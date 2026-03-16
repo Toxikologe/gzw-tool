@@ -31,21 +31,41 @@
         <div>
             <label for="weaponSelect">Waffen & Ballistik (Check)</label>
             <select id="weaponSelect" onchange="updateWeapon()">
-                <option value="">-- Wähle eine Waffe --</option>
-                <optgroup label="Neue Waffen (0.4)">
-                    <option value="ks1">KAC KS-1 (L403A1)</option>
-                    <option value="m14">M14 / EBR</option>
-                    <option value="m16a1">M16A1</option>
-                    <option value="alien">Laugo Alien (Pistole)</option>
-                    <option value="vz58">Vz. 58 (7.62x39mm)</option>
-                </optgroup>
-                <optgroup label="Klassiker">
-                    <option value="m4a1">M4A1 / MK18</option>
-                    <option value="akmn">AKMN / AK-103</option>
-                    <option value="mosin">Mosin-Nagant</option>
-                    <option value="svd">SVD Dragunov</option>
-                </optgroup>
-            </select>
+    <option value="">-- Wähle eine Waffe --</option>
+    <optgroup label="Sturmgewehre (West)">
+        <option value="ks1">KAC KS-1 (L403A1) - 0.4 Meta</option>
+        <option value="m4a1">M4A1</option>
+        <option value="mk18">MK18 (Kompakt)</option>
+        <option value="m16a1">M16A1 (Retro-Präzision)</option>
+    </optgroup>
+    <optgroup label="Sturmgewehre (Ost / AK)">
+        <option value="akmn">AKMN (Modernisiert)</option>
+        <option value="ak74n">AK-74N (5.45mm)</option>
+        <option value="ak74m">AK-74M (Klappschaft)</option>
+        <option value="ak103">AK-103 (7.62mm Modern)</option>
+        <option value="ak105">AK-105 (Kompakt)</option>
+        <option value="vz58">Vz. 58</option>
+    </optgroup>
+    <optgroup label="DMR & Scharfschützen">
+        <option value="m14">M14 EBR / Battle Rifle</option>
+        <option value="m700">M700 Remington</option>
+        <option value="svd">SVD Dragunov</option>
+        <option value="mosin">Mosin-Nagant (Standard/Infantry)</option>
+        <option value="skn">SKS (Modernisiert)</option>
+    </optgroup>
+    <optgroup label="SMGs & Shotguns">
+        <option value="mp5">MP5A3 / SD</option>
+        <option value="vityaz">PP-19-01 Vityaz</option>
+        <option value="m870">M870 Pump-Action</option>
+        <option value="590a1">Mossberg 590A1</option>
+    </optgroup>
+    <optgroup label="Pistolen">
+        <option value="alien">Laugo Alien</option>
+        <option value="glock17">Glock 17</option>
+        <option value="m9a1">M9A1 Beretta</option>
+        <option value="makarov">Makarov PM</option>
+    </optgroup>
+</select>
             <div id="weaponInfo" class="info-box">Munitions-Details...</div>
         </div>
 
