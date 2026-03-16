@@ -287,7 +287,43 @@ const allTasks = [
     { de: "Schlüssel zum Erfolg", en: "Key to Success", desc: "Finde den Lagerschlüssel im Restaurant der Blue Lagoon.", sol: "Der Schlüssel spawnt auf der Theke im hinteren Küchenbereich." },
     { de: "Letzter Abschied", en: "Last Farewell", desc: "Finde die Habseligkeiten des Soldaten am Flugplatz.", sol: "Hangar 3, kleiner Spind in der hinteren linken Ecke." },
     { de: "Verlorenes Hab und Gut", en: "Lost and Found", desc: "Finde den verlorenen Rucksack im Sägewerk.", sol: "Lumber Yard, hinter dem großen Sägeblatt-Stapel unter einer Plane." }
-    // Hier kannst du beliebig viele weitere Tasks nach dem gleichen Schema einfügen
+    // --- STARTSTADT & ANFÄNGER ---
+    { de: "Wasserreinigung", en: "Water Purification", desc: "Überprüfe die Wasserpumpen am Fluss.", sol: "Gehe zu den Koordinaten (142 165). Interagiere mit dem gelben Ventil hinter dem blauen Schuppen." },
+    { de: "Gefährliche Neugier", en: "Dangerous Curiosity", desc: "Finde den verlassenen LKW auf der Hauptstraße.", sol: "Der LKW steht bei (144 162). Suche im Fahrerhaus nach dem Logbuch." },
+    { de: "Bäckerei-Geheimnis", en: "Bakery Secret", desc: "Suche nach Hinweisen in der alten Bäckerei.", sol: "Die Bäckerei ist im Stadtzentrum. Das Dokument liegt im Hinterzimmer im Mehlregal." },
+    { de: "Letzte Ölung", en: "Last Rites", desc: "Platziere die Blumen am Friedhof.", sol: "Gehe zum Friedhof am Stadtrand. Das Grab mit dem frischen Erdhaufen ist dein Ziel." },
+
+    // --- BAN PA & BLUE LAGOON ---
+    { de: "Verbotenes Angeln", en: "Forbidden Fishing", desc: "Finde die Fischernetze der Miliz.", sol: "Am nördlichen Ufer von Ban Pa. Die Netze hängen an den Holzpfählen im Wasser." },
+    { de: "Blutiger Pfad", en: "Bloody Trail", desc: "Folge den Blutspuren in Blue Lagoon.", sol: "Starte beim Haupteingang und folge den Flecken bis zur kleinen Hütte am Felsen." },
+    { de: "Malo's Habseligkeiten", en: "Malo's Belongings", desc: "Sichere den Koffer aus Malo's Haus.", sol: "Du brauchst den 'Malo Key'. Das Haus steht auf Stelzen direkt am Wasser." },
+
+    // --- YBL-1 BUNKERSYSTEM ---
+    { de: "Belüftungsprobleme", en: "Ventilation Issues", desc: "Untersuche die Schächte im YBL-1.", sol: "Gehe zu Ebene -1. In der Mitte des Raumes ist ein Gitter am Boden, das du inspizieren musst." },
+    { de: "Stromausfall", en: "Power Outage", desc: "Repariere die Sicherungen im Bunker.", sol: "Ebene -2, im Generatorraum. Du musst 3 Sicherungen finden, die im Bunker verteilt in Werkzeugkästen spawnen." },
+    { de: "Bunker-Gefangene", en: "Bunker Prisoners", desc: "Finde Beweise für Gefangene.", sol: "Ebene -2, hintere Gefängniszellen. In der dritten Zelle liegt ein handgeschriebener Brief auf der Pritsche." },
+
+    // --- HUNTER'S PARADISE ---
+    { de: "Schießplatz-Check", en: "Range Check", desc: "Sichere die Munitionskisten am Schießstand.", sol: "Gehe zum großen Schießstand. Die Kiste steht ganz rechts unter dem Wellblechdach." },
+    { de: "Wilderer-Camp", en: "Poacher's Camp", desc: "Zerstöre die Fallen im Wald.", sol: "Südlich von Hunter's Paradise stehen 3 Fallen. Interagiere mit ihnen, um sie zu entschärfen." },
+
+    // --- FORT NARITH (ENDGAME) ---
+    { de: "Luftabwehr-Sichtung", en: "AA Sighting", desc: "Markiere die Flugabwehr-Geschütze.", sol: "Nutze 3 Marker von Gunny. Die Geschütze stehen auf den Dächern von Block A, B und C." },
+    { de: "General-Quartier", en: "General's Quarters", desc: "Finde den Safe im HQ.", sol: "Oberstes Stockwerk im HQ. Du brauchst den 'Fort HQ Key'. Der Safe ist hinter dem Schreibtisch." },
+    { de: "Treibstoffdiebe", en: "Fuel Thieves", desc: "Markiere die Benzinkanister im Hangar.", sol: "Hangar 2, hinter den Flugzeugwracks. Es sind 5 große grüne Kanister." },
+
+    // --- TIGER BAY & MIDNIGHT SAPPHIRE ---
+    { de: "UNLRA Proben", en: "UNLRA Samples", desc: "Sichere die Virusproben aus dem Labor.", sol: "Tiger Bay HQ, Ebene 3. Du brauchst die UNLRA Lab Card. Die Proben sind im Kühlschrank." },
+    { de: "Pier-Verteidigung", en: "Pier Defense", desc: "Eliminiere 20 Feinde am Pier.", sol: "Tiger Bay Pier Area. Bleib auf den Dächern, um die schiere Masse an KI zu kontrollieren." },
+    { de: "Villen-Loot", en: "Villa Looting", desc: "Finde den Schmuck in Villa 1.", sol: "Midnight Sapphire, westliche Villenreihe. Der Schmuck liegt in der Schlafzimmer-Schublade." },
+    { de: "Hotel-Gästeliste", en: "Hotel Guestlist", desc: "Sichere das Gästebuch der Lobby.", sol: "Hauptgebäude Midnight Sapphire. Liegt auf dem Counter direkt hinter dem PC." },
+    { de: "Abwasser-Geheimnisse", en: "Sewer Secrets", desc: "Erkunde die Kanäle unter Midnight Sapphire.", sol: "Eingang ist hinter dem Golfplatz. Folge dem Gang bis zum verschlossenen Gitter." },
+
+    // --- WEITERE DIVERSE ---
+    { de: "Schmuggler-Route", en: "Smuggler's Route", desc: "Finde das Versteck am Flussufer.", sol: "Ganz im Osten der Karte. Suche nach einem brennenden Fass neben einem kleinen Boot." },
+    { de: "Nachschubmangel", en: "Supply Shortage", desc: "Bringe 3 Verbandskästen zu Handshake.", sol: "Du musst 3 'IFAKs' finden oder kaufen und sie im Task-Menü abgeben." },
+    { de: "Scharfschützen-Nest", en: "Sniper's Nest", desc: "Eliminiere den Scharfschützen auf dem Wasserturm.", sol: "POIs: Checkpoints. Erledige die Wache mit dem Zielfernrohr ganz oben." }
+    // Hier noch mehr Task
 ];
 
 function searchTasks() {
