@@ -116,10 +116,79 @@
 </div>
 
 <script>
+    // Vollständige Datenbank
     const weapons = {
-        "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Nutze den neuen L403A1 Build für maximale Ergonomie." },
-        "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "DMR-Power. M80 tötet die meisten KI-Gegner mit 1-2 Schüssen." },
+        "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Höchste Ergonomie für Tactical Sprint." },
+        "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "DMR-Power. M80 tötet die meisten KIs mit 1-2 Schüssen." },
         "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Sehr hohe Präzision auf Distanz im Semi-Auto Modus." },
         "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Die neue 0.4 Meta für Sidearms. Kein Rückstoß." },
         "vz58": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Robust und schlagkräftig. Besserer Rückstoß als AKM." },
-        "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Klassiker. In 0.4 durch Gewichts-Updates am besten als 'Shorty' (10.3
+        "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "In 0.4 am besten als kurze 10.3 Zoll Variante spielbar." },
+        "akmn": { ammo: "7.62x39mm BP", pen: "Class 4+", tip: "Bricht Class 4 Rüstung. Hoher Einzelschuss-Schaden." },
+        "mosin": { ammo: "7.62x54mmR 7N1 / SNB", pen: "Class 5-6", tip: "SNB ignoriert fast jedes Face-Shield." },
+        "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Die ultimative DMR für Crimson/Mithras Fraktion." }
+    };
+
+    const bosses = {
+        "market_leader": { loc: "Marktplatz (Startstadt)", gear: "Engraved AKMN", loot: "Gravierte Waffen, Büroschlüssel.", tip: "Hat oft 2-3 Leibwächter." },
+        "hunter_commander": { loc: "Hunter's Paradise", gear: "M4A1 Custom", loot: "Braunes Barett, modifizierte M4.", tip: "Flankiert sehr aggressiv." },
+        "malo_blue": { loc: "Blue Lagoon", gear: "Mosin / SVD", loot: "Spezielles Camo-Gear.", tip: "Vorsicht vor den Minenfeldern!" },
+        "midnight_laf": { loc: "Midnight Sapphire", gear: "KS-1 Custom", loot: "Seltene Hotel-Schlüssel.", tip: "Granaten gegen die Leibwache nutzen!" },
+        "fort_commander": { loc: "Fort Narith (HQ)", gear: "M14 EBR / Class 5", loot: "EBR-Teile, gravierte Pistole.", tip: "Sehr zäh, nutzt 7.62mm M61." },
+        "rebel_ybl": { loc: "YBL-1 Bunker", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel.", tip: "Lauert oft in dunklen Ecken." }
+    };
+
+    const tasks = {
+        "first_recon": { desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
+        "little_bird": { desc: "Finde den Hubschrauber-Absturzplatz.", sol: "Nördlich der Stadt im Sumpf. Cockpit-Panel anklicken." },
+        "meds_wanted": { desc: "Finde UNLRA Hilfsgüter.", sol: "Wasserturm Stadtrand, Kiste steht am Fundament." },
+        "native_neg": { desc: "Bringe Paket zum Ältesten (Ban Pa).", sol: "Paket aus Kirche holen, zum Haus mit blauer Flagge am Wasser." },
+        "cache_retrieval": { desc: "Markiere Container im Lagerhaus.", sol: "GPS-Tracker von Gunny nutzen. Lagerhaus Südost-Industriezone." },
+        "shadow_banpa": { desc: "Infos über Miliz in Ban Pa finden.", sol: "Lagerhaus Nord-Steg, Dokument auf grünem Tisch oben." }
+    };
+
+    // FUNKTIONEN
+    function updateWeapon() {
+        const val = document.getElementById('weaponSelect').value;
+        const info = weapons[val];
+        const display = document.getElementById('weaponInfo');
+        if (info) {
+            display.innerHTML = `Ammo: <span class="highlight">${info.ammo}</span><br>Pen: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
+        } else {
+            display.innerHTML = "Wähle eine Waffe...";
+        }
+    }
+
+    function updateBoss() {
+        const val = document.getElementById('bossSelect').value;
+        const boss = bosses[val];
+        const display = document.getElementById('bossInfo');
+        if (boss) {
+            display.innerHTML = `Ort: <span class="highlight">${boss.loc}</span><br>Loot: ${boss.loot}<br>Tipp: ${boss.tip}`;
+        } else {
+            display.innerHTML = "Wähle einen Boss...";
+        }
+    }
+
+    function updateTask() {
+        const val = document.getElementById('taskSelect').value;
+        const task = tasks[val];
+        if(task) {
+            document.getElementById('taskTitle').innerHTML = val.replace(/_/g, ' ').toUpperCase();
+            document.getElementById('taskDesc').innerHTML = task.desc;
+            document.getElementById('taskSolution').innerHTML = `<strong>Wiki-Lösung:</strong><br>${task.sol}`;
+            document.getElementById('solBtn').style.display = 'block';
+            document.getElementById('taskSolution').style.display = 'none';
+        }
+    }
+
+    function updateGeneric(sId, iId) {
+        const val = document.getElementById(sId).value;
+        document.getElementById(iId).innerHTML = val || "Details...";
+    }
+
+    function toggleSolution() {
+        const s = document.getElementById('taskSolution');
+        s.style.display = s.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
