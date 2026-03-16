@@ -2,20 +2,124 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>GZW 0.4 Taktik-Tool</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GZW Spearhead Tactical Tool</title>
+    <style>
+        :root { --accent: #ffae00; --bg: #0f0f0f; --card: #1c1c1c; --text: #e0e0e0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+        h1 { color: var(--accent); text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; border-bottom: 2px solid var(--accent); display: inline-block; width: 100%; padding-bottom: 10px; }
+        label { display: block; margin-top: 20px; font-weight: 600; color: #888; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        select { width: 100%; padding: 12px; margin-top: 8px; background: #2a2a2a; color: white; border: 1px solid #444; border-radius: 6px; appearance: none; cursor: pointer; font-size: 1rem; }
+        select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 5px var(--accent); }
+        .info-box { margin-top: 15px; padding: 20px; background: #252525; border-left: 4px solid var(--accent); border-radius: 4px; min-height: 60px; }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
+        .highlight { color: var(--accent); font-weight: bold; }
+        .task-btn { background: var(--accent); color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px; margin-top: 15px; width: 100%; transition: 0.2s; }
+        .task-btn:hover { background: #e69d00; }
+        .task-solution { display: none; margin-top: 15px; padding: 15px; background: #111; border: 1px dashed var(--accent); border-radius: 4px; }
+        hr { border: 0; border-top: 1px solid #333; margin: 40px 0; }
+    </style>
 </head>
 <body>
-    <h1>GZW 0.4 Waffen-Berater</h1>
-    
-    <div class="search-area">
-        <input type="text" id="searchInput" placeholder="Waffe oder Munition suchen...">
-        <button onclick="searchData()">Suchen</button>
-    </div>
 
-    <div id="resultBox" class="result-container">
+<div class="container">
+    <h1>GZW Spearhead Tactical Tool</h1>
+
+    <div class="grid">
+        <div>
+            <label for="weaponSelect">Waffen & Ballistik (Check)</label>
+            <select id="weaponSelect" onchange="updateWeapon()">
+                <option value="">-- Wähle eine Waffe --</option>
+                <optgroup label="Neue Waffen (0.4)">
+                    <option value="ks1">KAC KS-1 (L403A1)</option>
+                    <option value="m14">M14 / EBR</option>
+                    <option value="m16a1">M16A1</option>
+                    <option value="alien">Laugo Alien (Pistole)</option>
+                    <option value="vz58">Vz. 58 (7.62x39mm)</option>
+                </optgroup>
+                <optgroup label="Klassiker">
+                    <option value="m4a1">M4A1 / MK18</option>
+                    <option value="akmn">AKMN / AK-103</option>
+                    <option value="mosin">Mosin-Nagant</option>
+                    <option value="svd">SVD Dragunov</option>
+                </optgroup>
+            </select>
+            <div id="weaponInfo" class="info-box">Munitions-Details...</div>
         </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+        <div>
+            <label for="bossSelect">Boss-Datenbank (0.4 Update)</label>
+            <select id="bossSelect" onchange="updateBoss()">
+                <option value="">-- Wähle einen Boss --</option>
+                <option value="market_leader">Criminal Leader (Marktplatz)</option>
+                <option value="hunter_commander">Hostile Commander (Hunter's Paradise)</option>
+                <option value="malo_blue">Malo Luangrath (Blue Lagoon)</option>
+                <option value="midnight_laf">LAF Commander (Midnight Sapphire)</option>
+                <option value="fort_commander">Fort Narith Commander</option>
+                <option value="rebel_ybl">Rebel Leader (YBL-1)</option>
+            </select>
+            <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div>
+            <label for="attachSelect">Attachments & Ergo</label>
+            <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
+                <option value="">-- Wähle Attachment --</option>
+                <option value="Vudu 1-6x / 3-9x: Absolute Meta-Optik. In 0.4 extrem wichtig für Distanzschüsse.">Vudu Scopes</option>
+                <option value="RAZOR 1-10x: Neu in 0.4. Maximale Flexibilität für DMR-Builds.">RAZOR 1-10x Scope</option>
+                <option value="Aimpoint 3X-P: Magnifier für Red Dots. Perfekt für das KS-1.">3X-P Magnifier</option>
+                <option value="RK-3 Grip: Bester Ergo-Boost. Reduziert die Waffen-Trägheit massiv.">Zenit RK-3 Grip</option>
+            </select>
+            <div id="attachInfo" class="info-box">Attachment-Effekte...</div>
+        </div>
+
+        <div>
+            <label for="gearSelect">Gear, Medic & Survival</label>
+            <select id="gearSelect" onchange="updateGeneric('gearSelect', 'gearInfo')">
+                <option value="">-- Wähle Item --</option>
+                <option value="RPC Class 4: Bester Kompromiss aus Schutz und Gewicht (Inertia-Vorteil).">RPC Plate Carrier</option>
+                <option value="6B45 Ratnik: Class 5 Schutz. Extrem schwer, behindert den Tactical Sprint.">6B45 Ratnik</option>
+                <option value="Surkit / Blood Bag: Essenziell für Organ-Reparatur und Blutverlust.">Medical High-End</option>
+                <option value="MRE & Water: Erhöht Energie- und Hydrations-Buffs für Ausdauer.">Survival Kits</option>
+            </select>
+            <div id="gearInfo" class="info-box">Gear-Stats...</div>
+        </div>
+    </div>
+
+    <hr>
+
+    <label for="taskSelect">Tasks & Lösungen (Wiki-Modus)</label>
+    <select id="taskSelect" onchange="updateTask()">
+        <option value="">-- Task auswählen --</option>
+        <optgroup label="Anfänger-Tasks">
+            <option value="first_recon">First Recon</option>
+            <option value="little_bird">Little Bird Down</option>
+            <option value="meds_wanted">Meds Wanted</option>
+        </optgroup>
+        <optgroup label="POI Tasks">
+            <option value="native_neg">Native Negotiations (Ban Pa)</option>
+            <option value="cache_retrieval">Cache Retrieval (Warehouse)</option>
+            <option value="shadow_banpa">Shadow Over Ban Pa</option>
+        </optgroup>
+    </select>
+    <div id="taskContainer" class="info-box">
+        <div id="taskTitle" style="font-weight:bold; margin-bottom: 5px;">Wähle einen Task...</div>
+        <div id="taskDesc">Beschreibung des Ziels erscheint hier.</div>
+        <button class="task-btn" id="solBtn" style="display:none;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
+        <div id="taskSolution" class="task-solution"></div>
+    </div>
+
+</div>
+
+<script>
+    const weapons = {
+        "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Nutze den neuen L403A1 Build für maximale Ergonomie." },
+        "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "DMR-Power. M80 tötet die meisten KI-Gegner mit 1-2 Schüssen." },
+        "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Sehr hohe Präzision auf Distanz im Semi-Auto Modus." },
+        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Die neue 0.4 Meta für Sidearms. Kein Rückstoß." },
+        "vz58": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Robust und schlagkräftig. Besserer Rückstoß als AKM." },
+        "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Klassiker. In 0.4 durch Gewichts-Updates am besten als 'Shorty' (10.3
