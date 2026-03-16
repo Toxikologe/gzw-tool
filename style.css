@@ -1,0 +1,13 @@
+body {
+    background-color: #1a1a1a;
+    color: #00ff00; /* Klassisches Terminal-Grün */
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+}
+
+.result-container {
+    margin-top: 20px;
+    border: 1px solid #00ff00;
+    padding: 15px;
+    background: #262626;
+}
