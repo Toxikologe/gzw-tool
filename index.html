@@ -93,7 +93,6 @@
 </select>
             <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
         </div>
-    </div>
 
     <div class="grid">
         <div>
@@ -128,6 +127,7 @@
             <div id="attachInfo" class="info-box">Attachment-Effekte...</div>
         </div>
 
+    <div class="grid">
         <div>
             <label for="gearFullSelect">Gear (Rüstung, Rigs & Rucksäcke):</label>
 <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
@@ -156,7 +156,9 @@
 </select>
 <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
         </div>
-    </div>
+
+    <div class="grid">
+        <div>
     <label for="medFullSelect">Medizinische Versorgung (Full List):</label>
 <select id="medFullSelect" onchange="updateGeneric('medFullSelect', 'medFullInfo')">
     <option value="">-- Wähle Medizin-Item --</option>
@@ -182,7 +184,9 @@
 </select>
 <div id="medFullInfo" class="info-box">Medizinische Details & Anwendung...</div>
         </div>
-    </div>
+
+    <div class="grid">
+        <div>
 <label for="foodFullSelect">Verpflegung (Essen & Trinken):</label>
 <select id="foodFullSelect" onchange="updateGeneric('foodFullSelect', 'foodFullInfo')">
     <option value="">-- Wähle Verpflegung --</option>
@@ -202,7 +206,9 @@
 </select>
 <div id="foodFullInfo" class="info-box">Effekte auf Ausdauer & Status...</div>
         </div>
-    </div>
+
+    <div class="grid">
+        <div>
     <hr>
 <label for="taskSearch">Task suchen (Deutsch oder Englisch):</label>
 <input type="text" id="taskSearch" placeholder="z.B. First Recon / Erstaufklärung..." onkeyup="searchTasks()" style="width: 100%; padding: 12px; margin-top: 8px; background: #2a2a2a; color: white; border: 1px solid #444; border-radius: 6px;">
