@@ -204,27 +204,19 @@
 
             <div>
     <hr>
+<label for="taskSearch">Task suchen (Deutsch oder Englisch):</label>
+<input type="text" id="taskSearch" placeholder="z.B. First Recon / Erstaufklärung..." onkeyup="searchTasks()" style="width: 100%; padding: 12px; margin-top: 8px; background: #2a2a2a; color: white; border: 1px solid #444; border-radius: 6px;">
 
-    <label for="taskSelect">Tasks & Lösungen (Wiki-Modus)</label>
-    <select id="taskSelect" onchange="updateTask()">
-        <option value="">-- Task auswählen --</option>
-        <optgroup label="Anfänger-Tasks">
-            <option value="first_recon">First Recon</option>
-            <option value="little_bird">Little Bird Down</option>
-            <option value="meds_wanted">Meds Wanted</option>
-        </optgroup>
-        <optgroup label="POI Tasks">
-            <option value="native_neg">Native Negotiations (Ban Pa)</option>
-            <option value="cache_retrieval">Cache Retrieval (Warehouse)</option>
-            <option value="shadow_banpa">Shadow Over Ban Pa</option>
-        </optgroup>
-    </select>
-    <div id="taskContainer" class="info-box">
-        <div id="taskTitle" style="font-weight:bold; margin-bottom: 5px;">Wähle einen Task...</div>
-        <div id="taskDesc">Beschreibung des Ziels erscheint hier.</div>
-        <button class="task-btn" id="solBtn" style="display:none;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
-        <div id="taskSolution" class="task-solution"></div>
+<div id="taskList" style="margin-top: 10px; max-height: 200px; overflow-y: auto; border: 1px solid #333; display: none; background: #1a1a1a;">
     </div>
+
+<div id="taskContainer" class="info-box" style="margin-top: 20px;">
+    <div id="taskTitle" style="font-weight:bold; color: var(--accent); font-size: 1.2rem; margin-bottom: 5px;">Wähle einen Task aus der Suche...</div>
+    <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
+    <div id="taskDesc">Die Zielbeschreibung erscheint hier.</div>
+    <button class="task-btn" id="solBtn" style="display:none;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
+    <div id="taskSolution" class="task-solution"></div>
+</div>
 
 </div>
 
@@ -284,14 +276,69 @@
     "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Voll modifizierte Waffen / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für eingespielte Squads. KI nutzt hier oft Thermal-Optiken." }
 };
 
-    const tasks = {
-        "first_recon": { desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
-        "little_bird": { desc: "Finde den Hubschrauber-Absturzplatz.", sol: "Nördlich der Stadt im Sumpf. Cockpit-Panel anklicken." },
-        "meds_wanted": { desc: "Finde UNLRA Hilfsgüter.", sol: "Wasserturm Stadtrand, Kiste steht am Fundament." },
-        "native_neg": { desc: "Bringe Paket zum Ältesten (Ban Pa).", sol: "Paket aus Kirche holen, zum Haus mit blauer Flagge am Wasser." },
-        "cache_retrieval": { desc: "Markiere Container im Lagerhaus.", sol: "GPS-Tracker von Gunny nutzen. Lagerhaus Südost-Industriezone." },
-        "shadow_banpa": { desc: "Infos über Miliz in Ban Pa finden.", sol: "Lagerhaus Nord-Steg, Dokument auf grünem Tisch oben." }
-    };
+    // MASSIVE TASK DATENBANK (Auszug der wichtigsten Tasks 0.3/0.4)
+const allTasks = [
+    { de: "Erstaufklärung", en: "First Recon", desc: "Erkunde Markt, Tankstelle und Rathaus in der Startstadt.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
+    { de: "Abgestürzter Vogel", en: "Little Bird Down", desc: "Finde den Hubschrauber-Absturzplatz im Sumpf.", sol: "Nördlich der Stadt im Sumpf. Interagiere mit dem Cockpit-Panel." },
+    { de: "Medikamente gesucht", en: "Meds Wanted", desc: "Finde UNLRA Hilfsgüter am Wasserturm.", sol: "Wasserturm am Stadtrand. Die Kiste steht direkt unten am Fundament." },
+    { de: "Einheimische Verhandlungen", en: "Native Negotiations", desc: "Bringe das Paket zum Ältesten in Ban Pa.", sol: "Paket in der Kirche holen. Bringe es zum Haus am Wasser mit der blauen Flagge." },
+    { de: "Schatten über Ban Pa", en: "Shadow Over Ban Pa", desc: "Finde Informationen über die Miliz in Ban Pa.", sol: "Lagerhaus am nördlichen Steg. Dokument liegt oben auf einem grünen Tisch." },
+    { de: "Die Menschenjagd", en: "The Manhunt", desc: "Eliminiere den Anführer in Hunter's Paradise.", sol: "Der Boss trägt ein rotes Barett. Meist beim Schießstand oder Hauptbüro." },
+    { de: "Gefährlicher Pfad", en: "Dangerous Past", desc: "Finde die Leiche des Informanten im YBL-1 Bunker.", sol: "Gehe in Ebene -2, Raum hinter den Generatoren. Die Leiche liegt in der Ecke." },
+    { de: "Schlüssel zum Erfolg", en: "Key to Success", desc: "Finde den Lagerschlüssel im Restaurant der Blue Lagoon.", sol: "Der Schlüssel spawnt auf der Theke im hinteren Küchenbereich." },
+    { de: "Letzter Abschied", en: "Last Farewell", desc: "Finde die Habseligkeiten des Soldaten am Flugplatz.", sol: "Hangar 3, kleiner Spind in der hinteren linken Ecke." },
+    { de: "Verlorenes Hab und Gut", en: "Lost and Found", desc: "Finde den verlorenen Rucksack im Sägewerk.", sol: "Lumber Yard, hinter dem großen Sägeblatt-Stapel unter einer Plane." }
+    // Hier kannst du beliebig viele weitere Tasks nach dem gleichen Schema einfügen
+];
+
+function searchTasks() {
+    const input = document.getElementById('taskSearch').value.toLowerCase();
+    const list = document.getElementById('taskList');
+    list.innerHTML = '';
+    
+    if (input.length < 2) {
+        list.style.display = 'none';
+        return;
+    }
+
+    const filtered = allTasks.filter(t => 
+        t.de.toLowerCase().includes(input) || 
+        t.en.toLowerCase().includes(input)
+    );
+
+    if (filtered.length > 0) {
+        list.style.display = 'block';
+        filtered.forEach(t => {
+            const div = document.createElement('div');
+            div.innerHTML = `${t.de} / ${t.en}`;
+            div.style.padding = '10px';
+            div.style.cursor = 'pointer';
+            div.style.borderBottom = '1px solid #333';
+            div.onmouseover = () => div.style.background = '#333';
+            div.onmouseout = () => div.style.background = 'transparent';
+            div.onclick = () => displayTask(t);
+            list.appendChild(div);
+        });
+    } else {
+        list.style.display = 'none';
+    }
+}
+
+function displayTask(task) {
+    document.getElementById('taskList').style.display = 'none';
+    document.getElementById('taskSearch').value = task.de;
+    document.getElementById('taskTitle').innerHTML = task.de;
+    document.getElementById('taskNames').innerHTML = `Englisch: ${task.en}`;
+    document.getElementById('taskDesc').innerHTML = task.desc;
+    document.getElementById('taskSolution').innerHTML = `<strong>Wiki-Lösung:</strong><br>${task.sol}`;
+    document.getElementById('solBtn').style.display = 'block';
+    document.getElementById('taskSolution').style.display = 'none';
+}
+
+function toggleSolution() {
+    const s = document.getElementById('taskSolution');
+    s.style.display = s.style.display === 'block' ? 'none' : 'block';
+}
 
     // FUNKTIONEN
     function updateWeapon() {
