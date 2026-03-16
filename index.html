@@ -208,7 +208,18 @@
             <div id="foodFullInfo" class="info-box">Effekte auf Status...</div>
         </div>
     </div>
+<hr>
+    <label for="keySearch">Schlüssel-Datenbank (Name oder Ort):</label>
+    <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()" style="width: 100%; padding: 12px; margin-top: 8px; background: #2a2a2a; color: white; border: 1px solid #444; border-radius: 6px; box-sizing: border-box;">
 
+    <div id="keyList" style="margin-top: 10px; max-height: 200px; overflow-y: auto; border: 1px solid #333; display: none; background: #1a1a1a;"></div>
+
+    <div id="keyContainer" class="info-box" style="margin-top: 20px;">
+        <div id="keyTitle" style="font-weight:bold; color: var(--accent); font-size: 1.2rem; margin-bottom: 5px;">Schlüssel-Info...</div>
+        <div id="keyLocation" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">Fundort wird hier angezeigt.</div>
+        <div id="keyEffect">Welche Tür öffnet dieser Schlüssel?</div>
+    </div>
+    
     <hr>
 
     <label for="taskSearch">Task suchen (Deutsch oder Englisch):</label>
@@ -333,6 +344,48 @@
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
         s.style.display = s.style.display === 'block' ? 'none' : 'block';
+    }
+    // SCHLÜSSEL DATENBANK
+    const allKeys = [
+        { name: "YBL-1 Office Key", loc: "YBL-1 Bunker", effect: "Öffnet das Büro im Haupteingangsbereich (Ebene -1). Enthält Intel für Tasks.", loot: "Wichtige Dokumente" },
+        { name: "YBL-1 Generator Key", loc: "YBL-1 Bunker", effect: "Öffnet den Generatorraum auf Ebene -2. Wichtig für die Strom-Task.", loot: "Sicherungen & Werkzeug" },
+        { name: "Storage Room Key (HP)", loc: "Hunter's Paradise", effect: "Öffnet den Waffenraum am Schießstand. Droppt oft vom Boss.", loot: "Waffen & Aufsätze" },
+        { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte am Steg. Wichtig für Crimson Shield Tasks.", loot: "Mosin / SVD Zubehör" },
+        { name: "Ban Pa Shack Key", loc: "Ban Pa", effect: "Öffnet die Fischerhütte am nördlichen Ende des Dorfes.", loot: "Wertsachen & Geld" },
+        { name: "Fort Narith HQ Key", loc: "Fort Narith", effect: "Öffnet das Hauptbüro des Generals im obersten Stock.", loot: "Gravierte Pistole & Intel" },
+        { name: "Fort Narith Storage Key", loc: "Fort Narith", effect: "Öffnet das Munitionsdepot im Keller von Block A.", loot: "High-Tier Munition (M61/M855A1)" },
+        { name: "Tiger Bay Mall Key", loc: "Tiger Bay", effect: "Öffnet den Technikraum im Einkaufszentrum.", loot: "Elektronik & High-Value Loot" },
+        { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Ermöglicht Zugang zum Quarantäne-Labor.", loot: "Medizinische Vorräte & Surkits" },
+        { name: "Villa 1 Key", loc: "Midnight Sapphire", effect: "Öffnet die westlichste Villa. Enthält oft Tresore.", loot: "Geld & Schmuck" },
+        { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Öffnet die meisten Standardzimmer im Hauptgebäude. Droppt vom Hotel-Boss.", loot: "Diverse Beute" }
+    ];
+
+    function searchKeys() {
+        const input = document.getElementById('keySearch').value.toLowerCase();
+        const list = document.getElementById('keyList');
+        list.innerHTML = '';
+        if (input.length < 2) { list.style.display = 'none'; return; }
+        
+        const filtered = allKeys.filter(k => k.name.toLowerCase().includes(input) || k.loc.toLowerCase().includes(input));
+        
+        if (filtered.length > 0) {
+            list.style.display = 'block';
+            filtered.forEach(k => {
+                const div = document.createElement('div');
+                div.innerHTML = `${k.name} (${k.loc})`;
+                div.style.padding = '10px'; div.style.cursor = 'pointer'; div.style.borderBottom = '1px solid #333';
+                div.onclick = () => displayKey(k);
+                list.appendChild(div);
+            });
+        } else { list.style.display = 'none'; }
+    }
+
+    function displayKey(key) {
+        document.getElementById('keyList').style.display = 'none';
+        document.getElementById('keySearch').value = key.name;
+        document.getElementById('keyTitle').innerHTML = key.name;
+        document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${key.loc}</span>`;
+        document.getElementById('keyEffect').innerHTML = `Nutzen: ${key.effect}<br>Erwarteter Loot: <span class="highlight">${key.loot}</span>`;
     }
 </script>
 </body>
