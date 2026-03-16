@@ -138,16 +138,39 @@
 <script>
     // Vollständige Datenbank
     const weapons = {
-        "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Höchste Ergonomie für Tactical Sprint." },
-        "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "DMR-Power. M80 tötet die meisten KIs mit 1-2 Schüssen." },
-        "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Sehr hohe Präzision auf Distanz im Semi-Auto Modus." },
-        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Die neue 0.4 Meta für Sidearms. Kein Rückstoß." },
-        "vz58": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Robust und schlagkräftig. Besserer Rückstoß als AKM." },
-        "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "In 0.4 am besten als kurze 10.3 Zoll Variante spielbar." },
-        "akmn": { ammo: "7.62x39mm BP", pen: "Class 4+", tip: "Bricht Class 4 Rüstung. Hoher Einzelschuss-Schaden." },
-        "mosin": { ammo: "7.62x54mmR 7N1 / SNB", pen: "Class 5-6", tip: "SNB ignoriert fast jedes Face-Shield." },
-        "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Die ultimative DMR für Crimson/Mithras Fraktion." }
-    };
+    // Sturmgewehre West
+    "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
+    "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 3+", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
+    "mk18": { ammo: "5.56x45mm M855A1", pen: "Class 3+", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
+    "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Hohe Mündungsgeschwindigkeit sorgt für weniger Bullet-Drop auf Distanz." },
+
+    // Sturmgewehre Ost
+    "akmn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Der Klassiker. Mit BP-Munition extrem gefährlich gegen Class 3+ Westen." },
+    "ak74n": { ammo: "5.45x39mm 7N6M / PP", pen: "Class 3", tip: "Sehr geringer Rückstoß. Präziser als die 7.62er Varianten." },
+    "ak74m": { ammo: "5.45x39mm PP / BP", pen: "Class 3+", tip: "Modernisierte AK-74. Geringes Gewicht, gute Trägheits-Werte." },
+    "ak103": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Beste 7.62er AK. Kann alle modernen Aufsätze nutzen." },
+    "ak105": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Kurze AK-Variante. Perfekt für das neue Bewegungssystem." },
+    "vz58": { ammo: "7.62x39mm PS / BP", pen: "Class 3+", tip: "Keine AK! Nutzt eigene Magazine. Höhere Feuerrate als die AKMN." },
+
+    // DMR & Sniper
+    "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
+    "m700": { ammo: "7.62x51mm M61", pen: "Class 6", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
+    "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
+    "mosin": { ammo: "7.62x54mmR SNB", pen: "Class 6", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
+    "skn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
+
+    // SMG & Shotguns
+    "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Ein Laser auf kurze Distanz. Ziele auf den Kopf oder Beine." },
+    "vityaz": { ammo: "9x19mm 7N21", pen: "Class 2+", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
+    "m870": { ammo: "12G Slug / 00 Buck", pen: "Class 0-2", tip: "In 0.4 sind Slugs gegen weiche Ziele (KI ohne Platten) verheerend." },
+    "590a1": { ammo: "12G 00 Buckshot", pen: "Class 0-1", tip: "Maximale Stopwirkung auf 5-10 Meter." },
+
+    // Pistolen
+    "alien": { ammo: "9x19mm 7N21", pen: "Class 2+", tip: "Extrem schnell im ADS. Beste Zweitwaffe für Scharfschützen." },
+    "glock17": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Zuverlässig, große Magazine verfügbar." },
+    "m9a1": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Gute Standard-Pistole für den Start." },
+    "makarov": { ammo: "9x18mm PM Gzh", pen: "Class 0", tip: "Nur im absoluten Notfall. Hat kaum Durchschlagskraft gegen Rüstung." }
+};
 
     const bosses = {
         "market_leader": { loc: "Marktplatz (Startstadt)", gear: "Engraved AKMN", loot: "Gravierte Waffen, Büroschlüssel.", tip: "Hat oft 2-3 Leibwächter." },
