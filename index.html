@@ -99,27 +99,91 @@
         <div>
             <label for="attachSelect">Attachments & Ergo</label>
             <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
-                <option value="">-- Wähle Attachment --</option>
-                <option value="Vudu 1-6x / 3-9x: Absolute Meta-Optik. In 0.4 extrem wichtig für Distanzschüsse.">Vudu Scopes</option>
-                <option value="RAZOR 1-10x: Neu in 0.4. Maximale Flexibilität für DMR-Builds.">RAZOR 1-10x Scope</option>
-                <option value="Aimpoint 3X-P: Magnifier für Red Dots. Perfekt für das KS-1.">3X-P Magnifier</option>
-                <option value="RK-3 Grip: Bester Ergo-Boost. Reduziert die Waffen-Trägheit massiv.">Zenit RK-3 Grip</option>
-            </select>
+    <option value="">-- Wähle Attachment --</option>
+    <optgroup label="Optiken (Scopes & Red Dots)">
+        <option value="Vudu 1-6x: Das Allround-Scope. Perfekt für Distanz und durch 1x Zoom auch für Nahkampf.">Vudu 1-6x</option>
+        <option value="Razor HD 1-6x: Sehr klares Bild, dünner Rand. Beste Sicht im ADS.">Razor HD Gen II</option>
+        <option value="Nightforce ATACR 1-8x: Maximale Vergrößerung für DMRs (M14/SVD).">NF ATACR 1-8x</option>
+        <option value="EOTech EXPS3: Bestes Holographic-Visier für schnelles Aiming im Nahkampf.">EOTech EXPS3</option>
+        <option value="Trijicon ACOG: Der Klassiker mit 4x Festvergrößerung. Sehr robust.">Trijicon ACOG 4x</option>
+    </optgroup>
+    <optgroup label="Mündung (Schalldämpfer & Bremsen)">
+        <option value="NT4 Suppressor (5.56): Der Standard für M4/KS-1. Reduziert Schall und Mündungsfeuer.">KAC NT4 Suppressor</option>
+        <option value="RC2 Suppressor: Bester Rückstoß-Schutz für 5.56mm Waffen.">Surefire RC2</option>
+        <option value="PBS-1 Suppressor: Essenziell für AKM/AK-103, um nicht die ganze Map anzulocken.">PBS-1 (7.62 AK)</option>
+        <option value="Hybrid 46: Vielseitiger Schalldämpfer für das neue M14 EBR.">Hybrid 46 Suppressor</option>
+    </optgroup>
+    <optgroup label="Griffe & Ergonomie (Wichtig für 0.4)">
+        <option value="Zenit RK-3: Bester Pistolengriff für AKs. Massiver Ergo-Boost.">Zenit RK-3 Grip</option>
+        <option value="Magpul MOE/K2: Top-Ergo für westliche Plattformen (M4/KS-1).">Magpul MOE Grip</option>
+        <option value="B-25U RK-1: Schräger Vordergriff. Beste Balance zwischen Rückstoßkontrolle und Ergo.">Zenit RK-1 (Schräg)</option>
+        <option value="BCM Gunfighter: Sehr leicht, reduziert die Waffen-Trägheit (Inertia).">BCM Vertical Grip</option>
+    </optgroup>
+    <optgroup label="Schäfte & Handguards">
+        <option value="Daniel Defense Stock: Stabilisiert das Visierbild nach dem Schuss extrem schnell.">DD Stock</option>
+        <option value="Magpul PRS Gen3: Präzisionsschaft für M14/M700. Reduziert Sway (Wackeln).">Magpul PRS Stock</option>
+        <option value="Sureshot Mk3: Das beste Chassis für AKs, erlaubt modernste Optik-Montage.">Sureshot MK3 Chassis</option>
+    </optgroup>
+</select>
             <div id="attachInfo" class="info-box">Attachment-Effekte...</div>
         </div>
 
         <div>
-            <label for="gearSelect">Gear, Medic & Survival</label>
-            <select id="gearSelect" onchange="updateGeneric('gearSelect', 'gearInfo')">
-                <option value="">-- Wähle Item --</option>
-                <option value="RPC Class 4: Bester Kompromiss aus Schutz und Gewicht (Inertia-Vorteil).">RPC Plate Carrier</option>
-                <option value="6B45 Ratnik: Class 5 Schutz. Extrem schwer, behindert den Tactical Sprint.">6B45 Ratnik</option>
-                <option value="Surkit / Blood Bag: Essenziell für Organ-Reparatur und Blutverlust.">Medical High-End</option>
-                <option value="MRE & Water: Erhöht Energie- und Hydrations-Buffs für Ausdauer.">Survival Kits</option>
-            </select>
-            <div id="gearInfo" class="info-box">Gear-Stats...</div>
+            <label for="gearFullSelect">Gear (Rüstung, Rigs & Rucksäcke):</label>
+<select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
+    <option value="">-- Wähle Ausrüstung --</option>
+    <optgroup label="Plattenträger & Westen (Armor)">
+        <option value="RPC Plate Carrier (Class 4): Beste Wahl für 0.4. Leicht, schützt Lunge/Herz, minimale Inertia-Strafe.">RPC (Class 4)</option>
+        <option value="6B45 Ratnik (Class 5): Schwerer Schutz für Fort Narith. Schützt Torso und Oberarme. Hoher Gewichts-Malus.">6B45 Ratnik (Class 5)</option>
+        <option value="6B43 Zabralo (Class 6): Maximaler Schutz. Extrem schwer. Nur für Verteidigung geeignet, da Tactical Sprint fast unmöglich.">Zabralo (Class 6)</option>
+        <option value="LBT-6094 (Class 3+): Guter Allrounder für Mid-Tier POIs wie Ban Pa.">LBT-6094 (Class 3+)</option>
+        <option value="PACA Soft Armor (Class 2): Schützt nur vor Schrot und 9mm PST. Gut für schnelle Loot-Runs.">PACA (Class 2)</option>
+    </optgroup>
+    <optgroup label="Helme & Gesichtsschutz">
+        <option value="Fast MT: High-End Helm. Kann mit Side-Rails und Face-Shield (Class 3) nachgerüstet werden.">Fast MT Helmet</option>
+        <option value="MICH 2000: Standard Class 3 Schutz. Zuverlässig gegen die meisten KI-Streifschüsse.">MICH 2000</option>
+        <option value="6B47 Ratnik-B: Russischer Helm, gute Ergo-Werte, kompatibel mit NVGs.">6B47 Ratnik-B</option>
+    </optgroup>
+    <optgroup label="Rucksäcke (Backpacks)">
+        <option value="Rush 24 (20 Slots): Der Standard. Genug Platz für Loot, ohne die Beweglichkeit zu stark zu bremsen.">Rush 24 (Medium)</option>
+        <option value="Eberlestock G4 (30 Slots): Riesig. Voll beladen führt dieser Rucksack in 0.4 zu massiver Trägheit.">Eberlestock Operator</option>
+        <option value="Assault Pack (12 Slots): Perfekt für PvP-Jagd. Minimales Gewicht, maximale Ausdauer.">Assault Pack (Small)</option>
+    </optgroup>
+    <optgroup label="Rigs & Belts">
+        <option value="Micro Rig: 8 Slots. Extrem leicht, ideal für Sniper-Builds.">Micro Rig</option>
+        <option value="Belt Rig: Zusätzlicher Platz für Magazine und Meds, ohne den Brustbereich zu belasten.">Tactical Belt</option>
+    </optgroup>
+</select>
+<div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
         </div>
     </div>
+    <label for="medFullSelect">Medizinische Versorgung (Full List):</label>
+<select id="medFullSelect" onchange="updateGeneric('medFullSelect', 'medFullInfo')">
+    <option value="">-- Wähle Medizin-Item --</option>
+    <optgroup label="Blutverlust & Wunden">
+        <option value="Blood Bag (IV): Stoppt Hypovolämie (Blutverlust) sofort. Muss im Stehen/Sitzen angewendet werden.">Blood Bag (IV)</option>
+        <option value="Tourniquet: Stoppt schwere (arterielle) Blutungen an Gliedmaßen sofort. Schnellste Anwendung.">Tourniquet (CAT)</option>
+        <option value="Bandage: Stoppt leichte Blutungen. Verbraucht sich bei Anwendung.">Bandage</option>
+        <option value="QuickClot: Spezial-Bandage für mittelschwere Wunden, beschleunigt die Blutstillung.">QuickClot</option>
+    </optgroup>
+    <optgroup label="Chirurgie & Organe">
+        <option value="Surkit (Surgery Kit): Repariert beschädigte Organe (Magen, Lunge, Leber). Lange Animation (20 Sek).">Surgery Kit (Surkit)</option>
+        <option value="Advanced Surkit: Mehr Anwendungen als das Standard-Kit. Goldstandard für Squads.">Advanced Surgery Kit</option>
+    </optgroup>
+    <optgroup label="Knochen & Brüche">
+        <option value="Splint: Repariert Frakturen sofort. Behebt Humpeln oder Zittern beim Zielen.">Splint (Schiene)</option>
+        <option value="Surgical Tape: Kann für kleine Brüche oder als Notlösung genutzt werden.">Surgical Tape</option>
+    </optgroup>
+    <optgroup label="Schmerzmittel & Booster">
+        <option value="Painkillers: Unterdrückt den Schmerz-Effekt (Verschwommene Sicht). Hält ca. 120 Sek.">Painkillers (Tabletten)</option>
+        <option value="Morphine Injector: Sofortige Schmerzausschaltung. Hilft bei schweren Verletzungen, um zur Extraktion zu rennen.">Morphine</option>
+        <option value="Epinephrine: Erhöht kurzzeitig die Ausdauer-Regeneration. Gut für Tactical Sprint.">Epinephrine (Epi-Pen)</option>
+    </optgroup>
+</select>
+<div id="medFullInfo" class="info-box">Medizinische Details & Anwendung...</div>
+            </div>
+
+        <div>
 
     <hr>
 
