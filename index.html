@@ -214,46 +214,76 @@
         <div>
             <select id="ammo1" onchange="compareAmmo()">
                 <option value="">-- Munition A wählen --</option>
-                <optgroup label="5.56x45mm">
-                    <option value="m855a1">5.56 M855A1</option>
-                    <option value="m855">5.56 M855</option>
-                    <option value="m193">5.56 M193</option>
-                </optgroup>
-                <optgroup label="7.62x39mm">
-                    <option value="ak_bp">7.62x39 BP</option>
-                    <option value="ak_ps">7.62x39 PS</option>
-                </optgroup>
-                <optgroup label="7.62x51mm">
-                    <option value="m61">7.62x51 M61</option>
-                    <option value="m80">7.62x51 M80</option>
-                </optgroup>
-                <optgroup label="9x19mm (0.4 Buff)">
-                    <option value="ap63">9x19 AP 6.3</option>
-                    <option value="pst">9x19 PST Gzh</option>
-                </optgroup>
+                <optgroup label="5.56x45mm (NATO)">
+        <option value="m855a1">5.56 M855A1</option>
+        <option value="m855">5.56 M855</option>
+        <option value="m193">5.56 M193</option>
+    </optgroup>
+    <optgroup label="5.45x39mm (AK-74)">
+        <option value="ak74_bp">5.45 BP (Armor Piercing)</option>
+        <option value="ak74_pp">5.45 PP (Enhanced Performance)</option>
+        <option value="ak74_7n6">5.45 7N6M (Standard)</option>
+    </optgroup>
+    <optgroup label="7.62x39mm (AKM/AK-103)">
+        <option value="ak_bp">7.62x39 BP</option>
+        <option value="ak_ps">7.62x39 PS</option>
+        <option value="ak_us">7.62x39 US (Subsonic)</option>
+    </optgroup>
+    <optgroup label="7.62x51mm (NATO / M14)">
+        <option value="m61">7.62x51 M61 (AP)</option>
+        <option value="m80">7.62x51 M80</option>
+    </optgroup>
+    <optgroup label="7.62x54mmR (Mosin/SVD)">
+        <option value="snb">7.62x54R SNB (Anti-Armor)</option>
+        <option value="7n1">7.62x54R 7N1 (Precision)</option>
+    </optgroup>
+    <optgroup label="9x19mm & 9x18mm">
+        <option value="ap63">9x19 AP 6.3</option>
+        <option value="pst">9x19 PST Gzh</option>
+        <option value="pm_sp7">9x18 PM SP7 (Leg Meta)</option>
+    </optgroup>
+    <optgroup label="12 Gauge (Shotguns)">
+        <option value="slug">12G Copper Slug</option>
+        <option value="buck">12G 00 Buckshot</option>
+    </optgroup>
             </select>
             <div id="ammo1Info" class="info-box">Wähle Munition A...</div>
         </div>
         <div>
             <select id="ammo2" onchange="compareAmmo()">
                 <option value="">-- Munition B wählen --</option>
-                <optgroup label="5.56x45mm">
-                    <option value="m855a1">5.56 M855A1</option>
-                    <option value="m855">5.56 M855</option>
-                    <option value="m193">5.56 M193</option>
-                </optgroup>
-                <optgroup label="7.62x39mm">
-                    <option value="ak_bp">7.62x39 BP</option>
-                    <option value="ak_ps">7.62x39 PS</option>
-                </optgroup>
-                <optgroup label="7.62x51mm">
-                    <option value="m61">7.62x51 M61</option>
-                    <option value="m80">7.62x51 M80</option>
-                </optgroup>
-                <optgroup label="9x19mm (0.4 Buff)">
-                    <option value="ap63">9x19 AP 6.3</option>
-                    <option value="pst">9x19 PST Gzh</option>
-                </optgroup>
+                <optgroup label="5.56x45mm (NATO)">
+        <option value="m855a1">5.56 M855A1</option>
+        <option value="m855">5.56 M855</option>
+        <option value="m193">5.56 M193</option>
+    </optgroup>
+    <optgroup label="5.45x39mm (AK-74)">
+        <option value="ak74_bp">5.45 BP (Armor Piercing)</option>
+        <option value="ak74_pp">5.45 PP (Enhanced Performance)</option>
+        <option value="ak74_7n6">5.45 7N6M (Standard)</option>
+    </optgroup>
+    <optgroup label="7.62x39mm (AKM/AK-103)">
+        <option value="ak_bp">7.62x39 BP</option>
+        <option value="ak_ps">7.62x39 PS</option>
+        <option value="ak_us">7.62x39 US (Subsonic)</option>
+    </optgroup>
+    <optgroup label="7.62x51mm (NATO / M14)">
+        <option value="m61">7.62x51 M61 (AP)</option>
+        <option value="m80">7.62x51 M80</option>
+    </optgroup>
+    <optgroup label="7.62x54mmR (Mosin/SVD)">
+        <option value="snb">7.62x54R SNB (Anti-Armor)</option>
+        <option value="7n1">7.62x54R 7N1 (Precision)</option>
+    </optgroup>
+    <optgroup label="9x19mm & 9x18mm">
+        <option value="ap63">9x19 AP 6.3</option>
+        <option value="pst">9x19 PST Gzh</option>
+        <option value="pm_sp7">9x18 PM SP7 (Leg Meta)</option>
+    </optgroup>
+    <optgroup label="12 Gauge (Shotguns)">
+        <option value="slug">12G Copper Slug</option>
+        <option value="buck">12G 00 Buckshot</option>
+    </optgroup>
             </select>
             <div id="ammo2Info" class="info-box">Wähle Munition B...</div>
         </div>
@@ -330,41 +360,40 @@
         "airfield_boss": { loc: "Ground Zero Hangar", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "KI nutzt Thermal-Optiken." }
     };
 
+    // AMMO DATENBANK
     const ammoDb = {
-        "m855a1": { name: "5.56 M855A1", pen: 4, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
-        "m855": { name: "5.56 M855", pen: 3, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
-        "m193": { name: "5.56 M193", pen: 2, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
-        "ak_bp": { name: "7.62x39 BP", pen: 4, damage: 58, info: "Härtester Durchschlag für AK-Plattformen." },
-        "ak_ps": { name: "7.62x39 PS", pen: 3, damage: 54, info: "Guter Allrounder für den Mid-Game Bereich." },
-        "m61": { name: "7.62x51 M61", pen: 6, damage: 64, info: "End-Game. Ignoriert jede Rüstung im Spiel." },
-        "m80": { name: "7.62x51 M80", pen: 4, damage: 80, info: "Enormer Schaden, tötet meist mit 1 Brusttreffer." },
-        "ap63": { name: "9x19 AP 6.3", pen: 2.5, damage: 48, info: "In 0.4 gebufft. Stark gegen Face-Shields." },
-        "pst": { name: "9x19 PST Gzh", pen: 1.5, damage: 52, info: "Nur für ungerüstete Ziele geeignet." }
-    };
+    // 5.56 NATO
+    "m855a1": { name: "5.56 M855A1", pen: 4, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
+    "m855": { name: "5.56 M855", pen: 3, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
+    "m193": { name: "5.56 M193", pen: 2, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
 
-    function compareAmmo() {
-        const id1 = document.getElementById('ammo1').value;
-        const id2 = document.getElementById('ammo2').value;
-        const a1 = ammoDb[id1];
-        const a2 = ammoDb[id2];
+    // 5.45 AK-74
+    "ak74_bp": { name: "5.45 BP", pen: 4, damage: 48, info: "Beste Penetration für AK-74. Sehr stabil." },
+    "ak74_pp": { name: "5.45 PP", pen: 3, damage: 50, info: "Guter Mid-Tier Durchschlag." },
+    "ak74_7n6": { name: "5.45 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition. Kaum gegen Panzerung geeignet." },
 
-        if (a1) {
-            document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Penetration: Class ${a1.pen}<br>Fleisch-Schaden: ${a1.damage}`;
-        }
-        if (a2) {
-            document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Penetration: Class ${a2.pen}<br>Fleisch-Schaden: ${a2.damage}`;
-        }
+    // 7.62x39 AKM
+    "ak_bp": { name: "7.62x39 BP", pen: 4.5, damage: 58, info: "Härtester Durchschlag für AK-Plattformen." },
+    "ak_ps": { name: "7.62x39 PS", pen: 3.2, damage: 54, info: "Solider Allrounder für den Start." },
+    "ak_us": { name: "7.62x39 US", pen: 2, damage: 56, info: "Subsonic. Sehr leise, aber massiver Drop auf Distanz." },
 
-        if (a1 && a2) {
-            let winner = "";
-            if (a1.pen > a2.pen) winner = `${a1.name} gewinnt beim Durchschlag!`;
-            else if (a2.pen > a1.pen) winner = `${a2.name} gewinnt beim Durchschlag!`;
-            else winner = "Beide haben ähnliche Penetration. Schau auf den Fleisch-Schaden!";
-            
-            document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${winner}`;
-        }
-    }
+    // 7.62x51 NATO
+    "m61": { name: "7.62x51 M61", pen: 6, damage: 64, info: "Ignoriert jede Rüstung im Spiel (Class 6)." },
+    "m80": { name: "7.62x51 M80", pen: 4.2, damage: 80, info: "Enormer Schaden, tötet meist mit 1 Brusttreffer." },
 
+    // 7.62x54R Mosin
+    "snb": { name: "7.62x54R SNB", pen: 6, damage: 75, info: "Schlägt durch jeden Helm und jede Weste." },
+    "7n1": { name: "7.62x54R 7N1", pen: 4.5, damage: 85, info: "Maximale Präzision. One-Shot Potenzial gegen Class 4." },
+
+    // Pistolen
+    "ap63": { name: "9x19 AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields seit 0.4 Buff." },
+    "pst": { name: "9x19 PST Gzh", pen: 1.5, damage: 52, info: "Geringe Penetration, nur für Kopfschüsse ohne Helm." },
+    "pm_sp7": { name: "9x18 PM SP7", pen: 1, damage: 70, info: "Keine Pen. Nur für Beine (Leg-Meta) geeignet." },
+
+    // Shotguns
+    "slug": { name: "12G Slug", pen: 2, damage: 150, info: "Präzises Einzelgeschoss. Verheerend gegen weiche Ziele." },
+    "buck": { name: "12G 00 Buckshot", pen: 1, damage: 240, info: "Acht Pellets. Tödlich im Nahkampf gegen ungeschützte Körperstellen." }
+};
     // TASK DATENBANK
     const allTasks = [
         { de: "Erstaufklärung", en: "First Recon", desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
