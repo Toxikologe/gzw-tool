@@ -72,14 +72,25 @@
         <div>
             <label for="bossSelect">Boss-Datenbank (0.4 Update)</label>
             <select id="bossSelect" onchange="updateBoss()">
-                <option value="">-- Wähle einen Boss --</option>
-                <option value="market_leader">Criminal Leader (Marktplatz)</option>
-                <option value="hunter_commander">Hostile Commander (Hunter's Paradise)</option>
-                <option value="malo_blue">Malo Luangrath (Blue Lagoon)</option>
-                <option value="midnight_laf">LAF Commander (Midnight Sapphire)</option>
-                <option value="fort_commander">Fort Narith Commander</option>
-                <option value="rebel_ybl">Rebel Leader (YBL-1)</option>
-            </select>
+    <option value="">-- Wähle einen Boss --</option>
+    <optgroup label="Startregionen">
+        <option value="market_leader">Criminal Leader (Marktplatz)</option>
+        <option value="lumber_boss">Lumber Yard Foreman</option>
+        <option value="rebel_ybl">Rebel Leader (YBL-1 Bunker)</option>
+    </optgroup>
+    <optgroup label="Mid-Game POIs">
+        <option value="hunter_commander">Hostile Commander (Hunter's Paradise)</option>
+        <option value="malo_blue">Malo Luangrath (Blue Lagoon)</option>
+        <option value="banpa_leader">Elder Leader (Ban Pa)</option>
+    </optgroup>
+    <optgroup label="End-Game & High Danger">
+        <option value="fort_commander">General Pa (Fort Narith HQ)</option>
+        <option value="midnight_laf">LAF Commander (Midnight Sapphire)</option>
+        <option value="tiger_bay_unlra">UNLRA Officer (Tiger Bay HQ)</option>
+        <option value="tiger_bay_pier">Pier Boss (Tiger Bay)</option>
+        <option value="airfield_boss">Airfield Commander (Ground Zero)</option>
+    </optgroup>
+</select>
             <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
         </div>
     </div>
@@ -173,13 +184,23 @@
 };
 
     const bosses = {
-        "market_leader": { loc: "Marktplatz (Startstadt)", gear: "Engraved AKMN", loot: "Gravierte Waffen, Büroschlüssel.", tip: "Hat oft 2-3 Leibwächter." },
-        "hunter_commander": { loc: "Hunter's Paradise", gear: "M4A1 Custom", loot: "Braunes Barett, modifizierte M4.", tip: "Flankiert sehr aggressiv." },
-        "malo_blue": { loc: "Blue Lagoon", gear: "Mosin / SVD", loot: "Spezielles Camo-Gear.", tip: "Vorsicht vor den Minenfeldern!" },
-        "midnight_laf": { loc: "Midnight Sapphire", gear: "KS-1 Custom", loot: "Seltene Hotel-Schlüssel.", tip: "Granaten gegen die Leibwache nutzen!" },
-        "fort_commander": { loc: "Fort Narith (HQ)", gear: "M14 EBR / Class 5", loot: "EBR-Teile, gravierte Pistole.", tip: "Sehr zäh, nutzt 7.62mm M61." },
-        "rebel_ybl": { loc: "YBL-1 Bunker", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel.", tip: "Lauert oft in dunklen Ecken." }
-    };
+    // Startregionen
+    "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses oder hinter dem Markt auf." },
+    "lumber_boss": { loc: "Lumber Yard (Sägewerk)", gear: "Mosin / AK-74N", loot: "Lumber Yard Office Key.", tip: "Patrouilliert zwischen den Holzstapeln. Hat gute Sichtlinien auf Distanz." },
+    "rebel_ybl": { loc: "YBL-1 (Bunker-Eingang oder Ebene -2)", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel, seltene AK-Mods.", tip: "Vorsicht in den engen Gängen, er nutzt oft Blendgranaten." },
+
+    // Mid-Game
+    "hunter_commander": { loc: "Hunter's Paradise (Schießstand/Waffenlager)", gear: "M4A1 Custom / Fast MT", loot: "Braunes Barett, Key to Weapon Storage.", tip: "Die Leibwache nutzt oft Schalldämpfer. Bleib in Bewegung." },
+    "malo_blue": { loc: "Blue Lagoon (Restaurant/Steg)", gear: "SVD / Mosin", loot: "Malo's Key, Scharfschützengewehr.", tip: "Er schießt extrem präzise auf hohe Distanz über das Wasser." },
+    "banpa_leader": { loc: "Ban Pa (Zentrum am See)", gear: "SKS / AKM", loot: "Ban Pa Shack Key, wertvolle Statuen.", tip: "Das Dorf ist sehr verwinkelt. Nutze Granaten, um ihn aus den Hütten zu treiben." },
+
+    // End-Game
+    "fort_commander": { loc: "Fort Narith (HQ Gebäude, oberster Stock)", gear: "Class 5 Armor / M14 EBR", loot: "Fort Narith Storage Key, gravierte Pistole.", tip: "Der zäheste Boss. Erfordert zwingend AP-Munition (M61 / SNB)." },
+    "midnight_laf": { loc: "Midnight Sapphire (Hotel/Villen)", gear: "KS-1 Custom / Class 4+", loot: "Villen-Schlüssel, High-End Optiken.", tip: "Wird von 4-6 Elitesoldaten geschützt. Greife niemals frontal an." },
+    "tiger_bay_unlra": { loc: "Tiger Bay (UNLRA Quarantäne-Zone)", gear: "M4A1 / Class 5", loot: "UNLRA Medical Key.", tip: "Tiger Bay hat die höchste KI-Dichte. Bring massiv Munition mit." },
+    "tiger_bay_pier": { loc: "Tiger Bay (Pier/Einkaufszentrum)", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Er nutzt Magazine mit hoher Kapazität. Warte auf seine Nachladepause." },
+    "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Voll modifizierte Waffen / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für eingespielte Squads. KI nutzt hier oft Thermal-Optiken." }
+};
 
     const tasks = {
         "first_recon": { desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
