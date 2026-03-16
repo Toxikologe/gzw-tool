@@ -182,9 +182,27 @@
 </select>
 <div id="medFullInfo" class="info-box">Medizinische Details & Anwendung...</div>
             </div>
-
+<label for="foodFullSelect">Verpflegung (Essen & Trinken):</label>
+<select id="foodFullSelect" onchange="updateGeneric('foodFullSelect', 'foodFullInfo')">
+    <option value="">-- Wähle Verpflegung --</option>
+    <optgroup label="Getränke (Hydration)">
+        <option value="Water Bottle (0.5L): Standard Hydration. Stellt ca. 50% Durst wieder her. Leicht zu finden.">Water Bottle</option>
+        <option value="Canteen: Mehrwegbehälter. Sehr effizient, füllt den Durst fast komplett auf.">Military Canteen</option>
+        <option value="Energy Drink: Gibt einen kleinen Hydration-Schub und regeneriert Ausdauer kurzzeitig schneller.">Energy Drink</option>
+        <option value="Soda Can: Geringe Hydration, gibt aber einen kleinen Energie-Zucker-Schub.">Soda (Cola/Lemon)</option>
+    </optgroup>
+    <optgroup label="Nahrung (Energie)">
+        <option value="MRE (Meal Ready to Eat): Bestes Food-Item. Füllt Energie komplett auf und wiegt wenig.">MRE (Military Grade)</option>
+        <option value="Canned Beef: Hohe Energie-Sättigung, aber macht durstig.">Canned Beef (Tushonka)</option>
+        <option value="Energy Bar: Schneller Snack für zwischendurch. Geringes Gewicht, perfekt für den Tactical Belt.">Energy Bar</option>
+        <option value="Crackers: Sehr trocken! Erhöht Energie, senkt aber deine Hydration massiv.">Crackers</option>
+        <option value="Condensed Milk: Extrem hohe Energie, aber verursacht sofort extremen Durst. Nur im Notfall nutzen!">Condensed Milk</option>
+    </optgroup>
+</select>
+<div id="foodFullInfo" class="info-box">Effekte auf Ausdauer & Status...</div>
         <div>
 
+            <div>
     <hr>
 
     <label for="taskSelect">Tasks & Lösungen (Wiki-Modus)</label>
