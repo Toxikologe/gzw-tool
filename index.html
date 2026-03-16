@@ -208,6 +208,59 @@
             <div id="foodFullInfo" class="info-box">Effekte auf Status...</div>
         </div>
     </div>
+    <hr>
+    <label>Munitions-Vergleich (Gegenüberstellung):</label>
+    <div class="grid">
+        <div>
+            <select id="ammo1" onchange="compareAmmo()">
+                <option value="">-- Munition A wählen --</option>
+                <optgroup label="5.56x45mm">
+                    <option value="m855a1">5.56 M855A1</option>
+                    <option value="m855">5.56 M855</option>
+                    <option value="m193">5.56 M193</option>
+                </optgroup>
+                <optgroup label="7.62x39mm">
+                    <option value="ak_bp">7.62x39 BP</option>
+                    <option value="ak_ps">7.62x39 PS</option>
+                </optgroup>
+                <optgroup label="7.62x51mm">
+                    <option value="m61">7.62x51 M61</option>
+                    <option value="m80">7.62x51 M80</option>
+                </optgroup>
+                <optgroup label="9x19mm (0.4 Buff)">
+                    <option value="ap63">9x19 AP 6.3</option>
+                    <option value="pst">9x19 PST Gzh</option>
+                </optgroup>
+            </select>
+            <div id="ammo1Info" class="info-box">Wähle Munition A...</div>
+        </div>
+        <div>
+            <select id="ammo2" onchange="compareAmmo()">
+                <option value="">-- Munition B wählen --</option>
+                <optgroup label="5.56x45mm">
+                    <option value="m855a1">5.56 M855A1</option>
+                    <option value="m855">5.56 M855</option>
+                    <option value="m193">5.56 M193</option>
+                </optgroup>
+                <optgroup label="7.62x39mm">
+                    <option value="ak_bp">7.62x39 BP</option>
+                    <option value="ak_ps">7.62x39 PS</option>
+                </optgroup>
+                <optgroup label="7.62x51mm">
+                    <option value="m61">7.62x51 M61</option>
+                    <option value="m80">7.62x51 M80</option>
+                </optgroup>
+                <optgroup label="9x19mm (0.4 Buff)">
+                    <option value="ap63">9x19 AP 6.3</option>
+                    <option value="pst">9x19 PST Gzh</option>
+                </optgroup>
+            </select>
+            <div id="ammo2Info" class="info-box">Wähle Munition B...</div>
+        </div>
+    </div>
+    <div id="comparisonResult" class="info-box" style="text-align: center; font-weight: bold; border-left: none; border-top: 4px solid var(--accent);">
+        Wähle zwei Typen zum Vergleich aus.
+    </div>
 <hr>
     <label for="keySearch">Schlüssel-Datenbank (Name oder Ort):</label>
     <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()" style="width: 100%; padding: 12px; margin-top: 8px; background: #2a2a2a; color: white; border: 1px solid #444; border-radius: 6px; box-sizing: border-box;">
@@ -276,6 +329,41 @@
         "tiger_bay_pier": { loc: "Tiger Bay Pier", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Nutzt Trommelmagazine." },
         "airfield_boss": { loc: "Ground Zero Hangar", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "KI nutzt Thermal-Optiken." }
     };
+
+    const ammoDb = {
+        "m855a1": { name: "5.56 M855A1", pen: 4, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
+        "m855": { name: "5.56 M855", pen: 3, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
+        "m193": { name: "5.56 M193", pen: 2, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
+        "ak_bp": { name: "7.62x39 BP", pen: 4, damage: 58, info: "Härtester Durchschlag für AK-Plattformen." },
+        "ak_ps": { name: "7.62x39 PS", pen: 3, damage: 54, info: "Guter Allrounder für den Mid-Game Bereich." },
+        "m61": { name: "7.62x51 M61", pen: 6, damage: 64, info: "End-Game. Ignoriert jede Rüstung im Spiel." },
+        "m80": { name: "7.62x51 M80", pen: 4, damage: 80, info: "Enormer Schaden, tötet meist mit 1 Brusttreffer." },
+        "ap63": { name: "9x19 AP 6.3", pen: 2.5, damage: 48, info: "In 0.4 gebufft. Stark gegen Face-Shields." },
+        "pst": { name: "9x19 PST Gzh", pen: 1.5, damage: 52, info: "Nur für ungerüstete Ziele geeignet." }
+    };
+
+    function compareAmmo() {
+        const id1 = document.getElementById('ammo1').value;
+        const id2 = document.getElementById('ammo2').value;
+        const a1 = ammoDb[id1];
+        const a2 = ammoDb[id2];
+
+        if (a1) {
+            document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Penetration: Class ${a1.pen}<br>Fleisch-Schaden: ${a1.damage}`;
+        }
+        if (a2) {
+            document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Penetration: Class ${a2.pen}<br>Fleisch-Schaden: ${a2.damage}`;
+        }
+
+        if (a1 && a2) {
+            let winner = "";
+            if (a1.pen > a2.pen) winner = `${a1.name} gewinnt beim Durchschlag!`;
+            else if (a2.pen > a1.pen) winner = `${a2.name} gewinnt beim Durchschlag!`;
+            else winner = "Beide haben ähnliche Penetration. Schau auf den Fleisch-Schaden!";
+            
+            document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${winner}`;
+        }
+    }
 
     // TASK DATENBANK
     const allTasks = [
