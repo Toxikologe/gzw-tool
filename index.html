@@ -1679,21 +1679,23 @@
     const select = document.getElementById('weaponSelect');
     const val = select.value;
     const infoDisplay = document.getElementById('weaponInfo');
+    const imgElement = document.getElementById('weaponImg'); // Hinzugefügt
+    const metaElement = document.getElementById('weaponMeta'); // Hinzugefügt
     
     const info = weapons[val];
     if (info) {
         infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
         
-        // --- JETZT DAS DROPDOWN FÜLLEN ---
+        // Dropdown füllen
         populateAmmoDropdown(val); 
     } else {
         infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
         populateAmmoDropdown(""); // Reset
     }
 
-    // 2. Bild-Vorschau aktualisieren
+    // Bild-Vorschau Logik
     if (val === "") {
-        imgElement.style.display = "none";
+        imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
         metaElement.innerText = "";
     } else if (weaponImages[val]) {
         imgElement.src = weaponImages[val];
@@ -1701,36 +1703,21 @@
         metaElement.innerText = "Quelle: GZW Official Wiki Intel";
     } else {
         imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
-        imgElement.style.display = "block";
         metaElement.innerText = "Bildpfad wird noch aktualisiert...";
     }
 }
 
-    // Hilfsfunktion: Ermittelt den Penetrations-Wert (1-6) für den Vergleich
-function getAmmoPenValue(ammoName) {
-    if (!ammoName) return 0;
-    const name = ammoName.toLowerCase();
-    
-    // 0.4 Meta Penetration Mapping
-    if (name.includes("m993") || name.includes("snb")) return 6.5;
-    if (name.includes("m61") || name.includes("7n13")) return 6.0;
-    if (name.includes("bs") || name.includes("mai ap")) return 5.5;
-    if (name.includes("m855a1") || name.includes("bp") || name.includes("ap sx")) return 4.5;
-    if (name.includes("m855") || name.includes("pp")) return 3.5;
-    if (name.includes("ps") || name.includes("7n6")) return 3.0;
-    if (name.includes("m193") || name.includes("pst")) return 2.0;
-    return 1.0; // Standard/Flesh
-}
-
 function calculateBallistics() {
     const armorLevel = parseFloat(document.getElementById('calcArmor').value);
-    const ammoName = document.getElementById('calcAmmoDisplay').innerText;
+    // KORREKTUR: .value statt .innerText
+    const ammoName = document.getElementById('calcAmmoDisplay').value; 
     const penValue = getAmmoPenValue(ammoName);
     const resultBox = document.getElementById('calcResult');
 
-    if (ammoName === "-" || ammoName === "") {
+    if (!ammoName || ammoName === "") {
         resultBox.innerHTML = "Wähle zuerst eine Waffe!";
         resultBox.style.color = "#888";
+        resultBox.style.backgroundColor = "#1a1a1a";
         return;
     }
 
