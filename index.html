@@ -715,33 +715,34 @@
     </div>
 
     <div id="tab-tasks" class="tab-content">
-        <h2>Missions-Datenbank (Tasks)</h2>
-        <label for="taskSearch">Task suchen (Deutsch oder Englisch):</label>
-        <input type="text" id="taskSearch" placeholder="z.B. First Recon / Erstaufklärung..." onkeyup="searchTasks()">
-        <div id="taskList"></div>
-        <div id="taskContainer" class="info-box">
-            <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem;">Wähle einen Task aus der Suche...</div>
-            <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
-            <div id="taskDesc" style="margin-bottom: 15px;">Die Zielbeschreibung erscheint hier.</div>
-            <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
-            <div id="taskSolution" class="task-solution" style="margin-top: 15px;"></div>
-        </div>
+    <h2>Missions-Datenbank (Tasks)</h2>
+
+    <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <select id="vendorFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1;">
+            <option value="all">-- Händler wählen --</option>
+            <option value="Handshake">Handshake</option>
+            <option value="Gunny">Gunny</option>
+            <option value="Lab Rat">Lab Rat</option>
+            <option value="Artisan">Artisan</option>
+            <option value="Turncoat">Turncoat</option>
+            <option value="Banshee">Banshee</option>
+        </select>
+
+        <select id="taskDropdown" onchange="selectTaskFromDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: var(--accent); cursor: pointer; flex: 2; font-weight: bold;">
+            <option value="">-- Erst Händler wählen --</option>
+        </select>
     </div>
 
-    <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 20px;">
-    <input type="text" id="taskSearch" placeholder="Task suchen..." onkeyup="filterTasks()" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white;">
+    <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #444; background: #222; color: white;">
     
-    <select id="vendorFilter" onchange="filterTasks()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer;">
-        <option value="all">Alle Händler</option>
-        <option value="Handshake">Handshake</option>
-        <option value="Gunny">Gunny</option>
-        <option value="Lab Rat">Lab Rat</option>
-        <option value="Artisan">Artisan</option>
-        <option value="Turncoat">Turncoat</option>
-        <option value="Banshee">Banshee</option>
-        <option value="Vulture">Vulture</option>
-        <option value="Squad Strike">Squad Strike</option>
-    </select>
+    <div id="taskList"></div>
+    <div id="taskContainer" class="info-box">
+        <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem;">Wähle einen Task...</div>
+        <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
+        <div id="taskDesc" style="margin-bottom: 15px;"></div>
+        <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
+        <div id="taskSolution" class="task-solution" style="margin-top: 15px; display: none;"></div>
+    </div>
 </div>
 
     <div id="tab-map" class="tab-content">
@@ -1800,6 +1801,53 @@ function calculateBallistics() {
         }
     }
     return 0;
+}
+
+    // Füllt das zweite Dropdown basierend auf dem gewählten Händler
+function updateTaskDropdown() {
+    const vendor = document.getElementById('vendorFilter').value;
+    const taskSelect = document.getElementById('taskDropdown');
+    taskSelect.innerHTML = '<option value="">-- Wähle einen Task --</option>';
+
+    if (vendor === 'all') return;
+
+    // Wir filtern alle Tasks, die den Händlernamen in der Beschreibung oder im Kontext haben
+    // Hinweis: In deiner current Task-Struktur fehlt ein direktes "vendor" Feld, 
+    // daher nutzen wir hier die Suche über die Händler-Abschnitte deiner allTasks Liste.
+    const filteredTasks = allTasks.filter(t => {
+        // Da deine Tasks im Array nach Händlern sortiert sind, ist das eine kleine Herausforderung.
+        // Falls du kein 'vendor' Attribut in allTasks hast, suchen wir nach Stichworten oder Index-Bereichen.
+        // Tipp: In einer perfekten Welt hättest du { de: "...", vendor: "Gunny" }.
+        // Behelfsmäßig suchen wir hier nach Händlernamen in der Lösung/Beschreibung:
+        return t.sol.toLowerCase().includes(vendor.toLowerCase()) || 
+               t.en.toLowerCase().includes(vendor.toLowerCase());
+    });
+
+    filteredTasks.forEach(t => {
+        const option = document.createElement('option');
+        option.value = t.de;
+        option.text = t.de;
+        taskSelect.appendChild(option);
+    });
+}
+
+// Zeigt den Task an, wenn er im Dropdown ausgewählt wurde
+function selectTaskFromDropdown() {
+    const taskName = document.getElementById('taskDropdown').value;
+    if (!taskName) return;
+
+    const task = allTasks.find(t => t.de === taskName);
+    if (task) {
+        document.getElementById('taskTitle').innerText = task.de;
+        document.getElementById('taskNames').innerText = `Englisch: ${task.en}`;
+        document.getElementById('taskDesc').innerText = task.desc;
+        document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
+        document.getElementById('solBtn').style.display = 'block';
+        document.getElementById('taskSolution').style.display = 'none';
+        
+        // Input-Feld für die Optik synchronisieren
+        document.getElementById('taskSearchInput').value = task.de;
+    }
 }
 </script>
 </body>
