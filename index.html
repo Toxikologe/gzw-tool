@@ -322,6 +322,32 @@
     <div id="valInfoDisplay" class="info-box">Wähle ein Item für Preis & Details...</div>
 
     <hr>
+    <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
+    <select id="containerSelect" onchange="updateContainer()">
+        <option value="">-- Wähle einen Container --</option>
+        <optgroup label="Secure Containers (Lockbox)">
+            <option value="safe_lock">Safe Lock (2x2) - 4 Slots</option>
+            <option value="snook_908">Snook 908 (2x3) - 6 Slots</option>
+            <option value="tas">TAS Container (3x3) - 9 Slots</option>
+        </optgroup>
+        <optgroup label="Lagerkisten (Stash Cases / Boxes)">
+            <option value="ammo_box">Ammo Container (Munitionskiste)</option>
+            <option value="weapon_box">Weapon Container (Waffenkiste)</option>
+            <option value="med_box">Medical Container (Medikamentenkiste)</option>
+            <option value="armor_box">Armor/Gear Container (Ausrüstungskiste)</option>
+            <option value="food_box">Provisions Container (Kühlbox/Essen)</option>
+        </optgroup>
+        <optgroup label="Kleine Behälter (Inventar)">
+            <option value="key_holder">Key Holder (Schlüsselbund)</option>
+            <option value="wallet">Leather Wallet (Geldbörse)</option>
+        </optgroup>
+        <optgroup label="Lagerplatz (Base Stash)">
+            <option value="stash_upgrade">Locker / Schließfach Erweiterungen</option>
+        </optgroup>
+    </select>
+    <div id="containerInfoDisplay" class="info-box">Wähle einen Container für Details zum Fundort...</div>
+
+    <hr>
 
     <label for="keySearch">Schlüssel-Datenbank (Name oder Ort):</label>
     <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
@@ -566,6 +592,70 @@
         "tp": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
         "matches": { price: "~ $5", slots: "1", info: "Absoluter Müll. Liegen lassen." }
     };
+
+    // CONTAINER DATENBANK (Secure Lockboxes, Cases & Stash)
+    const containers = {
+        "safe_lock": { 
+            name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", 
+            info: "Der Standard-Container. Du hast ihn von Beginn an, wenn du die normale oder die Tactical Version des Spiels besitzt. Er schützt 4 Felder an Items vor dem Verlust beim Tod." 
+        },
+        "snook_908": { 
+            name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", 
+            info: "Käufer der 'Elite Edition' haben ihn von Beginn an. <br><br><b>Wie man ihn erspielt:</b> Schließe die Task <i>'Gefährliche Schätze' (Hazardous Treasures)</i> ab. Du musst dafür Container an 6 verschiedenen Orten hinter verschlossenen Türen finden." 
+        },
+        "tas": { 
+            name: "TAS Container", size: "3x3 (9 Slots)", source: "Supporter Edition ODER In-Game durch Task", 
+            info: "Der aktuell größte Container im Spiel. Käufer der 'Supporter Edition' starten direkt damit. <br><br><b>Wie man ihn erspielt:</b> Er ist die ultimative Belohnung für eine der späten Endgame-Missionen von Handshake." 
+        },
+        "ammo_box": { 
+            name: "Ammo Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Gunny / Banshee)", 
+            info: "Wurde mit dem großen Update eingeführt. Kann aktuell nicht bei Händlern gekauft, sondern nur als Belohnung für Fraktions-Missionen (wie z.B. 'A Shot in the Dark') verdient werden. Bietet riesigen Lagerraum nur für Munition." 
+        },
+        "weapon_box": { 
+            name: "Weapon Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", 
+            info: "Die rettende Kiste für alle Waffensammler. Wird durch das Voranschreiten in den Mid/Endgame-Tasks freigeschaltet und fasst mehrere große Waffen (M4, M14, Mosin etc.), was unzählige Stash-Reihen spart." 
+        },
+        "med_box": { 
+            name: "Medical Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Lab Rat)", 
+            info: "Verdient man relativ früh durch Quests von Lab Rat. Perfekt, um hunderte von Bandagen, Surkits und Blutkonserven zu lagern, ohne das Schließfach zu verstopfen." 
+        },
+        "armor_box": { 
+            name: "Armor / Gear Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", 
+            info: "Plattenträger und Rigs fressen den meisten Platz in GZW. Diese Kiste wird durch spätere Quests freigeschaltet und löst das Platzproblem für dicke Rüstungen." 
+        },
+        "food_box": { 
+            name: "Provisions Container (Cooler)", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", 
+            info: "Eine Kühlbox für all deine Rationen und Getränke. Wird ebenfalls durch Quests freigeschaltet und lagert MREs, Wasser und Energy Drinks." 
+        },
+        "key_holder": { 
+            name: "Key Holder", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", 
+            info: "Nimmt nur einen einzigen Slot weg, kann aber unzählige Schlüssel aufnehmen. Gehört absolut in den Secure Container, damit du nie wieder Schlüssel beim Sterben verlierst!" 
+        },
+        "wallet": { 
+            name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", 
+            info: "Achtung: Seit einem neueren Update können Wallets <b>nur noch Bargeld und Kreditkarten</b> fassen, kein wertvolles Loot mehr! Sehr nützlich, um die dicken Bargeldbündel auf einem Slot zu komprimieren." 
+        },
+        "stash_upgrade": { 
+            name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", 
+            info: "Dein Haupt-Lager. <br><br><b>Startgröße:</b> Standard (10x25), Tactical (10x35), Elite (10x45), Supporter (10x60). <br><br><b>Kostenlose Upgrades:</b> Dein Schließfach wächst komplett automatisch alle 10 Level (Level 10, 20, 30, 40 und 50) um jeweils 10 weitere Reihen an." 
+        }
+    };
+
+    // FUNKTION FÜR DAS CONTAINER DROPDOWN
+    function updateContainer() {
+        const val = document.getElementById('containerSelect').value;
+        const info = containers[val];
+        const display = document.getElementById('containerInfoDisplay');
+        
+        if(info) {
+            display.innerHTML = `<b>${info.name}</b><br>
+                                 Größe: <span class="highlight">${info.size}</span><br>
+                                 Herkunft: <span class="highlight">${info.source}</span><br>
+                                 <br><small>${info.info}</small>`;
+        } else {
+            display.innerHTML = "Wähle einen Container für Details zum Fundort...";
+        }
+    }
 
     // FUNKTION FÜR DIE SUCHE
     function searchValuables() {
