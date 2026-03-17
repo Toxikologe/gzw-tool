@@ -368,21 +368,65 @@
 
     // 4. SCHLÜSSEL DATENBANK (ERWEITERT)
     const allKeys = [
-        { name: "YBL-1 Office Key", loc: "YBL-1 Bunker", effect: "Öffnet das Büro im Haupteingangsbereich (Ebene -1).", loot: "Intel für Tasks" },
-        { name: "YBL-1 Generator Key", loc: "YBL-1 Bunker", effect: "Öffnet den Generatorraum auf Ebene -2.", loot: "Sicherungen & Werkzeug" },
-        { name: "Storage Room Key (HP)", loc: "Hunter's Paradise", effect: "Öffnet den Waffenraum am Schießstand.", loot: "Waffen & Aufsätze" },
-        { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte am Steg.", loot: "Mosin / SVD Zubehör" },
-        { name: "Ban Pa Shack Key", loc: "Ban Pa", effect: "Öffnet die Fischerhütte am nördlichen Ende des Dorfes.", loot: "Wertsachen & Geld" },
-        { name: "Fort Narith HQ Key", loc: "Fort Narith", effect: "Öffnet das Hauptbüro des Generals im obersten Stock.", loot: "Gravierte Pistole & Intel" },
-        { name: "Fort Narith Storage Key", loc: "Fort Narith", effect: "Öffnet das Munitionsdepot im Keller von Block A.", loot: "High-Tier Munition (M61/M855A1)" },
-        { name: "Tiger Bay Mall Key", loc: "Tiger Bay", effect: "Öffnet den Technikraum im Einkaufszentrum.", loot: "Elektronik & High-Value Loot" },
-        { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Ermöglicht Zugang zum Quarantäne-Labor.", loot: "Medizinische Vorräte & Surkits" },
-        { name: "Villa 1 Key", loc: "Midnight Sapphire", effect: "Öffnet die westlichste Villa. Enthält oft Tresore.", loot: "Geld & Schmuck" },
-        { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Öffnet die meisten Standardzimmer im Hauptgebäude.", loot: "Diverse Beute" },
-        { name: "Blue Lagoon Restaurant Key", loc: "Blue Lagoon", effect: "Öffnet das Hinterzimmer des Restaurants.", loot: "Vorräte & Cash" },
-        { name: "Sawmill Office Key", loc: "Lumber Yard", effect: "Büro des Vorarbeiters.", loot: "Dokumente" },
-        { name: "Pha Lang Office Key", loc: "Startgebiet", effect: "Rathaus Büro.", loot: "Geld & Intel" },
-        { name: "Midnight Sapphire VIP", loc: "Midnight Sapphire", effect: "Oberstes Stockwerk des Hotels.", loot: "Gold & High-Tier Waffen" }
+        // --- STARTSTÄDTE (Pha Lang, Nam Thaven, Kiu Vongsa) ---
+        { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro des Arztes im 2. Stock.", loot: "Medizinische Vorräte, Task-Intel (Medical Detective)" },
+        { name: "Mayor's Office Key", loc: "Startstadt (Rathaus)", effect: "Öffnet das Hauptbüro des Bürgermeisters.", loot: "Bargeld, Intel, Tresor" },
+        { name: "Market Storage Key", loc: "Startstadt (Marktplatz)", effect: "Öffnet den Lagerraum hinter den Marktständen.", loot: "Provisions (Essen/Trinken), Rucksäcke" },
+        { name: "Pharmacy Key", loc: "Startstadt", effect: "Öffnet den Hinterraum der kleinen Apotheke.", loot: "IFAKs, Surkits, Schmerzmittel" },
+
+        // --- LUMBER YARD (Sägewerk) ---
+        { name: "Foreman's Office Key", loc: "Lumber Yard", effect: "Öffnet das Büro des Vorarbeiters in der Haupthalle.", loot: "Task-Dokumente (Blueprints), Safe, Bargeld" },
+        { name: "Lumber Storage Key", loc: "Lumber Yard", effect: "Öffnet den verschlossenen Geräteschuppen im Norden.", loot: "Werkzeuge (Toolsets), Baumaterial" },
+
+        // --- HUNTER'S PARADISE ---
+        { name: "HP Weapon Storage Key", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer am Hauptschießstand. Droppt oft vom dortigen Boss.", loot: "High-Tier Waffen (M4A1, M700), Aufsätze, AP-Munition" },
+        { name: "HP Motel Room 3 Key", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 3 im Motel-Bereich.", loot: "Waffen-Kisten, Munition" },
+        { name: "HP Office Key", loc: "Hunter's Paradise", effect: "Öffnet das Hauptbüro nahe dem Eingang.", loot: "Intel, Wertsachen" },
+
+        // --- BLUE LAGOON ---
+        { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte auf Stelzen über dem Wasser.", loot: "SVD/Mosin-Teile, Task-Items, Gold" },
+        { name: "Restaurant Backroom Key", loc: "Blue Lagoon", effect: "Öffnet das Lager im hinteren Teil des Restaurants.", loot: "Provisions, Schwarzgeld (Task)" },
+        { name: "Lagoon Office Key", loc: "Blue Lagoon", effect: "Öffnet das kleine Verwaltungsbüro.", loot: "Tresor, Intel" },
+
+        // --- BAN PA ---
+        { name: "Elder's House Key", loc: "Ban Pa", effect: "Öffnet das große Haus des Dorfältesten im Zentrum.", loot: "Wertvolle Statuen, Task-Items" },
+        { name: "Ban Pa Shack Key", loc: "Ban Pa", effect: "Öffnet die verschlossene Fischerhütte im Norden.", loot: "Waffen, Munition" },
+        { name: "Smuggler's Storage Key", loc: "Ban Pa", effect: "Öffnet den Schuppen nahe dem Bootssteg.", loot: "Schmuggelware, Wertsachen" },
+
+        // --- YBL-1 BUNKER ---
+        { name: "YBL-1 Office Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet das Büro direkt nach dem Haupteingang.", loot: "Task-Dokumente, Intel" },
+        { name: "YBL-1 Generator Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Hauptgeneratorraum.", loot: "Sicherungen, Werkzeuge, Task-Zugang" },
+        { name: "YBL-1 Server Room Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Serverraum hinter den Lüftungsschächten.", loot: "Elektronik, Task-Intel (Festplatte)" },
+        { name: "YBL-1 Commander Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet das Quartier des Bunker-Kommandanten.", loot: "Seltene Waffen-Mods, Tresor" },
+        { name: "YBL-1 Security Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet den Überwachungsraum.", loot: "Waffen, Munition" },
+
+        // --- FORT NARITH ---
+        { name: "Fort HQ Key", loc: "Fort Narith", effect: "Öffnet das Büro von General Pa im obersten Stock des Hauptquartiers.", loot: "Gravierte Waffen, Intel, Safe" },
+        { name: "Fort Storage Key", loc: "Fort Narith", effect: "Öffnet das primäre Munitionsdepot.", loot: "Große Mengen an High-Tier Munition (M61, M855A1)" },
+        { name: "Barracks A Key", loc: "Fort Narith (Block A)", effect: "Öffnet den verschlossenen Offiziersbereich in Block A.", loot: "Rüstungen (Class 4+), Helme" },
+        { name: "Fort Armory Key", loc: "Fort Narith", effect: "Öffnet die schwere Waffenkammer.", loot: "Sturmgewehre, Granaten, Aufsätze" },
+        { name: "Gatehouse Key", loc: "Fort Narith", effect: "Öffnet das Wachhaus am Haupteingang.", loot: "Waffen, Munition, Schlüssel" },
+
+        // --- TIGER BAY ---
+        { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Die rote Keycard öffnet die Quarantäne-Labore im 3. Stock des HQs.", loot: "Medizinische High-Tier Güter (Surkits, Stims), Task-Items" },
+        { name: "Tiger Bay Mall Key", loc: "Tiger Bay", effect: "Öffnet den Technik/Security-Raum im Einkaufszentrum.", loot: "Elektronik, Waffen, Bargeld" },
+        { name: "Pier Storage Key", loc: "Tiger Bay", effect: "Öffnet das Lagerhaus direkt am Pier.", loot: "Waffen-Kisten, Aufsätze" },
+        { name: "Tiger Clinic Key", loc: "Tiger Bay", effect: "Öffnet die kleine Feldklinik in der Stadt.", loot: "Medikamente, Blutkonserven" },
+        { name: "UNLRA Commander Key", loc: "Tiger Bay HQ", effect: "Öffnet das Büro des UNLRA Offiziers.", loot: "Intel, Safe, seltene Waffen" },
+
+        // --- MIDNIGHT SAPPHIRE (Hotel & Villen) ---
+        { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Der wichtigste Schlüssel hier! Öffnet viele Standard-Zimmer im Hotel.", loot: "Bargeld, Wertsachen, Koffer" },
+        { name: "Villa 1 Key", loc: "Midnight Sapphire", effect: "Öffnet die westlichste Luxusvilla.", loot: "Geld, Schmuck, Safe" },
+        { name: "Villa 2 Key", loc: "Midnight Sapphire", effect: "Öffnet die mittlere Villa (wichtig für Kongressabgeordneten-Task).", loot: "Task-Dokumente, Safe" },
+        { name: "Villa 3 Key", loc: "Midnight Sapphire", effect: "Öffnet die östliche Villa.", loot: "High-Tier Loot, Elektronik" },
+        { name: "VIP Lounge Key", loc: "Midnight Sapphire", effect: "Öffnet den VIP-Bereich im obersten Stock des Hotels.", loot: "Extreme Wertsachen, Gold" },
+        { name: "Hotel Manager Key", loc: "Midnight Sapphire", effect: "Öffnet das Büro hinter der Rezeption.", loot: "Safe, Bargeld, Intel" },
+        { name: "Room 202 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 202 im 2. Stock.", loot: "Waffen-Koffer" },
+        { name: "Room 204 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 204 (wichtig für Turncoat-Task).", loot: "Task-Akte, Wertsachen" },
+
+        // --- GROUND ZERO / AIRFIELD ---
+        { name: "Airfield Tower Key", loc: "Ground Zero", effect: "Öffnet den verschlossenen Bereich im Kontrollturm.", loot: "Militärische Aufklärung, Waffen" },
+        { name: "Hangar 1 Office Key", loc: "Ground Zero", effect: "Öffnet das Büro im ersten Hangar.", loot: "Werkzeuge, Waffen-Mods" }
     ];
 
     // 5. TASK DATENBANK (MASSIV)
