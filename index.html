@@ -6,632 +6,696 @@
     <title>Gray Zone Warfare - Tactical Tool</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Zusätzliches Styling für Überschriften zur besseren Trennung */
-        h2 { color: var(--accent); margin-top: 20px; font-size: 1.3rem; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        /* --- GRUNDSTRUKTUR & ÜBERSCHRIFTEN --- */
+        h2 { 
+            color: var(--accent, #7ca35a); 
+            margin-top: 10px; 
+            font-size: 1.3rem; 
+            border-bottom: 1px solid #444; 
+            padding-bottom: 5px; 
+        }
+
+        /* --- NAVIGATION TABS (Das neue Menü) --- */
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            justify-content: center;
+        }
+        .tab-btn {
+            background-color: #2a2a2a;
+            color: #ccc;
+            border: 1px solid #444;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover {
+            background-color: #3a3a3a;
+            color: #fff;
+        }
+        .tab-btn.active {
+            background-color: #7ca35a; /* Deine Tactical-Farbe */
+            color: #121212;
+            border-color: #7ca35a;
+            box-shadow: 0 4px 8px rgba(124, 163, 90, 0.3);
+        }
+
+        /* Container für die Inhalte */
+        .tab-content {
+            display: none; /* Versteckt alle Tabs standardmäßig */
+            animation: fadeIn 0.4s;
+        }
+        .tab-content.active {
+            display: block; /* Zeigt nur den aktiven Tab */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- ZURÜCK NACH OBEN BUTTON --- */
+        #backToTopBtn {
+            display: none; 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            z-index: 9999; 
+            border: 2px solid #5c7a42; 
+            outline: none; 
+            background-color: #7ca35a; 
+            color: #121212; 
+            cursor: pointer; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+        #backToTopBtn:hover {
+            background-color: #8ebd68; 
+            transform: translateY(-4px); 
+            box-shadow: 0px 6px 12px rgba(0,0,0,0.8);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Gray Zone Warfare - Tactical Tool</h1>
+    <h1 style="text-align: center; margin-bottom: 20px;">Gray Zone Warfare - Tactical Tool</h1>
 
-    <div class="grid">
-        <div>
-            <label for="weaponSelect">Waffen</label>
-            <select id="weaponSelect" onchange="updateWeapon()">
-                <option value="">-- Wähle eine Waffe --</option>
-                <optgroup label="Sturmgewehre">
-                    <option value="ks1">KAC KS-1 (L403A1) - 0.4 Meta</option>
-                    <option value="m4a1">M4A1</option>
-                    <option value="mk18">MK18 (Kompakt)</option>
-                    <option value="m16a1">M16A1 (Retro-Präzision)</option>
-                    <option value="akm">AKM</option>
-                    <option value="akmn">AKMN (Modernisiert)</option>
-                    <option value="akmsn">AKMSN</option>
-                    <option value="ak74n">AK-74N (5.45mm)</option>
-                    <option value="ak74m">AK-74M (Klappschaft)</option>
-                    <option value="aks74u">AKS-74U</option>
-                    <option value="ak103">AK-103 (7.62mm Modern)</option>
-                    <option value="ak105">AK-105 (Kompakt)</option>
-                    <option value="vz58">Vz. 58</option>
-                    <option value="ak12">AK-12</option>
-                    <option value="ak15">AK-15</option>
-                    <option value="ak19">AK-19</option>
-                    <option value="cqa1">CQ-A1</option>
-                    <option value="ddm4">DDM4</option>
-                    <option value="sicmcx">SIG-MCX</option>
-                    <option value="ak308">AK-308</option>
-                </optgroup>
-                <optgroup label="DMR & Scharfschützen">
-                    <option value="m14">M14 EBR / Battle Rifle</option>
-                    <option value="m700">M700 Remington</option>
-                    <option value="svd">SVD Dragunov</option>
-                    <option value="mosin">Mosin-Nagant</option>
-                    <option value="skn">SKS (Modernisiert)</option>
-                </optgroup>
-                <optgroup label="SMGs & Shotguns">
-                    <option value="mp5">MP5A3 / SD</option>
-                    <option value="mp7a1">MP7A1</option>
-                    <option value="mp7a2">MP7A2</option>
-                    <option value="vz61">VZ-61 Skorpio</option>
-                    <option value="vityaz">PP-19-01 Vityaz</option>
-                    <option value="m870">M870 Pump-Action</option>
-                    <option value="590a1">Mossberg 590A1</option>
-                </optgroup>
-                <optgroup label="Pistolen">
-                    <option value="alien">Laugo Alien (0.4 Meta)</option>
-                    <option value="glock17">Glock 17</option>
-                    <option value="m9a1">M9A1 Beretta</option>
-                    <option value="makarov">Makarov PM</option>
-                    <option value="1911">Colt 1911</option>
-                    <option value="ccc">Colt Combat Commander</option>
-                    <option value="typ51">Typ-51</option>
-                </optgroup>
-            </select>
-            <div id="weaponInfo" class="info-box">Wähle eine Waffe für Munitions-Details...</div>
-        </div>
-
-        <div>
-            <label for="attachSelect">Attachments & Ergo (Waffen-Mods)</label>
-            <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
-                <option value="">-- Wähle Attachment --</option>
-                <optgroup label="Optiken (Nahkampf & Red Dots)">
-                    <option value="EOTech EXPS3: Bestes Holographic-Visier. Perfektes Sichtfeld, ideal für schnelles Aiming im Nahkampf (CQB).">EOTech EXPS3 (Holo)</option>
-                    <option value="Aimpoint T-2 Micro: Extrem kleiner Leuchtpunkt. Nimmt null Platz auf dem Bildschirm ein. Super für SMGs und leichte ARs.">Aimpoint T-2 Micro</option>
-                    <option value="Kobra EKP-8-18: Russisches Standard-Reflexvisier. Günstig, zuverlässig, verschiedene Fadenkreuze wählbar.">Kobra EKP-8-18</option>
-                    <option value="OKP-7: Sehr beliebtes russisches Visier mit grünem Absehen. Bietet ein unglaublich freies Sichtfeld.">OKP-7 (Dovetail)</option>
-                </optgroup>
-                <optgroup label="Optiken (Mid & Long Range / LPVOs)">
-                    <option value="Vudu 1-6x: Die absolute Meta für Sturmgewehre. Perfekt für Distanz und durch den 1x Zoom auch stark im Nahkampf.">EOTech Vudu 1-6x</option>
-                    <option value="Razor HD Gen II 1-6x: Sehr klares Bild, extrem dünner Rand. Bietet fast die beste Sicht im ADS im ganzen Spiel.">Vortex Razor HD 1-6x</option>
-                    <option value="Elcan SpecterDR 1x/4x: Umschaltbares Visier. Sehr robuster Allrounder für M4 und KS-1.">Elcan SpecterDR 1x/4x</option>
-                    <option value="Trijicon ACOG 4x32: Der Klassiker. Festvergrößerung, extrem gute Sichtbarkeit des Fadenkreuzes (Tritium).">Trijicon ACOG 4x32</option>
-                    <option value="Valday PS-320 1x/6x: Das russische Äquivalent zum Vudu/Razor. Exzellent für AKs auf mittlere und weite Distanzen.">Valday PS-320 1x/6x</option>
-                    <option value="Nightforce ATACR 1-8x / 7-35x: Maximale Vergrößerung. Nur für reine Sniper (M700 / Mosin) oder DMRs (M14 / SVD) zu empfehlen.">Nightforce ATACR</option>
-                </optgroup>
-                <optgroup label="Mündung (Schalldämpfer / Suppressors)">
-                    <option value="KAC NT4 Suppressor (5.56): Der Standard für M4. Reduziert Schall und Mündungsfeuer zuverlässig.">KAC NT4 (5.56mm)</option>
-                    <option value="Surefire RC2 / Monster: Bester Rückstoß-Schutz für 5.56mm Waffen, sehr gute Haltbarkeit.">Surefire RC2 (5.56mm)</option>
-                    <option value="PBS-1 Suppressor: Essenziell für AKM/AK-103 (7.62x39), um bei Schüssen nicht die ganze Map anzulocken.">PBS-1 (7.62mm AK)</option>
-                    <option value="PBS-4 Suppressor: Der Standard-Schalldämpfer für die kleinen 5.45x39 Kaliber (AK-74/AK-105).">PBS-4 (5.45mm AK)</option>
-                    <option value="Hybrid 46: Schwerer, vielseitiger Schalldämpfer. Passt auf viele große Kaliber wie das M14 EBR.">Hybrid 46 Multi-Cal</option>
-                    <option value="Rotor 43: Sehr effektive Schalldämpfer-Reihe für russische Plattformen. Etwas schwerer, aber extrem leise.">Rotor 43 (Diverse)</option>
-                </optgroup>
-                <optgroup label="Mündung (Kompensatoren & Bremsen)">
-                    <option value="Lantac Dragon: Bester Kompensator für M4/KS-1. Reduziert den Rückstoß massiv, ist aber extrem laut!">Lantac Dragon (5.56)</option>
-                    <option value="SRVV Mündungsbremse: Russischer High-End Kompensator. Macht die AKM zu einem kontrollierbaren Laser.">SRVV (7.62x39)</option>
-                    <option value="Bulletec / Hexagon: Sehr effiziente Mündungsbremsen für maximale Rückstoß-Kontrolle, wenn Lautstärke egal ist.">Bulletec / Hexagon</option>
-                </optgroup>
-                <optgroup label="Vordergriffe (Foregrips / Ergo & Recoil)">
-                    <option value="Zenit RK-2: Die absolute Rückstoß-Bremse für AKs. Reduziert Recoil extrem, senkt aber die Ergonomie spürbar.">Zenit RK-2 (Recoil Meta)</option>
-                    <option value="Zenit RK-1 auf B-25U: Schräger Vordergriff. Die perfekte Balance zwischen Rückstoßkontrolle und Ergo für AK-Plattformen.">Zenit B-25U + RK-1 (Schräg)</option>
-                    <option value="Magpul RVG / AFG: Zuverlässige Allrounder. Der AFG (Angled) bringt mehr Ergo, der RVG (Vertical) mehr Rückstoßkontrolle.">Magpul RVG / AFG</option>
-                    <option value="Fortis Shift: Sehr leichter Skeleton-Griff. Pusht die Ergonomie massiv nach oben, ideal für schnelles Zielen (ADS).">Fortis Shift Grip</option>
-                    <option value="BCM Gunfighter: Leicht, unauffällig und reduziert die Waffen-Trägheit (Inertia) bei Drehungen.">BCM Vertical Grip</option>
-                </optgroup>
-                <optgroup label="Pistolengriffe (Pistol Grips)">
-                    <option value="Zenit RK-3: Bester Pistolengriff für AK-Plattformen. Massiver Ergo-Boost.">Zenit RK-3 Grip (AK)</option>
-                    <option value="Magpul MOE K2: Top-Ergonomie für westliche M4/AR-15 Plattformen. Pflicht-Upgrade!">Magpul MOE K2 (M4)</option>
-                    <option value="Ergo Grip / TangoDown: Sehr gute Alternativen für AR-Systeme, falls Magpul nicht verfügbar ist.">Ergo Grip / TangoDown</option>
-                </optgroup>
-                <optgroup label="Schäfte & Chassis (Stocks & Handguards)">
-                    <option value="Zenit PT-3 / PT-1: Klappschäfte für AKs. Hohe Ergo, extrem gute Rückstoßdämpfung.">Zenit PT-3 Klassika (AK)</option>
-                    <option value="Magpul PRS Gen3: Schwerer Präzisionsschaft für DMRs (M14/M700). Reduziert das Wackeln (Sway) durch Atmung massiv.">Magpul PRS Gen3 (Sniper)</option>
-                    <option value="Magpul CTR / MOE: Leichte, anpassbare Schäfte für M4-Buffer-Tubes. Perfekt für Sturmgewehre.">Magpul CTR Stock</option>
-                    <option value="Daniel Defense Stock: Stabilisiert das Visierbild nach dem Schuss extrem schnell. Sehr beliebt.">DD Stock (M4)</option>
-                    <option value="Sureshot Mk3 Chassis: Tauscht das halbe AK-Gehäuse aus. Erlaubt die Montage modernster westlicher Optiken und Laser auf AKs.">Sureshot MK3 (AK Chassis)</option>
-                </optgroup>
-                <optgroup label="Taktische Module (Laser & Licht)">
-                    <option value="AN/PEQ-15: Das Standard-Modul des Westens. Bietet Laser (Sichtbar/IR) und Taschenlampe. Verbessert Point-Fire Präzision.">AN/PEQ-15 (Laser/Licht)</option>
-                    <option value="Steiner DBAL: Sehr helles Licht und präziser Laser. Hervorragend für Night Ops (Nachteinsätze).">Steiner DBAL (Laser/Licht)</option>
-                    <option value="Klesch-2P / Perst: Russische Laser-Licht-Kombinationen. Sehr starker Laser, blendet Feinde auf kurze Distanz extrem.">Zenit Klesch / Perst</option>
-                    <option value="Surefire X400: Kompaktes Modul, eigentlich für Pistolen gedacht, macht sich aber auch gut an SMGs (MP5/MP7).">Surefire X400</option>
-                </optgroup>
-            </select>
-            <div id="attachInfo" class="info-box">Attachment-Effekte...</div>
-        </div>
-
-        <div>
-            <label for="gearFullSelect">Gear (Rüstung, Helme, Rucksäcke)</label>
-            <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
-                <option value="">-- Wähle Ausrüstung --</option>
-                <optgroup label="Schwere Panzerung (Class 5 & 6)">
-                    <option value="6B43 Zabralo (Class 6): Maximaler Schutz im Spiel. Macht dich zu einem wandelnden Panzer, ist aber extrem schwer. Taktischer Sprint wird zur Qual.">6B43 Zabralo (Class 6)</option>
-                    <option value="IOTV Gen4 (Class 5): Hervorragender ballistischer Schutz für Brust, Bauch und Arme. Sehr beliebt bei Fort Narith Runs.">IOTV Gen4 Full (Class 5)</option>
-                    <option value="6B45 Ratnik (Class 5): Russischer Standard. Schützt Torso und Oberarme. Hoher Gewichts-Malus, aber extrem verlässlich.">6B45 Ratnik (Class 5)</option>
-                </optgroup>
-                <optgroup label="Mittlere Panzerung (Class 3 & 4 - Meta)">
-                    <option value="RPC Plate Carrier (Class 4): Die absolute 0.4 Meta! Sehr leicht, schützt die lebenswichtigen Organe (Lunge/Herz) und hat fast keine Trägheits-Strafe (Inertia).">RPC Plate Carrier (Class 4)</option>
-                    <option value="JPC Vest (Class 4): Jumpable Plate Carrier. Sehr kompakt, perfekt für schnelle Aufklärer, schützt aber nur den oberen Torso.">JPC Vest (Class 4)</option>
-                    <option value="Ana Tactical M1 (Class 4): Armored Rig. Kombiniert Class 4 Platten mit viel Platz für Magazine. Toller Allrounder.">Ana Tactical M1 (Class 4)</option>
-                    <option value="LBT-6094 (Class 3+): Guter Allrounder für Mid-Tier POIs wie Ban Pa oder Hunter's Paradise.">LBT-6094 (Class 3+)</option>
-                    <option value="6B23-1 / 6B13 (Class 3): Robuste russische Westen. Gut gegen KI-Scavs, aber schwach gegen Spieler mit AP-Munition.">6B23-1 / 6B13 (Class 3)</option>
-                </optgroup>
-                <optgroup label="Leichte Panzerung (Class 1 & 2)">
-                    <option value="PACA Soft Armor (Class 2): Schützt nur vor Schrot und 9mm PST. Leicht, aber im Endgame ein absolutes Risiko.">PACA Soft Armor (Class 2)</option>
-                    <option value="Zhuk-3 (Class 2): Press-Weste. Reiner Basisschutz für absolute Anfänger.">Zhuk-3 (Class 2)</option>
-                </optgroup>
-                <optgroup label="Helme & Gesichtsschutz">
-                    <option value="Altyn / Vulcan Helm (Class 5): Schwerer Sturmmhelm mit Visier. Macht dich fast taub (Headsets nicht möglich!), stoppt aber fast jeden Kopftreffer.">Altyn Assault Helmet</option>
-                    <option value="AirFrame Helmet (Class 4): Hochmoderne westliche Ausrüstung. Kann mit Chops (Ohrenschutz) und Visier stark aufgewertet werden.">AirFrame Helmet</option>
-                    <option value="Fast MT (Class 4): High-End Helm. Sehr leicht, kann mit Side-Rails und Face-Shield (Class 3) nachgerüstet werden.">Fast MT Helmet</option>
-                    <option value="MICH 2000 / TC-2000 (Class 3): Der Standard-Armeehelm. Zuverlässig gegen KI-Streifschüsse und Schrotflinten.">MICH 2000 / TC-2000</option>
-                    <option value="6B47 Ratnik-B (Class 3): Russischer Standard-Helm, gute Ergo-Werte, kompatibel mit Nachtsichtgeräten (NVGs).">6B47 Ratnik-B</option>
-                    <option value="SSh-68 (Class 2): Der gute alte 'Penis-Helm' (Stahlhelm). Schützt fast gar nicht, sieht aber lustig aus und leitet manchmal Schüsse ab (Ricochet).">SSh-68 Stahlhelm</option>
-                </optgroup>
-                <optgroup label="Nachtsicht & Gehörschutz (Night Ops)">
-                    <option value="GPNVG-18 (Quad-Node): Das 4-Röhren-Nachtsichtgerät der Elite. Riesiges Sichtfeld, keine toten Winkel, absoluter Luxus.">GPNVG-18 (NVG)</option>
-                    <option value="PVS-31 (Binocular): 2-Röhren-NVG. Solides Sichtfeld, guter Kontrast im Dschungel.">PVS-31 (NVG)</option>
-                    <option value="PVS-14 (Monocular): 1-Röhren-NVG. Günstig, aber du hast stark eingeschränkte Sichtränder.">PVS-14 (NVG)</option>
-                    <option value="ComTac 2 / ComTac 4: Aktiver Gehörschutz. Dämpft laute Schüsse und verstärkt feindliche Schritte massiv. Ein MUSS für PvP!">ComTac Headset</option>
-                    <option value="Sordin / Gssh-01: Günstigere Headsets. Klingen etwas 'bassiger' oder blecherner, sind aber besser als ohne.">Sordin / Gssh-01</option>
-                </optgroup>
-                <optgroup label="Rucksäcke (Backpacks)">
-                    <option value="Eberlestock G4 / Attack 2 (30-35 Slots): Riesig. Voll beladen führen diese Rucksäcke zu extremer Trägheit. Nur für reine Loot-Runs!">Eberlestock / Attack 2 (Large)</option>
-                    <option value="Mystery Ranch / Beta2 (25 Slots): Perfekter Kompromiss aus Platz und Agilität.">Mystery Ranch (Medium-Large)</option>
-                    <option value="Rush 24 / Tri-Zip (20 Slots): Der Standard für normale Raids. Genug Platz für Quest-Items und Mags.">Rush 24 / Tri-Zip (Medium)</option>
-                    <option value="Assault Pack (12 Slots): Perfekt für PvP-Jagd. Minimales Gewicht, maximale Ausdauer.">Assault Pack (Small)</option>
-                    <option value="Sling Bag / Duffle Bag (6-8 Slots): Scav-Rucksäcke. Besser als nichts, aber du stößt sofort an dein Limit.">Sling Bag (Budget)</option>
-                </optgroup>
-                <optgroup label="Tactical Rigs & Belts">
-                    <option value="LBT-1961A / Alpha Rig: Riesige Rigs (bis zu 16 Slots). Perfekt für Spieler, die viele Trommelmagazine oder Meds brauchen.">Alpha Rig (Heavy)</option>
-                    <option value="Triton / Blackhawk Strike: Mittlere Rigs (10-12 Slots). Gute Balance, passen über die meisten Westen.">Triton / Strike Rig (Medium)</option>
-                    <option value="Micro Rig / Bank Robber: Kleine Rigs (6-8 Slots). Extrem leicht, ideal für Sniper-Builds oder Low-Budget-Runs.">Micro Rig (Light)</option>
-                    <option value="Tactical War Belt: Zusätzlicher Platz an der Hüfte für Magazine und Meds, entlastet den Brustbereich und erhöht die Ergonomie.">Tactical War Belt</option>
-                </optgroup>
-            </select>
-            <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
-        </div>
-
-        <div>
-            <label for="medFullSelect">Medizinische Versorgung</label>
-            <select id="medFullSelect" onchange="updateGeneric('medFullSelect', 'medFullInfo')">
-                <option value="">-- Wähle Medizin-Item --</option>
-                <optgroup label="Blutungen (Wundversorgung)">
-                    <option value="Bandage: Stoppt leichte Blutungen. Günstig und schnell, aber verbraucht sich sofort.">Bandage</option>
-                    <option value="Combat Gauze: Hämostatische Gaze. Stoppt leichte bis mittelschwere Blutungen sehr schnell.">Combat Gauze (QuikClot)</option>
-                    <option value="Notfallbandage (Israeli Bandage): Sehr zuverlässig. Stoppt mittelschwere Blutungen effektiv.">Emergency Bandage</option>
-                    <option value="Tourniquet (CAT): Lebensretter! Stoppt schwere (arterielle) Blutungen an Gliedmaßen sofort. Schnellste Anwendung im Spiel.">Tourniquet (CAT)</option>
-                </optgroup>
-                <optgroup label="Blutvolumen & Kreislauf (Hypovolämie)">
-                    <option value="Kochsalzlösung: Hilft bei leichtem Flüssigkeitsverlust und stabilisiert den Kreislauf ein wenig.">Saline Solution</option>
-                    <option value="Blutbeutel (250ml): Stellt eine kleine Menge Blutvolumen wieder her. Gut für leichte Streifschüsse.">Blood Bag (250ml)</option>
-                    <option value="Blutbeutel (500ml): Der Standard-Beutel. Stellt eine mittlere Menge Blut wieder her.">Blood Bag (500ml)</option>
-                    <option value="Blutbeutel (1000ml): Retter in der Not. Stellt das Blutvolumen bei massiven Verlusten (Koma-Gefahr) fast vollständig wieder her.">Blood Bag (1000ml)</option>
-                </optgroup>
-                <optgroup label="Chirurgie & Organe">
-                    <option value="Chirurgie-Set: Repariert beschädigte Organe (Magen, Lunge, Leber). Sehr lange Animationszeit, suche dir sichere Deckung!">Surgery Kit</option>
-                    <option value="Erweitertes Chirurgie-Set: Die Militär-Version. Hat mehr Anwendungen und heilt Organe etwas zuverlässiger. Goldstandard für Squad-Medics.">Advanced Surgery Kit</option>
-                </optgroup>
-                <optgroup label="Knochen & Brüche">
-                    <option value="Surgical Tape: Medizinisches Klebeband. Kann für minimale Fixierungen oder als Notlösung genutzt werden.">Surgical Tape</option>
-                    <option value="Schiene (Holz): Repariert Frakturen sofort. Behebt starkes Humpeln oder das extreme Zittern beim Zielen.">Splint (Wood)</option>
-                    <option value="SAM-Schiene: Hochwertige, formbare Militär-Schiene. Kompakt und hocheffizient bei Brüchen.">SAM Splint</option>
-                </optgroup>
-                <optgroup label="Schmerzmittel (Dauer & Stärke)">
-                    <option value="Paracetamol: Sehr leichtes Schmerzmittel. Unterdrückt den Schmerzeffekt (verschwommene Sicht) nur für kurze Zeit.">Paracetamol</option>
-                    <option value="Ibuprofen: Mittleres Schmerzmittel. Der Standard für leichte Verletzungen und längere Fußmärsche.">Ibuprofen</option>
-                    <option value="Meloxicam: Starkes Schmerzmittel in Tablettenform. Hält sehr lange an, ideal vor großen Feuergefechten.">Meloxicam</option>
-                    <option value="Morphin-Injektor: Extrem starke, sofortige Schmerzausschaltung. Hilft bei kritischen Verletzungen, um trotzdem noch zur Extraktion rennen zu können.">Morphine Injector</option>
-                    <option value="Adrenalin-Injektor: Gibt dir sofort einen massiven Ausdauer-Boost. Perfekt, um unter schwerem Beschuss in Deckung zu sprinten (Tactical Sprint).">Epinephrine (Epi-Pen)</option>
-                </optgroup>
-            </select>
-            <div id="medFullInfo" class="info-box">Medizinische Details...</div>
-        </div>
-
-        <div>
-            <label for="foodFullSelect">Verpflegung (Essen & Trinken)</label>
-            <select id="foodFullSelect" onchange="updateGeneric('foodFullSelect', 'foodFullInfo')">
-                <option value="">-- Wähle Verpflegung --</option>
-                <optgroup label="Wasser & Feldflaschen (Reine Hydration)">
-                    <option value="Wasserflasche (0.5L): Standard-Hydration. Stellt ca. die Hälfte des Dursts wieder her. Schnell konsumiert und leicht zu finden.">Water Bottle (0.5L)</option>
-                    <option value="Große Wasserflasche (1.5L): Perfekt für lange Raids. Füllt den Durst komplett auf und hat oft noch Reste für später.">Water Bottle (1.5L)</option>
-                    <option value="Militär-Feldflasche (Canteen): Der effizienteste Mehrwegbehälter. Füllt den Durst massiv auf. Optimaler Begleiter im Rucksack.">Military Canteen</option>
-                    <option value="Kokosnusswasser: Naturprodukt. Spendet hervorragende Hydration und gibt dir sogar noch einen kleinen Energie-Boost.">Coconut Water</option>
-                </optgroup>
-                <optgroup label="Säfte & Softdrinks (Hydration + Zucker/Energie)">
-                    <option value="Energy Drink (Taurine/Guarana): Gibt einen mittleren Hydration-Schub und lässt deine Ausdauer für kurze Zeit deutlich schneller regenerieren. Perfekt vor Sprints!">Energy Drink</option>
-                    <option value="Limonaden-Dose (Cola / Zitrone / Traube): Geringe Hydration, pusht aber durch den Zucker deine Energie leicht nach oben.">Soda Can (Diverse Sorten)</option>
-                    <option value="Fruchtsaft (Apfel / Orange / Ananas): Solide Flüssigkeitsquelle, die dir gleichzeitig einen ordentlichen Schub Kalorien (Energie) liefert.">Fruit Juice</option>
-                    <option value="Milch (Karton): Sehr nahrhaft. Füllt den Durst auf und gibt massiv Energie, ist aber relativ schwer im Rucksack.">Milk</option>
-                </optgroup>
-                <optgroup label="Militärrationen & Dosen (Hohe Energie)">
-                    <option value="MRE (Meal Ready to Eat): Die ultimative Kampfration. Füllt deine Energie fast komplett auf, wiegt wenig und macht nicht so extrem durstig wie Snacks.">MRE (Military Grade)</option>
-                    <option value="Dosenfleisch (Tushonka / Beef): Extrem hohe Energie-Sättigung, aber zieht Wasser! Halte unbedingt ein Getränk bereit.">Canned Beef / Meat</option>
-                    <option value="Dosen-Thunfisch: Sehr gute Proteinquelle. Liefert ordentlich Energie, trocknet dich aber leicht aus.">Canned Tuna</option>
-                    <option value="Dosenbohnen: Hohe Sättigung, sehr zuverlässig. Zieht nicht ganz so viel Wasser wie reines Fleisch.">Canned Beans</option>
-                    <option value="Dosenfrüchte (Pfirsich / Ananas): Ein echter Geheimtipp! Spendet viel Energie UND füllt dank des Sirups gleichzeitig deinen Durst auf.">Canned Fruits (Peaches/Pineapple)</option>
-                </optgroup>
-                <optgroup label="Snacks & Süßigkeiten (Für den Tactical Belt)">
-                    <option value="Energy Riegel / Protein Riegel: Schneller, leichter Snack für zwischendurch. Kostet nur einen Slot, ideal für den Gürtel.">Energy Bar / Protein Bar</option>
-                    <option value="Schokoriegel: Sehr schneller Zucker-Schub, um die Energie aus dem roten Bereich zu holen.">Chocolate Bar</option>
-                    <option value="Cracker / Kekse: Vorsicht, extrem trocken! Erhöhen die Energie, senken aber deine Hydration massiv. Nur essen, wenn Wasser da ist.">Crackers / Biscuits</option>
-                    <option value="Kartoffelchips / Erdnüsse: Der viele Salzgehalt macht extrem durstig. Zieht massiv Hydration, spendet nur mittlere Energie.">Chips / Peanuts</option>
-                    <option value="Instantnudeln: Solider Snack, mittlere Werte. Trocknet dich leicht aus, wenn trocken gegessen.">Instant Noodles</option>
-                    <option value="Kondensmilch (Dose): Massive Energie auf kleinstem Raum, verursacht aber sofort extremen Durst. Nur in der Nähe von Wasserquellen oder im absoluten Notfall nutzen!">Condensed Milk</option>
-                </optgroup>
-            </select>
-            <div id="foodFullInfo" class="info-box">Effekte auf Status...</div>
-        </div>
-
-        <div>
-            <label for="valSelect">Loot & Verkaufspreise (Valuables)</label>
-            <select id="valSelect" onchange="updateValuable()">
-                <option value="">-- Wähle ein Item --</option>
-                <optgroup label="High Tier (Bester Wert pro Slot)">
-                    <option value="gold_phone">Goldenes Smartphone</option>
-                    <option value="diamond_ring">Diamantring</option>
-                    <option value="gold_watch">Goldene Uhr (Rolex)</option>
-                    <option value="class_docs">Geheime Dokumente</option>
-                    <option value="gold_coin">Goldmünze</option>
-                    <option value="usb_drive">Verschlüsseltes USB-Laufwerk</option>
-                    <option value="gpu">Grafikkarte (GPU)</option>
-                    <option value="tablet">Tablet</option>
-                    <option value="laptop">Laptop / Notebook (Elektronik)</option>
-                </optgroup>
-                <optgroup label="Mid Tier (Solider Beifang)">
-                    <option value="antique_vase">Antike Vase</option>
-                    <option value="wood_statue">Holzstatue</option>
-                    <option value="smartphone">Smartphone (Standard)</option>
-                    <option value="camera">Digitalkamera</option>
-                    <option value="silver_coin">Silbermünze</option>
-                    <option value="silver_chain">Silberkette</option>
-                    <option value="voice_recorder">Diktiergerät</option>
-                    <option value="hdd">Festplatte (HDD)</option>
-                    <option value="flash_drive">Normaler USB-Stick</option>
-                    <option value="calculator">Taschenrechner</option>
-                    <option value="wallet">Geldbörse</option>
-                    <option value="sunglasses">Sonnenbrille</option>
-                    <option value="old_book">Altes Buch / Antikes Buch</option>
-                </optgroup>
-                <optgroup label="Low Tier (Nur wenn Platz ist)">
-                    <option value="glasses">Brille (Lesebrille)</option>
-                    <option value="cutlery">Besteck</option>
-                    <option value="lighter">Feuerzeug (Zippo)</option>
-                    <option value="cards">Kartenspiel</option>
-                    <option value="notebook_paper">Notizblock (Papier)</option>
-                    <option value="pen">Kugelschreiber (Pen)</option>
-                    <option value="cigarettes">Zigaretten</option>
-                    <option value="tp">Toilettenpapier</option>
-                    <option value="matches">Streichhölzer</option>
-                </optgroup>
-            </select>
-            <div id="valInfoDisplay" class="info-box">Wähle ein Item für Preis & Details...</div>
-        </div>
-
-        <div>
-            <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
-            <select id="containerSelect" onchange="updateContainer()">
-                <option value="">-- Wähle einen Container --</option>
-                <optgroup label="Secure Containers (Lockbox)">
-                    <option value="safe_lock">Safe Lock (2x2) - 4 Slots</option>
-                    <option value="snook_908">Snook 908 (2x3) - 6 Slots</option>
-                    <option value="tas">TAS Container (3x3) - 9 Slots</option>
-                </optgroup>
-                <optgroup label="Lagerkisten (Stash Cases / Boxes)">
-                    <option value="ammo_box">Ammo Container (Munitionskiste)</option>
-                    <option value="weapon_box">Weapon Container (Waffenkiste)</option>
-                    <option value="med_box">Medical Container (Medikamentenkiste)</option>
-                    <option value="armor_box">Armor/Gear Container (Ausrüstungskiste)</option>
-                    <option value="food_box">Provisions Container (Kühlbox/Essen)</option>
-                </optgroup>
-                <optgroup label="Kleine Behälter (Inventar)">
-                    <option value="key_holder">Key Holder (Schlüsselbund)</option>
-                    <option value="wallet">Leather Wallet (Geldbörse)</option>
-                </optgroup>
-                <optgroup label="Lagerplatz (Base Stash)">
-                    <option value="stash_upgrade">Locker / Schließfach Erweiterungen</option>
-                </optgroup>
-            </select>
-            <div id="containerInfoDisplay" class="info-box">Wähle einen Container für Details zum Fundort...</div>
-        </div>
-
-        <div>
-            <label for="bossSelect">Boss-Datenbank</label>
-            <select id="bossSelect" onchange="updateBoss()">
-                <option value="">-- Wähle einen Boss --</option>
-                <optgroup label="Startregionen">
-                    <option value="market_leader">Criminal Leader (Marktplatz)</option>
-                    <option value="lumber_boss">Lumber Yard Foreman</option>
-                    <option value="rebel_ybl">Rebel Leader (YBL-1 Bunker)</option>
-                </optgroup>
-                <optgroup label="Mid-Game POIs">
-                    <option value="hunter_commander">Hostile Commander (Hunter's Paradise)</option>
-                    <option value="malo_blue">Malo Luangrath (Blue Lagoon)</option>
-                    <option value="banpa_leader">Elder Leader (Ban Pa)</option>
-                </optgroup>
-                <optgroup label="End-Game & High Danger">
-                    <option value="fort_commander">General Pa (Fort Narith HQ)</option>
-                    <option value="midnight_laf">LAF Commander (Midnight Sapphire)</option>
-                    <option value="tiger_bay_unlra">UNLRA Officer (Tiger Bay HQ)</option>
-                    <option value="tiger_bay_pier">Pier Boss (Tiger Bay)</option>
-                    <option value="airfield_boss">Airfield Commander (Ground Zero)</option>
-                </optgroup>
-            </select>
-            <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
-        </div>
-
-        <div>
-            <label for="lzSelect">LZ & Navigation (Helikopter)</label>
-            <select id="lzSelect" onchange="updateLZ()">
-                <option value="">-- Wähle ein Zielgebiet --</option>
-                <optgroup label="Fraktions-Startgebiete (Safe Zones)">
-                    <option value="mithras">Mithras (Nam Thaven) - Alpha LZs</option>
-                    <option value="lamang">Lamang (Pha Lang) - Bravo LZs</option>
-                    <option value="crimson">Crimson (Kiu Vongsa) - Charlie LZs</option>
-                </optgroup>
-                <optgroup label="Early & Mid Game POIs">
-                    <option value="lumber">Lumber Yard (Sägewerk) - Echo LZs</option>
-                    <option value="hunters">Hunter's Paradise - Foxtrot LZs</option>
-                    <option value="banpa">Ban Pa (Fischerdorf) - India LZs</option>
-                    <option value="blue_lagoon">Blue Lagoon (See) - Kilo LZs</option>
-                </optgroup>
-                <optgroup label="End Game POIs (High Danger)">
-                    <option value="ybl">YBL-1 Bunker - Juliet LZs</option>
-                    <option value="fort_narith">Fort Narith (Basis) - Delta LZs</option>
-                    <option value="midnight">Midnight Sapphire - Hotel LZs</option>
-                    <option value="tiger_bay">Tiger Bay (Großstadt) - Lima LZs</option>
-                    <option value="ground_zero">Ground Zero (Airfield) - Golf LZs</option>
-                </optgroup>
-            </select>
-            <div id="lzInfo" class="info-box">Landeplatz-Sicherheit & Tipps...</div>
-        </div>
-
-        <div>
-            <label for="symptomSelect">Symptom-Checker (Notfall-Medic)</label>
-            <select id="symptomSelect" onchange="updateSymptom()">
-                <option value="">-- Was fühlst/siehst du? --</option>
-                <optgroup label="Sicht & Wahrnehmung">
-                    <option value="gray_vision">Schwarz-Weiß-Sicht / Farbe verschwindet</option>
-                    <option value="blurry_vision">Verschwommenes Sichtfeld / Pulsieren</option>
-                    <option value="tunnel_vision">Tunnelblick / Schwarzer Rand wird größer</option>
-                </optgroup>
-                <optgroup label="Bewegung & Waffen-Handling">
-                    <option value="limping">Starkes Humpeln / Sprinten unmöglich</option>
-                    <option value="weapon_sway">Extremes Wackeln beim Zielen (Sway)</option>
-                    <option value="stamina_drain">Ausdauer regeneriert extrem langsam</option>
-                </optgroup>
-                <optgroup label="Akustik (Geräusche)">
-                    <option value="coughing">Charakter hustet Blut / Stöhnt ständig</option>
-                    <option value="heartbeat">Lauter Herzschlag / Schweres Atmen</option>
-                    <option value="stomach">Magenknurren</option>
-                </optgroup>
-            </select>
-            <div id="symptomInfo" class="info-box">Diagnose & Behandlung...</div>
-        </div>
-
-        <div>
-            <label for="vendorSelect">Händler & Freischaltungen (Vendors)</label>
-            <select id="vendorSelect" onchange="updateVendor()">
-                <option value="">-- Wähle Händler & Level --</option>
-                <optgroup label="Gunny (NATO-Waffen & Munition)">
-                    <option value="gunny_1">Gunny Level 1 (Start)</option>
-                    <option value="gunny_2">Gunny Level 2</option>
-                    <option value="gunny_3">Gunny Level 3 (Meta-Gear)</option>
-                </optgroup>
-                <optgroup label="Handshake (Rüstung & Rucksäcke)">
-                    <option value="handshake_1">Handshake Level 1 (Start)</option>
-                    <option value="handshake_2">Handshake Level 2</option>
-                    <option value="handshake_3">Handshake Level 3 (Meta-Gear)</option>
-                </optgroup>
-                <optgroup label="Lab Rat (Medizin & Verpflegung)">
-                    <option value="labrat_1">Lab Rat Level 1 (Start)</option>
-                    <option value="labrat_2">Lab Rat Level 2</option>
-                    <option value="labrat_3">Lab Rat Level 3</option>
-                </optgroup>
-                <optgroup label="Artisan (AK-Plattformen & Ost-Gear)">
-                    <option value="artisan_1">Artisan Level 1 (Start)</option>
-                    <option value="artisan_2">Artisan Level 2</option>
-                    <option value="artisan_3">Artisan Level 3</option>
-                </optgroup>
-                <optgroup label="Turncoat (Westliche Spezialwaffen)">
-                    <option value="turncoat_1">Turncoat Level 1</option>
-                    <option value="turncoat_2">Turncoat Level 2</option>
-                    <option value="turncoat_3">Turncoat Level 3 (Sniper-Meta)</option>
-                </optgroup>
-                <optgroup label="Banshee (High-End & Seltenes)">
-                    <option value="banshee_1">Banshee Level 1</option>
-                    <option value="banshee_2">Banshee Level 2</option>
-                    <option value="banshee_3">Banshee Level 3 (Endgame)</option>
-                </optgroup>
-            </select>
-            <div id="vendorInfo" class="info-box">Wichtigste Freischaltungen...</div>
-        </div>
-    </div> <hr>
-
-    <h2>Munitions-Vergleich (Ballistik-Labor)</h2>
-    <div class="grid">
-        <div>
-            <label for="ammo1">Munition A</label>
-            <select id="ammo1" onchange="compareAmmo()"> 
-                <option value="">-- Munition wählen --</option>
-                <optgroup label="5.56x45mm (NATO)">
-                    <option value="m855a1">5.56 M855A1</option>
-                    <option value="m855">5.56 M855</option>
-                    <option value="m193">5.56 M193</option>
-                    <option value="m856a1">5.56 M856A1 (Tracer)</option>
-                    <option value="mk255">5.56 MK255 (Flesh/HP)</option>
-                </optgroup>
-                <optgroup label=".300 Blackout (SIG-MCX)">
-                    <option value="300_ap">.300 BLK AP</option>
-                    <option value="300_cbj">.300 BLK CBJ</option>
-                    <option value="300_m62">.300 BLK M62 (Tracer)</option>
-                    <option value="300_whisper">.300 BLK Whisper (Subsonic)</option>
-                </optgroup>
-                <optgroup label="5.45x39mm (AK-74/AK-12)">
-                    <option value="ak74_bs">5.45 BS (Max AP)</option>
-                    <option value="ak74_bp">5.45 BP (Armor Piercing)</option>
-                    <option value="ak74_pp">5.45 PP (Enhanced)</option>
-                    <option value="ak74_7n6">5.45 7N6M (Standard)</option>
-                    <option value="ak74_hp">5.45 HP (Hollow Point)</option>
-                </optgroup>
-                <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
-                    <option value="ak_mai_ap">7.62x39 MAI AP</option>
-                    <option value="ak_bp">7.62x39 BP</option>
-                    <option value="ak_ps">7.62x39 PS</option>
-                    <option value="ak_us">7.62x39 US (Subsonic)</option>
-                    <option value="ak_hp">7.62x39 HP (Flesh)</option>
-                </optgroup>
-                <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
-                    <option value="m993">7.62x51 M993 (Max AP)</option>
-                    <option value="m61">7.62x51 M61 (AP)</option>
-                    <option value="m62">7.62x51 M62 (Tracer)</option>
-                    <option value="m80">7.62x51 M80</option>
-                    <option value="tcw_sp">7.62x51 TCW SP (Flesh)</option>
-                </optgroup>
-                <optgroup label="7.62x54mmR (Mosin/SVD)">
-                    <option value="snb">7.62x54R SNB (AP)</option>
-                    <option value="7n1">7.62x54R 7N1 (Sniper)</option>
-                    <option value="lps">7.62x54R LPS Gzh</option>
-                </optgroup>
-                <optgroup label="4.6x30mm (MP7)">
-                    <option value="46_apsx">4.6x30 AP SX</option>
-                    <option value="46_fmjsx">4.6x30 FMJ SX</option>
-                    <option value="46_subsx">4.6x30 Subsonic SX</option>
-                    <option value="46_actionsx">4.6x30 Action SX (Flesh)</option>
-                </optgroup>
-                <optgroup label="9x19mm (Glock/MP5/Alien)">
-                    <option value="7n31">9x19 7N31 (Max AP)</option>
-                    <option value="ap63">9x19 AP 6.3</option>
-                    <option value="pst">9x19 PST Gzh</option>
-                    <option value="rip">9x19 RIP (Flesh)</option>
-                </optgroup>
-                <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
-                    <option value="pm_pmm">9x18 PMM (High Pressure)</option>
-                    <option value="pm_sp7">9x18 PM SP7 (Leg Meta)</option>
-                    <option value="pm_gzh">9x18 PM Gzh</option>
-                    <option value="tt_pst">7.62x25 TT PST Gzh</option>
-                    <option value="tt_lrnpc">7.62x25 TT LRNPC (Flesh)</option>
-                </optgroup>
-                <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
-                    <option value="45_ap">.45 ACP AP</option>
-                    <option value="45_match">.45 ACP Match FMJ</option>
-                    <option value="45_rip">.45 ACP RIP (Flesh)</option>
-                    <option value="32_fmj">.32 ACP FMJ (VZ-61)</option>
-                </optgroup>
-                <optgroup label="12 Gauge (Shotguns)">
-                    <option value="ap20">12G AP-20 Armor-Piercing Slug</option>
-                    <option value="slug">12G Copper Slug</option>
-                    <option value="flechette">12G Flechette (Shredder)</option>
-                    <option value="buck">12G 00 Buckshot</option>
-                </optgroup>
-            </select>
-            <div id="ammo1Info" class="info-box">Wähle Munition A...</div>
-        </div>
-        <div>
-            <label for="ammo2">Munition B</label>
-            <select id="ammo2" onchange="compareAmmo()"> 
-                <option value="">-- Munition wählen --</option>
-                <optgroup label="5.56x45mm (NATO)">
-                    <option value="m855a1">5.56 M855A1</option>
-                    <option value="m855">5.56 M855</option>
-                    <option value="m193">5.56 M193</option>
-                    <option value="m856a1">5.56 M856A1 (Tracer)</option>
-                    <option value="mk255">5.56 MK255 (Flesh/HP)</option>
-                </optgroup>
-                <optgroup label=".300 Blackout (SIG-MCX)">
-                    <option value="300_ap">.300 BLK AP</option>
-                    <option value="300_cbj">.300 BLK CBJ</option>
-                    <option value="300_m62">.300 BLK M62 (Tracer)</option>
-                    <option value="300_whisper">.300 BLK Whisper (Subsonic)</option>
-                </optgroup>
-                <optgroup label="5.45x39mm (AK-74/AK-12)">
-                    <option value="ak74_bs">5.45 BS (Max AP)</option>
-                    <option value="ak74_bp">5.45 BP (Armor Piercing)</option>
-                    <option value="ak74_pp">5.45 PP (Enhanced)</option>
-                    <option value="ak74_7n6">5.45 7N6M (Standard)</option>
-                    <option value="ak74_hp">5.45 HP (Hollow Point)</option>
-                </optgroup>
-                <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
-                    <option value="ak_mai_ap">7.62x39 MAI AP</option>
-                    <option value="ak_bp">7.62x39 BP</option>
-                    <option value="ak_ps">7.62x39 PS</option>
-                    <option value="ak_us">7.62x39 US (Subsonic)</option>
-                    <option value="ak_hp">7.62x39 HP (Flesh)</option>
-                </optgroup>
-                <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
-                    <option value="m993">7.62x51 M993 (Max AP)</option>
-                    <option value="m61">7.62x51 M61 (AP)</option>
-                    <option value="m62">7.62x51 M62 (Tracer)</option>
-                    <option value="m80">7.62x51 M80</option>
-                    <option value="tcw_sp">7.62x51 TCW SP (Flesh)</option>
-                </optgroup>
-                <optgroup label="7.62x54mmR (Mosin/SVD)">
-                    <option value="snb">7.62x54R SNB (AP)</option>
-                    <option value="7n1">7.62x54R 7N1 (Sniper)</option>
-                    <option value="lps">7.62x54R LPS Gzh</option>
-                </optgroup>
-                <optgroup label="4.6x30mm (MP7)">
-                    <option value="46_apsx">4.6x30 AP SX</option>
-                    <option value="46_fmjsx">4.6x30 FMJ SX</option>
-                    <option value="46_subsx">4.6x30 Subsonic SX</option>
-                    <option value="46_actionsx">4.6x30 Action SX (Flesh)</option>
-                </optgroup>
-                <optgroup label="9x19mm (Glock/MP5/Alien)">
-                    <option value="7n31">9x19 7N31 (Max AP)</option>
-                    <option value="ap63">9x19 AP 6.3</option>
-                    <option value="pst">9x19 PST Gzh</option>
-                    <option value="rip">9x19 RIP (Flesh)</option>
-                </optgroup>
-                <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
-                    <option value="pm_pmm">9x18 PMM (High Pressure)</option>
-                    <option value="pm_sp7">9x18 PM SP7 (Leg Meta)</option>
-                    <option value="pm_gzh">9x18 PM Gzh</option>
-                    <option value="tt_pst">7.62x25 TT PST Gzh</option>
-                    <option value="tt_lrnpc">7.62x25 TT LRNPC (Flesh)</option>
-                </optgroup>
-                <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
-                    <option value="45_ap">.45 ACP AP</option>
-                    <option value="45_match">.45 ACP Match FMJ</option>
-                    <option value="45_rip">.45 ACP RIP (Flesh)</option>
-                    <option value="32_fmj">.32 ACP FMJ (VZ-61)</option>
-                </optgroup>
-                <optgroup label="12 Gauge (Shotguns)">
-                    <option value="ap20">12G AP-20 Armor-Piercing Slug</option>
-                    <option value="slug">12G Copper Slug</option>
-                    <option value="flechette">12G Flechette (Shredder)</option>
-                    <option value="buck">12G 00 Buckshot</option>
-                </optgroup>
-            </select>
-            <div id="ammo2Info" class="info-box">Wähle Munition B...</div>
-        </div>
-    </div>
-    <div id="comparisonResult" class="info-box" style="text-align: center; font-weight: bold; border-left: none; border-top: 4px solid var(--accent);">
-        Wähle zwei Typen zum Vergleich aus.
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="openTab('tab-ausruestung', this)">🔫 Arsenal & Loadout</button>
+        <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medic & Survival</button>
+        <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ Intel & Navigation</button>
+        <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
+        <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Missionen</button>
     </div>
 
-    <hr>
-    
-    <h2>Schlüssel-Datenbank (Key Intel)</h2>
-    <label for="keySearch">Suche nach Key-Name oder Ort:</label>
-    <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
-    <div id="keyList"></div>
-    <div id="keyContainer" class="info-box">
-        <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px;">Schlüssel-Info...</div>
-        <div id="keyLocation" style="margin-bottom:5px;">Fundort wird hier angezeigt.</div>
-        <div id="keyEffect">Welche Tür öffnet dieser Schlüssel?</div>
-    </div>
-    
-    <hr>
+    <div id="tab-ausruestung" class="tab-content active">
+        <h2>Waffen & Ausrüstung</h2>
+        <div class="grid">
+            <div>
+                <label for="weaponSelect">Waffen</label>
+                <select id="weaponSelect" onchange="updateWeapon()">
+                    <option value="">-- Wähle eine Waffe --</option>
+                    <optgroup label="Sturmgewehre">
+                        <option value="ks1">KAC KS-1 (L403A1) - 0.4 Meta</option>
+                        <option value="m4a1">M4A1</option>
+                        <option value="mk18">MK18 (Kompakt)</option>
+                        <option value="m16a1">M16A1 (Retro-Präzision)</option>
+                        <option value="akm">AKM</option>
+                        <option value="akmn">AKMN (Modernisiert)</option>
+                        <option value="akmsn">AKMSN</option>
+                        <option value="ak74n">AK-74N (5.45mm)</option>
+                        <option value="ak74m">AK-74M (Klappschaft)</option>
+                        <option value="aks74u">AKS-74U</option>
+                        <option value="ak103">AK-103 (7.62mm Modern)</option>
+                        <option value="ak105">AK-105 (Kompakt)</option>
+                        <option value="vz58">Vz. 58</option>
+                        <option value="ak12">AK-12</option>
+                        <option value="ak15">AK-15</option>
+                        <option value="ak19">AK-19</option>
+                        <option value="cqa1">CQ-A1</option>
+                        <option value="ddm4">DDM4</option>
+                        <option value="sicmcx">SIG-MCX</option>
+                        <option value="ak308">AK-308</option>
+                    </optgroup>
+                    <optgroup label="DMR & Scharfschützen">
+                        <option value="m14">M14 EBR / Battle Rifle</option>
+                        <option value="m700">M700 Remington</option>
+                        <option value="svd">SVD Dragunov</option>
+                        <option value="mosin">Mosin-Nagant</option>
+                        <option value="skn">SKS (Modernisiert)</option>
+                    </optgroup>
+                    <optgroup label="SMGs & Shotguns">
+                        <option value="mp5">MP5A3 / SD</option>
+                        <option value="mp7a1">MP7A1</option>
+                        <option value="mp7a2">MP7A2</option>
+                        <option value="vz61">VZ-61 Skorpio</option>
+                        <option value="vityaz">PP-19-01 Vityaz</option>
+                        <option value="m870">M870 Pump-Action</option>
+                        <option value="590a1">Mossberg 590A1</option>
+                    </optgroup>
+                    <optgroup label="Pistolen">
+                        <option value="alien">Laugo Alien (0.4 Meta)</option>
+                        <option value="glock17">Glock 17</option>
+                        <option value="m9a1">M9A1 Beretta</option>
+                        <option value="makarov">Makarov PM</option>
+                        <option value="1911">Colt 1911</option>
+                        <option value="ccc">Colt Combat Commander</option>
+                        <option value="typ51">Typ-51</option>
+                    </optgroup>
+                </select>
+                <div id="weaponInfo" class="info-box">Wähle eine Waffe für Munitions-Details...</div>
+            </div>
 
-    <h2>Missions-Datenbank (Tasks)</h2>
-    <label for="taskSearch">Task suchen (Deutsch oder Englisch):</label>
-    <input type="text" id="taskSearch" placeholder="z.B. First Recon / Erstaufklärung..." onkeyup="searchTasks()">
-    <div id="taskList"></div>
-    <div id="taskContainer" class="info-box">
-        <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem;">Wähle einen Task aus der Suche...</div>
-        <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
-        <div id="taskDesc" style="margin-bottom: 15px;">Die Zielbeschreibung erscheint hier.</div>
-        <button class="task-btn" id="solBtn" style="display:none;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
-        <div id="taskSolution" class="task-solution"></div>
+            <div>
+                <label for="attachSelect">Attachments & Ergo (Waffen-Mods)</label>
+                <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
+                    <option value="">-- Wähle Attachment --</option>
+                    <optgroup label="Optiken (Nahkampf & Red Dots)">
+                        <option value="EOTech EXPS3: Bestes Holographic-Visier. Perfektes Sichtfeld, ideal für schnelles Aiming im Nahkampf (CQB).">EOTech EXPS3 (Holo)</option>
+                        <option value="Aimpoint T-2 Micro: Extrem kleiner Leuchtpunkt. Nimmt null Platz auf dem Bildschirm ein. Super für SMGs und leichte ARs.">Aimpoint T-2 Micro</option>
+                        <option value="Kobra EKP-8-18: Russisches Standard-Reflexvisier. Günstig, zuverlässig, verschiedene Fadenkreuze wählbar.">Kobra EKP-8-18</option>
+                        <option value="OKP-7: Sehr beliebtes russisches Visier mit grünem Absehen. Bietet ein unglaublich freies Sichtfeld.">OKP-7 (Dovetail)</option>
+                    </optgroup>
+                    <optgroup label="Optiken (Mid & Long Range / LPVOs)">
+                        <option value="Vudu 1-6x: Die absolute Meta für Sturmgewehre. Perfekt für Distanz und durch den 1x Zoom auch stark im Nahkampf.">EOTech Vudu 1-6x</option>
+                        <option value="Razor HD Gen II 1-6x: Sehr klares Bild, extrem dünner Rand. Bietet fast die beste Sicht im ADS im ganzen Spiel.">Vortex Razor HD 1-6x</option>
+                        <option value="Elcan SpecterDR 1x/4x: Umschaltbares Visier. Sehr robuster Allrounder für M4 und KS-1.">Elcan SpecterDR 1x/4x</option>
+                        <option value="Trijicon ACOG 4x32: Der Klassiker. Festvergrößerung, extrem gute Sichtbarkeit des Fadenkreuzes (Tritium).">Trijicon ACOG 4x32</option>
+                        <option value="Valday PS-320 1x/6x: Das russische Äquivalent zum Vudu/Razor. Exzellent für AKs auf mittlere und weite Distanzen.">Valday PS-320 1x/6x</option>
+                        <option value="Nightforce ATACR 1-8x / 7-35x: Maximale Vergrößerung. Nur für reine Sniper (M700 / Mosin) oder DMRs (M14 / SVD) zu empfehlen.">Nightforce ATACR</option>
+                    </optgroup>
+                    <optgroup label="Mündung (Schalldämpfer / Suppressors)">
+                        <option value="KAC NT4 Suppressor (5.56): Der Standard für M4. Reduziert Schall und Mündungsfeuer zuverlässig.">KAC NT4 (5.56mm)</option>
+                        <option value="Surefire RC2 / Monster: Bester Rückstoß-Schutz für 5.56mm Waffen, sehr gute Haltbarkeit.">Surefire RC2 (5.56mm)</option>
+                        <option value="PBS-1 Suppressor: Essenziell für AKM/AK-103 (7.62x39), um bei Schüssen nicht die ganze Map anzulocken.">PBS-1 (7.62mm AK)</option>
+                        <option value="PBS-4 Suppressor: Der Standard-Schalldämpfer für die kleinen 5.45x39 Kaliber (AK-74/AK-105).">PBS-4 (5.45mm AK)</option>
+                        <option value="Hybrid 46: Schwerer, vielseitiger Schalldämpfer. Passt auf viele große Kaliber wie das M14 EBR.">Hybrid 46 Multi-Cal</option>
+                        <option value="Rotor 43: Sehr effektive Schalldämpfer-Reihe für russische Plattformen. Etwas schwerer, aber extrem leise.">Rotor 43 (Diverse)</option>
+                    </optgroup>
+                    <optgroup label="Mündung (Kompensatoren & Bremsen)">
+                        <option value="Lantac Dragon: Bester Kompensator für M4/KS-1. Reduziert den Rückstoß massiv, ist aber extrem laut!">Lantac Dragon (5.56)</option>
+                        <option value="SRVV Mündungsbremse: Russischer High-End Kompensator. Macht die AKM zu einem kontrollierbaren Laser.">SRVV (7.62x39)</option>
+                        <option value="Bulletec / Hexagon: Sehr effiziente Mündungsbremsen für maximale Rückstoß-Kontrolle, wenn Lautstärke egal ist.">Bulletec / Hexagon</option>
+                    </optgroup>
+                    <optgroup label="Vordergriffe (Foregrips / Ergo & Recoil)">
+                        <option value="Zenit RK-2: Die absolute Rückstoß-Bremse für AKs. Reduziert Recoil extrem, senkt aber die Ergonomie spürbar.">Zenit RK-2 (Recoil Meta)</option>
+                        <option value="Zenit RK-1 auf B-25U: Schräger Vordergriff. Die perfekte Balance zwischen Rückstoßkontrolle und Ergo für AK-Plattformen.">Zenit B-25U + RK-1 (Schräg)</option>
+                        <option value="Magpul RVG / AFG: Zuverlässige Allrounder. Der AFG (Angled) bringt mehr Ergo, der RVG (Vertical) mehr Rückstoßkontrolle.">Magpul RVG / AFG</option>
+                        <option value="Fortis Shift: Sehr leichter Skeleton-Griff. Pusht die Ergonomie massiv nach oben, ideal für schnelles Zielen (ADS).">Fortis Shift Grip</option>
+                        <option value="BCM Gunfighter: Leicht, unauffällig und reduziert die Waffen-Trägheit (Inertia) bei Drehungen.">BCM Vertical Grip</option>
+                    </optgroup>
+                    <optgroup label="Pistolengriffe (Pistol Grips)">
+                        <option value="Zenit RK-3: Bester Pistolengriff für AK-Plattformen. Massiver Ergo-Boost.">Zenit RK-3 Grip (AK)</option>
+                        <option value="Magpul MOE K2: Top-Ergonomie für westliche M4/AR-15 Plattformen. Pflicht-Upgrade!">Magpul MOE K2 (M4)</option>
+                        <option value="Ergo Grip / TangoDown: Sehr gute Alternativen für AR-Systeme, falls Magpul nicht verfügbar ist.">Ergo Grip / TangoDown</option>
+                    </optgroup>
+                    <optgroup label="Schäfte & Chassis (Stocks & Handguards)">
+                        <option value="Zenit PT-3 / PT-1: Klappschäfte für AKs. Hohe Ergo, extrem gute Rückstoßdämpfung.">Zenit PT-3 Klassika (AK)</option>
+                        <option value="Magpul PRS Gen3: Schwerer Präzisionsschaft für DMRs (M14/M700). Reduziert das Wackeln (Sway) durch Atmung massiv.">Magpul PRS Gen3 (Sniper)</option>
+                        <option value="Magpul CTR / MOE: Leichte, anpassbare Schäfte für M4-Buffer-Tubes. Perfekt für Sturmgewehre.">Magpul CTR Stock</option>
+                        <option value="Daniel Defense Stock: Stabilisiert das Visierbild nach dem Schuss extrem schnell. Sehr beliebt.">DD Stock (M4)</option>
+                        <option value="Sureshot Mk3 Chassis: Tauscht das halbe AK-Gehäuse aus. Erlaubt die Montage modernster westlicher Optiken und Laser auf AKs.">Sureshot MK3 (AK Chassis)</option>
+                    </optgroup>
+                    <optgroup label="Taktische Module (Laser & Licht)">
+                        <option value="AN/PEQ-15: Das Standard-Modul des Westens. Bietet Laser (Sichtbar/IR) und Taschenlampe. Verbessert Point-Fire Präzision.">AN/PEQ-15 (Laser/Licht)</option>
+                        <option value="Steiner DBAL: Sehr helles Licht und präziser Laser. Hervorragend für Night Ops (Nachteinsätze).">Steiner DBAL (Laser/Licht)</option>
+                        <option value="Klesch-2P / Perst: Russische Laser-Licht-Kombinationen. Sehr starker Laser, blendet Feinde auf kurze Distanz extrem.">Zenit Klesch / Perst</option>
+                        <option value="Surefire X400: Kompaktes Modul, eigentlich für Pistolen gedacht, macht sich aber auch gut an SMGs (MP5/MP7).">Surefire X400</option>
+                    </optgroup>
+                </select>
+                <div id="attachInfo" class="info-box">Attachment-Effekte...</div>
+            </div>
+
+            <div>
+                <label for="gearFullSelect">Gear (Rüstung, Helme, Rucksäcke)</label>
+                <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
+                    <option value="">-- Wähle Ausrüstung --</option>
+                    <optgroup label="Schwere Panzerung (Class 5 & 6)">
+                        <option value="6B43 Zabralo (Class 6): Maximaler Schutz im Spiel. Macht dich zu einem wandelnden Panzer, ist aber extrem schwer. Taktischer Sprint wird zur Qual.">6B43 Zabralo (Class 6)</option>
+                        <option value="IOTV Gen4 (Class 5): Hervorragender ballistischer Schutz für Brust, Bauch und Arme. Sehr beliebt bei Fort Narith Runs.">IOTV Gen4 Full (Class 5)</option>
+                        <option value="6B45 Ratnik (Class 5): Russischer Standard. Schützt Torso und Oberarme. Hoher Gewichts-Malus, aber extrem verlässlich.">6B45 Ratnik (Class 5)</option>
+                    </optgroup>
+                    <optgroup label="Mittlere Panzerung (Class 3 & 4 - Meta)">
+                        <option value="RPC Plate Carrier (Class 4): Die absolute 0.4 Meta! Sehr leicht, schützt die lebenswichtigen Organe (Lunge/Herz) und hat fast keine Trägheits-Strafe (Inertia).">RPC Plate Carrier (Class 4)</option>
+                        <option value="JPC Vest (Class 4): Jumpable Plate Carrier. Sehr kompakt, perfekt für schnelle Aufklärer, schützt aber nur den oberen Torso.">JPC Vest (Class 4)</option>
+                        <option value="Ana Tactical M1 (Class 4): Armored Rig. Kombiniert Class 4 Platten mit viel Platz für Magazine. Toller Allrounder.">Ana Tactical M1 (Class 4)</option>
+                        <option value="LBT-6094 (Class 3+): Guter Allrounder für Mid-Tier POIs wie Ban Pa oder Hunter's Paradise.">LBT-6094 (Class 3+)</option>
+                        <option value="6B23-1 / 6B13 (Class 3): Robuste russische Westen. Gut gegen KI-Scavs, aber schwach gegen Spieler mit AP-Munition.">6B23-1 / 6B13 (Class 3)</option>
+                    </optgroup>
+                    <optgroup label="Leichte Panzerung (Class 1 & 2)">
+                        <option value="PACA Soft Armor (Class 2): Schützt nur vor Schrot und 9mm PST. Leicht, aber im Endgame ein absolutes Risiko.">PACA Soft Armor (Class 2)</option>
+                        <option value="Zhuk-3 (Class 2): Press-Weste. Reiner Basisschutz für absolute Anfänger.">Zhuk-3 (Class 2)</option>
+                    </optgroup>
+                    <optgroup label="Helme & Gesichtsschutz">
+                        <option value="Altyn / Vulcan Helm (Class 5): Schwerer Sturmmhelm mit Visier. Macht dich fast taub (Headsets nicht möglich!), stoppt aber fast jeden Kopftreffer.">Altyn Assault Helmet</option>
+                        <option value="AirFrame Helmet (Class 4): Hochmoderne westliche Ausrüstung. Kann mit Chops (Ohrenschutz) und Visier stark aufgewertet werden.">AirFrame Helmet</option>
+                        <option value="Fast MT (Class 4): High-End Helm. Sehr leicht, kann mit Side-Rails und Face-Shield (Class 3) nachgerüstet werden.">Fast MT Helmet</option>
+                        <option value="MICH 2000 / TC-2000 (Class 3): Der Standard-Armeehelm. Zuverlässig gegen KI-Streifschüsse und Schrotflinten.">MICH 2000 / TC-2000</option>
+                        <option value="6B47 Ratnik-B (Class 3): Russischer Standard-Helm, gute Ergo-Werte, kompatibel mit Nachtsichtgeräten (NVGs).">6B47 Ratnik-B</option>
+                        <option value="SSh-68 (Class 2): Der gute alte 'Penis-Helm' (Stahlhelm). Schützt fast gar nicht, sieht aber lustig aus und leitet manchmal Schüsse ab (Ricochet).">SSh-68 Stahlhelm</option>
+                    </optgroup>
+                    <optgroup label="Nachtsicht & Gehörschutz (Night Ops)">
+                        <option value="GPNVG-18 (Quad-Node): Das 4-Röhren-Nachtsichtgerät der Elite. Riesiges Sichtfeld, keine toten Winkel, absoluter Luxus.">GPNVG-18 (NVG)</option>
+                        <option value="PVS-31 (Binocular): 2-Röhren-NVG. Solides Sichtfeld, guter Kontrast im Dschungel.">PVS-31 (NVG)</option>
+                        <option value="PVS-14 (Monocular): 1-Röhren-NVG. Günstig, aber du hast stark eingeschränkte Sichtränder.">PVS-14 (NVG)</option>
+                        <option value="ComTac 2 / ComTac 4: Aktiver Gehörschutz. Dämpft laute Schüsse und verstärkt feindliche Schritte massiv. Ein MUSS für PvP!">ComTac Headset</option>
+                        <option value="Sordin / Gssh-01: Günstigere Headsets. Klingen etwas 'bassiger' oder blecherner, sind aber besser als ohne.">Sordin / Gssh-01</option>
+                    </optgroup>
+                    <optgroup label="Rucksäcke (Backpacks)">
+                        <option value="Eberlestock G4 / Attack 2 (30-35 Slots): Riesig. Voll beladen führen diese Rucksäcke zu extremer Trägheit. Nur für reine Loot-Runs!">Eberlestock / Attack 2 (Large)</option>
+                        <option value="Mystery Ranch / Beta2 (25 Slots): Perfekter Kompromiss aus Platz und Agilität.">Mystery Ranch (Medium-Large)</option>
+                        <option value="Rush 24 / Tri-Zip (20 Slots): Der Standard für normale Raids. Genug Platz für Quest-Items und Mags.">Rush 24 / Tri-Zip (Medium)</option>
+                        <option value="Assault Pack (12 Slots): Perfekt für PvP-Jagd. Minimales Gewicht, maximale Ausdauer.">Assault Pack (Small)</option>
+                        <option value="Sling Bag / Duffle Bag (6-8 Slots): Scav-Rucksäcke. Besser als nichts, aber du stößt sofort an dein Limit.">Sling Bag (Budget)</option>
+                    </optgroup>
+                    <optgroup label="Tactical Rigs & Belts">
+                        <option value="LBT-1961A / Alpha Rig: Riesige Rigs (bis zu 16 Slots). Perfekt für Spieler, die viele Trommelmagazine oder Meds brauchen.">Alpha Rig (Heavy)</option>
+                        <option value="Triton / Blackhawk Strike: Mittlere Rigs (10-12 Slots). Gute Balance, passen über die meisten Westen.">Triton / Strike Rig (Medium)</option>
+                        <option value="Micro Rig / Bank Robber: Kleine Rigs (6-8 Slots). Extrem leicht, ideal für Sniper-Builds oder Low-Budget-Runs.">Micro Rig (Light)</option>
+                        <option value="Tactical War Belt: Zusätzlicher Platz an der Hüfte für Magazine und Meds, entlastet den Brustbereich und erhöht die Ergonomie.">Tactical War Belt</option>
+                    </optgroup>
+                </select>
+                <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 30px;">Munitions-Vergleich (Ballistik-Labor)</h2>
+        <div class="grid">
+            <div>
+                <label for="ammo1">Munition A</label>
+                <select id="ammo1" onchange="compareAmmo()"> 
+                    <option value="">-- Munition wählen --</option>
+                    <optgroup label="5.56x45mm (NATO)">
+                        <option value="m855a1">5.56 M855A1</option><option value="m855">5.56 M855</option><option value="m193">5.56 M193</option><option value="m856a1">5.56 M856A1 (Tracer)</option><option value="mk255">5.56 MK255 (Flesh/HP)</option>
+                    </optgroup>
+                    <optgroup label=".300 Blackout (SIG-MCX)">
+                        <option value="300_ap">.300 BLK AP</option><option value="300_cbj">.300 BLK CBJ</option><option value="300_m62">.300 BLK M62 (Tracer)</option><option value="300_whisper">.300 BLK Whisper</option>
+                    </optgroup>
+                    <optgroup label="5.45x39mm (AK-74/AK-12)">
+                        <option value="ak74_bs">5.45 BS</option><option value="ak74_bp">5.45 BP</option><option value="ak74_pp">5.45 PP</option><option value="ak74_7n6">5.45 7N6M</option><option value="ak74_hp">5.45 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
+                        <option value="ak_mai_ap">7.62x39 MAI AP</option><option value="ak_bp">7.62x39 BP</option><option value="ak_ps">7.62x39 PS</option><option value="ak_us">7.62x39 US</option><option value="ak_hp">7.62x39 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
+                        <option value="m993">7.62 M993</option><option value="m61">7.62 M61</option><option value="m62">7.62 M62</option><option value="m80">7.62 M80</option><option value="tcw_sp">7.62 TCW SP</option>
+                    </optgroup>
+                    <optgroup label="7.62x54mmR (Mosin/SVD)">
+                        <option value="snb">7.62x54R SNB</option><option value="7n1">7.62x54R 7N1</option><option value="lps">7.62x54R LPS</option>
+                    </optgroup>
+                    <optgroup label="4.6x30mm (MP7)">
+                        <option value="46_apsx">4.6x30 AP SX</option><option value="46_fmjsx">4.6x30 FMJ SX</option><option value="46_subsx">4.6x30 Subsonic</option><option value="46_actionsx">4.6x30 Action</option>
+                    </optgroup>
+                    <optgroup label="9x19mm (Glock/MP5/Alien)">
+                        <option value="7n31">9x19 7N31</option><option value="ap63">9x19 AP 6.3</option><option value="pst">9x19 PST Gzh</option><option value="rip">9x19 RIP</option>
+                    </optgroup>
+                    <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
+                        <option value="pm_pmm">9x18 PMM</option><option value="pm_sp7">9x18 PM SP7</option><option value="pm_gzh">9x18 PM Gzh</option><option value="tt_pst">7.62x25 TT PST</option><option value="tt_lrnpc">7.62x25 TT LRNPC</option>
+                    </optgroup>
+                    <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
+                        <option value="45_ap">.45 ACP AP</option><option value="45_match">.45 ACP Match</option><option value="45_rip">.45 ACP RIP</option><option value="32_fmj">.32 ACP FMJ</option>
+                    </optgroup>
+                    <optgroup label="12 Gauge (Shotguns)">
+                        <option value="ap20">12G AP-20 Slug</option><option value="slug">12G Copper Slug</option><option value="flechette">12G Flechette</option><option value="buck">12G 00 Buckshot</option>
+                    </optgroup>
+                </select>
+                <div id="ammo1Info" class="info-box">Wähle Munition A...</div>
+            </div>
+            <div>
+                <label for="ammo2">Munition B</label>
+                <select id="ammo2" onchange="compareAmmo()"> 
+                    <option value="">-- Munition wählen --</option>
+                    <optgroup label="5.56x45mm (NATO)">
+                        <option value="m855a1">5.56 M855A1</option><option value="m855">5.56 M855</option><option value="m193">5.56 M193</option><option value="m856a1">5.56 M856A1 (Tracer)</option><option value="mk255">5.56 MK255 (Flesh/HP)</option>
+                    </optgroup>
+                    <optgroup label=".300 Blackout (SIG-MCX)">
+                        <option value="300_ap">.300 BLK AP</option><option value="300_cbj">.300 BLK CBJ</option><option value="300_m62">.300 BLK M62 (Tracer)</option><option value="300_whisper">.300 BLK Whisper</option>
+                    </optgroup>
+                    <optgroup label="5.45x39mm (AK-74/AK-12)">
+                        <option value="ak74_bs">5.45 BS</option><option value="ak74_bp">5.45 BP</option><option value="ak74_pp">5.45 PP</option><option value="ak74_7n6">5.45 7N6M</option><option value="ak74_hp">5.45 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
+                        <option value="ak_mai_ap">7.62x39 MAI AP</option><option value="ak_bp">7.62x39 BP</option><option value="ak_ps">7.62x39 PS</option><option value="ak_us">7.62x39 US</option><option value="ak_hp">7.62x39 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
+                        <option value="m993">7.62 M993</option><option value="m61">7.62 M61</option><option value="m62">7.62 M62</option><option value="m80">7.62 M80</option><option value="tcw_sp">7.62 TCW SP</option>
+                    </optgroup>
+                    <optgroup label="7.62x54mmR (Mosin/SVD)">
+                        <option value="snb">7.62x54R SNB</option><option value="7n1">7.62x54R 7N1</option><option value="lps">7.62x54R LPS</option>
+                    </optgroup>
+                    <optgroup label="4.6x30mm (MP7)">
+                        <option value="46_apsx">4.6x30 AP SX</option><option value="46_fmjsx">4.6x30 FMJ SX</option><option value="46_subsx">4.6x30 Subsonic</option><option value="46_actionsx">4.6x30 Action</option>
+                    </optgroup>
+                    <optgroup label="9x19mm (Glock/MP5/Alien)">
+                        <option value="7n31">9x19 7N31</option><option value="ap63">9x19 AP 6.3</option><option value="pst">9x19 PST Gzh</option><option value="rip">9x19 RIP</option>
+                    </optgroup>
+                    <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
+                        <option value="pm_pmm">9x18 PMM</option><option value="pm_sp7">9x18 PM SP7</option><option value="pm_gzh">9x18 PM Gzh</option><option value="tt_pst">7.62x25 TT PST</option><option value="tt_lrnpc">7.62x25 TT LRNPC</option>
+                    </optgroup>
+                    <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
+                        <option value="45_ap">.45 ACP AP</option><option value="45_match">.45 ACP Match</option><option value="45_rip">.45 ACP RIP</option><option value="32_fmj">.32 ACP FMJ</option>
+                    </optgroup>
+                    <optgroup label="12 Gauge (Shotguns)">
+                        <option value="ap20">12G AP-20 Slug</option><option value="slug">12G Copper Slug</option><option value="flechette">12G Flechette</option><option value="buck">12G 00 Buckshot</option>
+                    </optgroup>
+                </select>
+                <div id="ammo2Info" class="info-box">Wähle Munition B...</div>
+            </div>
+        </div>
+        <div id="comparisonResult" class="info-box" style="text-align: center; font-weight: bold; border-left: none; border-top: 4px solid var(--accent, #7ca35a);">
+            Wähle zwei Typen zum Vergleich aus.
+        </div>
+    </div>
+
+    <div id="tab-medic" class="tab-content">
+        <h2>Medizin & Survival</h2>
+        <div class="grid">
+            <div>
+                <label for="symptomSelect">Symptom-Checker (Notfall-Medic)</label>
+                <select id="symptomSelect" onchange="updateSymptom()">
+                    <option value="">-- Was fühlst/siehst du? --</option>
+                    <optgroup label="Sicht & Wahrnehmung">
+                        <option value="gray_vision">Schwarz-Weiß-Sicht / Farbe verschwindet</option>
+                        <option value="blurry_vision">Verschwommenes Sichtfeld / Pulsieren</option>
+                        <option value="tunnel_vision">Tunnelblick / Schwarzer Rand wird größer</option>
+                    </optgroup>
+                    <optgroup label="Bewegung & Waffen-Handling">
+                        <option value="limping">Starkes Humpeln / Sprinten unmöglich</option>
+                        <option value="weapon_sway">Extremes Wackeln beim Zielen (Sway)</option>
+                        <option value="stamina_drain">Ausdauer regeneriert extrem langsam</option>
+                    </optgroup>
+                    <optgroup label="Akustik (Geräusche)">
+                        <option value="coughing">Charakter hustet Blut / Stöhnt ständig</option>
+                        <option value="heartbeat">Lauter Herzschlag / Schweres Atmen</option>
+                        <option value="stomach">Magenknurren</option>
+                    </optgroup>
+                </select>
+                <div id="symptomInfo" class="info-box">Diagnose & Behandlung...</div>
+            </div>
+
+            <div>
+                <label for="medFullSelect">Medizinische Versorgung</label>
+                <select id="medFullSelect" onchange="updateGeneric('medFullSelect', 'medFullInfo')">
+                    <option value="">-- Wähle Medizin-Item --</option>
+                    <optgroup label="Blutungen (Wundversorgung)">
+                        <option value="Bandage: Stoppt leichte Blutungen. Günstig und schnell, aber verbraucht sich sofort.">Bandage</option>
+                        <option value="Combat Gauze: Hämostatische Gaze. Stoppt leichte bis mittelschwere Blutungen sehr schnell.">Combat Gauze (QuikClot)</option>
+                        <option value="Notfallbandage (Israeli Bandage): Sehr zuverlässig. Stoppt mittelschwere Blutungen effektiv.">Emergency Bandage</option>
+                        <option value="Tourniquet (CAT): Lebensretter! Stoppt schwere (arterielle) Blutungen an Gliedmaßen sofort. Schnellste Anwendung im Spiel.">Tourniquet (CAT)</option>
+                    </optgroup>
+                    <optgroup label="Blutvolumen & Kreislauf (Hypovolämie)">
+                        <option value="Kochsalzlösung: Hilft bei leichtem Flüssigkeitsverlust und stabilisiert den Kreislauf ein wenig.">Saline Solution</option>
+                        <option value="Blutbeutel (250ml): Stellt eine kleine Menge Blutvolumen wieder her. Gut für leichte Streifschüsse.">Blood Bag (250ml)</option>
+                        <option value="Blutbeutel (500ml): Der Standard-Beutel. Stellt eine mittlere Menge Blut wieder her.">Blood Bag (500ml)</option>
+                        <option value="Blutbeutel (1000ml): Retter in der Not. Stellt das Blutvolumen bei massiven Verlusten (Koma-Gefahr) fast vollständig wieder her.">Blood Bag (1000ml)</option>
+                    </optgroup>
+                    <optgroup label="Chirurgie & Organe">
+                        <option value="Chirurgie-Set: Repariert beschädigte Organe (Magen, Lunge, Leber). Sehr lange Animationszeit, suche dir sichere Deckung!">Surgery Kit</option>
+                        <option value="Erweitertes Chirurgie-Set: Die Militär-Version. Hat mehr Anwendungen und heilt Organe etwas zuverlässiger. Goldstandard für Squad-Medics.">Advanced Surgery Kit</option>
+                    </optgroup>
+                    <optgroup label="Knochen & Brüche">
+                        <option value="Surgical Tape: Medizinisches Klebeband. Kann für minimale Fixierungen oder als Notlösung genutzt werden.">Surgical Tape</option>
+                        <option value="Schiene (Holz): Repariert Frakturen sofort. Behebt starkes Humpeln oder das extreme Zittern beim Zielen.">Splint (Wood)</option>
+                        <option value="SAM-Schiene: Hochwertige, formbare Militär-Schiene. Kompakt und hocheffizient bei Brüchen.">SAM Splint</option>
+                    </optgroup>
+                    <optgroup label="Schmerzmittel (Dauer & Stärke)">
+                        <option value="Paracetamol: Sehr leichtes Schmerzmittel. Unterdrückt den Schmerzeffekt (verschwommene Sicht) nur für kurze Zeit.">Paracetamol</option>
+                        <option value="Ibuprofen: Mittleres Schmerzmittel. Der Standard für leichte Verletzungen und längere Fußmärsche.">Ibuprofen</option>
+                        <option value="Meloxicam: Starkes Schmerzmittel in Tablettenform. Hält sehr lange an, ideal vor großen Feuergefechten.">Meloxicam</option>
+                        <option value="Morphin-Injektor: Extrem starke, sofortige Schmerzausschaltung. Hilft bei kritischen Verletzungen, um trotzdem noch zur Extraktion rennen zu können.">Morphine Injector</option>
+                        <option value="Adrenalin-Injektor: Gibt dir sofort einen massiven Ausdauer-Boost. Perfekt, um unter schwerem Beschuss in Deckung zu sprinten (Tactical Sprint).">Epinephrine (Epi-Pen)</option>
+                    </optgroup>
+                </select>
+                <div id="medFullInfo" class="info-box">Medizinische Details...</div>
+            </div>
+
+            <div>
+                <label for="foodFullSelect">Verpflegung (Essen & Trinken)</label>
+                <select id="foodFullSelect" onchange="updateGeneric('foodFullSelect', 'foodFullInfo')">
+                    <option value="">-- Wähle Verpflegung --</option>
+                    <optgroup label="Wasser & Feldflaschen (Reine Hydration)">
+                        <option value="Wasserflasche (0.5L): Standard-Hydration. Stellt ca. die Hälfte des Dursts wieder her. Schnell konsumiert und leicht zu finden.">Water Bottle (0.5L)</option>
+                        <option value="Große Wasserflasche (1.5L): Perfekt für lange Raids. Füllt den Durst komplett auf und hat oft noch Reste für später.">Water Bottle (1.5L)</option>
+                        <option value="Militär-Feldflasche (Canteen): Der effizienteste Mehrwegbehälter. Füllt den Durst massiv auf. Optimaler Begleiter im Rucksack.">Military Canteen</option>
+                        <option value="Kokosnusswasser: Naturprodukt. Spendet hervorragende Hydration und gibt dir sogar noch einen kleinen Energie-Boost.">Coconut Water</option>
+                    </optgroup>
+                    <optgroup label="Säfte & Softdrinks (Hydration + Zucker/Energie)">
+                        <option value="Energy Drink (Taurine/Guarana): Gibt einen mittleren Hydration-Schub und lässt deine Ausdauer für kurze Zeit deutlich schneller regenerieren. Perfekt vor Sprints!">Energy Drink</option>
+                        <option value="Limonaden-Dose (Cola / Zitrone / Traube): Geringe Hydration, pusht aber durch den Zucker deine Energie leicht nach oben.">Soda Can (Diverse Sorten)</option>
+                        <option value="Fruchtsaft (Apfel / Orange / Ananas): Solide Flüssigkeitsquelle, die dir gleichzeitig einen ordentlichen Schub Kalorien (Energie) liefert.">Fruit Juice</option>
+                        <option value="Milch (Karton): Sehr nahrhaft. Füllt den Durst auf und gibt massiv Energie, ist aber relativ schwer im Rucksack.">Milk</option>
+                    </optgroup>
+                    <optgroup label="Militärrationen & Dosen (Hohe Energie)">
+                        <option value="MRE (Meal Ready to Eat): Die ultimative Kampfration. Füllt deine Energie fast komplett auf, wiegt wenig und macht nicht so extrem durstig wie Snacks.">MRE (Military Grade)</option>
+                        <option value="Dosenfleisch (Tushonka / Beef): Extrem hohe Energie-Sättigung, aber zieht Wasser! Halte unbedingt ein Getränk bereit.">Canned Beef / Meat</option>
+                        <option value="Dosen-Thunfisch: Sehr gute Proteinquelle. Liefert ordentlich Energie, trocknet dich aber leicht aus.">Canned Tuna</option>
+                        <option value="Dosenbohnen: Hohe Sättigung, sehr zuverlässig. Zieht nicht ganz so viel Wasser wie reines Fleisch.">Canned Beans</option>
+                        <option value="Dosenfrüchte (Pfirsich / Ananas): Ein echter Geheimtipp! Spendet viel Energie UND füllt dank des Sirups gleichzeitig deinen Durst auf.">Canned Fruits (Peaches/Pineapple)</option>
+                    </optgroup>
+                    <optgroup label="Snacks & Süßigkeiten (Für den Tactical Belt)">
+                        <option value="Energy Riegel / Protein Riegel: Schneller, leichter Snack für zwischendurch. Kostet nur einen Slot, ideal für den Gürtel.">Energy Bar / Protein Bar</option>
+                        <option value="Schokoriegel: Sehr schneller Zucker-Schub, um die Energie aus dem roten Bereich zu holen.">Chocolate Bar</option>
+                        <option value="Cracker / Kekse: Vorsicht, extrem trocken! Erhöhen die Energie, senken aber deine Hydration massiv. Nur essen, wenn Wasser da ist.">Crackers / Biscuits</option>
+                        <option value="Kartoffelchips / Erdnüsse: Der viele Salzgehalt macht extrem durstig. Zieht massiv Hydration, spendet nur mittlere Energie.">Chips / Peanuts</option>
+                        <option value="Instantnudeln: Solider Snack, mittlere Werte. Trocknet dich leicht aus, wenn trocken gegessen.">Instant Noodles</option>
+                        <option value="Kondensmilch (Dose): Massive Energie auf kleinstem Raum, verursacht aber sofort extremen Durst. Nur in der Nähe von Wasserquellen oder im absoluten Notfall nutzen!">Condensed Milk</option>
+                    </optgroup>
+                </select>
+                <div id="foodFullInfo" class="info-box">Effekte auf Status...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-intel" class="tab-content">
+        <h2>Intel, Karte & Kontakte</h2>
+        <div class="grid">
+            <div>
+                <label for="lzSelect">LZ & Navigation (Helikopter)</label>
+                <select id="lzSelect" onchange="updateLZ()">
+                    <option value="">-- Wähle ein Zielgebiet --</option>
+                    <optgroup label="Fraktions-Startgebiete (Safe Zones)">
+                        <option value="mithras">Mithras (Nam Thaven) - Alpha LZs</option>
+                        <option value="lamang">Lamang (Pha Lang) - Bravo LZs</option>
+                        <option value="crimson">Crimson (Kiu Vongsa) - Charlie LZs</option>
+                    </optgroup>
+                    <optgroup label="Early & Mid Game POIs">
+                        <option value="lumber">Lumber Yard (Sägewerk) - Echo LZs</option>
+                        <option value="hunters">Hunter's Paradise - Foxtrot LZs</option>
+                        <option value="banpa">Ban Pa (Fischerdorf) - India LZs</option>
+                        <option value="blue_lagoon">Blue Lagoon (See) - Kilo LZs</option>
+                    </optgroup>
+                    <optgroup label="End Game POIs (High Danger)">
+                        <option value="ybl">YBL-1 Bunker - Juliet LZs</option>
+                        <option value="fort_narith">Fort Narith (Basis) - Delta LZs</option>
+                        <option value="midnight">Midnight Sapphire - Hotel LZs</option>
+                        <option value="tiger_bay">Tiger Bay (Großstadt) - Lima LZs</option>
+                        <option value="ground_zero">Ground Zero (Airfield) - Golf LZs</option>
+                    </optgroup>
+                </select>
+                <div id="lzInfo" class="info-box">Landeplatz-Sicherheit & Tipps...</div>
+            </div>
+
+            <div>
+                <label for="bossSelect">Boss-Datenbank</label>
+                <select id="bossSelect" onchange="updateBoss()">
+                    <option value="">-- Wähle einen Boss --</option>
+                    <optgroup label="Startregionen">
+                        <option value="market_leader">Criminal Leader (Marktplatz)</option>
+                        <option value="lumber_boss">Lumber Yard Foreman</option>
+                        <option value="rebel_ybl">Rebel Leader (YBL-1 Bunker)</option>
+                    </optgroup>
+                    <optgroup label="Mid-Game POIs">
+                        <option value="hunter_commander">Hostile Commander (Hunter's Paradise)</option>
+                        <option value="malo_blue">Malo Luangrath (Blue Lagoon)</option>
+                        <option value="banpa_leader">Elder Leader (Ban Pa)</option>
+                    </optgroup>
+                    <optgroup label="End-Game & High Danger">
+                        <option value="fort_commander">General Pa (Fort Narith HQ)</option>
+                        <option value="midnight_laf">LAF Commander (Midnight Sapphire)</option>
+                        <option value="tiger_bay_unlra">UNLRA Officer (Tiger Bay HQ)</option>
+                        <option value="tiger_bay_pier">Pier Boss (Tiger Bay)</option>
+                        <option value="airfield_boss">Airfield Commander (Ground Zero)</option>
+                    </optgroup>
+                </select>
+                <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
+            </div>
+
+            <div>
+                <label for="vendorSelect">Händler & Freischaltungen (Vendors)</label>
+                <select id="vendorSelect" onchange="updateVendor()">
+                    <option value="">-- Wähle Händler & Level --</option>
+                    <optgroup label="Gunny (NATO-Waffen & Munition)">
+                        <option value="gunny_1">Gunny Level 1 (Start)</option>
+                        <option value="gunny_2">Gunny Level 2</option>
+                        <option value="gunny_3">Gunny Level 3 (Meta-Gear)</option>
+                    </optgroup>
+                    <optgroup label="Handshake (Rüstung & Rucksäcke)">
+                        <option value="handshake_1">Handshake Level 1 (Start)</option>
+                        <option value="handshake_2">Handshake Level 2</option>
+                        <option value="handshake_3">Handshake Level 3 (Meta-Gear)</option>
+                    </optgroup>
+                    <optgroup label="Lab Rat (Medizin & Verpflegung)">
+                        <option value="labrat_1">Lab Rat Level 1 (Start)</option>
+                        <option value="labrat_2">Lab Rat Level 2</option>
+                        <option value="labrat_3">Lab Rat Level 3</option>
+                    </optgroup>
+                    <optgroup label="Artisan (AK-Plattformen & Ost-Gear)">
+                        <option value="artisan_1">Artisan Level 1 (Start)</option>
+                        <option value="artisan_2">Artisan Level 2</option>
+                        <option value="artisan_3">Artisan Level 3</option>
+                    </optgroup>
+                    <optgroup label="Turncoat (Westliche Spezialwaffen)">
+                        <option value="turncoat_1">Turncoat Level 1</option>
+                        <option value="turncoat_2">Turncoat Level 2</option>
+                        <option value="turncoat_3">Turncoat Level 3 (Sniper-Meta)</option>
+                    </optgroup>
+                    <optgroup label="Banshee (High-End & Seltenes)">
+                        <option value="banshee_1">Banshee Level 1</option>
+                        <option value="banshee_2">Banshee Level 2</option>
+                        <option value="banshee_3">Banshee Level 3 (Endgame)</option>
+                    </optgroup>
+                </select>
+                <div id="vendorInfo" class="info-box">Wichtigste Freischaltungen...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-loot" class="tab-content">
+        <h2>Beute & Zugang</h2>
+        <div class="grid">
+            <div>
+                <label for="valSelect">Loot & Verkaufspreise (Valuables)</label>
+                <select id="valSelect" onchange="updateValuable()">
+                    <option value="">-- Wähle ein Item --</option>
+                    <optgroup label="High Tier (Bester Wert pro Slot)">
+                        <option value="gold_phone">Goldenes Smartphone</option>
+                        <option value="diamond_ring">Diamantring</option>
+                        <option value="gold_watch">Goldene Uhr (Rolex)</option>
+                        <option value="class_docs">Geheime Dokumente</option>
+                        <option value="gold_coin">Goldmünze</option>
+                        <option value="usb_drive">Verschlüsseltes USB-Laufwerk</option>
+                        <option value="gpu">Grafikkarte (GPU)</option>
+                        <option value="tablet">Tablet</option>
+                        <option value="laptop">Laptop / Notebook (Elektronik)</option>
+                    </optgroup>
+                    <optgroup label="Mid Tier (Solider Beifang)">
+                        <option value="antique_vase">Antike Vase</option>
+                        <option value="wood_statue">Holzstatue</option>
+                        <option value="smartphone">Smartphone (Standard)</option>
+                        <option value="camera">Digitalkamera</option>
+                        <option value="silver_coin">Silbermünze</option>
+                        <option value="silver_chain">Silberkette</option>
+                        <option value="voice_recorder">Diktiergerät</option>
+                        <option value="hdd">Festplatte (HDD)</option>
+                        <option value="flash_drive">Normaler USB-Stick</option>
+                        <option value="calculator">Taschenrechner</option>
+                        <option value="wallet">Geldbörse</option>
+                        <option value="sunglasses">Sonnenbrille</option>
+                        <option value="old_book">Altes Buch / Antikes Buch</option>
+                    </optgroup>
+                    <optgroup label="Low Tier (Nur wenn Platz ist)">
+                        <option value="glasses">Brille (Lesebrille)</option>
+                        <option value="cutlery">Besteck</option>
+                        <option value="lighter">Feuerzeug (Zippo)</option>
+                        <option value="cards">Kartenspiel</option>
+                        <option value="notebook_paper">Notizblock (Papier)</option>
+                        <option value="pen">Kugelschreiber (Pen)</option>
+                        <option value="cigarettes">Zigaretten</option>
+                        <option value="tp">Toilettenpapier</option>
+                        <option value="matches">Streichhölzer</option>
+                    </optgroup>
+                </select>
+                <div id="valInfoDisplay" class="info-box">Wähle ein Item für Preis & Details...</div>
+            </div>
+
+            <div>
+                <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
+                <select id="containerSelect" onchange="updateContainer()">
+                    <option value="">-- Wähle einen Container --</option>
+                    <optgroup label="Secure Containers (Lockbox)">
+                        <option value="safe_lock">Safe Lock (2x2) - 4 Slots</option>
+                        <option value="snook_908">Snook 908 (2x3) - 6 Slots</option>
+                        <option value="tas">TAS Container (3x3) - 9 Slots</option>
+                    </optgroup>
+                    <optgroup label="Lagerkisten (Stash Cases / Boxes)">
+                        <option value="ammo_box">Ammo Container (Munitionskiste)</option>
+                        <option value="weapon_box">Weapon Container (Waffenkiste)</option>
+                        <option value="med_box">Medical Container (Medikamentenkiste)</option>
+                        <option value="armor_box">Armor/Gear Container (Ausrüstungskiste)</option>
+                        <option value="food_box">Provisions Container (Kühlbox/Essen)</option>
+                    </optgroup>
+                    <optgroup label="Kleine Behälter (Inventar)">
+                        <option value="key_holder">Key Holder (Schlüsselbund)</option>
+                        <option value="wallet">Leather Wallet (Geldbörse)</option>
+                    </optgroup>
+                    <optgroup label="Lagerplatz (Base Stash)">
+                        <option value="stash_upgrade">Locker / Schließfach Erweiterungen</option>
+                    </optgroup>
+                </select>
+                <div id="containerInfoDisplay" class="info-box">Wähle einen Container für Details zum Fundort...</div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 30px;">Schlüssel-Datenbank (Key Intel)</h2>
+        <label for="keySearch">Suche nach Key-Name oder Ort:</label>
+        <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
+        <div id="keyList"></div>
+        <div id="keyContainer" class="info-box">
+            <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px;">Schlüssel-Info...</div>
+            <div id="keyLocation" style="margin-bottom:5px;">Fundort wird hier angezeigt.</div>
+            <div id="keyEffect">Welche Tür öffnet dieser Schlüssel?</div>
+        </div>
+    </div>
+
+    <div id="tab-tasks" class="tab-content">
+        <h2>Missions-Datenbank (Tasks)</h2>
+        <label for="taskSearch">Task suchen (Deutsch oder Englisch):</label>
+        <input type="text" id="taskSearch" placeholder="z.B. First Recon / Erstaufklärung..." onkeyup="searchTasks()">
+        <div id="taskList"></div>
+        <div id="taskContainer" class="info-box">
+            <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem;">Wähle einen Task aus der Suche...</div>
+            <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
+            <div id="taskDesc" style="margin-bottom: 15px;">Die Zielbeschreibung erscheint hier.</div>
+            <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
+            <div id="taskSolution" class="task-solution" style="margin-top: 15px;"></div>
+        </div>
     </div>
 
 </div> 
+<button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
 
 <script>
+    // --- TAB NAVIGATION LOGIK (NEU!) ---
+    function openTab(tabId, btnElement) {
+        // Verstecke alle Tabs
+        let tabs = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove("active");
+        }
+        
+        // Deaktiviere alle Buttons
+        let btns = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].classList.remove("active");
+        }
+        
+        // Aktiviere geklickten Tab und Button
+        document.getElementById(tabId).classList.add("active");
+        btnElement.classList.add("active");
+    }
+
+    // --- ZURÜCK NACH OBEN LOGIK ---
+    let topButton = document.getElementById("backToTopBtn");
+    window.addEventListener("scroll", function() {
+        if (window.scrollY > 150) {
+            topButton.style.display = "block";
+        } else {
+            topButton.style.display = "none";
+        }
+    });
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==============================================================
+    // FÜGE AB HIER DEINEN GESAMTEN ALTEN JAVASCRIPT-CODE EIN 
+    // (Deine const weapons = {...}, const bosses = {...}, Funktionen etc.)
+    // ==============================================================
+    
     // 1. WAFFEN DATENBANK (Erweitert)
     const weapons = {
-        // --- STURMGEWEHRE ---
         "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
         "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
         "mk18": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
@@ -652,15 +716,11 @@
         "ak15": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Verbindet das moderne Handling der AK-12 mit der brachialen Kraft der 7.62 Patrone." },
         "ak19": { ammo: "5.56x45mm NATO", pen: "Class 4", tip: "Nutzt westliche Munition auf der modernen AK-12 Plattform. Sehr vielseitig." },
         "ak308": { ammo: "7.62x51mm M80/M61", pen: "Class 5-6", tip: "AK-Plattform auf Steroiden. Verschießt fette NATO-Muni. Extrem laut, extrem tödlich." },
-
-        // --- DMR & SCHARFSCHÜTZEN ---
         "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
         "m700": { ammo: "7.62x51mm M61", pen: "Class 6", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
         "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
         "mosin": { ammo: "7.62x54mmR SNB", pen: "Class 6", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
         "skn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
-
-        // --- SMGs & SHOTGUNS ---
         "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Ein Laser auf kurze Distanz. Ziele auf Kopf oder Beine." },
         "mp7a1": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Kleine Waffe, gigantischer Durchschlag. Perfekte Backup-Waffe für Sniper." },
         "mp7a2": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Wie die A1, aber erlaubt die Montage eigener Vordergriffe für noch bessere Ergo." },
@@ -668,8 +728,6 @@
         "vityaz": { ammo: "9x19mm 7N21", pen: "Class 2+", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
         "m870": { ammo: "12G Slug / 00 Buck", pen: "Class 0-2", tip: "In 0.4 sind Slugs gegen weiche Ziele verheerend." },
         "590a1": { ammo: "12G 00 Buckshot", pen: "Class 0-1", tip: "Maximale Stopwirkung auf 5-10 Meter." },
-
-        // --- PISTOLEN ---
         "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS und fast kein Rückstoß." },
         "glock17": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Zuverlässig, große Magazine verfügbar." },
         "m9a1": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Gute Standard-Pistole für den Start." },
@@ -694,101 +752,107 @@
         "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
     };
 
-    // 3. AMMO DATENBANK (Komplett)
+    // 3. AMMO DATENBANK
     const ammoDb = {
-        // --- 5.56 NATO ---
         "m855a1": { name: "5.56 M855A1", pen: 4.0, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
         "m855": { name: "5.56 M855", pen: 3.0, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
         "m193": { name: "5.56 M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
         "m856a1": { name: "5.56 M856A1", pen: 3.5, damage: 51, info: "Tracer-Munition (Leuchtspur). Gut für Squads." },
         "mk255": { name: "5.56 MK255", pen: 1.0, damage: 65, info: "Hollow Point. Verheerend gegen ungepanzerte Ziele." },
-        // --- .300 BLACKOUT ---
         "300_ap": { name: ".300 BLK AP", pen: 4.5, damage: 55, info: "Hervorragende Penetration auf kurze bis mittlere Distanz." },
         "300_cbj": { name: ".300 BLK CBJ", pen: 4.0, damage: 58, info: "Gute Balance zwischen Rüstungsdurchschlag und Schaden." },
         "300_m62": { name: ".300 BLK M62", pen: 3.8, damage: 54, info: "Leuchtspurmunition für die SIG-MCX." },
         "300_whisper": { name: ".300 BLK Whisper", pen: 2.5, damage: 62, info: "Subsonic. In Kombination mit Schalldämpfer flüsterleise." },
-        // --- 5.45 AK ---
         "ak74_bs": { name: "5.45 BS", pen: 5.0, damage: 43, info: "Durchschlägt Class 5 problemlos. Etwas weniger Schaden." },
         "ak74_bp": { name: "5.45 BP", pen: 4.0, damage: 48, info: "Die Meta-Muni für 5.45 Waffen. Bricht Class 4." },
         "ak74_pp": { name: "5.45 PP", pen: 3.0, damage: 50, info: "Guter Mid-Tier Durchschlag für den Start." },
         "ak74_7n6": { name: "5.45 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition. Oft bei Scavs zu finden." },
         "ak74_hp": { name: "5.45 HP", pen: 1.0, damage: 68, info: "Hohlspitz. Null Durchschlag, aber sofort tödlich in die Beine." },
-        // --- 7.62x39 AK/SKS ---
         "ak_mai_ap": { name: "7.62x39 MAI AP", pen: 5.5, damage: 46, info: "Extrem seltene Munition. Bricht fast jede Rüstung." },
         "ak_bp": { name: "7.62x39 BP", pen: 4.5, damage: 58, info: "Härtester Standard-Durchschlag für AK-Plattformen." },
         "ak_ps": { name: "7.62x39 PS", pen: 3.2, damage: 54, info: "Solider Allrounder für das Mid-Game." },
         "ak_us": { name: "7.62x39 US", pen: 2.0, damage: 56, info: "Subsonic. Sehr leise, aber starker Bullet-Drop." },
         "ak_hp": { name: "7.62x39 HP", pen: 1.0, damage: 73, info: "Massiver Fleischschaden. Ideal für Leg-Meta." },
-        // --- 7.62x51 NATO ---
         "m993": { name: "7.62x51 M993", pen: 6.5, damage: 60, info: "Das Nonplusultra der Penetration. Geht durch Class 6 wie Butter." },
         "m61": { name: "7.62x51 M61", pen: 6.0, damage: 64, info: "Ignoriert fast jede Rüstung im Spiel (Class 6)." },
         "m62": { name: "7.62x51 M62", pen: 5.4, damage: 68, info: "Hohe Penetration + Leuchtspur. Guter Schaden." },
         "m80": { name: "7.62x51 M80", pen: 4.2, damage: 80, info: "Enormer Schaden, tötet weiche Ziele meist mit 1 Treffer." },
         "tcw_sp": { name: "7.62x51 TCW SP", pen: 2.5, damage: 90, info: "Gigantischer Fleischschaden. Zerfetzt ungepanzerte Ziele." },
-        // --- 7.62x54R ---
         "snb": { name: "7.62x54R SNB", pen: 6.0, damage: 75, info: "Schlägt durch jeden Helm und jede Weste (Mosin/SVD)." },
         "7n1": { name: "7.62x54R 7N1", pen: 4.5, damage: 85, info: "Maximale Präzision. One-Shot Potenzial gegen Class 4." },
         "lps": { name: "7.62x54R LPS Gzh", pen: 4.0, damage: 80, info: "Standard-Munition für Mosin. Gut gegen Class 4." },
-        // --- 4.6x30mm (MP7) ---
         "46_apsx": { name: "4.6x30 AP SX", pen: 5.0, damage: 35, info: "Absurde Penetration für eine SMG. Bricht Class 5!" },
         "46_fmjsx": { name: "4.6x30 FMJ SX", pen: 4.0, damage: 43, info: "Gute Allround-Munition für die MP7. Hohe Kadenz rettet den Schaden." },
         "46_subsx": { name: "4.6x30 Subsonic", pen: 3.5, damage: 45, info: "Leise und tödlich." },
         "46_actionsx": { name: "4.6x30 Action SX", pen: 1.5, damage: 65, info: "Null Penetration, zerstört aber Gliedmaßen extrem schnell." },
-        // --- 9x19mm ---
         "7n31": { name: "9x19 7N31", pen: 3.5, damage: 45, info: "Beste 9mm Penetration. Geht durch leichte Visire." },
         "ap63": { name: "9x19 AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields und leichte Helme." },
         "pst": { name: "9x19 PST Gzh", pen: 1.5, damage: 52, info: "Geringe Penetration, nur für Kopfschüsse ohne Helm." },
         "rip": { name: "9x19 RIP", pen: 0.5, damage: 95, info: "Die Leg-Meta Königin. Zielt auf die Beine für Insta-Kills." },
-        // --- 9x18 & 7.62x25 (Tokarev) ---
         "pm_pmm": { name: "9x18 PMM", pen: 2.0, damage: 55, info: "Überdruck-Munition. Kann nur in speziellen Makarovs/Klin genutzt werden!" },
         "pm_sp7": { name: "9x18 PM SP7", pen: 1.0, damage: 70, info: "Keine Pen. Nur für Beine geeignet." },
         "pm_gzh": { name: "9x18 PM Gzh", pen: 1.0, damage: 50, info: "Die absolute Standard-Pistolenmunition." },
         "tt_pst": { name: "7.62x25 TT PST Gzh", pen: 2.5, damage: 50, info: "Überraschend gute Penetration für alte Pistolen." },
         "tt_lrnpc": { name: "7.62x25 TT LRNPC", pen: 1.0, damage: 65, info: "Standard-Flesh-Damage Munition." },
-        // --- .45 ACP & .32 ACP ---
         "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Die einzige .45er Muni, die zuverlässig durch Rüstungen kommt." },
         "45_match": { name: ".45 ACP Match FMJ", pen: 2.0, damage: 70, info: "Hoher Basisschaden, aber schwach gegen Westen ab Class 3." },
         "45_rip": { name: ".45 ACP RIP", pen: 0.5, damage: 120, info: "Zwei Treffer in die Beine und der Gegner ist Geschichte." },
         "32_fmj": { name: ".32 ACP FMJ", pen: 1.0, damage: 40, info: "Sehr schwache Pistolenmunition (VZ-61). Feinde ins Gesicht sprühen!" },
-        // --- 12 GAUGE ---
         "ap20": { name: "12G AP-20 Slug", pen: 3.5, damage: 160, info: "Ein panzerbrechender Eisenblock. Kann Class 3/4 Westen brechen und sofort töten." },
         "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss. Verheerend gegen weiche Ziele." },
         "flechette": { name: "12G Flechette", pen: 3.0, damage: "8x25", info: "Schießt kleine Pfeile. Zerreißt Rüstungen in Sekunden." },
         "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Acht Pellets. Tödlich im Nahkampf bei Treffern auf Arme oder Beine." }
     };
 
-    // 4. SCHLÜSSEL DATENBANK
+    // 4. SCHLÜSSEL DATENBANK (Die ersten 10 als Beispiel - FÜGE HIER DEINE KOMPLETTE LISTE WIEDER EIN)
     const allKeys = [
+        // --- STARTSTÄDTE (Pha Lang, Nam Thaven, Kiu Vongsa) ---
         { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro des Arztes im 2. Stock.", loot: "Medizinische Vorräte, Task-Intel (Medical Detective)" },
         { name: "Mayor's Office Key", loc: "Startstadt (Rathaus)", effect: "Öffnet das Hauptbüro des Bürgermeisters.", loot: "Bargeld, Intel, Tresor" },
         { name: "Market Storage Key", loc: "Startstadt (Marktplatz)", effect: "Öffnet den Lagerraum hinter den Marktständen.", loot: "Provisions (Essen/Trinken), Rucksäcke" },
         { name: "Pharmacy Key", loc: "Startstadt", effect: "Öffnet den Hinterraum der kleinen Apotheke.", loot: "IFAKs, Surkits, Schmerzmittel" },
+
+        // --- LUMBER YARD (Sägewerk) ---
         { name: "Foreman's Office Key", loc: "Lumber Yard", effect: "Öffnet das Büro des Vorarbeiters in der Haupthalle.", loot: "Task-Dokumente (Blueprints), Safe, Bargeld" },
         { name: "Lumber Storage Key", loc: "Lumber Yard", effect: "Öffnet den verschlossenen Geräteschuppen im Norden.", loot: "Werkzeuge (Toolsets), Baumaterial" },
+
+        // --- HUNTER'S PARADISE ---
         { name: "HP Weapon Storage Key", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer am Hauptschießstand. Droppt oft vom dortigen Boss.", loot: "High-Tier Waffen (M4A1, M700), Aufsätze, AP-Munition" },
         { name: "HP Motel Room 3 Key", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 3 im Motel-Bereich.", loot: "Waffen-Kisten, Munition" },
         { name: "HP Office Key", loc: "Hunter's Paradise", effect: "Öffnet das Hauptbüro nahe dem Eingang.", loot: "Intel, Wertsachen" },
+
+        // --- BLUE LAGOON ---
         { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte auf Stelzen über dem Wasser.", loot: "SVD/Mosin-Teile, Task-Items, Gold" },
         { name: "Restaurant Backroom Key", loc: "Blue Lagoon", effect: "Öffnet das Lager im hinteren Teil des Restaurants.", loot: "Provisions, Schwarzgeld (Task)" },
         { name: "Lagoon Office Key", loc: "Blue Lagoon", effect: "Öffnet das kleine Verwaltungsbüro.", loot: "Tresor, Intel" },
+
+        // --- BAN PA ---
         { name: "Elder's House Key", loc: "Ban Pa", effect: "Öffnet das große Haus des Dorfältesten im Zentrum.", loot: "Wertvolle Statuen, Task-Items" },
         { name: "Ban Pa Shack Key", loc: "Ban Pa", effect: "Öffnet die verschlossene Fischerhütte im Norden.", loot: "Waffen, Munition" },
         { name: "Smuggler's Storage Key", loc: "Ban Pa", effect: "Öffnet den Schuppen nahe dem Bootssteg.", loot: "Schmuggelware, Wertsachen" },
+
+        // --- YBL-1 BUNKER ---
         { name: "YBL-1 Office Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet das Büro direkt nach dem Haupteingang.", loot: "Task-Dokumente, Intel" },
         { name: "YBL-1 Generator Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Hauptgeneratorraum.", loot: "Sicherungen, Werkzeuge, Task-Zugang" },
         { name: "YBL-1 Server Room Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Serverraum hinter den Lüftungsschächten.", loot: "Elektronik, Task-Intel (Festplatte)" },
         { name: "YBL-1 Commander Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet das Quartier des Bunker-Kommandanten.", loot: "Seltene Waffen-Mods, Tresor" },
         { name: "YBL-1 Security Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet den Überwachungsraum.", loot: "Waffen, Munition" },
+
+        // --- FORT NARITH ---
         { name: "Fort HQ Key", loc: "Fort Narith", effect: "Öffnet das Büro von General Pa im obersten Stock des Hauptquartiers.", loot: "Gravierte Waffen, Intel, Safe" },
         { name: "Fort Storage Key", loc: "Fort Narith", effect: "Öffnet das primäre Munitionsdepot.", loot: "Große Mengen an High-Tier Munition (M61, M855A1)" },
         { name: "Barracks A Key", loc: "Fort Narith (Block A)", effect: "Öffnet den verschlossenen Offiziersbereich in Block A.", loot: "Rüstungen (Class 4+), Helme" },
         { name: "Fort Armory Key", loc: "Fort Narith", effect: "Öffnet die schwere Waffenkammer.", loot: "Sturmgewehre, Granaten, Aufsätze" },
         { name: "Gatehouse Key", loc: "Fort Narith", effect: "Öffnet das Wachhaus am Haupteingang.", loot: "Waffen, Munition, Schlüssel" },
+
+        // --- TIGER BAY ---
         { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Die rote Keycard öffnet die Quarantäne-Labore im 3. Stock des HQs.", loot: "Medizinische High-Tier Güter (Surkits, Stims), Task-Items" },
         { name: "Tiger Bay Mall Key", loc: "Tiger Bay", effect: "Öffnet den Technik/Security-Raum im Einkaufszentrum.", loot: "Elektronik, Waffen, Bargeld" },
         { name: "Pier Storage Key", loc: "Tiger Bay", effect: "Öffnet das Lagerhaus direkt am Pier.", loot: "Waffen-Kisten, Aufsätze" },
         { name: "Tiger Clinic Key", loc: "Tiger Bay", effect: "Öffnet die kleine Feldklinik in der Stadt.", loot: "Medikamente, Blutkonserven" },
         { name: "UNLRA Commander Key", loc: "Tiger Bay HQ", effect: "Öffnet das Büro des UNLRA Offiziers.", loot: "Intel, Safe, seltene Waffen" },
+
+        // --- MIDNIGHT SAPPHIRE (Hotel & Villen) ---
         { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Der wichtigste Schlüssel hier! Öffnet viele Standard-Zimmer im Hotel.", loot: "Bargeld, Wertsachen, Koffer" },
         { name: "Villa 1 Key", loc: "Midnight Sapphire", effect: "Öffnet die westlichste Luxusvilla.", loot: "Geld, Schmuck, Safe" },
         { name: "Villa 2 Key", loc: "Midnight Sapphire", effect: "Öffnet die mittlere Villa (wichtig für Kongressabgeordneten-Task).", loot: "Task-Dokumente, Safe" },
@@ -797,8 +861,12 @@
         { name: "Hotel Manager Key", loc: "Midnight Sapphire", effect: "Öffnet das Büro hinter der Rezeption.", loot: "Safe, Bargeld, Intel" },
         { name: "Room 202 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 202 im 2. Stock.", loot: "Waffen-Koffer" },
         { name: "Room 204 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 204 (wichtig für Turncoat-Task).", loot: "Task-Akte, Wertsachen" },
+
+        // --- GROUND ZERO / AIRFIELD ---
         { name: "Airfield Tower Key", loc: "Ground Zero", effect: "Öffnet den verschlossenen Bereich im Kontrollturm.", loot: "Militärische Aufklärung, Waffen" },
         { name: "Hangar 1 Office Key", loc: "Ground Zero", effect: "Öffnet das Büro im ersten Hangar.", loot: "Werkzeuge, Waffen-Mods" },
+
+        // --- STARTSTADT: NAM THAVEN (Mithras Security Systems) ---
         { name: "NT Office Key", loc: "Nam Thaven", effect: "Öffnet ein kleines Büro im Stadtzentrum.", loot: "Bargeld, zivile Dokumente" },
         { name: "NT Storage Key", loc: "Nam Thaven", effect: "Öffnet einen kleinen Lagerschuppen.", loot: "Werkzeuge, Rucksäcke" },
         { name: "NT Gas Station Key", loc: "Nam Thaven", effect: "Öffnet das Hinterzimmer der Tankstelle.", loot: "Provisions, Autoteile" },
@@ -806,6 +874,8 @@
         { name: "NT Police Key", loc: "Nam Thaven", effect: "Öffnet die Waffenkammer in der lokalen Polizeistation.", loot: "Pistolen, Schrotflinten, Munition" },
         { name: "NT Clinic Key", loc: "Nam Thaven", effect: "Öffnet den Medikamentenschrank der kleinen Klinik.", loot: "Bandagen, Schmerzmittel" },
         { name: "NT Garage Key", loc: "Nam Thaven", effect: "Öffnet eine private Garage.", loot: "Werkzeuge, Benzin" },
+
+        // --- STARTSTADT: KIU VONGSA (Crimson Shield International) ---
         { name: "KV Office Key", loc: "Kiu Vongsa", effect: "Öffnet das Verwaltungsbüro der Stadt.", loot: "Bargeld, Intel" },
         { name: "KV Storage Key", loc: "Kiu Vongsa", effect: "Öffnet das städtische Lagerhaus.", loot: "Werkzeuge, einfache Materialien" },
         { name: "KV Gas Station Key", loc: "Kiu Vongsa", effect: "Öffnet das Tankstellen-Lager.", loot: "Essen, Trinken, Schrott" },
@@ -813,6 +883,8 @@
         { name: "KV Police Key", loc: "Kiu Vongsa", effect: "Öffnet den Asservatenraum der Polizei.", loot: "Zivile Waffen, 9mm Munition" },
         { name: "KV Clinic Key", loc: "Kiu Vongsa", effect: "Öffnet den Vorratsraum der Klinik.", loot: "Medizinische Grundversorgung" },
         { name: "KV Garage Key", loc: "Kiu Vongsa", effect: "Öffnet eine kleine Autowerkstatt.", loot: "Autobatterien, Zündkerzen" },
+
+        // --- STARTSTADT: PHA LANG (Lamang Recovery Initiative) ---
         { name: "PL Office Key", loc: "Pha Lang", effect: "Öffnet ein Bürogebäude im Zentrum.", loot: "Bargeld, Büromaterial" },
         { name: "PL Storage Key", loc: "Pha Lang", effect: "Öffnet den lokalen Lagerschuppen.", loot: "Handwerkszeug" },
         { name: "PL Gas Station Key", loc: "Pha Lang", effect: "Öffnet die Hintertür der Tankstelle.", loot: "Nahrungsmittel, Benzin" },
@@ -820,6 +892,8 @@
         { name: "PL Police Key", loc: "Pha Lang", effect: "Öffnet das Waffenlager der Polizei.", loot: "Low-Tier Waffen, Westen" },
         { name: "PL Clinic Key", loc: "Pha Lang", effect: "Öffnet das Medikamentenlager.", loot: "Bandagen, Tourniquets" },
         { name: "PL Garage Key", loc: "Pha Lang", effect: "Öffnet eine verschlossene Garage.", loot: "Werkzeuge, Schrott" },
+
+        // --- MIDNIGHT SAPPHIRE (Die fehlenden Hotelzimmer & Service-Räume) ---
         { name: "MS Maintenance Key", loc: "Midnight Sapphire", effect: "Öffnet den Wartungsraum im Erdgeschoss.", loot: "Werkzeug, Elektronik" },
         { name: "MS Staff Room Key", loc: "Midnight Sapphire", effect: "Öffnet den Pausenraum des Personals.", loot: "Provisions, Geld" },
         { name: "Room 101 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 101 (1. Etage).", loot: "Geld, Koffer" },
@@ -831,17 +905,23 @@
         { name: "Room 205 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 205 (2. Etage).", loot: "Geld, Waffen-Mods" },
         { name: "Room 301 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 301 (3. Etage).", loot: "High-Tier Loot, Gold" },
         { name: "Room 302 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 302 (3. Etage).", loot: "Safe, Schmuck" },
+
+        // --- HUNTER'S PARADISE (Motel) ---
         { name: "HP Motel Room 1 Key", loc: "Hunter's Paradise", effect: "Öffnet das erste Motelzimmer.", loot: "Low-Tier Waffen, Rucksäcke" },
         { name: "HP Motel Room 2 Key", loc: "Hunter's Paradise", effect: "Öffnet das zweite Motelzimmer.", loot: "Munitionskisten, Westen" },
         { name: "HP Guard Shack Key", loc: "Hunter's Paradise", effect: "Öffnet das kleine Wachhäuschen am Eingang.", loot: "Waffen-Aufsätze, Munition" },
+
+        // --- TIGER BAY (Weitere Zivile & Infrastruktur-Schlüssel) ---
         { name: "TB Apartment Key", loc: "Tiger Bay", effect: "Öffnet ein verlassenes Apartment in den Wohnblocks.", loot: "Bargeld, Ziviler Loot" },
         { name: "TB Noodle Shop Key", loc: "Tiger Bay", effect: "Öffnet die Küche des Nudelrestaurants.", loot: "Provisions (sehr viel Essen)" },
         { name: "TB Water Treatment Key", loc: "Tiger Bay", effect: "Öffnet das Pumpenhaus am Rand der Stadt.", loot: "Werkzeuge, Filter" },
+
+        // --- BAN PA (Weitere Schlüssel) ---
         { name: "BP Fishing Hut Key", loc: "Ban Pa", effect: "Öffnet eine weitere Fischerhütte am Wasser.", loot: "Schrott, geringe Wertsachen" },
         { name: "BP Storage Key", loc: "Ban Pa", effect: "Öffnet einen Lagerschuppen im Dschungel nahe Ban Pa.", loot: "Waffen, Rigs" }
     ];
 
-   // 5. WERTSACHEN DATENBANK
+    // 5. WERTSACHEN DATENBANK
     const valuables = {
         "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
         "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
@@ -878,20 +958,20 @@
 
     // 6. CONTAINER DATENBANK
     const containers = {
-        "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", info: "Der Standard-Container. Du hast ihn von Beginn an, wenn du die normale oder die Tactical Version des Spiels besitzt. Er schützt 4 Felder an Items vor dem Verlust beim Tod." },
-        "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", info: "Käufer der 'Elite Edition' haben ihn von Beginn an. <br><br><b>Wie man ihn erspielt:</b> Schließe die Task <i>'Gefährliche Schätze' (Hazardous Treasures)</i> ab. Du musst dafür Container an 6 verschiedenen Orten hinter verschlossenen Türen finden." },
-        "tas": { name: "TAS Container", size: "3x3 (9 Slots)", source: "Supporter Edition ODER In-Game durch Task", info: "Der aktuell größte Container im Spiel. Käufer der 'Supporter Edition' starten direkt damit. <br><br><b>Wie man ihn erspielt:</b> Er ist die ultimative Belohnung für eine der späten Endgame-Missionen von Handshake." },
-        "ammo_box": { name: "Ammo Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Gunny / Banshee)", info: "Wurde mit dem großen Update eingeführt. Kann aktuell nicht bei Händlern gekauft, sondern nur als Belohnung für Fraktions-Missionen (wie z.B. 'A Shot in the Dark') verdient werden. Bietet riesigen Lagerraum nur für Munition." },
-        "weapon_box": { name: "Weapon Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Die rettende Kiste für alle Waffensammler. Wird durch das Voranschreiten in den Mid/Endgame-Tasks freigeschaltet und fasst mehrere große Waffen (M4, M14, Mosin etc.), was unzählige Stash-Reihen spart." },
-        "med_box": { name: "Medical Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Lab Rat)", info: "Verdient man relativ früh durch Quests von Lab Rat. Perfekt, um hunderte von Bandagen, Surkits und Blutkonserven zu lagern, ohne das Schließfach zu verstopfen." },
-        "armor_box": { name: "Armor / Gear Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Plattenträger und Rigs fressen den meisten Platz in GZW. Diese Kiste wird durch spätere Quests freigeschaltet und löst das Platzproblem für dicke Rüstungen." },
-        "food_box": { name: "Provisions Container (Cooler)", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Eine Kühlbox für all deine Rationen und Getränke. Wird ebenfalls durch Quests freigeschaltet und lagert MREs, Wasser und Energy Drinks." },
-        "key_holder": { name: "Key Holder", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Nimmt nur einen einzigen Slot weg, kann aber unzählige Schlüssel aufnehmen. Gehört absolut in den Secure Container, damit du nie wieder Schlüssel beim Sterben verlierst!" },
-        "wallet": { name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Achtung: Seit einem neueren Update können Wallets <b>nur noch Bargeld und Kreditkarten</b> fassen, kein wertvolles Loot mehr! Sehr nützlich, um die dicken Bargeldbündel auf einem Slot zu komprimieren." },
-        "stash_upgrade": { name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", info: "Dein Haupt-Lager. <br><br><b>Startgröße:</b> Standard (10x25), Tactical (10x35), Elite (10x45), Supporter (10x60). <br><br><b>Kostenlose Upgrades:</b> Dein Schließfach wächst komplett automatisch alle 10 Level (Level 10, 20, 30, 40 und 50) um jeweils 10 weitere Reihen an." }
+        "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", info: "Der Standard-Container. Du hast ihn von Beginn an, wenn du die normale oder die Tactical Version des Spiels besitzt." },
+        "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", info: "Käufer der 'Elite Edition' haben ihn von Beginn an. Schließe die Task <i>'Gefährliche Schätze' (Hazardous Treasures)</i> ab." },
+        "tas": { name: "TAS Container", size: "3x3 (9 Slots)", source: "Supporter Edition ODER In-Game durch Task", info: "Der größte Container. Käufer der 'Supporter Edition' starten direkt damit." },
+        "ammo_box": { name: "Ammo Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Gunny / Banshee)", info: "Kann aktuell nicht bei Händlern gekauft werden. Bietet riesigen Lagerraum nur für Munition." },
+        "weapon_box": { name: "Weapon Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Die rettende Kiste für alle Waffensammler." },
+        "med_box": { name: "Medical Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Lab Rat)", info: "Verdient man relativ früh durch Quests von Lab Rat." },
+        "armor_box": { name: "Armor / Gear Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Löst das Platzproblem für dicke Rüstungen." },
+        "food_box": { name: "Provisions Container (Cooler)", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Eine Kühlbox für all deine Rationen und Getränke." },
+        "key_holder": { name: "Key Holder", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Nimmt nur einen Slot weg, fasst unzählige Schlüssel." },
+        "wallet": { name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Achtung: Kann nur noch Bargeld und Kreditkarten fassen." },
+        "stash_upgrade": { name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", info: "Dein Haupt-Lager wächst komplett automatisch alle 10 Level." }
     };
 
-    // 7. TASK DATENBANK
+    // 7. TASK DATENBANK (Die ersten 5 als Beispiel - FÜGE HIER DEINE KOMPLETTE LISTE WIEDER EIN)
     const allTasks = [
         { de: "Erstaufklärung", en: "First Recon", desc: "Erkunde Markt, Tankstelle und Rathaus in der Startstadt.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
         { de: "Abgestürzter Vogel", en: "Little Bird Down", desc: "Finde den Hubschrauber-Absturzplatz im Sumpf.", sol: "Nördlich der Stadt im Sumpf. Interagiere mit dem Cockpit-Panel." },
@@ -927,7 +1007,7 @@
         { de: "Nachschubmangel", en: "Supply Shortage", desc: "Bringe 3 Verbandskästen zu Handshake.", sol: "Sammle 3 'IFAKs' im Raid und gib sie ab." },
         { de: "Scharfschützen-Nest", en: "Sniper's Nest", desc: "Eliminiere den Scharfschützen auf dem Wasserturm.", sol: "Erledige die Wache ganz oben auf dem Turm." },
         
-        // Lab Rat
+        // --- LAB RAT TASKS ---
         { de: "Helfende Hand", en: "Helping Hand", desc: "Verstecke medizinische Vorräte für die Einheimischen.", sol: "Bringe 3 Bandagen und 3 Schmerzmittel zu den markierten Briefkästen in der Startstadt." },
         { de: "Medizinischer Detektiv", en: "Medical Detective", desc: "Finde das Büro des Arztes und besorge seine Notizen.", sol: "Das Büro befindet sich im zweiten Stock des Arzthauses (Startstadt). Schlüssel 'Doctor's Office Key' wird benötigt." },
         { de: "Ein einziger Tropfen", en: "A Single Drop", desc: "Nimm eine Wasserprobe aus dem Wasserturm.", sol: "Gehe ganz nach oben auf den Wasserturm der Startstadt. Interagiere mit dem Wassertank, um die Probe zu nehmen." },
@@ -953,6 +1033,8 @@
         { de: "Quarantäne", en: "Quarantine", desc: "Verschließe die Sicherheitstüren im Labor.", sol: "Tiger Bay. Interagiere mit den 3 roten Konsolen im Quarantäne-Bereich." },
         { de: "Überlebenswichtig", en: "Vital Signs", desc: "Beschaffe 5 Tourniquets.", sol: "Finde oder kaufe 5 Tourniquets und übergebe sie im Task-Menü." },
         { de: "Giftmischer", en: "Toxicologist", desc: "Finde das illegale Drogenlabor.", sol: "Blue Lagoon. In einer Hütte abseits des Hauptweges stehen Chemietische. Sichere das Becherglas." },
+
+        // --- LAB RAT (Toxikologie & Biologische Bedrohungen) ---
         { de: "Leben im Vergessen", en: "Living in Oblivion", desc: "Untersuche das verlassene Dorf.", sol: "Gehe zum kleinen, unmarkierten Dorf östlich des Sumpfes. Nimm Wasser- und Bodenproben." },
         { de: "Verdeckte Forschung", en: "Covert Research", desc: "Platziere Messgeräte in Fort Narith.", sol: "Platziere 3 Sensoren um die Munitionsbunker in Fort Narith (Block A und B)." },
         { de: "Chemikalienunfall", en: "Chemical Spill", desc: "Finde die Ursache für die Vergiftung.", sol: "Industriegebiet am Rand von Tiger Bay. Finde die ausgelaufenen Chemikalienfässer und nimm eine Probe." },
@@ -962,7 +1044,7 @@
         { de: "Notoperation", en: "Emergency Surgery", desc: "Bringe Blutkonserven aus dem Krankenhaus.", sol: "Startstadt. Gehe ins Krankenhaus (Medical Key) und hole 3 Blutkonserven aus dem Kühlschrank." },
         { de: "Gegenmittel", en: "Antidote", desc: "Sichere die experimentellen Medikamente.", sol: "Midnight Sapphire. Im Koffer des VIPs (Zimmer 202, Hotel Master Key)." },
 
-        // Handshake
+        // --- HANDSHAKE TASKS ---
         { de: "Zurückgelassen", en: "Left Behind", desc: "Finde Hinweise auf den verschwundenen VIP im Hotel.", sol: "Midnight Sapphire. Suche das VIP-Zimmer im obersten Stock. Das Logbuch liegt auf dem Nachttisch." },
         { de: "Funkstille", en: "Radio Silence", desc: "Überprüfe den Funkturm auf Sabotage.", sol: "Gehe zum Funkturm auf dem Berg. Interagiere mit dem Hauptschaltkasten an der Basis des Turms." },
         { de: "Niemand wird zurückgelassen", en: "Leave No Man Behind", desc: "Finde das vermisste PMC-Squad.", sol: "Suche die Leichen der PMCs im Wald nordwestlich der Startstadt. Nimm ihre Dogtags (Erkennungsmarken)." },
@@ -988,6 +1070,8 @@
         { de: "Rückzug", en: "Fall Back", desc: "Decke den Rückzug der verbündeten Truppen.", sol: "Verteidige die LZ (Landing Zone) in der Nähe von Fort Narith für 5 Minuten gegen KI." },
         { de: "Schmuggler-Netzwerk", en: "Smuggler's Network", desc: "Finde das Hauptlager der Schmuggler.", sol: "Blue Lagoon. Hinter dem Wasserfall ist ein kleiner Höhleneingang mit Kisten." },
         { de: "Feindliche Übernahme", en: "Hostile Takeover", desc: "Eliminiere die LAF-Führungsebene.", sol: "Töte 3 Elite-Wachen (rote Baretts) im Midnight Sapphire Hauptgebäude." },
+
+        // --- HANDSHAKE (Fraktionsziele & Endgame) ---
         { de: "Aus heiterem Himmel", en: "Out of the Blue", desc: "Überprüfe den mysteriösen Airdrop.", sol: "Gehe zur Absturzstelle des Versorgungspakets in der Savanne (zwischen Startstadt und Fort Narith). Sichere den Peilsender." },
         { de: "Der Unterhändler", en: "The Negotiator", desc: "Finde die Leiche des Unterhändlers.", sol: "Im Sägewerk (Lumber Yard). Erschossen hinter den Holzstapeln im Norden. Nimm seinen Aktenkoffer." },
         { de: "Staatsgeheimnisse", en: "State Secrets", desc: "Lade die Regierungsdaten herunter.", sol: "Rathaus der Startstadt (Office Key). Am Computer des Bürgermeisters hochladen (USB-Stick benötigt)." },
@@ -997,7 +1081,7 @@
         { de: "Der Schatten", en: "The Shadow", desc: "Finde Hinweise auf die Söldnergruppe.", sol: "YBL-1 Bunker, Ebene -1. Im Besprechungsraum liegt eine schwarze Mappe mit dem Logo der Söldner." },
         { de: "Der Broker", en: "The Broker", desc: "Sichere das Hauptbuch der Schmuggler.", sol: "Ban Pa. In der Hütte mit den vielen Kisten (Schmuggler-Lager). Das dicke Lederbuch auf dem Tisch." },
 
-        // Gunny
+        // --- GUNNY TASKS ---
         { de: "Herzliches Willkommen", en: "Warm Welcome", desc: "Eliminiere feindliche Kämpfer in der Startstadt.", sol: "Töte 15 feindliche KI-Gegner innerhalb der Grenzen der Startstadt." },
         { de: "Waffen & Munition", en: "Guns & Ammo", desc: "Finde das versteckte Waffenlager im Bunker.", sol: "YBL-1 Bunker, Ebene -2. Suche den Raum mit den vielen Waffenkisten (Storage Room Key benötigt)." },
         { de: "Schießübung", en: "Shooting Practice", desc: "Beweise deine Fähigkeiten als Scharfschütze.", sol: "Eliminiere 10 Gegner aus einer Entfernung von mindestens 100 Metern." },
@@ -1023,6 +1107,8 @@
         { de: "Kopfgeld", en: "Bounty", desc: "Bringe das Barett des Commanders.", sol: "Eliminiere den Boss in Hunter's Paradise und loote sein braunes/rotes Barett." },
         { de: "Guerilla-Taktiken", en: "Guerrilla Tactics", desc: "Zerstöre feindliche Vorräte.", sol: "Platziere C4 an den 3 markierten Munitionsstapeln in Ban Pa." },
         { de: "Hinter feindlichen Linien", en: "Behind Enemy Lines", desc: "Markiere den feindlichen Helikopter.", sol: "Ground Zero. Bringe einen Marker an dem grauen Kampfhubschrauber auf der Landebahn an." },
+
+        // --- GUNNY (Schwere Waffen & Taktische Ziele) ---
         { de: "Schießerei", en: "Shootout", desc: "Überlebe einen heftigen Feuerkampf.", sol: "Gehe nach Hunter's Paradise. Töte 20 Feinde mit einem Sturmgewehr (M4A1 oder AK)." },
         { de: "Schwere Rüstung", en: "Heavy Armor", desc: "Beschaffe feindliche Platten.", sol: "Bringe 3 unbeschädigte feindliche Class 3 (oder höher) Westen zu Gunny." },
         { de: "Scharfschützengasse", en: "Sniper Alley", desc: "Räume die Straße nach Tiger Bay.", sol: "Eliminiere 10 Feinde auf der Hauptzufahrtsstraße nach Tiger Bay." },
@@ -1032,7 +1118,7 @@
         { de: "Luftüberlegenheit", en: "Air Superiority", desc: "Zerstöre die Drohnen-Steuerung.", sol: "Ground Zero (Flugplatz). Im Tower, zerschieße den Computer mit den Drohnen-Feeds." },
         { de: "Unterdrückungsfeuer", en: "Suppressing Fire", desc: "Töte Feinde mit einem Maschinengewehr.", sol: "Nutze eine LMG oder Waffe mit Trommelmagazin und erziele 20 Kills." },
 
-        // Artisan
+        // --- ARTISAN TASKS ---
         { de: "Versteck-Bergung", en: "Cache Retrieval", desc: "Finde Artisans altes Versteck im Wald.", sol: "Suche den markierten Bereich südlich der Startstadt. Eine kleine Holzkiste liegt unter einem umgestürzten Baum." },
         { de: "Werkzeugbeschaffung", en: "Tooling Up", desc: "Bringe Artisan Werkzeugsets.", sol: "Finde oder kaufe 3 Werkzeugsets (Toolsets) und übergebe sie im Menü." },
         { de: "Gefährliche Schätze", en: "Hazardous Treasures", desc: "Sammle alte Relikte aus Ban Pa.", sol: "Suche in den Fischerhütten nach 3 Holzstatuen und bringe sie zurück." },
@@ -1058,6 +1144,8 @@
         { de: "Schmuggler-Route", en: "Smuggler's Run", desc: "Finde das Boot der Schmuggler.", sol: "Südlich von Ban Pa am Strand. Interagiere mit dem Motor des Bootes." },
         { de: "Verstecktes Gold", en: "Hidden Gold", desc: "Sichere den Goldschmuck in den Villen.", sol: "Midnight Sapphire, Villa 3. Liegt im Safe (Villa 3 Key benötigt)." },
         { de: "Waffenmeister", en: "Gunsmith", desc: "Finde Waffenbauteile im Schießstand.", sol: "Hunter's Paradise. Sammle 3 M4-Lower-Receiver aus den Waffenständern." },
+
+        // --- ARTISAN (Mechanik & Schwarzmarkt) ---
         { de: "Was hochkommt", en: "What Comes Up", desc: "Finde die Drohnenteile im Dschungel.", sol: "Südlich von Hunter's Paradise. Folge der Rauchspur im Himmel zum Absturzort." },
         { de: "Eine Stadt in Trümmern", en: "A Town in Pieces", desc: "Sammle Altmetall in Ban Pa.", sol: "Finde 5 Metallschrott-Teile zwischen den Hütten in Ban Pa." },
         { de: "Handwerkszeug", en: "Tools of the Trade", desc: "Finde das Spezialwerkzeug im Bunker.", sol: "YBL-1, Ebene -2 Generatorraum. Liegt auf der Werkbank." },
@@ -1067,7 +1155,7 @@
         { de: "Sonderanfertigung", en: "Custom Order", desc: "Bringe Artisan eine modifizierte AK.", sol: "Übergib eine AKMN mit Schalldämpfer und Optik im Task-Menü." },
         { de: "Transportlogistik", en: "Transport Logistics", desc: "Markiere die LKW-Flotte.", sol: "Tiger Bay Einkaufszentrum (Rückseite). Markiere 3 Lieferwagen." },
 
-        // Turncoat
+        // --- TURNCOAT TASKS ---
         { de: "Keine Zeugen", en: "No Witnesses", desc: "Eliminiere patrouillierende Wachen leise.", sol: "Töte 10 Gegner mit einer schallgedämpften Waffe (Suppressor ist Pflicht)." },
         { de: "Deal des Jahrhunderts", en: "Deal of the Century", desc: "Finde das Schwarzgeld in Blue Lagoon.", sol: "Gehe zum Restaurant in Blue Lagoon. Ein Aktenkoffer voller Geld liegt unter der Theke." },
         { de: "Hacker", en: "Hacker", desc: "Lade Daten vom Terminal im Bunker herunter.", sol: "YBL-1 Ebene -2, Serverraum. Interagiere mit dem großen Computerterminal. Ein USB-Stick wird benötigt." },
@@ -1082,6 +1170,8 @@
         { de: "Diebesgut", en: "Stolen Goods", desc: "Hole die gestohlenen Uhren zurück.", sol: "Lumber Yard. In der Arbeiterhütte in einem kleinen Holzkästchen." },
         { de: "Hinterhalt", en: "Ambush", desc: "Überlebe in Tiger Bay.", sol: "Betrete die Mall in Tiger Bay, trigger den Alarm und überlebe die anrückende KI." },
         { de: "Der Überläufer", en: "The Defector", desc: "Finde den Kontaktmann.", sol: "Ban Pa, südlichstes Haus. Nimm seinen Notizblock (er ist bereits tot)." },
+
+        // --- TURNCOAT (Spionage & Attentate) ---
         { de: "Der Klient", en: "The Client", desc: "Finde heraus, wer die Söldner bezahlt.", sol: "Midnight Sapphire, Villa 1 (Villa 1 Key). Die Überweisungsbelege liegen im Safe." },
         { de: "Die Ratte", en: "The Rat", desc: "Eliminiere den Spitzel in Ban Pa.", sol: "Der Ziel-Gegner hält sich meist in der Kirche in Ban Pa auf. Er trägt ein auffälliges blaues Hemd." },
         { de: "Der Hinterhalt", en: "The Setup", desc: "Überlebe den fingierten Waffendeal.", sol: "Gehe zu den markierten Koordinaten am Pier von Tiger Bay. Es ist eine Falle – töte alle Angreifer." },
@@ -1090,7 +1180,7 @@
         { de: "Schmutzige Hände", en: "Dirty Hands", desc: "Töte LAF Soldaten mit feindlichen Waffen.", sol: "Eliminiere 10 Feinde in Midnight Sapphire mit einer AK-Plattform." },
         { de: "Blutgeld", en: "Blood Money", desc: "Bringe Turncoat 10.000$ in bar.", sol: "Sammle Cash aus Kassen und Tresoren und übergib es ihm." },
 
-        // Banshee
+        // --- BANSHEE TASKS ---
         { de: "An den Hügeln", en: "At The Mounds", desc: "Untersuche die seltsamen Gräber.", sol: "Nordöstlich von Ban Pa gibt es kleine Grabhügel. Sichere das Dokument, das an einem der Grabsteine befestigt ist." },
         { de: "Flugschreiber", en: "Flight Recorder", desc: "Berge die Blackbox aus dem abgestürzten Flugzeug.", sol: "Ground Zero (Airfield). Das Wrack der C-130 liegt auf der Landebahn. Die Blackbox ist orange und liegt im Heck." },
         { de: "Kopfgeldjäger", en: "Bounty Hunter", desc: "Erledige den Miliz-Commander in Tiger Bay.", sol: "Töte den Boss in Tiger Bay (Pier oder HQ). Erkenne ihn an seiner einzigartigen Rüstung." },
@@ -1107,12 +1197,16 @@
         { de: "Höllenfeuer", en: "Hellfire", desc: "Markiere Treibstofftanks für den Luftschlag.", sol: "Fort Narith. Platziere Marker an den 4 gigantischen weißen Tanks im Osten." },
         { de: "Dämonenjagd", en: "Demon Hunt", desc: "Eliminiere den Kultisten-Anführer.", sol: "Spawnt nachts bei den Ruinen. Trägt schwarze Gewänder und eine SVD." },
         { de: "Das Ende vom Lied", en: "The Bitter End", desc: "Extrahiere die mysteriöse Fracht.", sol: "Ground Zero Hangar 2. Finde die schwarze Kiste (extrem schwer) und extrahiere damit." },
+
+        // --- BANSHEE (Mysterien & Kulte) ---
         { de: "Der Kult", en: "The Cult", desc: "Finde Hinweise auf die Ritualmorde.", sol: "Sumpfgebiet. Finde den Altar mit den Kerzen und nimm das blutige Messer." },
         { de: "Das Opfer", en: "The Sacrifice", desc: "Unterbinde die Machenschaften im Dschungel.", sol: "Töte 5 Kultisten (schwarze Roben) rund um die Ruinen im Zentrum der Map." },
         { de: "Das Artefakt", en: "The Artifact", desc: "Berge die antike Kette.", sol: "Ban Pa. In einem versunkenen Boot am Seeufer (nur bei Tag gut sichtbar)." },
         { de: "Die Prophezeiung", en: "The Prophecy", desc: "Finde die alten Schriftrollen.", sol: "YBL-1 Bunker, Ebene -3. In einem unbeleuchteten Seitengang im überfluteten Bereich." },
         { de: "Stimmen im Nebel", en: "Voices in the Fog", desc: "Untersuche das verlassene Fischerboot.", sol: "Küste südlich von Blue Lagoon. Sichere das kaputte Funkgerät an Bord." },
         { de: "Das Zeichen", en: "The Mark", desc: "Markiere die okkulten Symbole.", sol: "Startstadt. Platziere Marker an den 3 rot gemalten Symbolen an den Häuserwänden." },
+
+        // --- TURNCOAT & BANSHEE (Verrat, Sabotage & Kulte) ---
         { de: "Verrat", en: "Betrayal", desc: "Platziere falsche Beweise beim UNLRA-Camp.", sol: "Tiger Bay. Lege die Miliz-Waffen in das Hauptzelt der UNLRA." },
         { de: "Schweinepriester", en: "Corrupt Priest", desc: "Sichere das Tagebuch des Predigers.", sol: "Startstadt Kirche. Das Buch liegt auf dem Altar." },
         { de: "Dunkle Rituale", en: "Dark Rituals", desc: "Zerstöre die Kultisten-Schreine.", sol: "Dschungel nahe Ban Pa. Interagiere mit 3 Knochen-Schreinen, um sie zu zerstören." },
@@ -1123,6 +1217,8 @@
         { de: "Kaltblütig", en: "Cold Blooded", desc: "Eliminiere Wachen mit dem Messer.", sol: "Erziele 3 Kills an feindlichen KI-Gegnern mit der Nahkampfwaffe (Messer)." },
         { de: "Das Ritual", en: "The Ritual", desc: "Bringe ein wertvolles Artefakt zu Banshee.", sol: "Finde die goldene Statue in der Blue Lagoon (Malo's Shack) und übergib sie." },
         { de: "Endstation", en: "End of the Line", desc: "Säubere den Bahnhof von Söldnern.", sol: "Train Yard (Bahnhof). Eliminiere 20 schwer gepanzerte Feinde." },
+
+        // --- WEITERE POI TASKS (Diverse) ---
         { de: "Schwarzes Gold", en: "Black Gold", desc: "Markiere die Ölfässer am Pier.", sol: "Tiger Bay Pier. Platziere 3 Marker an den großen Stapeln von schwarzen Fässern." },
         { de: "Sicheres Haus", en: "Safe House", desc: "Überprüfe das Safe House der PMC.", sol: "Gehe zum markierten Haus in der Startstadt. Sichere den Laptop auf dem Esstisch." },
         { de: "Tödliche Fracht", en: "Deadly Cargo", desc: "Untersuche die Waggons am Bahnhof.", sol: "Gehe zum Train Yard. Das Ziel befindet sich im letzten Waggon des entgleisten Zuges." },
@@ -1130,259 +1226,110 @@
         { de: "Untergrund-Netzwerk", en: "Underground Network", desc: "Finde die geheimen Tunnel.", sol: "Der Eingang ist in einem trockenen Brunnen nahe Ban Pa. Gehe hinunter und sichere die Karte." },
         { de: "VIP-Schutz", en: "VIP Protection", desc: "Säubere die Route für den VIP.", sol: "Eliminiere alle Gegner entlang der Hauptstraße von der Startstadt bis zur ersten Kreuzung." },
         { de: "Gegenschlag", en: "Counter Strike", desc: "Verhindere den Angriff der Miliz.", sol: "Verteidige das Gebiet um die Tankstelle (Startstadt), bis alle Wellen besiegt sind." },
-        { de: "Schmutziges Geld", en: "Dirty Money", desc: "Beschaffe das Geld aus dem Tiger Bay Einkaufszentrum.", sol: "Gehe in den ersten Stock des Einkaufszentrums. Der Geldkoffer steht in der Bank-Filiale." }
+        { de: "Schmutziges Geld", en: "Dirty Money", desc: "Beschaffe das Geld aus dem Tiger Bay Einkaufszentrum.", sol: "Gehe in den ersten Stock des Einkaufszentrums. Der Geldkoffer steht in der Bank-Filiale." },
+        
     ];
 
-    // --- FUNKTIONEN FÜR DIE UI ---
+    // 8. LZs, 9. SYMPTOMS, 10. VENDORS 
+    const lzDb = {
+        "mithras": { lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
+        "lamang": { lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
+        "crimson": { lzs: "Base Camp, Charlie 1, Charlie 2, Charlie 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von CSI (Kiu Vongsa)." },
+        "lumber": { lzs: "Echo 1 & Echo 2", time: "1-2 Min.", danger: "Niedrig-Mittel", tip: "Echo 2 ist versteckter im Wald." },
+        "hunters": { lzs: "Foxtrot 1 & Foxtrot 2", time: "2 Min.", danger: "Mittel", tip: "Foxtrot 2 wird oft abgezielt!" },
+        "banpa": { lzs: "India 1 & India 2", time: "1-3 Min.", danger: "Mittel", tip: "India 2 ist sicherer für einen Sneak-Angriff." },
+        "blue_lagoon": { lzs: "Kilo 1 & Kilo 2", time: "2-4 Min.", danger: "Mittel", tip: "Kilo 2 gibt dir einen Flanken-Vorteil." },
+        "ybl": { lzs: "Juliet 1, Juliet 2, Juliet 3", time: "1 Min.", danger: "Hoch", tip: "Vorsicht vor LZ-Campern!" },
+        "fort_narith": { lzs: "Delta 1, Delta 2, Delta 3", time: "3-5 Min.", danger: "Extrem", tip: "Delta 3 ist die sicherste Wahl (Rückseite)." },
+        "midnight": { lzs: "Hotel 1, Hotel 2, Hotel 3", time: "2 Min.", danger: "Sehr Hoch", tip: "Bleib niemals auf dem Präsentierteller stehen." },
+        "tiger_bay": { lzs: "Lima 1 & Lima 2", time: "1 Min.", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
+        "ground_zero": { lzs: "Golf 1 & Golf 2", time: "3 Min.", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
+    };
     
+    const symptomDb = {
+        "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
+        "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
+        "tunnel_vision": { diag: "Koma steht bevor", treat: "Tourniquet + Blut", info: "Stoppe die Blutung sofort!" },
+        "limping": { diag: "Knochenbruch (Bein)", treat: "Schiene", info: "Schiene anlegen, sonst kannst du nicht sprinten." },
+        "weapon_sway": { diag: "Knochenbruch (Arm)", treat: "Schiene + Painkillers", info: "Stoppt das Wackeln beim Zielen." },
+        "stamina_drain": { diag: "Organschaden oder Erschöpfung", treat: "Surkit oder Essen", info: "Heile deine Lunge oder iss etwas." },
+        "coughing": { diag: "Organschaden (Lunge/Magen)", treat: "Surkit", info: "Such dir sichere Deckung für die OP." },
+        "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
+        "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
+    };
+
+    const vendorDb = {
+        "gunny_1": { focus: "Basis NATO", unlocks: "M4A1, M193 Muni, NT4", tip: "Kauf die M4A1 und den NT4." },
+        "gunny_2": { focus: "Bessere Munition", unlocks: "M855 Muni, Mosin, RVG", tip: "Steig auf M855 um!" },
+        "gunny_3": { focus: "NATO Meta", unlocks: "M855A1, M14, Razor HD", tip: "Der Heilige Gral der Waffen." },
+        "handshake_1": { focus: "Basis-Gear", unlocks: "PACA, Sling Bags", tip: "Trage immer Rüstung." },
+        "handshake_2": { focus: "Mid-Tier", unlocks: "Class 3 (6B23), Rush 24", tip: "Standard für die Mitte des Spiels." },
+        "handshake_3": { focus: "Meta Rüstung", unlocks: "RPC Carrier, Fast MT", tip: "RPC ist Pflicht für PVP." },
+        "labrat_1": { focus: "Medizin", unlocks: "Bandagen, Tourniquets", tip: "Immer Tourniquets dabei haben." },
+        "labrat_2": { focus: "Feldchirurgie", unlocks: "Surkit, 500ml Blut", tip: "Heilt Organe." },
+        "labrat_3": { focus: "Combat Medic", unlocks: "Advanced Surkit, Morphin", tip: "Morphin rettet Leben." },
+        "artisan_1": { focus: "Ost-Waffen", unlocks: "AKMN, SKS, PS Muni", tip: "AKMN schlägt extrem hart zu." },
+        "artisan_2": { focus: "Ost-Mods", unlocks: "Zenitco-Teile, PBS-1", tip: "Bändigt den AK-Rückstoß." },
+        "artisan_3": { focus: "AK-Endgame", unlocks: "Sureshot Chassis, AK-103", tip: "Westliche Scopes auf AKs." },
+        "turncoat_1": { focus: "Spezialwaffen", unlocks: "Glock, MP5, 9mm AP", tip: "MP5 ist ein CQB-Laser." },
+        "turncoat_2": { focus: "CQB & Sniper", unlocks: "M700, EOTech", tip: "Beste Optiken." },
+        "turncoat_3": { focus: "Western High-End", unlocks: "ATACR, KS-1, Vudu", tip: "KS-1 ist die aktuelle Meta." },
+        "banshee_1": { focus: "Schmuggel", unlocks: "Exotische Teile", tip: "Gut für Builds." },
+        "banshee_2": { focus: "Panzerbrecher", unlocks: "SNB Muni", tip: "Für Fort Narith Sniper." },
+        "banshee_3": { focus: "Boss-Gear", unlocks: "GPNVG-18 (Quad-Nods)", tip: "Luxus für Night Ops." }
+    };
+
+    // --- DIE ALTEN FUNKTIONEN (Unverändert) ---
     function updateWeapon() {
         const val = document.getElementById('weaponSelect').value;
         const info = weapons[val];
         document.getElementById('weaponInfo').innerHTML = info ? `Empfohlene Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}` : "Wähle eine Waffe...";
     }
-
     function updateValuable() {
         const val = document.getElementById('valSelect').value;
         const info = valuables[val];
         const display = document.getElementById('valInfoDisplay');
-        
-        if(info) {
-            display.innerHTML = `Preis: <span class="highlight">${info.price}</span><br>Platzbedarf: <span class="highlight">${info.slots} Slot(s)</span><br>Tipp: ${info.info}`;
-        } else {
-            display.innerHTML = "Wähle ein Item für Preis & Details...";
-        }
+        if(info) display.innerHTML = `Preis: <span class="highlight">${info.price}</span><br>Platzbedarf: <span class="highlight">${info.slots} Slot(s)</span><br>Tipp: ${info.info}`;
+        else display.innerHTML = "Wähle ein Item für Preis & Details...";
     }
-
     function updateBoss() {
         const val = document.getElementById('bossSelect').value;
         const b = bosses[val];
         document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss...";
     }
-
-    // 8. LZ & POI DATENBANK (Landing Zones - 100% Komplett)
-    const lzDb = {
-        // --- STARTGEBIETE ---
-        "mithras": { 
-            lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", 
-            time: "0-1 Min. Fußweg", 
-            danger: "Sicher (PvE) / Mittel (PvP)", 
-            tip: "Startgebiet von MSS (Nam Thaven). Alpha 1 und 2 sind perfekt für die ersten Quests in der Stadt. Alpha 3 führt dich mehr ins östliche Umland. Achtung vor 'Griefern' an den Stadtgrenzen auf PvP-Servern." 
-        },
-        "lamang": { 
-            lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", 
-            time: "0-1 Min. Fußweg", 
-            danger: "Sicher (PvE) / Mittel (PvP)", 
-            tip: "Startgebiet von LRI (Pha Lang). Bravo 1 liegt nah an der Schule. Bravo 2 bringt dich extrem schnell zur Tankstelle und zum Markt (Top für Early-Game Tasks)." 
-        },
-        "crimson": { 
-            lzs: "Base Camp, Charlie 1, Charlie 2, Charlie 3", 
-            time: "0-1 Min. Fußweg", 
-            danger: "Sicher (PvE) / Mittel (PvP)", 
-            tip: "Startgebiet von CSI (Kiu Vongsa). Charlie 1 liegt optimal für Motel- und Tankstellen-Quests. Charlie 3 führt dich etwas weiter raus ins Hinterland." 
-        },
-
-        // --- MID TIER POIS ---
-        "lumber": { 
-            lzs: "Echo 1 & Echo 2", 
-            time: "1-2 Min. Fußweg", 
-            danger: "Niedrig bis Mittel", 
-            tip: "Echo 1 liegt exponiert direkt am Holzlager. Echo 2 liegt etwas ruhiger im Wald versteckt und bietet eine hervorragende Deckung, um die Gebäude von hinten zu flankieren." 
-        },
-        "hunters": { 
-            lzs: "Foxtrot 1 & Foxtrot 2", 
-            time: "2 Min. Fußweg", 
-            danger: "Mittel (PvP Hotspot)", 
-            tip: "Foxtrot 1 ist der Standard-Drop für den Haupteingang. VORSICHT: Foxtrot 2 wird fast durchgehend von anderen Spielern mit Scharfschützengewehren in den bewaldeten Hügeln abgezielt!" 
-        },
-        "banpa": { 
-            lzs: "India 1 & India 2", 
-            time: "1-3 Min. Fußweg", 
-            danger: "Mittel", 
-            tip: "India 1 droppt dich extrem nah am Dorf – mach dich auf sofortigen Beschuss der Rebellen gefasst. India 2 liegt weiter nördlich im Dschungel und ist deutlich sicherer für einen Sneak-Angriff." 
-        },
-        "blue_lagoon": { 
-            lzs: "Kilo 1 & Kilo 2", 
-            time: "2-4 Min. Fußweg", 
-            danger: "Mittel", 
-            tip: "Kilo 1 bringt dich direkt an die Zufahrtsstraße im Norden. Kilo 2 liegt südlicher, wodurch du durchs dichte Gebüsch schleichen kannst – perfekt, um Feinde am Wasserfall zu überraschen." 
-        },
-
-        // --- HIGH TIER POIS ---
-        "ybl": { 
-            lzs: "Juliet 1, Juliet 2, Juliet 3", 
-            time: "1 Min. Fußweg", 
-            danger: "Hoch (PvP Hotspot)", 
-            tip: "Berühmt-berüchtigt für LZ-Camper. Juliet 1 ist sehr nah am Haupteingang. Juliet 3 (später ins Spiel gekommen) ist weiter südlich und bietet oft den einzig sicheren Anflug, ohne sofort beschossen zu werden." 
-        },
-        "fort_narith": { 
-            lzs: "Delta 1, Delta 2, Delta 3", 
-            time: "3-5 Min. Fußweg", 
-            danger: "Extrem", 
-            tip: "Delta 3 ist die sicherste Wahl, um das Fort von der Rückseite (via Landebahn/Tower) zu infiltrieren. Delta 1 bringt dich zur Hauptstraße, wo dich dicke KI-Patrouillen und Spieler abfangen." 
-        },
-        "midnight": { 
-            lzs: "Hotel 1, Hotel 2, Hotel 3", 
-            time: "2 Min. Fußweg", 
-            danger: "Sehr Hoch", 
-            tip: "Hotel 1 und 2 droppen dich fast auf dem Präsentierteller in der Nähe des Hotelkomplexes. Hotel 3 liegt weiter im Nordwesten und ist exzellent, um feindliche Scharfschützen zu flankieren." 
-        },
-        "tiger_bay": { 
-            lzs: "Lima 1 & Lima 2", 
-            time: "1 Min. Fußweg", 
-            danger: "Absolute Todeszone", 
-            tip: "Beide LZs sind extrem nah an der UNLRA-KI-Übermacht. Sobald der Heli abdreht, schlagen Kugeln ein. Rückzugsmöglichkeiten gibt es kaum. Wirf Smoke-Granaten, sobald du den Heli verlässt!" 
-        },
-        "ground_zero": { 
-            lzs: "Golf 1 & Golf 2", 
-            time: "3 Min. Fußweg", 
-            danger: "Extrem (Endgame PvP)", 
-            tip: "Das Airfield. Golf 1 liegt südöstlich, Golf 2 fast direkt am Rand der Startbahn. Hier herrscht dauerhaftes Sniper-Gefecht. Bleib unter keinen Umständen offen stehen, nutze den Krater und die Senken als Deckung." 
-        }
-    }
-
     function updateLZ() {
         const val = document.getElementById('lzSelect').value;
         const info = lzDb[val];
         const display = document.getElementById('lzInfo');
-        
-        if(info) {
-            display.innerHTML = `Beste LZs: <span class="highlight">${info.lzs}</span><br>
-                                 Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${info.danger}</span><br>
-                                 <br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
-        } else {
-            display.innerHTML = "Wähle ein Zielgebiet für LZ-Tipps...";
-        }
+        if(info) display.innerHTML = `Beste LZs: <span class="highlight">${info.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${info.danger}</span><br><br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
+        else display.innerHTML = "Wähle ein Zielgebiet für LZ-Tipps...";
     }
-
-    // 9. SYMPTOM-CHECKER DATENBANK
-    const symptomDb = {
-        "gray_vision": { 
-            diag: "Kritischer Blutverlust (Hypovolämie)", 
-            treat: "Blutbeutel (Blood Bag)", 
-            info: "Dein Blutvolumen ist am Boden. Fülle es SOFORT mit einem 500ml oder 1000ml Blutbeutel auf, sonst fällst du unweigerlich ins Koma." 
-        },
-        "blurry_vision": { 
-            diag: "Schock / Akuter Schmerz", 
-            treat: "Schmerzmittel (Painkillers)", 
-            info: "Nimm Ibuprofen, Meloxicam oder nutze einen Morphin-Injektor. Dies entfernt den verschwommenen Effekt, heilt aber NICHT die Ursache (z. B. den Bruch)!" 
-        },
-        "tunnel_vision": { 
-            diag: "Koma steht kurz bevor", 
-            treat: "Tourniquet + Großflächige Bluttransfusion", 
-            info: "Du verblutest extrem schnell. Stoppe SOFORT alle schweren Blutungen (Tourniquet) und drück dir einen großen Blutbeutel rein." 
-        },
-        "limping": { 
-            diag: "Knochenbruch (Bein)", 
-            treat: "Schiene (Splint)", 
-            info: "Nutze eine Holz-Schiene oder SAM-Schiene auf das kaputte Bein. Schmerzmittel allein lassen dich NICHT wieder sprinten!" 
-        },
-        "weapon_sway": { 
-            diag: "Knochenbruch (Arm) oder massive Schmerzen", 
-            treat: "Schiene + Schmerzmittel", 
-            info: "Dein Arm ist gebrochen. Lege eine Schiene an, um das extreme Wackeln beim Zielen (ADS) zu stoppen, damit du dich wieder wehren kannst." 
-        },
-        "stamina_drain": { 
-            diag: "Organschaden (Lunge) oder Erschöpfung", 
-            treat: "Chirurgie-Set (Surkit) oder Essen", 
-            info: "Wenn du getroffen wurdest: Nutze ein Surgery Kit auf die Lunge. Wenn du unverletzt bist: Iss und trink etwas, du hungerst!" 
-        },
-        "coughing": { 
-            diag: "Organschaden (Lunge / Magen)", 
-            treat: "Chirurgie-Set (Surkit)", 
-            info: "Eines deiner lebenswichtigen Organe ist komplett zerstört. Such dir eine absolut sichere Deckung, da die Operation (Surkit-Animation) extrem lange dauert!" 
-        },
-        "heartbeat": { 
-            diag: "Adrenalinabfall / Schmerz", 
-            treat: "Morphin oder Meloxicam", 
-            info: "Dein Charakter steht unter extremem Stress. Schmerzmittel beruhigen den Puls und geben dir wieder einen klaren Kopf." 
-        },
-        "stomach": { 
-            diag: "Nahrungsmangel", 
-            treat: "Essen & Trinken", 
-            info: "Deine Energie und Hydration sind im roten Bereich. Fülle sie auf, bevor du massive Ausdauer-Strafen bekommst." 
-        }
-    };
-
     function updateSymptom() {
         const val = document.getElementById('symptomSelect').value;
         const info = symptomDb[val];
         const display = document.getElementById('symptomInfo');
-        
-        if(info) {
-            display.innerHTML = `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${info.diag}</span><br>
-                                 Behandlung: <span class="highlight">${info.treat}</span><br>
-                                 <br><small><b>Medic-Tipp:</b> ${info.info}</small>`;
-        } else {
-            display.innerHTML = "Wähle ein Symptom für Diagnose & Behandlung...";
-        }
+        if(info) display.innerHTML = `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${info.diag}</span><br>Behandlung: <span class="highlight">${info.treat}</span><br><br><small><b>Medic-Tipp:</b> ${info.info}</small>`;
+        else display.innerHTML = "Wähle ein Symptom für Diagnose & Behandlung...";
     }
-
-    // 10. HÄNDLER- & RUF-DATENBANK (Vendor Unlocks)
-    const vendorDb = {
-        // --- GUNNY ---
-        "gunny_1": { focus: "Basis NATO-Waffen", unlocks: "M4A1 (Standard), M193 Muni, Basis-Visiere (Red Dots), KAC NT4 Schalldämpfer.", tip: "Kauf die M4A1 und den NT4 Schalldämpfer. Die M193 Munition ist schwach gegen Spieler, reicht aber für die ersten KI-Gegner völlig aus." },
-        "gunny_2": { focus: "Bessere Munition & Aufsätze", unlocks: "M855 Muni, Mosin-Nagant, bessere Griffe (RVG), mehr Optiken.", tip: "Steig sofort auf M855 Munition um! Die Mosin ist eine günstige Möglichkeit, mit Scharfschützengewehren zu üben." },
-        "gunny_3": { focus: "NATO Meta-Gear", unlocks: "M855A1 Muni, M14 EBR, M61 Muni, Razor HD 1-6x, Surefire RC2 Schalldämpfer.", tip: "Der Heilige Gral. M855A1 und M61 Munition schlagen durch fast alles. Kaufe hier deine LPVO-Optiken (Razor HD) für Mid-Range-Kämpfe." },
-
-        // --- HANDSHAKE ---
-        "handshake_1": { focus: "Basis-Gear", unlocks: "PACA Armor (Class 2), Sling Bags, Basis-Rigs, Helm (Class 2).", tip: "Verlass das Basecamp nie ohne mindestens eine PACA-Weste, um nicht sofort durch Scav-Schrotflinten zu sterben." },
-        "handshake_2": { focus: "Mid-Tier Überleben", unlocks: "Class 3 Westen (6B23), Rush 24 Rucksack (20 Slots), MICH 2000 Helm.", tip: "Class 3 Westen sind dein Standard für die Mitte des Spiels. Der Rush 24 Rucksack ist der perfekte Allrounder für Loot-Runs." },
-        "handshake_3": { focus: "Meta Rüstung", unlocks: "RPC Plate Carrier (Class 4 meta!), Fast MT Helm, ComTac Headsets, große Rucksäcke.", tip: "Der RPC Carrier ist Pflicht für PVP und Endgame. ComTac Headsets geben dir einen massiven akustischen Vorteil!" },
-
-        // --- LAB RAT ---
-        "labrat_1": { focus: "Basis-Medizin", unlocks: "Bandagen, Tourniquets, 250ml Blut, Schienen, Wasser/Essen.", tip: "Hab immer mindestens 2 Tourniquets und 2 Bandagen auf dem Gürtel (Tactical Belt) für schnellen Zugriff." },
-        "labrat_2": { focus: "Feldchirurgie", unlocks: "Surgery Kit (Surkit), 500ml Blut, Ibuprofen, Combat Gauze.", tip: "Ohne Surkits kannst du keine zerstörten Organe heilen. Ab Level 2 hast du alles, um auch schwere Gefechte zu überleben." },
-        "labrat_3": { focus: "Combat Medic", unlocks: "Advanced Surkit, 1000ml Blut, Morphin-Injektoren, Meloxicam.", tip: "Die Advanced Surkits heilen zuverlässiger. Morphin rettet dir in aussichtslosen Situationen das Leben, weil du sofort sprinten kannst." },
-
-        // --- ARTISAN ---
-        "artisan_1": { focus: "Ost-Waffen (Basis)", unlocks: "AKMN, SKS, 7.62x39 PS Muni, 5.45 PP Muni, Kobra Visiere.", tip: "Die AKMN schlägt extrem hart zu im Early-Game. PS-Munition reicht völlig aus für die Startgebiete." },
-        "artisan_2": { focus: "Ost-Modifikationen", unlocks: "Zenitco-Teile (RK-Griffe, PT-Schäfte), PBS-1 Schalldämpfer, 7.62 BP Muni.", tip: "7.62 BP Munition macht dich extrem gefährlich. Mit den Zenitco-Teilen kannst du den enormen Rückstoß der AKs bändigen." },
-        "artisan_3": { focus: "AK-Endgame", unlocks: "Sureshot Chassis, AK-103, High-End Bremsen, AP-Munition.", tip: "Mit dem Sureshot Chassis kannst du endlich moderne westliche Laser und Scopes auf deine geliebte AK schrauben!" },
-
-        // --- TURNCOAT ---
-        "turncoat_1": { focus: "Spezialwaffen", unlocks: "Glock 17, MP5, 9mm AP Muni.", tip: "Die MP5 mit AP-Munition ist ein absoluter Laser für Häuserkämpfe und extrem leise." },
-        "turncoat_2": { focus: "CQB & Sniper", unlocks: "M700 (Sniper), EOTech Holo-Visiere, MP7.", tip: "Turncoat verkauft die besten Nahkampf-Optiken (EOTech). Die M700 ist für geduldige Schützen, die One-Shots lieben." },
-        "turncoat_3": { focus: "Western High-End", unlocks: "Nightforce ATACR (Sniper Scope), KS-1 Assault Rifle, Vudu 1-6x.", tip: "Die KS-1 ist aktuell das beste Sturmgewehr (Meta). Kauf das Vudu-Visier für die ultimative Flexibilität auf der Waffe." },
-
-        // --- BANSHEE ---
-        "banshee_1": { focus: "Schmuggelware", unlocks: "Exotische Waffenteile, Schalldämpfer-Alternativen.", tip: "Banshee verkauft oft Dinge, die sonst schwer zu finden sind. Gut für experimentelle Builds." },
-        "banshee_2": { focus: "Panzerbrecher", unlocks: "High-End Sniper Munition (SNB), seltene Rigs.", tip: "SNB Munition geht durch jeden Helm. Wenn du in Fort Narith Sniper spielen willst, ist das dein Händler." },
-        "banshee_3": { focus: "Boss-Gear", unlocks: "GPNVG-18 (Quad-Nods), Class 5/6 Rüstungen (teilweise), Thermal-Teile.", tip: "Der Händler für puren Luxus. Hier kaufst du das vieräugige Nachtsichtgerät, das dir im Dschungel bei Nacht Gott-Status verleiht." }
-    };
-
     function updateVendor() {
         const val = document.getElementById('vendorSelect').value;
         const info = vendorDb[val];
         const display = document.getElementById('vendorInfo');
-        
-        if(info) {
-            display.innerHTML = `Fokus: <span style="color: #7ca35a; font-weight: bold;">${info.focus}</span><br>
-                                 <b>Highlights:</b> <span class="highlight">${info.unlocks}</span><br>
-                                 <br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
-        } else {
-            display.innerHTML = "Wähle Händler & Level für Details...";
-        }
+        if(info) display.innerHTML = `Fokus: <span style="color: #7ca35a; font-weight: bold;">${info.focus}</span><br><b>Highlights:</b> <span class="highlight">${info.unlocks}</span><br><br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
+        else display.innerHTML = "Wähle Händler & Level für Details...";
     }
-
     function updateContainer() {
         const val = document.getElementById('containerSelect').value;
         const info = containers[val];
         const display = document.getElementById('containerInfoDisplay');
-        
-        if(info) {
-            display.innerHTML = `<b>${info.name}</b><br>Größe: <span class="highlight">${info.size}</span><br>Herkunft: <span class="highlight">${info.source}</span><br><br><small>${info.info}</small>`;
-        } else {
-            display.innerHTML = "Wähle einen Container für Details zum Fundort...";
-        }
+        if(info) display.innerHTML = `<b>${info.name}</b><br>Größe: <span class="highlight">${info.size}</span><br>Herkunft: <span class="highlight">${info.source}</span><br><br><small>${info.info}</small>`;
+        else display.innerHTML = "Wähle einen Container für Details zum Fundort...";
     }
-
     function compareAmmo() {
         const a1 = ammoDb[document.getElementById('ammo1').value];
         const a2 = ammoDb[document.getElementById('ammo2').value];
-        
         if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden (Flesh): ${a1.damage}<br><small>${a1.info}</small>`;
         if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden (Flesh): ${a2.damage}<br><small>${a2.info}</small>`;
-        
         if(a1 && a2) {
             let winText = "";
             if(a1.pen > a2.pen) winText = `${a1.name} gewinnt gegen Rüstung!`;
@@ -1393,15 +1340,12 @@
             document.getElementById('comparisonResult').innerHTML = "Wähle zwei Typen zum Vergleich aus.";
         }
     }
-
     function searchKeys() {
         const input = document.getElementById('keySearch').value.toLowerCase();
         const list = document.getElementById('keyList');
         list.innerHTML = '';
         if(input.length < 2) { list.style.display='none'; return; }
-        
         const filtered = allKeys.filter(k => k.name.toLowerCase().includes(input) || k.loc.toLowerCase().includes(input));
-        
         if(filtered.length > 0) {
             list.style.display = 'block';
             filtered.forEach(k => {
@@ -1423,15 +1367,12 @@
             list.style.display = 'none';
         }
     }
-
     function searchTasks() {
         const input = document.getElementById('taskSearch').value.toLowerCase();
         const list = document.getElementById('taskList');
         list.innerHTML = '';
         if(input.length < 2) { list.style.display='none'; return; }
-        
         const filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
-        
         if(filtered.length > 0) {
             list.style.display = 'block';
             filtered.forEach(t => {
@@ -1456,64 +1397,12 @@
             list.style.display = 'none';
         }
     }
-
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
         s.style.display = s.style.display === 'block' ? 'none' : 'block';
     }
-
     function updateGeneric(sId, iId) {
         document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details...";
-    }
-</script>
-    <style>
-    #backToTopBtn {
-        display: none; /* Versteckt ihn anfangs */
-        position: fixed; /* Lässt ihn über dem restlichen Inhalt schweben */
-        bottom: 30px; /* Abstand von unten */
-        right: 30px; /* Abstand von rechts */
-        z-index: 9999; /* Garantiert, dass er IMMER im Vordergrund ist */
-        border: 2px solid #5c7a42; 
-        outline: none; 
-        background-color: #7ca35a; /* Deine grüne Akzentfarbe */
-        color: #121212; /* Dunkler Text für besseren Kontrast */
-        cursor: pointer; 
-        padding: 12px 20px; 
-        border-radius: 8px; 
-        font-size: 16px; 
-        font-weight: bold;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.6);
-        transition: all 0.3s ease;
-    }
-
-    #backToTopBtn:hover {
-        background-color: #8ebd68; /* Wird etwas heller, wenn man mit der Maus drüber geht */
-        transform: translateY(-4px); /* Hebt sich leicht an */
-        box-shadow: 0px 6px 12px rgba(0,0,0,0.8);
-    }
-</style>
-
-<button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
-
-<script>
-    let topButton = document.getElementById("backToTopBtn");
-
-    // Prüft, ob gescrollt wird
-    window.addEventListener("scroll", function() {
-        // Erscheint, sobald du 150 Pixel nach unten gescrollt hast
-        if (window.scrollY > 150) {
-            topButton.style.display = "block";
-        } else {
-            topButton.style.display = "none";
-        }
-    });
-
-    // Die Scroll-Funktion
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' /* Für ein weiches, gleitendes Scrollen */
-        });
     }
 </script>
 </body>
