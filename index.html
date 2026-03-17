@@ -1687,21 +1687,10 @@
     const select = document.getElementById('weaponSelect');
     const val = select.value;
     const infoDisplay = document.getElementById('weaponInfo');
-    const imgElement = document.getElementById('weaponImg'); // DAS HIER MUSS REIN
-    const metaElement = document.getElementById('weaponMeta'); // DAS HIER AUCH
+    const imgElement = document.getElementById('weaponImg'); 
+    const metaElement = document.getElementById('weaponMeta'); 
     
-    const info = weapons[val];
-    if (info) {
-        infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
-        
-        // Dropdown füllen
-        populateAmmoDropdown(val); 
-    } else {
-        infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
-        populateAmmoDropdown(""); // Reset
-    }
-
-    // Bild-Vorschau Logik
+    // 1. Bild-Vorschau Logik (Zuerst ausführen!)
     if (val === "") {
         imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
         metaElement.innerText = "";
@@ -1712,6 +1701,18 @@
     } else {
         imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
         metaElement.innerText = "Bildpfad wird noch aktualisiert...";
+    }
+
+    // 2. Munitions-Details & Dropdown
+    const info = weapons[val];
+    if (info) {
+        infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
+        populateAmmoDropdown(val); 
+    } else {
+        infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
+        const ammoSelect = document.getElementById('calcAmmoDisplay');
+        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
+        calculateBallistics(); // Reset Anzeige
     }
 }
 
@@ -1788,6 +1789,17 @@ function calculateBallistics() {
     }
 
     calculateBallistics();
+}
+
+    function getAmmoPenValue(ammoName) {
+    if (!ammoName) return 0;
+    // Wir suchen in der ammoDb nach dem Objekt, dessen .name mit dem Dropdown-Wert übereinstimmt
+    for (let key in ammoDb) {
+        if (ammoDb[key].name === ammoName) {
+            return ammoDb[key].pen;
+        }
+    }
+    return 0;
 }
 </script>
 </body>
