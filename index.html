@@ -355,20 +355,23 @@
             <label for="lzSelect">LZ & Navigation (Helikopter)</label>
             <select id="lzSelect" onchange="updateLZ()">
                 <option value="">-- Wähle ein Zielgebiet --</option>
-                <optgroup label="Early Game POIs">
-                    <option value="lumber">Lumber Yard (Sägewerk)</option>
-                    <option value="hunters">Hunter's Paradise (Schießstand)</option>
-                    <option value="banpa">Ban Pa (Fischerdorf)</option>
+                <optgroup label="Fraktions-Startgebiete (Safe Zones)">
+                    <option value="mithras">Mithras (Nam Thaven) - Alpha LZs</option>
+                    <option value="lamang">Lamang (Pha Lang) - Bravo LZs</option>
+                    <option value="crimson">Crimson (Kiu Vongsa) - Charlie LZs</option>
                 </optgroup>
-                <optgroup label="Mid Game POIs">
-                    <option value="ybl">YBL-1 (Militärbunker)</option>
-                    <option value="blue_lagoon">Blue Lagoon (Restaurant/See)</option>
+                <optgroup label="Early & Mid Game POIs">
+                    <option value="lumber">Lumber Yard (Sägewerk) - Echo LZs</option>
+                    <option value="hunters">Hunter's Paradise - Foxtrot LZs</option>
+                    <option value="banpa">Ban Pa (Fischerdorf) - India LZs</option>
+                    <option value="blue_lagoon">Blue Lagoon (See) - Kilo LZs</option>
                 </optgroup>
                 <optgroup label="End Game POIs (High Danger)">
-                    <option value="fort_narith">Fort Narith (Militärbasis)</option>
-                    <option value="midnight">Midnight Sapphire (Hotel/Villen)</option>
-                    <option value="tiger_bay">Tiger Bay (Großstadt & Pier)</option>
-                    <option value="ground_zero">Ground Zero (Flugplatz)</option>
+                    <option value="ybl">YBL-1 Bunker - Juliet LZs</option>
+                    <option value="fort_narith">Fort Narith (Basis) - Delta LZs</option>
+                    <option value="midnight">Midnight Sapphire - Hotel LZs</option>
+                    <option value="tiger_bay">Tiger Bay (Großstadt) - Lima LZs</option>
+                    <option value="ground_zero">Ground Zero (Airfield) - Golf LZs</option>
                 </optgroup>
             </select>
             <div id="lzInfo" class="info-box">Landeplatz-Sicherheit & Tipps...</div>
@@ -1095,61 +1098,84 @@
         document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss...";
     }
 
-    // 8. LZ & POI DATENBANK (Landing Zones)
+    // 8. LZ & POI DATENBANK (Landing Zones - 100% Komplett)
     const lzDb = {
+        // --- STARTGEBIETE ---
+        "mithras": { 
+            lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", 
+            time: "0-1 Min. Fußweg", 
+            danger: "Sicher (PvE) / Mittel (PvP)", 
+            tip: "Startgebiet von MSS (Nam Thaven). Alpha 1 und 2 sind perfekt für die ersten Quests in der Stadt. Alpha 3 führt dich mehr ins östliche Umland. Achtung vor 'Griefern' an den Stadtgrenzen auf PvP-Servern." 
+        },
+        "lamang": { 
+            lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", 
+            time: "0-1 Min. Fußweg", 
+            danger: "Sicher (PvE) / Mittel (PvP)", 
+            tip: "Startgebiet von LRI (Pha Lang). Bravo 1 liegt nah an der Schule. Bravo 2 bringt dich extrem schnell zur Tankstelle und zum Markt (Top für Early-Game Tasks)." 
+        },
+        "crimson": { 
+            lzs: "Base Camp, Charlie 1, Charlie 2, Charlie 3", 
+            time: "0-1 Min. Fußweg", 
+            danger: "Sicher (PvE) / Mittel (PvP)", 
+            tip: "Startgebiet von CSI (Kiu Vongsa). Charlie 1 liegt optimal für Motel- und Tankstellen-Quests. Charlie 3 führt dich etwas weiter raus ins Hinterland." 
+        },
+
+        // --- MID TIER POIS ---
         "lumber": { 
             lzs: "Echo 1 & Echo 2", 
             time: "1-2 Min. Fußweg", 
             danger: "Niedrig bis Mittel", 
-            tip: "Echo 1 liegt direkt am Holzlager und ist oft von KI umstellt. Echo 2 ist etwas ruhiger im Wald, bietet aber einen perfekten Flankierungs-Winkel auf das Hauptgebäude." 
+            tip: "Echo 1 liegt exponiert direkt am Holzlager. Echo 2 liegt etwas ruhiger im Wald versteckt und bietet eine hervorragende Deckung, um die Gebäude von hinten zu flankieren." 
         },
         "hunters": { 
-            lzs: "Fox 1 & Fox 2", 
+            lzs: "Foxtrot 1 & Foxtrot 2", 
             time: "2 Min. Fußweg", 
-            danger: "Mittel", 
-            tip: "Fox 1 ist der Standard-Drop für den Haupteingang. VORSICHT: Fox 2 wird sehr oft von Snipern beobachtet, die sich in den bewaldeten Hügeln rund um das Motel verstecken!" 
+            danger: "Mittel (PvP Hotspot)", 
+            tip: "Foxtrot 1 ist der Standard-Drop für den Haupteingang. VORSICHT: Foxtrot 2 wird fast durchgehend von anderen Spielern mit Scharfschützengewehren in den bewaldeten Hügeln abgezielt!" 
         },
         "banpa": { 
             lzs: "India 1 & India 2", 
             time: "1-3 Min. Fußweg", 
             danger: "Mittel", 
-            tip: "India 1 ist sehr nah am Dorf – mach dich auf sofortigen Beschuss gefasst. India 2 liegt weiter nördlich im Dschungel und ist viel sicherer für einen heimlichen Ansatz." 
-        },
-        "ybl": { 
-            lzs: "Juliet 1 & Juliet 2", 
-            time: "1 Min. Fußweg", 
-            danger: "Hoch (PvP Hotspot)", 
-            tip: "Beide LZs sind berüchtigt für 'LZ-Camping'. Wirf sofort nach dem Aussteigen eine Rauchgranate (Smoke) und sprinte in den Dschungel. Juliet 1 ist näher am Haupteingang." 
+            tip: "India 1 droppt dich extrem nah am Dorf – mach dich auf sofortigen Beschuss der Rebellen gefasst. India 2 liegt weiter nördlich im Dschungel und ist deutlich sicherer für einen Sneak-Angriff." 
         },
         "blue_lagoon": { 
             lzs: "Kilo 1 & Kilo 2", 
             time: "2-4 Min. Fußweg", 
             danger: "Mittel", 
-            tip: "Kilo 1 bringt dich direkt an die Zufahrtsstraße. Kilo 2 liegt südlicher und erfordert, dass du durchs dichte Gebüsch schleichst, was dir einen taktischen Vorteil am Wasserfall gibt." 
+            tip: "Kilo 1 bringt dich direkt an die Zufahrtsstraße im Norden. Kilo 2 liegt südlicher, wodurch du durchs dichte Gebüsch schleichen kannst – perfekt, um Feinde am Wasserfall zu überraschen." 
+        },
+
+        // --- HIGH TIER POIS ---
+        "ybl": { 
+            lzs: "Juliet 1, Juliet 2, Juliet 3", 
+            time: "1 Min. Fußweg", 
+            danger: "Hoch (PvP Hotspot)", 
+            tip: "Berühmt-berüchtigt für LZ-Camper. Juliet 1 ist sehr nah am Haupteingang. Juliet 3 (später ins Spiel gekommen) ist weiter südlich und bietet oft den einzig sicheren Anflug, ohne sofort beschossen zu werden." 
         },
         "fort_narith": { 
             lzs: "Delta 1, Delta 2, Delta 3", 
             time: "3-5 Min. Fußweg", 
             danger: "Extrem", 
-            tip: "Delta 3 ist oft die sicherste Wahl, um das Fort von der Rückseite (Landebahn) zu infiltrieren. Delta 1 führt dich an die Hauptstraße, wo dich feindliche Spieler leicht abfangen können." 
+            tip: "Delta 3 ist die sicherste Wahl, um das Fort von der Rückseite (via Landebahn/Tower) zu infiltrieren. Delta 1 bringt dich zur Hauptstraße, wo dich dicke KI-Patrouillen und Spieler abfangen." 
         },
         "midnight": { 
-            lzs: "Golf 1 & Golf 2", 
+            lzs: "Hotel 1, Hotel 2, Hotel 3", 
             time: "2 Min. Fußweg", 
             danger: "Sehr Hoch", 
-            tip: "Golf 1 liegt nah am Haupteingang des Hotels. Golf 2 droppt dich in der Nähe der Villen. Die LZs sind offenes Gelände – bewege dich sofort in die Deckung der Hügel!" 
+            tip: "Hotel 1 und 2 droppen dich fast auf dem Präsentierteller in der Nähe des Hotelkomplexes. Hotel 3 liegt weiter im Nordwesten und ist exzellent, um feindliche Scharfschützen zu flankieren." 
         },
         "tiger_bay": { 
             lzs: "Lima 1 & Lima 2", 
             time: "1 Min. Fußweg", 
-            danger: "Todeszone", 
-            tip: "Lima 1 und 2 sind extrem nah an der KI-Übermacht. Sobald der Heli abdreht, werden oft schon Schüsse auf dich abgegeben. Rückzugsmöglichkeiten sind minimal, sei kampfbereit!" 
+            danger: "Absolute Todeszone", 
+            tip: "Beide LZs sind extrem nah an der UNLRA-KI-Übermacht. Sobald der Heli abdreht, schlagen Kugeln ein. Rückzugsmöglichkeiten gibt es kaum. Wirf Smoke-Granaten, sobald du den Heli verlässt!" 
         },
         "ground_zero": { 
-            lzs: "Hotel 1 & Hotel 2", 
+            lzs: "Golf 1 & Golf 2", 
             time: "3 Min. Fußweg", 
             danger: "Extrem (Endgame PvP)", 
-            tip: "Absolute Endgame-Zone. Die LZs werden fast immer durch Spieler mit Scharfschützengewehren (M700/M14) überwacht. Bleib niemals stehen und nutze das Terrain (Senken) als Deckung." 
+            tip: "Das Airfield. Golf 1 liegt südöstlich, Golf 2 fast direkt am Rand der Startbahn. Hier herrscht dauerhaftes Sniper-Gefecht. Bleib unter keinen Umständen offen stehen, nutze den Krater und die Senken als Deckung." 
         }
     }
 
