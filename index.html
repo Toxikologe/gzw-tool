@@ -376,6 +376,29 @@
             </select>
             <div id="lzInfo" class="info-box">Landeplatz-Sicherheit & Tipps...</div>
         </div>
+
+        <div>
+            <label for="symptomSelect">Symptom-Checker (Notfall-Medic)</label>
+            <select id="symptomSelect" onchange="updateSymptom()">
+                <option value="">-- Was fühlst/siehst du? --</option>
+                <optgroup label="Sicht & Wahrnehmung">
+                    <option value="gray_vision">Schwarz-Weiß-Sicht / Farbe verschwindet</option>
+                    <option value="blurry_vision">Verschwommenes Sichtfeld / Pulsieren</option>
+                    <option value="tunnel_vision">Tunnelblick / Schwarzer Rand wird größer</option>
+                </optgroup>
+                <optgroup label="Bewegung & Waffen-Handling">
+                    <option value="limping">Starkes Humpeln / Sprinten unmöglich</option>
+                    <option value="weapon_sway">Extremes Wackeln beim Zielen (Sway)</option>
+                    <option value="stamina_drain">Ausdauer regeneriert extrem langsam</option>
+                </optgroup>
+                <optgroup label="Akustik (Geräusche)">
+                    <option value="coughing">Charakter hustet Blut / Stöhnt ständig</option>
+                    <option value="heartbeat">Lauter Herzschlag / Schweres Atmen</option>
+                    <option value="stomach">Magenknurren</option>
+                </optgroup>
+            </select>
+            <div id="symptomInfo" class="info-box">Diagnose & Behandlung...</div>
+        </div>
     </div> <hr>
 
     <h2>Munitions-Vergleich (Ballistik-Labor)</h2>
@@ -1190,6 +1213,69 @@
                                  <br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
         } else {
             display.innerHTML = "Wähle ein Zielgebiet für LZ-Tipps...";
+        }
+    }
+
+    // 9. SYMPTOM-CHECKER DATENBANK
+    const symptomDb = {
+        "gray_vision": { 
+            diag: "Kritischer Blutverlust (Hypovolämie)", 
+            treat: "Blutbeutel (Blood Bag)", 
+            info: "Dein Blutvolumen ist am Boden. Fülle es SOFORT mit einem 500ml oder 1000ml Blutbeutel auf, sonst fällst du unweigerlich ins Koma." 
+        },
+        "blurry_vision": { 
+            diag: "Schock / Akuter Schmerz", 
+            treat: "Schmerzmittel (Painkillers)", 
+            info: "Nimm Ibuprofen, Meloxicam oder nutze einen Morphin-Injektor. Dies entfernt den verschwommenen Effekt, heilt aber NICHT die Ursache (z. B. den Bruch)!" 
+        },
+        "tunnel_vision": { 
+            diag: "Koma steht kurz bevor", 
+            treat: "Tourniquet + Großflächige Bluttransfusion", 
+            info: "Du verblutest extrem schnell. Stoppe SOFORT alle schweren Blutungen (Tourniquet) und drück dir einen großen Blutbeutel rein." 
+        },
+        "limping": { 
+            diag: "Knochenbruch (Bein)", 
+            treat: "Schiene (Splint)", 
+            info: "Nutze eine Holz-Schiene oder SAM-Schiene auf das kaputte Bein. Schmerzmittel allein lassen dich NICHT wieder sprinten!" 
+        },
+        "weapon_sway": { 
+            diag: "Knochenbruch (Arm) oder massive Schmerzen", 
+            treat: "Schiene + Schmerzmittel", 
+            info: "Dein Arm ist gebrochen. Lege eine Schiene an, um das extreme Wackeln beim Zielen (ADS) zu stoppen, damit du dich wieder wehren kannst." 
+        },
+        "stamina_drain": { 
+            diag: "Organschaden (Lunge) oder Erschöpfung", 
+            treat: "Chirurgie-Set (Surkit) oder Essen", 
+            info: "Wenn du getroffen wurdest: Nutze ein Surgery Kit auf die Lunge. Wenn du unverletzt bist: Iss und trink etwas, du hungerst!" 
+        },
+        "coughing": { 
+            diag: "Organschaden (Lunge / Magen)", 
+            treat: "Chirurgie-Set (Surkit)", 
+            info: "Eines deiner lebenswichtigen Organe ist komplett zerstört. Such dir eine absolut sichere Deckung, da die Operation (Surkit-Animation) extrem lange dauert!" 
+        },
+        "heartbeat": { 
+            diag: "Adrenalinabfall / Schmerz", 
+            treat: "Morphin oder Meloxicam", 
+            info: "Dein Charakter steht unter extremem Stress. Schmerzmittel beruhigen den Puls und geben dir wieder einen klaren Kopf." 
+        },
+        "stomach": { 
+            diag: "Nahrungsmangel", 
+            treat: "Essen & Trinken", 
+            info: "Deine Energie und Hydration sind im roten Bereich. Fülle sie auf, bevor du massive Ausdauer-Strafen bekommst." 
+        }
+    };
+
+    function updateSymptom() {
+        const val = document.getElementById('symptomSelect').value;
+        const info = symptomDb[val];
+        const display = document.getElementById('symptomInfo');
+        
+        if(info) {
+            display.innerHTML = `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${info.diag}</span><br>
+                                 Behandlung: <span class="highlight">${info.treat}</span><br>
+                                 <br><small><b>Medic-Tipp:</b> ${info.info}</small>`;
+        } else {
+            display.innerHTML = "Wähle ein Symptom für Diagnose & Behandlung...";
         }
     }
 
