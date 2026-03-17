@@ -386,31 +386,54 @@
     </div>
 
 </div> <script>
-    // 1. WAFFEN DATENBANK
+    // 1. WAFFEN DATENBANK (Erweitert)
     const weapons = {
+        // --- STURMGEWEHRE ---
         "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
         "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
         "mk18": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
         "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Hohe Mündungsgeschwindigkeit sorgt für weniger Bullet-Drop auf Distanz." },
+        "cqa1": { ammo: "5.56x45mm M855", pen: "Class 3", tip: "Chinesischer M4-Klon. Gute Budget-Alternative, aber etwas schlechtere Basis-Werte." },
+        "ddm4": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Daniel Defense Plattform. Fantastische Basiswerte für Rückstoß und Ergonomie." },
+        "sicmcx": { ammo: "5.56x45mm / .300 BLK", pen: "Class 4", tip: "Sehr flexibel. Ein absolutes Biest im Nahkampf, besonders mit Schalldämpfer." },
+        "akm": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Viel Rückstoß, aber extrem hoher Schaden pro Schuss." },
         "akmn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Der Klassiker. Mit BP-Munition extrem gefährlich gegen Class 3+ Westen." },
+        "akmsn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Klappschaft-Version. Kompakter im Rucksack, erlaubt Optik-Montage via Dovetail." },
         "ak74n": { ammo: "5.45x39mm 7N6M / PP", pen: "Class 3", tip: "Sehr geringer Rückstoß. Präziser als die 7.62er Varianten." },
         "ak74m": { ammo: "5.45x39mm PP / BP", pen: "Class 4", tip: "Modernisierte AK-74. Geringes Gewicht, gute Trägheits-Werte." },
+        "aks74u": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Die 'Krinkov'. Genial für CQB, verliert aber auf Distanz stark an Genauigkeit." },
         "ak103": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Beste 7.62er AK. Kann alle modernen Aufsätze nutzen." },
         "ak105": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Kurze AK-Variante. Perfekt für das neue Bewegungssystem." },
         "vz58": { ammo: "7.62x39mm PS / BP", pen: "Class 4", tip: "Keine AK! Nutzt eigene Magazine. Höhere Feuerrate als die AKMN." },
+        "ak12": { ammo: "5.45x39mm BP", pen: "Class 4", tip: "Modernste russische Armee-Waffe. Integrierte Schienen und tolles Schussgefühl." },
+        "ak15": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Verbindet das moderne Handling der AK-12 mit der brachialen Kraft der 7.62 Patrone." },
+        "ak19": { ammo: "5.56x45mm NATO", pen: "Class 4", tip: "Nutzt westliche Munition auf der modernen AK-12 Plattform. Sehr vielseitig." },
+        "ak308": { ammo: "7.62x51mm M80/M61", pen: "Class 5-6", tip: "AK-Plattform auf Steroiden. Verschießt fette NATO-Muni. Extrem laut, extrem tödlich." },
+
+        // --- DMR & SCHARFSCHÜTZEN ---
         "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
         "m700": { ammo: "7.62x51mm M61", pen: "Class 6", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
         "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
         "mosin": { ammo: "7.62x54mmR SNB", pen: "Class 6", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
         "skn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
+
+        // --- SMGs & SHOTGUNS ---
         "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Ein Laser auf kurze Distanz. Ziele auf Kopf oder Beine." },
+        "mp7a1": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Kleine Waffe, gigantischer Durchschlag. Perfekte Backup-Waffe für Sniper." },
+        "mp7a2": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Wie die A1, aber erlaubt die Montage eigener Vordergriffe für noch bessere Ergo." },
+        "vz61": { ammo: "9x18mm / .32 ACP", pen: "Class 0-1", tip: "Skorpion Maschinenpistole. Enorme Feuerrate, aber durchdringt keine Rüstung. Leg-Meta!" },
         "vityaz": { ammo: "9x19mm 7N21", pen: "Class 2+", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
         "m870": { ammo: "12G Slug / 00 Buck", pen: "Class 0-2", tip: "In 0.4 sind Slugs gegen weiche Ziele verheerend." },
         "590a1": { ammo: "12G 00 Buckshot", pen: "Class 0-1", tip: "Maximale Stopwirkung auf 5-10 Meter." },
-        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS." },
+
+        // --- PISTOLEN ---
+        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS und fast kein Rückstoß." },
         "glock17": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Zuverlässig, große Magazine verfügbar." },
         "m9a1": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Gute Standard-Pistole für den Start." },
-        "makarov": { ammo: "9x18mm PM Gzh", pen: "Class 0", tip: "Nur im absoluten Notfall." }
+        "makarov": { ammo: "9x18mm PM Gzh", pen: "Class 0", tip: "Nur im absoluten Notfall." },
+        "1911": { ammo: ".45 ACP", pen: "Class 1", tip: "Massiver Fleischschaden, aber geringe Magazinkapazität." },
+        "ccc": { ammo: ".45 ACP", pen: "Class 1", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
+        "typ51": { ammo: "7.62x25mm Tokarev", pen: "Class 2+", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." }
     };
 
     // 2. BOSS DATENBANK
