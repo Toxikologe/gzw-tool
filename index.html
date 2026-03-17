@@ -161,24 +161,38 @@
             <label for="medFullSelect">Medizinische Versorgung</label>
             <select id="medFullSelect" onchange="updateGeneric('medFullSelect', 'medFullInfo')">
                 <option value="">-- Wähle Medizin-Item --</option>
-                <optgroup label="Blutverlust & Wunden">
-                    <option value="Blutbeutel (IV): Stoppt Hypovolämie (Blutverlust) sofort. Muss im Stehen/Sitzen angewendet werden.">Blood Bag (IV)</option>
-                    <option value="Tourniquet: Stoppt schwere (arterielle) Blutungen an Gliedmaßen sofort. Schnellste Anwendung.">Tourniquet (CAT)</option>
-                    <option value="Bandage: Stoppt leichte Blutungen. Verbraucht sich bei Anwendung.">Bandage</option>
-                    <option value="Quick Clot: Spezial-Bandage für mittelschwere Wunden, beschleunigt die Blutstillung.">QuickClot</option>
+                
+                <optgroup label="Blutungen (Wundversorgung)">
+                    <option value="Bandage: Stoppt leichte Blutungen. Günstig und schnell, aber verbraucht sich sofort.">Bandage</option>
+                    <option value="Combat Gauze: Hämostatische Gaze. Stoppt leichte bis mittelschwere Blutungen sehr schnell.">Combat Gauze (QuikClot)</option>
+                    <option value="Notfallbandage (Israeli Bandage): Sehr zuverlässig. Stoppt mittelschwere Blutungen effektiv.">Emergency Bandage</option>
+                    <option value="Tourniquet (CAT): Lebensretter! Stoppt schwere (arterielle) Blutungen an Gliedmaßen sofort. Schnellste Anwendung im Spiel.">Tourniquet (CAT)</option>
                 </optgroup>
+
+                <optgroup label="Blutvolumen & Kreislauf (Hypovolämie)">
+                    <option value="Kochsalzlösung: Hilft bei leichtem Flüssigkeitsverlust und stabilisiert den Kreislauf ein wenig.">Saline Solution</option>
+                    <option value="Blutbeutel (250ml): Stellt eine kleine Menge Blutvolumen wieder her. Gut für leichte Streifschüsse.">Blood Bag (250ml)</option>
+                    <option value="Blutbeutel (500ml): Der Standard-Beutel. Stellt eine mittlere Menge Blut wieder her.">Blood Bag (500ml)</option>
+                    <option value="Blutbeutel (1000ml): Retter in der Not. Stellt das Blutvolumen bei massiven Verlusten (Koma-Gefahr) fast vollständig wieder her.">Blood Bag (1000ml)</option>
+                </optgroup>
+
                 <optgroup label="Chirurgie & Organe">
-                    <option value="Surkit (Surgery Kit): Repariert beschädigte Organe (Magen, Lunge, Leber). Lange Animation (20 Sek).">Surgery Kit (Surkit)</option>
-                    <option value="Advanced Surkit: Mehr Anwendungen als das Standard-Kit. Goldstandard für Squads.">Advanced Surgery Kit</option>
+                    <option value="Chirurgie-Set: Repariert beschädigte Organe (Magen, Lunge, Leber). Sehr lange Animationszeit, suche dir sichere Deckung!">Surgery Kit</option>
+                    <option value="Erweitertes Chirurgie-Set: Die Militär-Version. Hat mehr Anwendungen und heilt Organe etwas zuverlässiger. Goldstandard für Squad-Medics.">Advanced Surgery Kit</option>
                 </optgroup>
+
                 <optgroup label="Knochen & Brüche">
-                    <option value="Splint: Repariert Frakturen sofort. Behebt Humpeln oder Zittern beim Zielen.">Splint (Schiene)</option>
-                    <option value="Surgical Tape: Kann für kleine Brüche oder als Notlösung genutzt werden.">Surgical Tape</option>
+                    <option value="Surgical Tape: Medizinisches Klebeband. Kann für minimale Fixierungen oder als Notlösung genutzt werden.">Surgical Tape</option>
+                    <option value="Schiene (Holz): Repariert Frakturen sofort. Behebt starkes Humpeln oder das extreme Zittern beim Zielen.">Splint (Wood)</option>
+                    <option value="SAM-Schiene: Hochwertige, formbare Militär-Schiene. Kompakt und hocheffizient bei Brüchen.">SAM Splint</option>
                 </optgroup>
-                <optgroup label="Schmerzmittel & Booster">
-                    <option value="Painkillers: Unterdrückt den Schmerz-Effekt (Verschwommene Sicht). Hält ca. 120 Sek.">Painkillers (Tabletten)</option>
-                    <option value="Morphine Injector: Sofortige Schmerzausschaltung. Hilft bei schweren Verletzungen, um zur Extraktion zu rennen.">Morphine</option>
-                    <option value="Epinephrine: Erhöht kurzzeitig die Ausdauer-Regeneration. Gut für Tactical Sprint.">Epinephrine (Epi-Pen)</option>
+
+                <optgroup label="Schmerzmittel (Dauer & Stärke)">
+                    <option value="Paracetamol: Sehr leichtes Schmerzmittel. Unterdrückt den Schmerzeffekt (verschwommene Sicht) nur für kurze Zeit.">Paracetamol</option>
+                    <option value="Ibuprofen: Mittleres Schmerzmittel. Der Standard für leichte Verletzungen und längere Fußmärsche.">Ibuprofen</option>
+                    <option value="Meloxicam: Starkes Schmerzmittel in Tablettenform. Hält sehr lange an, ideal vor großen Feuergefechten.">Meloxicam</option>
+                    <option value="Morphin-Injektor: Extrem starke, sofortige Schmerzausschaltung. Hilft bei kritischen Verletzungen, um trotzdem noch zur Extraktion rennen zu können.">Morphine Injector</option>
+                    <option value="Adrenalin-Injektor: Gibt dir sofort einen massiven Ausdauer-Boost. Perfekt, um unter schwerem Beschuss in Deckung zu sprinten (Tactical Sprint).">Epinephrine (Epi-Pen)</option>
                 </optgroup>
             </select>
             <div id="medFullInfo" class="info-box">Medizinische Details...</div>
