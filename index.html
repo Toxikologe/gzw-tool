@@ -829,6 +829,36 @@
         "typ51": { ammo: "7.62x25mm Tokarev", pen: "Class 2+", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." }
     };
 
+    const weaponImages = {
+    // Sturmgewehre
+    "ak74m": "https://static.wikia.nocookie.net/grayzonewarfare/images/a/a2/AK-74M_Icon.png",
+    "ak74n": "https://static.wikia.nocookie.net/grayzonewarfare/images/2/22/AK-74N_Icon.png",
+    "ak103": "https://static.wikia.nocookie.net/grayzonewarfare/images/1/12/AK-103_Icon.png",
+    "ak12": "https://static.wikia.nocookie.net/grayzonewarfare/images/a/a7/AK-12_Icon.png",
+    "akm": "https://static.wikia.nocookie.net/grayzonewarfare/images/a/a9/AKM_Icon.png",
+    "akmn": "https://static.wikia.nocookie.net/grayzonewarfare/images/4/41/AKMN_Icon.png",
+    "ks1": "https://static.wikia.nocookie.net/grayzonewarfare/images/c/c5/KS-1_Icon.png",
+    "m4a1": "https://static.wikia.nocookie.net/grayzonewarfare/images/a/a2/M4A1_Icon.png",
+    "mk18": "https://static.wikia.nocookie.net/grayzonewarfare/images/1/1e/Mk18_Icon.png",
+    "ddm4": "https://static.wikia.nocookie.net/grayzonewarfare/images/d/d4/DDM4_Icon.png",
+
+    // DMR & Sniper
+    "m14": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/80/M14_EBR_Icon.png",
+    "m700": "https://static.wikia.nocookie.net/grayzonewarfare/images/4/4e/M700_Remington_Icon.png",
+    "svd": "https://static.wikia.nocookie.net/grayzonewarfare/images/c/c7/SVD_Icon.png",
+    "mosin": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/83/Mosin-Nagant_Icon.png",
+
+    // SMGs & Shotguns
+    "mp5": "https://static.wikia.nocookie.net/grayzonewarfare/images/d/d4/MP5A3_Icon.png",
+    "mp7a2": "https://static.wikia.nocookie.net/grayzonewarfare/images/e/e0/MP7A2_Icon.png",
+    "m870": "https://static.wikia.nocookie.net/grayzonewarfare/images/5/52/M870_Icon.png",
+
+    // Pistolen
+    "alien": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/8b/Laugo_Alien_Icon.png",
+    "glock17": "https://static.wikia.nocookie.net/grayzonewarfare/images/e/ef/Glock_17_Icon.png",
+    "m9a1": "https://static.wikia.nocookie.net/grayzonewarfare/images/2/2d/M9A1_Icon.png"
+};
+
     // 2. BOSS DATENBANK
     const bosses = {
         "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses auf." },
@@ -1611,28 +1641,22 @@
     }
 
     function updateWeaponPreview() {
-    const select = document.getElementById('weaponSelect');
+    const select = document.getElementById('weaponSelect'); // ID deines Dropdowns
     const weaponKey = select.value;
-    const imgElement = document.getElementById('weaponImg');
-    const placeholderText = document.getElementById('placeholderText');
-    
-    // 1. Wenn der Platzhalter ausgewählt ist
+    const imgElement = document.getElementById('weaponImg'); // ID deines <img> Tags
+
     if (weaponKey === "") {
         imgElement.style.display = "none";
-        placeholderText.style.display = "block";
-        return; // Funktion hier abbrechen
+        return;
     }
 
-    // 2. Wenn eine echte Waffe ausgewählt wurde
     if (weaponImages[weaponKey]) {
         imgElement.src = weaponImages[weaponKey];
         imgElement.style.display = "block";
-        placeholderText.style.display = "none";
     } else {
-        // Fallback für Waffen ohne Bild-Link
-        imgElement.src = "https://via.placeholder.com/400x200?text=Bild+folgt";
+        // Fallback-Bild, falls der Link mal nicht geht
+        imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+nicht+verfügbar";
         imgElement.style.display = "block";
-        placeholderText.style.display = "none";
     }
 }
 </script>
