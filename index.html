@@ -146,7 +146,7 @@
         <div class="grid">
             <div>
                 <label for="weaponSelect">Waffen</label>
-                <select id="weaponSelect" onchange="updateWeapon()">
+                <select id="weaponSelect" onchange="updateWeaponCombined()">
                     <option value="">-- Wähle eine Waffe --</option>
                     <optgroup label="Sturmgewehre">
     <option value="ak-74m">AK-74M (Klappschaft)</option>
@@ -1646,23 +1646,34 @@
         document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details...";
     }
 
-    function updateWeaponPreview() {
-    const select = document.getElementById('weaponSelect'); // ID deines Dropdowns
-    const weaponKey = select.value;
-    const imgElement = document.getElementById('weaponImg'); // ID deines <img> Tags
+    function updateWeaponCombined() {
+    const select = document.getElementById('weaponSelect');
+    const val = select.value;
+    const infoDisplay = document.getElementById('weaponInfo');
+    const imgElement = document.getElementById('weaponImg');
+    const metaElement = document.getElementById('weaponMeta');
 
-    if (weaponKey === "") {
-        imgElement.style.display = "none";
-        return;
+    // 1. Text-Informationen aktualisieren
+    const info = weapons[val];
+    if (info) {
+        infoDisplay.innerHTML = `Empfohlene Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
+    } else {
+        infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
     }
 
-    if (weaponImages[weaponKey]) {
-        imgElement.src = weaponImages[weaponKey];
+    // 2. Bild-Vorschau aktualisieren
+    if (val === "") {
+        imgElement.style.display = "none";
+        metaElement.innerText = "";
+    } else if (weaponImages[val]) {
+        imgElement.src = weaponImages[val];
         imgElement.style.display = "block";
+        metaElement.innerText = "Quelle: GZW Official Wiki Intel";
     } else {
-        // Fallback-Bild, falls der Link mal nicht geht
-        imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+nicht+verfügbar";
+        // Fallback falls Bild-URL fehlt
+        imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
         imgElement.style.display = "block";
+        metaElement.innerText = "Bildpfad wird noch aktualisiert...";
     }
 }
 </script>
