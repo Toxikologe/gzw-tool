@@ -694,6 +694,22 @@
         </div>
     </div>
 
+    <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 20px;">
+    <input type="text" id="taskSearch" placeholder="Task suchen..." onkeyup="filterTasks()" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white;">
+    
+    <select id="vendorFilter" onchange="filterTasks()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer;">
+        <option value="all">Alle Händler</option>
+        <option value="Handshake">Handshake</option>
+        <option value="Gunny">Gunny</option>
+        <option value="Lab Rat">Lab Rat</option>
+        <option value="Artisan">Artisan</option>
+        <option value="Turncoat">Turncoat</option>
+        <option value="Banshee">Banshee</option>
+        <option value="Vulture">Vulture</option>
+        <option value="Squad Strike">Squad Strike</option>
+    </select>
+</div>
+
     <div id="tab-map" class="tab-content">
         <h2>Interactive Tactical Map</h2>
         <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 10px;">
