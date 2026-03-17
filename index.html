@@ -1684,8 +1684,15 @@
     const info = weapons[val];
     if (info) {
         infoDisplay.innerHTML = `Empfohlene Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
+        
+        // --- HIER SIND DIE FEHLENDEN ZEILEN ---
+        document.getElementById('calcAmmoDisplay').innerText = info.ammo; // Schreibt die Munition in den Rechner
+        calculateBallistics(); // Startet sofort die Berechnung
+        // --------------------------------------
+        
     } else {
         infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
+        document.getElementById('calcAmmoDisplay').innerText = "-"; // Reset wenn keine Waffe gewählt
     }
 
     // 2. Bild-Vorschau aktualisieren
@@ -1697,7 +1704,6 @@
         imgElement.style.display = "block";
         metaElement.innerText = "Quelle: GZW Official Wiki Intel";
     } else {
-        // Fallback falls Bild-URL fehlt
         imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
         imgElement.style.display = "block";
         metaElement.innerText = "Bildpfad wird noch aktualisiert...";
