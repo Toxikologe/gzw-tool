@@ -911,55 +911,63 @@
 
     // 3. AMMO DATENBANK
     const ammoDb = {
-        "m855a1": { name: "5.56 M855A1", pen: 4.0, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
-        "m855": { name: "5.56 M855", pen: 3.0, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
-        "m193": { name: "5.56 M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
-        "m856a1": { name: "5.56 M856A1", pen: 3.5, damage: 51, info: "Tracer-Munition (Leuchtspur). Gut für Squads." },
-        "mk255": { name: "5.56 MK255", pen: 1.0, damage: 65, info: "Hollow Point. Verheerend gegen ungepanzerte Ziele." },
-        "300_ap": { name: ".300 BLK AP", pen: 4.5, damage: 55, info: "Hervorragende Penetration auf kurze bis mittlere Distanz." },
-        "300_cbj": { name: ".300 BLK CBJ", pen: 4.0, damage: 58, info: "Gute Balance zwischen Rüstungsdurchschlag und Schaden." },
-        "300_m62": { name: ".300 BLK M62", pen: 3.8, damage: 54, info: "Leuchtspurmunition für die SIG-MCX." },
-        "300_whisper": { name: ".300 BLK Whisper", pen: 2.5, damage: 62, info: "Subsonic. In Kombination mit Schalldämpfer flüsterleise." },
-        "ak74_bs": { name: "5.45 BS", pen: 5.0, damage: 43, info: "Durchschlägt Class 5 problemlos. Etwas weniger Schaden." },
-        "ak74_bp": { name: "5.45 BP", pen: 4.0, damage: 48, info: "Die Meta-Muni für 5.45 Waffen. Bricht Class 4." },
-        "ak74_pp": { name: "5.45 PP", pen: 3.0, damage: 50, info: "Guter Mid-Tier Durchschlag für den Start." },
-        "ak74_7n6": { name: "5.45 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition. Oft bei Scavs zu finden." },
-        "ak74_hp": { name: "5.45 HP", pen: 1.0, damage: 68, info: "Hohlspitz. Null Durchschlag, aber sofort tödlich in die Beine." },
-        "ak_mai_ap": { name: "7.62x39 MAI AP", pen: 5.5, damage: 46, info: "Extrem seltene Munition. Bricht fast jede Rüstung." },
-        "ak_bp": { name: "7.62x39 BP", pen: 4.5, damage: 58, info: "Härtester Standard-Durchschlag für AK-Plattformen." },
-        "ak_ps": { name: "7.62x39 PS", pen: 3.2, damage: 54, info: "Solider Allrounder für das Mid-Game." },
-        "ak_us": { name: "7.62x39 US", pen: 2.0, damage: 56, info: "Subsonic. Sehr leise, aber starker Bullet-Drop." },
-        "ak_hp": { name: "7.62x39 HP", pen: 1.0, damage: 73, info: "Massiver Fleischschaden. Ideal für Leg-Meta." },
-        "m993": { name: "7.62x51 M993", pen: 6.5, damage: 60, info: "Das Nonplusultra der Penetration. Geht durch Class 6 wie Butter." },
-        "m61": { name: "7.62x51 M61", pen: 6.0, damage: 64, info: "Ignoriert fast jede Rüstung im Spiel (Class 6)." },
-        "m62": { name: "7.62x51 M62", pen: 5.4, damage: 68, info: "Hohe Penetration + Leuchtspur. Guter Schaden." },
-        "m80": { name: "7.62x51 M80", pen: 4.2, damage: 80, info: "Enormer Schaden, tötet weiche Ziele meist mit 1 Treffer." },
-        "tcw_sp": { name: "7.62x51 TCW SP", pen: 2.5, damage: 90, info: "Gigantischer Fleischschaden. Zerfetzt ungepanzerte Ziele." },
-        "snb": { name: "7.62x54R SNB", pen: 6.0, damage: 75, info: "Schlägt durch jeden Helm und jede Weste (Mosin/SVD)." },
-        "7n1": { name: "7.62x54R 7N1", pen: 4.5, damage: 85, info: "Maximale Präzision. One-Shot Potenzial gegen Class 4." },
-        "lps": { name: "7.62x54R LPS Gzh", pen: 4.0, damage: 80, info: "Standard-Munition für Mosin. Gut gegen Class 4." },
-        "46_apsx": { name: "4.6x30 AP SX", pen: 5.0, damage: 35, info: "Absurde Penetration für eine SMG. Bricht Class 5!" },
-        "46_fmjsx": { name: "4.6x30 FMJ SX", pen: 4.0, damage: 43, info: "Gute Allround-Munition für die MP7. Hohe Kadenz rettet den Schaden." },
-        "46_subsx": { name: "4.6x30 Subsonic", pen: 3.5, damage: 45, info: "Leise und tödlich." },
-        "46_actionsx": { name: "4.6x30 Action SX", pen: 1.5, damage: 65, info: "Null Penetration, zerstört aber Gliedmaßen extrem schnell." },
-        "7n31": { name: "9x19 7N31", pen: 3.5, damage: 45, info: "Beste 9mm Penetration. Geht durch leichte Visire." },
-        "ap63": { name: "9x19 AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields und leichte Helme." },
-        "pst": { name: "9x19 PST Gzh", pen: 1.5, damage: 52, info: "Geringe Penetration, nur für Kopfschüsse ohne Helm." },
-        "rip": { name: "9x19 RIP", pen: 0.5, damage: 95, info: "Die Leg-Meta Königin. Zielt auf die Beine für Insta-Kills." },
-        "pm_pmm": { name: "9x18 PMM", pen: 2.0, damage: 55, info: "Überdruck-Munition. Kann nur in speziellen Makarovs/Klin genutzt werden!" },
-        "pm_sp7": { name: "9x18 PM SP7", pen: 1.0, damage: 70, info: "Keine Pen. Nur für Beine geeignet." },
-        "pm_gzh": { name: "9x18 PM Gzh", pen: 1.0, damage: 50, info: "Die absolute Standard-Pistolenmunition." },
-        "tt_pst": { name: "7.62x25 TT PST Gzh", pen: 2.5, damage: 50, info: "Überraschend gute Penetration für alte Pistolen." },
-        "tt_lrnpc": { name: "7.62x25 TT LRNPC", pen: 1.0, damage: 65, info: "Standard-Flesh-Damage Munition." },
-        "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Die einzige .45er Muni, die zuverlässig durch Rüstungen kommt." },
-        "45_match": { name: ".45 ACP Match FMJ", pen: 2.0, damage: 70, info: "Hoher Basisschaden, aber schwach gegen Westen ab Class 3." },
-        "45_rip": { name: ".45 ACP RIP", pen: 0.5, damage: 120, info: "Zwei Treffer in die Beine und der Gegner ist Geschichte." },
-        "32_fmj": { name: ".32 ACP FMJ", pen: 1.0, damage: 40, info: "Sehr schwache Pistolenmunition (VZ-61). Feinde ins Gesicht sprühen!" },
-        "ap20": { name: "12G AP-20 Slug", pen: 3.5, damage: 160, info: "Ein panzerbrechender Eisenblock. Kann Class 3/4 Westen brechen und sofort töten." },
-        "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss. Verheerend gegen weiche Ziele." },
-        "flechette": { name: "12G Flechette", pen: 3.0, damage: "8x25", info: "Schießt kleine Pfeile. Zerreißt Rüstungen in Sekunden." },
-        "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Acht Pellets. Tödlich im Nahkampf bei Treffern auf Arme oder Beine." }
-    };
+    // 5.56x45mm (NATO)
+    "m855a1": { name: "5.56x45mm M855A1", pen: 4.5, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
+    "m855": { name: "5.56x45mm M855", pen: 3.5, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
+    "m193": { name: "5.56x45mm M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
+    "m856a1": { name: "5.56x45mm M856A1", pen: 3.8, damage: 51, info: "Tracer-Munition (Leuchtspur). Gut für Squads." },
+    "mk255": { name: "5.56x45mm MK255", pen: 1.0, damage: 65, info: "Hollow Point. Verheerend gegen ungepanzerte Ziele." },
+
+    // .300 Blackout (SIG-MCX)
+    "300_ap": { name: ".300 BLK AP", pen: 4.5, damage: 55, info: "Hervorragende Penetration auf kurze Distanz." },
+    "300_cbj": { name: ".300 BLK CBJ", pen: 4.0, damage: 58, info: "Gute Balance zwischen Durchschlag und Schaden." },
+    "300_m62": { name: ".300 BLK M62", pen: 3.8, damage: 54, info: "Leuchtspurmunition für die SIG-MCX." },
+    "300_whisper": { name: ".300 BLK Whisper", pen: 2.5, damage: 62, info: "Subsonic. In Kombination mit Schalldämpfer flüsterleise." },
+
+    // 5.45x39mm (AK-74 / AK-12)
+    "ak74_bs": { name: "5.45x39mm BS", pen: 5.5, damage: 43, info: "Durchschlägt Class 5 problemlos." },
+    "ak74_bp": { name: "5.45x39mm BP", pen: 4.5, damage: 48, info: "Die Meta-Muni für 5.45. Bricht Class 4." },
+    "ak74_pp": { name: "5.45x39mm PP", pen: 3.5, damage: 50, info: "Guter Mid-Tier Durchschlag." },
+    "ak74_7n6": { name: "5.45x39mm 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition." },
+    "ak74_hp": { name: "5.45x39mm HP", pen: 1.0, damage: 68, info: "Null Durchschlag, Beine anvisieren!" },
+
+    // 7.62x39mm (AKM / AK-15 / SKS)
+    "ak_mai_ap": { name: "7.62x39mm MAI AP", pen: 5.5, damage: 46, info: "Bricht fast jede Rüstung." },
+    "ak_bp": { name: "7.62x39mm BP", pen: 4.5, damage: 58, info: "Härtester Standard-Durchschlag für AKs." },
+    "ak_ps": { name: "7.62x39mm PS", pen: 3.5, damage: 54, info: "Solider Allrounder." },
+    "ak_us": { name: "7.62x39mm US", pen: 2.0, damage: 56, info: "Subsonic. Sehr leise." },
+    "ak_hp": { name: "7.62x39mm HP", pen: 1.0, damage: 73, info: "Ideal für Leg-Meta." },
+
+    // 7.62x51mm (NATO / M14 / M700)
+    "m993": { name: "7.62x51mm M993", pen: 6.5, damage: 60, info: "Geht durch Class 6 wie Butter." },
+    "m61": { name: "7.62x51mm M61", pen: 6.0, damage: 64, info: "Ignoriert fast jede Rüstung." },
+    "m62": { name: "7.62x51mm M62", pen: 5.4, damage: 68, info: "Hohe Penetration + Leuchtspur." },
+    "m80": { name: "7.62x51mm M80", pen: 4.2, damage: 80, info: "Enormer Schaden." },
+    "tcw_sp": { name: "7.62x51mm TCW SP", pen: 2.5, damage: 90, info: "Gigantischer Fleischschaden." },
+
+    // 7.62x54mmR (Mosin / SVD)
+    "snb": { name: "7.62x54mmR SNB", pen: 6.0, damage: 75, info: "Schlägt durch jeden Helm." },
+    "7n1": { name: "7.62x54mmR 7N1", pen: 4.5, damage: 85, info: "One-Shot Potenzial gegen Class 4." },
+    "lps": { name: "7.62x54mmR LPS", pen: 4.0, damage: 80, info: "Standard-Munition für Mosin." },
+
+    // 4.6x30mm (MP7)
+    "46_apsx": { name: "4.6x30mm AP SX", pen: 5.0, damage: 35, info: "Bricht Class 5!" },
+    "46_fmjsx": { name: "4.6x30mm FMJ SX", pen: 4.0, damage: 43, info: "Gute Allround-Munition." },
+
+    // 9x19mm (Glock / MP5 / Alien)
+    "7n31": { name: "9x19mm 7N31", pen: 3.5, damage: 45, info: "Beste 9mm Penetration." },
+    "ap63": { name: "9x19mm AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields." },
+    "pst": { name: "9x19mm PST Gzh", pen: 1.5, damage: 52, info: "Nur für Kopfschüsse ohne Helm." },
+    "rip": { name: "9x19mm RIP", pen: 0.5, damage: 95, info: "Leg-Meta Königin." },
+
+    // 12 Gauge (Shotguns)
+    "ap20": { name: "12G AP-20 Slug", pen: 3.5, damage: 160, info: "Panzerbrechender Eisenblock." },
+    "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss." },
+    "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Tödlich im Nahkampf." },
+
+    // .45 ACP
+    "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Beste .45er Pen." }
+};
 
     // 4. SCHLÜSSEL DATENBANK
     const allKeys = [
@@ -1679,8 +1687,8 @@
     const select = document.getElementById('weaponSelect');
     const val = select.value;
     const infoDisplay = document.getElementById('weaponInfo');
-    const imgElement = document.getElementById('weaponImg'); // Hinzugefügt
-    const metaElement = document.getElementById('weaponMeta'); // Hinzugefügt
+    const imgElement = document.getElementById('weaponImg'); // DAS HIER MUSS REIN
+    const metaElement = document.getElementById('weaponMeta'); // DAS HIER AUCH
     
     const info = weapons[val];
     if (info) {
@@ -1741,7 +1749,6 @@ function calculateBallistics() {
     const ammoSelect = document.getElementById('calcAmmoDisplay');
     const weaponInfo = weapons[weaponKey];
     
-    // Dropdown leeren
     ammoSelect.innerHTML = "";
 
     if (!weaponInfo) {
@@ -1749,15 +1756,21 @@ function calculateBallistics() {
         return;
     }
 
-    // Wir suchen in der ammoDb nach allen Typen, die zum Kaliber der Waffe passen
-    // (Extrahiert z.B. "5.56x45mm" aus "5.56x45mm M855A1")
-    const caliber = weaponInfo.ammo.split(' ')[0]; 
+    // Wir holen das Kaliber (z.B. "5.56x45mm")
+    // Falls das Kaliber Leerzeichen hat (z.B. ".300 BLK"), nehmen wir den Teil vor dem ersten Leerzeichen
+    let caliber = weaponInfo.ammo.split(' ')[0]; 
+    
+    // Sonderfall: Wenn das Kaliber mit ".300" oder "7.62" anfängt, 
+    // müssen wir genauer suchen, damit 7.62x39 nicht 7.62x51 findet.
+    if(caliber.includes("7.62") || caliber.includes("5.45") || caliber.includes("5.56")) {
+        caliber = weaponInfo.ammo.substring(0, 7); // Nimmt z.B. "7.62x39" oder "5.56x45"
+    }
 
     let foundAmmo = false;
     for (let key in ammoDb) {
         const ammo = ammoDb[key];
-        // Prüfen, ob der Name der Munition das Kaliber enthält
-        if (ammo.name.includes(caliber)) {
+        // Wir prüfen, ob das Kaliber im Namen der Munition vorkommt
+        if (ammo.name.toLowerCase().includes(caliber.toLowerCase())) {
             const option = document.createElement('option');
             option.value = ammo.name;
             option.text = ammo.name;
@@ -1766,8 +1779,7 @@ function calculateBallistics() {
         }
     }
 
-    // Falls die Waffe ein spezielles Kaliber hat (z.B. .300 BLK oder 12G), 
-    // das nicht über den Split gefunden wird:
+    // Falls gar nichts gefunden wurde (Backup)
     if (!foundAmmo) {
         const option = document.createElement('option');
         option.value = weaponInfo.ammo;
@@ -1775,7 +1787,6 @@ function calculateBallistics() {
         ammoSelect.appendChild(option);
     }
 
-    // Sofort berechnen mit der ersten verfügbaren Munition
     calculateBallistics();
 }
 </script>
