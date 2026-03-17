@@ -1173,26 +1173,56 @@
     function updateGeneric(sId, iId) {
         document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details...";
     }
-    // --- ZURÜCK NACH OBEN FUNKTION ---
+</script>
+    <style>
+    #backToTopBtn {
+        display: none; /* Versteckt ihn anfangs */
+        position: fixed; /* Lässt ihn über dem restlichen Inhalt schweben */
+        bottom: 30px; /* Abstand von unten */
+        right: 30px; /* Abstand von rechts */
+        z-index: 9999; /* Garantiert, dass er IMMER im Vordergrund ist */
+        border: 2px solid #5c7a42; 
+        outline: none; 
+        background-color: #7ca35a; /* Deine grüne Akzentfarbe */
+        color: #121212; /* Dunkler Text für besseren Kontrast */
+        cursor: pointer; 
+        padding: 12px 20px; 
+        border-radius: 8px; 
+        font-size: 16px; 
+        font-weight: bold;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.6);
+        transition: all 0.3s ease;
+    }
+
+    #backToTopBtn:hover {
+        background-color: #8ebd68; /* Wird etwas heller, wenn man mit der Maus drüber geht */
+        transform: translateY(-4px); /* Hebt sich leicht an */
+        box-shadow: 0px 6px 12px rgba(0,0,0,0.8);
+    }
+</style>
+
+<button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
+
+<script>
     let topButton = document.getElementById("backToTopBtn");
 
-    // Zeige den Button an, wenn der User 100px nach unten scrollt
-    window.onscroll = function() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+    // Prüft, ob gescrollt wird
+    window.addEventListener("scroll", function() {
+        // Erscheint, sobald du 150 Pixel nach unten gescrollt hast
+        if (window.scrollY > 150) {
             topButton.style.display = "block";
         } else {
             topButton.style.display = "none";
         }
-    };
+    });
 
-    // Scrolle weich nach oben, wenn geklickt wird
+    // Die Scroll-Funktion
     function scrollToTop() {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: 'smooth' /* Für ein weiches, gleitendes Scrollen */
         });
     }
 </script>
 </body>
-    <button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
 </html>
