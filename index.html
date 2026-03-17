@@ -13,7 +13,7 @@
 
     <div class="grid">
         <div>
-            <label for="weaponSelect">Waffen & Ballistik</label>
+            <label for="weaponSelect">Waffen</label>
             <select id="weaponSelect" onchange="updateWeapon()">
                 <option value="">-- Wähle eine Waffe --</option>
                 <optgroup label="Sturmgewehre">
@@ -47,6 +47,9 @@
                 </optgroup>
                 <optgroup label="SMGs & Shotguns">
                     <option value="mp5">MP5A3 / SD</option>
+                    <option value="mp7a1">MP7A1</option>
+                    <option value="mp7a2">MP7A2</option>
+                    <option value="vz61">VZ-61 Skorpio</option>
                     <option value="vityaz">PP-19-01 Vityaz</option>
                     <option value="m870">M870 Pump-Action</option>
                     <option value="590a1">Mossberg 590A1</option>
@@ -56,6 +59,9 @@
                     <option value="glock17">Glock 17</option>
                     <option value="m9a1">M9A1 Beretta</option>
                     <option value="makarov">Makarov PM</option>
+                    <option value="1911">Colt 1911</option>
+                    <option value="ccc">Colt Combat Commander</option>
+                    <option value="typ51">Typ-51</option>
                 </optgroup>
             </select>
             <div id="weaponInfo" class="info-box">Wähle eine Waffe für Munitions-Details...</div>
@@ -89,7 +95,7 @@
 
     <div class="grid">
         <div>
-            <label for="attachSelect">Attachments & Ergo</label>
+            <label for="attachSelect">Attachments</label>
             <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
                 <option value="">-- Wähle Attachment --</option>
                 <optgroup label="Optiken (Scopes & Red Dots)">
@@ -121,7 +127,7 @@
         </div>
 
         <div>
-            <label for="gearFullSelect">Gear (Rüstung, Rigs & Rucksäcke)</label>
+            <label for="gearFullSelect">Gear (Rüstung, Helme, Rucksäcke)</label>
             <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
                 <option value="">-- Wähle Ausrüstung --</option>
                 <optgroup label="Plattenträger & Westen (Armor)">
