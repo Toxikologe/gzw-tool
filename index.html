@@ -204,6 +204,33 @@
     <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
 </div>
 
+            <div id="armorCalcContainer" style="margin-top: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid #555;">
+    <h3 style="color: var(--accent); margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #444;">🛡️ Ballistik-Check</h3>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+        <div style="flex: 1;">
+            <label style="font-size: 0.8rem; color: #888;">Gegnerische Rüstung:</label>
+            <select id="calcArmor" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+                <option value="1">Class 2 (Soft Armor)</option>
+                <option value="2">Class 3 (NIJ III)</option>
+                <option value="3">Class 3+ (NIJ III+)</option>
+                <option value="4">Class 4 (NIJ IV - Plate)</option>
+                <option value="5">Class 5 (Heavy)</option>
+                <option value="6">Class 6 (Zabralo/Bastion)</option>
+            </select>
+        </div>
+        <div style="font-weight: bold; padding-top: 15px;">VS</div>
+        <div style="flex: 1;">
+            <label style="font-size: 0.8rem; color: #888;">Deine Munition:</label>
+            <div id="calcAmmoDisplay" style="padding: 8px; background: #333; color: var(--accent); border-radius: 5px; text-align: center; font-weight: bold; font-size: 0.9rem;">-</div>
+        </div>
+    </div>
+
+    <div id="calcResult" style="padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 1rem; background: #1a1a1a; border: 1px solid #333;">
+        Wähle eine Waffe & Rüstung
+    </div>
+</div>
+
             <div>
                 <label for="attachSelect">Attachments & Ergo (Waffen-Mods)</label>
                 <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
@@ -1674,6 +1701,50 @@
         imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
         imgElement.style.display = "block";
         metaElement.innerText = "Bildpfad wird noch aktualisiert...";
+    }
+}
+
+    // Hilfsfunktion: Ermittelt den Penetrations-Wert (1-6) für den Vergleich
+function getAmmoPenValue(ammoName) {
+    if (!ammoName) return 0;
+    const name = ammoName.toLowerCase();
+    
+    // 0.4 Meta Penetration Mapping
+    if (name.includes("m993") || name.includes("snb")) return 6.5;
+    if (name.includes("m61") || name.includes("7n13")) return 6.0;
+    if (name.includes("bs") || name.includes("mai ap")) return 5.5;
+    if (name.includes("m855a1") || name.includes("bp") || name.includes("ap sx")) return 4.5;
+    if (name.includes("m855") || name.includes("pp")) return 3.5;
+    if (name.includes("ps") || name.includes("7n6")) return 3.0;
+    if (name.includes("m193") || name.includes("pst")) return 2.0;
+    return 1.0; // Standard/Flesh
+}
+
+function calculateBallistics() {
+    const armorLevel = parseFloat(document.getElementById('calcArmor').value);
+    const ammoName = document.getElementById('calcAmmoDisplay').innerText;
+    const penValue = getAmmoPenValue(ammoName);
+    const resultBox = document.getElementById('calcResult');
+
+    if (ammoName === "-" || ammoName === "") {
+        resultBox.innerHTML = "Wähle zuerst eine Waffe!";
+        resultBox.style.color = "#888";
+        return;
+    }
+
+    // Vergleichs-Logik
+    if (penValue >= armorLevel + 0.5) {
+        resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG (1-2 Schüsse)";
+        resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
+        resultBox.style.color = "#7ca35a";
+    } else if (penValue >= armorLevel) {
+        resultBox.innerHTML = "⚠️ WAHRSCHEINLICHER DURCHSCHLAG (3-5 Schüsse)";
+        resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
+        resultBox.style.color = "#ffa500";
+    } else {
+        resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Wirkungslos gegen Platte)";
+        resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
+        resultBox.style.color = "#ff4c4c";
     }
 }
 </script>
