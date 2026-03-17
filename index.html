@@ -221,9 +221,11 @@
         </div>
         <div style="font-weight: bold; padding-top: 15px;">VS</div>
         <div style="flex: 1;">
-            <label style="font-size: 0.8rem; color: #888;">Deine Munition:</label>
-            <div id="calcAmmoDisplay" style="padding: 8px; background: #333; color: var(--accent); border-radius: 5px; text-align: center; font-weight: bold; font-size: 0.9rem;">-</div>
-        </div>
+    <label style="font-size: 0.8rem; color: #888;">Deine Munition:</label>
+    <select id="calcAmmoDisplay" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #333; color: var(--accent); border: 1px solid #444; border-radius: 5px; font-weight: bold; font-size: 0.9rem;">
+        <option value="">-- Erst Waffe wählen --</option>
+    </select>
+</div>
     </div>
 
     <div id="calcResult" style="padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 1rem; background: #1a1a1a; border: 1px solid #333;">
@@ -1677,22 +1679,16 @@
     const select = document.getElementById('weaponSelect');
     const val = select.value;
     const infoDisplay = document.getElementById('weaponInfo');
-    const imgElement = document.getElementById('weaponImg');
-    const metaElement = document.getElementById('weaponMeta');
-
-    // 1. Text-Informationen aktualisieren
+    
     const info = weapons[val];
     if (info) {
-        infoDisplay.innerHTML = `Empfohlene Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
+        infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
         
-        // --- HIER SIND DIE FEHLENDEN ZEILEN ---
-        document.getElementById('calcAmmoDisplay').innerText = info.ammo; // Schreibt die Munition in den Rechner
-        calculateBallistics(); // Startet sofort die Berechnung
-        // --------------------------------------
-        
+        // --- JETZT DAS DROPDOWN FÜLLEN ---
+        populateAmmoDropdown(val); 
     } else {
         infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
-        document.getElementById('calcAmmoDisplay').innerText = "-"; // Reset wenn keine Waffe gewählt
+        populateAmmoDropdown(""); // Reset
     }
 
     // 2. Bild-Vorschau aktualisieren
@@ -1752,6 +1748,48 @@ function calculateBallistics() {
         resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
         resultBox.style.color = "#ff4c4c";
     }
+}
+
+    function populateAmmoDropdown(weaponKey) {
+    const ammoSelect = document.getElementById('calcAmmoDisplay');
+    const weaponInfo = weapons[weaponKey];
+    
+    // Dropdown leeren
+    ammoSelect.innerHTML = "";
+
+    if (!weaponInfo) {
+        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
+        return;
+    }
+
+    // Wir suchen in der ammoDb nach allen Typen, die zum Kaliber der Waffe passen
+    // (Extrahiert z.B. "5.56x45mm" aus "5.56x45mm M855A1")
+    const caliber = weaponInfo.ammo.split(' ')[0]; 
+
+    let foundAmmo = false;
+    for (let key in ammoDb) {
+        const ammo = ammoDb[key];
+        // Prüfen, ob der Name der Munition das Kaliber enthält
+        if (ammo.name.includes(caliber)) {
+            const option = document.createElement('option');
+            option.value = ammo.name;
+            option.text = ammo.name;
+            ammoSelect.appendChild(option);
+            foundAmmo = true;
+        }
+    }
+
+    // Falls die Waffe ein spezielles Kaliber hat (z.B. .300 BLK oder 12G), 
+    // das nicht über den Split gefunden wird:
+    if (!foundAmmo) {
+        const option = document.createElement('option');
+        option.value = weaponInfo.ammo;
+        option.text = weaponInfo.ammo;
+        ammoSelect.appendChild(option);
+    }
+
+    // Sofort berechnen mit der ersten verfügbaren Munition
+    calculateBallistics();
 }
 </script>
 </body>
