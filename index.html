@@ -199,6 +199,11 @@
                 <div id="weaponInfo" class="info-box">Wähle eine Waffe für Munitions-Details...</div>
             </div>
 
+            <div id="weaponPreviewContainer" style="margin-top: 20px; text-align: center; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border: 1px solid #444;">
+    <img id="weaponImg" src="https://via.placeholder.com/400x200?text=Waffe+auswählen" alt="Waffenvorschau" style="max-width: 100%; height: auto; filter: drop-shadow(0 0 10px rgba(0,255,0,0.2));">
+    <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
+</div>
+
             <div>
                 <label for="attachSelect">Attachments & Ergo (Waffen-Mods)</label>
                 <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
@@ -1604,6 +1609,32 @@
     function updateGeneric(sId, iId) {
         document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details...";
     }
+
+    function updateWeaponPreview() {
+    const select = document.getElementById('weaponSelect');
+    const weaponKey = select.value;
+    const imgElement = document.getElementById('weaponImg');
+    const placeholderText = document.getElementById('placeholderText');
+    
+    // 1. Wenn der Platzhalter ausgewählt ist
+    if (weaponKey === "") {
+        imgElement.style.display = "none";
+        placeholderText.style.display = "block";
+        return; // Funktion hier abbrechen
+    }
+
+    // 2. Wenn eine echte Waffe ausgewählt wurde
+    if (weaponImages[weaponKey]) {
+        imgElement.src = weaponImages[weaponKey];
+        imgElement.style.display = "block";
+        placeholderText.style.display = "none";
+    } else {
+        // Fallback für Waffen ohne Bild-Link
+        imgElement.src = "https://via.placeholder.com/400x200?text=Bild+folgt";
+        imgElement.style.display = "block";
+        placeholderText.style.display = "none";
+    }
+}
 </script>
 </body>
 </html>
