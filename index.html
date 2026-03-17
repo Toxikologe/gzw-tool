@@ -289,22 +289,31 @@
             <option value="gold_coin">Goldmünze</option>
             <option value="usb_drive">Verschlüsseltes USB-Laufwerk</option>
             <option value="gpu">Grafikkarte (GPU)</option>
-            <option value="laptop">Laptop / Notebook</option>
+            <option value="tablet">Tablet</option>
+            <option value="laptop">Laptop / Notebook (Elektronik)</option>
         </optgroup>
         <optgroup label="Mid Tier (Solider Beifang)">
+            <option value="antique_vase">Antike Vase</option>
             <option value="wood_statue">Holzstatue</option>
+            <option value="smartphone">Smartphone (Standard)</option>
             <option value="camera">Digitalkamera</option>
+            <option value="silver_coin">Silbermünze</option>
             <option value="silver_chain">Silberkette</option>
             <option value="voice_recorder">Diktiergerät</option>
             <option value="hdd">Festplatte (HDD)</option>
+            <option value="flash_drive">Normaler USB-Stick</option>
             <option value="calculator">Taschenrechner</option>
             <option value="wallet">Geldbörse</option>
             <option value="sunglasses">Sonnenbrille</option>
+            <option value="old_book">Altes Buch / Antikes Buch</option>
         </optgroup>
         <optgroup label="Low Tier (Nur wenn Platz ist)">
+            <option value="glasses">Brille (Lesebrille)</option>
             <option value="cutlery">Besteck</option>
             <option value="lighter">Feuerzeug (Zippo)</option>
             <option value="cards">Kartenspiel</option>
+            <option value="notebook_paper">Notizblock (Papier)</option>
+            <option value="pen">Kugelschreiber (Pen)</option>
             <option value="cigarettes">Zigaretten</option>
             <option value="tp">Toilettenpapier</option>
             <option value="matches">Streichhölzer</option>
@@ -518,7 +527,7 @@
         { name: "BP Storage Key", loc: "Ban Pa", effect: "Öffnet einen Lagerschuppen im Dschungel nahe Ban Pa.", loot: "Waffen, Rigs" }
     ];
 
-   // WERTSACHEN DATENBANK (Loot & Preise)
+   // WERTSACHEN DATENBANK (Loot & Preise - 100% Complete)
     const valuables = {
         // High Tier
         "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
@@ -526,22 +535,33 @@
         "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
         "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Hoher Gesamtwert, erfordert aber 2 horizontale Slots." },
         "gold_coin": { price: "~ $350", slots: "1", info: "Perfekter Lückenfüller für den Rucksack." },
-        "usb_drive": { price: "~ $450", slots: "1", info: "Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
+        "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
         "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, aber frisst viel Platz. Nur mitnehmen, wenn Platz ist." },
+        "tablet": { price: "~ $300", slots: "2", info: "Guter Wert, findet man oft in Büros und dem Hotel." },
         "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Tausche es gegen 1-Slot-Items aus, wenn möglich." },
+        
         // Mid Tier
+        "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel Platz weg. Eher ineffizient." },
         "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
+        "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot für 1 Slot." },
         "camera": { price: "~ $150", slots: "2", info: "Guter Beifang, oft in zivilen Gebäuden." },
+        "silver_coin": { price: "~ $150", slots: "1", info: "Nicht so gut wie Gold, aber definitiv mitnehmen!" },
         "silver_chain": { price: "~ $120", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
         "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Wert für nur einen Slot." },
         "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
+        "flash_drive": { price: "~ $80", slots: "1", info: "Normaler USB-Stick. Nimmt kaum Platz weg." },
         "calculator": { price: "~ $80", slots: "1", info: "Guter Filler für den Secure Container am Anfang." },
         "wallet": { price: "~ $50 - $200", slots: "1", info: "Kann manchmal wertvolles Bargeld enthalten. Prüfen!" },
         "sunglasses": { price: "~ $60", slots: "1", info: "Oft auf Tischen oder in Cafés zu finden." },
+        "old_book": { price: "~ $70", slots: "2", info: "Nimmt zu viel Platz weg für den geringen Wert." },
+        
         // Low Tier
+        "glasses": { price: "~ $35", slots: "1", info: "Lesebrillen. Kaum Wert." },
         "cutlery": { price: "~ $30", slots: "1", info: "Spawnt oft in Restaurants. Eher wertlos." },
         "lighter": { price: "~ $25", slots: "1", info: "Kaum der Rede wert. Wegwerfen, sobald etwas Besseres droppt." },
         "cards": { price: "~ $20", slots: "1", info: "Sehr geringer Wert." },
+        "notebook_paper": { price: "~ $15", slots: "1", info: "Papier-Notizblock. Völlig wertlos." },
+        "pen": { price: "~ $10", slots: "1", info: "Kugelschreiber. Bringt fast nichts." },
         "cigarettes": { price: "~ $15", slots: "1", info: "Wertlos, nimmt nur Platz weg." },
         "tp": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
         "matches": { price: "~ $5", slots: "1", info: "Absoluter Müll. Liegen lassen." }
