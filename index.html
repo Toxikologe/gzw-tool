@@ -243,76 +243,151 @@
     <label>Munitions-Vergleich (Gegenüberstellung)</label>
     <div class="grid">
         <div>
-            <select id="ammo1" onchange="compareAmmo()">
-                <option value="">-- Munition A wählen --</option>
+            <select id="ammo1" onchange="compareAmmo()"> <option value="">-- Munition wählen --</option>
                 <optgroup label="5.56x45mm (NATO)">
                     <option value="m855a1">5.56 M855A1</option>
                     <option value="m855">5.56 M855</option>
                     <option value="m193">5.56 M193</option>
+                    <option value="m856a1">5.56 M856A1 (Tracer)</option>
+                    <option value="mk255">5.56 MK255 (Flesh/HP)</option>
                 </optgroup>
-                <optgroup label="5.45x39mm (AK-74)">
+                <optgroup label=".300 Blackout (SIG-MCX)">
+                    <option value="300_ap">.300 BLK AP</option>
+                    <option value="300_cbj">.300 BLK CBJ</option>
+                    <option value="300_m62">.300 BLK M62 (Tracer)</option>
+                    <option value="300_whisper">.300 BLK Whisper (Subsonic)</option>
+                </optgroup>
+                <optgroup label="5.45x39mm (AK-74/AK-12)">
+                    <option value="ak74_bs">5.45 BS (Max AP)</option>
                     <option value="ak74_bp">5.45 BP (Armor Piercing)</option>
-                    <option value="ak74_pp">5.45 PP (Enhanced Performance)</option>
+                    <option value="ak74_pp">5.45 PP (Enhanced)</option>
                     <option value="ak74_7n6">5.45 7N6M (Standard)</option>
+                    <option value="ak74_hp">5.45 HP (Hollow Point)</option>
                 </optgroup>
-                <optgroup label="7.62x39mm (AKM/AK-103)">
+                <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
+                    <option value="ak_mai_ap">7.62x39 MAI AP</option>
                     <option value="ak_bp">7.62x39 BP</option>
                     <option value="ak_ps">7.62x39 PS</option>
                     <option value="ak_us">7.62x39 US (Subsonic)</option>
+                    <option value="ak_hp">7.62x39 HP (Flesh)</option>
                 </optgroup>
-                <optgroup label="7.62x51mm (NATO / M14)">
+                <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
+                    <option value="m993">7.62x51 M993 (Max AP)</option>
                     <option value="m61">7.62x51 M61 (AP)</option>
+                    <option value="m62">7.62x51 M62 (Tracer)</option>
                     <option value="m80">7.62x51 M80</option>
+                    <option value="tcw_sp">7.62x51 TCW SP (Flesh)</option>
                 </optgroup>
                 <optgroup label="7.62x54mmR (Mosin/SVD)">
-                    <option value="snb">7.62x54R SNB (Anti-Armor)</option>
-                    <option value="7n1">7.62x54R 7N1 (Precision)</option>
+                    <option value="snb">7.62x54R SNB (AP)</option>
+                    <option value="7n1">7.62x54R 7N1 (Sniper)</option>
+                    <option value="lps">7.62x54R LPS Gzh</option>
                 </optgroup>
-                <optgroup label="9x19mm & 9x18mm">
+                <optgroup label="4.6x30mm (MP7)">
+                    <option value="46_apsx">4.6x30 AP SX</option>
+                    <option value="46_fmjsx">4.6x30 FMJ SX</option>
+                    <option value="46_subsx">4.6x30 Subsonic SX</option>
+                    <option value="46_actionsx">4.6x30 Action SX (Flesh)</option>
+                </optgroup>
+                <optgroup label="9x19mm (Glock/MP5/Alien)">
+                    <option value="7n31">9x19 7N31 (Max AP)</option>
                     <option value="ap63">9x19 AP 6.3</option>
                     <option value="pst">9x19 PST Gzh</option>
+                    <option value="rip">9x19 RIP (Flesh)</option>
+                </optgroup>
+                <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
+                    <option value="pm_pmm">9x18 PMM (High Pressure)</option>
                     <option value="pm_sp7">9x18 PM SP7 (Leg Meta)</option>
+                    <option value="pm_gzh">9x18 PM Gzh</option>
+                    <option value="tt_pst">7.62x25 TT PST Gzh</option>
+                    <option value="tt_lrnpc">7.62x25 TT LRNPC (Flesh)</option>
+                </optgroup>
+                <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
+                    <option value="45_ap">.45 ACP AP</option>
+                    <option value="45_match">.45 ACP Match FMJ</option>
+                    <option value="45_rip">.45 ACP RIP (Flesh)</option>
+                    <option value="32_fmj">.32 ACP FMJ (VZ-61)</option>
                 </optgroup>
                 <optgroup label="12 Gauge (Shotguns)">
+                    <option value="ap20">12G AP-20 Armor-Piercing Slug</option>
                     <option value="slug">12G Copper Slug</option>
+                    <option value="flechette">12G Flechette (Shredder)</option>
                     <option value="buck">12G 00 Buckshot</option>
                 </optgroup>
             </select>
             <div id="ammo1Info" class="info-box">Wähle Munition A...</div>
         </div>
         <div>
-            <select id="ammo2" onchange="compareAmmo()">
-                <option value="">-- Munition B wählen --</option>
+            <select id="ammo2" onchange="compareAmmo()"> 
+                <option value="">-- Munition wählen --</option>
                 <optgroup label="5.56x45mm (NATO)">
                     <option value="m855a1">5.56 M855A1</option>
                     <option value="m855">5.56 M855</option>
                     <option value="m193">5.56 M193</option>
+                    <option value="m856a1">5.56 M856A1 (Tracer)</option>
+                    <option value="mk255">5.56 MK255 (Flesh/HP)</option>
                 </optgroup>
-                <optgroup label="5.45x39mm (AK-74)">
+                <optgroup label=".300 Blackout (SIG-MCX)">
+                    <option value="300_ap">.300 BLK AP</option>
+                    <option value="300_cbj">.300 BLK CBJ</option>
+                    <option value="300_m62">.300 BLK M62 (Tracer)</option>
+                    <option value="300_whisper">.300 BLK Whisper (Subsonic)</option>
+                </optgroup>
+                <optgroup label="5.45x39mm (AK-74/AK-12)">
+                    <option value="ak74_bs">5.45 BS (Max AP)</option>
                     <option value="ak74_bp">5.45 BP (Armor Piercing)</option>
-                    <option value="ak74_pp">5.45 PP (Enhanced Performance)</option>
+                    <option value="ak74_pp">5.45 PP (Enhanced)</option>
                     <option value="ak74_7n6">5.45 7N6M (Standard)</option>
+                    <option value="ak74_hp">5.45 HP (Hollow Point)</option>
                 </optgroup>
-                <optgroup label="7.62x39mm (AKM/AK-103)">
+                <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
+                    <option value="ak_mai_ap">7.62x39 MAI AP</option>
                     <option value="ak_bp">7.62x39 BP</option>
                     <option value="ak_ps">7.62x39 PS</option>
                     <option value="ak_us">7.62x39 US (Subsonic)</option>
+                    <option value="ak_hp">7.62x39 HP (Flesh)</option>
                 </optgroup>
-                <optgroup label="7.62x51mm (NATO / M14)">
+                <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
+                    <option value="m993">7.62x51 M993 (Max AP)</option>
                     <option value="m61">7.62x51 M61 (AP)</option>
+                    <option value="m62">7.62x51 M62 (Tracer)</option>
                     <option value="m80">7.62x51 M80</option>
+                    <option value="tcw_sp">7.62x51 TCW SP (Flesh)</option>
                 </optgroup>
                 <optgroup label="7.62x54mmR (Mosin/SVD)">
-                    <option value="snb">7.62x54R SNB (Anti-Armor)</option>
-                    <option value="7n1">7.62x54R 7N1 (Precision)</option>
+                    <option value="snb">7.62x54R SNB (AP)</option>
+                    <option value="7n1">7.62x54R 7N1 (Sniper)</option>
+                    <option value="lps">7.62x54R LPS Gzh</option>
                 </optgroup>
-                <optgroup label="9x19mm & 9x18mm">
+                <optgroup label="4.6x30mm (MP7)">
+                    <option value="46_apsx">4.6x30 AP SX</option>
+                    <option value="46_fmjsx">4.6x30 FMJ SX</option>
+                    <option value="46_subsx">4.6x30 Subsonic SX</option>
+                    <option value="46_actionsx">4.6x30 Action SX (Flesh)</option>
+                </optgroup>
+                <optgroup label="9x19mm (Glock/MP5/Alien)">
+                    <option value="7n31">9x19 7N31 (Max AP)</option>
                     <option value="ap63">9x19 AP 6.3</option>
                     <option value="pst">9x19 PST Gzh</option>
+                    <option value="rip">9x19 RIP (Flesh)</option>
+                </optgroup>
+                <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
+                    <option value="pm_pmm">9x18 PMM (High Pressure)</option>
                     <option value="pm_sp7">9x18 PM SP7 (Leg Meta)</option>
+                    <option value="pm_gzh">9x18 PM Gzh</option>
+                    <option value="tt_pst">7.62x25 TT PST Gzh</option>
+                    <option value="tt_lrnpc">7.62x25 TT LRNPC (Flesh)</option>
+                </optgroup>
+                <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
+                    <option value="45_ap">.45 ACP AP</option>
+                    <option value="45_match">.45 ACP Match FMJ</option>
+                    <option value="45_rip">.45 ACP RIP (Flesh)</option>
+                    <option value="32_fmj">.32 ACP FMJ (VZ-61)</option>
                 </optgroup>
                 <optgroup label="12 Gauge (Shotguns)">
+                    <option value="ap20">12G AP-20 Armor-Piercing Slug</option>
                     <option value="slug">12G Copper Slug</option>
+                    <option value="flechette">12G Flechette (Shredder)</option>
                     <option value="buck">12G 00 Buckshot</option>
                 </optgroup>
             </select>
@@ -483,26 +558,77 @@
         "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
     };
 
-    // 3. AMMO DATENBANK (LÜCKENLOS)
+    // AMMO DATENBANK (Komplett)
     const ammoDb = {
-        "m855a1": { name: "5.56 M855A1", pen: 4, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
-        "m855": { name: "5.56 M855", pen: 3, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
-        "m193": { name: "5.56 M193", pen: 2, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
-        "ak74_bp": { name: "5.45 BP", pen: 4, damage: 48, info: "Beste Penetration für AK-74. Sehr stabil." },
-        "ak74_pp": { name: "5.45 PP", pen: 3, damage: 50, info: "Guter Mid-Tier Durchschlag." },
-        "ak74_7n6": { name: "5.45 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition." },
-        "ak_bp": { name: "7.62x39 BP", pen: 4.5, damage: 58, info: "Härtester Durchschlag für AK-Plattformen." },
-        "ak_ps": { name: "7.62x39 PS", pen: 3.2, damage: 54, info: "Solider Allrounder für den Start." },
-        "ak_us": { name: "7.62x39 US", pen: 2, damage: 56, info: "Subsonic. Sehr leise." },
-        "m61": { name: "7.62x51 M61", pen: 6, damage: 64, info: "Ignoriert jede Rüstung im Spiel (Class 6)." },
-        "m80": { name: "7.62x51 M80", pen: 4.2, damage: 80, info: "Enormer Schaden, tötet meist mit 1 Brusttreffer." },
-        "snb": { name: "7.62x54R SNB", pen: 6, damage: 75, info: "Schlägt durch jeden Helm und jede Weste." },
+        // --- 5.56 NATO ---
+        "m855a1": { name: "5.56 M855A1", pen: 4.0, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
+        "m855": { name: "5.56 M855", pen: 3.0, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
+        "m193": { name: "5.56 M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
+        "m856a1": { name: "5.56 M856A1", pen: 3.5, damage: 51, info: "Tracer-Munition (Leuchtspur). Gut für Squads." },
+        "mk255": { name: "5.56 MK255", pen: 1.0, damage: 65, info: "Hollow Point. Verheerend gegen ungepanzerte Ziele." },
+
+        // --- .300 BLACKOUT ---
+        "300_ap": { name: ".300 BLK AP", pen: 4.5, damage: 55, info: "Hervorragende Penetration auf kurze bis mittlere Distanz." },
+        "300_cbj": { name: ".300 BLK CBJ", pen: 4.0, damage: 58, info: "Gute Balance zwischen Rüstungsdurchschlag und Schaden." },
+        "300_m62": { name: ".300 BLK M62", pen: 3.8, damage: 54, info: "Leuchtspurmunition für die SIG-MCX." },
+        "300_whisper": { name: ".300 BLK Whisper", pen: 2.5, damage: 62, info: "Subsonic. In Kombination mit Schalldämpfer flüsterleise." },
+
+        // --- 5.45 AK ---
+        "ak74_bs": { name: "5.45 BS", pen: 5.0, damage: 43, info: "Durchschlägt Class 5 problemlos. Etwas weniger Schaden." },
+        "ak74_bp": { name: "5.45 BP", pen: 4.0, damage: 48, info: "Die Meta-Muni für 5.45 Waffen. Bricht Class 4." },
+        "ak74_pp": { name: "5.45 PP", pen: 3.0, damage: 50, info: "Guter Mid-Tier Durchschlag für den Start." },
+        "ak74_7n6": { name: "5.45 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition. Oft bei Scavs zu finden." },
+        "ak74_hp": { name: "5.45 HP", pen: 1.0, damage: 68, info: "Hohlspitz. Null Durchschlag, aber sofort tödlich in die Beine." },
+
+        // --- 7.62x39 AK/SKS ---
+        "ak_mai_ap": { name: "7.62x39 MAI AP", pen: 5.5, damage: 46, info: "Extrem seltene Munition. Bricht fast jede Rüstung." },
+        "ak_bp": { name: "7.62x39 BP", pen: 4.5, damage: 58, info: "Härtester Standard-Durchschlag für AK-Plattformen." },
+        "ak_ps": { name: "7.62x39 PS", pen: 3.2, damage: 54, info: "Solider Allrounder für das Mid-Game." },
+        "ak_us": { name: "7.62x39 US", pen: 2.0, damage: 56, info: "Subsonic. Sehr leise, aber starker Bullet-Drop." },
+        "ak_hp": { name: "7.62x39 HP", pen: 1.0, damage: 73, info: "Massiver Fleischschaden. Ideal für Leg-Meta." },
+
+        // --- 7.62x51 NATO ---
+        "m993": { name: "7.62x51 M993", pen: 6.5, damage: 60, info: "Das Nonplusultra der Penetration. Geht durch Class 6 wie Butter." },
+        "m61": { name: "7.62x51 M61", pen: 6.0, damage: 64, info: "Ignoriert fast jede Rüstung im Spiel (Class 6)." },
+        "m62": { name: "7.62x51 M62", pen: 5.4, damage: 68, info: "Hohe Penetration + Leuchtspur. Guter Schaden." },
+        "m80": { name: "7.62x51 M80", pen: 4.2, damage: 80, info: "Enormer Schaden, tötet weiche Ziele meist mit 1 Treffer." },
+        "tcw_sp": { name: "7.62x51 TCW SP", pen: 2.5, damage: 90, info: "Gigantischer Fleischschaden. Zerfetzt ungepanzerte Ziele." },
+
+        // --- 7.62x54R ---
+        "snb": { name: "7.62x54R SNB", pen: 6.0, damage: 75, info: "Schlägt durch jeden Helm und jede Weste (Mosin/SVD)." },
         "7n1": { name: "7.62x54R 7N1", pen: 4.5, damage: 85, info: "Maximale Präzision. One-Shot Potenzial gegen Class 4." },
-        "ap63": { name: "9x19 AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields seit 0.4 Buff." },
-        "pst": { name: "9x19 PST Gzh", pen: 1.5, damage: 52, info: "Geringe Penetration, nur für Kopfschüsse." },
-        "pm_sp7": { name: "9x18 PM SP7", pen: 1, damage: 70, info: "Keine Pen. Nur für Beine (Leg-Meta) geeignet." },
-        "slug": { name: "12G Slug", pen: 2, damage: 150, info: "Präzises Einzelgeschoss. Verheerend gegen weiche Ziele." },
-        "buck": { name: "12G 00 Buckshot", pen: 1, damage: 240, info: "Acht Pellets. Tödlich im Nahkampf." }
+        "lps": { name: "7.62x54R LPS Gzh", pen: 4.0, damage: 80, info: "Standard-Munition für Mosin. Gut gegen Class 4." },
+
+        // --- 4.6x30mm (MP7) ---
+        "46_apsx": { name: "4.6x30 AP SX", pen: 5.0, damage: 35, info: "Absurde Penetration für eine SMG. Bricht Class 5!" },
+        "46_fmjsx": { name: "4.6x30 FMJ SX", pen: 4.0, damage: 43, info: "Gute Allround-Munition für die MP7. Hohe Kadenz rettet den Schaden." },
+        "46_subsx": { name: "4.6x30 Subsonic", pen: 3.5, damage: 45, info: "Leise und tödlich." },
+        "46_actionsx": { name: "4.6x30 Action SX", pen: 1.5, damage: 65, info: "Null Penetration, zerstört aber Gliedmaßen extrem schnell." },
+
+        // --- 9x19mm ---
+        "7n31": { name: "9x19 7N31", pen: 3.5, damage: 45, info: "Beste 9mm Penetration. Geht durch leichte Visire." },
+        "ap63": { name: "9x19 AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields und leichte Helme." },
+        "pst": { name: "9x19 PST Gzh", pen: 1.5, damage: 52, info: "Geringe Penetration, nur für Kopfschüsse ohne Helm." },
+        "rip": { name: "9x19 RIP", pen: 0.5, damage: 95, info: "Die Leg-Meta Königin. Zielt auf die Beine für Insta-Kills." },
+
+        // --- 9x18 & 7.62x25 (Tokarev) ---
+        "pm_pmm": { name: "9x18 PMM", pen: 2.0, damage: 55, info: "Überdruck-Munition. Kann nur in speziellen Makarovs/Klin genutzt werden!" },
+        "pm_sp7": { name: "9x18 PM SP7", pen: 1.0, damage: 70, info: "Keine Pen. Nur für Beine geeignet." },
+        "pm_gzh": { name: "9x18 PM Gzh", pen: 1.0, damage: 50, info: "Die absolute Standard-Pistolenmunition." },
+        "tt_pst": { name: "7.62x25 TT PST Gzh", pen: 2.5, damage: 50, info: "Überraschend gute Penetration für alte Pistolen." },
+        "tt_lrnpc": { name: "7.62x25 TT LRNPC", pen: 1.0, damage: 65, info: "Standard-Flesh-Damage Munition." },
+
+        // --- .45 ACP & .32 ACP ---
+        "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Die einzige .45er Muni, die zuverlässig durch Rüstungen kommt." },
+        "45_match": { name: ".45 ACP Match FMJ", pen: 2.0, damage: 70, info: "Hoher Basisschaden, aber schwach gegen Westen ab Class 3." },
+        "45_rip": { name: ".45 ACP RIP", pen: 0.5, damage: 120, info: "Zwei Treffer in die Beine und der Gegner ist Geschichte." },
+        "32_fmj": { name: ".32 ACP FMJ", pen: 1.0, damage: 40, info: "Sehr schwache Pistolenmunition (VZ-61). Feinde ins Gesicht sprühen!" },
+
+        // --- 12 GAUGE (Shotguns) ---
+        "ap20": { name: "12G AP-20 Slug", pen: 3.5, damage: 160, info: "Ein panzerbrechender Eisenblock. Kann Class 3/4 Westen brechen und sofort töten." },
+        "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss. Verheerend gegen weiche Ziele." },
+        "flechette": { name: "12G Flechette", pen: 3.0, damage: "8x25", info: "Schießt kleine Pfeile. Zerreißt Rüstungen in Sekunden." },
+        "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Acht Pellets. Tödlich im Nahkampf bei Treffern auf Arme oder Beine." }
     };
 
     // 4. SCHLÜSSEL DATENBANK (ERWEITERT)
