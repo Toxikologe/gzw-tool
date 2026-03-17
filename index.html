@@ -843,6 +843,18 @@
         document.getElementById('weaponInfo').innerHTML = info ? `Empfohlene Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}` : "Wähle eine Waffe...";
     }
 
+    function updateValuable() {
+        const val = document.getElementById('valSelect').value;
+        const info = valuables[val];
+        const display = document.getElementById('valInfoDisplay');
+        
+        if(info) {
+            display.innerHTML = `Preis: <span class="highlight">${info.price}</span><br>Platzbedarf: <span class="highlight">${info.slots} Slot(s)</span><br>Tipp: ${info.info}`;
+        } else {
+            display.innerHTML = "Wähle ein Item für Preis & Details...";
+        }
+    }
+
     function updateBoss() {
         const val = document.getElementById('bossSelect').value;
         const b = bosses[val];
