@@ -350,6 +350,29 @@
             </select>
             <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
         </div>
+
+        <div>
+            <label for="lzSelect">LZ & Navigation (Helikopter)</label>
+            <select id="lzSelect" onchange="updateLZ()">
+                <option value="">-- Wähle ein Zielgebiet --</option>
+                <optgroup label="Early Game POIs">
+                    <option value="lumber">Lumber Yard (Sägewerk)</option>
+                    <option value="hunters">Hunter's Paradise (Schießstand)</option>
+                    <option value="banpa">Ban Pa (Fischerdorf)</option>
+                </optgroup>
+                <optgroup label="Mid Game POIs">
+                    <option value="ybl">YBL-1 (Militärbunker)</option>
+                    <option value="blue_lagoon">Blue Lagoon (Restaurant/See)</option>
+                </optgroup>
+                <optgroup label="End Game POIs (High Danger)">
+                    <option value="fort_narith">Fort Narith (Militärbasis)</option>
+                    <option value="midnight">Midnight Sapphire (Hotel/Villen)</option>
+                    <option value="tiger_bay">Tiger Bay (Großstadt & Pier)</option>
+                    <option value="ground_zero">Ground Zero (Flugplatz)</option>
+                </optgroup>
+            </select>
+            <div id="lzInfo" class="info-box">Landeplatz-Sicherheit & Tipps...</div>
+        </div>
     </div> <hr>
 
     <h2>Munitions-Vergleich (Ballistik-Labor)</h2>
@@ -1070,6 +1093,78 @@
         const val = document.getElementById('bossSelect').value;
         const b = bosses[val];
         document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss...";
+    }
+
+    // 8. LZ & POI DATENBANK (Landing Zones)
+    const lzDb = {
+        "lumber": { 
+            lzs: "Echo 1 & Echo 2", 
+            time: "1-2 Min. Fußweg", 
+            danger: "Niedrig bis Mittel", 
+            tip: "Echo 1 liegt direkt am Holzlager und ist oft von KI umstellt. Echo 2 ist etwas ruhiger im Wald, bietet aber einen perfekten Flankierungs-Winkel auf das Hauptgebäude." 
+        },
+        "hunters": { 
+            lzs: "Fox 1 & Fox 2", 
+            time: "2 Min. Fußweg", 
+            danger: "Mittel", 
+            tip: "Fox 1 ist der Standard-Drop für den Haupteingang. VORSICHT: Fox 2 wird sehr oft von Snipern beobachtet, die sich in den bewaldeten Hügeln rund um das Motel verstecken!" 
+        },
+        "banpa": { 
+            lzs: "India 1 & India 2", 
+            time: "1-3 Min. Fußweg", 
+            danger: "Mittel", 
+            tip: "India 1 ist sehr nah am Dorf – mach dich auf sofortigen Beschuss gefasst. India 2 liegt weiter nördlich im Dschungel und ist viel sicherer für einen heimlichen Ansatz." 
+        },
+        "ybl": { 
+            lzs: "Juliet 1 & Juliet 2", 
+            time: "1 Min. Fußweg", 
+            danger: "Hoch (PvP Hotspot)", 
+            tip: "Beide LZs sind berüchtigt für 'LZ-Camping'. Wirf sofort nach dem Aussteigen eine Rauchgranate (Smoke) und sprinte in den Dschungel. Juliet 1 ist näher am Haupteingang." 
+        },
+        "blue_lagoon": { 
+            lzs: "Kilo 1 & Kilo 2", 
+            time: "2-4 Min. Fußweg", 
+            danger: "Mittel", 
+            tip: "Kilo 1 bringt dich direkt an die Zufahrtsstraße. Kilo 2 liegt südlicher und erfordert, dass du durchs dichte Gebüsch schleichst, was dir einen taktischen Vorteil am Wasserfall gibt." 
+        },
+        "fort_narith": { 
+            lzs: "Delta 1, Delta 2, Delta 3", 
+            time: "3-5 Min. Fußweg", 
+            danger: "Extrem", 
+            tip: "Delta 3 ist oft die sicherste Wahl, um das Fort von der Rückseite (Landebahn) zu infiltrieren. Delta 1 führt dich an die Hauptstraße, wo dich feindliche Spieler leicht abfangen können." 
+        },
+        "midnight": { 
+            lzs: "Golf 1 & Golf 2", 
+            time: "2 Min. Fußweg", 
+            danger: "Sehr Hoch", 
+            tip: "Golf 1 liegt nah am Haupteingang des Hotels. Golf 2 droppt dich in der Nähe der Villen. Die LZs sind offenes Gelände – bewege dich sofort in die Deckung der Hügel!" 
+        },
+        "tiger_bay": { 
+            lzs: "Lima 1 & Lima 2", 
+            time: "1 Min. Fußweg", 
+            danger: "Todeszone", 
+            tip: "Lima 1 und 2 sind extrem nah an der KI-Übermacht. Sobald der Heli abdreht, werden oft schon Schüsse auf dich abgegeben. Rückzugsmöglichkeiten sind minimal, sei kampfbereit!" 
+        },
+        "ground_zero": { 
+            lzs: "Hotel 1 & Hotel 2", 
+            time: "3 Min. Fußweg", 
+            danger: "Extrem (Endgame PvP)", 
+            tip: "Absolute Endgame-Zone. Die LZs werden fast immer durch Spieler mit Scharfschützengewehren (M700/M14) überwacht. Bleib niemals stehen und nutze das Terrain (Senken) als Deckung." 
+        }
+    }
+
+    function updateLZ() {
+        const val = document.getElementById('lzSelect').value;
+        const info = lzDb[val];
+        const display = document.getElementById('lzInfo');
+        
+        if(info) {
+            display.innerHTML = `Beste LZs: <span class="highlight">${info.lzs}</span><br>
+                                 Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${info.danger}</span><br>
+                                 <br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
+        } else {
+            display.innerHTML = "Wähle ein Zielgebiet für LZ-Tipps...";
+        }
     }
 
     function updateContainer() {
