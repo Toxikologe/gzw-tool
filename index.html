@@ -278,6 +278,19 @@
     </div>
 
     <hr>
+    <label for="valSearch">Loot & Verkaufspreise (Suche Item):</label>
+    <input type="text" id="valSearch" placeholder="z.B. Gold, Uhr, Laptop..." onkeyup="searchValuables()" style="width: 100%; padding: 12px; margin-top: 8px; background: #2a2a2a; color: white; border: 1px solid #444; border-radius: 6px; box-sizing: border-box;">
+
+    <div id="valList" style="margin-top: 10px; max-height: 200px; overflow-y: auto; border: 1px solid #333; display: none; background: #1a1a1a;"></div>
+
+    <div id="valContainer" class="info-box" style="margin-top: 20px;">
+        <div id="valTitle" style="font-weight:bold; color: var(--accent); font-size: 1.2rem; margin-bottom: 5px;">Item-Details...</div>
+        <div id="valPrice" style="font-size: 1rem; color: #fff; margin-bottom: 5px;">Verkaufspreis wird hier angezeigt.</div>
+        <div id="valSlots" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">Platzbedarf im Rucksack.</div>
+        <div id="valInfo">Tipp zur Wirtschaftlichkeit.</div>
+    </div>
+
+    <hr>
 
     <label for="keySearch">Schlüssel-Datenbank (Name oder Ort):</label>
     <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
@@ -482,6 +495,66 @@
         { name: "BP Fishing Hut Key", loc: "Ban Pa", effect: "Öffnet eine weitere Fischerhütte am Wasser.", loot: "Schrott, geringe Wertsachen" },
         { name: "BP Storage Key", loc: "Ban Pa", effect: "Öffnet einen Lagerschuppen im Dschungel nahe Ban Pa.", loot: "Waffen, Rigs" }
     ];
+
+    // WERTSACHEN DATENBANK (Loot & Preise)
+    const allValuables = [
+        // --- HIGH TIER (Bester Wert pro Slot) ---
+        { name: "Goldenes Smartphone (Gold Phone)", price: "~ $800", slots: "1 Slot", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
+        { name: "Diamantring (Diamond Ring)", price: "~ $600", slots: "1 Slot", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
+        { name: "Goldene Uhr (Gold Watch / Rolex)", price: "~ $500", slots: "1 Slot", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
+        { name: "Geheime Dokumente (Classified Docs)", price: "~ $500", slots: "2 Slots", info: "Hoher Gesamtwert, erfordert aber 2 horizontale Slots." },
+        { name: "Goldmünze (Gold Coin)", price: "~ $350", slots: "1 Slot", info: "Perfekter Lückenfüller für den Rucksack." },
+        { name: "Verschlüsseltes USB-Laufwerk", price: "~ $450", slots: "1 Slot", info: "Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
+        { name: "Grafikkarte (GPU)", price: "~ $450", slots: "4 Slots (2x2)", info: "Hoher Wert, aber frisst viel Platz. Nur mitnehmen, wenn Platz ist." },
+        { name: "Laptop / Notebook", price: "~ $400", slots: "4 Slots (2x2)", info: "Viel zu groß für den Preis. Tausche es gegen 1-Slot-Items aus, wenn möglich." },
+        
+        // --- MID TIER (Solider Beifang) ---
+        { name: "Holzstatue (Wooden Statue)", price: "~ $150", slots: "2 Slots", info: "Häufig in Ban Pa oder Blue Lagoon." },
+        { name: "Digitalkamera", price: "~ $150", slots: "2 Slots", info: "Guter Beifang, oft in zivilen Gebäuden." },
+        { name: "Silberkette (Silver Chain)", price: "~ $120", slots: "1 Slot", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
+        { name: "Diktiergerät (Voice Recorder)", price: "~ $110", slots: "1 Slot", info: "Solider Wert für nur einen Slot." },
+        { name: "Festplatte (HDD)", price: "~ $100", slots: "2 Slots", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
+        { name: "Taschenrechner (Calculator)", price: "~ $80", slots: "1 Slot", info: "Guter Filler für den Secure Container am Anfang." },
+        { name: "Geldbörse (Wallet)", price: "~ $50 - $200", slots: "1 Slot", info: "Kann manchmal wertvolles Bargeld enthalten. Prüfen!" },
+        { name: "Sonnenbrille (Sunglasses)", price: "~ $60", slots: "1 Slot", info: "Oft auf Tischen oder in Cafés zu finden." },
+
+        // --- LOW TIER (Nur mitnehmen, wenn der Rucksack leer ist) ---
+        { name: "Besteck (Cutlery)", price: "~ $30", slots: "1 Slot", info: "Spawnt oft in Restaurants. Eher wertlos." },
+        { name: "Feuerzeug (Lighter / Zippo)", price: "~ $25", slots: "1 Slot", info: "Kaum der Rede wert. Wegwerfen, sobald etwas Besseres droppt." },
+        { name: "Kartenspiel (Playing Cards)", price: "~ $20", slots: "1 Slot", info: "Sehr geringer Wert." },
+        { name: "Zigaretten (Cigarettes)", price: "~ $15", slots: "1 Slot", info: "Wertlos, nimmt nur Platz weg." },
+        { name: "Toilettenpapier (Toilet Paper)", price: "~ $10", slots: "4 Slots (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
+        { name: "Streichhölzer (Matches)", price: "~ $5", slots: "1 Slot", info: "Absoluter Müll. Liegen lassen." }
+    ];
+
+    // FUNKTION FÜR DIE SUCHE
+    function searchValuables() {
+        const input = document.getElementById('valSearch').value.toLowerCase();
+        const list = document.getElementById('valList');
+        list.innerHTML = '';
+        if(input.length < 2) { list.style.display='none'; return; }
+        
+        const filtered = allValuables.filter(v => v.name.toLowerCase().includes(input));
+        
+        if(filtered.length > 0) {
+            list.style.display = 'block';
+            filtered.forEach(v => {
+                const d = document.createElement('div');
+                d.innerHTML = `${v.name} (<span style="color:#7ca35a;">${v.price}</span>)`;
+                d.onclick = () => {
+                    document.getElementById('valTitle').innerText = v.name;
+                    document.getElementById('valPrice').innerHTML = `Preis: <span class="highlight">${v.price}</span>`;
+                    document.getElementById('valSlots').innerHTML = `Platzbedarf: ${v.slots}`;
+                    document.getElementById('valInfo').innerHTML = `Tipp: ${v.info}`;
+                    list.style.display = 'none';
+                    document.getElementById('valSearch').value = v.name;
+                };
+                list.appendChild(d);
+            });
+        } else {
+            list.style.display = 'none';
+        }
+    }
 
     // 5. TASK DATENBANK (MASSIV)
     const allTasks = [
