@@ -399,6 +399,44 @@
             </select>
             <div id="symptomInfo" class="info-box">Diagnose & Behandlung...</div>
         </div>
+
+        <div>
+            <label for="vendorSelect">Händler & Freischaltungen (Vendors)</label>
+            <select id="vendorSelect" onchange="updateVendor()">
+                <option value="">-- Wähle Händler & Level --</option>
+                <optgroup label="Gunny (NATO-Waffen & Munition)">
+                    <option value="gunny_1">Gunny Level 1 (Start)</option>
+                    <option value="gunny_2">Gunny Level 2</option>
+                    <option value="gunny_3">Gunny Level 3 (Meta-Gear)</option>
+                </optgroup>
+                <optgroup label="Handshake (Rüstung & Rucksäcke)">
+                    <option value="handshake_1">Handshake Level 1 (Start)</option>
+                    <option value="handshake_2">Handshake Level 2</option>
+                    <option value="handshake_3">Handshake Level 3 (Meta-Gear)</option>
+                </optgroup>
+                <optgroup label="Lab Rat (Medizin & Verpflegung)">
+                    <option value="labrat_1">Lab Rat Level 1 (Start)</option>
+                    <option value="labrat_2">Lab Rat Level 2</option>
+                    <option value="labrat_3">Lab Rat Level 3</option>
+                </optgroup>
+                <optgroup label="Artisan (AK-Plattformen & Ost-Gear)">
+                    <option value="artisan_1">Artisan Level 1 (Start)</option>
+                    <option value="artisan_2">Artisan Level 2</option>
+                    <option value="artisan_3">Artisan Level 3</option>
+                </optgroup>
+                <optgroup label="Turncoat (Westliche Spezialwaffen)">
+                    <option value="turncoat_1">Turncoat Level 1</option>
+                    <option value="turncoat_2">Turncoat Level 2</option>
+                    <option value="turncoat_3">Turncoat Level 3 (Sniper-Meta)</option>
+                </optgroup>
+                <optgroup label="Banshee (High-End & Seltenes)">
+                    <option value="banshee_1">Banshee Level 1</option>
+                    <option value="banshee_2">Banshee Level 2</option>
+                    <option value="banshee_3">Banshee Level 3 (Endgame)</option>
+                </optgroup>
+            </select>
+            <div id="vendorInfo" class="info-box">Wichtigste Freischaltungen...</div>
+        </div>
     </div> <hr>
 
     <h2>Munitions-Vergleich (Ballistik-Labor)</h2>
@@ -1276,6 +1314,53 @@
                                  <br><small><b>Medic-Tipp:</b> ${info.info}</small>`;
         } else {
             display.innerHTML = "Wähle ein Symptom für Diagnose & Behandlung...";
+        }
+    }
+
+    // 10. HÄNDLER- & RUF-DATENBANK (Vendor Unlocks)
+    const vendorDb = {
+        // --- GUNNY ---
+        "gunny_1": { focus: "Basis NATO-Waffen", unlocks: "M4A1 (Standard), M193 Muni, Basis-Visiere (Red Dots), KAC NT4 Schalldämpfer.", tip: "Kauf die M4A1 und den NT4 Schalldämpfer. Die M193 Munition ist schwach gegen Spieler, reicht aber für die ersten KI-Gegner völlig aus." },
+        "gunny_2": { focus: "Bessere Munition & Aufsätze", unlocks: "M855 Muni, Mosin-Nagant, bessere Griffe (RVG), mehr Optiken.", tip: "Steig sofort auf M855 Munition um! Die Mosin ist eine günstige Möglichkeit, mit Scharfschützengewehren zu üben." },
+        "gunny_3": { focus: "NATO Meta-Gear", unlocks: "M855A1 Muni, M14 EBR, M61 Muni, Razor HD 1-6x, Surefire RC2 Schalldämpfer.", tip: "Der Heilige Gral. M855A1 und M61 Munition schlagen durch fast alles. Kaufe hier deine LPVO-Optiken (Razor HD) für Mid-Range-Kämpfe." },
+
+        // --- HANDSHAKE ---
+        "handshake_1": { focus: "Basis-Gear", unlocks: "PACA Armor (Class 2), Sling Bags, Basis-Rigs, Helm (Class 2).", tip: "Verlass das Basecamp nie ohne mindestens eine PACA-Weste, um nicht sofort durch Scav-Schrotflinten zu sterben." },
+        "handshake_2": { focus: "Mid-Tier Überleben", unlocks: "Class 3 Westen (6B23), Rush 24 Rucksack (20 Slots), MICH 2000 Helm.", tip: "Class 3 Westen sind dein Standard für die Mitte des Spiels. Der Rush 24 Rucksack ist der perfekte Allrounder für Loot-Runs." },
+        "handshake_3": { focus: "Meta Rüstung", unlocks: "RPC Plate Carrier (Class 4 meta!), Fast MT Helm, ComTac Headsets, große Rucksäcke.", tip: "Der RPC Carrier ist Pflicht für PVP und Endgame. ComTac Headsets geben dir einen massiven akustischen Vorteil!" },
+
+        // --- LAB RAT ---
+        "labrat_1": { focus: "Basis-Medizin", unlocks: "Bandagen, Tourniquets, 250ml Blut, Schienen, Wasser/Essen.", tip: "Hab immer mindestens 2 Tourniquets und 2 Bandagen auf dem Gürtel (Tactical Belt) für schnellen Zugriff." },
+        "labrat_2": { focus: "Feldchirurgie", unlocks: "Surgery Kit (Surkit), 500ml Blut, Ibuprofen, Combat Gauze.", tip: "Ohne Surkits kannst du keine zerstörten Organe heilen. Ab Level 2 hast du alles, um auch schwere Gefechte zu überleben." },
+        "labrat_3": { focus: "Combat Medic", unlocks: "Advanced Surkit, 1000ml Blut, Morphin-Injektoren, Meloxicam.", tip: "Die Advanced Surkits heilen zuverlässiger. Morphin rettet dir in aussichtslosen Situationen das Leben, weil du sofort sprinten kannst." },
+
+        // --- ARTISAN ---
+        "artisan_1": { focus: "Ost-Waffen (Basis)", unlocks: "AKMN, SKS, 7.62x39 PS Muni, 5.45 PP Muni, Kobra Visiere.", tip: "Die AKMN schlägt extrem hart zu im Early-Game. PS-Munition reicht völlig aus für die Startgebiete." },
+        "artisan_2": { focus: "Ost-Modifikationen", unlocks: "Zenitco-Teile (RK-Griffe, PT-Schäfte), PBS-1 Schalldämpfer, 7.62 BP Muni.", tip: "7.62 BP Munition macht dich extrem gefährlich. Mit den Zenitco-Teilen kannst du den enormen Rückstoß der AKs bändigen." },
+        "artisan_3": { focus: "AK-Endgame", unlocks: "Sureshot Chassis, AK-103, High-End Bremsen, AP-Munition.", tip: "Mit dem Sureshot Chassis kannst du endlich moderne westliche Laser und Scopes auf deine geliebte AK schrauben!" },
+
+        // --- TURNCOAT ---
+        "turncoat_1": { focus: "Spezialwaffen", unlocks: "Glock 17, MP5, 9mm AP Muni.", tip: "Die MP5 mit AP-Munition ist ein absoluter Laser für Häuserkämpfe und extrem leise." },
+        "turncoat_2": { focus: "CQB & Sniper", unlocks: "M700 (Sniper), EOTech Holo-Visiere, MP7.", tip: "Turncoat verkauft die besten Nahkampf-Optiken (EOTech). Die M700 ist für geduldige Schützen, die One-Shots lieben." },
+        "turncoat_3": { focus: "Western High-End", unlocks: "Nightforce ATACR (Sniper Scope), KS-1 Assault Rifle, Vudu 1-6x.", tip: "Die KS-1 ist aktuell das beste Sturmgewehr (Meta). Kauf das Vudu-Visier für die ultimative Flexibilität auf der Waffe." },
+
+        // --- BANSHEE ---
+        "banshee_1": { focus: "Schmuggelware", unlocks: "Exotische Waffenteile, Schalldämpfer-Alternativen.", tip: "Banshee verkauft oft Dinge, die sonst schwer zu finden sind. Gut für experimentelle Builds." },
+        "banshee_2": { focus: "Panzerbrecher", unlocks: "High-End Sniper Munition (SNB), seltene Rigs.", tip: "SNB Munition geht durch jeden Helm. Wenn du in Fort Narith Sniper spielen willst, ist das dein Händler." },
+        "banshee_3": { focus: "Boss-Gear", unlocks: "GPNVG-18 (Quad-Nods), Class 5/6 Rüstungen (teilweise), Thermal-Teile.", tip: "Der Händler für puren Luxus. Hier kaufst du das vieräugige Nachtsichtgerät, das dir im Dschungel bei Nacht Gott-Status verleiht." }
+    };
+
+    function updateVendor() {
+        const val = document.getElementById('vendorSelect').value;
+        const info = vendorDb[val];
+        const display = document.getElementById('vendorInfo');
+        
+        if(info) {
+            display.innerHTML = `Fokus: <span style="color: #7ca35a; font-weight: bold;">${info.focus}</span><br>
+                                 <b>Highlights:</b> <span class="highlight">${info.unlocks}</span><br>
+                                 <br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
+        } else {
+            display.innerHTML = "Wähle Händler & Level für Details...";
         }
     }
 
