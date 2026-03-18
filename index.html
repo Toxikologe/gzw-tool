@@ -110,6 +110,7 @@
         <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
         <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin & Food</button>
         <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ & Bosse</button>
+        <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
         <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
         <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
         <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
@@ -714,6 +715,31 @@
                     </optgroup>
                 </select>
                 <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-factions" class="tab-content">
+        <h2>Fraktions-Datenbank (PMCs)</h2>
+        <div class="grid">
+            <div>
+                <label for="factionInfoSelect" style="margin-top: 0;">Wähle eine Fraktion</label>
+                <select id="factionInfoSelect" onchange="updateFactionInfo()">
+                    <option value="">-- Fraktion wählen --</option>
+                    <option value="mss">Mithras Security Systems (MSS)</option>
+                    <option value="csi">Crimson Shield International (CSI)</option>
+                    <option value="lri">Lamang Recovery Initiative (LRI)</option>
+                </select>
+                
+                <div id="factionDescBox" class="info-box" style="margin-top: 15px; min-height: 200px; line-height: 1.6;">
+                    Wähle eine Fraktion aus, um ihre Hintergrundgeschichte und Details zu sehen...
+                </div>
+            </div>
+            
+            <div class="panel-box" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                <img id="factionLogoImg" src="https://via.placeholder.com/250x250/222222/7ca35a?text=Fraktions-Logo" alt="Faction Logo" style="max-width: 250px; margin: 0 auto; filter: drop-shadow(0 0 15px rgba(255,255,255,0.1)); border-radius: 10px;">
+                <h3 id="factionNameTitle" style="margin-top: 20px; margin-bottom: 5px; border: none; color: #fff;"></h3>
+                <div id="factionMotto" style="color: var(--accent); font-style: italic; font-weight: bold;"></div>
             </div>
         </div>
     </div>
@@ -1637,6 +1663,28 @@ const allTasks = [
         "banshee_3": { focus: "Boss-Gear", unlocks: "GPNVG-18 (Quad-Nods)", tip: "Luxus für Night Ops." }
     };
 
+    // 13. FRAKTIONEN DATENBANK
+    const factionDb = {
+        "mss": {
+            name: "Mithras Security Systems",
+            motto: "Aegis Fortis",
+            desc: "Mithras bezeichnet sich selbst als PMC-System, das von Soldaten für Soldaten geführt wird. Das System fragt nicht nach der Vergangenheit seiner Bewerber, sondern beurteilt sie nur nach ihren Fähigkeiten im Feld. Die Organisation wird von einem Komitee hochrangiger Offiziere geleitet. Ihr Hauptquartier in Lamang befindet sich im südlichen Nam Thaven.",
+            logo: "https://static.wikia.nocookie.net/gray-zone-warfare/images/f/fe/Mithras_Security_Systems_Logo.png"
+        },
+        "csi": {
+            name: "Crimson Shield International",
+            motto: "Ex Cineribus",
+            desc: "Crimson Shield stieg während des syrischen Bürgerkriegs auf. Berühmt für eine beeindruckende Erfolgsquote von 95 %, aber oft kritisiert für ihre rücksichtslosen Methoden. Niemand weiß, wer wirklich das Sagen hat. Ihre Elite-Soldaten sind für harte, kompromisslose Einsätze bekannt. Ihr Hauptquartier in Lamang liegt in Kiu Vongsa.",
+            logo: "https://static.wikia.nocookie.net/gray-zone-warfare/images/8/87/Crimson_Shield_International_Logo.png"
+        },
+        "lri": {
+            name: "Lamang Recovery Initiative",
+            motto: "Salus Populi",
+            desc: "Ein PMC, das von einem exzentrischen Technologie-Milliardär gegründet und finanziert wurde. Die LRI präsentiert sich als streng philanthropische Organisation, deren Ziel es ist, die Region nach dem 'Ereignis' zu sichern und die Zivilbevölkerung zu schützen. Sie operieren extrem hochtechnisiert und arbeiten strikt nach Protokoll. Ihr Hauptquartier befindet sich in Pha Lang.",
+            logo: "https://static.wikia.nocookie.net/gray-zone-warfare/images/f/f7/Lamang_Recovery_Initiative_Logo.png"
+        }
+    };
+
     // ==============================================================
     // FUNKTIONEN
     // ==============================================================
@@ -1861,6 +1909,29 @@ const allTasks = [
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
         s.style.display = s.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // UPDATE FUNKTION FÜR FRAKTIONEN
+    function updateFactionInfo() {
+        const val = document.getElementById('factionInfoSelect').value;
+        const descBox = document.getElementById('factionDescBox');
+        const logoImg = document.getElementById('factionLogoImg');
+        const nameTitle = document.getElementById('factionNameTitle');
+        const mottoText = document.getElementById('factionMotto');
+
+        if (!val) {
+            descBox.innerHTML = "Wähle eine Fraktion aus, um ihre Hintergrundgeschichte und Details zu sehen...";
+            logoImg.src = "https://via.placeholder.com/250x250/222222/7ca35a?text=Fraktions-Logo";
+            nameTitle.innerText = "";
+            mottoText.innerText = "";
+            return;
+        }
+
+        const f = factionDb[val];
+        descBox.innerHTML = `<p style="margin-top: 0;">${f.desc}</p>`;
+        logoImg.src = f.logo;
+        nameTitle.innerText = f.name;
+        mottoText.innerText = `Motto: "${f.motto}"`;
     }
 </script>
 </body>
