@@ -25,6 +25,10 @@
             color: var(--accent); 
             font-weight: bold; 
         }
+
+        /* Container und Boxen */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #333; }
         
         .info-box {
             background: #252525;
@@ -34,105 +38,53 @@
             margin-top: 10px;
             min-height: 50px;
             line-height: 1.5;
+            box-sizing: border-box;
+        }
+
+        /* Spezielle Panel-Box für sauberes Layout */
+        .panel-box {
+            background: #252525;
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 4px solid var(--accent);
+            box-sizing: border-box;
+        }
+
+        .panel-box h3 {
+            color: var(--accent);
+            margin-top: 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
         }
 
         /* --- FRAKTIONS-BUTTONS --- */
-        .faction-selector {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .fac-btn {
-            background-color: #1e1e1e;
-            color: #888;
-            border: 1px solid #444;
-            padding: 6px 15px;
-            margin: 0 5px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
+        .faction-selector { text-align: center; margin-bottom: 20px; }
+        .fac-btn { background-color: #1e1e1e; color: #888; border: 1px solid #444; padding: 6px 15px; margin: 0 5px; cursor: pointer; border-radius: 4px; font-size: 0.9rem; font-weight: bold; transition: all 0.2s; }
         .fac-btn:hover { color: #fff; }
         .fac-btn.mithras:hover { border-color: #7ca35a; background-color: rgba(124, 163, 90, 0.2); }
         .fac-btn.crimson:hover { border-color: #b33939; background-color: rgba(179, 57, 57, 0.2); }
         .fac-btn.lamang:hover { border-color: #227093; background-color: rgba(34, 112, 147, 0.2); }
 
         /* --- NAVIGATION TABS --- */
-        .tab-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            justify-content: center;
-        }
-        .tab-btn {
-            background-color: #2a2a2a;
-            color: #ccc;
-            border: 1px solid #444;
-            padding: 12px 20px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .tab-btn:hover {
-            background-color: #3a3a3a;
-            color: #fff;
-        }
-        .tab-btn.active {
-            background-color: var(--accent); 
-            color: #fff; 
-            border-color: var(--accent);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
+        .tab-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #333; padding-bottom: 15px; justify-content: center; }
+        .tab-btn { background-color: #2a2a2a; color: #ccc; border: 1px solid #444; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 1rem; font-weight: bold; transition: all 0.3s ease; }
+        .tab-btn:hover { background-color: #3a3a3a; color: #fff; }
+        .tab-btn.active { background-color: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
 
         /* Container für die Inhalte */
-        .tab-content {
-            display: none; 
-            animation: fadeIn 0.4s;
-        }
-        .tab-content.active {
-            display: block; 
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .tab-content { display: none; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- LAYOUT --- */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        label { display: block; margin-top: 15px; font-weight: bold; font-size: 0.9rem; color: #aaa; }
-        select, input { width: 100%; padding: 10px; margin-top: 5px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 6px; }
+        label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #aaa; }
+        select, input { width: 100%; padding: 10px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 6px; box-sizing: border-box; }
 
         /* --- ZURÜCK NACH OBEN BUTTON --- */
-        #backToTopBtn {
-            display: none; 
-            position: fixed; 
-            bottom: 30px; 
-            right: 30px; 
-            z-index: 9999; 
-            border: 2px solid #333; 
-            outline: none; 
-            background-color: var(--accent); 
-            color: #fff; 
-            cursor: pointer; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            font-weight: bold;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.6);
-            transition: all 0.3s ease;
-        }
-        #backToTopBtn:hover {
-            filter: brightness(1.2); 
-            transform: translateY(-4px); 
-            box-shadow: 0px 6px 12px rgba(0,0,0,0.8);
-        }
+        #backToTopBtn { display: none; position: fixed; bottom: 30px; right: 30px; z-index: 9999; border: 2px solid #333; outline: none; background-color: var(--accent); color: #fff; cursor: pointer; padding: 12px 20px; border-radius: 8px; font-size: 16px; font-weight: bold; box-shadow: 0px 4px 10px rgba(0,0,0,0.6); transition: all 0.3s ease; }
+        #backToTopBtn:hover { filter: brightness(1.2); transform: translateY(-4px); box-shadow: 0px 6px 12px rgba(0,0,0,0.8); }
 
         #keyList, #taskList { background: #2a2a2a; border: 1px solid #444; max-height: 200px; overflow-y: auto; display: none; border-radius: 0 0 6px 6px; }
     </style>
@@ -162,9 +114,10 @@
 
     <div id="tab-mods" class="tab-content active">
         <h2>Waffen-Modifikationen & Ergonomie</h2>
+        
         <div class="grid">
             <div>
-                <label for="weaponSelect">Waffen</label>
+                <label for="weaponSelect" style="margin-top: 0;">Waffen-Auswahl</label>
                 <select id="weaponSelect" onchange="updateWeaponCombined()">
                     <option value="">-- Wähle eine Waffe --</option>
                     <optgroup label="Sturmgewehre">
@@ -216,9 +169,45 @@
                     </optgroup>
                 </select>
                 <div id="weaponInfo" class="info-box">Wähle eine Waffe für Munitions-Details...</div>
-                
-                <label for="attachSelect" style="margin-top: 15px;">Attachments & Ergo (Waffen-Mods)</label>
-                <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
+            </div>
+
+            <div id="weaponPreviewContainer" class="panel-box" style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                <img id="weaponImg" src="https://via.placeholder.com/400x200?text=Waffe+auswählen" alt="Waffenvorschau" style="max-width: 100%; max-height: 180px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(0,255,0,0.2)); margin: 0 auto;">
+                <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
+            </div>
+        </div>
+
+        <div class="grid" style="margin-top: 20px;">
+            <div id="armorCalcContainer" class="panel-box">
+                <h3>🛡️ Ballistik-Check</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+                    <div style="flex: 1;">
+                        <label style="margin-top: 0; font-size: 0.8rem;">Gegnerische Rüstung:</label>
+                        <select id="calcArmor" onchange="calculateBallistics()" style="padding: 8px;">
+                            <option value="1">Class 2 (Soft Armor)</option>
+                            <option value="2">Class 3 (NIJ III)</option>
+                            <option value="3">Class 3+ (NIJ III+)</option>
+                            <option value="4" selected>Class 4 (NIJ IV)</option>
+                            <option value="5">Class 5 (Heavy)</option>
+                            <option value="6">Class 6 (Zabralo)</option>
+                        </select>
+                    </div>
+                    <div style="font-weight: bold; padding-top: 20px;">VS</div>
+                    <div style="flex: 1;">
+                        <label style="margin-top: 0; font-size: 0.8rem;">Deine Munition:</label>
+                        <select id="calcAmmoDisplay" onchange="calculateBallistics()" style="padding: 8px; color: var(--accent); font-weight: bold;">
+                            <option value="">-- Waffe wählen --</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="calcResult" style="padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 1rem; background: #1a1a1a; border: 1px solid #333;">
+                    Wähle eine Waffe & Rüstung
+                </div>
+            </div>
+
+            <div class="panel-box">
+                <h3>🔧 Attachments & Ergo</h3>
+                <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')" style="margin-top: 0;">
                     <option value="">-- Wähle Attachment --</option>
                     <optgroup label="Optiken (Nahkampf & Red Dots)">
                         <option value="EOTech EXPS3: Bestes Holographic-Visier. Perfektes Sichtfeld, ideal für schnelles Aiming im Nahkampf (CQB).">EOTech EXPS3 (Holo)</option>
@@ -273,45 +262,13 @@
                         <option value="Surefire X400: Kompaktes Modul, eigentlich für Pistolen gedacht, macht sich aber auch gut an SMGs (MP5/MP7).">Surefire X400</option>
                     </optgroup>
                 </select>
-                <div id="attachInfo" class="info-box">Attachment-Effekte...</div>
+                <div id="attachInfo" class="info-box" style="margin-top: 10px;">Attachment-Effekte...</div>
             </div>
+        </div>
 
+        <h2 style="margin-top: 30px;">Munitions-Vergleich (Labor)</h2>
+        <div class="grid">
             <div>
-                <div id="weaponPreviewContainer" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border: 1px solid #444; text-align: center;">
-                    <img id="weaponImg" src="https://via.placeholder.com/400x200?text=Waffe+auswählen" alt="Waffenvorschau" style="max-width: 100%; height: auto; filter: drop-shadow(0 0 10px rgba(0,255,0,0.2));">
-                    <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
-                </div>
-
-                <div id="armorCalcContainer" style="margin-top: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid #555;">
-                    <h3 style="color: var(--accent); margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #444;">🛡️ Ballistik-Check</h3>
-                    
-                    <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
-                        <div style="flex: 1;">
-                            <label style="font-size: 0.8rem; color: #888;">Gegnerische Rüstung:</label>
-                            <select id="calcArmor" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-                                <option value="1">Class 2 (Soft Armor)</option>
-                                <option value="2">Class 3 (NIJ III)</option>
-                                <option value="3">Class 3+ (NIJ III+)</option>
-                                <option value="4">Class 4 (NIJ IV - Plate)</option>
-                                <option value="5">Class 5 (Heavy)</option>
-                                <option value="6">Class 6 (Zabralo/Bastion)</option>
-                            </select>
-                        </div>
-                        <div style="font-weight: bold; padding-top: 15px;">VS</div>
-                        <div style="flex: 1;">
-                            <label style="font-size: 0.8rem; color: #888;">Deine Munition:</label>
-                            <select id="calcAmmoDisplay" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #333; color: var(--accent); border: 1px solid #444; border-radius: 5px; font-weight: bold; font-size: 0.9rem;">
-                                <option value="">-- Erst Waffe wählen --</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="calcResult" style="padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 1rem; background: #1a1a1a; border: 1px solid #333;">
-                        Wähle eine Waffe & Rüstung
-                    </div>
-                </div>
-                
-                <h3 style="color: var(--accent); margin-top: 30px; font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 5px;">Munitions-Vergleich (Labor)</h3>
                 <label for="ammo1">Munition A</label>
                 <select id="ammo1" onchange="compareAmmo()"> 
                     <option value="">-- Munition wählen --</option>
@@ -350,7 +307,8 @@
                     </optgroup>
                 </select>
                 <div id="ammo1Info" class="info-box" style="margin-bottom:10px;">Wähle Munition A...</div>
-
+            </div>
+            <div>
                 <label for="ammo2">Munition B</label>
                 <select id="ammo2" onchange="compareAmmo()"> 
                     <option value="">-- Munition wählen --</option>
@@ -389,11 +347,10 @@
                     </optgroup>
                 </select>
                 <div id="ammo2Info" class="info-box">Wähle Munition B...</div>
-
-                <div id="comparisonResult" class="info-box" style="text-align: center; font-weight: bold; border-left: none; border-top: 4px solid var(--accent); margin-top:15px;">
-                    Wähle zwei Typen zum Vergleich aus.
-                </div>
             </div>
+        </div>
+        <div id="comparisonResult" class="info-box" style="text-align: center; font-weight: bold; border-left: none; border-top: 4px solid var(--accent); margin-top:15px;">
+            Wähle zwei Typen zum Vergleich aus.
         </div>
     </div>
 
@@ -451,9 +408,8 @@
                 </select>
                 <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
             </div>
-            
             <div style="padding-top: 15px;">
-                <div class="info-box" style="border-top: 4px solid var(--accent); border-left: none;">
+                <div class="panel-box" style="border-left: none;">
                     <h3 style="margin-top: 0; color: var(--accent);">🎒 Loadout Tipps (0.4 Meta)</h3>
                     <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
                         <li><strong>Armor-Material:</strong> Keramik-Platten reparieren sich schlechter als Stahl, schlucken aber den ersten Treffer besser.</li>
@@ -597,7 +553,7 @@
                 <div id="medFullInfo" class="info-box">Medizinische Details...</div>
             </div>
 
-            <div>
+            <div style="grid-column: span 2;">
                 <label for="foodFullSelect">Verpflegung (Essen & Trinken)</label>
                 <select id="foodFullSelect" onchange="updateGeneric('foodFullSelect', 'foodFullInfo')">
                     <option value="">-- Wähle Verpflegung --</option>
@@ -635,7 +591,7 @@
     </div>
 
     <div id="tab-intel" class="tab-content">
-        <h2>Intel: Helikopter LZs & feindliche Bosse</h2>
+        <h2>Intel, Karte & Kontakte</h2>
         <div class="grid">
             <div>
                 <label for="lzSelect">LZ & Navigation (Helikopter)</label>
@@ -691,7 +647,7 @@
     </div>
 
     <div id="tab-loot" class="tab-content">
-        <h2>Beute & Zugang (Loot & Keys)</h2>
+        <h2>Beute & Zugang</h2>
         <div class="grid">
             <div>
                 <label for="valSelect">Loot & Verkaufspreise (Valuables)</label>
@@ -740,7 +696,7 @@
 
             <div>
                 <label for="keySearch">Schlüssel-Datenbank (Key Intel)</label>
-                <input type="text" id="keySearch" placeholder="Suche nach Key-Name oder Ort..." onkeyup="searchKeys()">
+                <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
                 <div id="keyList"></div>
                 <div id="keyContainer" class="info-box" style="margin-top: 10px;">
                     <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px;">Schlüssel-Info...</div>
@@ -770,10 +726,9 @@
             </select>
         </div>
 
-        <input type="text" id="taskSearchInput" placeholder="Oder manuell nach Name suchen..." onkeyup="searchTasks()" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; box-sizing: border-box;">
+        <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()">
         
         <div id="taskList"></div>
-        
         <div id="taskContainer" class="info-box">
             <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem;">Wähle einen Task...</div>
             <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
@@ -786,7 +741,7 @@
     <div id="tab-map" class="tab-content">
         <h2>Interactive Tactical Map</h2>
         <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 10px;">
-            Navigiere direkt hier auf der Karte. Falls die Karte nicht lädt, kannst du sie <a href="https://gzwtacmap.com/maps/lamang?x=7273.26156&y=4580.75431&z=14" target="_blank" style="color: var(--accent);">hier öffnen</a>.
+            Navigiere direkt hier auf der Karte. Falls die Karte nicht lädt, kannst du sie <a href="https://gzwtacmap.com/maps/lamang?x=7273.26156&y=4580.75431&z=14" target="_blank" style="color: var(--accent);">hier in einem neuen Fenster öffnen</a>.
         </p>
         
         <div class="info-box" style="padding: 0; height: 700px; overflow: hidden; border: 2px solid #333; border-top: 4px solid var(--accent);">
@@ -849,7 +804,7 @@
     // ==============================================================
     // DATENBANKEN
     // ==============================================================
-    
+
     // 7. TASK DATENBANK (VOLLSTÄNDIG)
 const allTasks = [
     // --- HANDSHAKE ---
@@ -1251,6 +1206,20 @@ const allTasks = [
         "m9a1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/bc/M9A1_inspect.png"
     };
 
+    const bosses = {
+        "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses auf." },
+        "lumber_boss": { loc: "Lumber Yard (Sägewerk)", gear: "Mosin / AK-74N", loot: "Lumber Yard Office Key.", tip: "Patrouilliert zwischen den Holzstapeln. Gute Sichtlinien." },
+        "rebel_ybl": { loc: "YBL-1 Bunker", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel.", tip: "Vorsicht in den engen Gängen, nutzt Blendgranaten." },
+        "hunter_commander": { loc: "Hunter's Paradise (Schießstand)", gear: "M4A1 Custom / Fast MT", loot: "Braunes Barett, Key to Weapon Storage.", tip: "Die Leibwache nutzt oft Schalldämpfer." },
+        "malo_blue": { loc: "Blue Lagoon (Restaurant/Steg)", gear: "SVD / Mosin", loot: "Malo's Key, Scharfschützengewehr.", tip: "Er schießt extrem präzise auf hohe Distanz." },
+        "banpa_leader": { loc: "Ban Pa (Zentrum am See)", gear: "SKS / AKM", loot: "Ban Pa Shack Key, wertvolle Statuen.", tip: "Nutze Granaten, um ihn aus den Hütten zu treiben." },
+        "fort_commander": { loc: "Fort Narith (HQ Gebäude)", gear: "Class 5 Armor / M14 EBR", loot: "Fort Narith Storage Key.", tip: "Der zäheste Boss. Erfordert zwingend AP-Munition (M61/SNB)." },
+        "midnight_laf": { loc: "Midnight Sapphire (Hotel/Villen)", gear: "KS-1 Custom / Class 4+", loot: "Villen-Schlüssel, High-End Optiken.", tip: "Wird von 4-6 Elitesoldaten geschützt. Greife niemals frontal an." },
+        "tiger_bay_unlra": { loc: "Tiger Bay (UNLRA Zone)", gear: "M4A1 / Class 5", loot: "UNLRA Medical Key.", tip: "Höchste KI-Dichte im Spiel. Bring massiv Munition mit." },
+        "tiger_bay_pier": { loc: "Tiger Bay (Pier)", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Er nutzt Magazine mit hoher Kapazität. Warte auf seine Nachladepause." },
+        "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
+    };
+
     const ammoDb = {
         "m855a1": { name: "5.56x45mm M855A1", pen: 4.5, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
         "m855": { name: "5.56x45mm M855", pen: 3.5, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
@@ -1291,18 +1260,162 @@ const allTasks = [
         "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Beste .45er Pen." }
     };
 
-    const bosses = {
-        "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses auf." },
-        "lumber_boss": { loc: "Lumber Yard (Sägewerk)", gear: "Mosin / AK-74N", loot: "Lumber Yard Office Key.", tip: "Patrouilliert zwischen den Holzstapeln." },
-        "rebel_ybl": { loc: "YBL-1 Bunker", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel.", tip: "Vorsicht in den engen Gängen, nutzt Blendgranaten." },
-        "hunter_commander": { loc: "Hunter's Paradise (Schießstand)", gear: "M4A1 Custom / Fast MT", loot: "Braunes Barett, Key to Weapon Storage.", tip: "Die Leibwache nutzt oft Schalldämpfer." },
-        "malo_blue": { loc: "Blue Lagoon (Restaurant/Steg)", gear: "SVD / Mosin", loot: "Malo's Key, Scharfschützengewehr.", tip: "Er schießt extrem präzise auf hohe Distanz." },
-        "banpa_leader": { loc: "Ban Pa (Zentrum am See)", gear: "SKS / AKM", loot: "Ban Pa Shack Key, wertvolle Statuen.", tip: "Nutze Granaten, um ihn aus den Hütten zu treiben." },
-        "fort_commander": { loc: "Fort Narith (HQ Gebäude)", gear: "Class 5 Armor / M14 EBR", loot: "Fort Narith Storage Key.", tip: "Der zäheste Boss. Erfordert zwingend AP-Munition (M61/SNB)." },
-        "midnight_laf": { loc: "Midnight Sapphire (Hotel/Villen)", gear: "KS-1 Custom / Class 4+", loot: "Villen-Schlüssel, High-End Optiken.", tip: "Wird von 4-6 Elitesoldaten geschützt." },
-        "tiger_bay_unlra": { loc: "Tiger Bay (UNLRA Zone)", gear: "M4A1 / Class 5", loot: "UNLRA Medical Key.", tip: "Höchste KI-Dichte im Spiel. Bring massiv Munition mit." },
-        "tiger_bay_pier": { loc: "Tiger Bay (Pier)", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Er nutzt Magazine mit hoher Kapazität. Warte auf seine Nachladepause." },
-        "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
+    const allKeys = [
+        { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro des Arztes im 2. Stock.", loot: "Medizinische Vorräte, Task-Intel (Medical Detective)" },
+        { name: "Mayor's Office Key", loc: "Startstadt (Rathaus)", effect: "Öffnet das Hauptbüro des Bürgermeisters.", loot: "Bargeld, Intel, Tresor" },
+        { name: "Market Storage Key", loc: "Startstadt (Marktplatz)", effect: "Öffnet den Lagerraum hinter den Marktständen.", loot: "Provisions (Essen/Trinken), Rucksäcke" },
+        { name: "Pharmacy Key", loc: "Startstadt", effect: "Öffnet den Hinterraum der kleinen Apotheke.", loot: "IFAKs, Surkits, Schmerzmittel" },
+        { name: "Foreman's Office Key", loc: "Lumber Yard", effect: "Öffnet das Büro des Vorarbeiters in der Haupthalle.", loot: "Task-Dokumente (Blueprints), Safe, Bargeld" },
+        { name: "Lumber Storage Key", loc: "Lumber Yard", effect: "Öffnet den verschlossenen Geräteschuppen im Norden.", loot: "Werkzeuge (Toolsets), Baumaterial" },
+        { name: "HP Weapon Storage Key", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer am Hauptschießstand. Droppt oft vom dortigen Boss.", loot: "High-Tier Waffen (M4A1, M700), Aufsätze, AP-Munition" },
+        { name: "HP Motel Room 3 Key", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 3 im Motel-Bereich.", loot: "Waffen-Kisten, Munition" },
+        { name: "HP Office Key", loc: "Hunter's Paradise", effect: "Öffnet das Hauptbüro nahe dem Eingang.", loot: "Intel, Wertsachen" },
+        { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte auf Stelzen über dem Wasser.", loot: "SVD/Mosin-Teile, Task-Items, Gold" },
+        { name: "Restaurant Backroom Key", loc: "Blue Lagoon", effect: "Öffnet das Lager im hinteren Teil des Restaurants.", loot: "Provisions, Schwarzgeld (Task)" },
+        { name: "Lagoon Office Key", loc: "Blue Lagoon", effect: "Öffnet das kleine Verwaltungsbüro.", loot: "Tresor, Intel" },
+        { name: "Elder's House Key", loc: "Ban Pa", effect: "Öffnet das große Haus des Dorfältesten im Zentrum.", loot: "Wertvolle Statuen, Task-Items" },
+        { name: "Ban Pa Shack Key", loc: "Ban Pa", effect: "Öffnet die verschlossene Fischerhütte im Norden.", loot: "Waffen, Munition" },
+        { name: "Smuggler's Storage Key", loc: "Ban Pa", effect: "Öffnet den Schuppen nahe dem Bootssteg.", loot: "Schmuggelware, Wertsachen" },
+        { name: "YBL-1 Office Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet das Büro direkt nach dem Haupteingang.", loot: "Task-Dokumente, Intel" },
+        { name: "YBL-1 Generator Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Hauptgeneratorraum.", loot: "Sicherungen, Werkzeuge, Task-Zugang" },
+        { name: "YBL-1 Server Room Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Serverraum hinter den Lüftungsschächten.", loot: "Elektronik, Task-Intel (Festplatte)" },
+        { name: "YBL-1 Commander Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet das Quartier des Bunker-Kommandanten.", loot: "Seltene Waffen-Mods, Tresor" },
+        { name: "YBL-1 Security Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet den Überwachungsraum.", loot: "Waffen, Munition" },
+        { name: "Fort HQ Key", loc: "Fort Narith", effect: "Öffnet das Büro von General Pa im obersten Stock des Hauptquartiers.", loot: "Gravierte Waffen, Intel, Safe" },
+        { name: "Fort Storage Key", loc: "Fort Narith", effect: "Öffnet das primäre Munitionsdepot.", loot: "Große Mengen an High-Tier Munition (M61, M855A1)" },
+        { name: "Barracks A Key", loc: "Fort Narith (Block A)", effect: "Öffnet den verschlossenen Offiziersbereich in Block A.", loot: "Rüstungen (Class 4+), Helme" },
+        { name: "Fort Armory Key", loc: "Fort Narith", effect: "Öffnet die schwere Waffenkammer.", loot: "Sturmgewehre, Granaten, Aufsätze" },
+        { name: "Gatehouse Key", loc: "Fort Narith", effect: "Öffnet das Wachhaus am Haupteingang.", loot: "Waffen, Munition, Schlüssel" },
+        { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Die rote Keycard öffnet die Quarantäne-Labore im 3. Stock des HQs.", loot: "Medizinische High-Tier Güter (Surkits, Stims), Task-Items" },
+        { name: "Tiger Bay Mall Key", loc: "Tiger Bay", effect: "Öffnet den Technik/Security-Raum im Einkaufszentrum.", loot: "Elektronik, Waffen, Bargeld" },
+        { name: "Pier Storage Key", loc: "Tiger Bay", effect: "Öffnet das Lagerhaus direkt am Pier.", loot: "Waffen-Kisten, Aufsätze" },
+        { name: "Tiger Clinic Key", loc: "Tiger Bay", effect: "Öffnet die kleine Feldklinik in der Stadt.", loot: "Medikamente, Blutkonserven" },
+        { name: "UNLRA Commander Key", loc: "Tiger Bay HQ", effect: "Öffnet das Büro des UNLRA Offiziers.", loot: "Intel, Safe, seltene Waffen" },
+        { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Der wichtigste Schlüssel hier! Öffnet viele Standard-Zimmer im Hotel.", loot: "Bargeld, Wertsachen, Koffer" },
+        { name: "Villa 1 Key", loc: "Midnight Sapphire", effect: "Öffnet die westlichste Luxusvilla.", loot: "Geld, Schmuck, Safe" },
+        { name: "Villa 2 Key", loc: "Midnight Sapphire", effect: "Öffnet die mittlere Villa (wichtig für Kongressabgeordneten-Task).", loot: "Task-Dokumente, Safe" },
+        { name: "Villa 3 Key", loc: "Midnight Sapphire", effect: "Öffnet die östliche Villa.", loot: "High-Tier Loot, Elektronik" },
+        { name: "VIP Lounge Key", loc: "Midnight Sapphire", effect: "Öffnet den VIP-Bereich im obersten Stock des Hotels.", loot: "Extreme Wertsachen, Gold" },
+        { name: "Hotel Manager Key", loc: "Midnight Sapphire", effect: "Öffnet das Büro hinter der Rezeption.", loot: "Safe, Bargeld, Intel" },
+        { name: "Room 202 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 202 im 2. Stock.", loot: "Waffen-Koffer" },
+        { name: "Room 204 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 204 (wichtig für Turncoat-Task).", loot: "Task-Akte, Wertsachen" },
+        { name: "Airfield Tower Key", loc: "Ground Zero", effect: "Öffnet den verschlossenen Bereich im Kontrollturm.", loot: "Militärische Aufklärung, Waffen" },
+        { name: "Hangar 1 Office Key", loc: "Ground Zero", effect: "Öffnet das Büro im ersten Hangar.", loot: "Werkzeuge, Waffen-Mods" },
+        { name: "NT Office Key", loc: "Nam Thaven", effect: "Öffnet ein kleines Büro im Stadtzentrum.", loot: "Bargeld, zivile Dokumente" },
+        { name: "NT Storage Key", loc: "Nam Thaven", effect: "Öffnet einen kleinen Lagerschuppen.", loot: "Werkzeuge, Rucksäcke" },
+        { name: "NT Gas Station Key", loc: "Nam Thaven", effect: "Öffnet das Hinterzimmer der Tankstelle.", loot: "Provisions, Autoteile" },
+        { name: "NT Motel Key", loc: "Nam Thaven", effect: "Öffnet ein Motelzimmer am Stadtrand.", loot: "Kleidung, Bargeld, einfache Waffen" },
+        { name: "NT Police Key", loc: "Nam Thaven", effect: "Öffnet die Waffenkammer in der lokalen Polizeistation.", loot: "Pistolen, Schrotflinten, Munition" },
+        { name: "NT Clinic Key", loc: "Nam Thaven", effect: "Öffnet den Medikamentenschrank der kleinen Klinik.", loot: "Bandagen, Schmerzmittel" },
+        { name: "NT Garage Key", loc: "Nam Thaven", effect: "Öffnet eine private Garage.", loot: "Werkzeuge, Benzin" },
+        { name: "KV Office Key", loc: "Kiu Vongsa", effect: "Öffnet das Verwaltungsbüro der Stadt.", loot: "Bargeld, Intel" },
+        { name: "KV Storage Key", loc: "Kiu Vongsa", effect: "Öffnet das städtische Lagerhaus.", loot: "Werkzeuge, einfache Materialien" },
+        { name: "KV Gas Station Key", loc: "Kiu Vongsa", effect: "Öffnet das Tankstellen-Lager.", loot: "Essen, Trinken, Schrott" },
+        { name: "KV Motel Key", loc: "Kiu Vongsa", effect: "Öffnet ein Motelzimmer für Zivilisten.", loot: "Wertsachen (gering)" },
+        { name: "KV Police Key", loc: "Kiu Vongsa", effect: "Öffnet den Asservatenraum der Polizei.", loot: "Zivile Waffen, 9mm Munition" },
+        { name: "KV Clinic Key", loc: "Kiu Vongsa", effect: "Öffnet den Vorratsraum der Klinik.", loot: "Medizinische Grundversorgung" },
+        { name: "KV Garage Key", loc: "Kiu Vongsa", effect: "Öffnet eine kleine Autowerkstatt.", loot: "Autobatterien, Zündkerzen" },
+        { name: "PL Office Key", loc: "Pha Lang", effect: "Öffnet ein Bürogebäude im Zentrum.", loot: "Bargeld, Büromaterial" },
+        { name: "PL Storage Key", loc: "Pha Lang", effect: "Öffnet den lokalen Lagerschuppen.", loot: "Handwerkszeug" },
+        { name: "PL Gas Station Key", loc: "Pha Lang", effect: "Öffnet die Hintertür der Tankstelle.", loot: "Nahrungsmittel, Benzin" },
+        { name: "PL Motel Key", loc: "Pha Lang", effect: "Öffnet ein verlassenes Motelzimmer.", loot: "Geringe Wertsachen" },
+        { name: "PL Police Key", loc: "Pha Lang", effect: "Öffnet das Waffenlager der Polizei.", loot: "Low-Tier Waffen, Westen" },
+        { name: "PL Clinic Key", loc: "Pha Lang", effect: "Öffnet das Medikamentenlager.", loot: "Bandagen, Tourniquets" },
+        { name: "PL Garage Key", loc: "Pha Lang", effect: "Öffnet eine verschlossene Garage.", loot: "Werkzeuge, Schrott" },
+        { name: "MS Maintenance Key", loc: "Midnight Sapphire", effect: "Öffnet den Wartungsraum im Erdgeschoss.", loot: "Werkzeug, Elektronik" },
+        { name: "MS Staff Room Key", loc: "Midnight Sapphire", effect: "Öffnet den Pausenraum des Personals.", loot: "Provisions, Geld" },
+        { name: "Room 101 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 101 (1. Etage).", loot: "Geld, Koffer" },
+        { name: "Room 102 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 102 (1. Etage).", loot: "Geld, Koffer" },
+        { name: "Room 103 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 103 (1. Etage).", loot: "Geld, Waffen (selten)" },
+        { name: "Room 104 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 104 (1. Etage).", loot: "Geld, Koffer" },
+        { name: "Room 201 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 201 (2. Etage).", loot: "Geld, Wertsachen" },
+        { name: "Room 203 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 203 (2. Etage).", loot: "Geld, Safe" },
+        { name: "Room 205 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 205 (2. Etage).", loot: "Geld, Waffen-Mods" },
+        { name: "Room 301 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 301 (3. Etage).", loot: "High-Tier Loot, Gold" },
+        { name: "Room 302 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 302 (3. Etage).", loot: "Safe, Schmuck" },
+        { name: "HP Motel Room 1 Key", loc: "Hunter's Paradise", effect: "Öffnet das erste Motelzimmer.", loot: "Low-Tier Waffen, Rucksäcke" },
+        { name: "HP Motel Room 2 Key", loc: "Hunter's Paradise", effect: "Öffnet das zweite Motelzimmer.", loot: "Munitionskisten, Westen" },
+        { name: "HP Guard Shack Key", loc: "Hunter's Paradise", effect: "Öffnet das kleine Wachhäuschen am Eingang.", loot: "Waffen-Aufsätze, Munition" },
+        { name: "TB Apartment Key", loc: "Tiger Bay", effect: "Öffnet ein verlassenes Apartment in den Wohnblocks.", loot: "Bargeld, Ziviler Loot" },
+        { name: "TB Noodle Shop Key", loc: "Tiger Bay", effect: "Öffnet die Küche des Nudelrestaurants.", loot: "Provisions (sehr viel Essen)" },
+        { name: "TB Water Treatment Key", loc: "Tiger Bay", effect: "Öffnet das Pumpenhaus am Rand der Stadt.", loot: "Werkzeuge, Filter" },
+        { name: "BP Fishing Hut Key", loc: "Ban Pa", effect: "Öffnet eine weitere Fischerhütte am Wasser.", loot: "Schrott, geringe Wertsachen" },
+        { name: "BP Storage Key", loc: "Ban Pa", effect: "Öffnet einen Lagerschuppen im Dschungel nahe Ban Pa.", loot: "Waffen, Rigs" }
+    ];
+
+    const valuables = {
+        "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
+        "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
+        "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
+        "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Hoher Gesamtwert, erfordert aber 2 horizontale Slots." },
+        "gold_coin": { price: "~ $350", slots: "1", info: "Perfekter Lückenfüller für den Rucksack." },
+        "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
+        "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, aber frisst viel Platz. Nur mitnehmen, wenn Platz ist." },
+        "tablet": { price: "~ $300", slots: "2", info: "Guter Wert, findet man oft in Büros und dem Hotel." },
+        "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Tausche es gegen 1-Slot-Items aus, wenn möglich." },
+        "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel Platz weg. Eher ineffizient." },
+        "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
+        "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot für 1 Slot." },
+        "camera": { price: "~ $150", slots: "2", info: "Guter Beifang, oft in zivilen Gebäuden." },
+        "silver_coin": { price: "~ $150", slots: "1", info: "Nicht so gut wie Gold, aber definitiv mitnehmen!" },
+        "silver_chain": { price: "~ $120", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
+        "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Wert für nur einen Slot." },
+        "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
+        "flash_drive": { price: "~ $80", slots: "1", info: "Normaler USB-Stick. Nimmt kaum Platz weg." },
+        "calculator": { price: "~ $80", slots: "1", info: "Guter Filler für den Secure Container am Anfang." },
+        "wallet": { price: "~ $50 - $200", slots: "1", info: "Kann manchmal wertvolles Bargeld enthalten. Prüfen!" },
+        "sunglasses": { price: "~ $60", slots: "1", info: "Oft auf Tischen oder in Cafés zu finden." },
+        "old_book": { price: "~ $70", slots: "2", info: "Nimmt zu viel Platz weg für den geringen Wert." },
+        "glasses": { price: "~ $35", slots: "1", info: "Lesebrillen. Kaum Wert." },
+        "cutlery": { price: "~ $30", slots: "1", info: "Spawnt oft in Restaurants. Eher wertlos." },
+        "lighter": { price: "~ $25", slots: "1", info: "Kaum der Rede wert. Wegwerfen, sobald etwas Besseres droppt." },
+        "cards": { price: "~ $20", slots: "1", info: "Sehr geringer Wert." },
+        "notebook_paper": { price: "~ $15", slots: "1", info: "Papier-Notizblock. Völlig wertlos." },
+        "pen": { price: "~ $10", slots: "1", info: "Kugelschreiber. Bringt fast nichts." },
+        "cigarettes": { price: "~ $15", slots: "1", info: "Wertlos, nimmt nur Platz weg." },
+        "tp": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
+        "matches": { price: "~ $5", slots: "1", info: "Absoluter Müll. Liegen lassen." }
+    };
+
+    const containers = {
+        "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", info: "Der Standard-Container. Du hast ihn von Beginn an, wenn du die normale oder die Tactical Version des Spiels besitzt." },
+        "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", info: "Käufer der 'Elite Edition' haben ihn von Beginn an. Schließe die Task <i>'Gefährliche Schätze' (Hazardous Treasures)</i> ab." },
+        "tas": { name: "TAS Container", size: "3x3 (9 Slots)", source: "Supporter Edition ODER In-Game durch Task", info: "Der größte Container. Käufer der 'Supporter Edition' starten direkt damit." },
+        "ammo_box": { name: "Ammo Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Gunny / Banshee)", info: "Kann aktuell nicht bei Händlern gekauft werden. Bietet riesigen Lagerraum nur für Munition." },
+        "weapon_box": { name: "Weapon Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Die rettende Kiste für alle Waffensammler." },
+        "med_box": { name: "Medical Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Lab Rat)", info: "Verdient man relativ früh durch Quests von Lab Rat." },
+        "armor_box": { name: "Armor / Gear Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Löst das Platzproblem für dicke Rüstungen." },
+        "food_box": { name: "Provisions Container (Cooler)", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Eine Kühlbox für all deine Rationen und Getränke." },
+        "key_holder": { name: "Key Holder", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Nimmt nur einen Slot weg, fasst unzählige Schlüssel." },
+        "wallet": { name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Achtung: Kann nur noch Bargeld und Kreditkarten fassen." },
+        "stash_upgrade": { name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", info: "Dein Haupt-Lager wächst komplett automatisch alle 10 Level." }
+    };
+
+    const lzDb = {
+        "mithras": { lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
+        "lamang": { lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
+        "crimson": { lzs: "Base Camp, Charlie 1, Charlie 2, Charlie 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von CSI (Kiu Vongsa)." },
+        "lumber": { lzs: "Echo 1 & Echo 2", time: "1-2 Min.", danger: "Niedrig-Mittel", tip: "Echo 2 ist versteckter im Wald." },
+        "hunters": { lzs: "Foxtrot 1 & Foxtrot 2", time: "2 Min.", danger: "Mittel", tip: "Foxtrot 2 wird oft abgezielt!" },
+        "banpa": { lzs: "India 1 & India 2", time: "1-3 Min.", danger: "Mittel", tip: "India 2 ist sicherer für einen Sneak-Angriff." },
+        "blue_lagoon": { lzs: "Kilo 1 & Kilo 2", time: "2-4 Min.", danger: "Mittel", tip: "Kilo 2 gibt dir einen Flanken-Vorteil." },
+        "ybl": { lzs: "Juliet 1, Juliet 2, Juliet 3", time: "1 Min.", danger: "Hoch", tip: "Vorsicht vor LZ-Campern!" },
+        "fort_narith": { lzs: "Delta 1, Delta 2, Delta 3", time: "3-5 Min.", danger: "Extrem", tip: "Delta 3 ist die sicherste Wahl (Rückseite)." },
+        "midnight": { lzs: "Hotel 1, Hotel 2, Hotel 3", time: "2 Min.", danger: "Sehr Hoch", tip: "Bleib niemals auf dem Präsentierteller stehen." },
+        "tiger_bay": { lzs: "Lima 1 & Lima 2", time: "1 Min.", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
+        "ground_zero": { lzs: "Golf 1 & Golf 2", time: "3 Min.", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
+    };
+    
+    const symptomDb = {
+        "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
+        "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
+        "tunnel_vision": { diag: "Koma steht bevor", treat: "Tourniquet + Blut", info: "Stoppe die Blutung sofort!" },
+        "limping": { diag: "Knochenbruch (Bein)", treat: "Schiene", info: "Schiene anlegen, sonst kannst du nicht sprinten." },
+        "weapon_sway": { diag: "Knochenbruch (Arm)", treat: "Schiene + Painkillers", info: "Stoppt das Wackeln beim Zielen." },
+        "stamina_drain": { diag: "Organschaden oder Erschöpfung", treat: "Surkit oder Essen", info: "Heile deine Lunge oder iss etwas." },
+        "coughing": { diag: "Organschaden (Lunge/Magen)", treat: "Surkit", info: "Such dir sichere Deckung für die OP." },
+        "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
+        "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
     };
 
     const vendorDb = {
@@ -1326,83 +1439,8 @@ const allTasks = [
         "banshee_3": { focus: "Boss-Gear", unlocks: "GPNVG-18 (Quad-Nods)", tip: "Luxus für Night Ops." }
     };
 
-    const valuables = {
-        "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
-        "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
-        "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
-        "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Hoher Gesamtwert, erfordert aber 2 horizontale Slots." },
-        "gold_coin": { price: "~ $350", slots: "1", info: "Perfekter Lückenfüller für den Rucksack." },
-        "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
-        "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, aber frisst viel Platz. Nur mitnehmen, wenn Platz ist." },
-        "tablet": { price: "~ $300", slots: "2", info: "Guter Wert, findet man oft in Büros und dem Hotel." },
-        "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Tausche es gegen 1-Slot-Items aus, wenn möglich." },
-        "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel Platz weg. Eher ineffizient." },
-        "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
-        "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot für 1 Slot." },
-        "camera": { price: "~ $150", slots: "2", info: "Guter Beifang, oft in zivilen Gebäuden." },
-        "silver_coin": { price: "~ $150", slots: "1", info: "Nicht so gut wie Gold, aber definitiv mitnehmen!" },
-        "silver_chain": { price: "~ $120", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
-        "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Wert für nur einen Slot." },
-        "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
-        "flash_drive": { price: "~ $80", slots: "1", info: "Normaler USB-Stick. Nimmt kaum Platz weg." },
-        "calculator": { price: "~ $80", slots: "1", info: "Guter Filler für den Secure Container am Anfang." }
-    };
-
-    const containers = {
-        "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", info: "Der Standard-Container." },
-        "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", info: "Schließe die Task 'Gefährliche Schätze' ab." },
-        "tas": { name: "TAS Container", size: "3x3 (9 Slots)", source: "Supporter Edition ODER In-Game durch Task", info: "Der größte Container." },
-        "ammo_box": { name: "Ammo Container", size: "Spart Platz", source: "Quests (Gunny / Banshee)", info: "Riesiges Lager nur für Munition." },
-        "weapon_box": { name: "Weapon Container", size: "Spart Platz", source: "Quests", info: "Für alle Waffensammler." },
-        "med_box": { name: "Medical Container", size: "Spart Platz", source: "Quests (Lab Rat)", info: "Verdient man relativ früh." },
-        "armor_box": { name: "Armor Container", size: "Spart Platz", source: "Quests", info: "Löst das Platzproblem für Rüstungen." },
-        "food_box": { name: "Provisions Container", size: "Spart Platz", source: "Quests", info: "Kühlbox für Rationen." },
-        "key_holder": { name: "Key Holder", size: "1 Slot", source: "Supporter Edition / In-Game", info: "Fasst unzählige Schlüssel." },
-        "wallet": { name: "Leather Wallet", size: "1 Slot", source: "Supporter Edition / In-Game", info: "Nur für Bargeld." },
-        "stash_upgrade": { name: "Locker Erweiterung", size: "Dynamisch", source: "Level-Ups", info: "Wächst alle 10 Level." }
-    };
-
-    const lzDb = {
-        "mithras": { lzs: "Alpha 1, Alpha 2, Alpha 3", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
-        "lamang": { lzs: "Bravo 1, Bravo 2, Bravo 3", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
-        "crimson": { lzs: "Charlie 1, Charlie 2, Charlie 3", danger: "Sicher / Mittel", tip: "Startgebiet von CSI (Kiu Vongsa)." },
-        "lumber": { lzs: "Echo 1 & Echo 2", danger: "Niedrig-Mittel", tip: "Echo 2 ist versteckter im Wald." },
-        "hunters": { lzs: "Foxtrot 1 & Foxtrot 2", danger: "Mittel", tip: "Foxtrot 2 wird oft abgezielt!" },
-        "banpa": { lzs: "India 1 & India 2", danger: "Mittel", tip: "India 2 ist sicherer für einen Sneak-Angriff." },
-        "blue_lagoon": { lzs: "Kilo 1 & Kilo 2", danger: "Mittel", tip: "Kilo 2 gibt dir einen Flanken-Vorteil." },
-        "ybl": { lzs: "Juliet 1, 2, 3", danger: "Hoch", tip: "Vorsicht vor LZ-Campern!" },
-        "fort_narith": { lzs: "Delta 1, 2, 3", danger: "Extrem", tip: "Delta 3 ist die sicherste Wahl (Rückseite)." },
-        "midnight": { lzs: "Hotel 1, 2, 3", danger: "Sehr Hoch", tip: "Bleib niemals auf dem Präsentierteller stehen." },
-        "tiger_bay": { lzs: "Lima 1 & 2", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
-        "ground_zero": { lzs: "Golf 1 & 2", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
-    };
-
-    const symptomDb = {
-        "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
-        "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
-        "tunnel_vision": { diag: "Koma steht bevor", treat: "Tourniquet + Blut", info: "Stoppe die Blutung sofort!" },
-        "limping": { diag: "Knochenbruch (Bein)", treat: "Schiene", info: "Schiene anlegen, sonst kannst du nicht sprinten." },
-        "weapon_sway": { diag: "Knochenbruch (Arm)", treat: "Schiene + Painkillers", info: "Stoppt das Wackeln beim Zielen." },
-        "stamina_drain": { diag: "Organschaden oder Erschöpfung", treat: "Surkit oder Essen", info: "Heile deine Lunge oder iss etwas." },
-        "coughing": { diag: "Organschaden (Lunge/Magen)", treat: "Surkit", info: "Such dir sichere Deckung für die OP." },
-        "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
-        "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
-    };
-
-    const allKeys = [
-        { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro im 2. Stock.", loot: "Medizinische Vorräte" },
-        { name: "Foreman's Office Key", loc: "Lumber Yard", effect: "Öffnet das Büro des Vorarbeiters.", loot: "Task-Dokumente, Safe" },
-        { name: "HP Weapon Storage Key", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer.", loot: "High-Tier Waffen" },
-        { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte auf Stelzen.", loot: "SVD-Teile, Gold" },
-        { name: "YBL-1 Office Key", loc: "YBL-1 Bunker", effect: "Öffnet das Büro Ebene -1.", loot: "Task-Dokumente" },
-        { name: "Fort HQ Key", loc: "Fort Narith", effect: "Öffnet das Büro von General Pa.", loot: "Gravierte Waffen, Safe" },
-        { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Öffnet die Quarantäne-Labore.", loot: "Medizinische High-Tier Güter" },
-        { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Öffnet viele Standard-Zimmer.", loot: "Bargeld, Wertsachen" }
-        // Füge hier deine weiteren Schlüssel hinzu
-    ];
-
     // ==============================================================
-    // FUNKTIONEN (WAFFEN & BALLISTIK)
+    // FUNKTIONEN
     // ==============================================================
 
     function updateWeaponCombined() {
@@ -1412,7 +1450,7 @@ const allTasks = [
         const imgElement = document.getElementById('weaponImg'); 
         const metaElement = document.getElementById('weaponMeta'); 
         
-        // 1. Bild-Vorschau Logik
+        // Bild-Vorschau Logik
         if (val === "") {
             imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
             metaElement.innerText = "";
@@ -1425,7 +1463,7 @@ const allTasks = [
             metaElement.innerText = "Bildpfad wird noch aktualisiert...";
         }
 
-        // 2. Munitions-Details & Dropdown
+        // Munitions-Details & Dropdown
         const info = weapons[val];
         if (info) {
             infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
@@ -1450,8 +1488,9 @@ const allTasks = [
         }
 
         let caliber = weaponInfo.ammo.split(' ')[0]; 
+        
         if(caliber.includes("7.62") || caliber.includes("5.45") || caliber.includes("5.56")) {
-            caliber = weaponInfo.ammo.substring(0, 7);
+            caliber = weaponInfo.ammo.substring(0, 7); 
         }
 
         let foundAmmo = false;
@@ -1500,45 +1539,44 @@ const allTasks = [
         }
 
         if (penValue >= armorLevel + 0.5) {
-            resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG";
+            resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG (1-2 Schüsse)";
             resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
             resultBox.style.color = "#7ca35a";
         } else if (penValue >= armorLevel) {
-            resultBox.innerHTML = "⚠️ MEHRERE TREFFER NÖTIG";
+            resultBox.innerHTML = "⚠️ WAHRSCHEINLICHER DURCHSCHLAG (3-5 Schüsse)";
             resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
             resultBox.style.color = "#ffa500";
         } else {
-            resultBox.innerHTML = "❌ KEIN DURCHSCHLAG";
+            resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Wirkungslos gegen Platte)";
             resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
             resultBox.style.color = "#ff4c4c";
         }
     }
 
-    // ==============================================================
-    // ALLGEMEINE UPDATER (Generic)
-    // ==============================================================
-    function updateGeneric(sId, iId) { document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details..."; }
-    function updateBoss() { const b = bosses[document.getElementById('bossSelect').value]; document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss..."; }
-    function updateLZ() { const l = lzDb[document.getElementById('lzSelect').value]; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small>Tipp: ${l.tip}</small>` : "Wähle Zielgebiet..."; }
-    function updateSymptom() { const s = symptomDb[document.getElementById('symptomSelect').value]; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><small>${s.info}</small>` : "Symptom wählen..."; }
-    function updateVendor() { const v = vendorDb[document.getElementById('vendorSelect').value]; document.getElementById('vendorInfo').innerHTML = v ? `Fokus: <span style="color: var(--accent); font-weight: bold;">${v.focus}</span><br>Unlocks: <span class="highlight">${v.unlocks}</span><br><small>Tipp: ${v.tip}</small>` : "Wähle Händler..."; }
-    function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: ${c.source}<br><small>${c.info}</small>` : "Wähle Container..."; }
-    function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Slots: <span class="highlight">${v.slots}</span><br>Tipp: ${v.info}` : "Wähle Item..."; }
-    
     function compareAmmo() {
         const a1 = ammoDb[document.getElementById('ammo1').value];
         const a2 = ammoDb[document.getElementById('ammo2').value];
-        if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden: ${a1.damage}`;
-        if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden: ${a2.damage}`;
+        if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden (Flesh): ${a1.damage}<br><small>${a1.info}</small>`;
+        if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden (Flesh): ${a2.damage}<br><small>${a2.info}</small>`;
         if(a1 && a2) {
-            let text = a1.pen > a2.pen ? `${a1.name} gewinnt gegen Rüstung!` : (a2.pen > a1.pen ? `${a2.name} gewinnt gegen Rüstung!` : "Gleicher Durchschlag.");
-            document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${text}`;
+            let winText = "";
+            if(a1.pen > a2.pen) winText = `${a1.name} gewinnt gegen Rüstung!`;
+            else if(a2.pen > a1.pen) winText = `${a2.name} gewinnt gegen Rüstung!`;
+            else winText = "Gleicher Durchschlag. Achte auf den Schaden!";
+            document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${winText}`;
+        } else {
+            document.getElementById('comparisonResult').innerHTML = "Wähle zwei Typen zum Vergleich aus.";
         }
     }
 
-    // ==============================================================
-    // TASKS & KEYS SUCHE
-    // ==============================================================
+    function updateGeneric(sId, iId) { document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details..."; }
+    function updateBoss() { const b = bosses[document.getElementById('bossSelect').value]; document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss..."; }
+    function updateLZ() { const l = lzDb[document.getElementById('lzSelect').value]; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small><b>Operator-Tipp:</b> ${l.tip}</small>` : "Wähle ein Zielgebiet für LZ-Tipps..."; }
+    function updateSymptom() { const s = symptomDb[document.getElementById('symptomSelect').value]; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><br><small><b>Medic-Tipp:</b> ${s.info}</small>` : "Wähle ein Symptom für Diagnose & Behandlung..."; }
+    function updateVendor() { const v = vendorDb[document.getElementById('vendorSelect').value]; document.getElementById('vendorInfo').innerHTML = v ? `Fokus: <span style="color: var(--accent); font-weight: bold;">${v.focus}</span><br><b>Highlights:</b> <span class="highlight">${v.unlocks}</span><br><br><small><b>Operator-Tipp:</b> ${v.tip}</small>` : "Wähle Händler & Level für Details..."; }
+    function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
+    function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
+
     function searchKeys() {
         const input = document.getElementById('keySearch').value.toLowerCase();
         const list = document.getElementById('keyList');
@@ -1549,12 +1587,12 @@ const allTasks = [
             list.style.display = 'block';
             filtered.forEach(k => {
                 const d = document.createElement('div');
-                d.className = "search-item";
+                d.className = 'search-item';
                 d.innerHTML = `${k.name} (${k.loc})`;
                 d.onclick = () => {
                     document.getElementById('keyTitle').innerText = k.name;
                     document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${k.loc}</span>`;
-                    document.getElementById('keyEffect').innerHTML = `Nutzen: ${k.effect}<br>Loot: <span class="highlight">${k.loot}</span>`;
+                    document.getElementById('keyEffect').innerHTML = `Nutzen: ${k.effect}<br>Erwarteter Loot: <span class="highlight">${k.loot}</span>`;
                     list.style.display = 'none';
                     document.getElementById('keySearch').value = k.name;
                 };
@@ -1567,8 +1605,9 @@ const allTasks = [
         const vendor = document.getElementById('vendorFilter').value;
         const taskSelect = document.getElementById('taskDropdown');
         taskSelect.innerHTML = '<option value="">-- Wähle einen Task --</option>';
+
         if (vendor === 'all') return;
-        
+
         const filteredTasks = allTasks.filter(t => t.v === vendor);
         filteredTasks.forEach(t => {
             const option = document.createElement('option');
@@ -1597,7 +1636,7 @@ const allTasks = [
             list.style.display = 'block';
             filtered.forEach(t => {
                 const d = document.createElement('div');
-                d.className = "search-item";
+                d.className = 'search-item';
                 d.innerHTML = `<strong>${t.de}</strong> <small>(${t.v || 'Divers'})</small>`;
                 d.onclick = () => {
                     displayTaskData(t.de);
