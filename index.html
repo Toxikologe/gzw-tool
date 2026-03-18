@@ -182,6 +182,8 @@
                         <option value="mk18">MK18 (Kompakt)</option>
                         <option value="sicmcx">SIG-MCX</option>
                         <option value="vz58">Vz. 58</option>
+                        <option value="m1a">M1A</option>
+                        <option value="m201c">M-201C</option>
                     </optgroup>
                     <optgroup label="DMR & Scharfschützen">
                         <option value="m14">M14 EBR / Battle Rifle</option>
@@ -189,6 +191,7 @@
                         <option value="mosin">Mosin-Nagant</option>
                         <option value="skn">SKS (Modernisiert)</option>
                         <option value="svd">SVD Dragunov</option>
+                        <option value="rem788">Remington Model 788</option>
                     </optgroup>
                     <optgroup label="SMGs & Shotguns">
                         <option value="m870">M870 Pump-Action</option>
@@ -255,6 +258,8 @@
                         <option value="Aimpoint T-2 Micro: Extrem kleiner Leuchtpunkt. Nimmt null Platz auf dem Bildschirm ein. Super für SMGs und leichte ARs.">Aimpoint T-2 Micro</option>
                         <option value="Kobra EKP-8-18: Russisches Standard-Reflexvisier. Günstig, zuverlässig, verschiedene Fadenkreuze wählbar.">Kobra EKP-8-18</option>
                         <option value="OKP-7: Sehr beliebtes russisches Visier mit grünem Absehen. Bietet ein unglaublich freies Sichtfeld.">OKP-7 (Dovetail)</option>
+                        <option value="Magnifier (G33 / G45): NEU! Klappbare Vergrößerung (3x oder 5x) für Red Dots wie das EXPS3. Absolute Meta für Häuserkampf & Mid-Range.">EOTech G33 / G45 Magnifier</option>
+                        <option value="Trijicon MRO / RMR: Neue, extrem saubere Red-Dots für ARs und als Backup auf Scopes.">Trijicon MRO / RMR Type 2</option>
                     </optgroup>
                     <optgroup label="Optiken (Mid & Long Range / LPVOs)">
                         <option value="Vudu 1-6x: Die absolute Meta für Sturmgewehre. Perfekt für Distanz und durch den 1x Zoom auch stark im Nahkampf.">EOTech Vudu 1-6x</option>
@@ -263,6 +268,8 @@
                         <option value="Trijicon ACOG 4x32: Der Klassiker. Festvergrößerung, extrem gute Sichtbarkeit des Fadenkreuzes (Tritium).">Trijicon ACOG 4x32</option>
                         <option value="Valday PS-320 1x/6x: Das russische Äquivalent zum Vudu/Razor. Exzellent für AKs auf mittlere und weite Distanzen.">Valday PS-320 1x/6x</option>
                         <option value="Nightforce ATACR 1-8x / 7-35x: Maximale Vergrößerung. Nur für reine Sniper (M700 / Mosin) oder DMRs (M14 / SVD) zu empfehlen.">Nightforce ATACR</option>
+                        <option value="RAZOR 1-10x24: Das ultimative neue LPVO. Gigantischer Zoom-Bereich, extrem flexibel.">Vortex RAZOR 1-10x24</option>
+                        <option value="Vudu 3-9x32: Mehr Vergrößerung als das alte Vudu, perfekt für die neue M1A oder M14.">EOTech Vudu 3-9x32 SFP</option>
                     </optgroup>
                     <optgroup label="Mündung (Schalldämpfer / Suppressors)">
                         <option value="KAC NT4 Suppressor (5.56): Der Standard für M4. Reduziert Schall und Mündungsfeuer zuverlässig.">KAC NT4 (5.56mm)</option>
@@ -635,6 +642,7 @@
                         <option value="Große Wasserflasche (1.5L): Perfekt für lange Raids. Füllt den Durst komplett auf und hat oft noch Reste für später.">Große Wasserflasche (1.5L)</option>
                         <option value="Militär-Feldflasche (Canteen): Der effizienteste Mehrwegbehälter. Füllt den Durst massiv auf. Optimaler Begleiter im Rucksack.">Militär-Feldflasche</option>
                         <option value="Kokosnusswasser: Naturprodukt. Spendet hervorragende Hydration und gibt dir sogar noch einen kleinen Energie-Boost.">Kokosnusswasser</option>
+                        <option value="Kaffee (Thermoskanne/Dose): 0.4 FEATURE! Gibt dir einen direkten Gameplay-Buff. Beschleunigt deine Ausdauer-Regeneration merklich. Pflicht vor langen Sprints!">Kaffee (Stamina Buff)</option>
                     </optgroup>
                     <optgroup label="Säfte & Softdrinks (Hydration + Zucker/Energie)">
                         <option value="Energy Drink (Taurine/Guarana): Gibt einen mittleren Hydration-Schub und lässt deine Ausdauer für kurze Zeit deutlich schneller regenerieren. Perfekt vor Sprints!">Energy Drink</option>
@@ -712,6 +720,9 @@
                         <option value="tiger_bay_unlra">UNLRA Officer (Tiger Bay HQ)</option>
                         <option value="tiger_bay_pier">Pier Boss (Tiger Bay)</option>
                         <option value="airfield_boss">Airfield Commander (Ground Zero)</option>
+                        <option value="jungle_camp">Viper (Dschungel Camps)</option>
+                        <option value="military_checkpoints">Bloodhound (Militär Checkpoints)</option>
+                        <option value="midnight_laf">Golden Boy (Midnight Sapphire)</option>
                     </optgroup>
                 </select>
                 <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
@@ -1296,6 +1307,9 @@ const allTasks = [
         "1911": { ammo: ".45 ACP", pen: "Class 1", tip: "Massiver Fleischschaden, aber geringe Magazinkapazität." },
         "ccc": { ammo: ".45 ACP", pen: "Class 1", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
         "typ51": { ammo: "7.62x25mm Tokarev", pen: "Class 2+", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." }
+        "m1a": { ammo: "7.62x51mm M80", pen: "Class 4-6", tip: "0.4 NEU: Zivile Version des M14. Exzellent als DMR mit den neuen 0.4 Scopes." },
+        "rem788": { ammo: "5.56x45mm M855", pen: "Class 2-3", tip: "0.4 NEU: Remington Model 788 (.222). Repetierbüchse, ideal für Einsteiger-Jagd-Tasks." },
+        "m201c": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 NEU: Stark modifizierbares Kompaktgewehr. Sehr starke Alternative zur M4A1." },
     };
     
 // 3. WAFFEN BILDER DATENBANK
@@ -1341,6 +1355,9 @@ const allTasks = [
         "tiger_bay_unlra": { loc: "Tiger Bay (UNLRA Zone)", gear: "M4A1 / Class 5", loot: "UNLRA Medical Key.", tip: "Höchste KI-Dichte im Spiel. Bring massiv Munition mit." },
         "tiger_bay_pier": { loc: "Tiger Bay (Pier)", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Er nutzt Magazine mit hoher Kapazität. Warte auf seine Nachladepause." },
         "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
+        "viper": { loc: "Dschungel-Camps", gear: "Vz.58 / Stealth Gear", loot: "Gravierte Waffen", tip: "0.4 NEU: Extrem leise. Bewegt sich flankierend durch die Vegetation." },
+        "bloodhound": { loc: "Militär-Checkpoints", gear: "M201C / Class 4", loot: "High-Tier Armor", tip: "0.4 NEU: Agiert mit einem Elite-Squad der neuen 7 KI-Fraktionen." },
+        "golden_boy": { loc: "Midnight Sapphire", gear: "Alien Pistole / MP7", loot: "Rolex, VIP-Schlüssel", tip: "0.4 NEU: Trägt extrem viel Loot bei sich, schwer bewacht." },
     };
     
 // 5. AMMO DATENBANK
