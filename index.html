@@ -805,7 +805,7 @@
     // DATENBANKEN
     // ==============================================================
 
-    // 7. TASK DATENBANK (VOLLSTÄNDIG)
+    // 1. TASK DATENBANK (VOLLSTÄNDIG)
 const allTasks = [
     // --- HANDSHAKE ---
     { de: "Erstaufklärung", en: "First Recon", v: "Handshake", desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
@@ -1134,7 +1134,7 @@ const allTasks = [
     { de: "Squad Strike: Night Raid", en: "Squad Strike: Night Raid", v: "Banshee", desc: "Leise Nacht-Op.", sol: "Team Stealth Kills." }
 ];
 
-    // 1. WAFFEN DATENBANK
+    // 2. WAFFEN DATENBANK
     const weapons = {
         "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
         "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
@@ -1176,7 +1176,8 @@ const allTasks = [
         "ccc": { ammo: ".45 ACP", pen: "Class 1", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
         "typ51": { ammo: "7.62x25mm Tokarev", pen: "Class 2+", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." }
     };
-
+    
+// 3. WAFFEN BILDER DATENBANK
     const weaponImages = {
         "ak74m": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/AK-74M_inspect.png",
         "ak74n": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e2/AK-74N_inspect.png",
@@ -1205,7 +1206,8 @@ const allTasks = [
         "glock17": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e4/Glock17_inspect.png",
         "m9a1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/bc/M9A1_inspect.png"
     };
-
+    
+// 4. BOSSE DATENBANK
     const bosses = {
         "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses auf." },
         "lumber_boss": { loc: "Lumber Yard (Sägewerk)", gear: "Mosin / AK-74N", loot: "Lumber Yard Office Key.", tip: "Patrouilliert zwischen den Holzstapeln. Gute Sichtlinien." },
@@ -1219,7 +1221,8 @@ const allTasks = [
         "tiger_bay_pier": { loc: "Tiger Bay (Pier)", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Er nutzt Magazine mit hoher Kapazität. Warte auf seine Nachladepause." },
         "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
     };
-
+    
+// 5. AMMO DATENBANK
     const ammoDb = {
         "m855a1": { name: "5.56x45mm M855A1", pen: 4.5, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
         "m855": { name: "5.56x45mm M855", pen: 3.5, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
@@ -1259,7 +1262,8 @@ const allTasks = [
         "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Tödlich im Nahkampf." },
         "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Beste .45er Pen." }
     };
-
+    
+// 6. KEYS DATENBANK
     const allKeys = [
         { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro des Arztes im 2. Stock.", loot: "Medizinische Vorräte, Task-Intel (Medical Detective)" },
         { name: "Mayor's Office Key", loc: "Startstadt (Rathaus)", effect: "Öffnet das Hauptbüro des Bürgermeisters.", loot: "Bargeld, Intel, Tresor" },
@@ -1342,7 +1346,8 @@ const allTasks = [
         { name: "BP Fishing Hut Key", loc: "Ban Pa", effect: "Öffnet eine weitere Fischerhütte am Wasser.", loot: "Schrott, geringe Wertsachen" },
         { name: "BP Storage Key", loc: "Ban Pa", effect: "Öffnet einen Lagerschuppen im Dschungel nahe Ban Pa.", loot: "Waffen, Rigs" }
     ];
-
+    
+// 7. LOOT DATENBANK
     const valuables = {
         "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
         "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
@@ -1376,7 +1381,8 @@ const allTasks = [
         "tp": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
         "matches": { price: "~ $5", slots: "1", info: "Absoluter Müll. Liegen lassen." }
     };
-
+    
+// 8. CONTAINER DATENBANK
     const containers = {
         "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", info: "Der Standard-Container. Du hast ihn von Beginn an, wenn du die normale oder die Tactical Version des Spiels besitzt." },
         "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", info: "Käufer der 'Elite Edition' haben ihn von Beginn an. Schließe die Task <i>'Gefährliche Schätze' (Hazardous Treasures)</i> ab." },
@@ -1390,7 +1396,8 @@ const allTasks = [
         "wallet": { name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Achtung: Kann nur noch Bargeld und Kreditkarten fassen." },
         "stash_upgrade": { name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", info: "Dein Haupt-Lager wächst komplett automatisch alle 10 Level." }
     };
-
+    
+// 9. LZ DATENBANK
     const lzDb = {
         "mithras": { lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
         "lamang": { lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
@@ -1405,7 +1412,8 @@ const allTasks = [
         "tiger_bay": { lzs: "Lima 1 & Lima 2", time: "1 Min.", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
         "ground_zero": { lzs: "Golf 1 & Golf 2", time: "3 Min.", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
     };
-    
+
+    // 10. SYMPTOME DATENBANK
     const symptomDb = {
         "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
         "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
@@ -1417,7 +1425,8 @@ const allTasks = [
         "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
         "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
     };
-
+    
+// 11. HÄNDLER DATENBANK
     const vendorDb = {
         "gunny_1": { focus: "Basis NATO", unlocks: "M4A1, M193 Muni, NT4", tip: "Kauf die M4A1 und den NT4." },
         "gunny_2": { focus: "Bessere Munition", unlocks: "M855 Muni, Mosin, RVG", tip: "Steig auf M855 um!" },
