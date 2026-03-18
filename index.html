@@ -25,6 +25,16 @@
             color: var(--accent); 
             font-weight: bold; 
         }
+        
+        .info-box {
+            background: #252525;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            margin-top: 10px;
+            min-height: 50px;
+            line-height: 1.5;
+        }
 
         /* --- FRAKTIONS-BUTTONS --- */
         .faction-selector {
@@ -75,7 +85,7 @@
         }
         .tab-btn.active {
             background-color: var(--accent); 
-            color: #fff; /* Auf Weiß geändert, damit es auf allen Farben gut lesbar ist */
+            color: #fff; 
             border-color: var(--accent);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
@@ -93,6 +103,11 @@
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* --- LAYOUT --- */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        label { display: block; margin-top: 15px; font-weight: bold; font-size: 0.9rem; color: #aaa; }
+        select, input { width: 100%; padding: 10px; margin-top: 5px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 6px; }
 
         /* --- ZURÜCK NACH OBEN BUTTON --- */
         #backToTopBtn {
@@ -118,6 +133,8 @@
             transform: translateY(-4px); 
             box-shadow: 0px 6px 12px rgba(0,0,0,0.8);
         }
+
+        #keyList, #taskList { background: #2a2a2a; border: 1px solid #444; max-height: 200px; overflow-y: auto; display: none; border-radius: 0 0 6px 6px; }
     </style>
 </head>
 <body>
@@ -133,108 +150,74 @@
     </div>
 
     <div class="tab-nav">
-        <button class="tab-btn active" onclick="openTab('tab-ausruestung', this)">🔫 Waffen&Gear</button>
-        <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin&Food</button>
-        <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ&Bosse</button>
-        <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot&Keys</button>
+        <button class="tab-btn active" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
+        <button class="tab-btn" onclick="openTab('tab-gear', this)">🛡️ Rüstung & Gear</button>
+        <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
+        <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin & Food</button>
+        <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ & Bosse</button>
+        <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
         <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
         <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
     </div>
 
-    <div id="tab-ausruestung" class="tab-content active">
-        <h2>Waffen & Ausrüstung</h2>
+    <div id="tab-mods" class="tab-content active">
+        <h2>Waffen-Modifikationen & Ergonomie</h2>
         <div class="grid">
             <div>
                 <label for="weaponSelect">Waffen</label>
                 <select id="weaponSelect" onchange="updateWeaponCombined()">
                     <option value="">-- Wähle eine Waffe --</option>
                     <optgroup label="Sturmgewehre">
-    <option value="ak-74m">AK-74M (Klappschaft)</option>
-    <option value="ak74n">AK-74N (5.45mm)</option>
-    <option value="ak103">AK-103 (7.62mm Modern)</option>
-    <option value="ak105">AK-105 (Kompakt)</option>
-    <option value="ak12">AK-12</option>
-    <option value="ak15">AK-15</option>
-    <option value="ak19">AK-19</option>
-    <option value="ak308">AK-308</option>
-    <option value="akm">AKM</option>
-    <option value="akmn">AKMN (Modernisiert)</option>
-    <option value="akmsn">AKMSN</option>
-    <option value="aks74u">AKS-74U</option>
-    <option value="cqa1">CQ-A1</option>
-    <option value="ddm4">DDM4</option>
-    <option value="ks1">KAC KS-1 (L403A1) - 0.4 Meta</option>
-    <option value="m16a1">M16A1 (Retro-Präzision)</option>
-    <option value="m4a1">M4A1</option>
-    <option value="mk18">MK18 (Kompakt)</option>
-    <option value="sicmcx">SIG-MCX</option>
-    <option value="vz58">Vz. 58</option>
-</optgroup>
-<optgroup label="DMR & Scharfschützen">
-    <option value="m14">M14 EBR / Battle Rifle</option>
-    <option value="m700">M700 Remington</option>
-    <option value="mosin">Mosin-Nagant</option>
-    <option value="skn">SKS (Modernisiert)</option>
-    <option value="svd">SVD Dragunov</option>
-</optgroup>
-<optgroup label="SMGs & Shotguns">
-    <option value="m870">M870 Pump-Action</option>
-    <option value="590a1">Mossberg 590A1</option>
-    <option value="mp5">MP5A3 / SD</option>
-    <option value="mp7a1">MP7A1</option>
-    <option value="mp7a2">MP7A2</option>
-    <option value="vityaz">PP-19-01 Vityaz</option>
-    <option value="vz61">VZ-61 Skorpio</option>
-</optgroup>
-<optgroup label="Pistolen">
-    <option value="1911">Colt 1911</option>
-    <option value="ccc">Colt Combat Commander</option>
-    <option value="glock17">Glock 17</option>
-    <option value="alien">Laugo Alien (0.4 Meta)</option>
-    <option value="m9a1">M9A1 Beretta</option>
-    <option value="makarov">Makarov PM</option>
-    <option value="typ51">Typ-51</option>
-</optgroup>
+                        <option value="ak-74m">AK-74M (Klappschaft)</option>
+                        <option value="ak74n">AK-74N (5.45mm)</option>
+                        <option value="ak103">AK-103 (7.62mm Modern)</option>
+                        <option value="ak105">AK-105 (Kompakt)</option>
+                        <option value="ak12">AK-12</option>
+                        <option value="ak15">AK-15</option>
+                        <option value="ak19">AK-19</option>
+                        <option value="ak308">AK-308</option>
+                        <option value="akm">AKM</option>
+                        <option value="akmn">AKMN (Modernisiert)</option>
+                        <option value="akmsn">AKMSN</option>
+                        <option value="aks74u">AKS-74U</option>
+                        <option value="cqa1">CQ-A1</option>
+                        <option value="ddm4">DDM4</option>
+                        <option value="ks1">KAC KS-1 (L403A1) - 0.4 Meta</option>
+                        <option value="m16a1">M16A1 (Retro-Präzision)</option>
+                        <option value="m4a1">M4A1</option>
+                        <option value="mk18">MK18 (Kompakt)</option>
+                        <option value="sicmcx">SIG-MCX</option>
+                        <option value="vz58">Vz. 58</option>
+                    </optgroup>
+                    <optgroup label="DMR & Scharfschützen">
+                        <option value="m14">M14 EBR / Battle Rifle</option>
+                        <option value="m700">M700 Remington</option>
+                        <option value="mosin">Mosin-Nagant</option>
+                        <option value="skn">SKS (Modernisiert)</option>
+                        <option value="svd">SVD Dragunov</option>
+                    </optgroup>
+                    <optgroup label="SMGs & Shotguns">
+                        <option value="m870">M870 Pump-Action</option>
+                        <option value="590a1">Mossberg 590A1</option>
+                        <option value="mp5">MP5A3 / SD</option>
+                        <option value="mp7a1">MP7A1</option>
+                        <option value="mp7a2">MP7A2</option>
+                        <option value="vityaz">PP-19-01 Vityaz</option>
+                        <option value="vz61">VZ-61 Skorpio</option>
+                    </optgroup>
+                    <optgroup label="Pistolen">
+                        <option value="1911">Colt 1911</option>
+                        <option value="ccc">Colt Combat Commander</option>
+                        <option value="glock17">Glock 17</option>
+                        <option value="alien">Laugo Alien (0.4 Meta)</option>
+                        <option value="m9a1">M9A1 Beretta</option>
+                        <option value="makarov">Makarov PM</option>
+                        <option value="typ51">Typ-51</option>
+                    </optgroup>
                 </select>
                 <div id="weaponInfo" class="info-box">Wähle eine Waffe für Munitions-Details...</div>
-            </div>
-
-            <div id="weaponPreviewContainer" style="margin-top: 20px; text-align: center; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border: 1px solid #444;">
-    <img id="weaponImg" src="https://via.placeholder.com/400x200?text=Waffe+auswählen" alt="Waffenvorschau" style="max-width: 100%; height: auto; filter: drop-shadow(0 0 10px rgba(0,255,0,0.2));">
-    <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
-</div>
-
-            <div id="armorCalcContainer" style="margin-top: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid #555;">
-    <h3 style="color: var(--accent); margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #444;">🛡️ Ballistik-Check</h3>
-    
-    <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
-        <div style="flex: 1;">
-            <label style="font-size: 0.8rem; color: #888;">Gegnerische Rüstung:</label>
-            <select id="calcArmor" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-                <option value="1">Class 2 (Soft Armor)</option>
-                <option value="2">Class 3 (NIJ III)</option>
-                <option value="3">Class 3+ (NIJ III+)</option>
-                <option value="4">Class 4 (NIJ IV - Plate)</option>
-                <option value="5">Class 5 (Heavy)</option>
-                <option value="6">Class 6 (Zabralo/Bastion)</option>
-            </select>
-        </div>
-        <div style="font-weight: bold; padding-top: 15px;">VS</div>
-        <div style="flex: 1;">
-    <label style="font-size: 0.8rem; color: #888;">Deine Munition:</label>
-    <select id="calcAmmoDisplay" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #333; color: var(--accent); border: 1px solid #444; border-radius: 5px; font-weight: bold; font-size: 0.9rem;">
-        <option value="">-- Erst Waffe wählen --</option>
-    </select>
-</div>
-    </div>
-
-    <div id="calcResult" style="padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 1rem; background: #1a1a1a; border: 1px solid #333;">
-        Wähle eine Waffe & Rüstung
-    </div>
-</div>
-
-            <div>
-                <label for="attachSelect">Attachments & Ergo (Waffen-Mods)</label>
+                
+                <label for="attachSelect" style="margin-top: 15px;">Attachments & Ergo (Waffen-Mods)</label>
                 <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')">
                     <option value="">-- Wähle Attachment --</option>
                     <optgroup label="Optiken (Nahkampf & Red Dots)">
@@ -294,7 +277,131 @@
             </div>
 
             <div>
-                <label for="gearFullSelect">Gear (Rüstung, Helme, Rucksäcke)</label>
+                <div id="weaponPreviewContainer" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border: 1px solid #444; text-align: center;">
+                    <img id="weaponImg" src="https://via.placeholder.com/400x200?text=Waffe+auswählen" alt="Waffenvorschau" style="max-width: 100%; height: auto; filter: drop-shadow(0 0 10px rgba(0,255,0,0.2));">
+                    <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
+                </div>
+
+                <div id="armorCalcContainer" style="margin-top: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid #555;">
+                    <h3 style="color: var(--accent); margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #444;">🛡️ Ballistik-Check</h3>
+                    
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.8rem; color: #888;">Gegnerische Rüstung:</label>
+                            <select id="calcArmor" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+                                <option value="1">Class 2 (Soft Armor)</option>
+                                <option value="2">Class 3 (NIJ III)</option>
+                                <option value="3">Class 3+ (NIJ III+)</option>
+                                <option value="4">Class 4 (NIJ IV - Plate)</option>
+                                <option value="5">Class 5 (Heavy)</option>
+                                <option value="6">Class 6 (Zabralo/Bastion)</option>
+                            </select>
+                        </div>
+                        <div style="font-weight: bold; padding-top: 15px;">VS</div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.8rem; color: #888;">Deine Munition:</label>
+                            <select id="calcAmmoDisplay" onchange="calculateBallistics()" style="width: 100%; padding: 8px; background: #333; color: var(--accent); border: 1px solid #444; border-radius: 5px; font-weight: bold; font-size: 0.9rem;">
+                                <option value="">-- Erst Waffe wählen --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="calcResult" style="padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 1rem; background: #1a1a1a; border: 1px solid #333;">
+                        Wähle eine Waffe & Rüstung
+                    </div>
+                </div>
+                
+                <h3 style="color: var(--accent); margin-top: 30px; font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 5px;">Munitions-Vergleich (Labor)</h3>
+                <label for="ammo1">Munition A</label>
+                <select id="ammo1" onchange="compareAmmo()"> 
+                    <option value="">-- Munition wählen --</option>
+                    <optgroup label="5.56x45mm (NATO)">
+                        <option value="m855a1">5.56 M855A1</option><option value="m855">5.56 M855</option><option value="m193">5.56 M193</option><option value="m856a1">5.56 M856A1 (Tracer)</option><option value="mk255">5.56 MK255 (Flesh/HP)</option>
+                    </optgroup>
+                    <optgroup label=".300 Blackout (SIG-MCX)">
+                        <option value="300_ap">.300 BLK AP</option><option value="300_cbj">.300 BLK CBJ</option><option value="300_m62">.300 BLK M62 (Tracer)</option><option value="300_whisper">.300 BLK Whisper</option>
+                    </optgroup>
+                    <optgroup label="5.45x39mm (AK-74/AK-12)">
+                        <option value="ak74_bs">5.45 BS</option><option value="ak74_bp">5.45 BP</option><option value="ak74_pp">5.45 PP</option><option value="ak74_7n6">5.45 7N6M</option><option value="ak74_hp">5.45 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
+                        <option value="ak_mai_ap">7.62x39 MAI AP</option><option value="ak_bp">7.62x39 BP</option><option value="ak_ps">7.62x39 PS</option><option value="ak_us">7.62x39 US</option><option value="ak_hp">7.62x39 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
+                        <option value="m993">7.62 M993</option><option value="m61">7.62 M61</option><option value="m62">7.62 M62</option><option value="m80">7.62 M80</option><option value="tcw_sp">7.62 TCW SP</option>
+                    </optgroup>
+                    <optgroup label="7.62x54mmR (Mosin/SVD)">
+                        <option value="snb">7.62x54R SNB</option><option value="7n1">7.62x54R 7N1</option><option value="lps">7.62x54R LPS</option>
+                    </optgroup>
+                    <optgroup label="4.6x30mm (MP7)">
+                        <option value="46_apsx">4.6x30 AP SX</option><option value="46_fmjsx">4.6x30 FMJ SX</option><option value="46_subsx">4.6x30 Subsonic</option><option value="46_actionsx">4.6x30 Action</option>
+                    </optgroup>
+                    <optgroup label="9x19mm (Glock/MP5/Alien)">
+                        <option value="7n31">9x19 7N31</option><option value="ap63">9x19 AP 6.3</option><option value="pst">9x19 PST Gzh</option><option value="rip">9x19 RIP</option>
+                    </optgroup>
+                    <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
+                        <option value="pm_pmm">9x18 PMM</option><option value="pm_sp7">9x18 PM SP7</option><option value="pm_gzh">9x18 PM Gzh</option><option value="tt_pst">7.62x25 TT PST</option><option value="tt_lrnpc">7.62x25 TT LRNPC</option>
+                    </optgroup>
+                    <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
+                        <option value="45_ap">.45 ACP AP</option><option value="45_match">.45 ACP Match</option><option value="45_rip">.45 ACP RIP</option><option value="32_fmj">.32 ACP FMJ</option>
+                    </optgroup>
+                    <optgroup label="12 Gauge (Shotguns)">
+                        <option value="ap20">12G AP-20 Slug</option><option value="slug">12G Copper Slug</option><option value="flechette">12G Flechette</option><option value="buck">12G 00 Buckshot</option>
+                    </optgroup>
+                </select>
+                <div id="ammo1Info" class="info-box" style="margin-bottom:10px;">Wähle Munition A...</div>
+
+                <label for="ammo2">Munition B</label>
+                <select id="ammo2" onchange="compareAmmo()"> 
+                    <option value="">-- Munition wählen --</option>
+                    <optgroup label="5.56x45mm (NATO)">
+                        <option value="m855a1">5.56 M855A1</option><option value="m855">5.56 M855</option><option value="m193">5.56 M193</option><option value="m856a1">5.56 M856A1 (Tracer)</option><option value="mk255">5.56 MK255 (Flesh/HP)</option>
+                    </optgroup>
+                    <optgroup label=".300 Blackout (SIG-MCX)">
+                        <option value="300_ap">.300 BLK AP</option><option value="300_cbj">.300 BLK CBJ</option><option value="300_m62">.300 BLK M62 (Tracer)</option><option value="300_whisper">.300 BLK Whisper</option>
+                    </optgroup>
+                    <optgroup label="5.45x39mm (AK-74/AK-12)">
+                        <option value="ak74_bs">5.45 BS</option><option value="ak74_bp">5.45 BP</option><option value="ak74_pp">5.45 PP</option><option value="ak74_7n6">5.45 7N6M</option><option value="ak74_hp">5.45 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
+                        <option value="ak_mai_ap">7.62x39 MAI AP</option><option value="ak_bp">7.62x39 BP</option><option value="ak_ps">7.62x39 PS</option><option value="ak_us">7.62x39 US</option><option value="ak_hp">7.62x39 HP</option>
+                    </optgroup>
+                    <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
+                        <option value="m993">7.62 M993</option><option value="m61">7.62 M61</option><option value="m62">7.62 M62</option><option value="m80">7.62 M80</option><option value="tcw_sp">7.62 TCW SP</option>
+                    </optgroup>
+                    <optgroup label="7.62x54mmR (Mosin/SVD)">
+                        <option value="snb">7.62x54R SNB</option><option value="7n1">7.62x54R 7N1</option><option value="lps">7.62x54R LPS</option>
+                    </optgroup>
+                    <optgroup label="4.6x30mm (MP7)">
+                        <option value="46_apsx">4.6x30 AP SX</option><option value="46_fmjsx">4.6x30 FMJ SX</option><option value="46_subsx">4.6x30 Subsonic</option><option value="46_actionsx">4.6x30 Action</option>
+                    </optgroup>
+                    <optgroup label="9x19mm (Glock/MP5/Alien)">
+                        <option value="7n31">9x19 7N31</option><option value="ap63">9x19 AP 6.3</option><option value="pst">9x19 PST Gzh</option><option value="rip">9x19 RIP</option>
+                    </optgroup>
+                    <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
+                        <option value="pm_pmm">9x18 PMM</option><option value="pm_sp7">9x18 PM SP7</option><option value="pm_gzh">9x18 PM Gzh</option><option value="tt_pst">7.62x25 TT PST</option><option value="tt_lrnpc">7.62x25 TT LRNPC</option>
+                    </optgroup>
+                    <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
+                        <option value="45_ap">.45 ACP AP</option><option value="45_match">.45 ACP Match</option><option value="45_rip">.45 ACP RIP</option><option value="32_fmj">.32 ACP FMJ</option>
+                    </optgroup>
+                    <optgroup label="12 Gauge (Shotguns)">
+                        <option value="ap20">12G AP-20 Slug</option><option value="slug">12G Copper Slug</option><option value="flechette">12G Flechette</option><option value="buck">12G 00 Buckshot</option>
+                    </optgroup>
+                </select>
+                <div id="ammo2Info" class="info-box">Wähle Munition B...</div>
+
+                <div id="comparisonResult" class="info-box" style="text-align: center; font-weight: bold; border-left: none; border-top: 4px solid var(--accent); margin-top:15px;">
+                    Wähle zwei Typen zum Vergleich aus.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-gear" class="tab-content">
+        <h2>Rüstung, Helme & Rucksäcke</h2>
+        <div class="grid">
+            <div>
+                <label for="gearFullSelect">Ausrüstungs-Datenbank</label>
                 <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
                     <option value="">-- Wähle Ausrüstung --</option>
                     <optgroup label="Schwere Panzerung (Class 5 & 6)">
@@ -344,93 +451,87 @@
                 </select>
                 <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
             </div>
+            
+            <div style="padding-top: 15px;">
+                <div class="info-box" style="border-top: 4px solid var(--accent); border-left: none;">
+                    <h3 style="margin-top: 0; color: var(--accent);">🎒 Loadout Tipps (0.4 Meta)</h3>
+                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
+                        <li><strong>Armor-Material:</strong> Keramik-Platten reparieren sich schlechter als Stahl, schlucken aber den ersten Treffer besser.</li>
+                        <li><strong>Inertia (Trägheit):</strong> Je schwerer deine Ausrüstung, desto langsamer erreichst du deine Sprint-Geschwindigkeit und desto länger dauert es, bis du nach dem Sprint schussbereit bist.</li>
+                        <li><strong>PvP-Meta:</strong> Aktuell schwören Elite-Spieler auf den leichten <strong>RPC Plate Carrier</strong>, um im Häuserkampf agil zu bleiben.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <h2 style="margin-top: 30px;">Munitions-Vergleich (Ballistik-Labor)</h2>
+    <div id="tab-vendors" class="tab-content">
+        <h2>Händler, Freischaltungen & Lager</h2>
         <div class="grid">
             <div>
-                <label for="ammo1">Munition A</label>
-                <select id="ammo1" onchange="compareAmmo()"> 
-                    <option value="">-- Munition wählen --</option>
-                    <optgroup label="5.56x45mm (NATO)">
-                        <option value="m855a1">5.56 M855A1</option><option value="m855">5.56 M855</option><option value="m193">5.56 M193</option><option value="m856a1">5.56 M856A1 (Tracer)</option><option value="mk255">5.56 MK255 (Flesh/HP)</option>
+                <label for="vendorSelect">Händler-Freischaltungen (Vendors)</label>
+                <select id="vendorSelect" onchange="updateVendor()">
+                    <option value="">-- Wähle Händler & Level --</option>
+                    <optgroup label="Gunny (NATO-Waffen & Munition)">
+                        <option value="gunny_1">Gunny Level 1 (Start)</option>
+                        <option value="gunny_2">Gunny Level 2</option>
+                        <option value="gunny_3">Gunny Level 3 (Meta-Gear)</option>
                     </optgroup>
-                    <optgroup label=".300 Blackout (SIG-MCX)">
-                        <option value="300_ap">.300 BLK AP</option><option value="300_cbj">.300 BLK CBJ</option><option value="300_m62">.300 BLK M62 (Tracer)</option><option value="300_whisper">.300 BLK Whisper</option>
+                    <optgroup label="Handshake (Rüstung & Rucksäcke)">
+                        <option value="handshake_1">Handshake Level 1 (Start)</option>
+                        <option value="handshake_2">Handshake Level 2</option>
+                        <option value="handshake_3">Handshake Level 3 (Meta-Gear)</option>
                     </optgroup>
-                    <optgroup label="5.45x39mm (AK-74/AK-12)">
-                        <option value="ak74_bs">5.45 BS</option><option value="ak74_bp">5.45 BP</option><option value="ak74_pp">5.45 PP</option><option value="ak74_7n6">5.45 7N6M</option><option value="ak74_hp">5.45 HP</option>
+                    <optgroup label="Lab Rat (Medizin & Verpflegung)">
+                        <option value="labrat_1">Lab Rat Level 1 (Start)</option>
+                        <option value="labrat_2">Lab Rat Level 2</option>
+                        <option value="labrat_3">Lab Rat Level 3</option>
                     </optgroup>
-                    <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
-                        <option value="ak_mai_ap">7.62x39 MAI AP</option><option value="ak_bp">7.62x39 BP</option><option value="ak_ps">7.62x39 PS</option><option value="ak_us">7.62x39 US</option><option value="ak_hp">7.62x39 HP</option>
+                    <optgroup label="Artisan (AK-Plattformen & Ost-Gear)">
+                        <option value="artisan_1">Artisan Level 1 (Start)</option>
+                        <option value="artisan_2">Artisan Level 2</option>
+                        <option value="artisan_3">Artisan Level 3</option>
                     </optgroup>
-                    <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
-                        <option value="m993">7.62 M993</option><option value="m61">7.62 M61</option><option value="m62">7.62 M62</option><option value="m80">7.62 M80</option><option value="tcw_sp">7.62 TCW SP</option>
+                    <optgroup label="Turncoat (Westliche Spezialwaffen)">
+                        <option value="turncoat_1">Turncoat Level 1</option>
+                        <option value="turncoat_2">Turncoat Level 2</option>
+                        <option value="turncoat_3">Turncoat Level 3 (Sniper-Meta)</option>
                     </optgroup>
-                    <optgroup label="7.62x54mmR (Mosin/SVD)">
-                        <option value="snb">7.62x54R SNB</option><option value="7n1">7.62x54R 7N1</option><option value="lps">7.62x54R LPS</option>
-                    </optgroup>
-                    <optgroup label="4.6x30mm (MP7)">
-                        <option value="46_apsx">4.6x30 AP SX</option><option value="46_fmjsx">4.6x30 FMJ SX</option><option value="46_subsx">4.6x30 Subsonic</option><option value="46_actionsx">4.6x30 Action</option>
-                    </optgroup>
-                    <optgroup label="9x19mm (Glock/MP5/Alien)">
-                        <option value="7n31">9x19 7N31</option><option value="ap63">9x19 AP 6.3</option><option value="pst">9x19 PST Gzh</option><option value="rip">9x19 RIP</option>
-                    </optgroup>
-                    <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
-                        <option value="pm_pmm">9x18 PMM</option><option value="pm_sp7">9x18 PM SP7</option><option value="pm_gzh">9x18 PM Gzh</option><option value="tt_pst">7.62x25 TT PST</option><option value="tt_lrnpc">7.62x25 TT LRNPC</option>
-                    </optgroup>
-                    <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
-                        <option value="45_ap">.45 ACP AP</option><option value="45_match">.45 ACP Match</option><option value="45_rip">.45 ACP RIP</option><option value="32_fmj">.32 ACP FMJ</option>
-                    </optgroup>
-                    <optgroup label="12 Gauge (Shotguns)">
-                        <option value="ap20">12G AP-20 Slug</option><option value="slug">12G Copper Slug</option><option value="flechette">12G Flechette</option><option value="buck">12G 00 Buckshot</option>
+                    <optgroup label="Banshee (High-End & Seltenes)">
+                        <option value="banshee_1">Banshee Level 1</option>
+                        <option value="banshee_2">Banshee Level 2</option>
+                        <option value="banshee_3">Banshee Level 3 (Endgame)</option>
                     </optgroup>
                 </select>
-                <div id="ammo1Info" class="info-box">Wähle Munition A...</div>
+                <div id="vendorInfo" class="info-box">Wichtigste Freischaltungen...</div>
             </div>
+
             <div>
-                <label for="ammo2">Munition B</label>
-                <select id="ammo2" onchange="compareAmmo()"> 
-                    <option value="">-- Munition wählen --</option>
-                    <optgroup label="5.56x45mm (NATO)">
-                        <option value="m855a1">5.56 M855A1</option><option value="m855">5.56 M855</option><option value="m193">5.56 M193</option><option value="m856a1">5.56 M856A1 (Tracer)</option><option value="mk255">5.56 MK255 (Flesh/HP)</option>
+                <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
+                <select id="containerSelect" onchange="updateContainer()">
+                    <option value="">-- Wähle einen Container --</option>
+                    <optgroup label="Secure Containers (Lockbox)">
+                        <option value="safe_lock">Safe Lock (2x2) - 4 Slots</option>
+                        <option value="snook_908">Snook 908 (2x3) - 6 Slots</option>
+                        <option value="tas">TAS Container (3x3) - 9 Slots</option>
                     </optgroup>
-                    <optgroup label=".300 Blackout (SIG-MCX)">
-                        <option value="300_ap">.300 BLK AP</option><option value="300_cbj">.300 BLK CBJ</option><option value="300_m62">.300 BLK M62 (Tracer)</option><option value="300_whisper">.300 BLK Whisper</option>
+                    <optgroup label="Lagerkisten (Stash Cases / Boxes)">
+                        <option value="ammo_box">Ammo Container (Munitionskiste)</option>
+                        <option value="weapon_box">Weapon Container (Waffenkiste)</option>
+                        <option value="med_box">Medical Container (Medikamentenkiste)</option>
+                        <option value="armor_box">Armor/Gear Container (Ausrüstungskiste)</option>
+                        <option value="food_box">Provisions Container (Kühlbox/Essen)</option>
                     </optgroup>
-                    <optgroup label="5.45x39mm (AK-74/AK-12)">
-                        <option value="ak74_bs">5.45 BS</option><option value="ak74_bp">5.45 BP</option><option value="ak74_pp">5.45 PP</option><option value="ak74_7n6">5.45 7N6M</option><option value="ak74_hp">5.45 HP</option>
+                    <optgroup label="Kleine Behälter (Inventar)">
+                        <option value="key_holder">Key Holder (Schlüsselbund)</option>
+                        <option value="wallet">Leather Wallet (Geldbörse)</option>
                     </optgroup>
-                    <optgroup label="7.62x39mm (AKM/AK-15/SKS)">
-                        <option value="ak_mai_ap">7.62x39 MAI AP</option><option value="ak_bp">7.62x39 BP</option><option value="ak_ps">7.62x39 PS</option><option value="ak_us">7.62x39 US</option><option value="ak_hp">7.62x39 HP</option>
-                    </optgroup>
-                    <optgroup label="7.62x51mm (NATO / M14 / AK-308)">
-                        <option value="m993">7.62 M993</option><option value="m61">7.62 M61</option><option value="m62">7.62 M62</option><option value="m80">7.62 M80</option><option value="tcw_sp">7.62 TCW SP</option>
-                    </optgroup>
-                    <optgroup label="7.62x54mmR (Mosin/SVD)">
-                        <option value="snb">7.62x54R SNB</option><option value="7n1">7.62x54R 7N1</option><option value="lps">7.62x54R LPS</option>
-                    </optgroup>
-                    <optgroup label="4.6x30mm (MP7)">
-                        <option value="46_apsx">4.6x30 AP SX</option><option value="46_fmjsx">4.6x30 FMJ SX</option><option value="46_subsx">4.6x30 Subsonic</option><option value="46_actionsx">4.6x30 Action</option>
-                    </optgroup>
-                    <optgroup label="9x19mm (Glock/MP5/Alien)">
-                        <option value="7n31">9x19 7N31</option><option value="ap63">9x19 AP 6.3</option><option value="pst">9x19 PST Gzh</option><option value="rip">9x19 RIP</option>
-                    </optgroup>
-                    <optgroup label="9x18mm & 7.62x25mm (Makarov/Typ-51)">
-                        <option value="pm_pmm">9x18 PMM</option><option value="pm_sp7">9x18 PM SP7</option><option value="pm_gzh">9x18 PM Gzh</option><option value="tt_pst">7.62x25 TT PST</option><option value="tt_lrnpc">7.62x25 TT LRNPC</option>
-                    </optgroup>
-                    <optgroup label=".45 ACP & .32 ACP (1911/VZ-61)">
-                        <option value="45_ap">.45 ACP AP</option><option value="45_match">.45 ACP Match</option><option value="45_rip">.45 ACP RIP</option><option value="32_fmj">.32 ACP FMJ</option>
-                    </optgroup>
-                    <optgroup label="12 Gauge (Shotguns)">
-                        <option value="ap20">12G AP-20 Slug</option><option value="slug">12G Copper Slug</option><option value="flechette">12G Flechette</option><option value="buck">12G 00 Buckshot</option>
+                    <optgroup label="Lagerplatz (Base Stash)">
+                        <option value="stash_upgrade">Locker / Schließfach Erweiterungen</option>
                     </optgroup>
                 </select>
-                <div id="ammo2Info" class="info-box">Wähle Munition B...</div>
+                <div id="containerInfoDisplay" class="info-box">Wähle einen Container für Details zum Fundort...</div>
             </div>
-        </div>
-        <div id="comparisonResult" class="info-box" style="text-align: center; font-weight: bold; border-left: none; border-top: 4px solid var(--accent);">
-            Wähle zwei Typen zum Vergleich aus.
         </div>
     </div>
 
@@ -534,7 +635,7 @@
     </div>
 
     <div id="tab-intel" class="tab-content">
-        <h2>Intel, Karte & Kontakte</h2>
+        <h2>Intel: Helikopter LZs & feindliche Bosse</h2>
         <div class="grid">
             <div>
                 <label for="lzSelect">LZ & Navigation (Helikopter)</label>
@@ -586,49 +687,11 @@
                 </select>
                 <div id="bossInfo" class="info-box">Boss-Details & Loot...</div>
             </div>
-
-            <div>
-                <label for="vendorSelect">Händler & Freischaltungen (Vendors)</label>
-                <select id="vendorSelect" onchange="updateVendor()">
-                    <option value="">-- Wähle Händler & Level --</option>
-                    <optgroup label="Gunny (NATO-Waffen & Munition)">
-                        <option value="gunny_1">Gunny Level 1 (Start)</option>
-                        <option value="gunny_2">Gunny Level 2</option>
-                        <option value="gunny_3">Gunny Level 3 (Meta-Gear)</option>
-                    </optgroup>
-                    <optgroup label="Handshake (Rüstung & Rucksäcke)">
-                        <option value="handshake_1">Handshake Level 1 (Start)</option>
-                        <option value="handshake_2">Handshake Level 2</option>
-                        <option value="handshake_3">Handshake Level 3 (Meta-Gear)</option>
-                    </optgroup>
-                    <optgroup label="Lab Rat (Medizin & Verpflegung)">
-                        <option value="labrat_1">Lab Rat Level 1 (Start)</option>
-                        <option value="labrat_2">Lab Rat Level 2</option>
-                        <option value="labrat_3">Lab Rat Level 3</option>
-                    </optgroup>
-                    <optgroup label="Artisan (AK-Plattformen & Ost-Gear)">
-                        <option value="artisan_1">Artisan Level 1 (Start)</option>
-                        <option value="artisan_2">Artisan Level 2</option>
-                        <option value="artisan_3">Artisan Level 3</option>
-                    </optgroup>
-                    <optgroup label="Turncoat (Westliche Spezialwaffen)">
-                        <option value="turncoat_1">Turncoat Level 1</option>
-                        <option value="turncoat_2">Turncoat Level 2</option>
-                        <option value="turncoat_3">Turncoat Level 3 (Sniper-Meta)</option>
-                    </optgroup>
-                    <optgroup label="Banshee (High-End & Seltenes)">
-                        <option value="banshee_1">Banshee Level 1</option>
-                        <option value="banshee_2">Banshee Level 2</option>
-                        <option value="banshee_3">Banshee Level 3 (Endgame)</option>
-                    </optgroup>
-                </select>
-                <div id="vendorInfo" class="info-box">Wichtigste Freischaltungen...</div>
-            </div>
         </div>
     </div>
 
     <div id="tab-loot" class="tab-content">
-        <h2>Beute & Zugang</h2>
+        <h2>Beute & Zugang (Loot & Keys)</h2>
         <div class="grid">
             <div>
                 <label for="valSelect">Loot & Verkaufspreise (Valuables)</label>
@@ -676,79 +739,54 @@
             </div>
 
             <div>
-                <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
-                <select id="containerSelect" onchange="updateContainer()">
-                    <option value="">-- Wähle einen Container --</option>
-                    <optgroup label="Secure Containers (Lockbox)">
-                        <option value="safe_lock">Safe Lock (2x2) - 4 Slots</option>
-                        <option value="snook_908">Snook 908 (2x3) - 6 Slots</option>
-                        <option value="tas">TAS Container (3x3) - 9 Slots</option>
-                    </optgroup>
-                    <optgroup label="Lagerkisten (Stash Cases / Boxes)">
-                        <option value="ammo_box">Ammo Container (Munitionskiste)</option>
-                        <option value="weapon_box">Weapon Container (Waffenkiste)</option>
-                        <option value="med_box">Medical Container (Medikamentenkiste)</option>
-                        <option value="armor_box">Armor/Gear Container (Ausrüstungskiste)</option>
-                        <option value="food_box">Provisions Container (Kühlbox/Essen)</option>
-                    </optgroup>
-                    <optgroup label="Kleine Behälter (Inventar)">
-                        <option value="key_holder">Key Holder (Schlüsselbund)</option>
-                        <option value="wallet">Leather Wallet (Geldbörse)</option>
-                    </optgroup>
-                    <optgroup label="Lagerplatz (Base Stash)">
-                        <option value="stash_upgrade">Locker / Schließfach Erweiterungen</option>
-                    </optgroup>
-                </select>
-                <div id="containerInfoDisplay" class="info-box">Wähle einen Container für Details zum Fundort...</div>
+                <label for="keySearch">Schlüssel-Datenbank (Key Intel)</label>
+                <input type="text" id="keySearch" placeholder="Suche nach Key-Name oder Ort..." onkeyup="searchKeys()">
+                <div id="keyList"></div>
+                <div id="keyContainer" class="info-box" style="margin-top: 10px;">
+                    <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px;">Schlüssel-Info...</div>
+                    <div id="keyLocation" style="margin-bottom:5px;">Fundort wird hier angezeigt.</div>
+                    <div id="keyEffect">Welche Tür öffnet dieser Schlüssel?</div>
+                </div>
             </div>
-        </div>
-
-        <h2 style="margin-top: 30px;">Schlüssel-Datenbank (Key Intel)</h2>
-        <label for="keySearch">Suche nach Key-Name oder Ort:</label>
-        <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
-        <div id="keyList"></div>
-        <div id="keyContainer" class="info-box">
-            <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px;">Schlüssel-Info...</div>
-            <div id="keyLocation" style="margin-bottom:5px;">Fundort wird hier angezeigt.</div>
-            <div id="keyEffect">Welche Tür öffnet dieser Schlüssel?</div>
         </div>
     </div>
 
     <div id="tab-tasks" class="tab-content">
-    <h2>Missions-Datenbank (Tasks)</h2>
+        <h2>Missions-Datenbank (Tasks)</h2>
 
-    <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 10px;">
-        <select id="vendorFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1;">
-            <option value="all">-- Händler wählen --</option>
-            <option value="Handshake">Handshake</option>
-            <option value="Gunny">Gunny</option>
-            <option value="Lab Rat">Lab Rat</option>
-            <option value="Artisan">Artisan</option>
-            <option value="Turncoat">Turncoat</option>
-            <option value="Banshee">Banshee</option>
-        </select>
+        <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <select id="vendorFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1;">
+                <option value="all">-- Händler wählen --</option>
+                <option value="Handshake">Handshake</option>
+                <option value="Gunny">Gunny</option>
+                <option value="Lab Rat">Lab Rat</option>
+                <option value="Artisan">Artisan</option>
+                <option value="Turncoat">Turncoat</option>
+                <option value="Banshee">Banshee</option>
+            </select>
 
-        <select id="taskDropdown" onchange="selectTaskFromDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: var(--accent); cursor: pointer; flex: 2; font-weight: bold;">
-            <option value="">-- Erst Händler wählen --</option>
-        </select>
+            <select id="taskDropdown" onchange="selectTaskFromDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: var(--accent); cursor: pointer; flex: 2; font-weight: bold;">
+                <option value="">-- Erst Händler wählen --</option>
+            </select>
+        </div>
+
+        <input type="text" id="taskSearchInput" placeholder="Oder manuell nach Name suchen..." onkeyup="searchTasks()" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; box-sizing: border-box;">
+        
+        <div id="taskList"></div>
+        
+        <div id="taskContainer" class="info-box">
+            <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem;">Wähle einen Task...</div>
+            <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
+            <div id="taskDesc" style="margin-bottom: 15px;">Die Zielbeschreibung erscheint hier.</div>
+            <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
+            <div id="taskSolution" class="task-solution" style="margin-top: 15px; display: none;"></div>
+        </div>
     </div>
-
-    <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #444; background: #222; color: white;">
-    
-    <div id="taskList"></div>
-    <div id="taskContainer" class="info-box">
-        <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem;">Wähle einen Task...</div>
-        <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
-        <div id="taskDesc" style="margin-bottom: 15px;"></div>
-        <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
-        <div id="taskSolution" class="task-solution" style="margin-top: 15px; display: none;"></div>
-    </div>
-</div>
 
     <div id="tab-map" class="tab-content">
         <h2>Interactive Tactical Map</h2>
         <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 10px;">
-            Navigiere direkt hier auf der Karte. Falls die Karte nicht lädt (manche Browser blockieren externe Einbettungen), kannst du sie <a href="https://gzwtacmap.com/maps/lamang?x=7273.26156&y=4580.75431&z=14" target="_blank" style="color: var(--accent);">hier in einem neuen Fenster öffnen</a>.
+            Navigiere direkt hier auf der Karte. Falls die Karte nicht lädt, kannst du sie <a href="https://gzwtacmap.com/maps/lamang?x=7273.26156&y=4580.75431&z=14" target="_blank" style="color: var(--accent);">hier öffnen</a>.
         </p>
         
         <div class="info-box" style="padding: 0; height: 700px; overflow: hidden; border: 2px solid #333; border-top: 4px solid var(--accent);">
@@ -768,14 +806,10 @@
 <script>
     // --- FRAKTIONS-FARBEN & LOKALER SPEICHER ---
     function setFaction(colorHex) {
-        // Ändert die globale CSS-Variable
         document.documentElement.style.setProperty('--accent', colorHex);
-        
-        // Speichert die Farbe im Browser (Local Storage)
         localStorage.setItem('gzw_faction_color', colorHex);
     }
 
-    // Beim Laden der Seite prüfen, ob eine Farbe gespeichert ist
     window.addEventListener('DOMContentLoaded', (event) => {
         const savedColor = localStorage.getItem('gzw_faction_color');
         if (savedColor) {
@@ -816,312 +850,7 @@
     // DATENBANKEN
     // ==============================================================
     
-    // 1. WAFFEN DATENBANK
-    const weapons = {
-        "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
-        "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
-        "mk18": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
-        "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Hohe Mündungsgeschwindigkeit sorgt für weniger Bullet-Drop auf Distanz." },
-        "cqa1": { ammo: "5.56x45mm M855", pen: "Class 3", tip: "Chinesischer M4-Klon. Gute Budget-Alternative, aber etwas schlechtere Basis-Werte." },
-        "ddm4": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Daniel Defense Plattform. Fantastische Basiswerte für Rückstoß und Ergonomie." },
-        "sicmcx": { ammo: "5.56x45mm / .300 BLK", pen: "Class 4", tip: "Sehr flexibel. Ein absolutes Biest im Nahkampf, besonders mit Schalldämpfer." },
-        "akm": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Viel Rückstoß, aber extrem hoher Schaden pro Schuss." },
-        "akmn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Der Klassiker. Mit BP-Munition extrem gefährlich gegen Class 3+ Westen." },
-        "akmsn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Klappschaft-Version. Kompakter im Rucksack, erlaubt Optik-Montage via Dovetail." },
-        "ak74n": { ammo: "5.45x39mm 7N6M / PP", pen: "Class 3", tip: "Sehr geringer Rückstoß. Präziser als die 7.62er Varianten." },
-        "ak74m": { ammo: "5.45x39mm PP / BP", pen: "Class 4", tip: "Modernisierte AK-74. Geringes Gewicht, gute Trägheits-Werte." },
-        "aks74u": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Die 'Krinkov'. Genial für CQB, verliert aber auf Distanz stark an Genauigkeit." },
-        "ak103": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Beste 7.62er AK. Kann alle modernen Aufsätze nutzen." },
-        "ak105": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Kurze AK-Variante. Perfekt für das neue Bewegungssystem." },
-        "vz58": { ammo: "7.62x39mm PS / BP", pen: "Class 4", tip: "Keine AK! Nutzt eigene Magazine. Höhere Feuerrate als die AKMN." },
-        "ak12": { ammo: "5.45x39mm BP", pen: "Class 4", tip: "Modernste russische Armee-Waffe. Integrierte Schienen und tolles Schussgefühl." },
-        "ak15": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Verbindet das moderne Handling der AK-12 mit der brachialen Kraft der 7.62 Patrone." },
-        "ak19": { ammo: "5.56x45mm NATO", pen: "Class 4", tip: "Nutzt westliche Munition auf der modernen AK-12 Plattform. Sehr vielseitig." },
-        "ak308": { ammo: "7.62x51mm M80/M61", pen: "Class 5-6", tip: "AK-Plattform auf Steroiden. Verschießt fette NATO-Muni. Extrem laut, extrem tödlich." },
-        "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
-        "m700": { ammo: "7.62x51mm M61", pen: "Class 6", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
-        "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
-        "mosin": { ammo: "7.62x54mmR SNB", pen: "Class 6", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
-        "skn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
-        "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Ein Laser auf kurze Distanz. Ziele auf Kopf oder Beine." },
-        "mp7a1": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Kleine Waffe, gigantischer Durchschlag. Perfekte Backup-Waffe für Sniper." },
-        "mp7a2": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Wie die A1, aber erlaubt die Montage eigener Vordergriffe für noch bessere Ergo." },
-        "vz61": { ammo: "9x18mm / .32 ACP", pen: "Class 0-1", tip: "Skorpion Maschinenpistole. Enorme Feuerrate, aber durchdringt keine Rüstung. Leg-Meta!" },
-        "vityaz": { ammo: "9x19mm 7N21", pen: "Class 2+", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
-        "m870": { ammo: "12G Slug / 00 Buck", pen: "Class 0-2", tip: "In 0.4 sind Slugs gegen weiche Ziele verheerend." },
-        "590a1": { ammo: "12G 00 Buckshot", pen: "Class 0-1", tip: "Maximale Stopwirkung auf 5-10 Meter." },
-        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS und fast kein Rückstoß." },
-        "glock17": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Zuverlässig, große Magazine verfügbar." },
-        "m9a1": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Gute Standard-Pistole für den Start." },
-        "makarov": { ammo: "9x18mm PM Gzh", pen: "Class 0", tip: "Nur im absoluten Notfall." },
-        "1911": { ammo: ".45 ACP", pen: "Class 1", tip: "Massiver Fleischschaden, aber geringe Magazinkapazität." },
-        "ccc": { ammo: ".45 ACP", pen: "Class 1", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
-        "typ51": { ammo: "7.62x25mm Tokarev", pen: "Class 2+", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." }
-    };
-
-    const weaponImages = {
-    // Sturmgewehre
-    "ak74m": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/AK-74M_inspect.png",
-    "ak74n": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e2/AK-74N_inspect.png",
-    "ak103": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-12_inspect.png",
-    "ak12": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-12_inspect.png",
-    "ak15": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e3/AK-15_inspect.png",
-    "ak19": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/b6/AK-19_inspect.png",
-    "akm": "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/94/AKM_inspect.png",
-    "akmn": "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/94/AKM_inspect.png",
-    "akmsn": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/51/AKMSN_inspect.png",
-    "aks74u": "https://static.wikia.nocookie.net/gray-zone-warfare/images/f/fd/AKS74U_inspect.png",
-    "ak308": "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/9d/AK-308_inspect.png",
-    "cqa1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/b3/CQA1_inspect.png",
-    "ks1": "https://static.wikia.nocookie.net/grayzonewarfare/images/c/c5/KS-1_Icon.png",
-    "m4a1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/4/43/M4A1_inspect.png",
-    "ddm4": "https://static.wikia.nocookie.net/gray-zone-warfare/images/4/43/DDM4_inspect.png",
-    "sicmcx": "https://static.wikia.nocookie.net/gray-zone-warfare/images/2/2d/SIG_MCX_inspect.png",
-
-    // DMR & Sniper
-    "m14": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/80/M14_EBR_Icon.png",
-    "m700": "https://static.wikia.nocookie.net/gray-zone-warfare/images/a/a8/M700_inspect.png",
-    "svd": "https://static.wikia.nocookie.net/gray-zone-warfare/images/8/85/SVD_inspect.png",
-    "mosin": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/51/Mosin_%28S%29_inspect.png",
-
-    // SMGs & Shotguns
-    "mp5": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/MP5_inspect.png",
-    "mp7a2": "https://static.wikia.nocookie.net/gray-zone-warfare/images/f/f9/MP7_inspect.png",
-    "m870": "https://static.wikia.nocookie.net/gray-zone-warfare/images/d/db/M870_inspect.png",
-
-    // Pistolen
-    "alien": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/8b/Laugo_Alien_Icon.png",
-    "glock17": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e4/Glock17_inspect.png",
-    "m9a1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/bc/M9A1_inspect.png"
-};
-
-    // 2. BOSS DATENBANK
-    const bosses = {
-        "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses auf." },
-        "lumber_boss": { loc: "Lumber Yard (Sägewerk)", gear: "Mosin / AK-74N", loot: "Lumber Yard Office Key.", tip: "Patrouilliert zwischen den Holzstapeln. Gute Sichtlinien." },
-        "rebel_ybl": { loc: "YBL-1 Bunker", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel.", tip: "Vorsicht in den engen Gängen, nutzt Blendgranaten." },
-        "hunter_commander": { loc: "Hunter's Paradise (Schießstand)", gear: "M4A1 Custom / Fast MT", loot: "Braunes Barett, Key to Weapon Storage.", tip: "Die Leibwache nutzt oft Schalldämpfer." },
-        "malo_blue": { loc: "Blue Lagoon (Restaurant/Steg)", gear: "SVD / Mosin", loot: "Malo's Key, Scharfschützengewehr.", tip: "Er schießt extrem präzise auf hohe Distanz." },
-        "banpa_leader": { loc: "Ban Pa (Zentrum am See)", gear: "SKS / AKM", loot: "Ban Pa Shack Key, wertvolle Statuen.", tip: "Nutze Granaten, um ihn aus den Hütten zu treiben." },
-        "fort_commander": { loc: "Fort Narith (HQ Gebäude)", gear: "Class 5 Armor / M14 EBR", loot: "Fort Narith Storage Key.", tip: "Der zäheste Boss. Erfordert zwingend AP-Munition (M61/SNB)." },
-        "midnight_laf": { loc: "Midnight Sapphire (Hotel/Villen)", gear: "KS-1 Custom / Class 4+", loot: "Villen-Schlüssel, High-End Optiken.", tip: "Wird von 4-6 Elitesoldaten geschützt. Greife niemals frontal an." },
-        "tiger_bay_unlra": { loc: "Tiger Bay (UNLRA Zone)", gear: "M4A1 / Class 5", loot: "UNLRA Medical Key.", tip: "Höchste KI-Dichte im Spiel. Bring massiv Munition mit." },
-        "tiger_bay_pier": { loc: "Tiger Bay (Pier)", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Er nutzt Magazine mit hoher Kapazität. Warte auf seine Nachladepause." },
-        "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
-    };
-
-    // 3. AMMO DATENBANK
-    const ammoDb = {
-    // 5.56x45mm (NATO)
-    "m855a1": { name: "5.56x45mm M855A1", pen: 4.5, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
-    "m855": { name: "5.56x45mm M855", pen: 3.5, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
-    "m193": { name: "5.56x45mm M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
-    "m856a1": { name: "5.56x45mm M856A1", pen: 3.8, damage: 51, info: "Tracer-Munition (Leuchtspur). Gut für Squads." },
-    "mk255": { name: "5.56x45mm MK255", pen: 1.0, damage: 65, info: "Hollow Point. Verheerend gegen ungepanzerte Ziele." },
-
-    // .300 Blackout (SIG-MCX)
-    "300_ap": { name: ".300 BLK AP", pen: 4.5, damage: 55, info: "Hervorragende Penetration auf kurze Distanz." },
-    "300_cbj": { name: ".300 BLK CBJ", pen: 4.0, damage: 58, info: "Gute Balance zwischen Durchschlag und Schaden." },
-    "300_m62": { name: ".300 BLK M62", pen: 3.8, damage: 54, info: "Leuchtspurmunition für die SIG-MCX." },
-    "300_whisper": { name: ".300 BLK Whisper", pen: 2.5, damage: 62, info: "Subsonic. In Kombination mit Schalldämpfer flüsterleise." },
-
-    // 5.45x39mm (AK-74 / AK-12)
-    "ak74_bs": { name: "5.45x39mm BS", pen: 5.5, damage: 43, info: "Durchschlägt Class 5 problemlos." },
-    "ak74_bp": { name: "5.45x39mm BP", pen: 4.5, damage: 48, info: "Die Meta-Muni für 5.45. Bricht Class 4." },
-    "ak74_pp": { name: "5.45x39mm PP", pen: 3.5, damage: 50, info: "Guter Mid-Tier Durchschlag." },
-    "ak74_7n6": { name: "5.45x39mm 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition." },
-    "ak74_hp": { name: "5.45x39mm HP", pen: 1.0, damage: 68, info: "Null Durchschlag, Beine anvisieren!" },
-
-    // 7.62x39mm (AKM / AK-15 / SKS)
-    "ak_mai_ap": { name: "7.62x39mm MAI AP", pen: 5.5, damage: 46, info: "Bricht fast jede Rüstung." },
-    "ak_bp": { name: "7.62x39mm BP", pen: 4.5, damage: 58, info: "Härtester Standard-Durchschlag für AKs." },
-    "ak_ps": { name: "7.62x39mm PS", pen: 3.5, damage: 54, info: "Solider Allrounder." },
-    "ak_us": { name: "7.62x39mm US", pen: 2.0, damage: 56, info: "Subsonic. Sehr leise." },
-    "ak_hp": { name: "7.62x39mm HP", pen: 1.0, damage: 73, info: "Ideal für Leg-Meta." },
-
-    // 7.62x51mm (NATO / M14 / M700)
-    "m993": { name: "7.62x51mm M993", pen: 6.5, damage: 60, info: "Geht durch Class 6 wie Butter." },
-    "m61": { name: "7.62x51mm M61", pen: 6.0, damage: 64, info: "Ignoriert fast jede Rüstung." },
-    "m62": { name: "7.62x51mm M62", pen: 5.4, damage: 68, info: "Hohe Penetration + Leuchtspur." },
-    "m80": { name: "7.62x51mm M80", pen: 4.2, damage: 80, info: "Enormer Schaden." },
-    "tcw_sp": { name: "7.62x51mm TCW SP", pen: 2.5, damage: 90, info: "Gigantischer Fleischschaden." },
-
-    // 7.62x54mmR (Mosin / SVD)
-    "snb": { name: "7.62x54mmR SNB", pen: 6.0, damage: 75, info: "Schlägt durch jeden Helm." },
-    "7n1": { name: "7.62x54mmR 7N1", pen: 4.5, damage: 85, info: "One-Shot Potenzial gegen Class 4." },
-    "lps": { name: "7.62x54mmR LPS", pen: 4.0, damage: 80, info: "Standard-Munition für Mosin." },
-
-    // 4.6x30mm (MP7)
-    "46_apsx": { name: "4.6x30mm AP SX", pen: 5.0, damage: 35, info: "Bricht Class 5!" },
-    "46_fmjsx": { name: "4.6x30mm FMJ SX", pen: 4.0, damage: 43, info: "Gute Allround-Munition." },
-
-    // 9x19mm (Glock / MP5 / Alien)
-    "7n31": { name: "9x19mm 7N31", pen: 3.5, damage: 45, info: "Beste 9mm Penetration." },
-    "ap63": { name: "9x19mm AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields." },
-    "pst": { name: "9x19mm PST Gzh", pen: 1.5, damage: 52, info: "Nur für Kopfschüsse ohne Helm." },
-    "rip": { name: "9x19mm RIP", pen: 0.5, damage: 95, info: "Leg-Meta Königin." },
-
-    // 12 Gauge (Shotguns)
-    "ap20": { name: "12G AP-20 Slug", pen: 3.5, damage: 160, info: "Panzerbrechender Eisenblock." },
-    "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss." },
-    "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Tödlich im Nahkampf." },
-
-    // .45 ACP
-    "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Beste .45er Pen." }
-};
-
-    // 4. SCHLÜSSEL DATENBANK
-    const allKeys = [
-        // --- STARTSTÄDTE (Pha Lang, Nam Thaven, Kiu Vongsa) ---
-        { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro des Arztes im 2. Stock.", loot: "Medizinische Vorräte, Task-Intel (Medical Detective)" },
-        { name: "Mayor's Office Key", loc: "Startstadt (Rathaus)", effect: "Öffnet das Hauptbüro des Bürgermeisters.", loot: "Bargeld, Intel, Tresor" },
-        { name: "Market Storage Key", loc: "Startstadt (Marktplatz)", effect: "Öffnet den Lagerraum hinter den Marktständen.", loot: "Provisions (Essen/Trinken), Rucksäcke" },
-        { name: "Pharmacy Key", loc: "Startstadt", effect: "Öffnet den Hinterraum der kleinen Apotheke.", loot: "IFAKs, Surkits, Schmerzmittel" },
-        // --- LUMBER YARD (Sägewerk) ---
-        { name: "Foreman's Office Key", loc: "Lumber Yard", effect: "Öffnet das Büro des Vorarbeiters in der Haupthalle.", loot: "Task-Dokumente (Blueprints), Safe, Bargeld" },
-        { name: "Lumber Storage Key", loc: "Lumber Yard", effect: "Öffnet den verschlossenen Geräteschuppen im Norden.", loot: "Werkzeuge (Toolsets), Baumaterial" },
-        // --- HUNTER'S PARADISE ---
-        { name: "HP Weapon Storage Key", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer am Hauptschießstand. Droppt oft vom dortigen Boss.", loot: "High-Tier Waffen (M4A1, M700), Aufsätze, AP-Munition" },
-        { name: "HP Motel Room 3 Key", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 3 im Motel-Bereich.", loot: "Waffen-Kisten, Munition" },
-        { name: "HP Office Key", loc: "Hunter's Paradise", effect: "Öffnet das Hauptbüro nahe dem Eingang.", loot: "Intel, Wertsachen" },
-        // --- BLUE LAGOON ---
-        { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte auf Stelzen über dem Wasser.", loot: "SVD/Mosin-Teile, Task-Items, Gold" },
-        { name: "Restaurant Backroom Key", loc: "Blue Lagoon", effect: "Öffnet das Lager im hinteren Teil des Restaurants.", loot: "Provisions, Schwarzgeld (Task)" },
-        { name: "Lagoon Office Key", loc: "Blue Lagoon", effect: "Öffnet das kleine Verwaltungsbüro.", loot: "Tresor, Intel" },
-        // --- BAN PA ---
-        { name: "Elder's House Key", loc: "Ban Pa", effect: "Öffnet das große Haus des Dorfältesten im Zentrum.", loot: "Wertvolle Statuen, Task-Items" },
-        { name: "Ban Pa Shack Key", loc: "Ban Pa", effect: "Öffnet die verschlossene Fischerhütte im Norden.", loot: "Waffen, Munition" },
-        { name: "Smuggler's Storage Key", loc: "Ban Pa", effect: "Öffnet den Schuppen nahe dem Bootssteg.", loot: "Schmuggelware, Wertsachen" },
-        // --- YBL-1 BUNKER ---
-        { name: "YBL-1 Office Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet das Büro direkt nach dem Haupteingang.", loot: "Task-Dokumente, Intel" },
-        { name: "YBL-1 Generator Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Hauptgeneratorraum.", loot: "Sicherungen, Werkzeuge, Task-Zugang" },
-        { name: "YBL-1 Server Room Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet den Serverraum hinter den Lüftungsschächten.", loot: "Elektronik, Task-Intel (Festplatte)" },
-        { name: "YBL-1 Commander Key", loc: "YBL-1 Bunker (Ebene -2)", effect: "Öffnet das Quartier des Bunker-Kommandanten.", loot: "Seltene Waffen-Mods, Tresor" },
-        { name: "YBL-1 Security Key", loc: "YBL-1 Bunker (Ebene -1)", effect: "Öffnet den Überwachungsraum.", loot: "Waffen, Munition" },
-        // --- FORT NARITH ---
-        { name: "Fort HQ Key", loc: "Fort Narith", effect: "Öffnet das Büro von General Pa im obersten Stock des Hauptquartiers.", loot: "Gravierte Waffen, Intel, Safe" },
-        { name: "Fort Storage Key", loc: "Fort Narith", effect: "Öffnet das primäre Munitionsdepot.", loot: "Große Mengen an High-Tier Munition (M61, M855A1)" },
-        { name: "Barracks A Key", loc: "Fort Narith (Block A)", effect: "Öffnet den verschlossenen Offiziersbereich in Block A.", loot: "Rüstungen (Class 4+), Helme" },
-        { name: "Fort Armory Key", loc: "Fort Narith", effect: "Öffnet die schwere Waffenkammer.", loot: "Sturmgewehre, Granaten, Aufsätze" },
-        { name: "Gatehouse Key", loc: "Fort Narith", effect: "Öffnet das Wachhaus am Haupteingang.", loot: "Waffen, Munition, Schlüssel" },
-        // --- TIGER BAY ---
-        { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Die rote Keycard öffnet die Quarantäne-Labore im 3. Stock des HQs.", loot: "Medizinische High-Tier Güter (Surkits, Stims), Task-Items" },
-        { name: "Tiger Bay Mall Key", loc: "Tiger Bay", effect: "Öffnet den Technik/Security-Raum im Einkaufszentrum.", loot: "Elektronik, Waffen, Bargeld" },
-        { name: "Pier Storage Key", loc: "Tiger Bay", effect: "Öffnet das Lagerhaus direkt am Pier.", loot: "Waffen-Kisten, Aufsätze" },
-        { name: "Tiger Clinic Key", loc: "Tiger Bay", effect: "Öffnet die kleine Feldklinik in der Stadt.", loot: "Medikamente, Blutkonserven" },
-        { name: "UNLRA Commander Key", loc: "Tiger Bay HQ", effect: "Öffnet das Büro des UNLRA Offiziers.", loot: "Intel, Safe, seltene Waffen" },
-        // --- MIDNIGHT SAPPHIRE (Hotel & Villen) ---
-        { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Der wichtigste Schlüssel hier! Öffnet viele Standard-Zimmer im Hotel.", loot: "Bargeld, Wertsachen, Koffer" },
-        { name: "Villa 1 Key", loc: "Midnight Sapphire", effect: "Öffnet die westlichste Luxusvilla.", loot: "Geld, Schmuck, Safe" },
-        { name: "Villa 2 Key", loc: "Midnight Sapphire", effect: "Öffnet die mittlere Villa (wichtig für Kongressabgeordneten-Task).", loot: "Task-Dokumente, Safe" },
-        { name: "Villa 3 Key", loc: "Midnight Sapphire", effect: "Öffnet die östliche Villa.", loot: "High-Tier Loot, Elektronik" },
-        { name: "VIP Lounge Key", loc: "Midnight Sapphire", effect: "Öffnet den VIP-Bereich im obersten Stock des Hotels.", loot: "Extreme Wertsachen, Gold" },
-        { name: "Hotel Manager Key", loc: "Midnight Sapphire", effect: "Öffnet das Büro hinter der Rezeption.", loot: "Safe, Bargeld, Intel" },
-        { name: "Room 202 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 202 im 2. Stock.", loot: "Waffen-Koffer" },
-        { name: "Room 204 Key", loc: "Midnight Sapphire", effect: "Öffnet Zimmer 204 (wichtig für Turncoat-Task).", loot: "Task-Akte, Wertsachen" },
-        // --- GROUND ZERO / AIRFIELD ---
-        { name: "Airfield Tower Key", loc: "Ground Zero", effect: "Öffnet den verschlossenen Bereich im Kontrollturm.", loot: "Militärische Aufklärung, Waffen" },
-        { name: "Hangar 1 Office Key", loc: "Ground Zero", effect: "Öffnet das Büro im ersten Hangar.", loot: "Werkzeuge, Waffen-Mods" },
-        // --- STARTSTADT: NAM THAVEN (Mithras Security Systems) ---
-        { name: "NT Office Key", loc: "Nam Thaven", effect: "Öffnet ein kleines Büro im Stadtzentrum.", loot: "Bargeld, zivile Dokumente" },
-        { name: "NT Storage Key", loc: "Nam Thaven", effect: "Öffnet einen kleinen Lagerschuppen.", loot: "Werkzeuge, Rucksäcke" },
-        { name: "NT Gas Station Key", loc: "Nam Thaven", effect: "Öffnet das Hinterzimmer der Tankstelle.", loot: "Provisions, Autoteile" },
-        { name: "NT Motel Key", loc: "Nam Thaven", effect: "Öffnet ein Motelzimmer am Stadtrand.", loot: "Kleidung, Bargeld, einfache Waffen" },
-        { name: "NT Police Key", loc: "Nam Thaven", effect: "Öffnet die Waffenkammer in der lokalen Polizeistation.", loot: "Pistolen, Schrotflinten, Munition" },
-        { name: "NT Clinic Key", loc: "Nam Thaven", effect: "Öffnet den Medikamentenschrank der kleinen Klinik.", loot: "Bandagen, Schmerzmittel" },
-        { name: "NT Garage Key", loc: "Nam Thaven", effect: "Öffnet eine private Garage.", loot: "Werkzeuge, Benzin" },
-        // --- STARTSTADT: KIU VONGSA (Crimson Shield International) ---
-        { name: "KV Office Key", loc: "Kiu Vongsa", effect: "Öffnet das Verwaltungsbüro der Stadt.", loot: "Bargeld, Intel" },
-        { name: "KV Storage Key", loc: "Kiu Vongsa", effect: "Öffnet das städtische Lagerhaus.", loot: "Werkzeuge, einfache Materialien" },
-        { name: "KV Gas Station Key", loc: "Kiu Vongsa", effect: "Öffnet das Tankstellen-Lager.", loot: "Essen, Trinken, Schrott" },
-        { name: "KV Motel Key", loc: "Kiu Vongsa", effect: "Öffnet ein Motelzimmer für Zivilisten.", loot: "Wertsachen (gering)" },
-        { name: "KV Police Key", loc: "Kiu Vongsa", effect: "Öffnet den Asservatenraum der Polizei.", loot: "Zivile Waffen, 9mm Munition" },
-        { name: "KV Clinic Key", loc: "Kiu Vongsa", effect: "Öffnet den Vorratsraum der Klinik.", loot: "Medizinische Grundversorgung" },
-        { name: "KV Garage Key", loc: "Kiu Vongsa", effect: "Öffnet eine kleine Autowerkstatt.", loot: "Autobatterien, Zündkerzen" },
-        // --- STARTSTADT: PHA LANG (Lamang Recovery Initiative) ---
-        { name: "PL Office Key", loc: "Pha Lang", effect: "Öffnet ein Bürogebäude im Zentrum.", loot: "Bargeld, Büromaterial" },
-        { name: "PL Storage Key", loc: "Pha Lang", effect: "Öffnet den lokalen Lagerschuppen.", loot: "Handwerkszeug" },
-        { name: "PL Gas Station Key", loc: "Pha Lang", effect: "Öffnet die Hintertür der Tankstelle.", loot: "Nahrungsmittel, Benzin" },
-        { name: "PL Motel Key", loc: "Pha Lang", effect: "Öffnet ein verlassenes Motelzimmer.", loot: "Geringe Wertsachen" },
-        { name: "PL Police Key", loc: "Pha Lang", effect: "Öffnet das Waffenlager der Polizei.", loot: "Low-Tier Waffen, Westen" },
-        { name: "PL Clinic Key", loc: "Pha Lang", effect: "Öffnet das Medikamentenlager.", loot: "Bandagen, Tourniquets" },
-        { name: "PL Garage Key", loc: "Pha Lang", effect: "Öffnet eine verschlossene Garage.", loot: "Werkzeuge, Schrott" },
-        // --- MIDNIGHT SAPPHIRE (Die fehlenden Hotelzimmer & Service-Räume) ---
-        { name: "MS Maintenance Key", loc: "Midnight Sapphire", effect: "Öffnet den Wartungsraum im Erdgeschoss.", loot: "Werkzeug, Elektronik" },
-        { name: "MS Staff Room Key", loc: "Midnight Sapphire", effect: "Öffnet den Pausenraum des Personals.", loot: "Provisions, Geld" },
-        { name: "Room 101 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 101 (1. Etage).", loot: "Geld, Koffer" },
-        { name: "Room 102 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 102 (1. Etage).", loot: "Geld, Koffer" },
-        { name: "Room 103 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 103 (1. Etage).", loot: "Geld, Waffen (selten)" },
-        { name: "Room 104 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 104 (1. Etage).", loot: "Geld, Koffer" },
-        { name: "Room 201 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 201 (2. Etage).", loot: "Geld, Wertsachen" },
-        { name: "Room 203 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 203 (2. Etage).", loot: "Geld, Safe" },
-        { name: "Room 205 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 205 (2. Etage).", loot: "Geld, Waffen-Mods" },
-        { name: "Room 301 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 301 (3. Etage).", loot: "High-Tier Loot, Gold" },
-        { name: "Room 302 Key", loc: "Midnight Sapphire", effect: "Öffnet Hotelzimmer 302 (3. Etage).", loot: "Safe, Schmuck" },
-        // --- HUNTER'S PARADISE (Motel) ---
-        { name: "HP Motel Room 1 Key", loc: "Hunter's Paradise", effect: "Öffnet das erste Motelzimmer.", loot: "Low-Tier Waffen, Rucksäcke" },
-        { name: "HP Motel Room 2 Key", loc: "Hunter's Paradise", effect: "Öffnet das zweite Motelzimmer.", loot: "Munitionskisten, Westen" },
-        { name: "HP Guard Shack Key", loc: "Hunter's Paradise", effect: "Öffnet das kleine Wachhäuschen am Eingang.", loot: "Waffen-Aufsätze, Munition" },
-        // --- TIGER BAY (Weitere Zivile & Infrastruktur-Schlüssel) ---
-        { name: "TB Apartment Key", loc: "Tiger Bay", effect: "Öffnet ein verlassenes Apartment in den Wohnblocks.", loot: "Bargeld, Ziviler Loot" },
-        { name: "TB Noodle Shop Key", loc: "Tiger Bay", effect: "Öffnet die Küche des Nudelrestaurants.", loot: "Provisions (sehr viel Essen)" },
-        { name: "TB Water Treatment Key", loc: "Tiger Bay", effect: "Öffnet das Pumpenhaus am Rand der Stadt.", loot: "Werkzeuge, Filter" },
-        // --- BAN PA (Weitere Schlüssel) ---
-        { name: "BP Fishing Hut Key", loc: "Ban Pa", effect: "Öffnet eine weitere Fischerhütte am Wasser.", loot: "Schrott, geringe Wertsachen" },
-        { name: "BP Storage Key", loc: "Ban Pa", effect: "Öffnet einen Lagerschuppen im Dschungel nahe Ban Pa.", loot: "Waffen, Rigs" }
-    ];
-
-    // 5. WERTSACHEN DATENBANK
-    const valuables = {
-        "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
-        "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
-        "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
-        "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Hoher Gesamtwert, erfordert aber 2 horizontale Slots." },
-        "gold_coin": { price: "~ $350", slots: "1", info: "Perfekter Lückenfüller für den Rucksack." },
-        "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
-        "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, aber frisst viel Platz. Nur mitnehmen, wenn Platz ist." },
-        "tablet": { price: "~ $300", slots: "2", info: "Guter Wert, findet man oft in Büros und dem Hotel." },
-        "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Tausche es gegen 1-Slot-Items aus, wenn möglich." },
-        "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel Platz weg. Eher ineffizient." },
-        "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
-        "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot für 1 Slot." },
-        "camera": { price: "~ $150", slots: "2", info: "Guter Beifang, oft in zivilen Gebäuden." },
-        "silver_coin": { price: "~ $150", slots: "1", info: "Nicht so gut wie Gold, aber definitiv mitnehmen!" },
-        "silver_chain": { price: "~ $120", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
-        "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Wert für nur einen Slot." },
-        "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
-        "flash_drive": { price: "~ $80", slots: "1", info: "Normaler USB-Stick. Nimmt kaum Platz weg." },
-        "calculator": { price: "~ $80", slots: "1", info: "Guter Filler für den Secure Container am Anfang." },
-        "wallet": { price: "~ $50 - $200", slots: "1", info: "Kann manchmal wertvolles Bargeld enthalten. Prüfen!" },
-        "sunglasses": { price: "~ $60", slots: "1", info: "Oft auf Tischen oder in Cafés zu finden." },
-        "old_book": { price: "~ $70", slots: "2", info: "Nimmt zu viel Platz weg für den geringen Wert." },
-        "glasses": { price: "~ $35", slots: "1", info: "Lesebrillen. Kaum Wert." },
-        "cutlery": { price: "~ $30", slots: "1", info: "Spawnt oft in Restaurants. Eher wertlos." },
-        "lighter": { price: "~ $25", slots: "1", info: "Kaum der Rede wert. Wegwerfen, sobald etwas Besseres droppt." },
-        "cards": { price: "~ $20", slots: "1", info: "Sehr geringer Wert." },
-        "notebook_paper": { price: "~ $15", slots: "1", info: "Papier-Notizblock. Völlig wertlos." },
-        "pen": { price: "~ $10", slots: "1", info: "Kugelschreiber. Bringt fast nichts." },
-        "cigarettes": { price: "~ $15", slots: "1", info: "Wertlos, nimmt nur Platz weg." },
-        "tp": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
-        "matches": { price: "~ $5", slots: "1", info: "Absoluter Müll. Liegen lassen." }
-    };
-
-    // 6. CONTAINER DATENBANK
-    const containers = {
-        "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", info: "Der Standard-Container. Du hast ihn von Beginn an, wenn du die normale oder die Tactical Version des Spiels besitzt." },
-        "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", info: "Käufer der 'Elite Edition' haben ihn von Beginn an. Schließe die Task <i>'Gefährliche Schätze' (Hazardous Treasures)</i> ab." },
-        "tas": { name: "TAS Container", size: "3x3 (9 Slots)", source: "Supporter Edition ODER In-Game durch Task", info: "Der größte Container. Käufer der 'Supporter Edition' starten direkt damit." },
-        "ammo_box": { name: "Ammo Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Gunny / Banshee)", info: "Kann aktuell nicht bei Händlern gekauft werden. Bietet riesigen Lagerraum nur für Munition." },
-        "weapon_box": { name: "Weapon Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Die rettende Kiste für alle Waffensammler." },
-        "med_box": { name: "Medical Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Lab Rat)", info: "Verdient man relativ früh durch Quests von Lab Rat." },
-        "armor_box": { name: "Armor / Gear Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Löst das Platzproblem für dicke Rüstungen." },
-        "food_box": { name: "Provisions Container (Cooler)", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Eine Kühlbox für all deine Rationen und Getränke." },
-        "key_holder": { name: "Key Holder", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Nimmt nur einen Slot weg, fasst unzählige Schlüssel." },
-        "wallet": { name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Achtung: Kann nur noch Bargeld und Kreditkarten fassen." },
-        "stash_upgrade": { name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", info: "Dein Haupt-Lager wächst komplett automatisch alle 10 Level." }
-    };
-
-   // 7. TASK DATENBANK (VOLLSTÄNDIG)
+    // 7. TASK DATENBANK (VOLLSTÄNDIG)
 const allTasks = [
     // --- HANDSHAKE ---
     { de: "Erstaufklärung", en: "First Recon", v: "Handshake", desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
@@ -1450,32 +1179,130 @@ const allTasks = [
     { de: "Squad Strike: Night Raid", en: "Squad Strike: Night Raid", v: "Banshee", desc: "Leise Nacht-Op.", sol: "Team Stealth Kills." }
 ];
 
-    // 8. LZs, 9. SYMPTOMS, 10. VENDORS 
-    const lzDb = {
-        "mithras": { lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
-        "lamang": { lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
-        "crimson": { lzs: "Base Camp, Charlie 1, Charlie 2, Charlie 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von CSI (Kiu Vongsa)." },
-        "lumber": { lzs: "Echo 1 & Echo 2", time: "1-2 Min.", danger: "Niedrig-Mittel", tip: "Echo 2 ist versteckter im Wald." },
-        "hunters": { lzs: "Foxtrot 1 & Foxtrot 2", time: "2 Min.", danger: "Mittel", tip: "Foxtrot 2 wird oft abgezielt!" },
-        "banpa": { lzs: "India 1 & India 2", time: "1-3 Min.", danger: "Mittel", tip: "India 2 ist sicherer für einen Sneak-Angriff." },
-        "blue_lagoon": { lzs: "Kilo 1 & Kilo 2", time: "2-4 Min.", danger: "Mittel", tip: "Kilo 2 gibt dir einen Flanken-Vorteil." },
-        "ybl": { lzs: "Juliet 1, Juliet 2, Juliet 3", time: "1 Min.", danger: "Hoch", tip: "Vorsicht vor LZ-Campern!" },
-        "fort_narith": { lzs: "Delta 1, Delta 2, Delta 3", time: "3-5 Min.", danger: "Extrem", tip: "Delta 3 ist die sicherste Wahl (Rückseite)." },
-        "midnight": { lzs: "Hotel 1, Hotel 2, Hotel 3", time: "2 Min.", danger: "Sehr Hoch", tip: "Bleib niemals auf dem Präsentierteller stehen." },
-        "tiger_bay": { lzs: "Lima 1 & Lima 2", time: "1 Min.", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
-        "ground_zero": { lzs: "Golf 1 & Golf 2", time: "3 Min.", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
+    // 1. WAFFEN DATENBANK
+    const weapons = {
+        "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
+        "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
+        "mk18": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
+        "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Hohe Mündungsgeschwindigkeit sorgt für weniger Bullet-Drop auf Distanz." },
+        "cqa1": { ammo: "5.56x45mm M855", pen: "Class 3", tip: "Chinesischer M4-Klon. Gute Budget-Alternative, aber etwas schlechtere Basis-Werte." },
+        "ddm4": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Daniel Defense Plattform. Fantastische Basiswerte für Rückstoß und Ergonomie." },
+        "sicmcx": { ammo: "5.56x45mm / .300 BLK", pen: "Class 4", tip: "Sehr flexibel. Ein absolutes Biest im Nahkampf, besonders mit Schalldämpfer." },
+        "akm": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Viel Rückstoß, aber extrem hoher Schaden pro Schuss." },
+        "akmn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Der Klassiker. Mit BP-Munition extrem gefährlich gegen Class 3+ Westen." },
+        "akmsn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Klappschaft-Version. Kompakter im Rucksack, erlaubt Optik-Montage via Dovetail." },
+        "ak74n": { ammo: "5.45x39mm 7N6M / PP", pen: "Class 3", tip: "Sehr geringer Rückstoß. Präziser als die 7.62er Varianten." },
+        "ak74m": { ammo: "5.45x39mm PP / BP", pen: "Class 4", tip: "Modernisierte AK-74. Geringes Gewicht, gute Trägheits-Werte." },
+        "aks74u": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Die 'Krinkov'. Genial für CQB, verliert aber auf Distanz stark an Genauigkeit." },
+        "ak103": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Beste 7.62er AK. Kann alle modernen Aufsätze nutzen." },
+        "ak105": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Kurze AK-Variante. Perfekt für das neue Bewegungssystem." },
+        "vz58": { ammo: "7.62x39mm PS / BP", pen: "Class 4", tip: "Keine AK! Nutzt eigene Magazine. Höhere Feuerrate als die AKMN." },
+        "ak12": { ammo: "5.45x39mm BP", pen: "Class 4", tip: "Modernste russische Armee-Waffe. Integrierte Schienen und tolles Schussgefühl." },
+        "ak15": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Verbindet das moderne Handling der AK-12 mit der brachialen Kraft der 7.62 Patrone." },
+        "ak19": { ammo: "5.56x45mm NATO", pen: "Class 4", tip: "Nutzt westliche Munition auf der modernen AK-12 Plattform. Sehr vielseitig." },
+        "ak308": { ammo: "7.62x51mm M80/M61", pen: "Class 5-6", tip: "AK-Plattform auf Steroiden. Verschießt fette NATO-Muni. Extrem laut, extrem tödlich." },
+        "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
+        "m700": { ammo: "7.62x51mm M61", pen: "Class 6", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
+        "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
+        "mosin": { ammo: "7.62x54mmR SNB", pen: "Class 6", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
+        "skn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
+        "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Ein Laser auf kurze Distanz. Ziele auf Kopf oder Beine." },
+        "mp7a1": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Kleine Waffe, gigantischer Durchschlag. Perfekte Backup-Waffe für Sniper." },
+        "mp7a2": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Wie die A1, aber erlaubt die Montage eigener Vordergriffe für noch bessere Ergo." },
+        "vz61": { ammo: "9x18mm / .32 ACP", pen: "Class 0-1", tip: "Skorpion Maschinenpistole. Enorme Feuerrate, aber durchdringt keine Rüstung. Leg-Meta!" },
+        "vityaz": { ammo: "9x19mm 7N21", pen: "Class 2+", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
+        "m870": { ammo: "12G Slug / 00 Buck", pen: "Class 0-2", tip: "In 0.4 sind Slugs gegen weiche Ziele verheerend." },
+        "590a1": { ammo: "12G 00 Buckshot", pen: "Class 0-1", tip: "Maximale Stopwirkung auf 5-10 Meter." },
+        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS und fast kein Rückstoß." },
+        "glock17": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Zuverlässig, große Magazine verfügbar." },
+        "m9a1": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Gute Standard-Pistole für den Start." },
+        "makarov": { ammo: "9x18mm PM Gzh", pen: "Class 0", tip: "Nur im absoluten Notfall." },
+        "1911": { ammo: ".45 ACP", pen: "Class 1", tip: "Massiver Fleischschaden, aber geringe Magazinkapazität." },
+        "ccc": { ammo: ".45 ACP", pen: "Class 1", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
+        "typ51": { ammo: "7.62x25mm Tokarev", pen: "Class 2+", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." }
     };
-    
-    const symptomDb = {
-        "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
-        "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
-        "tunnel_vision": { diag: "Koma steht bevor", treat: "Tourniquet + Blut", info: "Stoppe die Blutung sofort!" },
-        "limping": { diag: "Knochenbruch (Bein)", treat: "Schiene", info: "Schiene anlegen, sonst kannst du nicht sprinten." },
-        "weapon_sway": { diag: "Knochenbruch (Arm)", treat: "Schiene + Painkillers", info: "Stoppt das Wackeln beim Zielen." },
-        "stamina_drain": { diag: "Organschaden oder Erschöpfung", treat: "Surkit oder Essen", info: "Heile deine Lunge oder iss etwas." },
-        "coughing": { diag: "Organschaden (Lunge/Magen)", treat: "Surkit", info: "Such dir sichere Deckung für die OP." },
-        "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
-        "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
+
+    const weaponImages = {
+        "ak74m": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/AK-74M_inspect.png",
+        "ak74n": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e2/AK-74N_inspect.png",
+        "ak103": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-12_inspect.png",
+        "ak12": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-12_inspect.png",
+        "ak15": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e3/AK-15_inspect.png",
+        "ak19": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/b6/AK-19_inspect.png",
+        "akm": "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/94/AKM_inspect.png",
+        "akmn": "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/94/AKM_inspect.png",
+        "akmsn": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/51/AKMSN_inspect.png",
+        "aks74u": "https://static.wikia.nocookie.net/gray-zone-warfare/images/f/fd/AKS74U_inspect.png",
+        "ak308": "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/9d/AK-308_inspect.png",
+        "cqa1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/b3/CQA1_inspect.png",
+        "ks1": "https://static.wikia.nocookie.net/grayzonewarfare/images/c/c5/KS-1_Icon.png",
+        "m4a1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/4/43/M4A1_inspect.png",
+        "ddm4": "https://static.wikia.nocookie.net/gray-zone-warfare/images/4/43/DDM4_inspect.png",
+        "sicmcx": "https://static.wikia.nocookie.net/gray-zone-warfare/images/2/2d/SIG_MCX_inspect.png",
+        "m14": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/80/M14_EBR_Icon.png",
+        "m700": "https://static.wikia.nocookie.net/gray-zone-warfare/images/a/a8/M700_inspect.png",
+        "svd": "https://static.wikia.nocookie.net/gray-zone-warfare/images/8/85/SVD_inspect.png",
+        "mosin": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/51/Mosin_%28S%29_inspect.png",
+        "mp5": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/MP5_inspect.png",
+        "mp7a2": "https://static.wikia.nocookie.net/gray-zone-warfare/images/f/f9/MP7_inspect.png",
+        "m870": "https://static.wikia.nocookie.net/gray-zone-warfare/images/d/db/M870_inspect.png",
+        "alien": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/8b/Laugo_Alien_Icon.png",
+        "glock17": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e4/Glock17_inspect.png",
+        "m9a1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/bc/M9A1_inspect.png"
+    };
+
+    const ammoDb = {
+        "m855a1": { name: "5.56x45mm M855A1", pen: 4.5, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
+        "m855": { name: "5.56x45mm M855", pen: 3.5, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
+        "m193": { name: "5.56x45mm M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
+        "m856a1": { name: "5.56x45mm M856A1", pen: 3.8, damage: 51, info: "Tracer-Munition (Leuchtspur). Gut für Squads." },
+        "mk255": { name: "5.56x45mm MK255", pen: 1.0, damage: 65, info: "Hollow Point. Verheerend gegen ungepanzerte Ziele." },
+        "300_ap": { name: ".300 BLK AP", pen: 4.5, damage: 55, info: "Hervorragende Penetration auf kurze Distanz." },
+        "300_cbj": { name: ".300 BLK CBJ", pen: 4.0, damage: 58, info: "Gute Balance zwischen Durchschlag und Schaden." },
+        "300_m62": { name: ".300 BLK M62", pen: 3.8, damage: 54, info: "Leuchtspurmunition für die SIG-MCX." },
+        "300_whisper": { name: ".300 BLK Whisper", pen: 2.5, damage: 62, info: "Subsonic. In Kombination mit Schalldämpfer flüsterleise." },
+        "ak74_bs": { name: "5.45x39mm BS", pen: 5.5, damage: 43, info: "Durchschlägt Class 5 problemlos." },
+        "ak74_bp": { name: "5.45x39mm BP", pen: 4.5, damage: 48, info: "Die Meta-Muni für 5.45. Bricht Class 4." },
+        "ak74_pp": { name: "5.45x39mm PP", pen: 3.5, damage: 50, info: "Guter Mid-Tier Durchschlag." },
+        "ak74_7n6": { name: "5.45x39mm 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition." },
+        "ak74_hp": { name: "5.45x39mm HP", pen: 1.0, damage: 68, info: "Null Durchschlag, Beine anvisieren!" },
+        "ak_mai_ap": { name: "7.62x39mm MAI AP", pen: 5.5, damage: 46, info: "Bricht fast jede Rüstung." },
+        "ak_bp": { name: "7.62x39mm BP", pen: 4.5, damage: 58, info: "Härtester Standard-Durchschlag für AKs." },
+        "ak_ps": { name: "7.62x39mm PS", pen: 3.5, damage: 54, info: "Solider Allrounder." },
+        "ak_us": { name: "7.62x39mm US", pen: 2.0, damage: 56, info: "Subsonic. Sehr leise." },
+        "ak_hp": { name: "7.62x39mm HP", pen: 1.0, damage: 73, info: "Ideal für Leg-Meta." },
+        "m993": { name: "7.62x51mm M993", pen: 6.5, damage: 60, info: "Geht durch Class 6 wie Butter." },
+        "m61": { name: "7.62x51mm M61", pen: 6.0, damage: 64, info: "Ignoriert fast jede Rüstung." },
+        "m62": { name: "7.62x51mm M62", pen: 5.4, damage: 68, info: "Hohe Penetration + Leuchtspur." },
+        "m80": { name: "7.62x51mm M80", pen: 4.2, damage: 80, info: "Enormer Schaden." },
+        "tcw_sp": { name: "7.62x51mm TCW SP", pen: 2.5, damage: 90, info: "Gigantischer Fleischschaden." },
+        "snb": { name: "7.62x54mmR SNB", pen: 6.0, damage: 75, info: "Schlägt durch jeden Helm." },
+        "7n1": { name: "7.62x54mmR 7N1", pen: 4.5, damage: 85, info: "One-Shot Potenzial gegen Class 4." },
+        "lps": { name: "7.62x54mmR LPS", pen: 4.0, damage: 80, info: "Standard-Munition für Mosin." },
+        "46_apsx": { name: "4.6x30mm AP SX", pen: 5.0, damage: 35, info: "Bricht Class 5!" },
+        "46_fmjsx": { name: "4.6x30mm FMJ SX", pen: 4.0, damage: 43, info: "Gute Allround-Munition." },
+        "7n31": { name: "9x19mm 7N31", pen: 3.5, damage: 45, info: "Beste 9mm Penetration." },
+        "ap63": { name: "9x19mm AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields." },
+        "pst": { name: "9x19mm PST Gzh", pen: 1.5, damage: 52, info: "Nur für Kopfschüsse ohne Helm." },
+        "rip": { name: "9x19mm RIP", pen: 0.5, damage: 95, info: "Leg-Meta Königin." },
+        "ap20": { name: "12G AP-20 Slug", pen: 3.5, damage: 160, info: "Panzerbrechender Eisenblock." },
+        "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss." },
+        "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Tödlich im Nahkampf." },
+        "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Beste .45er Pen." }
+    };
+
+    const bosses = {
+        "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses auf." },
+        "lumber_boss": { loc: "Lumber Yard (Sägewerk)", gear: "Mosin / AK-74N", loot: "Lumber Yard Office Key.", tip: "Patrouilliert zwischen den Holzstapeln." },
+        "rebel_ybl": { loc: "YBL-1 Bunker", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel.", tip: "Vorsicht in den engen Gängen, nutzt Blendgranaten." },
+        "hunter_commander": { loc: "Hunter's Paradise (Schießstand)", gear: "M4A1 Custom / Fast MT", loot: "Braunes Barett, Key to Weapon Storage.", tip: "Die Leibwache nutzt oft Schalldämpfer." },
+        "malo_blue": { loc: "Blue Lagoon (Restaurant/Steg)", gear: "SVD / Mosin", loot: "Malo's Key, Scharfschützengewehr.", tip: "Er schießt extrem präzise auf hohe Distanz." },
+        "banpa_leader": { loc: "Ban Pa (Zentrum am See)", gear: "SKS / AKM", loot: "Ban Pa Shack Key, wertvolle Statuen.", tip: "Nutze Granaten, um ihn aus den Hütten zu treiben." },
+        "fort_commander": { loc: "Fort Narith (HQ Gebäude)", gear: "Class 5 Armor / M14 EBR", loot: "Fort Narith Storage Key.", tip: "Der zäheste Boss. Erfordert zwingend AP-Munition (M61/SNB)." },
+        "midnight_laf": { loc: "Midnight Sapphire (Hotel/Villen)", gear: "KS-1 Custom / Class 4+", loot: "Villen-Schlüssel, High-End Optiken.", tip: "Wird von 4-6 Elitesoldaten geschützt." },
+        "tiger_bay_unlra": { loc: "Tiger Bay (UNLRA Zone)", gear: "M4A1 / Class 5", loot: "UNLRA Medical Key.", tip: "Höchste KI-Dichte im Spiel. Bring massiv Munition mit." },
+        "tiger_bay_pier": { loc: "Tiger Bay (Pier)", gear: "AK-103 / Drum Mags", loot: "Pier Storage Key.", tip: "Er nutzt Magazine mit hoher Kapazität. Warte auf seine Nachladepause." },
+        "airfield_boss": { loc: "Ground Zero (Airfield Hangar)", gear: "Custom Weapons / Class 6", loot: "Seltene Prototyp-Teile.", tip: "Nur für Squads. KI nutzt hier oft Thermal-Optiken." }
     };
 
     const vendorDb = {
@@ -1499,67 +1326,219 @@ const allTasks = [
         "banshee_3": { focus: "Boss-Gear", unlocks: "GPNVG-18 (Quad-Nods)", tip: "Luxus für Night Ops." }
     };
 
-    // --- FUNKTIONEN ---
-    function updateWeapon() {
-        const val = document.getElementById('weaponSelect').value;
+    const valuables = {
+        "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
+        "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
+        "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
+        "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Hoher Gesamtwert, erfordert aber 2 horizontale Slots." },
+        "gold_coin": { price: "~ $350", slots: "1", info: "Perfekter Lückenfüller für den Rucksack." },
+        "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
+        "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, aber frisst viel Platz. Nur mitnehmen, wenn Platz ist." },
+        "tablet": { price: "~ $300", slots: "2", info: "Guter Wert, findet man oft in Büros und dem Hotel." },
+        "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Tausche es gegen 1-Slot-Items aus, wenn möglich." },
+        "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel Platz weg. Eher ineffizient." },
+        "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
+        "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot für 1 Slot." },
+        "camera": { price: "~ $150", slots: "2", info: "Guter Beifang, oft in zivilen Gebäuden." },
+        "silver_coin": { price: "~ $150", slots: "1", info: "Nicht so gut wie Gold, aber definitiv mitnehmen!" },
+        "silver_chain": { price: "~ $120", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
+        "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Wert für nur einen Slot." },
+        "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
+        "flash_drive": { price: "~ $80", slots: "1", info: "Normaler USB-Stick. Nimmt kaum Platz weg." },
+        "calculator": { price: "~ $80", slots: "1", info: "Guter Filler für den Secure Container am Anfang." }
+    };
+
+    const containers = {
+        "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Standard Edition & Tactical Edition", info: "Der Standard-Container." },
+        "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Elite Edition ODER In-Game durch Task", info: "Schließe die Task 'Gefährliche Schätze' ab." },
+        "tas": { name: "TAS Container", size: "3x3 (9 Slots)", source: "Supporter Edition ODER In-Game durch Task", info: "Der größte Container." },
+        "ammo_box": { name: "Ammo Container", size: "Spart Platz", source: "Quests (Gunny / Banshee)", info: "Riesiges Lager nur für Munition." },
+        "weapon_box": { name: "Weapon Container", size: "Spart Platz", source: "Quests", info: "Für alle Waffensammler." },
+        "med_box": { name: "Medical Container", size: "Spart Platz", source: "Quests (Lab Rat)", info: "Verdient man relativ früh." },
+        "armor_box": { name: "Armor Container", size: "Spart Platz", source: "Quests", info: "Löst das Platzproblem für Rüstungen." },
+        "food_box": { name: "Provisions Container", size: "Spart Platz", source: "Quests", info: "Kühlbox für Rationen." },
+        "key_holder": { name: "Key Holder", size: "1 Slot", source: "Supporter Edition / In-Game", info: "Fasst unzählige Schlüssel." },
+        "wallet": { name: "Leather Wallet", size: "1 Slot", source: "Supporter Edition / In-Game", info: "Nur für Bargeld." },
+        "stash_upgrade": { name: "Locker Erweiterung", size: "Dynamisch", source: "Level-Ups", info: "Wächst alle 10 Level." }
+    };
+
+    const lzDb = {
+        "mithras": { lzs: "Alpha 1, Alpha 2, Alpha 3", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
+        "lamang": { lzs: "Bravo 1, Bravo 2, Bravo 3", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
+        "crimson": { lzs: "Charlie 1, Charlie 2, Charlie 3", danger: "Sicher / Mittel", tip: "Startgebiet von CSI (Kiu Vongsa)." },
+        "lumber": { lzs: "Echo 1 & Echo 2", danger: "Niedrig-Mittel", tip: "Echo 2 ist versteckter im Wald." },
+        "hunters": { lzs: "Foxtrot 1 & Foxtrot 2", danger: "Mittel", tip: "Foxtrot 2 wird oft abgezielt!" },
+        "banpa": { lzs: "India 1 & India 2", danger: "Mittel", tip: "India 2 ist sicherer für einen Sneak-Angriff." },
+        "blue_lagoon": { lzs: "Kilo 1 & Kilo 2", danger: "Mittel", tip: "Kilo 2 gibt dir einen Flanken-Vorteil." },
+        "ybl": { lzs: "Juliet 1, 2, 3", danger: "Hoch", tip: "Vorsicht vor LZ-Campern!" },
+        "fort_narith": { lzs: "Delta 1, 2, 3", danger: "Extrem", tip: "Delta 3 ist die sicherste Wahl (Rückseite)." },
+        "midnight": { lzs: "Hotel 1, 2, 3", danger: "Sehr Hoch", tip: "Bleib niemals auf dem Präsentierteller stehen." },
+        "tiger_bay": { lzs: "Lima 1 & 2", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
+        "ground_zero": { lzs: "Golf 1 & 2", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
+    };
+
+    const symptomDb = {
+        "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
+        "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
+        "tunnel_vision": { diag: "Koma steht bevor", treat: "Tourniquet + Blut", info: "Stoppe die Blutung sofort!" },
+        "limping": { diag: "Knochenbruch (Bein)", treat: "Schiene", info: "Schiene anlegen, sonst kannst du nicht sprinten." },
+        "weapon_sway": { diag: "Knochenbruch (Arm)", treat: "Schiene + Painkillers", info: "Stoppt das Wackeln beim Zielen." },
+        "stamina_drain": { diag: "Organschaden oder Erschöpfung", treat: "Surkit oder Essen", info: "Heile deine Lunge oder iss etwas." },
+        "coughing": { diag: "Organschaden (Lunge/Magen)", treat: "Surkit", info: "Such dir sichere Deckung für die OP." },
+        "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
+        "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
+    };
+
+    const allKeys = [
+        { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro im 2. Stock.", loot: "Medizinische Vorräte" },
+        { name: "Foreman's Office Key", loc: "Lumber Yard", effect: "Öffnet das Büro des Vorarbeiters.", loot: "Task-Dokumente, Safe" },
+        { name: "HP Weapon Storage Key", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer.", loot: "High-Tier Waffen" },
+        { name: "Malo's Shack Key", loc: "Blue Lagoon", effect: "Öffnet Malos Hütte auf Stelzen.", loot: "SVD-Teile, Gold" },
+        { name: "YBL-1 Office Key", loc: "YBL-1 Bunker", effect: "Öffnet das Büro Ebene -1.", loot: "Task-Dokumente" },
+        { name: "Fort HQ Key", loc: "Fort Narith", effect: "Öffnet das Büro von General Pa.", loot: "Gravierte Waffen, Safe" },
+        { name: "UNLRA Lab Card", loc: "Tiger Bay HQ", effect: "Öffnet die Quarantäne-Labore.", loot: "Medizinische High-Tier Güter" },
+        { name: "Hotel Master Key", loc: "Midnight Sapphire", effect: "Öffnet viele Standard-Zimmer.", loot: "Bargeld, Wertsachen" }
+        // Füge hier deine weiteren Schlüssel hinzu
+    ];
+
+    // ==============================================================
+    // FUNKTIONEN (WAFFEN & BALLISTIK)
+    // ==============================================================
+
+    function updateWeaponCombined() {
+        const select = document.getElementById('weaponSelect');
+        const val = select.value;
+        const infoDisplay = document.getElementById('weaponInfo');
+        const imgElement = document.getElementById('weaponImg'); 
+        const metaElement = document.getElementById('weaponMeta'); 
+        
+        // 1. Bild-Vorschau Logik
+        if (val === "") {
+            imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
+            metaElement.innerText = "";
+        } else if (weaponImages[val]) {
+            imgElement.src = weaponImages[val];
+            imgElement.style.display = "block";
+            metaElement.innerText = "Quelle: GZW Official Wiki Intel";
+        } else {
+            imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
+            metaElement.innerText = "Bildpfad wird noch aktualisiert...";
+        }
+
+        // 2. Munitions-Details & Dropdown
         const info = weapons[val];
-        document.getElementById('weaponInfo').innerHTML = info ? `Empfohlene Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}` : "Wähle eine Waffe...";
+        if (info) {
+            infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
+            populateAmmoDropdown(val); 
+        } else {
+            infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
+            const ammoSelect = document.getElementById('calcAmmoDisplay');
+            ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
+            calculateBallistics(); 
+        }
     }
-    function updateValuable() {
-        const val = document.getElementById('valSelect').value;
-        const info = valuables[val];
-        const display = document.getElementById('valInfoDisplay');
-        if(info) display.innerHTML = `Preis: <span class="highlight">${info.price}</span><br>Platzbedarf: <span class="highlight">${info.slots} Slot(s)</span><br>Tipp: ${info.info}`;
-        else display.innerHTML = "Wähle ein Item für Preis & Details...";
+
+    function populateAmmoDropdown(weaponKey) {
+        const ammoSelect = document.getElementById('calcAmmoDisplay');
+        const weaponInfo = weapons[weaponKey];
+        
+        ammoSelect.innerHTML = "";
+
+        if (!weaponInfo) {
+            ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
+            return;
+        }
+
+        let caliber = weaponInfo.ammo.split(' ')[0]; 
+        if(caliber.includes("7.62") || caliber.includes("5.45") || caliber.includes("5.56")) {
+            caliber = weaponInfo.ammo.substring(0, 7);
+        }
+
+        let foundAmmo = false;
+        for (let key in ammoDb) {
+            const ammo = ammoDb[key];
+            if (ammo.name.toLowerCase().includes(caliber.toLowerCase())) {
+                const option = document.createElement('option');
+                option.value = ammo.name;
+                option.text = ammo.name;
+                ammoSelect.appendChild(option);
+                foundAmmo = true;
+            }
+        }
+
+        if (!foundAmmo) {
+            const option = document.createElement('option');
+            option.value = weaponInfo.ammo;
+            option.text = weaponInfo.ammo;
+            ammoSelect.appendChild(option);
+        }
+
+        calculateBallistics();
     }
-    function updateBoss() {
-        const val = document.getElementById('bossSelect').value;
-        const b = bosses[val];
-        document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss...";
+
+    function getAmmoPenValue(ammoName) {
+        if (!ammoName) return 0;
+        for (let key in ammoDb) {
+            if (ammoDb[key].name === ammoName) {
+                return ammoDb[key].pen;
+            }
+        }
+        return 0;
     }
-    function updateLZ() {
-        const val = document.getElementById('lzSelect').value;
-        const info = lzDb[val];
-        const display = document.getElementById('lzInfo');
-        if(info) display.innerHTML = `Beste LZs: <span class="highlight">${info.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${info.danger}</span><br><br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
-        else display.innerHTML = "Wähle ein Zielgebiet für LZ-Tipps...";
+
+    function calculateBallistics() {
+        const armorLevel = parseFloat(document.getElementById('calcArmor').value);
+        const ammoName = document.getElementById('calcAmmoDisplay').value; 
+        const penValue = getAmmoPenValue(ammoName);
+        const resultBox = document.getElementById('calcResult');
+
+        if (!ammoName || ammoName === "") {
+            resultBox.innerHTML = "Wähle zuerst eine Waffe!";
+            resultBox.style.color = "#888";
+            resultBox.style.backgroundColor = "#1a1a1a";
+            return;
+        }
+
+        if (penValue >= armorLevel + 0.5) {
+            resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG";
+            resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
+            resultBox.style.color = "#7ca35a";
+        } else if (penValue >= armorLevel) {
+            resultBox.innerHTML = "⚠️ MEHRERE TREFFER NÖTIG";
+            resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
+            resultBox.style.color = "#ffa500";
+        } else {
+            resultBox.innerHTML = "❌ KEIN DURCHSCHLAG";
+            resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
+            resultBox.style.color = "#ff4c4c";
+        }
     }
-    function updateSymptom() {
-        const val = document.getElementById('symptomSelect').value;
-        const info = symptomDb[val];
-        const display = document.getElementById('symptomInfo');
-        if(info) display.innerHTML = `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${info.diag}</span><br>Behandlung: <span class="highlight">${info.treat}</span><br><br><small><b>Medic-Tipp:</b> ${info.info}</small>`;
-        else display.innerHTML = "Wähle ein Symptom für Diagnose & Behandlung...";
-    }
-    function updateVendor() {
-        const val = document.getElementById('vendorSelect').value;
-        const info = vendorDb[val];
-        const display = document.getElementById('vendorInfo');
-        if(info) display.innerHTML = `Fokus: <span style="color: var(--accent); font-weight: bold;">${info.focus}</span><br><b>Highlights:</b> <span class="highlight">${info.unlocks}</span><br><br><small><b>Operator-Tipp:</b> ${info.tip}</small>`;
-        else display.innerHTML = "Wähle Händler & Level für Details...";
-    }
-    function updateContainer() {
-        const val = document.getElementById('containerSelect').value;
-        const info = containers[val];
-        const display = document.getElementById('containerInfoDisplay');
-        if(info) display.innerHTML = `<b>${info.name}</b><br>Größe: <span class="highlight">${info.size}</span><br>Herkunft: <span class="highlight">${info.source}</span><br><br><small>${info.info}</small>`;
-        else display.innerHTML = "Wähle einen Container für Details zum Fundort...";
-    }
+
+    // ==============================================================
+    // ALLGEMEINE UPDATER (Generic)
+    // ==============================================================
+    function updateGeneric(sId, iId) { document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details..."; }
+    function updateBoss() { const b = bosses[document.getElementById('bossSelect').value]; document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss..."; }
+    function updateLZ() { const l = lzDb[document.getElementById('lzSelect').value]; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small>Tipp: ${l.tip}</small>` : "Wähle Zielgebiet..."; }
+    function updateSymptom() { const s = symptomDb[document.getElementById('symptomSelect').value]; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><small>${s.info}</small>` : "Symptom wählen..."; }
+    function updateVendor() { const v = vendorDb[document.getElementById('vendorSelect').value]; document.getElementById('vendorInfo').innerHTML = v ? `Fokus: <span style="color: var(--accent); font-weight: bold;">${v.focus}</span><br>Unlocks: <span class="highlight">${v.unlocks}</span><br><small>Tipp: ${v.tip}</small>` : "Wähle Händler..."; }
+    function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: ${c.source}<br><small>${c.info}</small>` : "Wähle Container..."; }
+    function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Slots: <span class="highlight">${v.slots}</span><br>Tipp: ${v.info}` : "Wähle Item..."; }
+    
     function compareAmmo() {
         const a1 = ammoDb[document.getElementById('ammo1').value];
         const a2 = ammoDb[document.getElementById('ammo2').value];
-        if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden (Flesh): ${a1.damage}<br><small>${a1.info}</small>`;
-        if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden (Flesh): ${a2.damage}<br><small>${a2.info}</small>`;
+        if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden: ${a1.damage}`;
+        if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden: ${a2.damage}`;
         if(a1 && a2) {
-            let winText = "";
-            if(a1.pen > a2.pen) winText = `${a1.name} gewinnt gegen Rüstung!`;
-            else if(a2.pen > a1.pen) winText = `${a2.name} gewinnt gegen Rüstung!`;
-            else winText = "Gleicher Durchschlag. Achte auf den Schaden!";
-            document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${winText}`;
-        } else {
-            document.getElementById('comparisonResult').innerHTML = "Wähle zwei Typen zum Vergleich aus.";
+            let text = a1.pen > a2.pen ? `${a1.name} gewinnt gegen Rüstung!` : (a2.pen > a1.pen ? `${a2.name} gewinnt gegen Rüstung!` : "Gleicher Durchschlag.");
+            document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${text}`;
         }
     }
+
+    // ==============================================================
+    // TASKS & KEYS SUCHE
+    // ==============================================================
     function searchKeys() {
         const input = document.getElementById('keySearch').value.toLowerCase();
         const list = document.getElementById('keyList');
@@ -1570,258 +1549,82 @@ const allTasks = [
             list.style.display = 'block';
             filtered.forEach(k => {
                 const d = document.createElement('div');
+                d.className = "search-item";
                 d.innerHTML = `${k.name} (${k.loc})`;
-                d.style.padding = "8px"; d.style.borderBottom = "1px solid #333"; d.style.cursor = "pointer";
-                d.onmouseover = () => d.style.backgroundColor = "#2a2a2a";
-                d.onmouseout = () => d.style.backgroundColor = "transparent";
                 d.onclick = () => {
                     document.getElementById('keyTitle').innerText = k.name;
                     document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${k.loc}</span>`;
-                    document.getElementById('keyEffect').innerHTML = `Nutzen: ${k.effect}<br>Erwarteter Loot: <span class="highlight">${k.loot}</span>`;
+                    document.getElementById('keyEffect').innerHTML = `Nutzen: ${k.effect}<br>Loot: <span class="highlight">${k.loot}</span>`;
                     list.style.display = 'none';
                     document.getElementById('keySearch').value = k.name;
                 };
                 list.appendChild(d);
             });
-        } else {
-            list.style.display = 'none';
-        }
+        } else { list.style.display = 'none'; }
     }
+
+    function updateTaskDropdown() {
+        const vendor = document.getElementById('vendorFilter').value;
+        const taskSelect = document.getElementById('taskDropdown');
+        taskSelect.innerHTML = '<option value="">-- Wähle einen Task --</option>';
+        if (vendor === 'all') return;
+        
+        const filteredTasks = allTasks.filter(t => t.v === vendor);
+        filteredTasks.forEach(t => {
+            const option = document.createElement('option');
+            option.value = t.de;
+            option.text = t.de;
+            taskSelect.appendChild(option);
+        });
+    }
+
+    function selectTaskFromDropdown() {
+        const taskName = document.getElementById('taskDropdown').value;
+        if (!taskName) return;
+        displayTaskData(taskName);
+    }
+
     function searchTasks() {
-        const input = document.getElementById('taskSearch').value.toLowerCase();
+        const input = document.getElementById('taskSearchInput').value.toLowerCase();
         const list = document.getElementById('taskList');
         list.innerHTML = '';
-        if(input.length < 2) { list.style.display='none'; return; }
+        
+        if(input.length < 2) { list.style.display = 'none'; return; }
+
         const filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
+
         if(filtered.length > 0) {
             list.style.display = 'block';
             filtered.forEach(t => {
                 const d = document.createElement('div');
-                d.innerHTML = `${t.de} / ${t.en}`;
-                d.style.padding = "8px"; d.style.borderBottom = "1px solid #333"; d.style.cursor = "pointer";
-                d.onmouseover = () => d.style.backgroundColor = "#2a2a2a";
-                d.onmouseout = () => d.style.backgroundColor = "transparent";
+                d.className = "search-item";
+                d.innerHTML = `<strong>${t.de}</strong> <small>(${t.v || 'Divers'})</small>`;
                 d.onclick = () => {
-                    document.getElementById('taskTitle').innerText = t.de;
-                    document.getElementById('taskNames').innerText = `Englisch: ${t.en}`;
-                    document.getElementById('taskDesc').innerText = t.desc;
-                    document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${t.sol}`;
-                    document.getElementById('solBtn').style.display = 'block';
-                    document.getElementById('taskSolution').style.display = 'none';
+                    displayTaskData(t.de);
                     list.style.display = 'none';
-                    document.getElementById('taskSearch').value = t.de;
+                    document.getElementById('taskSearchInput').value = t.de;
                 };
                 list.appendChild(d);
             });
-        } else {
-            list.style.display = 'none';
+        } else { list.style.display = 'none'; }
+    }
+
+    function displayTaskData(name) {
+        const task = allTasks.find(t => t.de === name);
+        if (task) {
+            document.getElementById('taskTitle').innerText = task.de;
+            document.getElementById('taskNames').innerText = `Englisch: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
+            document.getElementById('taskDesc').innerText = task.desc;
+            document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
+            document.getElementById('solBtn').style.display = 'block';
+            document.getElementById('taskSolution').style.display = 'none';
         }
     }
+
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
         s.style.display = s.style.display === 'block' ? 'none' : 'block';
     }
-    function updateGeneric(sId, iId) {
-        document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details...";
-    }
-
-    function updateWeaponCombined() {
-    const select = document.getElementById('weaponSelect');
-    const val = select.value;
-    const infoDisplay = document.getElementById('weaponInfo');
-    const imgElement = document.getElementById('weaponImg'); 
-    const metaElement = document.getElementById('weaponMeta'); 
-    
-    // 1. Bild-Vorschau Logik (Zuerst ausführen!)
-    if (val === "") {
-        imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
-        metaElement.innerText = "";
-    } else if (weaponImages[val]) {
-        imgElement.src = weaponImages[val];
-        imgElement.style.display = "block";
-        metaElement.innerText = "Quelle: GZW Official Wiki Intel";
-    } else {
-        imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
-        metaElement.innerText = "Bildpfad wird noch aktualisiert...";
-    }
-
-    // 2. Munitions-Details & Dropdown
-    const info = weapons[val];
-    if (info) {
-        infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
-        populateAmmoDropdown(val); 
-    } else {
-        infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
-        const ammoSelect = document.getElementById('calcAmmoDisplay');
-        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
-        calculateBallistics(); // Reset Anzeige
-    }
-}
-
-function calculateBallistics() {
-    const armorLevel = parseFloat(document.getElementById('calcArmor').value);
-    // KORREKTUR: .value statt .innerText
-    const ammoName = document.getElementById('calcAmmoDisplay').value; 
-    const penValue = getAmmoPenValue(ammoName);
-    const resultBox = document.getElementById('calcResult');
-
-    if (!ammoName || ammoName === "") {
-        resultBox.innerHTML = "Wähle zuerst eine Waffe!";
-        resultBox.style.color = "#888";
-        resultBox.style.backgroundColor = "#1a1a1a";
-        return;
-    }
-
-    // Vergleichs-Logik
-    if (penValue >= armorLevel + 0.5) {
-        resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG (1-2 Schüsse)";
-        resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
-        resultBox.style.color = "#7ca35a";
-    } else if (penValue >= armorLevel) {
-        resultBox.innerHTML = "⚠️ WAHRSCHEINLICHER DURCHSCHLAG (3-5 Schüsse)";
-        resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
-        resultBox.style.color = "#ffa500";
-    } else {
-        resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Wirkungslos gegen Platte)";
-        resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
-        resultBox.style.color = "#ff4c4c";
-    }
-}
-
-    function populateAmmoDropdown(weaponKey) {
-    const ammoSelect = document.getElementById('calcAmmoDisplay');
-    const weaponInfo = weapons[weaponKey];
-    
-    ammoSelect.innerHTML = "";
-
-    if (!weaponInfo) {
-        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
-        return;
-    }
-
-    // Wir holen das Kaliber (z.B. "5.56x45mm")
-    // Falls das Kaliber Leerzeichen hat (z.B. ".300 BLK"), nehmen wir den Teil vor dem ersten Leerzeichen
-    let caliber = weaponInfo.ammo.split(' ')[0]; 
-    
-    // Sonderfall: Wenn das Kaliber mit ".300" oder "7.62" anfängt, 
-    // müssen wir genauer suchen, damit 7.62x39 nicht 7.62x51 findet.
-    if(caliber.includes("7.62") || caliber.includes("5.45") || caliber.includes("5.56")) {
-        caliber = weaponInfo.ammo.substring(0, 7); // Nimmt z.B. "7.62x39" oder "5.56x45"
-    }
-
-    let foundAmmo = false;
-    for (let key in ammoDb) {
-        const ammo = ammoDb[key];
-        // Wir prüfen, ob das Kaliber im Namen der Munition vorkommt
-        if (ammo.name.toLowerCase().includes(caliber.toLowerCase())) {
-            const option = document.createElement('option');
-            option.value = ammo.name;
-            option.text = ammo.name;
-            ammoSelect.appendChild(option);
-            foundAmmo = true;
-        }
-    }
-
-    // Falls gar nichts gefunden wurde (Backup)
-    if (!foundAmmo) {
-        const option = document.createElement('option');
-        option.value = weaponInfo.ammo;
-        option.text = weaponInfo.ammo;
-        ammoSelect.appendChild(option);
-    }
-
-    calculateBallistics();
-}
-
-    function getAmmoPenValue(ammoName) {
-    if (!ammoName) return 0;
-    // Wir suchen in der ammoDb nach dem Objekt, dessen .name mit dem Dropdown-Wert übereinstimmt
-    for (let key in ammoDb) {
-        if (ammoDb[key].name === ammoName) {
-            return ammoDb[key].pen;
-        }
-    }
-    return 0;
-}
-
-    // 1. Filterung für das Händler-Dropdown
-function updateTaskDropdown() {
-    const vendor = document.getElementById('vendorFilter').value;
-    const taskSelect = document.getElementById('taskDropdown');
-    taskSelect.innerHTML = '<option value="">-- Wähle einen Task --</option>';
-
-    if (vendor === 'all') {
-        // Wenn "Alle" gewählt, zeigen wir zur Sicherheit nichts im Dropdown (zu lang), 
-        // aber die manuelle Suche unten findet alles.
-        return;
-    }
-
-    // Wir filtern jetzt sauber nach dem neuen Feld "v"
-    const filteredTasks = allTasks.filter(t => t.v === vendor);
-
-    filteredTasks.forEach(t => {
-        const option = document.createElement('option');
-        option.value = t.de;
-        option.text = t.de;
-        taskSelect.appendChild(option);
-    });
-}
-
-// 2. Task aus Dropdown anzeigen
-function selectTaskFromDropdown() {
-    const taskName = document.getElementById('taskDropdown').value;
-    if (!taskName) return;
-    displayTaskData(taskName);
-}
-
-// 3. Korrigierte Manuelle Suche
-function searchTasks() {
-    const input = document.getElementById('taskSearchInput').value.toLowerCase();
-    const list = document.getElementById('taskList');
-    list.innerHTML = '';
-    
-    if(input.length < 2) { 
-        list.style.display = 'none'; 
-        return; 
-    }
-
-    const filtered = allTasks.filter(t => 
-        t.de.toLowerCase().includes(input) || 
-        t.en.toLowerCase().includes(input)
-    );
-
-    if(filtered.length > 0) {
-        list.style.display = 'block';
-        filtered.forEach(t => {
-            const d = document.createElement('div');
-            d.innerHTML = `<strong>${t.de}</strong> <small>(${t.v || 'Divers'})</small>`;
-            d.style.padding = "10px"; 
-            d.style.borderBottom = "1px solid #333"; 
-            d.style.cursor = "pointer";
-            d.onclick = () => {
-                displayTaskData(t.de);
-                list.style.display = 'none';
-                document.getElementById('taskSearchInput').value = t.de;
-            };
-            list.appendChild(d);
-        });
-    } else {
-        list.style.display = 'none';
-    }
-}
-
-// Hilfsfunktion um doppelten Code zu vermeiden
-function displayTaskData(name) {
-    const task = allTasks.find(t => t.de === name);
-    if (task) {
-        document.getElementById('taskTitle').innerText = task.de;
-        document.getElementById('taskNames').innerText = `Englisch: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
-        document.getElementById('taskDesc').innerText = task.desc;
-        document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
-        document.getElementById('solBtn').style.display = 'block';
-        document.getElementById('taskSolution').style.display = 'none';
-    }
-}
 </script>
 </body>
 </html>
