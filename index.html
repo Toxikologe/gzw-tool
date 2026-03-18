@@ -104,7 +104,8 @@
     </div>
 
     <div class="tab-nav">
-        <button class="tab-btn active" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
+        <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
+        <button class="tab-btn" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
         <button class="tab-btn" onclick="openTab('tab-gear', this)">🛡️ Rüstung & Gear</button>
         <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
         <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin & Food</button>
@@ -115,7 +116,43 @@
         <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
     </div>
 
-    <div id="tab-mods" class="tab-content active">
+    <div id="tab-home" class="tab-content active">
+        <div style="width: 100%; height: 250px; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111;">
+            <img src="https://via.placeholder.com/1100x250/222222/7ca35a?text=Gray+Zone+Warfare+Header" alt="Gray Zone Warfare Header" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+
+        <h2 style="margin-top: 0;">Willkommen auf Lamang Island (Sperrzone)</h2>
+        
+        <div class="grid">
+            <div class="panel-box">
+                <h3>📖 Über Gray Zone Warfare</h3>
+                <p style="line-height: 1.6; color: #ccc; margin-bottom: 0;">
+                    Gray Zone Warfare ist ein intensiver, taktischer First-Person-Shooter mit starkem Fokus auf Realismus. Das Spiel findet auf der fiktiven südostasiatischen Insel Lamang statt. Nach einem mysteriösen Vorkommnis, das nur als das "Ereignis" (The Event) bekannt ist, wurde die gesamte Insel unter strikte internationale Quarantäne gestellt. Fast die komplette Zivilbevölkerung wurde evakuiert, was eine weitläufige, wilde Region voller verlassener Infrastruktur, Geheimnisse und Gefahren zurückließ.
+                </p>
+            </div>
+            
+            <div class="panel-box">
+                <h3>⚔️ Die Fraktionen (PMCs)</h3>
+                <p style="line-height: 1.6; color: #ccc; margin-top: 0;">Drei private Militärunternehmen wurden beauftragt, die Insel zu infiltrieren:</p>
+                <ul style="color: #ccc; line-height: 1.6; padding-left: 20px; margin-bottom: 0;">
+                    <li><strong style="color: #7ca35a;">Mithras Security Systems (MSS):</strong> Ein PMC gegründet von Ex-Elitesoldaten. Arbeitet hoch diszipliniert.</li>
+                    <li><strong style="color: #b33939;">Crimson Shield Int. (CSI):</strong> Eine skrupellose, extrem gut finanzierte Organisation, die Resultate liefert.</li>
+                    <li><strong style="color: #227093;">Lamang Recovery Initiative (LRI):</strong> Ein Unternehmen, das vorgibt, die Insel für die Einheimischen sichern zu wollen.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-box" style="margin-top: 20px;">
+            <h3>📜 Die Geschichte & Das "Ereignis"</h3>
+            <p style="line-height: 1.6; color: #ccc; margin-bottom: 0;">
+                Lamang trägt noch immer die tiefen Narben jahrzehntelanger Konflikte und eines brutalen diktatorischen Regimes. Doch das, was die Insel in den heutigen Abgrund stürzte, war unerwartet und extrem zerstörerisch. Ein plötzliches, unerklärliches Phänomen am Ground Zero (dem heutigen Flugplatz) verwandelte die Region über Nacht in eine absolute Sperrzone. Niemand weiß genau, was passiert ist – war es ein Waffentest? Ein Asteroideneinschlag? Oder etwas weitaus Dunkleres?
+                <br><br>
+                Die UNLRA (United Nations Lamang Relief Agency) hat schnell Notlager errichtet, wurde aber rasch von den Geschehnissen überrollt. Nun streifen zurückgelassene Milizen der LAF, brutale Kriminelle, fanatische Kultisten und rivalisierende Elite-Söldner durch den Dschungel. Dein Auftrag als Operator ist es, Befehle für deine Händler zu erfüllen, deine Fraktion zu stärken und das Epizentrum der Katastrophe zu erreichen.
+            </p>
+        </div>
+    </div>
+
+    <div id="tab-mods" class="tab-content">
         <h2>Waffen-Modifikationen & Ergonomie</h2>
         
         <div class="grid">
@@ -175,7 +212,7 @@
             </div>
 
             <div id="weaponPreviewContainer" class="panel-box" style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%;">
-                <img id="weaponImg" src="https://www.grayzonewarfare.com/icons/gzw-icon.png" alt="Waffenvorschau" style="max-width: 100%; max-height: 180px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(0,255,0,0.2)); margin: 0 auto;">
+                <img id="weaponImg" src="https://via.placeholder.com/400x200?text=Waffe+auswählen" alt="Waffenvorschau" style="max-width: 100%; max-height: 180px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(0,255,0,0.2)); margin: 0 auto;">
                 <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
             </div>
         </div>
@@ -1601,7 +1638,7 @@ const allTasks = [
     };
 
     // ==============================================================
-    // LOGIK-FUNKTIONEN
+    // FUNKTIONEN
     // ==============================================================
 
     function updateWeaponCombined() {
@@ -1737,25 +1774,6 @@ const allTasks = [
     function updateVendor() { const v = vendorDb[document.getElementById('vendorSelect').value]; document.getElementById('vendorInfo').innerHTML = v ? `Fokus: <span style="color: var(--accent); font-weight: bold;">${v.focus}</span><br><b>Highlights:</b> <span class="highlight">${v.unlocks}</span><br><br><small><b>Operator-Tipp:</b> ${v.tip}</small>` : "Wähle Händler & Level für Details..."; }
     function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
-    
-    function updateStatusEffect() {
-        const val = document.getElementById('statusSelect').value;
-        const infoDisplay = document.getElementById('statusInfo');
-        const imgElement = document.getElementById('statusImg');
-        
-        if (val === "") {
-            infoDisplay.innerHTML = "Wähle einen Effekt für Ursachen und Auswirkungen...";
-            imgElement.src = "https://via.placeholder.com/150x150/222222/7ca35a?text=Status+Wählen";
-        } else {
-            const info = statusEffectsDb[val];
-            infoDisplay.innerHTML = `
-                <div style="margin-bottom: 8px;"><strong>Ursache:</strong> ${info.desc}</div>
-                <div style="color: #ff4c4c; font-weight: bold; margin-bottom: 4px;">Auswirkung:</div>
-                <div style="line-height: 1.4;">${info.effect}</div>
-            `;
-            imgElement.src = info.img;
-        }
-    }
 
     function searchKeys() {
         const input = document.getElementById('keySearch').value.toLowerCase();
