@@ -785,14 +785,31 @@
             </iframe>
         </div>
 
-        <div id="tab-patchnotes" class="tab-content">
+        <div id="tab-map" class="tab-content">
+        <h2>Interactive Tactical Map</h2>
+        <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 10px;">
+            Navigiere direkt hier auf der Karte. Falls die Karte nicht lädt, kannst du sie <a href="https://gzwtacmap.com/maps/lamang?x=7273.26156&y=4580.75431&z=14" target="_blank" style="color: var(--accent);">hier in einem neuen Fenster öffnen</a>.
+        </p>
+        
+        <div class="info-box" style="padding: 0; height: 700px; overflow: hidden; border: 2px solid #333; border-top: 4px solid var(--accent);">
+            <iframe 
+                src="https://mapgenie.io/gray-zone-warfare/maps/lamang-island" 
+                width="100%" 
+                height="100%" 
+                style="border: none;" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <div id="tab-patchnotes" class="tab-content">
         <h2>Aktuelle Patch Notes (Changelog)</h2>
         
         <div class="info-box" style="text-align: center; padding: 50px 20px; border-top: 4px solid var(--accent);">
             <div style="font-size: 3rem; margin-bottom: 10px;">📜</div>
             <h3 style="color: #fff; font-size: 1.5rem; margin-top: 0;">GZW News & Patch Notes</h3>
             <p style="color: #aaa; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6;">
-                Die offizielle Gray Zone Warfare Website blockiert leider das direkte Einbetten (iFrames) aus Sicherheitsgründen. Klicke auf einen der Buttons unten, um die aktuellsten Patch Notes in einem neuen Fenster zu öffnen.
+                Die offizielle Gray Zone Warfare Website blockiert das direkte Einbetten innerhalb anderer Tools. Klicke auf einen der Buttons, um die offiziellen News sicher in einem neuen Fenster zu öffnen.
             </p>
             
             <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
@@ -806,7 +823,8 @@
             </div>
         </div>
     </div>
-<button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
+
+</div> <button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
 
 <script>
     // --- FRAKTIONS-FARBEN & LOKALER SPEICHER ---
