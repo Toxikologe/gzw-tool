@@ -561,6 +561,12 @@
                 <label for="statusSelect" style="margin-top: 0;">Temporäre Status-Effekte</label>
                 <select id="statusSelect" onchange="updateStatusEffect()">
                     <option value="">-- Wähle einen Status-Effekt --</option>
+                    <option value="out_of_breath">Außer Atem (Out of Breath)</option>
+                    <option value="cramps">Krämpfe (Cramps)</option>
+                    <option value="sore_arms">Schmerzende Arme (Sore Arms)</option>
+                    <option value="fatigued">Erschöpft (Gelb) (Fatigued)</option>
+                    <option value="exhausted">Erschöpft (Rot) (Exhausted)</option>
+                    <option value="encumbered">Überlastet (Encumbered)</option>
                     <option value="dazed">Benommenheit (Dazed)</option>
                     <option value="bleed_light">Blutung: Leicht (Light Bleeding)</option>
                     <option value="bleed_med">Blutung: Mittel (Medium Bleeding)</option>
@@ -1578,6 +1584,42 @@ const allTasks = [
 
     // 11. STATUS EFFECT DATENBANK
     const statusEffectsDb = {
+        "out_of_breath": { 
+            de: "Außer Atem", en: "Out of Breath", 
+            desc: "Erschöpfung der Beinkraft. Atemstillstand. Lungenschädigung.",
+            effect: "Hörbarer Herzschlag/Atemgeräusche. Verhindert Atemstillstand.",
+            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/bd/OutOfBreathIcon.png"
+        },
+        "cramps": { 
+            de: "Krämpfe", en: "Cramps", 
+            desc: "Arm-Ausdauer liegt unter 1%",
+            effect: "Erhöht das Waffenschwanken & Verhindert Nahkampfangriffe.",
+            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/2/27/CrampsIcon.png"
+        },
+        "sore_arms": { 
+            de: "Schmerzende Arme", en: "Sore Arms", 
+            desc: "Arm-Ausdauer liegt unter 40%",
+            effect: "Erhöht das Waffenschwanken",
+            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/50/SoreArmsIcon.png"
+        },
+        "fatigued": { 
+            de: "Erschöpft (Gelb)", en: "Fatigued", 
+            desc: "Bein-Ausdauer liegt unter 40%",
+            effect: "Hörbarer Herzschlag/Atemgeräusche. Unterbricht vorübergehend die Regeneration der Ausdauer.",
+            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/34/FatiguedIcon.png"
+        },
+        "exhausted": { 
+            de: "Erschöpft (Rot)", en: "Exhausted", 
+            desc: "Bein-Ausdauer liegt unter 1%",
+            effect: "Hörbarer Herzschlag/Atemgeräusche. Sichtbares Waffenzittern. Verhindert Sprinten und Springen. Verhindert Überwinden von Hindernissen/Klettern. Unterbricht vorübergehend die Regeneration der Beinkraft.",
+            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/6/66/ExhaustedIcon.png"
+        },
+        "encumbered": { 
+            de: "Überlastet", en: "Encumbered", 
+            desc: "Bis das Gewicht unter 54 kg sinkt",
+            effect: "Verhindert Sprinten und Springen. Verringert die Regeneration der Beinkraft. Verringert die Zielgeschwindigkeit.",
+            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/92/EncumberedIcon.png"
+        },
         "dazed": { 
             de: "Benommenheit", en: "Dazed", 
             desc: "Tritt auf bei Kopftreffern (wenn der Helm das Projektil abfängt) oder durch sehr nahe Explosionen.",
