@@ -492,10 +492,40 @@
     </div>
 
     <div id="tab-medic" class="tab-content">
-        <h2>Medizin & Survival</h2>
+        <h2>Körperlicher Zustand & Status-Effekte (Health System)</h2>
+        
         <div class="grid">
             <div>
-                <label for="symptomSelect">Symptom-Checker (Notfall-Medic)</label>
+                <label for="statusSelect" style="margin-top: 0;">Temporäre Status-Effekte</label>
+                <select id="statusSelect" onchange="updateStatusEffect()">
+                    <option value="">-- Wähle einen Status-Effekt --</option>
+                    <option value="dazed">Benommenheit (Dazed)</option>
+                    <option value="bleed_light">Blutung: Leicht (Light Bleeding)</option>
+                    <option value="bleed_med">Blutung: Mittel (Medium Bleeding)</option>
+                    <option value="bleed_heavy">Blutung: Schwer (Severe Bleeding)</option>
+                    <option value="fatigued">Ermüdung (Fatigued)</option>
+                    <option value="exhausted">Erschöpfung (Exhausted)</option>
+                    <option value="coma">Koma (Coma)</option>
+                    <option value="suffering">Leiden (Suffering)</option>
+                    <option value="pain">Schmerz (Pain)</option>
+                    <option value="nausea">Übelkeit (Nausea)</option>
+                    <option value="intoxication">Vergiftung (Intoxication)</option>
+                    <option value="radiation">Verstrahlung (Radiation)</option>
+                </select>
+                <div id="statusInfo" class="info-box">Wähle einen Effekt für Ursachen und Auswirkungen...</div>
+            </div>
+
+            <div class="panel-box" style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                <img id="statusImg" src="https://via.placeholder.com/150x150/222222/7ca35a?text=Status+Wählen" alt="Status Icon" style="max-width: 150px; margin: 0 auto; filter: drop-shadow(0 0 10px rgba(124,163,90,0.3)); border-radius: 10px;">
+                <div id="statusMeta" style="margin-top: 15px; color: #aaa; font-size: 0.9em; font-style: italic;">Official GZW Medical Intel</div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 30px;">Diagnose & Behandlung</h2>
+        
+        <div class="grid">
+            <div>
+                <label for="symptomSelect">Symptom-Checker (Schnell-Diagnose)</label>
                 <select id="symptomSelect" onchange="updateSymptom()">
                     <option value="">-- Was fühlst/siehst du? --</option>
                     <optgroup label="Sicht & Wahrnehmung">
@@ -514,11 +544,11 @@
                         <option value="stomach">Magenknurren</option>
                     </optgroup>
                 </select>
-                <div id="symptomInfo" class="info-box">Diagnose & Behandlung...</div>
+                <div id="symptomInfo" class="info-box">Wähle ein Symptom für Diagnose & Behandlung...</div>
             </div>
 
             <div>
-                <label for="medFullSelect">Medizinische Versorgung</label>
+                <label for="medFullSelect">Medizinische Versorgung (Items)</label>
                 <select id="medFullSelect" onchange="updateGeneric('medFullSelect', 'medFullInfo')">
                     <option value="">-- Wähle Medizin-Item --</option>
                     <optgroup label="Blutungen (Wundversorgung)">
@@ -1425,8 +1455,104 @@ const allTasks = [
         "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
         "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
     };
+
+    // --- STATUS EFFEKTE DATENBANK ---
+    const statusEffectsDb = {
+        "dazed": { 
+            de: "Benommenheit", en: "Dazed", 
+            desc: "Tritt auf bei Kopftreffern (wenn der Helm das Projektil abfängt) oder durch sehr nahe Explosionen.",
+            effect: "Verschwommene Sicht und stark gedämpftes Gehör. Du verlierst kurzzeitig die akustische Orientierung im Raum.",
+            img: "https://via.placeholder.com/150x150/222222/cccccc?text=Dazed"
+        },
+        "bleed_light": { 
+            de: "Blutung: Leicht", en: "Light Bleeding", 
+            desc: "Wird durch Streifschüsse, kleine Kaliber oder Umgebungs-Schaden (Stacheldraht) verursacht.",
+            effect: "Langsamer Blutverlust (rotes Tropfen-Icon). Heilt im Gegensatz zu schweren Wunden über Zeit von selbst, kann aber mit einer Bandage sofort gestoppt werden.",
+            img: "https://via.placeholder.com/150x150/222222/ff6666?text=Light+Bleed"
+        },
+        "bleed_med": { 
+            de: "Blutung: Mittel", en: "Medium Bleeding", 
+            desc: "Klassische Schusswunde, typischerweise durch Sturmgewehre verursacht.",
+            effect: "Moderater Blutverlust. Heilt NICHT von selbst. Muss zwingend mit Bandage, Combat Gauze oder Tourniquet behandelt werden.",
+            img: "https://via.placeholder.com/150x150/222222/ff3333?text=Med+Bleed"
+        },
+        "bleed_heavy": { 
+            de: "Blutung: Schwer", en: "Severe Bleeding", 
+            desc: "Arterielle Blutung. Meist durch schwere Kaliber (Sniper) oder Volltreffer auf ungeschützte Gliedmaßen.",
+            effect: "Extrem schneller Blutverlust! Führt in kürzester Zeit zum Koma. Das Tourniquet (CAT) ist die einzig verlässliche und schnellste Sofortmaßnahme.",
+            img: "https://via.placeholder.com/150x150/222222/cc0000?text=Severe+Bleed"
+        },
+        "fatigued": { 
+            de: "Ermüdung", en: "Fatigued", 
+            desc: "Verursacht durch permanentes Sprinten oder beginnenden Mangel an Hydration/Energie.",
+            effect: "Hörbarer Herzschlag und schweres Atmen. Stoppt vorübergehend die Regeneration der Bein-Ausdauer (Leg Stamina).",
+            img: "https://via.placeholder.com/150x150/222222/aaaaaa?text=Fatigued"
+        },
+        "exhausted": { 
+            de: "Erschöpfung", en: "Exhausted", 
+            desc: "Kritischer Mangel an Hydration/Energie oder extreme Gewichts-Überbelastung.",
+            effect: "Sichtbares Waffenwackeln (Sway). Verhindert Sprinten, Springen und Klettern. Regeneration der Ausdauer ist komplett gestoppt. Sofort essen/trinken!",
+            img: "https://via.placeholder.com/150x150/222222/ffa500?text=Exhausted"
+        },
+        "coma": { 
+            de: "Koma", en: "Coma", 
+            desc: "Tritt auf, wenn dein Blutvolumen auf Null sinkt oder lebenswichtige Organe (Herz, Gehirn) zerstört werden.",
+            effect: "Vollständiger Kontrollverlust, der Charakter kollabiert. Du hast ein kurzes Zeitfenster, in dem dich Teammitglieder retten können (Blutbeutel, Epi-Pen).",
+            img: "https://via.placeholder.com/150x150/222222/444444?text=Coma"
+        },
+        "suffering": { 
+            de: "Leiden", en: "Suffering", 
+            desc: "Begleiterscheinung von zerstörten Knochen (Arme/Beine) oder massiven Organschäden.",
+            effect: "Der Charakter stöhnt unkontrolliert vor Schmerzen (Gegner können dich dadurch orten!). Führt zu Schwindel und verzieht das Aiming.",
+            img: "https://via.placeholder.com/150x150/222222/ff4c4c?text=Suffering"
+        },
+        "pain": { 
+            de: "Schmerz", en: "Pain", 
+            desc: "Entsteht durch Wunden oder 'Blunt Force Trauma' (Rüstung stoppt das Projektil, aber die Aufprallenergie schlägt durch).",
+            effect: "Verschwommene Ränder im Sichtfeld und leichtes Pulsieren. Heilt bei Prellungen (Bruises) oft von selbst, ansonsten Schmerzmittel nutzen.",
+            img: "https://via.placeholder.com/150x150/222222/7ca35a?text=Pain"
+        },
+        "nausea": { 
+            de: "Übelkeit", en: "Nausea", 
+            desc: "Entsteht primär durch Leberschäden, starke radioaktive Verstrahlung oder Intoxikation.",
+            effect: "Verzerrte Sicht und Unwohlsein. Nutze zwingend ein Surgery Kit (falls Leber beschädigt) oder verlasse das radioaktive Gebiet.",
+            img: "https://via.placeholder.com/150x150/222222/227093?text=Nausea"
+        },
+        "intoxication": { 
+            de: "Vergiftung", en: "Intoxication", 
+            desc: "Akkumuliert sich durch den übermäßigen Einsatz von Stimulanzien (wie Painkillern) oder unsauberem Sumpf-Wasser.",
+            effect: "Baut sich langsam auf und führt zu schwerer Übelkeit. Sinkt über Zeit langsam ab oder erfordert spezifische Gegenmittel.",
+            img: "https://via.placeholder.com/150x150/222222/a35a7c?text=Toxic"
+        },
+        "radiation": { 
+            de: "Verstrahlung", en: "Radiation", 
+            desc: "Entsteht in hochgradig verstrahlten Gebieten (wie dem Ground Zero Krater am Airfield).",
+            effect: "Akkumuliert im Körper. Führt unbehandelt zu Gewebeschäden, Übelkeit und letztendlich zum Tod. Erfordert Schutzanzug/Gasmaske.",
+            img: "https://via.placeholder.com/150x150/222222/aaff00?text=Radiation"
+        }
+    };
+
+    // 11. STATUS EFFECT DATENBANK
+    function updateStatusEffect() {
+        const val = document.getElementById('statusSelect').value;
+        const infoDisplay = document.getElementById('statusInfo');
+        const imgElement = document.getElementById('statusImg');
+        
+        if (val === "") {
+            infoDisplay.innerHTML = "Wähle einen Effekt für Ursachen und Auswirkungen...";
+            imgElement.src = "https://via.placeholder.com/150x150/222222/7ca35a?text=Status+Wählen";
+        } else {
+            const info = statusEffectsDb[val];
+            infoDisplay.innerHTML = `
+                <div style="margin-bottom: 8px;"><strong>Ursache:</strong> ${info.desc}</div>
+                <div style="color: #ff4c4c; font-weight: bold; margin-bottom: 4px;">Auswirkung:</div>
+                <div style="line-height: 1.4;">${info.effect}</div>
+            `;
+            imgElement.src = info.img;
+        }
+    }
     
-// 11. HÄNDLER DATENBANK
+// 12. HÄNDLER DATENBANK
     const vendorDb = {
         "gunny_1": { focus: "Basis NATO", unlocks: "M4A1, M193 Muni, NT4", tip: "Kauf die M4A1 und den NT4." },
         "gunny_2": { focus: "Bessere Munition", unlocks: "M855 Muni, Mosin, RVG", tip: "Steig auf M855 um!" },
