@@ -854,12 +854,15 @@
             </select>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display: inline-flex; align-items: center; cursor: pointer; color: #ccc; margin-top: 0; font-size: 0.95rem;">
-                <input type="checkbox" id="filterOpenTasks" onchange="refreshTaskList()" style="width: auto; margin-right: 8px; margin-top: 0; cursor: pointer;">
-                Nur offene Tasks anzeigen
-            </label>
-        </div>
+        <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 20px;">
+    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #ccc; margin-top: 0; font-size: 0.95rem;">
+        <input type="checkbox" id="filterOpenTasks" onchange="refreshTaskList()" style="width: auto; margin-right: 8px; margin-top: 0; cursor: pointer;">
+        Nur offene Tasks anzeigen
+    </label>
+    <button onclick="resetAllTasks()" style="background: #b33939; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">
+        🗑️ Alle Häkchen zurücksetzen
+    </button>
+</div>
 
         <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()">
         
@@ -2111,6 +2114,23 @@ const allTasks = [
             checkbox.onclick = toggleTaskCompletion;
         }
     }
+    
+    // RESET BUTTON
+    function resetAllTasks() {
+    if (confirm("Wirklich alle erledigten Tasks zurücksetzen?")) {
+        completedTasks = [];
+        try {
+            localStorage.removeItem('gzw_completed_tasks');
+        } catch(e) {}
+        refreshTaskList();
+        
+        // Aktuell angezeigten Task auch zurücksetzen
+        const titleEl = document.getElementById('taskTitle');
+        const checkbox = document.getElementById('taskCompleteCheckbox');
+        if (titleEl) { titleEl.style.textDecoration = 'none'; titleEl.style.opacity = '1'; }
+        if (checkbox) checkbox.checked = false;
+    }
+}
 
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
