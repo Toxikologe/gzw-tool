@@ -3145,8 +3145,11 @@ function updateBossTimers() {
             display.className = 'boss-timer-display ready';
             if (btn) {
                 btn.textContent = '✕ Tot';
-                btn.classList.add('ready-btn');
+                btn.classList.remove('ready-btn');
             }
+            // Timer automatisch löschen nach Ablauf
+            delete bossTimers[boss.id];
+            
         } else {
             const m = Math.floor(remaining / 60);
             const s = remaining % 60;
