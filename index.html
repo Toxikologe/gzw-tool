@@ -1940,22 +1940,31 @@ const allTasks = [
         } else { list.style.display = 'none'; }
     }
 
-    // --- TASK TRACKER LOGIK (NEU) ---
+    // --- TASK TRACKER LOGIK (NEU & VERBESSERT) ---
     let completedTasks = JSON.parse(localStorage.getItem('gzw_completed_tasks')) || [];
+    let currentOpenTask = ""; // Merkt sich exakt den Namen des offenen Tasks!
 
     function toggleTaskCompletion() {
-        const taskName = document.getElementById('taskTitle').innerText;
+        if (!currentOpenTask) return; // Sicherheits-Check
+        
         const isCompleted = document.getElementById('taskCompleteCheckbox').checked;
         
         if (isCompleted) {
-            if (!completedTasks.includes(taskName)) completedTasks.push(taskName);
+            // Task hinzufügen, falls er noch nicht drin ist
+            if (!completedTasks.includes(currentOpenTask)) {
+                completedTasks.push(currentOpenTask);
+            }
         } else {
-            completedTasks = completedTasks.filter(t => t !== taskName);
+            // Task wieder entfernen (Häkchen wegnehmen)
+            completedTasks = completedTasks.filter(t => t !== currentOpenTask);
         }
         
+        // Speichern
         localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
-        refreshTaskList(); // Aktualisiert Dropdown & Suche
-        displayTaskData(taskName); // Aktualisiert die Optik des Titels
+        
+        // UI sofort aktualisieren
+        refreshTaskList(); 
+        displayTaskData(currentOpenTask); 
     }
 
     function refreshTaskList() {
@@ -1966,9 +1975,12 @@ const allTasks = [
     function updateTaskDropdown() {
         const vendor = document.getElementById('vendorFilter').value;
         const taskSelect = document.getElementById('taskDropdown');
-        const hideCompleted = document.getElementById('filterOpenTasks').checked;
+        const hideCompleted = document.getElementById('filterOpenTasks') ? document.getElementById('filterOpenTasks').checked : false;
+        
+        // Aktuelle Auswahl merken, damit das Dropdown nicht umspringt
+        const selectedValue = taskSelect.value; 
 
-        taskSelect.innerHTML = '<option value="">-- Wähle einen Task --</option>';
+        taskSelect.innerHTML = '<option value="">-- Erst Händler wählen --</option>';
 
         if (vendor === 'all') return;
 
@@ -1981,8 +1993,9 @@ const allTasks = [
 
         filteredTasks.forEach(t => {
             const option = document.createElement('option');
-            option.value = t.de;
-            // Zeigt ein Häkchen im Dropdown, wenn erledigt
+            option.value = t.de; // WICHTIG: Der Value bleibt sauber ohne Häkchen
+            
+            // Zeigt ein Häkchen nur im angezeigten Text, wenn erledigt
             if (completedTasks.includes(t.de)) {
                 option.text = `✓ ${t.de}`;
             } else {
@@ -1990,20 +2003,26 @@ const allTasks = [
             }
             taskSelect.appendChild(option);
         });
+        
+        // Dropdown-Auswahl wiederherstellen, falls der Task noch in der Liste ist
+        if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
+            taskSelect.value = selectedValue;
+        } else if (currentOpenTask && Array.from(taskSelect.options).some(opt => opt.value === currentOpenTask)) {
+            taskSelect.value = currentOpenTask;
+        }
     }
 
     function selectTaskFromDropdown() {
         const taskName = document.getElementById('taskDropdown').value;
-        // Check, ob der Name mit einem Häkchen anfängt und entferne es für die Suche
-        const cleanName = taskName.replace(/^✓\s/, '');
-        if (!cleanName) return;
-        displayTaskData(cleanName);
+        if (!taskName) return;
+        displayTaskData(taskName);
     }
 
     function searchTasks() {
         const input = document.getElementById('taskSearchInput').value.toLowerCase();
         const list = document.getElementById('taskList');
-        const hideCompleted = document.getElementById('filterOpenTasks').checked;
+        const hideCompleted = document.getElementById('filterOpenTasks') ? document.getElementById('filterOpenTasks').checked : false;
+        
         list.innerHTML = '';
         
         if(input.length < 2) { list.style.display = 'none'; return; }
@@ -2021,7 +2040,7 @@ const allTasks = [
                 const d = document.createElement('div');
                 d.className = 'search-item';
                 
-                // Visuelle Unterscheidung in der Suche
+                // Visuelle Unterscheidung in der Suche (durchgestrichen wenn erledigt)
                 const isDone = completedTasks.includes(t.de);
                 const mark = isDone ? '<span style="color:#7ca35a; margin-right:5px; font-weight:bold;">✓</span>' : '';
                 const styling = isDone ? 'text-decoration: line-through; opacity: 0.5;' : '';
@@ -2040,6 +2059,7 @@ const allTasks = [
     function displayTaskData(name) {
         const task = allTasks.find(t => t.de === name);
         if (task) {
+            currentOpenTask = task.de; // Merkt sich exakt den Namen für das Checkbox-Toggle
             const isDone = completedTasks.includes(task.de);
             
             document.getElementById('taskTitle').innerText = task.de;
@@ -2053,15 +2073,13 @@ const allTasks = [
             document.getElementById('solBtn').style.display = 'block';
             document.getElementById('taskSolution').style.display = 'none';
             
-            // Checkbox aktivieren & Status setzen
-            document.getElementById('taskCompleteWrapper').style.display = 'block';
-            document.getElementById('taskCompleteCheckbox').checked = isDone;
+            // Checkbox anzeigen & Status setzen
+            const wrapper = document.getElementById('taskCompleteWrapper');
+            if (wrapper) wrapper.style.display = 'block';
+            
+            const checkbox = document.getElementById('taskCompleteCheckbox');
+            if (checkbox) checkbox.checked = isDone;
         }
-    }
-
-    function toggleSolution() {
-        const s = document.getElementById('taskSolution');
-        s.style.display = s.style.display === 'block' ? 'none' : 'block';
     }
 
     function toggleSolution() {
