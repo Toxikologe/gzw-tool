@@ -6,6 +6,45 @@
     <title>Gray Zone Warfare - Tactical Tool</title>
     <link rel="stylesheet" href="style.css">
     <style>
+
+        /* --- RAID NOTIZBLOCK --- */
+        #raidNotepad {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            z-index: 9998;
+            width: 260px;
+            background: #1e1e1e;
+            border: 1px solid #444;
+            border-top: 3px solid var(--accent);
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+
+        #raidNotepad.collapsed #notepadBody {
+            display: none;
+        }
+
+        #notepadHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 6px 6px 0 0;
+        }
+
+        #notepadHeader:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        #notepadTitle {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--accent);
+            
         /* --- GLOBALE FARB-VARIABLE --- */
         :root {
             --accent: #7ca35a; /* Standard: Mithras Grün */
@@ -1182,6 +1221,28 @@
         </div>
     </div>
 
+    <!-- RAID NOTIZBLOCK -->
+<div id="raidNotepad">
+    <div id="notepadHeader" onclick="toggleNotepad()">
+        <div id="notepadTitle">
+            📋 Raid-Notizblock
+        </div>
+        <span id="notepadToggleIcon">▼</span>
+    </div>
+    <div id="notepadBody">
+        <textarea 
+            id="raidTextarea" 
+            placeholder="Koordinaten & Notizen...&#10;z.B. 142 163 – Sniper auf Dach&#10;HP Weapon Key – Schreibtisch links&#10;Boss spawn ~ 10 Min nach Raid-Start"
+            oninput="saveNotepad()"
+        ></textarea>
+        <div id="notepadFooter">
+            <span id="notepadCharCount">0 Zeichen</span>
+            <button id="notepadClearBtn" onclick="clearNotepad()">🗑️ Leeren</button>
+        </div>
+        <div id="noteSavedIndicator"></div>
+    </div>
+</div>
+
 </div> 
 <button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
 
@@ -2201,6 +2262,88 @@ const allTasks = [
             });
         } else { list.style.display = 'none'; }
     }
+
+    // ==============================================================
+    // RAID NOTIZBLOCK
+    // ==============================================================
+
+    let notepadSaveTimer = null;
+
+    function initNotepad() {
+        const textarea = document.getElementById('raidTextarea');
+        const collapsed = localStorage.getItem('gzw_notepad_collapsed') === 'true';
+
+        // Gespeicherten Text laden
+        try {
+            const saved = localStorage.getItem('gzw_notepad_text');
+            if (saved) {
+                textarea.value = saved;
+                updateCharCount();
+            }
+        } catch(e) {}
+
+        // Collapsed-State wiederherstellen
+        if (collapsed) {
+            document.getElementById('raidNotepad').classList.add('collapsed');
+        }
+    }
+
+    function saveNotepad() {
+        updateCharCount();
+
+        // Debounce — erst nach 600ms speichern
+        clearTimeout(notepadSaveTimer);
+        notepadSaveTimer = setTimeout(() => {
+            try {
+                const text = document.getElementById('raidTextarea').value;
+                localStorage.setItem('gzw_notepad_text', text);
+                showSavedIndicator();
+            } catch(e) {}
+        }, 600);
+    }
+
+    function updateCharCount() {
+        const textarea = document.getElementById('raidTextarea');
+        const count = document.getElementById('notepadCharCount');
+        const len = textarea.value.length;
+        count.textContent = len + ' Zeichen';
+        count.style.color = len > 800 ? '#ffa500' : '#555';
+    }
+
+    function showSavedIndicator() {
+        const el = document.getElementById('noteSavedIndicator');
+        el.textContent = '✓ Gespeichert';
+        el.style.color = 'var(--accent)';
+        setTimeout(() => {
+            el.textContent = '';
+        }, 2000);
+    }
+
+    function toggleNotepad() {
+        const pad = document.getElementById('raidNotepad');
+        pad.classList.toggle('collapsed');
+        try {
+            localStorage.setItem('gzw_notepad_collapsed', pad.classList.contains('collapsed'));
+        } catch(e) {}
+    }
+
+    function clearNotepad() {
+        if (!confirm("Notizblock leeren?")) return;
+        document.getElementById('raidTextarea').value = '';
+        updateCharCount();
+        try {
+            localStorage.removeItem('gzw_notepad_text');
+        } catch(e) {}
+        const el = document.getElementById('noteSavedIndicator');
+        el.textContent = '🗑️ Geleert';
+        el.style.color = '#b33939';
+        setTimeout(() => { el.textContent = ''; }, 2000);
+    }
+
+    // Initialisierung in den bestehenden DOMContentLoaded Listener einbauen
+    window.addEventListener('DOMContentLoaded', () => {
+        initNotepad();
+    });
 
     // ==============================================================
     // SCHLÜSSEL DROPDOWN + SCHLÜSSELBUND (KEYRING MANAGER)
