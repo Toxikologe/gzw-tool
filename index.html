@@ -113,6 +113,7 @@
         <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
         <button class="tab-btn" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
         <button class="tab-btn" onclick="openTab('tab-gear', this)">🛡️ Rüstung & Gear</button>
+        <button class="tab-btn" onclick="openTab('tab-loadout', this)">⚖️ Loadout-Rechner</button>
         <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
         <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin & Food</button>
         <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ & Bosse</button>
@@ -482,6 +483,176 @@
             </div>
         </div>
     </div>
+
+    <div id="tab-loadout" class="tab-content">
+    <h2>⚖️ Loadout & Inertia-Rechner (Theorycrafting)</h2>
+    <p style="color:#aaa; font-size:0.9rem; margin-top:-5px; margin-bottom:20px;">
+        Wähle deine Ausrüstung und berechne das Gesamtgewicht sowie deinen Inertia-Status.
+    </p>
+
+    <div class="grid">
+        <!-- LINKE SPALTE: Auswahl -->
+        <div>
+            <!-- PRIMÄRWAFFE -->
+            <div class="panel-box" style="margin-bottom:15px;">
+                <h3>🔫 Primärwaffe</h3>
+                <label for="lc_primary" style="margin-top:0;">Waffe wählen</label>
+                <select id="lc_primary" onchange="calcLoadout()">
+                    <option value="0">-- Keine --</option>
+                    <optgroup label="Sturmgewehre">
+                        <option value="3.2">AK-74M (3.2 kg)</option>
+                        <option value="3.4">AK-74N (3.4 kg)</option>
+                        <option value="3.6">AK-103 (3.6 kg)</option>
+                        <option value="3.1">AK-105 (3.1 kg)</option>
+                        <option value="3.5">AK-12 (3.5 kg)</option>
+                        <option value="3.7">AK-15 (3.7 kg)</option>
+                        <option value="3.5">AK-19 (3.5 kg)</option>
+                        <option value="4.2">AK-308 (4.2 kg)</option>
+                        <option value="3.6">AKM (3.6 kg)</option>
+                        <option value="3.6">AKMN (3.6 kg)</option>
+                        <option value="3.5">AKMSN (3.5 kg)</option>
+                        <option value="2.7">AKS-74U (2.7 kg)</option>
+                        <option value="3.4">CQ-A1 (3.4 kg)</option>
+                        <option value="3.3">DDM4 (3.3 kg)</option>
+                        <option value="3.2">KAC KS-1 (3.2 kg)</option>
+                        <option value="3.3">M16A1 (3.3 kg)</option>
+                        <option value="3.4">M4A1 (3.4 kg)</option>
+                        <option value="2.9">MK18 (2.9 kg)</option>
+                        <option value="3.3">SIG-MCX (3.3 kg)</option>
+                        <option value="3.1">Vz. 58 (3.1 kg)</option>
+                        <option value="4.1">M1A (4.1 kg)</option>
+                        <option value="3.2">M-201C (3.2 kg)</option>
+                    </optgroup>
+                    <optgroup label="DMR & Scharfschützen">
+                        <option value="5.1">M14 EBR (5.1 kg)</option>
+                        <option value="4.5">M700 Remington (4.5 kg)</option>
+                        <option value="4.0">Mosin-Nagant (4.0 kg)</option>
+                        <option value="3.8">SKS Modernisiert (3.8 kg)</option>
+                        <option value="4.7">SVD Dragunov (4.7 kg)</option>
+                        <option value="3.2">Remington 788 (3.2 kg)</option>
+                    </optgroup>
+                    <optgroup label="SMGs & Shotguns">
+                        <option value="3.6">M870 (3.6 kg)</option>
+                        <option value="3.7">Mossberg 590A1 (3.7 kg)</option>
+                        <option value="2.6">MP5A3 (2.6 kg)</option>
+                        <option value="1.8">MP7A1 (1.8 kg)</option>
+                        <option value="1.9">MP7A2 (1.9 kg)</option>
+                        <option value="2.8">PP-19 Vityaz (2.8 kg)</option>
+                        <option value="1.3">VZ-61 Skorpio (1.3 kg)</option>
+                    </optgroup>
+                </select>
+
+                <label for="lc_suppressor">Schalldämpfer</label>
+                <select id="lc_suppressor" onchange="calcLoadout()">
+                    <option value="0">-- Keiner --</option>
+                    <option value="0.3">KAC NT4 (0.3 kg)</option>
+                    <option value="0.5">Surefire RC2 (0.5 kg)</option>
+                    <option value="0.4">PBS-1 (0.4 kg)</option>
+                    <option value="0.3">PBS-4 (0.3 kg)</option>
+                    <option value="0.6">Hybrid 46 (0.6 kg)</option>
+                    <option value="0.5">Rotor 43 (0.5 kg)</option>
+                </select>
+
+                <label for="lc_optic">Optik</label>
+                <select id="lc_optic" onchange="calcLoadout()">
+                    <option value="0.1">Red Dot / Kobra (0.1 kg)</option>
+                    <option value="0.3">LPVO 1-6x (0.3 kg)</option>
+                    <option value="0.4">LPVO 1-10x (0.4 kg)</option>
+                    <option value="0.5">ATACR / Nightforce (0.5 kg)</option>
+                    <option value="0.0">Keine Optik (0.0 kg)</option>
+                </select>
+
+                <label for="lc_mags">Magazine (Anzahl auf Person)</label>
+                <select id="lc_mags" onchange="calcLoadout()">
+                    <option value="0.5">2 Magazine (~0.5 kg)</option>
+                    <option value="1.0" selected>4 Magazine (~1.0 kg)</option>
+                    <option value="1.5">6 Magazine (~1.5 kg)</option>
+                    <option value="2.0">8 Magazine (~2.0 kg)</option>
+                    <option value="2.5">10+ Magazine (~2.5 kg)</option>
+                </select>
+            </div>
+
+            <!-- SIDEARM -->
+            <div class="panel-box" style="margin-bottom:15px;">
+                <h3>🔫 Sidearm (Pistole)</h3>
+                <select id="lc_sidearm" onchange="calcLoadout()">
+                    <option value="0">-- Keine --</option>
+                    <option value="0.9">Glock 17 (0.9 kg)</option>
+                    <option value="1.0">M9A1 Beretta (1.0 kg)</option>
+                    <option value="0.7">Makarov PM (0.7 kg)</option>
+                    <option value="1.1">Colt 1911 (1.1 kg)</option>
+                    <option value="1.0">Colt Combat Commander (1.0 kg)</option>
+                    <option value="0.8">Laugo Alien (0.8 kg)</option>
+                    <option value="0.8">Typ-51 (0.8 kg)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- RECHTE SPALTE: Schutzausrüstung -->
+        <div>
+            <!-- RÜSTUNG -->
+            <div class="panel-box" style="margin-bottom:15px;">
+                <h3>🛡️ Rüstung & Helm</h3>
+
+                <label for="lc_armor" style="margin-top:0;">Körperpanzerung</label>
+                <select id="lc_armor" onchange="calcLoadout()">
+                    <option value="0">-- Keine --</option>
+                    <option value="11.0">6B43 Zabralo Class 6 (11.0 kg)</option>
+                    <option value="8.5">IOTV Gen4 Class 5 (8.5 kg)</option>
+                    <option value="7.8">6B45 Ratnik Class 5 (7.8 kg)</option>
+                    <option value="3.2">RPC Plate Carrier Class 4 (3.2 kg)</option>
+                    <option value="4.1">JPC Vest Class 4 (4.1 kg)</option>
+                    <option value="5.5">Ana Tactical M1 Class 4 (5.5 kg)</option>
+                    <option value="5.8">LBT-6094 Class 3+ (5.8 kg)</option>
+                    <option value="5.2">6B23-1 Class 3 (5.2 kg)</option>
+                    <option value="1.8">PACA Soft Armor Class 2 (1.8 kg)</option>
+                    <option value="1.2">Zhuk-3 Class 2 (1.2 kg)</option>
+                </select>
+
+                <label for="lc_helmet">Helm</label>
+                <select id="lc_helmet" onchange="calcLoadout()">
+                    <option value="0">-- Keiner --</option>
+                    <option value="4.2">Altyn / Vulcan Class 5 (4.2 kg)</option>
+                    <option value="1.4">AirFrame Class 4 (1.4 kg)</option>
+                    <option value="1.2">Fast MT Class 4 (1.2 kg)</option>
+                    <option value="1.5">MICH 2000 Class 3 (1.5 kg)</option>
+                    <option value="1.3">6B47 Ratnik-B Class 3 (1.3 kg)</option>
+                    <option value="0.8">SSh-68 Stahlhelm Class 2 (0.8 kg)</option>
+                </select>
+
+                <label for="lc_rig">Tactical Rig / Belt</label>
+                <select id="lc_rig" onchange="calcLoadout()">
+                    <option value="0">-- Keiner --</option>
+                    <option value="1.8">Alpha Rig Heavy (1.8 kg)</option>
+                    <option value="1.2">Triton / Strike Rig Medium (1.2 kg)</option>
+                    <option value="0.6">Micro Rig Light (0.6 kg)</option>
+                    <option value="0.5">Tactical War Belt (0.5 kg)</option>
+                </select>
+
+                <label for="lc_nvg">Nachtsichtgerät (NVG)</label>
+                <select id="lc_nvg" onchange="calcLoadout()">
+                    <option value="0">-- Keines --</option>
+                    <option value="0.8">GPNVG-18 Quad (0.8 kg)</option>
+                    <option value="0.5">PVS-31 Binocular (0.5 kg)</option>
+                    <option value="0.3">PVS-14 Monocular (0.3 kg)</option>
+                </select>
+            </div>
+
+            <!-- RUCKSACK & VORRÄTE -->
+            <div class="panel-box">
+                <h3>🎒 Rucksack & Vorräte</h3>
+
+                <label for="lc_bag" style="margin-top:0;">Rucksack (leer)</label>
+                <select id="lc_bag" onchange="calcLoadout()">
+                    <option value="0">-- Keiner --</option>
+                    <option value="3.5">Eberlestock / Attack 2 Large (3.5 kg)</option>
+                    <option value="2.5">Mystery Ranch Medium-Large (2.5 kg)</option>
+                    <option value="1.8">Rush 24 / Tri-Zip Medium (1.8 kg)</option>
+                    <option value="1.0">Assault Pack Small (1.0 kg)</option>
+                    <option value="0.5">Sling Bag Budget (0.5 kg)</option>
+                </select>
+
+                <label for="lc_loot">Loot /
 
     <div id="tab-vendors" class="tab-content">
         <h2>Händler, Freischaltungen & Lager</h2>
@@ -2364,6 +2535,116 @@ const allTasks = [
         const s = document.getElementById('taskSolution');
         s.style.display = s.style.display === 'block' ? 'none' : 'block';
     }
+
+    // ==============================================================
+    // LOADOUT & INERTIA RECHNER
+    // ==============================================================
+
+    // Inertia-Schwellenwerte (in kg) – basierend auf GZW Spielmechanik
+    const INERTIA_THRESHOLDS = {
+        agile:      { max: 20,  label: "🟢 Agil – Volle Beweglichkeit",          color: "#7ca35a", bg: "rgba(124,163,90,0.15)",    tip: "Perfekt für PvP. Maximale Sprint-Geschwindigkeit, sofortiger ADS nach Sprint, kein Trägheits-Malus." },
+        normal:     { max: 30,  label: "🟡 Normal – Leichte Einschränkungen",     color: "#f0c040", bg: "rgba(240,192,64,0.12)",    tip: "Guter Allrounder. Minimale Trägheit spürbar, aber noch sehr gut für Mid-Game POIs." },
+        heavy:      { max: 40,  label: "🟠 Schwer – Spürbarer Inertia-Malus",    color: "#ffa500", bg: "rgba(255,165,0,0.12)",     tip: "Taktischer Sprint verlangsamt sich deutlich. ADS-Recovery nach Sprint merkbar. Nur für gedeckte Angriffe empfohlen." },
+        veryheavy:  { max: 54,  label: "🔴 Sehr Schwer – Stark eingeschränkt",   color: "#e05c2a", bg: "rgba(224,92,42,0.15)",     tip: "Massiver Inertia-Malus. Sprinten kaum möglich, ADS sehr langsam. Nur für Fort Narith / Bunker-Raids mit viel Deckung." },
+        overloaded: { max: 999, label: "💀 Überlastet – Encumbered Status!",      color: "#b33939", bg: "rgba(179,57,57,0.2)",      tip: "WARNUNG: Ab 54 kg greift der 'Encumbered'-Status. Sprinten und Springen ist komplett deaktiviert!" }
+    };
+
+    function calcLoadout() {
+        // Alle Gewichte einsammeln
+        const items = {
+            "Primärwaffe":        parseFloat(document.getElementById('lc_primary').value)    || 0,
+            "Schalldämpfer":      parseFloat(document.getElementById('lc_suppressor').value) || 0,
+            "Optik":              parseFloat(document.getElementById('lc_optic').value)      || 0,
+            "Magazine":           parseFloat(document.getElementById('lc_mags').value)       || 0,
+            "Sidearm":            parseFloat(document.getElementById('lc_sidearm').value)    || 0,
+            "Körperpanzerung":    parseFloat(document.getElementById('lc_armor').value)      || 0,
+            "Helm":               parseFloat(document.getElementById('lc_helmet').value)     || 0,
+            "Tactical Rig":       parseFloat(document.getElementById('lc_rig').value)        || 0,
+            "Nachtsicht (NVG)":   parseFloat(document.getElementById('lc_nvg').value)        || 0,
+            "Rucksack (leer)":    parseFloat(document.getElementById('lc_bag').value)        || 0,
+            "Loot / Inhalt":      parseFloat(document.getElementById('lc_loot').value)       || 0,
+            "Medizin":            parseFloat(document.getElementById('lc_medics').value)     || 0,
+            "Verpflegung":        parseFloat(document.getElementById('lc_food').value)       || 0,
+        };
+
+        // Charakter-Basisgewicht (Kleidung, Ausrüstung am Körper, Munition im Gürtel)
+        const BASE_WEIGHT = 5.0;
+
+        const total = BASE_WEIGHT + Object.values(items).reduce((a, b) => a + b, 0);
+
+        // Inertia-Status bestimmen
+        let status;
+        if      (total <= INERTIA_THRESHOLDS.agile.max)     status = INERTIA_THRESHOLDS.agile;
+        else if (total <= INERTIA_THRESHOLDS.normal.max)    status = INERTIA_THRESHOLDS.normal;
+        else if (total <= INERTIA_THRESHOLDS.heavy.max)     status = INERTIA_THRESHOLDS.heavy;
+        else if (total <= INERTIA_THRESHOLDS.veryheavy.max) status = INERTIA_THRESHOLDS.veryheavy;
+        else                                                  status = INERTIA_THRESHOLDS.overloaded;
+
+        // Balken berechnen (0-100%, cap bei 54 kg = 100%)
+        const barPct = Math.min(100, Math.round((total / 54) * 100));
+
+        // UI aktualisieren
+        document.getElementById('lc_total_weight').textContent = total.toFixed(1) + ' kg';
+        document.getElementById('lc_total_weight').style.color = status.color;
+
+        const bar = document.getElementById('lc_inertia_bar');
+        bar.style.width = barPct + '%';
+        bar.style.background = status.color;
+
+        document.getElementById('lc_inertia_pct').textContent = barPct + '%';
+        document.getElementById('lc_inertia_pct').style.color = status.color;
+
+        const verdict = document.getElementById('lc_inertia_verdict');
+        verdict.textContent = status.label;
+        verdict.style.color = status.color;
+        verdict.style.background = status.bg;
+        verdict.style.border = `1px solid ${status.color}`;
+
+        // Aufschlüsselung
+        const breakdown = document.getElementById('lc_breakdown');
+        let rows = `<span style="color:#666;">── Basis (Charakter + Kleidung): ${BASE_WEIGHT.toFixed(1)} kg</span><br>`;
+        Object.entries(items).forEach(([name, weight]) => {
+            if (weight > 0) {
+                rows += `── ${name}: <span style="color:var(--accent);">${weight.toFixed(1)} kg</span><br>`;
+            }
+        });
+        rows += `<br><strong style="color:#fff;">Gesamt: ${total.toFixed(1)} kg</strong>`;
+        breakdown.innerHTML = rows;
+
+        // Tipps & Empfehlungen
+        const tipsEl = document.getElementById('lc_tips');
+        let tips = `<div style="color:#aaa; font-size:0.85rem; margin-bottom:8px; font-weight:bold;">💡 Operator-Empfehlung:</div>`;
+        tips += `<div style="font-size:0.9rem; color:#ccc; line-height:1.6; padding:10px 12px; background:${status.bg}; border-left:3px solid ${status.color}; border-radius:4px;">${status.tip}</div>`;
+
+        // Spezifische Hinweise
+        const hints = [];
+        if (parseFloat(document.getElementById('lc_armor').value) >= 7.8) {
+            hints.push("⚠️ <strong>Schwere Rüstung erkannt:</strong> Zabralo/IOTV schränken deine Mobilität massiv ein. Nutze nur bei statischen Fort Narith Runs.");
+        }
+        if (parseFloat(document.getElementById('lc_bag').value) >= 2.5 && parseFloat(document.getElementById('lc_loot').value) >= 9.0) {
+            hints.push("⚠️ <strong>Voll beladener Rucksack:</strong> Großer Rucksack + viel Loot = extremer Inertia-Malus. Nur für reine Loot-Runs empfohlen.");
+        }
+        if (parseFloat(document.getElementById('lc_primary').value) >= 4.5) {
+            hints.push("📌 <strong>Schwere Primärwaffe:</strong> Sniper-Plattformen wie SVD/M14 haben hohes Eigengewicht. Spare bei Rüstung oder Rucksack.");
+        }
+        if (total <= 20) {
+            hints.push("✅ <strong>PvP-optimiertes Loadout:</strong> Du bist im grünen Bereich. Ideal für aggressive Spielstile und Häuserkampf.");
+        }
+        if (total > 54) {
+            hints.push("🚨 <strong>ENCUMBERED!</strong> Reduziere dein Gewicht sofort auf unter 54 kg um wieder sprinten zu können.");
+        }
+
+        if (hints.length > 0) {
+            tips += `<div style="margin-top:10px;">${hints.map(h => `<div style="margin-bottom:6px; font-size:0.85rem;">${h}</div>`).join('')}</div>`;
+        }
+
+        tipsEl.innerHTML = tips;
+    }
+
+    // Beim Laden einmal berechnen
+    window.addEventListener('DOMContentLoaded', () => {
+        calcLoadout();
+    });
 
     // UPDATE FUNKTION FÜR FRAKTIONEN
     function updateFactionInfo() {
