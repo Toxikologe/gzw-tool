@@ -219,7 +219,22 @@
     color: #7ca35a;
     border: 1px solid #7ca35a;
 }
-            
+
+.boss-cancel-btn {
+    background: #b33939;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.boss-cancel-btn:hover {
+    background: #e05c2a;
+}
+        
         /* --- GLOBALE FARB-VARIABLE --- */
         :root {
             --accent: #7ca35a; /* Standard: Mithras Grün */
@@ -3158,6 +3173,47 @@ function updateBossTimers() {
             display.className = 'boss-timer-display active';
         }
     });
+}
+
+// Timer starten
+    const endTime = Date.now() + boss.timer * 1000;
+    bossTimers[id] = { endTime };
+
+    if (btn) {
+        btn.textContent = '↺ Reset';
+        btn.classList.remove('ready-btn');
+    }
+    // Cancel-Button einblenden
+    const cancelBtn = document.getElementById(`boss-cancel-${id}`);
+    if (cancelBtn) cancelBtn.style.display = 'inline-block';
+
+    if (remaining <= 0) {
+        display.textContent = '✅ SP!';
+        display.className = 'boss-timer-display ready';
+        if (btn) {
+            btn.textContent = '✕ Tot';
+            btn.classList.remove('ready-btn');
+        }
+        const cancelBtn = document.getElementById(`boss-cancel-${boss.id}`);
+        if (cancelBtn) cancelBtn.style.display = 'none';
+        delete bossTimers[boss.id];
+
+function bossCancel(id) {
+    delete bossTimers[id];
+
+    const btn = document.getElementById(`boss-btn-${id}`);
+    const cancelBtn = document.getElementById(`boss-cancel-${id}`);
+    const display = document.getElementById(`boss-time-${id}`);
+
+    if (btn) {
+        btn.textContent = '✕ Tot';
+        btn.classList.remove('ready-btn');
+    }
+    if (cancelBtn) cancelBtn.style.display = 'none';
+    if (display) {
+        display.textContent = '–:––';
+        display.className = 'boss-timer-display';
+    }
 }
 
 // Beim Laden initialisieren
