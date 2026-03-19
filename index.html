@@ -3162,6 +3162,88 @@
     }
 
     // ==============================================================
+// DRAG & DROP FÜR WIDGETS
+// ==============================================================
+
+function makeDraggable(elementId) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+
+    // Header als Drag-Handle nehmen
+    const header = el.querySelector('[id$="Header"], [id$="notepadHeader"]') || el;
+
+    header.style.cursor = 'grab';
+
+    header.addEventListener('mousedown', (e) => {
+        // Nicht draggen wenn man auf einen Button klickt
+        if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SPAN' && e.target.id === 'bossSpawnToggle') return;
+
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        const rect = el.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+
+        header.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        let newLeft = startLeft + dx;
+        let newTop = startTop + dy;
+
+        // Bildschirmränder respektieren
+        newLeft = Math.max(0, Math.min(window.innerWidth - el.offsetWidth, newLeft));
+        newTop = Math.max(0, Math.min(window.innerHeight - el.offsetHeight, newTop));
+
+        el.style.left = newLeft + 'px';
+        el.style.top = newTop + 'px';
+        el.style.right = 'auto';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        header.style.cursor = 'grab';
+
+        // Position in localStorage speichern
+        try {
+            localStorage.setItem(`gzw_pos_${elementId}`, JSON.stringify({
+                left: el.style.left,
+                top: el.style.top
+            }));
+        } catch(e) {}
+    });
+
+    // Gespeicherte Position laden
+    try {
+        const saved = localStorage.getItem(`gzw_pos_${elementId}`);
+        if (saved) {
+            const pos = JSON.parse(saved);
+            el.style.left = pos.left;
+            el.style.top = pos.top;
+            el.style.right = 'auto';
+        }
+    } catch(e) {}
+}
+
+// Beim Laden initialisieren
+window.addEventListener('DOMContentLoaded', () => {
+    makeDraggable('bossSpawnWidget');
+    makeDraggable('raidNotepad');
+});
+
+    // ==============================================================
 // BOSS SPAWN TIMER
 // ==============================================================
 
