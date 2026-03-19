@@ -652,7 +652,72 @@
                     <option value="0.5">Sling Bag Budget (0.5 kg)</option>
                 </select>
 
-                <label for="lc_loot">Loot /
+                <label for="lc_loot">Loot / Inhalt (geschätzt)</label>
+                <select id="lc_loot" onchange="calcLoadout()">
+                    <option value="0">Leer / Fast leer</option>
+                    <option value="2.0">Leicht befüllt (~2 kg)</option>
+                    <option value="5.0" selected>Normal befüllt (~5 kg)</option>
+                    <option value="9.0">Schwer befüllt (~9 kg)</option>
+                    <option value="14.0">Voll beladen (~14 kg)</option>
+                </select>
+
+                <label for="lc_medics">Medizin & Meds</label>
+                <select id="lc_medics" onchange="calcLoadout()">
+                    <option value="0.3">Minimal (Tourniquet + 1x Meds ~0.3 kg)</option>
+                    <option value="0.8" selected>Standard (IFAKs + Blutbeutel ~0.8 kg)</option>
+                    <option value="1.5">Volles Medic-Kit (~1.5 kg)</option>
+                    <option value="2.5">Squad-Medic Setup (~2.5 kg)</option>
+                </select>
+
+                <label for="lc_food">Verpflegung (Essen & Trinken)</label>
+                <select id="lc_food" onchange="calcLoadout()">
+                    <option value="0.2">Minimal (1-2 Items ~0.2 kg)</option>
+                    <option value="0.8" selected>Normal (Feldflasche + MRE ~0.8 kg)</option>
+                    <option value="1.5">Viel (für lange Raids ~1.5 kg)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- ERGEBNIS-ANZEIGE -->
+    <div style="margin-top:25px;">
+        <div id="lc_result_box" class="panel-box" style="border-top: 4px solid var(--accent);">
+            <h3 style="margin-bottom:15px;">📊 Loadout-Analyse</h3>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                <div style="font-size:1.1rem; color:#aaa;">Gesamtgewicht:</div>
+                <div id="lc_total_weight" style="font-size:2rem; font-weight:bold; color:var(--accent);">0.0 kg</div>
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="color:#aaa; font-size:0.9rem;">Inertia-Belastung</span>
+                    <span id="lc_inertia_pct" style="font-weight:bold; color:var(--accent);">0%</span>
+                </div>
+                <div style="background:#1a1a1a; border-radius:6px; height:20px; overflow:hidden; border:1px solid #333;">
+                    <div id="lc_inertia_bar" style="height:100%; width:0%; background:var(--accent); border-radius:6px; transition: width 0.4s ease, background 0.4s ease;"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.75rem; color:#555;">
+                    <span>0 kg</span>
+                    <span>20 kg</span>
+                    <span>35 kg</span>
+                    <span>54 kg+</span>
+                </div>
+            </div>
+
+            <div id="lc_inertia_verdict" style="padding:12px 16px; border-radius:8px; font-size:1rem; font-weight:bold; text-align:center; margin-bottom:20px; background:#1a1a1a; border:1px solid #333;">
+                Wähle deine Ausrüstung...
+            </div>
+
+            <div style="border-top:1px solid #333; padding-top:15px;">
+                <div style="color:#aaa; font-size:0.85rem; margin-bottom:8px; font-weight:bold;">📋 Gewichtsaufschlüsselung:</div>
+                <div id="lc_breakdown" style="font-size:0.85rem; color:#ccc; line-height:1.8;"></div>
+            </div>
+
+            <div id="lc_tips" style="margin-top:15px; border-top:1px solid #333; padding-top:15px;"></div>
+        </div>
+    </div>
+</div>
 
     <div id="tab-vendors" class="tab-content">
         <h2>Händler, Freischaltungen & Lager</h2>
