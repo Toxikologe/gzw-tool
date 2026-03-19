@@ -1541,7 +1541,7 @@
             
             <div id="taskCompleteWrapper" style="display: none; position: absolute; top: 15px; right: 15px;">
                 <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin-top: 0; font-size: 1rem;">
-                    <input type="checkbox" id="taskCompleteCheckbox" onclick="toggleTaskCompletion()" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
+                    <input type="checkbox" id="taskCompleteCheckbox" onchange="toggleTaskCompletion()" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
                     Erledigt
                 </label>
             </div>
@@ -3325,7 +3325,7 @@
         if (wrapper) wrapper.style.display = 'block';
         if (checkbox) {
             checkbox.checked = completedTasks.includes(task.de);
-            checkbox.onclick = toggleTaskCompletion;
+            checkbox.onchange = toggleTaskCompletion;
         }
     }
     
