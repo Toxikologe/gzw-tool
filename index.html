@@ -31,6 +31,16 @@
             height: auto;
         }
 
+        #heliWidget .toggle-icon {
+            font-size: 0.75rem;
+            color: #888;
+            transition: transform 0.2s;
+        }
+
+        #heliWidget.collapsed .toggle-icon {
+            transform: rotate(180deg);
+        }
+
         #heliHeader {
             padding: 8px 12px;
             font-weight: bold;
@@ -1557,9 +1567,9 @@
         <!-- HELI WIDGET -->
     <div id="heliWidget">
     <div id="heliHeader" onclick="document.getElementById('heliWidget').classList.toggle('collapsed')">
-        🚁 Heli Fluglotse
-        <span style="color:#888; font-size:0.75rem;">▼</span>
-    </div>
+    🚁 Heli Fluglotse
+    <span class="toggle-icon">▼</span>
+</div>
     <div id="heliBody">
         <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:2px;">Startpunkt:</label>
         <select id="heliStart" class="heli-select" onchange="calcHeliTime()">
