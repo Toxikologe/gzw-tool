@@ -2781,22 +2781,51 @@
     // QUEST ITEM DATENBANK (KEEP OR SELL)
     // ==============================================================
     const questItemsDb = [
+        { name: "Autobatterie", qty: 4, quest: "Parts Needed (2x, Artisan), Mechanic's Trouble (2x, Artisan)" },
+        { name: "Benzinkanister (Gas Can / Rot)", qty: 2, quest: "Fuel Run (Artisan)" },
+        { name: "Beweise / Dokumente", qty: "Situativ", quest: "Fast jeder Händler (Quest-Items niemals wegwerfen!)" },
+        { name: "Holzstatue", qty: 3, quest: "Hazardous Treasures (Artisan)" },
+        { name: "Kupferkabel", qty: 5, quest: "Scrapyard (Artisan)" },
+        { name: "M4A1 Sturmgewehr", qty: 4, quest: "Brothers in Arms (2x, Gunny), In The Right Hands (2x, Turncoat)" },
+        { name: "Morphin-Injektor", qty: 5, quest: "Medical Supplies (Lab Rat)" },
+        { name: "MRE (Kampfration)", qty: 5, quest: "Supply Squeeze (Gunny)" },
+        { name: "Nägel", qty: 2, quest: "Supply Shortage (Artisan)" },
+        { name: "Panzertape / Duct Tape", qty: 5, quest: "Supply Shortage (3x, Artisan), The Builder (2x, Artisan)" },
+        { name: "Tourniquet (CAT)", qty: 5, quest: "Vital Signs (Lab Rat)" },
+        { name: "Unmodifizierte AKMN", qty: "Einige", quest: "Save the Rebellion (Artisan)" },
         { name: "Verbandskasten / IFAK", qty: 3, quest: "Nachschubmangel (Handshake)" },
         { name: "Werkzeugset / Toolset", qty: 5, quest: "Tooling Up (3x, Artisan), The Builder (1x, Artisan), Lines of Communication (1x, Handshake)" },
-        { name: "Autobatterie", qty: 4, quest: "Parts Needed (2x, Artisan), Mechanic's Trouble (2x, Artisan)" },
-        { name: "Zündkerze", qty: 2, quest: "Mechanic's Trouble (Artisan)" },
-        { name: "Kupferkabel", qty: 5, quest: "Scrapyard (Artisan)" },
-        { name: "Holzstatue", qty: 3, quest: "Hazardous Treasures (Artisan)" },
-        { name: "Panzertape / Duct Tape", qty: 5, quest: "Supply Shortage (3x, Artisan), The Builder (2x, Artisan)" },
-        { name: "Nägel", qty: 2, quest: "Supply Shortage (Artisan)" },
-        { name: "Morphin-Injektor", qty: 5, quest: "Medical Supplies (Lab Rat)" },
-        { name: "Tourniquet (CAT)", qty: 5, quest: "Vital Signs (Lab Rat)" },
-        { name: "Benzinkanister (Gas Can / Rot)", qty: 2, quest: "Fuel Run (Artisan)" },
-        { name: "M4A1 Sturmgewehr", qty: 4, quest: "Brothers in Arms (2x, Gunny), In The Right Hands (2x, Turncoat)" },
-        { name: "MRE (Kampfration)", qty: 5, quest: "Supply Squeeze (Gunny)" },
-        { name: "Unmodifizierte AKMN", qty: "Einige", quest: "Save the Rebellion (Artisan)" },
-        { name: "Beweise / Dokumente", qty: "Situativ", quest: "Fast jeder Händler (Quest-Items niemals wegwerfen!)" }
+        { name: "Zündkerze", qty: 2, quest: "Mechanic's Trouble (Artisan)" }
     ];
+
+    // NEU: Baut das Dropdown beim Start auf (alphabetisch sortiert)
+    function buildQuestItemDropdown() {
+        const dropdown = document.getElementById('questItemDropdown');
+        if (!dropdown) return;
+        
+        const sortedItems = [...questItemsDb].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+        
+        sortedItems.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.name;
+            opt.text = item.name;
+            dropdown.appendChild(opt);
+        });
+    }
+
+    // NEU: Wenn man ein Item im Dropdown anklickt
+    function selectQuestItemFromDropdown() {
+        const dropdownValue = document.getElementById('questItemDropdown').value;
+        const searchInput = document.getElementById('questItemSearch');
+        
+        if (dropdownValue) {
+            searchInput.value = dropdownValue; // Schreibt den Namen ins Suchfeld
+            searchQuestItems(); // Löst die Suche aus
+        } else {
+            searchInput.value = "";
+            document.getElementById('questItemList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">Wähle ein Item oder tippe den Namen ein...</div>';
+        }
+    }
 
     function searchQuestItems() {
         const input = document.getElementById('questItemSearch').value.toLowerCase();
