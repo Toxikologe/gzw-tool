@@ -1961,34 +1961,31 @@ const allTasks = [
 
     // Funktion, wenn die Checkbox geklickt wird
     function toggleTaskCompletion() {
-        if (!currentTaskNameRaw) return; // Wenn kein Task ausgewählt ist, abbrechen
-        
-        const checkbox = document.getElementById('taskCompleteCheckbox');
-        const titleEl = document.getElementById('taskTitle');
-        const isChecked = checkbox.checked;
-        
-        if (isChecked) {
-            // Füge Task hinzu, wenn er nicht schon drin ist
-            if (!completedTasks.includes(currentTaskNameRaw)) {
-                completedTasks.push(currentTaskNameRaw);
-            }
-            // Optik aktualisieren
-            titleEl.style.textDecoration = 'line-through';
-            titleEl.style.opacity = '0.6';
-        } else {
-            // Entferne Task aus der Liste
-            completedTasks = completedTasks.filter(name => name !== currentTaskNameRaw);
-            // Optik aktualisieren
-            titleEl.style.textDecoration = 'none';
-            titleEl.style.opacity = '1';
+    if (!currentOpenTask) return;
+    
+    const checkbox = document.getElementById('taskCompleteCheckbox');
+    const titleEl = document.getElementById('taskTitle');
+    const isNowChecked = checkbox.checked;
+    
+    if (isNowChecked) {
+        if (!completedTasks.includes(currentOpenTask)) {
+            completedTasks.push(currentOpenTask);
         }
-        
-        // Sofort im Browser speichern
-        localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
-        
-        // Dropdown und Suche aktualisieren, OHNE die aktuelle Auswahl zu löschen
-        refreshTaskList(); 
+    } else {
+        completedTasks = completedTasks.filter(t => t !== currentOpenTask);
     }
+    
+    titleEl.style.textDecoration = isNowChecked ? 'line-through' : 'none';
+    titleEl.style.opacity = isNowChecked ? '0.6' : '1';
+    
+    try {
+        localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
+    } catch(e) {
+        console.warn('localStorage nicht verfügbar:', e);
+    }
+    
+    refreshTaskList();
+}
 
     function refreshTaskList() {
         updateTaskDropdown();
@@ -2107,11 +2104,12 @@ const allTasks = [
         
         // Checkbox-Bereich anzeigen und Status korrekt setzen
         const wrapper = document.getElementById('taskCompleteWrapper');
-        if (wrapper) wrapper.style.display = 'block';
-        
-        const checkbox = document.getElementById('taskCompleteCheckbox');
-        if (checkbox) checkbox.checked = isDone;
-    }
+const checkbox = document.getElementById('taskCompleteCheckbox');
+if (wrapper) wrapper.style.display = 'block';
+if (checkbox) {
+    checkbox.checked = completedTasks.includes(task.de);
+    checkbox.onclick = toggleTaskCompletion;
+}
 
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
