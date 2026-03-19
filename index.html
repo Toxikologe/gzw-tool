@@ -864,8 +864,8 @@
         <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()">
         
         <div id="taskList"></div>
-        
         <div id="taskContainer" class="info-box" style="position: relative;">
+            
             <div id="taskCompleteWrapper" style="display: none; position: absolute; top: 15px; right: 15px;">
                 <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin-top: 0; font-size: 1rem;">
                     <input type="checkbox" id="taskCompleteCheckbox" onchange="toggleTaskCompletion()" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
@@ -1940,31 +1940,33 @@ const allTasks = [
         } else { list.style.display = 'none'; }
     }
 
-    // --- TASK TRACKER LOGIK (NEU & VERBESSERT) ---
+    // ==============================================================
+    // TASK TRACKER LOGIK
+    // ==============================================================
     let completedTasks = JSON.parse(localStorage.getItem('gzw_completed_tasks')) || [];
-    let currentOpenTask = ""; // Merkt sich exakt den Namen des offenen Tasks!
+    let currentOpenTask = ""; // Merkt sich den offenen Task fehlerfrei
 
     function toggleTaskCompletion() {
-        if (!currentOpenTask) return; // Sicherheits-Check
+        if (!currentOpenTask) return;
         
         const isCompleted = document.getElementById('taskCompleteCheckbox').checked;
+        const titleEl = document.getElementById('taskTitle');
         
         if (isCompleted) {
-            // Task hinzufügen, falls er noch nicht drin ist
             if (!completedTasks.includes(currentOpenTask)) {
                 completedTasks.push(currentOpenTask);
             }
+            // Visuelles Feedback sofort setzen, ohne die ganze Box neu zu laden
+            titleEl.style.textDecoration = 'line-through';
+            titleEl.style.opacity = '0.6';
         } else {
-            // Task wieder entfernen (Häkchen wegnehmen)
             completedTasks = completedTasks.filter(t => t !== currentOpenTask);
+            titleEl.style.textDecoration = 'none';
+            titleEl.style.opacity = '1';
         }
         
-        // Speichern
         localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
-        
-        // UI sofort aktualisieren
         refreshTaskList(); 
-        displayTaskData(currentOpenTask); 
     }
 
     function refreshTaskList() {
@@ -1975,9 +1977,9 @@ const allTasks = [
     function updateTaskDropdown() {
         const vendor = document.getElementById('vendorFilter').value;
         const taskSelect = document.getElementById('taskDropdown');
-        const hideCompleted = document.getElementById('filterOpenTasks') ? document.getElementById('filterOpenTasks').checked : false;
+        const filterCheckbox = document.getElementById('filterOpenTasks');
+        const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
         
-        // Aktuelle Auswahl merken, damit das Dropdown nicht umspringt
         const selectedValue = taskSelect.value; 
 
         taskSelect.innerHTML = '<option value="">-- Erst Händler wählen --</option>';
@@ -1986,25 +1988,17 @@ const allTasks = [
 
         let filteredTasks = allTasks.filter(t => t.v === vendor);
         
-        // Filter für "Nur offene Tasks"
         if (hideCompleted) {
             filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.de));
         }
 
         filteredTasks.forEach(t => {
             const option = document.createElement('option');
-            option.value = t.de; // WICHTIG: Der Value bleibt sauber ohne Häkchen
-            
-            // Zeigt ein Häkchen nur im angezeigten Text, wenn erledigt
-            if (completedTasks.includes(t.de)) {
-                option.text = `✓ ${t.de}`;
-            } else {
-                option.text = t.de;
-            }
+            option.value = t.de; 
+            option.text = completedTasks.includes(t.de) ? `✓ ${t.de}` : t.de;
             taskSelect.appendChild(option);
         });
         
-        // Dropdown-Auswahl wiederherstellen, falls der Task noch in der Liste ist
         if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
             taskSelect.value = selectedValue;
         } else if (currentOpenTask && Array.from(taskSelect.options).some(opt => opt.value === currentOpenTask)) {
@@ -2021,7 +2015,8 @@ const allTasks = [
     function searchTasks() {
         const input = document.getElementById('taskSearchInput').value.toLowerCase();
         const list = document.getElementById('taskList');
-        const hideCompleted = document.getElementById('filterOpenTasks') ? document.getElementById('filterOpenTasks').checked : false;
+        const filterCheckbox = document.getElementById('filterOpenTasks');
+        const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
         
         list.innerHTML = '';
         
@@ -2029,7 +2024,6 @@ const allTasks = [
 
         let filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
 
-        // Filter für "Nur offene Tasks"
         if (hideCompleted) {
             filtered = filtered.filter(t => !completedTasks.includes(t.de));
         }
@@ -2040,7 +2034,6 @@ const allTasks = [
                 const d = document.createElement('div');
                 d.className = 'search-item';
                 
-                // Visuelle Unterscheidung in der Suche (durchgestrichen wenn erledigt)
                 const isDone = completedTasks.includes(t.de);
                 const mark = isDone ? '<span style="color:#7ca35a; margin-right:5px; font-weight:bold;">✓</span>' : '';
                 const styling = isDone ? 'text-decoration: line-through; opacity: 0.5;' : '';
@@ -2059,13 +2052,13 @@ const allTasks = [
     function displayTaskData(name) {
         const task = allTasks.find(t => t.de === name);
         if (task) {
-            currentOpenTask = task.de; // Merkt sich exakt den Namen für das Checkbox-Toggle
+            currentOpenTask = task.de; 
             const isDone = completedTasks.includes(task.de);
             
-            document.getElementById('taskTitle').innerText = task.de;
-            // Durchstreichen, wenn erledigt
-            document.getElementById('taskTitle').style.textDecoration = isDone ? 'line-through' : 'none';
-            document.getElementById('taskTitle').style.opacity = isDone ? '0.6' : '1';
+            const titleEl = document.getElementById('taskTitle');
+            titleEl.innerText = task.de;
+            titleEl.style.textDecoration = isDone ? 'line-through' : 'none';
+            titleEl.style.opacity = isDone ? '0.6' : '1';
             
             document.getElementById('taskNames').innerText = `Englisch: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
             document.getElementById('taskDesc').innerText = task.desc;
@@ -2073,7 +2066,6 @@ const allTasks = [
             document.getElementById('solBtn').style.display = 'block';
             document.getElementById('taskSolution').style.display = 'none';
             
-            // Checkbox anzeigen & Status setzen
             const wrapper = document.getElementById('taskCompleteWrapper');
             if (wrapper) wrapper.style.display = 'block';
             
