@@ -7,6 +7,32 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+        .tool-btn {
+    background-color: #1e1e1e;
+    color: #888;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    margin: 0 3px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.tool-btn:hover {
+    color: #fff;
+    border-color: #666;
+    background-color: #2a2a2a;
+}
+
+.tool-btn.active {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 0 6px rgba(124,163,90,0.3);
+}
+
         /* --- HELI ETA WIDGET --- */
         #heliWidget {
     position: fixed;
@@ -431,11 +457,16 @@
     </div>
 
     <div class="faction-selector">
-        <span style="color: #888; font-size: 0.9rem; margin-right: 15px;">Fraktion wählen:</span>
-        <button class="fac-btn mithras" onclick="setFaction('#7ca35a')" title="Mithras Security Systems">MSS</button>
-        <button class="fac-btn crimson" onclick="setFaction('#b33939')" title="Crimson Shield International">CSI</button>
-        <button class="fac-btn lamang" onclick="setFaction('#227093')" title="Lamang Recovery Initiative">LRI</button>
-    </div>
+    <span style="color: #888; font-size: 0.9rem; margin-right: 15px;">Fraktion wählen:</span>
+    <button class="fac-btn mithras" onclick="setFaction('#7ca35a')" title="Mithras Security Systems">MSS</button>
+    <button class="fac-btn crimson" onclick="setFaction('#b33939')" title="Crimson Shield International">CSI</button>
+    <button class="fac-btn lamang" onclick="setFaction('#227093')" title="Lamang Recovery Initiative">LRI</button>
+    <span style="color: #555; margin: 0 15px;">|</span>
+    <span style="color: #888; font-size: 0.9rem; margin-right: 10px;">Tools:</span>
+    <button class="tool-btn" id="btn-bossSpawnWidget" onclick="toggleWidget('bossSpawnWidget')">☠️ Boss Timer</button>
+    <button class="tool-btn" id="btn-raidNotepad" onclick="toggleWidget('raidNotepad')">📋 Notizblock</button>
+    <button class="tool-btn" id="btn-heliWidget" onclick="toggleWidget('heliWidget')">🚁 Heli</button>
+</div>
 
     <div class="tab-nav">
         <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
@@ -1533,7 +1564,7 @@
     </div>
 
     <!-- BOSS SPAWN TIMER -->
-<div id="bossSpawnWidget">
+<div id="bossSpawnWidget" style="display:none;">
     <div id="bossSpawnHeader">
         ☠️ Boss Spawn Timer
         <span id="bossSpawnToggle" onclick="toggleBossWidget()" style="cursor:pointer; font-size:0.75rem; color:#888; margin-left:8px;">▼</span>
@@ -1544,7 +1575,7 @@
 </div>
 
     <!-- RAID NOTIZBLOCK -->
-<div id="raidNotepad">
+<div id="raidNotepad" style="display:none;">
     <div id="notepadHeader" onclick="toggleNotepad()">
         <div id="notepadTitle">
             📋 Raid-Notizblock
@@ -1566,7 +1597,7 @@
 </div>
 
         <!-- HELI WIDGET -->
-    <div id="heliWidget">
+    <div id="heliWidget" style="display:none;">
     <div id="heliHeader" onclick="document.getElementById('heliWidget').classList.toggle('collapsed')">
     🚁 Heli Fluglotse
     <span class="toggle-icon">▼</span>
@@ -3513,6 +3544,25 @@ window.addEventListener('DOMContentLoaded', () => {
     makeDraggable('raidNotepad');
     makeDraggable('heliWidget');
 });
+
+    function toggleWidget(id) {
+    const widget = document.getElementById(id);
+    const btn = document.getElementById('btn-' + id);
+    
+    if (!widget) return;
+
+    const isVisible = widget.style.display !== 'none';
+
+    if (isVisible) {
+        widget.style.display = 'none';
+        if (btn) btn.classList.remove('active');
+    } else {
+        widget.style.display = 'block';
+        if (btn) btn.classList.add('active');
+        // Widget collapsed-State beim Öffnen entfernen damit es voll aufgeht
+        widget.classList.remove('collapsed');
+    }
+}
 
     // ==============================================================
 // BOSS SPAWN TIMER
