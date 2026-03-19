@@ -7,6 +7,86 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+        /* --- HELI ETA WIDGET --- */
+        #heliWidget {
+            position: fixed;
+            bottom: 20px;
+            left: 7px;
+            z-index: 9997;
+            width: 200px;
+            background: #1e1e1e;
+            border: 1px solid #444;
+            border-top: 3px solid #227093;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        #heliWidget.collapsed #heliBody {
+            display: none;
+        }
+
+        #heliHeader {
+            padding: 8px 12px;
+            font-weight: bold;
+            color: #227093;
+            font-size: 0.85rem;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #heliHeader:hover { background: rgba(255,255,255,0.03); }
+
+        #heliBody {
+            padding: 10px;
+        }
+
+        .heli-select {
+            width: 100%;
+            padding: 6px;
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+        }
+
+        #heliDisplay {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.6rem;
+            color: var(--accent);
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(124, 163, 90, 0.4);
+        }
+
+        .heli-btn-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .heli-btn {
+            flex: 1;
+            padding: 6px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.75rem;
+            transition: filter 0.2s;
+        }
+        .heli-btn:hover { filter: brightness(1.2); }
+        .btn-calc { background: #333; color: #ccc; border: 1px solid #555; }
+        .btn-start { background: var(--accent); color: #fff; }
+        .btn-stop { background: #b33939; color: #fff; }
+
         /* --- RAID NOTIZBLOCK --- */
         #raidNotepad {
             position: fixed;
@@ -1470,6 +1550,50 @@
     </div>
 </div>
 
+        <!-- HELI WIDGET -->
+    <div id="heliWidget">
+    <div id="heliHeader" onclick="document.getElementById('heliWidget').classList.toggle('collapsed')">
+        🚁 Heli Fluglotse
+        <span style="color:#888; font-size:0.75rem;">▼</span>
+    </div>
+    <div id="heliBody">
+        <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:2px;">Startpunkt:</label>
+        <select id="heliStart" class="heli-select" onchange="calcHeliTime()">
+            <option value="0">Base Camp (HQ)</option>
+            <option value="90">Echo (Lumber Yard)</option>
+            <option value="120">Foxtrot (Hunter's Paradise)</option>
+            <option value="135">India (Ban Pa)</option>
+            <option value="165">Kilo (Blue Lagoon)</option>
+            <option value="105">Juliet (YBL-1 Bunker)</option>
+            <option value="210">Delta (Fort Narith)</option>
+            <option value="180">Hotel (Midnight Sapphire)</option>
+            <option value="195">Lima (Tiger Bay)</option>
+            <option value="225">Golf (Ground Zero)</option>
+        </select>
+
+        <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:2px;">Ziel (LZ):</label>
+        <select id="heliEnd" class="heli-select" onchange="calcHeliTime()">
+            <option value="0">Base Camp (HQ)</option>
+            <option value="90">Echo (Lumber Yard)</option>
+            <option value="120">Foxtrot (Hunter's Paradise)</option>
+            <option value="135">India (Ban Pa)</option>
+            <option value="165">Kilo (Blue Lagoon)</option>
+            <option value="105">Juliet (YBL-1 Bunker)</option>
+            <option value="210">Delta (Fort Narith)</option>
+            <option value="180">Hotel (Midnight Sapphire)</option>
+            <option value="195" selected>Lima (Tiger Bay)</option>
+            <option value="225">Golf (Ground Zero)</option>
+        </select>
+
+        <div id="heliDisplay">00:00</div>
+
+        <div class="heli-btn-group">
+            <button class="heli-btn btn-calc" onclick="calcHeliTime()">⏱️ Calc</button>
+            <button id="heliActionBtn" class="heli-btn btn-start" onclick="toggleHeliTimer()">🚀 Start</button>
+        </div>
+    </div>
+</div>
+
 </div> 
 <button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
 
@@ -2868,6 +2992,92 @@
             `;
         }
     }
+
+    // ==============================================================
+    // HELICOPTER ETA CALCULATOR & TIMER
+    // ==============================================================
+    let heliTimerInterval = null;
+    let heliSecondsRemaining = 0;
+
+    // Berechnet die geschätzte Flugzeit
+    function calcHeliTime() {
+        if (heliTimerInterval) return; // Nicht berechnen, wenn Timer gerade läuft
+
+        const startVal = parseInt(document.getElementById('heliStart').value);
+        const endVal = parseInt(document.getElementById('heliEnd').value);
+        
+        // Logik: Unterschied der Entfernungen (simuliert) + Strafzeit, wenn man nicht vom/zum HQ fliegt (Umlenken des Helis)
+        let flightTimeSeconds = Math.abs(startVal - endVal);
+        
+        // Wenn man von einer LZ zu einer anderen LZ fliegt (nicht Basecamp), dauert es durch die Umwege oft etwas länger
+        if (startVal !== 0 && endVal !== 0 && startVal !== endVal) {
+            flightTimeSeconds += 45; 
+        }
+
+        // Mindestflugzeit oder 0, wenn identisch
+        if (startVal === endVal) {
+            flightTimeSeconds = 0;
+        } else if (flightTimeSeconds < 45) {
+            flightTimeSeconds = 45; // Minimaler Transit
+        }
+
+        heliSecondsRemaining = flightTimeSeconds;
+        updateHeliDisplay();
+    }
+
+    // Aktualisiert die Text-Anzeige (MM:SS)
+    function updateHeliDisplay() {
+        const m = Math.floor(heliSecondsRemaining / 60);
+        const s = heliSecondsRemaining % 60;
+        document.getElementById('heliDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    // Startet oder stoppt den Timer
+    function toggleHeliTimer() {
+        const btn = document.getElementById('heliActionBtn');
+        
+        // Wenn Timer läuft -> Stoppen
+        if (heliTimerInterval) {
+            clearInterval(heliTimerInterval);
+            heliTimerInterval = null;
+            btn.textContent = "🚀 Start";
+            btn.className = "heli-btn btn-start";
+            document.getElementById('heliDisplay').style.color = "var(--accent)";
+            calcHeliTime(); // Setzt die Zeit wieder auf den berechneten Ursprungswert zurück
+            return;
+        }
+
+        // Wenn Timer auf 0 steht -> Nichts tun
+        if (heliSecondsRemaining <= 0) {
+            calcHeliTime();
+            if (heliSecondsRemaining <= 0) return;
+        }
+
+        // Timer starten
+        btn.textContent = "🛑 Stop";
+        btn.className = "heli-btn btn-stop";
+        document.getElementById('heliDisplay').style.color = "#ffa500"; // Gelb während dem Flug
+
+        heliTimerInterval = setInterval(() => {
+            heliSecondsRemaining--;
+            updateHeliDisplay();
+
+            if (heliSecondsRemaining <= 0) {
+                // Flug beendet!
+                clearInterval(heliTimerInterval);
+                heliTimerInterval = null;
+                document.getElementById('heliDisplay').textContent = "TOUCHDOWN!";
+                document.getElementById('heliDisplay').style.color = "#ff4c4c"; // Rot bei Ankunft
+                btn.textContent = "↺ Reset";
+                btn.className = "heli-btn btn-calc";
+            }
+        }, 1000);
+    }
+
+    // Beim Start einmal die Standard-Werte durchrechnen
+    window.addEventListener('DOMContentLoaded', () => {
+        calcHeliTime();
+    });
 
     // ==============================================================
     // TASK TRACKER LOGIK (ABSOLUT KUGELSICHER)
