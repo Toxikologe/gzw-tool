@@ -868,7 +868,7 @@
             
             <div id="taskCompleteWrapper" style="display: none; position: absolute; top: 15px; right: 15px;">
                 <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin-top: 0; font-size: 1rem;">
-                    <input type="checkbox" id="taskCompleteCheckbox" onchange="toggleTaskCompletion()" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
+                    <input type="checkbox" id="taskCompleteCheckbox" onclick="toggleTaskCompletion()" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
                     Erledigt
                 </label>
             </div>
@@ -1941,10 +1941,8 @@ const allTasks = [
     }
 
     // ==============================================================
-    // TASK TRACKER LOGIK (KUGELSICHER)
+    // TASK TRACKER LOGIK (FINAL FIX)
     // ==============================================================
-    
-    // Wir stellen sicher, dass es immer ein sauberes Array ist
     let completedTasks = [];
     try {
         completedTasks = JSON.parse(localStorage.getItem('gzw_completed_tasks')) || [];
@@ -1959,37 +1957,26 @@ const allTasks = [
         if (!currentOpenTask) return; // Sicherheits-Check
         
         const checkbox = document.getElementById('taskCompleteCheckbox');
-        const isCompleted = checkbox.checked;
         const titleEl = document.getElementById('taskTitle');
         
-        // Wir holen die Daten bei jedem Klick frisch aus dem Speicher
-        let tasks = [];
-        try {
-            tasks = JSON.parse(localStorage.getItem('gzw_completed_tasks')) || [];
-            if (!Array.isArray(tasks)) tasks = [];
-        } catch(e) {
-            tasks = [];
-        }
-        
-        if (isCompleted) {
-            // Task hinzufügen
-            if (!tasks.includes(currentOpenTask)) {
-                tasks.push(currentOpenTask);
+        if (checkbox.checked) {
+            // Task hinzufügen, wenn er nicht schon drin ist
+            if (!completedTasks.includes(currentOpenTask)) {
+                completedTasks.push(currentOpenTask);
             }
             titleEl.style.textDecoration = 'line-through';
             titleEl.style.opacity = '0.6';
         } else {
-            // Task entfernen (Häkchen rausnehmen)
-            tasks = tasks.filter(t => t !== currentOpenTask);
+            // Task gnadenlos aus dem Array filtern
+            completedTasks = completedTasks.filter(taskName => taskName !== currentOpenTask);
             titleEl.style.textDecoration = 'none';
             titleEl.style.opacity = '1';
         }
         
-        // Globale Variable updaten und sicher speichern
-        completedTasks = tasks;
+        // Im Browser speichern
         localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
         
-        // Listen aktualisieren, ohne den offenen Task zu schließen
+        // Listen im Hintergrund aktualisieren
         refreshTaskList(); 
     }
 
@@ -2012,7 +1999,6 @@ const allTasks = [
 
         let filteredTasks = allTasks.filter(t => t.v === vendor);
         
-        // Filter für "Nur offene Tasks"
         if (hideCompleted) {
             filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.de));
         }
@@ -2024,7 +2010,6 @@ const allTasks = [
             taskSelect.appendChild(option);
         });
         
-        // Dropdown auf dem aktuellen Task halten, falls er noch sichtbar ist
         if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
             taskSelect.value = selectedValue;
         } else if (currentOpenTask && Array.from(taskSelect.options).some(opt => opt.value === currentOpenTask)) {
@@ -2050,7 +2035,6 @@ const allTasks = [
 
         let filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
 
-        // Filter für "Nur offene Tasks"
         if (hideCompleted) {
             filtered = filtered.filter(t => !completedTasks.includes(t.de));
         }
