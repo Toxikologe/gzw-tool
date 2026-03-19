@@ -823,13 +823,36 @@
             </div>
 
             <div>
-                <label for="keySearch">Schlüssel-Datenbank (Key Intel)</label>
+                <label for="keyDropdown">Schlüssel auswählen (Alphabetisch)</label>
+                <select id="keyDropdown" onchange="selectKeyFromDropdown()">
+                    <option value="">-- Schlüssel wählen --</option>
+                </select>
+
+                <label for="keySearch" style="margin-top: 10px;">Oder manuell suchen</label>
                 <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
                 <div id="keyList"></div>
-                <div id="keyContainer" class="info-box" style="margin-top: 10px;">
-                    <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px;">Schlüssel-Info...</div>
+
+                <div id="keyContainer" class="info-box" style="margin-top: 10px; position: relative;">
+                    
+                    <!-- Schlüsselbund Checkbox -->
+                    <div id="keyRingWrapper" style="display:none; position: absolute; top: 12px; right: 12px;">
+                        <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; font-size: 0.9rem; margin-top: 0;">
+                            <input type="checkbox" id="keyOwnedCheckbox" style="width: 18px; height: 18px; margin-right: 6px; margin-top: 0; cursor: pointer;">
+                            🗝️ Besitze ich
+                        </label>
+                    </div>
+
+                    <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px; padding-right: 140px;">Schlüssel-Info...</div>
                     <div id="keyLocation" style="margin-bottom:5px;">Fundort wird hier angezeigt.</div>
-                    <div id="keyEffect">Welche Tür öffnet dieser Schlüssel?</div>
+                    <div id="keyEffect" style="margin-bottom: 10px;">Welche Tür öffnet dieser Schlüssel?</div>
+                    <div id="keyMissionHint" style="display:none; margin-top: 8px; padding: 8px 12px; background: rgba(124,163,90,0.15); border-left: 3px solid var(--accent); border-radius: 4px; font-size: 0.9rem;"></div>
+                </div>
+
+                <!-- Schlüsselbund Übersicht -->
+                <div class="panel-box" style="margin-top: 15px;">
+                    <h3 style="margin-bottom: 8px;">🗝️ Mein Schlüsselbund (<span id="keyRingCount">0</span>)</h3>
+                    <div id="keyRingDisplay" style="color: #888; font-size: 0.9rem;">Noch keine Schlüssel markiert.</div>
+                    <button onclick="clearKeyRing()" style="margin-top: 10px; background: #b33939; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">🗑️ Schlüsselbund leeren</button>
                 </div>
             </div>
         </div>
@@ -1941,6 +1964,211 @@ const allTasks = [
                 list.appendChild(d);
             });
         } else { list.style.display = 'none'; }
+    }
+
+    // ==============================================================
+    // SCHLÜSSEL DROPDOWN + SCHLÜSSELBUND (KEYRING MANAGER)
+    // ==============================================================
+
+    // Schlüsselbund aus localStorage laden
+    let myKeyRing = [];
+    try {
+        const savedKeys = localStorage.getItem('gzw_keyring');
+        if (savedKeys) myKeyRing = JSON.parse(savedKeys);
+        if (!Array.isArray(myKeyRing)) myKeyRing = [];
+    } catch(e) { myKeyRing = []; }
+
+    // Aktuell angezeigter Schlüssel
+    let currentKeyName = "";
+
+    // Dropdown beim Start befüllen (alphabetisch sortiert)
+    function buildKeyDropdown() {
+        const dropdown = document.getElementById('keyDropdown');
+        if (!dropdown) return;
+
+        const sorted = [...allKeys].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+        
+        sorted.forEach(k => {
+            const opt = document.createElement('option');
+            opt.value = k.name;
+            const owned = myKeyRing.includes(k.name);
+            opt.text = owned ? `🗝️ ${k.name}` : k.name;
+            dropdown.appendChild(opt);
+        });
+    }
+
+    // Wird aufgerufen wenn man im Dropdown einen Schlüssel wählt
+    function selectKeyFromDropdown() {
+        const name = document.getElementById('keyDropdown').value;
+        if (!name) return;
+        showKeyData(name);
+    }
+
+    // Zeigt Schlüssel-Daten an (gemeinsame Funktion für Dropdown + Suche)
+    function showKeyData(name) {
+        const key = allKeys.find(k => k.name === name);
+        if (!key) return;
+
+        currentKeyName = key.name;
+
+        document.getElementById('keyTitle').innerText = key.name;
+        document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${key.loc}</span>`;
+        document.getElementById('keyEffect').innerHTML = `Nutzen: ${key.effect}<br>Erwarteter Loot: <span class="highlight">${key.loot}</span>`;
+
+        // Checkbox anzeigen und Status setzen
+        const wrapper = document.getElementById('keyRingWrapper');
+        const checkbox = document.getElementById('keyOwnedCheckbox');
+        if (wrapper) wrapper.style.display = 'block';
+        if (checkbox) {
+            checkbox.checked = myKeyRing.includes(key.name);
+            checkbox.onclick = toggleKeyOwnership;
+        }
+
+        // Missions-Hinweis prüfen
+        checkKeyMissionHint(key.name);
+    }
+
+    // Prüft ob eine Task diesen Schlüssel erwähnt
+    function checkKeyMissionHint(keyName) {
+        const hintBox = document.getElementById('keyMissionHint');
+        
+        // Suche in allen Tasks nach dem Schlüsselnamen
+        const shortName = keyName.replace(' Key', '').replace(' Card', '').toLowerCase();
+        const relatedTasks = allTasks.filter(t => 
+            t.sol.toLowerCase().includes(shortName) || 
+            t.desc.toLowerCase().includes(shortName)
+        );
+
+        const owned = myKeyRing.includes(keyName);
+
+        if (relatedTasks.length > 0) {
+            const taskNames = relatedTasks.map(t => `<strong>${t.de}</strong> (${t.v})`).join(', ');
+            if (owned) {
+                hintBox.style.display = 'block';
+                hintBox.innerHTML = `✅ Du hast diesen Schlüssel! Relevant für: ${taskNames}`;
+                hintBox.style.borderLeftColor = 'var(--accent)';
+                hintBox.style.background = 'rgba(124,163,90,0.15)';
+            } else {
+                hintBox.style.display = 'block';
+                hintBox.innerHTML = `🔒 Tür verschlossen – du hast den Schlüssel noch nicht. Relevant für: ${taskNames}`;
+                hintBox.style.borderLeftColor = '#ffa500';
+                hintBox.style.background = 'rgba(255,165,0,0.1)';
+            }
+        } else {
+            hintBox.style.display = 'none';
+        }
+    }
+
+    // Schlüssel zum Schlüsselbund hinzufügen / entfernen
+    function toggleKeyOwnership() {
+        if (!currentKeyName) return;
+
+        const checkbox = document.getElementById('keyOwnedCheckbox');
+        const isOwned = checkbox.checked;
+
+        if (isOwned) {
+            if (!myKeyRing.includes(currentKeyName)) {
+                myKeyRing.push(currentKeyName);
+            }
+        } else {
+            myKeyRing = myKeyRing.filter(k => k !== currentKeyName);
+        }
+
+        try {
+            localStorage.setItem('gzw_keyring', JSON.stringify(myKeyRing));
+        } catch(e) {}
+
+        // Dropdown-Eintrag aktualisieren
+        updateKeyDropdownEntry(currentKeyName, isOwned);
+
+        // Schlüsselbund-Anzeige aktualisieren
+        renderKeyRing();
+
+        // Missions-Hinweis aktualisieren
+        checkKeyMissionHint(currentKeyName);
+    }
+
+    // Dropdown-Eintrag mit/ohne 🗝️ aktualisieren
+    function updateKeyDropdownEntry(keyName, isOwned) {
+        const dropdown = document.getElementById('keyDropdown');
+        Array.from(dropdown.options).forEach(opt => {
+            if (opt.value === keyName) {
+                opt.text = isOwned ? `🗝️ ${keyName}` : keyName;
+            }
+        });
+    }
+
+    // Schlüsselbund-Übersicht rendern
+    function renderKeyRing() {
+        const display = document.getElementById('keyRingDisplay');
+        const count = document.getElementById('keyRingCount');
+        
+        count.textContent = myKeyRing.length;
+
+        if (myKeyRing.length === 0) {
+            display.innerHTML = '<span style="color: #888;">Noch keine Schlüssel markiert.</span>';
+            return;
+        }
+
+        const sorted = [...myKeyRing].sort((a, b) => a.localeCompare(b, 'de'));
+        display.innerHTML = sorted.map(k => 
+            `<span style="display:inline-block; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:3px 8px; margin:3px; font-size:0.85rem; cursor:pointer;" 
+             onclick="showKeyData('${k.replace(/'/g, "\\'")}'); document.getElementById('keyDropdown').value='${k.replace(/'/g, "\\'")}'"
+             title="Klicken für Details">🗝️ ${k}</span>`
+        ).join('');
+    }
+
+    // Schlüsselbund komplett leeren
+    function clearKeyRing() {
+        if (!confirm("Wirklich alle Schlüssel aus dem Schlüsselbund entfernen?")) return;
+        
+        myKeyRing = [];
+        try { localStorage.removeItem('gzw_keyring'); } catch(e) {}
+
+        // Alle Dropdown-Einträge zurücksetzen
+        const dropdown = document.getElementById('keyDropdown');
+        Array.from(dropdown.options).forEach(opt => {
+            if (opt.value) opt.text = opt.value;
+        });
+
+        // Aktuelle Checkbox zurücksetzen falls sichtbar
+        const checkbox = document.getElementById('keyOwnedCheckbox');
+        if (checkbox) checkbox.checked = false;
+
+        renderKeyRing();
+        if (currentKeyName) checkKeyMissionHint(currentKeyName);
+    }
+
+    // Alte searchKeys Funktion anpassen damit sie showKeyData nutzt
+    const _origSearchKeys = searchKeys;
+    searchKeys = function() {
+        const input = document.getElementById('keySearch').value.toLowerCase();
+        const list = document.getElementById('keyList');
+        list.innerHTML = '';
+        if(input.length < 2) { list.style.display='none'; return; }
+        const filtered = allKeys.filter(k => k.name.toLowerCase().includes(input) || k.loc.toLowerCase().includes(input));
+        if(filtered.length > 0) {
+            list.style.display = 'block';
+            filtered.forEach(k => {
+                const d = document.createElement('div');
+                d.className = 'search-item';
+                const owned = myKeyRing.includes(k.name);
+                d.innerHTML = `${owned ? '🗝️ ' : ''}${k.name} <small style="color:#888">(${k.loc})</small>`;
+                d.onclick = () => {
+                    showKeyData(k.name);
+                    document.getElementById('keyDropdown').value = k.name;
+                    list.style.display = 'none';
+                    document.getElementById('keySearch').value = k.name;
+                };
+                list.appendChild(d);
+            });
+        } else { list.style.display = 'none'; }
+    };
+
+    // Initialisierung beim Laden
+    window.addEventListener('DOMContentLoaded', () => {
+        buildKeyDropdown();
+        renderKeyRing();
     }
 
     // ==============================================================
