@@ -2104,12 +2104,13 @@ const allTasks = [
         
         // Checkbox-Bereich anzeigen und Status korrekt setzen
         const wrapper = document.getElementById('taskCompleteWrapper');
-const checkbox = document.getElementById('taskCompleteCheckbox');
-if (wrapper) wrapper.style.display = 'block';
-if (checkbox) {
-    checkbox.checked = completedTasks.includes(task.de);
-    checkbox.onclick = toggleTaskCompletion;
-}
+        const checkbox = document.getElementById('taskCompleteCheckbox');
+        if (wrapper) wrapper.style.display = 'block';
+        if (checkbox) {
+            checkbox.checked = completedTasks.includes(task.de);
+            checkbox.onclick = toggleTaskCompletion;
+        }
+    }
 
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
