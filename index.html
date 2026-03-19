@@ -1331,14 +1331,20 @@
     <div id="tab-keep-sell" class="tab-content">
         <h2>📦 Quest-Loot Tracker (Keep or Sell)</h2>
         <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 15px;">
-            Suchst du ein Item und weißt nicht, ob du es behalten oder zu Geld machen sollst? Tippe es ein, um zu prüfen, ob du es für Missionen aufheben musst!
+            Suchst du ein Item und weißt nicht, ob du es behalten oder zu Geld machen sollst? Wähle es aus der Liste oder tippe es ein, um zu prüfen, ob du es für Missionen aufheben musst!
         </p>
         
+        <label for="questItemDropdown" style="margin-top: 0;">Item aus Liste wählen:</label>
+        <select id="questItemDropdown" onchange="selectQuestItemFromDropdown()" style="margin-bottom: 15px;">
+            <option value="">-- Wähle ein Item --</option>
+        </select>
+        
+        <label for="questItemSearch" style="margin-top: 0;">Oder manuell suchen:</label>
         <input type="text" id="questItemSearch" placeholder="z.B. Autobatterie, Toolset, Verbandskasten..." onkeyup="searchQuestItems()">
         
         <div id="questItemList" style="margin-top: 15px;">
             <div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">
-                Tippe einen Item-Namen ein...
+                Wähle ein Item oder tippe den Namen ein...
             </div>
         </div>
     </div>
