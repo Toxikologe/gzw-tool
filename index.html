@@ -9,19 +9,20 @@
 
         /* --- HELI ETA WIDGET --- */
         #heliWidget {
-            position: fixed;
-            bottom: 20px;
-            left: 7px;
-            z-index: 9997;
-            width: 200px;
-            background: #1e1e1e;
-            border: 1px solid #444;
-            border-top: 3px solid #227093;
-            border-radius: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
+    position: fixed;
+    bottom: 20px;
+    left: 7px;
+    z-index: 9997;
+    width: 200px;
+    height: auto;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    border-top: 3px solid #227093;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
 
         #heliWidget.collapsed #heliBody {
             display: none;
@@ -3431,18 +3432,18 @@ function makeDraggable(elementId) {
     if (!el) return;
 
     let isDragging = false;
+    let hasMoved = false;
     let startX, startY, startLeft, startTop;
 
-    // Header als Drag-Handle nehmen
     const header = el.querySelector('[id$="Header"], [id$="notepadHeader"]') || el;
 
     header.style.cursor = 'grab';
 
     header.addEventListener('mousedown', (e) => {
-        // Nicht draggen wenn man auf einen Button klickt
-        if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SPAN' && e.target.id === 'bossSpawnToggle') return;
+        if (e.target.tagName === 'BUTTON') return;
 
         isDragging = true;
+        hasMoved = false;
         startX = e.clientX;
         startY = e.clientY;
 
@@ -3451,7 +3452,7 @@ function makeDraggable(elementId) {
         startTop = rect.top;
 
         header.style.cursor = 'grabbing';
-        e.preventDefault();
+        // KEIN e.preventDefault() mehr hier!
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -3460,16 +3461,23 @@ function makeDraggable(elementId) {
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
 
+        // Erst ab 5px Bewegung als "Drag" zählen
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+            hasMoved = true;
+        }
+
+        if (!hasMoved) return;
+
         let newLeft = startLeft + dx;
         let newTop = startTop + dy;
 
-        // Bildschirmränder respektieren
         newLeft = Math.max(0, Math.min(window.innerWidth - el.offsetWidth, newLeft));
         newTop = Math.max(0, Math.min(window.innerHeight - el.offsetHeight, newTop));
 
         el.style.left = newLeft + 'px';
         el.style.top = newTop + 'px';
         el.style.right = 'auto';
+        el.style.bottom = 'auto';
     });
 
     document.addEventListener('mouseup', () => {
@@ -3477,16 +3485,16 @@ function makeDraggable(elementId) {
         isDragging = false;
         header.style.cursor = 'grab';
 
-        // Position in localStorage speichern
-        try {
-            localStorage.setItem(`gzw_pos_${elementId}`, JSON.stringify({
-                left: el.style.left,
-                top: el.style.top
-            }));
-        } catch(e) {}
+        if (hasMoved) {
+            try {
+                localStorage.setItem(`gzw_pos_${elementId}`, JSON.stringify({
+                    left: el.style.left,
+                    top: el.style.top
+                }));
+            } catch(e) {}
+        }
     });
 
-    // Gespeicherte Position laden
     try {
         const saved = localStorage.getItem(`gzw_pos_${elementId}`);
         if (saved) {
@@ -3494,6 +3502,7 @@ function makeDraggable(elementId) {
             el.style.left = pos.left;
             el.style.top = pos.top;
             el.style.right = 'auto';
+            el.style.bottom = 'auto';
         }
     } catch(e) {}
 }
