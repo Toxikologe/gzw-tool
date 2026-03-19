@@ -2413,8 +2413,9 @@ const allTasks = [
     
     // Globale Variablen für den State
     let completedTasks = [];
-    let currentTaskNameRaw = ""; // Speichert den reinen Task-Namen OHNE HTML oder Häkchen
-
+    let currentTaskNameRaw = "";
+    let currentOpenTask = ""; // Alias für toggleTaskCompletion
+    
     // Lade gespeicherte Tasks beim Start
     try {
         const saved = localStorage.getItem('gzw_completed_tasks');
@@ -2550,7 +2551,8 @@ const allTasks = [
         if (!task) return;
 
         // Speichere den REINEN Namen für die Checkbox-Logik
-        currentTaskNameRaw = task.de; 
+        currentTaskNameRaw = task.de;
+        currentOpenTask = task.de;
         
         const isDone = completedTasks.includes(task.de);
         
