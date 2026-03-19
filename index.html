@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+        <!-- BOSS SPAWN TIMER -->
+<div id="bossSpawnWidget">
+    <div id="bossSpawnHeader">
+        ☠️ Boss Spawn Timer
+        <span id="bossSpawnToggle" onclick="toggleBossWidget()" style="cursor:pointer; font-size:0.75rem; color:#888; margin-left:8px;">▼</span>
+    </div>
+    <div id="bossSpawnBody">
+        <div id="bossTimerList"></div>
+    </div>
+</div>
+
         /* --- RAID NOTIZBLOCK --- */
         #raidNotepad {
             position: fixed;
@@ -124,6 +135,101 @@
             margin-top: 5px;
             min-height: 14px;
         }
+
+        /* --- BOSS SPAWN TIMER --- */
+#bossSpawnWidget {
+    position: fixed;
+    top: 20px;
+    left: 7px;
+    z-index: 9997;
+    width: 200px;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    border-top: 3px solid #ff4c4c;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    font-size: 0.8rem;
+}
+
+#bossSpawnWidget.collapsed #bossSpawnBody {
+    display: none;
+}
+
+#bossSpawnHeader {
+    padding: 8px 12px;
+    font-weight: bold;
+    color: #ff4c4c;
+    font-size: 0.85rem;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+#bossSpawnBody {
+    padding: 6px 8px 8px 8px;
+}
+
+.boss-timer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 4px;
+    border-bottom: 1px solid #2a2a2a;
+    gap: 6px;
+}
+
+.boss-timer-row:last-child {
+    border-bottom: none;
+}
+
+.boss-timer-name {
+    color: #ccc;
+    font-size: 0.75rem;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.boss-timer-display {
+    font-weight: bold;
+    font-size: 0.8rem;
+    min-width: 38px;
+    text-align: center;
+    color: #888;
+}
+
+.boss-timer-display.active {
+    color: #ffa500;
+}
+
+.boss-timer-display.ready {
+    color: #7ca35a;
+}
+
+.boss-kill-btn {
+    background: #b33939;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.boss-kill-btn:hover {
+    background: #e05c2a;
+}
+
+.boss-kill-btn.ready-btn {
+    background: #2a4a2a;
+    color: #7ca35a;
+    border: 1px solid #7ca35a;
+}
             
         /* --- GLOBALE FARB-VARIABLE --- */
         :root {
@@ -2958,6 +3064,103 @@
         nameTitle.innerText = f.name;
         mottoText.innerText = `Motto: "${f.motto}"`;
     }
+
+    // ==============================================================
+// BOSS SPAWN TIMER
+// ==============================================================
+
+const bossSpawnData = [
+    { id: "market",   name: "🏙️ Market Boss",     timer: 15 * 60 },
+    { id: "lumber",   name: "🪚 Lumber Boss",      timer: 15 * 60 },
+    { id: "ybl",      name: "🏚️ YBL Rebel",        timer: 15 * 60 },
+    { id: "hunters",  name: "🎯 HP Commander",     timer: 15 * 60 },
+    { id: "malo",     name: "🌊 Malo (Lagoon)",     timer: 20 * 60 },
+    { id: "banpa",    name: "🏘️ Ban Pa Elder",      timer: 15 * 60 },
+    { id: "general",  name: "🏯 General Pa",        timer: 25 * 60 },
+    { id: "midnight", name: "🏨 LAF Commander",     timer: 20 * 60 },
+    { id: "tiger",    name: "🐯 Tiger Bay Boss",    timer: 20 * 60 },
+    { id: "airfield", name: "✈️ Airfield Boss",     timer: 25 * 60 },
+    { id: "viper",    name: "🐍 Viper",             timer: 15 * 60 },
+    { id: "golden",   name: "💰 Golden Boy",        timer: 20 * 60 },
+];
+
+let bossTimers = {}; // { id: { endTime: timestamp } }
+
+function toggleBossWidget() {
+    document.getElementById('bossSpawnWidget').classList.toggle('collapsed');
+}
+
+function buildBossTimerList() {
+    const list = document.getElementById('bossTimerList');
+    list.innerHTML = '';
+
+    bossSpawnData.forEach(boss => {
+        const row = document.createElement('div');
+        row.className = 'boss-timer-row';
+        row.id = `boss-row-${boss.id}`;
+
+        row.innerHTML = `
+            <span class="boss-timer-name" title="${boss.name}">${boss.name}</span>
+            <span class="boss-timer-display" id="boss-time-${boss.id}">–:––</span>
+            <button class="boss-kill-btn" id="boss-btn-${boss.id}" onclick="bossKilled('${boss.id}')">✕ Tot</button>
+        `;
+        list.appendChild(row);
+    });
+}
+
+function bossKilled(id) {
+    const boss = bossSpawnData.find(b => b.id === id);
+    if (!boss) return;
+
+    const endTime = Date.now() + boss.timer * 1000;
+    bossTimers[id] = { endTime };
+
+    const btn = document.getElementById(`boss-btn-${id}`);
+    if (btn) {
+        btn.textContent = '↺ Reset';
+        btn.classList.remove('ready-btn');
+    }
+}
+
+function updateBossTimers() {
+    const now = Date.now();
+
+    bossSpawnData.forEach(boss => {
+        const display = document.getElementById(`boss-time-${boss.id}`);
+        const btn = document.getElementById(`boss-btn-${boss.id}`);
+        if (!display) return;
+
+        const data = bossTimers[boss.id];
+
+        if (!data) {
+            display.textContent = '–:––';
+            display.className = 'boss-timer-display';
+            return;
+        }
+
+        const remaining = Math.max(0, Math.floor((data.endTime - now) / 1000));
+
+        if (remaining <= 0) {
+            display.textContent = '✅ SP!';
+            display.className = 'boss-timer-display ready';
+            if (btn) {
+                btn.textContent = '✕ Tot';
+                btn.classList.add('ready-btn');
+            }
+        } else {
+            const m = Math.floor(remaining / 60);
+            const s = remaining % 60;
+            display.textContent = `${m}:${String(s).padStart(2, '0')}`;
+            display.className = 'boss-timer-display active';
+        }
+    });
+}
+
+// Beim Laden initialisieren
+window.addEventListener('DOMContentLoaded', () => {
+    buildBossTimerList();
+    setInterval(updateBossTimers, 1000);
+});
 </script>
 </body>
 </html>
