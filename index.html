@@ -3103,6 +3103,7 @@ function buildBossTimerList() {
             <span class="boss-timer-name" title="${boss.name}">${boss.name}</span>
             <span class="boss-timer-display" id="boss-time-${boss.id}">–:––</span>
             <button class="boss-kill-btn" id="boss-btn-${boss.id}" onclick="bossKilled('${boss.id}')">✕ Tot</button>
+            <button class="boss-cancel-btn" id="boss-cancel-${boss.id}" onclick="bossCancel('${boss.id}')" style="display:none;">✕</button>
         `;
         list.appendChild(row);
     });
