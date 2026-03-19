@@ -348,6 +348,7 @@
         <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ & Bosse</button>
         <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
         <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
+        <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Keep or Sell</button>
         <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
         <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
         <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
@@ -1319,6 +1320,21 @@
                     <div id="keyRingDisplay" style="color: #888; font-size: 0.9rem;">Noch keine Schlüssel markiert.</div>
                     <button onclick="clearKeyRing()" style="margin-top: 10px; background: #b33939; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">🗑️ Schlüsselbund leeren</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-keep-sell" class="tab-content">
+        <h2>📦 Quest-Loot Tracker (Keep or Sell)</h2>
+        <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 15px;">
+            Suchst du ein Item und weißt nicht, ob du es behalten oder zu Geld machen sollst? Tippe es ein, um zu prüfen, ob du es für Missionen aufheben musst!
+        </p>
+        
+        <input type="text" id="questItemSearch" placeholder="z.B. Autobatterie, Toolset, Verbandskasten..." onkeyup="searchQuestItems()">
+        
+        <div id="questItemList" style="margin-top: 15px;">
+            <div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">
+                Tippe einen Item-Namen ein...
             </div>
         </div>
     </div>
@@ -2750,6 +2766,67 @@
         buildKeyDropdown();
         renderKeyRing();
     });
+
+    // ==============================================================
+    // QUEST ITEM DATENBANK (KEEP OR SELL)
+    // ==============================================================
+    const questItemsDb = [
+        { name: "Verbandskasten / IFAK", qty: 3, quest: "Nachschubmangel (Handshake)" },
+        { name: "Werkzeugset / Toolset", qty: 5, quest: "Tooling Up (3x, Artisan), The Builder (1x, Artisan), Lines of Communication (1x, Handshake)" },
+        { name: "Autobatterie", qty: 4, quest: "Parts Needed (2x, Artisan), Mechanic's Trouble (2x, Artisan)" },
+        { name: "Zündkerze", qty: 2, quest: "Mechanic's Trouble (Artisan)" },
+        { name: "Kupferkabel", qty: 5, quest: "Scrapyard (Artisan)" },
+        { name: "Holzstatue", qty: 3, quest: "Hazardous Treasures (Artisan)" },
+        { name: "Panzertape / Duct Tape", qty: 5, quest: "Supply Shortage (3x, Artisan), The Builder (2x, Artisan)" },
+        { name: "Nägel", qty: 2, quest: "Supply Shortage (Artisan)" },
+        { name: "Morphin-Injektor", qty: 5, quest: "Medical Supplies (Lab Rat)" },
+        { name: "Tourniquet (CAT)", qty: 5, quest: "Vital Signs (Lab Rat)" },
+        { name: "Benzinkanister (Gas Can / Rot)", qty: 2, quest: "Fuel Run (Artisan)" },
+        { name: "M4A1 Sturmgewehr", qty: 4, quest: "Brothers in Arms (2x, Gunny), In The Right Hands (2x, Turncoat)" },
+        { name: "MRE (Kampfration)", qty: 5, quest: "Supply Squeeze (Gunny)" },
+        { name: "Unmodifizierte AKMN", qty: "Einige", quest: "Save the Rebellion (Artisan)" },
+        { name: "Beweise / Dokumente", qty: "Situativ", quest: "Fast jeder Händler (Quest-Items niemals wegwerfen!)" }
+    ];
+
+    function searchQuestItems() {
+        const input = document.getElementById('questItemSearch').value.toLowerCase();
+        const list = document.getElementById('questItemList');
+        list.innerHTML = '';
+        
+        if (input.length < 2) {
+            list.innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">Tippe mindestens 2 Buchstaben ein...</div>';
+            return;
+        }
+
+        const filtered = questItemsDb.filter(i => i.name.toLowerCase().includes(input));
+
+        if (filtered.length > 0) {
+            filtered.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'panel-box';
+                box.style.marginBottom = '10px';
+                box.style.borderTopColor = '#ffcc00'; // Warn-Gelb
+                box.innerHTML = `
+                    <h3 style="color: #ffcc00; margin-top: 0; font-size: 1.2rem;">⚠️ KEEP! (Behalten)</h3>
+                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; color: #fff;">${item.name}</div>
+                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
+                        <strong>Benötigte Menge gesamt:</strong> <span style="color: #ffcc00; font-weight: bold;">${item.qty}</span><br>
+                        <strong>Wird gebraucht für:</strong> ${item.quest}
+                    </div>
+                `;
+                list.appendChild(box);
+            });
+        } else {
+            list.innerHTML = `
+                <div class="panel-box" style="border-top: 4px solid #b33939;">
+                    <h3 style="color: #b33939; margin-top: 0; font-size: 1.2rem;">💰 SELL! (Verkaufen / Nutzen)</h3>
+                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
+                        Aktuell wird <strong>"${document.getElementById('questItemSearch').value}"</strong> für keine bekannte Sammel-Quest benötigt. Du kannst es zu Geld machen oder selbst ausrüsten.
+                    </div>
+                </div>
+            `;
+        }
+    }
 
     // ==============================================================
     // TASK TRACKER LOGIK (ABSOLUT KUGELSICHER)
