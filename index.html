@@ -1941,31 +1941,55 @@ const allTasks = [
     }
 
     // ==============================================================
-    // TASK TRACKER LOGIK
+    // TASK TRACKER LOGIK (KUGELSICHER)
     // ==============================================================
-    let completedTasks = JSON.parse(localStorage.getItem('gzw_completed_tasks')) || [];
-    let currentOpenTask = ""; // Merkt sich den offenen Task fehlerfrei
+    
+    // Wir stellen sicher, dass es immer ein sauberes Array ist
+    let completedTasks = [];
+    try {
+        completedTasks = JSON.parse(localStorage.getItem('gzw_completed_tasks')) || [];
+        if (!Array.isArray(completedTasks)) completedTasks = [];
+    } catch(e) {
+        completedTasks = [];
+    }
+    
+    let currentOpenTask = ""; 
 
     function toggleTaskCompletion() {
-        if (!currentOpenTask) return;
+        if (!currentOpenTask) return; // Sicherheits-Check
         
-        const isCompleted = document.getElementById('taskCompleteCheckbox').checked;
+        const checkbox = document.getElementById('taskCompleteCheckbox');
+        const isCompleted = checkbox.checked;
         const titleEl = document.getElementById('taskTitle');
         
+        // Wir holen die Daten bei jedem Klick frisch aus dem Speicher
+        let tasks = [];
+        try {
+            tasks = JSON.parse(localStorage.getItem('gzw_completed_tasks')) || [];
+            if (!Array.isArray(tasks)) tasks = [];
+        } catch(e) {
+            tasks = [];
+        }
+        
         if (isCompleted) {
-            if (!completedTasks.includes(currentOpenTask)) {
-                completedTasks.push(currentOpenTask);
+            // Task hinzufügen
+            if (!tasks.includes(currentOpenTask)) {
+                tasks.push(currentOpenTask);
             }
-            // Visuelles Feedback sofort setzen, ohne die ganze Box neu zu laden
             titleEl.style.textDecoration = 'line-through';
             titleEl.style.opacity = '0.6';
         } else {
-            completedTasks = completedTasks.filter(t => t !== currentOpenTask);
+            // Task entfernen (Häkchen rausnehmen)
+            tasks = tasks.filter(t => t !== currentOpenTask);
             titleEl.style.textDecoration = 'none';
             titleEl.style.opacity = '1';
         }
         
+        // Globale Variable updaten und sicher speichern
+        completedTasks = tasks;
         localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
+        
+        // Listen aktualisieren, ohne den offenen Task zu schließen
         refreshTaskList(); 
     }
 
@@ -1988,6 +2012,7 @@ const allTasks = [
 
         let filteredTasks = allTasks.filter(t => t.v === vendor);
         
+        // Filter für "Nur offene Tasks"
         if (hideCompleted) {
             filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.de));
         }
@@ -1999,6 +2024,7 @@ const allTasks = [
             taskSelect.appendChild(option);
         });
         
+        // Dropdown auf dem aktuellen Task halten, falls er noch sichtbar ist
         if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
             taskSelect.value = selectedValue;
         } else if (currentOpenTask && Array.from(taskSelect.options).some(opt => opt.value === currentOpenTask)) {
@@ -2024,6 +2050,7 @@ const allTasks = [
 
         let filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
 
+        // Filter für "Nur offene Tasks"
         if (hideCompleted) {
             filtered = filtered.filter(t => !completedTasks.includes(t.de));
         }
