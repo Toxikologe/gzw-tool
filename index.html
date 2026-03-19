@@ -3099,7 +3099,7 @@ const bossSpawnData = [
     { id: "golden",   name: "💰 Golden Boy",        timer: 20 * 60 },
 ];
 
-let bossTimers = {}; // { id: { endTime: timestamp } }
+let bossTimers = {};
 
 function toggleBossWidget() {
     document.getElementById('bossSpawnWidget').classList.toggle('collapsed');
@@ -3136,67 +3136,10 @@ function bossKilled(id) {
         btn.textContent = '↺ Reset';
         btn.classList.remove('ready-btn');
     }
-}
 
-function updateBossTimers() {
-    const now = Date.now();
-
-    bossSpawnData.forEach(boss => {
-        const display = document.getElementById(`boss-time-${boss.id}`);
-        const btn = document.getElementById(`boss-btn-${boss.id}`);
-        if (!display) return;
-
-        const data = bossTimers[boss.id];
-
-        if (!data) {
-            display.textContent = '–:––';
-            display.className = 'boss-timer-display';
-            return;
-        }
-
-        const remaining = Math.max(0, Math.floor((data.endTime - now) / 1000));
-
-        if (remaining <= 0) {
-            display.textContent = '✅ SP!';
-            display.className = 'boss-timer-display ready';
-            if (btn) {
-                btn.textContent = '✕ Tot';
-                btn.classList.remove('ready-btn');
-            }
-            // Timer automatisch löschen nach Ablauf
-            delete bossTimers[boss.id];
-            
-        } else {
-            const m = Math.floor(remaining / 60);
-            const s = remaining % 60;
-            display.textContent = `${m}:${String(s).padStart(2, '0')}`;
-            display.className = 'boss-timer-display active';
-        }
-    });
-}
-
-// Timer starten
-    const endTime = Date.now() + boss.timer * 1000;
-    bossTimers[id] = { endTime };
-
-    if (btn) {
-        btn.textContent = '↺ Reset';
-        btn.classList.remove('ready-btn');
-    }
-    // Cancel-Button einblenden
     const cancelBtn = document.getElementById(`boss-cancel-${id}`);
     if (cancelBtn) cancelBtn.style.display = 'inline-block';
-
-    if (remaining <= 0) {
-        display.textContent = '✅ SP!';
-        display.className = 'boss-timer-display ready';
-        if (btn) {
-            btn.textContent = '✕ Tot';
-            btn.classList.remove('ready-btn');
-        }
-        const cancelBtn = document.getElementById(`boss-cancel-${boss.id}`);
-        if (cancelBtn) cancelBtn.style.display = 'none';
-        delete bossTimers[boss.id];
+}
 
 function bossCancel(id) {
     delete bossTimers[id];
@@ -3216,7 +3159,43 @@ function bossCancel(id) {
     }
 }
 
-// Beim Laden initialisieren
+function updateBossTimers() {
+    const now = Date.now();
+
+    bossSpawnData.forEach(boss => {
+        const display = document.getElementById(`boss-time-${boss.id}`);
+        const btn = document.getElementById(`boss-btn-${boss.id}`);
+        const cancelBtn = document.getElementById(`boss-cancel-${boss.id}`);
+        if (!display) return;
+
+        const data = bossTimers[boss.id];
+
+        if (!data) {
+            display.textContent = '–:––';
+            display.className = 'boss-timer-display';
+            return;
+        }
+
+        const remaining = Math.max(0, Math.floor((data.endTime - now) / 1000));
+
+        if (remaining <= 0) {
+            display.textContent = '✅ SP!';
+            display.className = 'boss-timer-display ready';
+            if (btn) {
+                btn.textContent = '✕ Tot';
+                btn.classList.remove('ready-btn');
+            }
+            if (cancelBtn) cancelBtn.style.display = 'none';
+            delete bossTimers[boss.id];
+        } else {
+            const m = Math.floor(remaining / 60);
+            const s = remaining % 60;
+            display.textContent = `${m}:${String(s).padStart(2, '0')}`;
+            display.className = 'boss-timer-display active';
+        }
+    });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     buildBossTimerList();
     setInterval(updateBossTimers, 1000);
