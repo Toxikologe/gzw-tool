@@ -575,30 +575,56 @@
             gap: 15px;
         }
         
-        /* --- YOUTUBE BUTTON STYLING (Identisch zu den Fac-Btns) --- */
-        .judas-btn {
+        /* NEUER UNIFORMER DESIGN-STANDARD (Basierend auf Pater Judas-Button) */
+        .fac-btn, .judas-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             background-color: #1a1a1a;
-            color: #666; /* Exakt wie die inaktiven Fraktionen */
-            border: 2px solid #333;
-            padding: 8px 20px; /* Gleiche Größe wie die Fraktionen */
+            color: #888; /* Standard Grau-Text, etwas heller */
+            border: 2px solid #333; /* Dunkle Basis-Border */
+            padding: 8px 20px;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 0.95rem; /* Gleiche Schriftgröße */
+            font-size: 0.95rem;
             font-weight: bold;
             text-transform: uppercase;
             text-decoration: none; 
             transition: all 0.3s ease;
             box-sizing: border-box;
+            line-height: normal;
         }
 
+        /* Der Standard-Hover-Effekt für Pater Judas (Bleibt Rot/Pink wie im Bild) */
         .judas-btn:hover { 
             color: #fff; 
-            border-color: #ff0000; /* YouTube Rot */
+            border-color: #ff0000; /* Der knackige Rot-Ton aus dem Bild */
             background-color: rgba(255, 0, 0, 0.1); 
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2); 
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2); /* DER COOLEN INNER-GLOW-EFFEKT */
+        }
+
+        /* Mithras (Grün) */
+        .fac-btn.mithras:hover, .fac-btn.mithras.active {
+            color: #fff;
+            border-color: #7ca35a;
+            background-color: rgba(124, 163, 90, 0.1);
+            box-shadow: inset 0 0 10px rgba(124, 163, 90, 0.2); /* Grüner Glow */
+        }
+
+        /* Crimson (Rot) */
+        .fac-btn.crimson:hover, .fac-btn.crimson.active {
+            color: #fff;
+            border-color: #b33939;
+            background-color: rgba(179, 57, 57, 0.1);
+            box-shadow: inset 0 0 10px rgba(179, 57, 57, 0.2); /* Roter Glow */
+        }
+
+        /* Lamang (Blau) */
+        .fac-btn.lamang:hover, .fac-btn.lamang.active {
+            color: #fff;
+            border-color: #227093;
+            background-color: rgba(34, 112, 147, 0.1);
+            box-shadow: inset 0 0 10px rgba(34, 112, 147, 0.2); /* Blauer Glow */
         }
         
         /* Aktiver Faction Status */
