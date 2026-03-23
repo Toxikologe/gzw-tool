@@ -4217,10 +4217,18 @@ function updateBossTimers() {
     });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    buildBossTimerList();
-    setInterval(updateBossTimers, 1000);
-});
+// Beim Laden initialisieren
+    window.addEventListener('DOMContentLoaded', () => {
+        buildKeyDropdown();
+        renderKeyRing();
+        buildQuestItemDropdown();
+        calcLoadout();
+        calcHeliTime();
+        buildBossTimerList();
+        
+        // --- NEU HINZUGEFÜGT ---
+        fetchLatestNews(); 
+    });
 </script>
 </body>
 </html>
