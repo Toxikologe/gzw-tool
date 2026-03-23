@@ -4516,14 +4516,14 @@ function updateBossTimers() {
         // Militärische Monatsabkürzungen (Englisch)
         const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
         
-        // Hole die UTC (Zulu) Werte
-        const day = String(now.getUTCDate()).padStart(2, '0');
-        const month = months[now.getUTCMonth()];
-        const year = now.getUTCFullYear();
+        // Hole die LOKALEN Werte deines Systems (GMT+1)
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
         
-        const hours = String(now.getUTCHours()).padStart(2, '0');
-        const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-        const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
 
         // Text im Terminal aktualisieren
         timeDisplay.textContent = `DATE: ${day} ${month} ${year} | TIME: ${hours}:${minutes}:${seconds} ZULU`;
