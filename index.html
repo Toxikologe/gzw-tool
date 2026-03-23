@@ -4050,7 +4050,7 @@ window.addEventListener('DOMContentLoaded', () => {
         resultBox.innerHTML = routeHtml + availableHtml;
     }
 
-    // ==============================================================
+   // ==============================================================
     // DYNAMISCHER NEWS-FETCHER (Steam Offiziell + Auto-Übersetzung)
     // ==============================================================
     
@@ -4080,37 +4080,79 @@ window.addEventListener('DOMContentLoaded', () => {
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
 
         try {
+            // Zeige Lade-Status, während Google übersetzt
+            newsContainer.innerHTML = `
+                <h3 style="margin-top: 0; color: #ff4c4c;">🚨 ENTSCHLÜSSELE TRANSMISSION...</h3>
+                <p style="color: #ccc;">Analysiere und übersetze die neuesten Intel-Daten von Steam...</p>
+            `;
+
             const response = await fetch(apiUrl);
             const data = await response.json();
 
             if (data.status === 'ok' && data.items.length > 0) {
+                // 1. ALLERNEUESTE NEWS (Immer als Headline)
                 const latestItem = data.items[0];
-                const pubDate = new Date(latestItem.pubDate);
-                const dateString = pubDate.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                const pubDate = new Date(latestItem.pubDate).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
                 let snippet = latestItem.description.replace(/(<([^>]+)>)/gi, "").replace(/&quot;/g, '"'); 
                 if (snippet.length > 200) snippet = snippet.substring(0, 200) + "...";
 
-                // Zeige Lade-Status, während Google übersetzt
-                newsContainer.innerHTML = `
-                    <h3 style="margin-top: 0; color: #ff4c4c;">🚨 ENTSCHLÜSSELE TRANSMISSION...</h3>
-                    <p style="color: #ccc;">Übersetze Daten ins Deutsche...</p>
-                `;
-
-                // Hole die deutsche Übersetzung für Titel und Text
                 const translatedTitle = await translateToGerman(latestItem.title);
                 const translatedSnippet = await translateToGerman(snippet);
 
-                // Das fertige, komplett deutsche Ergebnis rendern
+                // 2. ÄLTERE ABER WICHTIGE NEWS FILTERN
+                // Wir scannen die nächsten 5 Posts auf diese Schlüsselwörter:
+                const keywords = ["update", "patch", "stream", "devlog", "release", "wipe", "spearhead", "0.4", "hotfix"];
+                let importantItemsHTML = "";
+                let importantFound = 0;
+
+                const olderItems = data.items.slice(1, 6); // Hole Post 2 bis 6
+
+                for (let item of olderItems) {
+                    const titleLower = item.title.toLowerCase();
+                    const hasKeyword = keywords.some(kw => titleLower.includes(kw));
+                    
+                    if (hasKeyword && importantFound < 3) { // Maximal die letzten 3 wichtigen anzeigen
+                        const itemDate = new Date(item.pubDate).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+                        const transTitle = await translateToGerman(item.title);
+                        
+                        importantItemsHTML += `
+                            <li style="margin-bottom: 6px;">
+                                <span style="color: #ffcc00; font-weight: bold;">[${itemDate}]</span> 
+                                <a href="${item.link}" target="_blank" style="color: #ccc; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#ccc'">
+                                    ${transTitle}
+                                </a>
+                            </li>
+                        `;
+                        importantFound++;
+                    }
+                }
+
+                // Extra-HTML-Block für die wichtigen Termine zusammenbauen
+                let extraSection = "";
+                if (importantFound > 0) {
+                    extraSection = `
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #444;">
+                            <h4 style="margin-top: 0; margin-bottom: 8px; color: #ffa500; font-size: 0.95rem;">📌 Wichtige Ankündigungen & Termine:</h4>
+                            <ul style="margin: 0; padding-left: 20px; font-size: 0.85rem; color: #aaa;">
+                                ${importantItemsHTML}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                // Das fertige HTML rendern
                 newsContainer.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
-                        <h3 style="margin-top: 0; margin-bottom: 10px; color: #ff4c4c;">🚨 BREAKING: ${translatedTitle}</h3>
-                        <span style="font-size: 0.75rem; color: #ffcc00; background: rgba(255,204,0,0.15); padding: 3px 6px; border-radius: 4px; white-space: nowrap;">📅 ${dateString}</span>
+                        <h3 style="margin-top: 0; margin-bottom: 10px; color: #ff4c4c;">🚨 LATEST: ${translatedTitle}</h3>
+                        <span style="font-size: 0.75rem; color: #ffcc00; background: rgba(255,204,0,0.15); padding: 3px 6px; border-radius: 4px; white-space: nowrap;">📅 ${pubDate}</span>
                     </div>
                     <p style="margin-top: 0; color: #ccc; line-height: 1.5; font-size: 0.95rem;">${translatedSnippet}</p>
                     <a href="${latestItem.link}" target="_blank" style="display: inline-block; margin-top: 8px; background: #b33939; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.85rem; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#e05c2a'" onmouseout="this.style.backgroundColor='#b33939'">
                         Originalbericht auf Steam öffnen 🔗
                     </a>
+                    
+                    ${extraSection}
                 `;
             } else {
                 throw new Error("Keine News im Feed.");
