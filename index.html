@@ -1566,12 +1566,16 @@
                 <label for="routePoiSelect" style="margin-top: 0;">Einsatzgebiet wählen:</label>
                 <select id="routePoiSelect" onchange="onPoiChange()" style="font-weight: bold; color: var(--accent);">
                     <option value="">-- Wähle einen POI --</option>
+                    <option value="starter">Startstadt (Nam Thaven / Pha Lang / Kiu Vongsa)</option>
+                    <option value="lumber">Lumber Yard (Sägewerk)</option>
+                    <option value="hunters">Hunter's Paradise (Schießstand)</option>
+                    <option value="banpa">Ban Pa (Fischerdorf)</option>
+                    <option value="blue_lagoon">Blue Lagoon (Ressort & See)</option>
+                    <option value="ybl">YBL-1 Bunker</option>
                     <option value="midnight">Midnight Sapphire (Hotel & Villen)</option>
                     <option value="fort">Fort Narith (Militärbasis)</option>
                     <option value="tiger">Tiger Bay (Großstadt & UNLRA)</option>
-                    <option value="ybl">YBL-1 Bunker</option>
-                    <option value="banpa">Ban Pa (Fischerdorf)</option>
-                    <option value="hunters">Hunter's Paradise (Schießstand)</option>
+                    <option value="ground_zero">Ground Zero (Endgame Airfield)</option>
                 </select>
             </div>
         </div>
@@ -3803,6 +3807,54 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // --- Die POI Datenbank ---
     const poiBlueprints = {
+        "starter": {
+            name: "Startstadt (Startgebiet)",
+            infil: "Base Camp (Laufe zu Fuß) oder Alpha/Bravo/Charlie LZs.",
+            danger: "🟢 GERING (Straßengangs, ideal für Anfänger)",
+            keywords: ["startstadt", "markt", "tankstelle", "rathaus", "arzthaus", "schule", "nam thaven", "pha lang", "kiu vongsa", "startgebiet"],
+            steps: [
+                { name: "Phase 1: Randgebiete & Farmen", keys: ["scheune", "farm", "umland", "checkpoints", "versteck"] },
+                { name: "Phase 2: Markt & Tankstelle", keys: ["markt", "tankstelle", "mechaniker", "post"] },
+                { name: "Phase 3: Schule & Krankenhaus", keys: ["schule", "arzthaus", "krankenhaus", "blut"] },
+                { name: "Phase 4: Rathaus", keys: ["rathaus", "bürgermeister", "boss"] }
+            ]
+        },
+        "lumber": {
+            name: "Lumber Yard (Sägewerk)",
+            infil: "LZ Echo 1 oder Echo 2 (versteckter im Wald).",
+            danger: "🟡 MITTEL (Rebellen & Scharfschützen auf den Hügeln, Boss: Foreman)",
+            keywords: ["lumber", "sawmill", "sägewerk", "holz", "vorarbeiter"],
+            steps: [
+                { name: "Phase 1: Außenbereich & Hügel", keys: ["hügel", "spähe", "außen", "holzstapel"] },
+                { name: "Phase 2: Arbeiterhütten", keys: ["arbeiterhütte", "hütte", "uhren"] },
+                { name: "Phase 3: Haupthalle & Büro", keys: ["büro", "vorarbeiter", "haupthalle", "sabotieren", "mre"] },
+                { name: "Phase 4: Straßen & Fahrzeuge", keys: ["truck", "lkw", "straße"] }
+            ]
+        },
+        "blue_lagoon": {
+            name: "Blue Lagoon",
+            infil: "LZ Kilo 1 oder 2.",
+            danger: "🟡 MITTEL (Kartellmitglieder, Boss: Malo)",
+            keywords: ["blue lagoon", "lagune", "restaurant", "bootshaus", "malo", "kartell"],
+            steps: [
+                { name: "Phase 1: Randgebiet & Wasserfilter", keys: ["filter", "wasser", "rand"] },
+                { name: "Phase 2: Drogenlabor & Hütten", keys: ["labor", "drogen", "becherglas", "c4"] },
+                { name: "Phase 3: Bootshaus & Schmuggler", keys: ["bootshaus", "schmuggler", "wasserfall"] },
+                { name: "Phase 4: Restaurant & Büro", keys: ["büro", "schwarzgeld", "koffer"] }
+            ]
+        },
+        "ground_zero": {
+            name: "Ground Zero (Airfield)",
+            infil: "LZ Golf 1 oder 2. Vorsicht vor der Verstrahlung!",
+            danger: "🔴 EXTREM (Militär-Elite, Strahlung, Boss: Airfield Commander)",
+            keywords: ["ground zero", "airfield", "flugplatz", "krater", "c-130", "hangar", "tower", "jet", "landebahn"],
+            steps: [
+                { name: "Phase 1: Außenperimeter & Wracks", keys: ["c-130", "wrack", "schrott", "drohne", "heli", "landebahn"] },
+                { name: "Phase 2: Der Krater (Verstrahlt!)", keys: ["krater", "strahlung", "mutiert", "leichen"] },
+                { name: "Phase 3: Hangars", keys: ["hangar", "ap-munition", "jet"] },
+                { name: "Phase 4: Kontrollturm (Tower)", keys: ["tower", "zentrum", "flugplatz"] }
+            ]
+        },
         "midnight": {
             name: "Midnight Sapphire",
             infil: "LZ Hotel 1 (Süd) für den Pool-Ansatz oder Hotel 3 (Nord) für die Villen.",
