@@ -516,19 +516,101 @@
             padding-bottom: 5px;
         }
 
-        /* --- FRAKTIONS-BUTTONS --- */
-        .faction-selector { text-align: center; margin-bottom: 20px; }
-        .fac-btn { background-color: #1e1e1e; color: #888; border: 1px solid #444; padding: 6px 15px; margin: 0 5px; cursor: pointer; border-radius: 4px; font-size: 0.9rem; font-weight: bold; transition: all 0.2s; }
-        .fac-btn:hover { color: #fff; }
-        .fac-btn.mithras:hover { border-color: #7ca35a; background-color: rgba(124, 163, 90, 0.2); }
-        .fac-btn.crimson:hover { border-color: #b33939; background-color: rgba(179, 57, 57, 0.2); }
-        .fac-btn.lamang:hover { border-color: #227093; background-color: rgba(34, 112, 147, 0.2); }
+        /* --- UNIFIED TACTICAL CONSOLE (Factions, Tools & Tabs) --- */
+        .tactical-console {
+            background-color: #0d0d0d;
+            border: 3px solid #333;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
 
-        /* --- NAVIGATION TABS --- */
-        .tab-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #333; padding-bottom: 15px; justify-content: center; }
-        .tab-btn { background-color: #2a2a2a; color: #ccc; border: 1px solid #444; padding: 12px 20px; cursor: pointer; border-radius: 6px; font-size: 1rem; font-weight: bold; transition: all 0.3s ease; }
-        .tab-btn:hover { background-color: #3a3a3a; color: #fff; }
-        .tab-btn.active { background-color: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+        /* Console Header */
+        .console-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a1a1a;
+            padding: 10px 15px;
+            border-bottom: 2px solid #222;
+        }
+        .console-header h3 {
+            margin: 0;
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .console-tools {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Faction Selector Override */
+        .faction-selector {
+            padding: 15px;
+            background: #111;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            border-bottom: 2px solid #222;
+        }
+        .fac-btn {
+            background-color: #1a1a1a;
+            color: #666;
+            border: 2px solid #333;
+            padding: 8px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .fac-btn:hover { color: #ccc; border-color: #555; }
+        
+        /* Aktiver Faction Status */
+        .fac-btn.mithras.active, .fac-btn.mithras:hover { background-color: rgba(124,163,90,0.1); border-color: #7ca35a; color: #7ca35a; box-shadow: inset 0 0 10px rgba(124,163,90,0.2); }
+        .fac-btn.crimson.active, .fac-btn.crimson:hover { background-color: rgba(179,57,57,0.1); border-color: #b33939; color: #b33939; box-shadow: inset 0 0 10px rgba(179,57,57,0.2); }
+        .fac-btn.lamang.active, .fac-btn.lamang:hover { background-color: rgba(34,112,147,0.1); border-color: #227093; color: #227093; box-shadow: inset 0 0 10px rgba(34,112,147,0.2); }
+
+        /* Tactical Tab Navigation */
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 15px;
+            background-color: #151515;
+            justify-content: center;
+        }
+        .tab-btn {
+            background-color: #1e1e1e;
+            color: #777;
+            border: 1px solid #333;
+            border-bottom: 3px solid #222;
+            padding: 10px 18px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+        .tab-btn:hover {
+            background-color: #252525;
+            color: #aaa;
+            border-bottom-color: #555;
+        }
+        .tab-btn.active {
+            background-color: #2a2a2a;
+            color: #fff;
+            border-color: #444;
+            border-bottom: 3px solid var(--accent);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
 
         /* Container für die Inhalte */
         .tab-content { display: none; animation: fadeIn 0.4s; }
@@ -580,34 +662,41 @@
         <img src="https://www.gameskinny.com/wp-content/uploads/2024/04/Gray-Zone-Warfare-TItle-Screen.jpg" alt="Gray Zone Warfare Header" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
 
-    <div class="faction-selector">
-    <span style="color: #888; font-size: 0.9rem; margin-right: 15px;">Fraktion wählen:</span>
-    <button class="fac-btn mithras" onclick="setFaction('#7ca35a')" title="Mithras Security Systems">MSS</button>
-    <button class="fac-btn crimson" onclick="setFaction('#b33939')" title="Crimson Shield International">CSI</button>
-    <button class="fac-btn lamang" onclick="setFaction('#227093')" title="Lamang Recovery Initiative">LRI</button>
-    <span style="color: #555; margin: 0 15px;">|</span>
-    <span style="color: #888; font-size: 0.9rem; margin-right: 10px;">Tools:</span>
-    <button class="tool-btn" id="btn-bossSpawnWidget" onclick="toggleWidget('bossSpawnWidget')">☠️ Boss Timer</button>
-    <button class="tool-btn" id="btn-raidNotepad" onclick="toggleWidget('raidNotepad')">📋 Notizblock</button>
-    <button class="tool-btn" id="btn-heliWidget" onclick="toggleWidget('heliWidget')">🚁 Heli</button>
-</div>
+    <div class="tactical-console">
+        
+        <div class="console-header">
+            <h3>⚙️ Systemkanäle & Externe Tools</h3>
+            <div class="console-tools">
+                <button class="tool-btn" id="btn-bossSpawnWidget" onclick="toggleWidget('bossSpawnWidget')">☠️ Boss Timer</button>
+                <button class="tool-btn" id="btn-raidNotepad" onclick="toggleWidget('raidNotepad')">📋 Notizblock</button>
+                <button class="tool-btn" id="btn-heliWidget" onclick="toggleWidget('heliWidget')">🚁 Heli-Lotsen</button>
+            </div>
+        </div>
 
-    <div class="tab-nav">
-        <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
-        <button class="tab-btn" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
-        <button class="tab-btn" onclick="openTab('tab-ammo', this)">🔴 Ammo Matrix</button>
-        <button class="tab-btn" onclick="openTab('tab-gear', this)">🛡️ Rüstung & Gear</button>
-        <button class="tab-btn" onclick="openTab('tab-loadout', this)">⚖️ Loadout-Rechner</button>
-        <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
-        <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin & Food</button>
-        <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ & Bosse</button>
-        <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
-        <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
-        <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Quest-Loot Tracker</button>
-        <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
-        <button class="tab-btn" onclick="openTab('tab-route', this)">🚁 Einsatzplaner</button>
-        <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
-        <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
+        <div class="faction-selector">
+            <button class="fac-btn mithras" onclick="setFaction('#7ca35a', this)" title="Mithras Security Systems">Mithras (MSS)</button>
+            <button class="fac-btn crimson" onclick="setFaction('#b33939', this)" title="Crimson Shield International">Crimson (CSI)</button>
+            <button class="fac-btn lamang" onclick="setFaction('#227093', this)" title="Lamang Recovery Initiative">Lamang (LRI)</button>
+        </div>
+
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
+            <button class="tab-btn" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
+            <button class="tab-btn" onclick="openTab('tab-ammo', this)">🔴 Ammo Matrix</button>
+            <button class="tab-btn" onclick="openTab('tab-gear', this)">🛡️ Rüstung & Gear</button>
+            <button class="tab-btn" onclick="openTab('tab-loadout', this)">⚖️ Loadout-Rechner</button>
+            <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
+            <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin & Food</button>
+            <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ & Bosse</button>
+            <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
+            <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
+            <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Quest-Loot Tracker</button>
+            <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
+            <button class="tab-btn" onclick="openTab('tab-route', this)">🚁 Einsatzplaner</button>
+            <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
+            <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
+        </div>
+        
     </div>
 
 <div id="tab-home" class="tab-content active">
@@ -1824,9 +1913,18 @@
 
 <script>
     // --- FRAKTIONS-FARBEN & LOKALER SPEICHER ---
-    function setFaction(colorHex) {
+    function setFaction(colorHex, btnElement) {
         document.documentElement.style.setProperty('--accent', colorHex);
         localStorage.setItem('gzw_faction_color', colorHex);
+        
+        // Aktiven Button visuell hervorheben
+        if (btnElement) {
+            let btns = document.getElementsByClassName("fac-btn");
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+            btnElement.classList.add("active");
+        }
     }
 
     window.addEventListener('DOMContentLoaded', (event) => {
