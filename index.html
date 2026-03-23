@@ -559,14 +559,34 @@
             gap: 8px;
         }
 
-        /* Faction Selector Override */
-        .faction-selector {
-            padding: 15px;
+        /* --- NEUES LAYOUT: FRAKTIONEN & YOUTUBE --- */
+        .faction-selector-wrapper {
             background: #111;
-            display: flex;
-            justify-content: space-between; /* Fraktionen links, YouTube rechts - genau wie im Header darüber! */
-            align-items: center; 
             border-bottom: 2px solid #222;
+            padding: 15px;
+            display: flex;
+            flex-direction: column; /* Ordnet die beiden Zeilen untereinander an */
+            gap: 15px; /* Abstand zwischen der Fraktions-Zeile und der YouTube-Zeile */
+        }
+
+        .selector-row {
+            display: flex;
+            justify-content: space-between; /* Text links, Buttons rechts */
+            align-items: center;
+        }
+
+        .youtube-row {
+            border-top: 1px dashed #333; /* Feine Trennlinie zwischen den Zeilen */
+            padding-top: 15px;
+        }
+
+        .row-label {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Courier New', Courier, monospace; /* Passend zum Konsolen-Look */
         }
 
         /* Container für die 3 Fraktionsbuttons */
@@ -840,13 +860,24 @@
             </div>
         </div>
 
-        <div class="faction-selector">
-            <button class="fac-btn mithras" onclick="setFaction('mss', '#7ca35a', this)" title="Mithras Security Systems">Mithras (Nam Thaven)</button>
-            <button class="fac-btn crimson" onclick="setFaction('csi', '#b33939', this)" title="Crimson Shield International">Crimson (Kiu Vongsa)</button>
-            <button class="fac-btn lamang" onclick="setFaction('lri', '#227093', this)" title="Lamang Recovery Initiative">Lamang (Pha Lang)</button>
-        <a href="https://www.youtube.com/playlist?list=PLb9Sw2wOhSfai8TXSe8X5MygsRmz7tH3V" target="_blank" class="judas-btn" title="Zu den Video-Guides">
-                ▶️ Quest Guide by Pater Judas
-            </a>
+        <div class="faction-selector-wrapper">
+            
+            <div class="selector-row">
+                <div class="row-label">🛡️ Fraktionen Auswahl</div>
+                <div class="fac-group">
+                    <button class="fac-btn mithras" onclick="setFaction('mss', '#7ca35a', this)" title="Mithras Security Systems">Mithras (Nam Thaven)</button>
+                    <button class="fac-btn crimson" onclick="setFaction('csi', '#b33939', this)" title="Crimson Shield International">Crimson (Kiu Vongsa)</button>
+                    <button class="fac-btn lamang" onclick="setFaction('lri', '#227093', this)" title="Lamang Recovery Initiative">Lamang (Pha Lang)</button>
+                </div>
+            </div>
+
+            <div class="selector-row youtube-row">
+                <div class="row-label">📺 Youtube Task Guides</div>
+                <a href="HIER_DEIN_YOUTUBE_LINK_REIN" target="_blank" class="judas-btn" title="Zu den Video-Guides">
+                    ▶️ Quest Guide by Pater Judas
+                </a>
+            </div>
+
         </div>
 
         <div class="nav-wrapper">
