@@ -577,21 +577,62 @@
         .fac-btn.crimson.active, .fac-btn.crimson:hover { background-color: rgba(179,57,57,0.1); border-color: #b33939; color: #b33939; box-shadow: inset 0 0 10px rgba(179,57,57,0.2); }
         .fac-btn.lamang.active, .fac-btn.lamang:hover { background-color: rgba(34,112,147,0.1); border-color: #227093; color: #227093; box-shadow: inset 0 0 10px rgba(34,112,147,0.2); }
 
-        /* Tactical Tab Navigation */
-        .tab-nav {
+       /* --- TACTICAL CATEGORY & TAB NAVIGATION --- */
+        .nav-wrapper {
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Main Categories (Top Row) */
+        .main-categories {
             display: flex;
+            background-color: #0a0a0a;
+            border-bottom: 2px solid #222;
+        }
+        .cat-btn {
+            flex: 1;
+            background: transparent;
+            color: #666;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 12px 10px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .cat-btn:hover { color: #aaa; background: rgba(255,255,255,0.02); }
+        .cat-btn.active {
+            color: var(--accent);
+            background: #151515;
+            border-bottom: 3px solid var(--accent);
+            text-shadow: 0 0 8px rgba(124,163,90,0.4);
+        }
+
+        /* Sub-Tabs (Bottom Row) */
+        .sub-nav-group {
+            display: none; /* Standardmäßig versteckt */
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
             padding: 15px;
             background-color: #151515;
             justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .sub-nav-group.active {
+            display: flex; /* Zeigt nur die aktive Gruppe */
         }
         .tab-btn {
             background-color: #1e1e1e;
-            color: #777;
+            color: #888;
             border: 1px solid #333;
-            border-bottom: 3px solid #222;
-            padding: 10px 18px;
+            padding: 8px 16px;
             cursor: pointer;
             border-radius: 4px;
             font-size: 0.85rem;
@@ -599,17 +640,12 @@
             text-transform: uppercase;
             transition: all 0.2s ease;
         }
-        .tab-btn:hover {
-            background-color: #252525;
-            color: #aaa;
-            border-bottom-color: #555;
-        }
+        .tab-btn:hover { background-color: #2a2a2a; color: #ccc; border-color: #555; }
         .tab-btn.active {
             background-color: #2a2a2a;
             color: #fff;
-            border-color: #444;
-            border-bottom: 3px solid var(--accent);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border-color: var(--accent);
+            box-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
 
         /* Container für die Inhalte */
@@ -679,22 +715,42 @@
             <button class="fac-btn lamang" onclick="setFaction('#227093', this)" title="Lamang Recovery Initiative">Lamang (LRI)</button>
         </div>
 
-        <div class="tab-nav">
-            <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
-            <button class="tab-btn" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
-            <button class="tab-btn" onclick="openTab('tab-ammo', this)">🔴 Ammo Matrix</button>
-            <button class="tab-btn" onclick="openTab('tab-gear', this)">🛡️ Rüstung & Gear</button>
-            <button class="tab-btn" onclick="openTab('tab-loadout', this)">⚖️ Loadout-Rechner</button>
-            <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
-            <button class="tab-btn" onclick="openTab('tab-medic', this)">🩸 Medizin & Food</button>
-            <button class="tab-btn" onclick="openTab('tab-intel', this)">🗺️ LZ & Bosse</button>
-            <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
-            <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
-            <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Quest-Loot Tracker</button>
-            <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
-            <button class="tab-btn" onclick="openTab('tab-route', this)">🚁 Einsatzplaner</button>
-            <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
-            <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
+        <div class="nav-wrapper">
+            
+            <div class="main-categories">
+                <button class="cat-btn active" onclick="switchCategory('cat-basecamp', this)">⛺ Basecamp</button>
+                <button class="cat-btn" onclick="switchCategory('cat-arsenal', this)">🔫 Arsenal</button>
+                <button class="cat-btn" onclick="switchCategory('cat-ops', this)">🗺️ Field Ops</button>
+                <button class="cat-btn" onclick="switchCategory('cat-medic', this)">🩸 Medical</button>
+            </div>
+
+            <div id="cat-basecamp" class="sub-nav-group active">
+                <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
+                <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>
+                <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
+                <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
+            </div>
+
+            <div id="cat-arsenal" class="sub-nav-group">
+                <button class="tab-btn" onclick="openTab('tab-mods', this)">🔧 Waffen & Mods</button>
+                <button class="tab-btn" onclick="openTab('tab-ammo', this)">🔴 Ammo Matrix</button>
+                <button class="tab-btn" onclick="openTab('tab-gear', this)">🦺 Rüstung & Gear</button>
+                <button class="tab-btn" onclick="openTab('tab-loadout', this)">⚖️ Loadout-Rechner</button>
+            </div>
+
+            <div id="cat-ops" class="sub-nav-group">
+                <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
+                <button class="tab-btn" onclick="openTab('tab-intel', this)">🚁 LZ & Bosse</button>
+                <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
+                <button class="tab-btn" onclick="openTab('tab-route', this)">🗺️ Einsatzplaner</button>
+                <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Quest-Tracker</button>
+                <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
+            </div>
+
+            <div id="cat-medic" class="sub-nav-group">
+                <button class="tab-btn" onclick="openTab('tab-medic', this)">⚕️ Medizin & Verpflegung</button>
+            </div>
+
         </div>
         
     </div>
@@ -1948,6 +2004,32 @@
         
         document.getElementById(tabId).classList.add("active");
         btnElement.classList.add("active");
+    }
+
+    // --- KATEGORIE NAVIGATION LOGIK ---
+    function switchCategory(catId, btnElement) {
+        // 1. Alle Kategorie-Buttons zurücksetzen
+        let catBtns = document.getElementsByClassName("cat-btn");
+        for (let i = 0; i < catBtns.length; i++) {
+            catBtns[i].classList.remove("active");
+        }
+        btnElement.classList.add("active"); // Geklickten Button aktivieren
+
+        // 2. Alle Sub-Nav-Gruppen ausblenden
+        let groups = document.getElementsByClassName("sub-nav-group");
+        for (let i = 0; i < groups.length; i++) {
+            groups[i].classList.remove("active");
+        }
+        
+        // 3. Die gewählte Gruppe einblenden
+        let targetGroup = document.getElementById(catId);
+        targetGroup.classList.add("active");
+
+        // 4. Automatisch den ersten Tab in dieser neuen Gruppe öffnen!
+        let firstTabBtn = targetGroup.querySelector('.tab-btn');
+        if (firstTabBtn) {
+            firstTabBtn.click();
+        }
     }
 
     // --- ZURÜCK NACH OBEN LOGIK ---
