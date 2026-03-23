@@ -3433,6 +3433,9 @@
 
         // Spezifische Hinweise
         const hints = [];
+        if (parseFloat(document.getElementById('lc_suppressor').value) > 0) {
+            hints.push("🥷 <strong>Stealth-Taktik (0.4 Meta):</strong> Du hast einen Schalldämpfer ausgerüstet! Bei einem Überraschungsangriff hast du exakt <strong>0,5 Sekunden</strong> Zeit, um die KI (z.B. per Headshot) zu eliminieren, bevor sie Alarm schlagen kann.");
+        }    
         if (parseFloat(document.getElementById('lc_armor').value) >= 7.8) {
             hints.push("⚠️ <strong>Schwere Rüstung erkannt:</strong> Zabralo/IOTV schränken deine Mobilität massiv ein. Nutze nur bei statischen Fort Narith Runs.");
         }
