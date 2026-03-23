@@ -564,34 +564,41 @@
             padding: 15px;
             background: #111;
             display: flex;
-            justify-content: flex-start; /* Schiebt die Fraktionen alle nach links! */
+            justify-content: space-between; /* Fraktionen links, YouTube rechts - genau wie im Header darüber! */
             align-items: center; 
-            gap: 15px;
             border-bottom: 2px solid #222;
-            /* Das 'position: relative' ist jetzt weg, wir brauchen es nicht mehr */
+        }
+
+        /* Container für die 3 Fraktionsbuttons */
+        .fac-group {
+            display: flex;
+            gap: 15px;
         }
         
-        /* --- NEUER YOUTUBE BUTTON STYLING --- */
+        /* --- YOUTUBE BUTTON STYLING (Identisch zu den Fac-Btns) --- */
         .judas-btn {
-            margin-left: auto; /* WICHTIG: Drückt NUR diesen Button ganz nach rechts! */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background-color: #1a1a1a;
-            color: #888;
+            color: #666; /* Exakt wie die inaktiven Fraktionen */
             border: 2px solid #333;
-            padding: 8px 15px;
+            padding: 8px 20px; /* Gleiche Größe wie die Fraktionen */
             cursor: pointer;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.95rem; /* Gleiche Schriftgröße */
             font-weight: bold;
-            text-decoration: none; 
             text-transform: uppercase;
+            text-decoration: none; 
             transition: all 0.3s ease;
+            box-sizing: border-box;
         }
 
         .judas-btn:hover { 
             color: #fff; 
-            border-color: #ff4c4c; 
-            background-color: rgba(255, 76, 76, 0.1); 
-            box-shadow: inset 0 0 10px rgba(255, 76, 76, 0.2); 
+            border-color: #ff0000; /* YouTube Rot */
+            background-color: rgba(255, 0, 0, 0.1); 
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2); 
         }
         
         /* Aktiver Faction Status */
