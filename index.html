@@ -6,34 +6,109 @@
     <title>Gray Zone Warfare - Tactical Tool</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- SCROLLING NEWS BANNER --- */
+    /* --- TACTICAL NEWS FRAME --- */
+        .tactical-news-frame {
+            width: 100%;
+            background-color: #0d0d0d;
+            border: 3px solid #333;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-family: 'Roboto Mono', monospace; /* Verwende eine technische Monospace-Schrift */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        
+        /* Tactical Header */
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a1a1a;
+            padding: 10px 15px;
+            border-bottom: 2px solid #333;
+            border-radius: 6px 6px 0 0;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-left .warning-icon {
+            font-size: 1.5rem;
+            color: #ffcc00;
+        }
+        .header-left h3 {
+            margin: 0;
+            color: #ffcc00;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .header-right {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+        .live-indicator {
+            color: #2ecc71; /* Grüner LIVE-Punkt */
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* The News Ticker (Lauftext) */
         .news-ticker-container {
             width: 100%;
             overflow: hidden;
-            background: rgba(179, 57, 57, 0.15); /* Leicht roter Hintergrund */
-            border: 2px solid #ff4c4c;           /* Roter Rahmen */
-            border-radius: 6px;
-            margin-bottom: 20px;
+            background: rgba(179, 57, 57, 0.05); /* Sehr dezenter roter Hintergrund */
             padding: 8px 0;
-            box-sizing: border-box;
             position: relative;
         }
         .news-ticker-text {
             display: inline-block;
             white-space: nowrap;
-            color: #ffcc00;                      /* Gelbe Schrift */
+            color: #ffcc00; /* Gelbe Schrift */
             font-weight: bold;
             font-size: 1.05rem;
-            padding-left: 100%;                  /* Startet ganz rechts am Rand */
-            animation: ticker 20s linear infinite; /* 20 Sekunden für einen Durchlauf */
-        }
-        .news-ticker-text:hover {
-            animation-play-state: paused;        /* Stoppt beim Drüberfahren */
-            cursor: default;
+            padding-left: 100%; /* Startet rechts am Rand */
+            animation: ticker 25s linear infinite; /* Etwas langsamer für bessere Lesbarkeit */
         }
         @keyframes ticker {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
+        }
+        
+        /* Timeline List */
+        .timeline-section {
+            padding: 15px;
+            background-color: #111;
+        }
+        .timeline-section h4 {
+            margin: 0 0 10px 0;
+            color: #ffcc00;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        .timeline-list li {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+        .timeline-list li::before {
+            content: '•'; /* Kleiner Aufzählungspunkt */
+            position: absolute;
+            left: 0;
+            color: #444;
+        }
+        .timeline-list li strong {
+            color: #ffcc00; /* Datumsangaben hervorheben */
         }
 
         .tool-btn {
@@ -481,10 +556,34 @@
 
 <div class="container">
     
-    <div class="news-ticker-container">
-        <div class="news-ticker-text">
-            ⚠️ Vorabzugang für Supporter Edition ab 27. März, vollständige Version 0.4 ab 31. März ⚠️
+    <div class="tactical-news-frame">
+        
+        <div class="news-header">
+            <div class="header-left">
+                <span class="warning-icon">⚠️</span> <h3>Tactical Alert: Deployment Intel</h3>
+            </div>
+            <div class="header-right">
+                <span class="live-indicator">● LIVE</span>
+                <span>DATE: 23 MAR 2026 | TIME: 14:00 Zulu</span>
+            </div>
         </div>
+        
+        <div class="news-ticker-container">
+            <div class="news-ticker-text">
+                ⚠️ Vorabzugang für Supporter Edition ab 27. März, vollständige Version 0.4 ab 31. März ⚠️
+            </div>
+        </div>
+        
+        <div class="timeline-section">
+            <h4>Critical Deployment Timeline</h4>
+            <ul class="timeline-list">
+                <li><strong>[27. MÄRZ]:</strong> Supporter Edition Early Access</li>
+                <li><strong>[31. MÄRZ]:</strong> Full Version 0.4 Launch</li>
+                <li><strong>[TBA]:</strong> DevLog #03 Deployment</li>
+                <li><strong>[TBA]:</strong> Developer Stream (Q&A)</li>
+            </ul>
+        </div>
+        
     </div>
 
     <div style="width: 100%; height: 250px; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111;">
