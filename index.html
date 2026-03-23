@@ -3900,14 +3900,14 @@ window.addEventListener('DOMContentLoaded', () => {
         let availableTasks = poiTasks.filter(t => !selectedRouteTasks.includes(t.de));
         let routeTasks = poiTasks.filter(t => selectedRouteTasks.includes(t.de));
 
-        // 1. OBERER BLOCK: Die verfügbaren Missionen
-        let availableHtml = `<div style="margin-bottom: 25px; padding: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; border-left: 4px solid var(--accent);">`;
+        // 1. VERFÜGBARE MISSIONEN (Wird jetzt UNTEN angezeigt)
+        let availableHtml = `<div style="padding: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; border-left: 4px solid var(--accent);">`;
         availableHtml += `<h4 style="color:#fff; margin-top:0; margin-bottom:10px; font-size: 1.1rem;">📋 Verfügbare Missionen in ${poi.name} (${availableTasks.length}):</h4>`;
         
         if (poiTasks.length === 0) {
              availableHtml += `<span style="color:var(--accent); font-weight:bold;">✅ Zone Clear! Du hast hier keine offenen Missionen mehr.</span>`;
         } else if (availableTasks.length === 0) {
-            availableHtml += `<span style="color:#888;">Alle verfügbaren Missionen wurden zur Route hinzugefügt! 👇</span>`;
+            availableHtml += `<span style="color:#888;">Alle verfügbaren Missionen wurden zur Route hinzugefügt! ☝️</span>`;
         } else {
             availableTasks.forEach(t => {
                 availableHtml += `
@@ -3921,14 +3921,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         availableHtml += `</div>`;
 
-        // 2. UNTERER BLOCK: Der eigentliche Einsatzplan
+        // 2. DER EIGENTLICHE EINSATZPLAN (Wird jetzt OBEN angezeigt)
         let routeHtml = "";
         
         if (routeTasks.length === 0) {
             routeHtml = `
-                <div class="panel-box" style="text-align:center; border-top: 4px solid #555;">
+                <div class="panel-box" style="text-align:center; border-top: 4px solid #555; margin-bottom: 20px;">
                     <h3 style="color:#888; font-size: 1.3rem;">📍 ROUTE LEER</h3>
-                    <p style="color:#aaa;">Füge oben Tasks hinzu, um deinen Einsatzplan für diesen Raid zu generieren.</p>
+                    <p style="color:#aaa;">Füge aus der Liste unten Tasks hinzu, um deinen Einsatzplan für diesen Raid zu generieren.</p>
                 </div>
             `;
         } else {
@@ -3978,7 +3978,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
 
             routeHtml = `
-                <div class="panel-box" style="border-top: 4px solid var(--accent);">
+                <div class="panel-box" style="border-top: 4px solid var(--accent); margin-bottom: 20px;">
                     <h3 style="margin-bottom: 5px; font-size: 1.3rem;">📍 DEIN EINSATZPLAN: ${poi.name.toUpperCase()}</h3>
                     
                     <div style="display:flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; margin-top: 15px;">
@@ -3997,6 +3997,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }
+
+        // Beide Blöcke ausgeben: ERST Route, DANN Verfügbare
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = routeHtml + availableHtml;
+    }
 
         // Beide Blöcke ausgeben
         resultBox.style.display = 'block';
