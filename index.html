@@ -564,17 +564,16 @@
             padding: 15px;
             background: #111;
             display: flex;
-            justify-content: center;
-            align-items: center; /* NEU: Für perfekte vertikale Zentrierung */
+            justify-content: flex-start; /* Schiebt die Fraktionen alle nach links! */
+            align-items: center; 
             gap: 15px;
             border-bottom: 2px solid #222;
-            position: relative; /* NEU WICHTIG: Erlaubt es, den neuen Button rechts anzudocken */
+            /* Das 'position: relative' ist jetzt weg, wir brauchen es nicht mehr */
         }
         
         /* --- NEUER YOUTUBE BUTTON STYLING --- */
         .judas-btn {
-            position: absolute; /* Löst den Button aus der Mitte und klebt ihn an den Rand */
-            right: 15px; /* Abstand vom rechten Rand */
+            margin-left: auto; /* WICHTIG: Drückt NUR diesen Button ganz nach rechts! */
             background-color: #1a1a1a;
             color: #888;
             border: 2px solid #333;
@@ -583,14 +582,14 @@
             border-radius: 4px;
             font-size: 0.85rem;
             font-weight: bold;
-            text-decoration: none; /* Entfernt den hässlichen Link-Unterstrich */
+            text-decoration: none; 
             text-transform: uppercase;
             transition: all 0.3s ease;
         }
 
         .judas-btn:hover { 
             color: #fff; 
-            border-color: #ff4c4c; /* Taktisches YouTube-Rot beim Drüberfahren */
+            border-color: #ff4c4c; 
             background-color: rgba(255, 76, 76, 0.1); 
             box-shadow: inset 0 0 10px rgba(255, 76, 76, 0.2); 
         }
