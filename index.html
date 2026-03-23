@@ -7,6 +7,36 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+    /* --- SCROLLING NEWS BANNER --- */
+        .news-ticker-container {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(179, 57, 57, 0.15); /* Leicht roter Hintergrund */
+            border: 2px solid #ff4c4c;           /* Roter Rahmen */
+            border-radius: 6px;
+            margin-bottom: 20px;
+            padding: 8px 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .news-ticker-text {
+            display: inline-block;
+            white-space: nowrap;
+            color: #ffcc00;                      /* Gelbe Schrift */
+            font-weight: bold;
+            font-size: 1.05rem;
+            padding-left: 100%;                  /* Startet ganz rechts am Rand */
+            animation: ticker 20s linear infinite; /* 20 Sekunden für einen Durchlauf */
+        }
+        .news-ticker-text:hover {
+            animation-play-state: paused;        /* Stoppt beim Drüberfahren */
+            cursor: default;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
         .tool-btn {
     background-color: #1e1e1e;
     color: #888;
@@ -452,7 +482,13 @@
 
 <div class="container">
     
-    <div style="width: 100%; height: 250px; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111;">
+    <div class="news-ticker-container">
+        <div class="news-ticker-text">
+            ⚠️ Vorabzugang für Supporter Edition ab 27. März, vollständige Version 0.4 ab 31. März ⚠️
+        </div>
+    </div>
+
+    <div style="width: 100%; height: 250px; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111;"> justify-content: center; background-color: #111;">
         <img src="https://www.gameskinny.com/wp-content/uploads/2024/04/Gray-Zone-Warfare-TItle-Screen.jpg" alt="Gray Zone Warfare Header" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
 
