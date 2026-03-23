@@ -481,6 +481,7 @@
         <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
         <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Quest-Loot Tracker</button>
         <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
+        <button class="tab-btn" onclick="openTab('tab-route', this)">🚁 Einsatzplaner</button>
         <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
         <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
     </div>
@@ -1552,6 +1553,31 @@
             <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
             <div id="taskSolution" class="task-solution" style="margin-top: 15px; display: none;"></div>
         </div>
+    </div>
+
+    <div id="tab-route" class="tab-content">
+        <h2>🚁 Tactical POI Blueprint (Routenplaner)</h2>
+        <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 15px;">
+            Wähle dein Zielgebiet aus. Das Tool filtert alle deine <strong>offenen Tasks</strong> und erstellt dir einen logischen, schrittweisen Einsatzplan für den Raid.
+        </p>
+        
+        <div class="grid">
+            <div style="grid-column: span 2;">
+                <label for="routePoiSelect" style="margin-top: 0;">Einsatzgebiet wählen:</label>
+                <select id="routePoiSelect" onchange="generateRoutePlan()" style="font-weight: bold; color: var(--accent);">
+                    <option value="">-- Wähle einen POI --</option>
+                    <option value="midnight">Midnight Sapphire (Hotel & Villen)</option>
+                    <option value="fort">Fort Narith (Militärbasis)</option>
+                    <option value="tiger">Tiger Bay (Großstadt & UNLRA)</option>
+                    <option value="ybl">YBL-1 Bunker</option>
+                    <option value="banpa">Ban Pa (Fischerdorf)</option>
+                    <option value="hunters">Hunter's Paradise (Schießstand)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="routeResult" style="margin-top: 20px; display: none;">
+            </div>
     </div>
 
     <div id="tab-map" class="tab-content">
@@ -3750,6 +3776,179 @@ function buildAmmoMatrix() {
 window.addEventListener('DOMContentLoaded', () => {
     buildAmmoMatrix();
 });
+
+// ==============================================================
+    // ROUTENPLANER (TACTICAL BLUEPRINT) LOGIK
+    // ==============================================================
+    const poiBlueprints = {
+        "midnight": {
+            name: "Midnight Sapphire",
+            infil: "LZ Hotel 1 (Süd) für den Pool-Ansatz oder Hotel 3 (Nord) für die Villen.",
+            danger: "🔴 SEHR HOCH (Gepanzerte Söldner, Boss: Golden Boy / LAF Commander)",
+            keywords: ["midnight", "hotel", "villa", "pool", "rezeption", "zimmer"],
+            steps: [
+                { name: "Phase 1: Außenbereich & Pool", keys: ["pool", "golf", "außen", "späher"] },
+                { name: "Phase 2: Erdgeschoss & Rezeption", keys: ["rezeption", "erdgeschoss", "lobby"] },
+                { name: "Phase 3: Hotelzimmer", keys: ["zimmer", "schrank", "204", "301", "202", "pass"] },
+                { name: "Phase 4: Die Luxusvillen", keys: ["villa", "villen", "kongressabgeordnete"] }
+            ]
+        },
+        "fort": {
+            name: "Fort Narith",
+            infil: "LZ Delta 3 (Rückseite) bietet den sichersten Anmarsch durch den Wald.",
+            danger: "🔴 EXTREM (LAF Militär, Boss: General Pa)",
+            keywords: ["fort narith", "narith", "hq", "barracken"],
+            steps: [
+                { name: "Phase 1: Außenbereich & Tankstelle", keys: ["tankstelle", "außen", "mauer", "geschütze", "artillerie"] },
+                { name: "Phase 2: Barracken & Hof", keys: ["barracken", "innenhof", "block c", "block a"] },
+                { name: "Phase 3: HQ Gebäude", keys: ["hq", "hauptquartier", "büro", "befehlskette"] },
+                { name: "Phase 4: Untergrund & Keller", keys: ["keller", "munitionsbunker", "schattenkrieg"] }
+            ]
+        },
+        "tiger": {
+            name: "Tiger Bay",
+            infil: "LZ Lima 1 oder 2. Bereite dich auf sofortigen Beschuss vor!",
+            danger: "💀 TODESZONE (Extreme KI-Dichte, UNLRA-Elite)",
+            keywords: ["tiger bay", "mall", "pier", "unlra", "einkaufszentrum"],
+            steps: [
+                { name: "Phase 1: Vorstadt & Straßen", keys: ["vorstadt", "straße", "haus", "suv"] },
+                { name: "Phase 2: Das Einkaufszentrum", keys: ["mall", "einkaufszentrum", "bank"] },
+                { name: "Phase 3: Der Pier", keys: ["pier", "boot", "wasser"] },
+                { name: "Phase 4: UNLRA Hauptquartier & Labor", keys: ["unlra", "labor", "quarantäne", "zelt"] }
+            ]
+        },
+        "ybl": {
+            name: "YBL-1 Bunker",
+            infil: "LZ Juliet 2 (Südlicher Wald).",
+            danger: "🟠 HOCH (Enge Gänge, CQB Waffen empfohlen)",
+            keywords: ["ybl", "bunker", "ebene"],
+            steps: [
+                { name: "Phase 1: Außenposten & Eingänge", keys: ["außen", "eingang", "hof", "checkpoints"] },
+                { name: "Phase 2: Ebene -1 (Verwaltung)", keys: ["ebene -1", "büro", "überwachung", "schatten"] },
+                { name: "Phase 3: Ebene -2 (Gefängnis & Waffen)", keys: ["ebene -2", "zelle", "server", "generator", "waffenlager", "gefangener"] },
+                { name: "Phase 4: Ebene -3 (Überflutet)", keys: ["ebene -3", "wasser", "fässer", "toxisch"] }
+            ]
+        },
+        "banpa": {
+            name: "Ban Pa",
+            infil: "LZ India 2 für einen leisen Ansatz über den Dschungel.",
+            danger: "🟡 MITTEL (Okkulte Fanatiker, viel Holz-Deckung)",
+            keywords: ["ban pa", "fischerdorf", "ältesten", "kult", "schmuggler"],
+            steps: [
+                { name: "Phase 1: Dschungel & Gräber", keys: ["hügel", "dschungel", "grab", "schrein"] },
+                { name: "Phase 2: Äußere Hütten & Schmuggler", keys: ["hütte", "fischer", "schmuggler"] },
+                { name: "Phase 3: Zentrum & Ältesten-Haus", keys: ["zentrum", "ältesten", "brunnen", "kirche"] },
+                { name: "Phase 4: See & Steg", keys: ["see", "steg", "boot", "wasserfall"] }
+            ]
+        },
+        "hunters": {
+            name: "Hunter's Paradise",
+            infil: "LZ Foxtrot 1. Vorsicht: Foxtrot 2 wird oft von Huntern abgezielt!",
+            danger: "🟠 HOCH (Scharfschützen, Aggressive Söldner)",
+            keywords: ["hunter's", "hunters", "schießstand", "motel"],
+            steps: [
+                { name: "Phase 1: Müllhalde & Lager", keys: ["müllhalde", "lager", "schack"] },
+                { name: "Phase 2: Das Motel", keys: ["motel", "kundenliste"] },
+                { name: "Phase 3: Hauptbüro", keys: ["hauptbüro", "funkgerät"] },
+                { name: "Phase 4: Schießstand & Waffenkammer", keys: ["schießstand", "boss", "barett"] }
+            ]
+        }
+    };
+
+    function generateRoutePlan() {
+        const poiKey = document.getElementById('routePoiSelect').value;
+        const resultBox = document.getElementById('routeResult');
+
+        if (!poiKey) {
+            resultBox.style.display = 'none';
+            return;
+        }
+
+        const poi = poiBlueprints[poiKey];
+        if (!poi) return;
+
+        // Finde alle offenen Tasks (Vergleicht mit dem Tracker)
+        let activeTasks = allTasks.filter(t => !completedTasks.includes(t.de));
+        
+        // Filtere die Tasks heraus, die zum ausgewählten POI gehören
+        let poiTasks = activeTasks.filter(t =>
+            poi.keywords.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw))
+        );
+
+        if (poiTasks.length === 0) {
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `
+                <div class="panel-box" style="text-align:center; border-top: 4px solid #7ca35a;">
+                    <h3 style="color:#7ca35a; font-size: 1.5rem;">✅ ZONE CLEAR</h3>
+                    <p style="color:#ccc;">Du hast aktuell keine offenen Missionen für <strong>${poi.name}</strong>!<br>Gute Arbeit, Operator.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Tasks in die logischen Phasen/Schritte einteilen
+        let phasesHtml = "";
+        let assignedTasks = new Set();
+
+        poi.steps.forEach(step => {
+            let stepTasks = poiTasks.filter(t =>
+                !assignedTasks.has(t.de) &&
+                step.keys.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw))
+            );
+
+            if (stepTasks.length > 0) {
+                phasesHtml += `<div style="margin-bottom: 15px; border-left: 3px solid var(--accent); padding-left: 12px; background: rgba(255,255,255,0.02); border-radius: 0 6px 6px 0; padding-top: 8px; padding-bottom: 8px;">`;
+                phasesHtml += `<h4 style="color:#fff; margin-top:0; margin-bottom:8px; font-size: 1.05rem;">🎯 ${step.name}</h4>`;
+                stepTasks.forEach(t => {
+                    assignedTasks.add(t.de);
+                    phasesHtml += `
+                    <div style="margin-bottom: 8px; color:#ccc;">
+                        <strong style="color:var(--accent);">${t.de}</strong> <small>(${t.v})</small><br>
+                        <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
+                    </div>`;
+                });
+                phasesHtml += `</div>`;
+            }
+        });
+
+        // Übrige Tasks, die keiner spezifischen Phase zugeordnet wurden
+        let remainingTasks = poiTasks.filter(t => !assignedTasks.has(t.de));
+        if (remainingTasks.length > 0) {
+            phasesHtml += `<div style="margin-bottom: 15px; border-left: 3px solid #ffa500; padding-left: 12px; background: rgba(255,165,0,0.05); border-radius: 0 6px 6px 0; padding-top: 8px; padding-bottom: 8px;">`;
+            phasesHtml += `<h4 style="color:#ffa500; margin-top:0; margin-bottom:8px; font-size: 1.05rem;">📌 Allgemeine Ziele in der Zone</h4>`;
+            remainingTasks.forEach(t => {
+                phasesHtml += `
+                <div style="margin-bottom: 8px; color:#ccc;">
+                    <strong style="color:#ffa500;">${t.de}</strong> <small>(${t.v})</small><br>
+                    <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
+                </div>`;
+            });
+            phasesHtml += `</div>`;
+        }
+
+        // HTML zusammenbauen
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+            <div class="panel-box" style="border-top: 4px solid var(--accent);">
+                <h3 style="margin-bottom: 5px; font-size: 1.3rem;">📍 EINSATZPLAN: ${poi.name.toUpperCase()}</h3>
+                <div style="font-size: 0.85rem; color: #888; margin-bottom: 15px;">Wir haben <strong>${poiTasks.length} offene Missionen</strong> für diesen Raid gebündelt.</div>
+                
+                <div style="display:flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+                    <div style="flex:1; min-width: 200px; background:#1a1a1a; padding:10px; border-radius:6px; border:1px solid #333;">
+                        <span style="color:#888; font-size:0.8rem; display:block; margin-bottom: 3px;">🚁 Empfohlene Infiltration</span>
+                        <strong style="color:#fff; font-size:0.9rem;">${poi.infil}</strong>
+                    </div>
+                    <div style="flex:1; min-width: 200px; background:#1a1a1a; padding:10px; border-radius:6px; border:1px solid #333;">
+                        <span style="color:#888; font-size:0.8rem; display:block; margin-bottom: 3px;">⚠️ Gefahrenstufe</span>
+                        <strong style="font-size:0.9rem;">${poi.danger}</strong>
+                    </div>
+                </div>
+
+                <h3 style="color: #888; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 15px; font-size: 1rem;">DEINE ROUTE:</h3>
+                ${phasesHtml}
+            </div>
+        `;
+    }
 
     // ==============================================================
 // BOSS SPAWN TIMER
