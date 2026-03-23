@@ -484,19 +484,30 @@
             font-weight: bold; 
         }
 
-        /* Container und Boxen */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
-        .container { max-width: 1100px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #333; }
-        
-        .info-box {
-            background: #252525;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
-            margin-top: 10px;
-            min-height: 50px;
-            line-height: 1.5;
-            box-sizing: border-box;
+        /* --- GRUNDSTRUKTUR & TACTICAL AMBIENT GLOW --- */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #050505; /* Ein noch tieferes Schwarz für perfekten Kontrast */
+            color: #e0e0e0; 
+            margin: 0; 
+            padding: 20px; 
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Der dynamische Fraktions-Leuchteffekt an den Rändern */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0;
+            /* Ein sanfter Verlauf von den Rändern zur Mitte */
+            background: linear-gradient(to right, var(--accent) 0%, transparent 25%, transparent 75%, var(--accent) 100%);
+            opacity: 0.18; /* Die Stärke des Leuchtens (0.18 ist edel, mach es höher für mehr Farbe) */
+            z-index: -1;
+            pointer-events: none;
         }
 
         /* Spezielle Panel-Box für sauberes Layout */
