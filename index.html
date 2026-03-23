@@ -1558,7 +1558,8 @@
     <div id="tab-route" class="tab-content">
         <h2>🚁 Tactical POI Blueprint (Routenplaner)</h2>
         <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 15px;">
-            Wähle dein Zielgebiet aus. Das Tool filtert alle deine <strong>offenen Tasks</strong> und erstellt dir einen logischen, schrittweisen Einsatzplan für den Raid.
+            Wähle dein Zielgebiet aus. Das Tool filtert alle offenen Tasks und erstellt dir einen logischen Einsatzplan für den Raid. 
+            <strong style="color: #ffa500;">Tipp:</strong> Klicke auf ❌ neben Tasks, die du noch nicht hast, um sie auszublenden.
         </p>
         
         <div class="grid">
@@ -3780,12 +3781,36 @@ window.addEventListener('DOMContentLoaded', () => {
 // ==============================================================
     // ROUTENPLANER (TACTICAL BLUEPRINT) LOGIK
     // ==============================================================
+    
+    // --- 1. Ausgeblendete Tasks (Ignorieren-Logik) ---
+    let ignoredTasks = [];
+    try {
+        const savedIgnored = localStorage.getItem('gzw_ignored_tasks');
+        if (savedIgnored) ignoredTasks = JSON.parse(savedIgnored);
+        if (!Array.isArray(ignoredTasks)) ignoredTasks = [];
+    } catch(e) { ignoredTasks = []; }
+
+    function ignoreTask(taskName) {
+        if (!ignoredTasks.includes(taskName)) {
+            ignoredTasks.push(taskName);
+            try { localStorage.setItem('gzw_ignored_tasks', JSON.stringify(ignoredTasks)); } catch(e) {}
+        }
+        generateRoutePlan(); // Plan sofort neu laden
+    }
+
+    function unignoreTask(taskName) {
+        ignoredTasks = ignoredTasks.filter(t => t !== taskName);
+        try { localStorage.setItem('gzw_ignored_tasks', JSON.stringify(ignoredTasks)); } catch(e) {}
+        generateRoutePlan(); // Plan sofort neu laden
+    }
+
+    // --- 2. Die POI Datenbank (Abläufe & Keywords) ---
     const poiBlueprints = {
         "midnight": {
             name: "Midnight Sapphire",
             infil: "LZ Hotel 1 (Süd) für den Pool-Ansatz oder Hotel 3 (Nord) für die Villen.",
             danger: "🔴 SEHR HOCH (Gepanzerte Söldner, Boss: Golden Boy / LAF Commander)",
-            keywords: ["midnight", "hotel", "villa", "pool", "rezeption", "zimmer"],
+            keywords: ["midnight", "hotel", "villa", "pool", "rezeption", "zimmer", "golf", "späher"],
             steps: [
                 { name: "Phase 1: Außenbereich & Pool", keys: ["pool", "golf", "außen", "späher"] },
                 { name: "Phase 2: Erdgeschoss & Rezeption", keys: ["rezeption", "erdgeschoss", "lobby"] },
@@ -3797,7 +3822,7 @@ window.addEventListener('DOMContentLoaded', () => {
             name: "Fort Narith",
             infil: "LZ Delta 3 (Rückseite) bietet den sichersten Anmarsch durch den Wald.",
             danger: "🔴 EXTREM (LAF Militär, Boss: General Pa)",
-            keywords: ["fort narith", "narith", "hq", "barracken"],
+            keywords: ["fort narith", "narith", "hq", "barracken", "tankstelle", "geschütze"],
             steps: [
                 { name: "Phase 1: Außenbereich & Tankstelle", keys: ["tankstelle", "außen", "mauer", "geschütze", "artillerie"] },
                 { name: "Phase 2: Barracken & Hof", keys: ["barracken", "innenhof", "block c", "block a"] },
@@ -3809,7 +3834,7 @@ window.addEventListener('DOMContentLoaded', () => {
             name: "Tiger Bay",
             infil: "LZ Lima 1 oder 2. Bereite dich auf sofortigen Beschuss vor!",
             danger: "💀 TODESZONE (Extreme KI-Dichte, UNLRA-Elite)",
-            keywords: ["tiger bay", "mall", "pier", "unlra", "einkaufszentrum"],
+            keywords: ["tiger bay", "mall", "pier", "unlra", "einkaufszentrum", "vorstadt"],
             steps: [
                 { name: "Phase 1: Vorstadt & Straßen", keys: ["vorstadt", "straße", "haus", "suv"] },
                 { name: "Phase 2: Das Einkaufszentrum", keys: ["mall", "einkaufszentrum", "bank"] },
@@ -3821,7 +3846,7 @@ window.addEventListener('DOMContentLoaded', () => {
             name: "YBL-1 Bunker",
             infil: "LZ Juliet 2 (Südlicher Wald).",
             danger: "🟠 HOCH (Enge Gänge, CQB Waffen empfohlen)",
-            keywords: ["ybl", "bunker", "ebene"],
+            keywords: ["ybl", "bunker", "ebene", "checkpoints", "zelle", "wasser"],
             steps: [
                 { name: "Phase 1: Außenposten & Eingänge", keys: ["außen", "eingang", "hof", "checkpoints"] },
                 { name: "Phase 2: Ebene -1 (Verwaltung)", keys: ["ebene -1", "büro", "überwachung", "schatten"] },
@@ -3833,7 +3858,7 @@ window.addEventListener('DOMContentLoaded', () => {
             name: "Ban Pa",
             infil: "LZ India 2 für einen leisen Ansatz über den Dschungel.",
             danger: "🟡 MITTEL (Okkulte Fanatiker, viel Holz-Deckung)",
-            keywords: ["ban pa", "fischerdorf", "ältesten", "kult", "schmuggler"],
+            keywords: ["ban pa", "fischerdorf", "ältesten", "kult", "schmuggler", "dschungel", "schrein"],
             steps: [
                 { name: "Phase 1: Dschungel & Gräber", keys: ["hügel", "dschungel", "grab", "schrein"] },
                 { name: "Phase 2: Äußere Hütten & Schmuggler", keys: ["hütte", "fischer", "schmuggler"] },
@@ -3845,7 +3870,7 @@ window.addEventListener('DOMContentLoaded', () => {
             name: "Hunter's Paradise",
             infil: "LZ Foxtrot 1. Vorsicht: Foxtrot 2 wird oft von Huntern abgezielt!",
             danger: "🟠 HOCH (Scharfschützen, Aggressive Söldner)",
-            keywords: ["hunter's", "hunters", "schießstand", "motel"],
+            keywords: ["hunter's", "hunters", "schießstand", "motel", "müllhalde", "hauptbüro"],
             steps: [
                 { name: "Phase 1: Müllhalde & Lager", keys: ["müllhalde", "lager", "schack"] },
                 { name: "Phase 2: Das Motel", keys: ["motel", "kundenliste"] },
@@ -3855,6 +3880,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // --- 3. Die Hauptfunktion (Generator) ---
     function generateRoutePlan() {
         const poiKey = document.getElementById('routePoiSelect').value;
         const resultBox = document.getElementById('routeResult');
@@ -3867,26 +3893,48 @@ window.addEventListener('DOMContentLoaded', () => {
         const poi = poiBlueprints[poiKey];
         if (!poi) return;
 
-        // Finde alle offenen Tasks (Vergleicht mit dem Tracker)
-        let activeTasks = allTasks.filter(t => !completedTasks.includes(t.de));
+        // Finde offene Tasks (weder erledigt noch ignoriert)
+        let activeTasks = allTasks.filter(t => !completedTasks.includes(t.de) && !ignoredTasks.includes(t.de));
         
-        // Filtere die Tasks heraus, die zum ausgewählten POI gehören
         let poiTasks = activeTasks.filter(t =>
             poi.keywords.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw))
         );
 
+        // Finde ignorierte Tasks, die zu genau diesem POI gehören
+        let ignoredPoiTasks = allTasks.filter(t => 
+            ignoredTasks.includes(t.de) && 
+            poi.keywords.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw))
+        );
+
+        // Den "Ausgeblendete Tasks"-Block aufbauen
+        let ignoredHtml = "";
+        if (ignoredPoiTasks.length > 0) {
+            ignoredHtml += `<div style="margin-top: 25px; border-top: 1px dashed #444; padding-top: 15px;">`;
+            ignoredHtml += `<h4 style="color:#888; margin-top:0; margin-bottom:10px; font-size: 0.95rem;">👁️ Ausgeblendete Tasks in dieser Zone:</h4>`;
+            ignoredPoiTasks.forEach(t => {
+                ignoredHtml += `
+                <div style="margin-bottom: 6px; color:#666; display: flex; justify-content: space-between; align-items: center; background: #1a1a1a; padding: 6px 10px; border-radius: 4px; border: 1px solid #333;">
+                    <span style="font-size: 0.85rem;">${t.de} <small>(${t.v})</small></span>
+                    <button onclick="unignoreTask('${t.de}')" title="Wieder in den Plan aufnehmen" style="background: #2a2a2a; border: 1px solid #444; color: #ccc; cursor: pointer; font-size: 0.8rem; padding: 4px 8px; border-radius: 3px; transition: all 0.2s;">➕ Einblenden</button>
+                </div>`;
+            });
+            ignoredHtml += `</div>`;
+        }
+
+        // Wenn es keine aktiven Tasks in der Zone gibt
         if (poiTasks.length === 0) {
             resultBox.style.display = 'block';
             resultBox.innerHTML = `
                 <div class="panel-box" style="text-align:center; border-top: 4px solid #7ca35a;">
                     <h3 style="color:#7ca35a; font-size: 1.5rem;">✅ ZONE CLEAR</h3>
-                    <p style="color:#ccc;">Du hast aktuell keine offenen Missionen für <strong>${poi.name}</strong>!<br>Gute Arbeit, Operator.</p>
+                    <p style="color:#ccc;">Du hast aktuell keine aktiven Missionen für <strong>${poi.name}</strong>!<br>Gute Arbeit, Operator.</p>
+                    ${ignoredHtml}
                 </div>
             `;
             return;
         }
 
-        // Tasks in die logischen Phasen/Schritte einteilen
+        // HTML für die Route zusammenbauen
         let phasesHtml = "";
         let assignedTasks = new Set();
 
@@ -3902,36 +3950,42 @@ window.addEventListener('DOMContentLoaded', () => {
                 stepTasks.forEach(t => {
                     assignedTasks.add(t.de);
                     phasesHtml += `
-                    <div style="margin-bottom: 8px; color:#ccc;">
-                        <strong style="color:var(--accent);">${t.de}</strong> <small>(${t.v})</small><br>
-                        <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
+                    <div style="margin-bottom: 8px; color:#ccc; display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <strong style="color:var(--accent);">${t.de}</strong> <small>(${t.v})</small><br>
+                            <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
+                        </div>
+                        <button onclick="ignoreTask('${t.de.replace(/'/g, "\\'")}')" title="Task habe ich noch nicht - Ausblenden" style="background: none; border: none; color: #b33939; cursor: pointer; font-size: 0.9rem; padding: 2px 5px;">❌</button>
                     </div>`;
                 });
                 phasesHtml += `</div>`;
             }
         });
 
-        // Übrige Tasks, die keiner spezifischen Phase zugeordnet wurden
+        // Übrige Tasks (Allgemein)
         let remainingTasks = poiTasks.filter(t => !assignedTasks.has(t.de));
         if (remainingTasks.length > 0) {
             phasesHtml += `<div style="margin-bottom: 15px; border-left: 3px solid #ffa500; padding-left: 12px; background: rgba(255,165,0,0.05); border-radius: 0 6px 6px 0; padding-top: 8px; padding-bottom: 8px;">`;
             phasesHtml += `<h4 style="color:#ffa500; margin-top:0; margin-bottom:8px; font-size: 1.05rem;">📌 Allgemeine Ziele in der Zone</h4>`;
             remainingTasks.forEach(t => {
                 phasesHtml += `
-                <div style="margin-bottom: 8px; color:#ccc;">
-                    <strong style="color:#ffa500;">${t.de}</strong> <small>(${t.v})</small><br>
-                    <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
+                <div style="margin-bottom: 8px; color:#ccc; display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <strong style="color:#ffa500;">${t.de}</strong> <small>(${t.v})</small><br>
+                        <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
+                    </div>
+                    <button onclick="ignoreTask('${t.de.replace(/'/g, "\\'")}')" title="Task habe ich noch nicht - Ausblenden" style="background: none; border: none; color: #b33939; cursor: pointer; font-size: 0.9rem; padding: 2px 5px;">❌</button>
                 </div>`;
             });
             phasesHtml += `</div>`;
         }
 
-        // HTML zusammenbauen
+        // Finale Ausgabe
         resultBox.style.display = 'block';
         resultBox.innerHTML = `
             <div class="panel-box" style="border-top: 4px solid var(--accent);">
                 <h3 style="margin-bottom: 5px; font-size: 1.3rem;">📍 EINSATZPLAN: ${poi.name.toUpperCase()}</h3>
-                <div style="font-size: 0.85rem; color: #888; margin-bottom: 15px;">Wir haben <strong>${poiTasks.length} offene Missionen</strong> für diesen Raid gebündelt.</div>
+                <div style="font-size: 0.85rem; color: #888; margin-bottom: 15px;">Wir haben <strong>${poiTasks.length} aktive Missionen</strong> für diesen Raid gebündelt.</div>
                 
                 <div style="display:flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
                     <div style="flex:1; min-width: 200px; background:#1a1a1a; padding:10px; border-radius:6px; border:1px solid #333;">
@@ -3946,6 +4000,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 <h3 style="color: #888; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 15px; font-size: 1rem;">DEINE ROUTE:</h3>
                 ${phasesHtml}
+                
+                ${ignoredHtml}
             </div>
         `;
     }
