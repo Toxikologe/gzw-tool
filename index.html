@@ -710,9 +710,9 @@
         </div>
 
         <div class="faction-selector">
-            <button class="fac-btn mithras" onclick="setFaction('#7ca35a', this)" title="Mithras Security Systems">Mithras (MSS)</button>
-            <button class="fac-btn crimson" onclick="setFaction('#b33939', this)" title="Crimson Shield International">Crimson (CSI)</button>
-            <button class="fac-btn lamang" onclick="setFaction('#227093', this)" title="Lamang Recovery Initiative">Lamang (LRI)</button>
+            <button class="fac-btn mithras" onclick="setFaction('mss', '#7ca35a', this)" title="Mithras Security Systems">Mithras (Nam Thaven)</button>
+            <button class="fac-btn crimson" onclick="setFaction('csi', '#b33939', this)" title="Crimson Shield International">Crimson (Kiu Vongsa)</button>
+            <button class="fac-btn lamang" onclick="setFaction('lri', '#227093', this)" title="Lamang Recovery Initiative">Lamang (Pha Lang)</button>
         </div>
 
         <div class="nav-wrapper">
@@ -1968,10 +1968,19 @@
 <button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
 
 <script>
-    // --- FRAKTIONS-FARBEN & LOKALER SPEICHER ---
-    function setFaction(colorHex, btnElement) {
+   // --- FRAKTIONS-FARBEN & HOME-ADVANTAGE ---
+    const hqData = {
+        'mss': { city: 'Nam Thaven', lz: 'Alpha LZs' },
+        'csi': { city: 'Kiu Vongsa', lz: 'Charlie LZs' },
+        'lri': { city: 'Pha Lang', lz: 'Bravo LZs' }
+    };
+
+    function setFaction(facId, colorHex, btnElement) {
         document.documentElement.style.setProperty('--accent', colorHex);
-        localStorage.setItem('gzw_faction_color', colorHex);
+        try {
+            localStorage.setItem('gzw_faction_color', colorHex);
+            localStorage.setItem('gzw_faction_id', facId);
+        } catch(e) {}
         
         // Aktiven Button visuell hervorheben
         if (btnElement) {
@@ -1981,12 +1990,47 @@
             }
             btnElement.classList.add("active");
         }
+
+        updateHomeAdvantage(facId);
     }
 
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const savedColor = localStorage.getItem('gzw_faction_color');
-        if (savedColor) {
+    function updateHomeAdvantage(facId) {
+        if(!facId || !hqData[facId]) return;
+        const hq = hqData[facId];
+        
+        // 1. Routenplaner anpassen (Option 1 ist der "Starter"-POI)
+        const routeSelect = document.getElementById('routePoiSelect');
+        if(routeSelect && routeSelect.options[1]) {
+            routeSelect.options[1].text = `Startstadt (${hq.city})`;
+        }
+
+        // 2. Heli Tool Basecamp anpassen
+        const heliStart = document.getElementById('heliStart');
+        const heliEnd = document.getElementById('heliEnd');
+        if(heliStart && heliStart.options[0]) heliStart.options[0].text = `Base Camp (${hq.city} - ${hq.lz})`;
+        if(heliEnd && heliEnd.options[0]) heliEnd.options[0].text = `Base Camp (${hq.city} - ${hq.lz})`;
+    }
+
+    // Beim Laden des Skripts die gespeicherte Fraktion wiederherstellen
+    window.addEventListener('DOMContentLoaded', () => {
+        let savedColor = '#7ca35a'; // Default Mithras
+        let savedFacId = 'mss';     // Default Mithras
+        
+        try {
+            savedColor = localStorage.getItem('gzw_faction_color') || savedColor;
+            savedFacId = localStorage.getItem('gzw_faction_id') || savedFacId;
+        } catch(e) {}
+
+        // Finde den passenden Button und löse den Klick aus (simuliert den Start-Zustand)
+        let classMap = { 'mss': 'mithras', 'csi': 'crimson', 'lri': 'lamang' };
+        let facBtn = document.querySelector(`.fac-btn.${classMap[savedFacId]}`);
+        
+        if(facBtn) {
+            setFaction(savedFacId, savedColor, facBtn);
+        } else {
+            // Fallback, falls der Button noch nicht geladen ist
             document.documentElement.style.setProperty('--accent', savedColor);
+            updateHomeAdvantage(savedFacId);
         }
     });
 
