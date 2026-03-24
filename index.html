@@ -3193,29 +3193,6 @@ const vendorData = {
         </ul>`
 };
 
-// Die Funktion, die durch das Dropdown (onchange) aufgerufen wird
-function updateVendor() {
-    const select = document.getElementById('vendorSelect');
-    const infoBox = document.getElementById('vendorInfo');
-    const selectedValue = select.value;
-
-    if (vendorData[selectedValue]) {
-        // Fügt die Daten ein
-        infoBox.innerHTML = vendorData[selectedValue];
-        
-        // Fügt einen taktischen Rahmen und Padding hinzu, sobald etwas ausgewählt wurde
-        infoBox.style.padding = "15px";
-        infoBox.style.border = "1px solid #333";
-        infoBox.style.backgroundColor = "#111";
-        infoBox.style.marginTop = "15px";
-    } else {
-        // Reset, wenn nichts ausgewählt ist
-        infoBox.innerHTML = "Wähle einen Händler und sein Level aus, um das komplette Inventarprotokoll abzurufen.";
-        infoBox.style.border = "none";
-        infoBox.style.backgroundColor = "transparent";
-    }
-}
-
     // 13. FRAKTIONEN DATENBANK
     const factionDb = {
         "mss": {
@@ -3381,6 +3358,30 @@ function updateVendor() {
     function updateVendor() { const v = vendorDb[document.getElementById('vendorSelect').value]; document.getElementById('vendorInfo').innerHTML = v ? `Fokus: <span style="color: var(--accent); font-weight: bold;">${v.focus}</span><br><b>Highlights:</b> <span class="highlight">${v.unlocks}</span><br><br><small><b>Operator-Tipp:</b> ${v.tip}</small>` : "Wähle Händler & Level für Details..."; }
     function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
+
+    
+// Die Funktion, die durch das Dropdown (onchange) aufgerufen wird
+function updateVendor() {
+    const select = document.getElementById('vendorSelect');
+    const infoBox = document.getElementById('vendorInfo');
+    const selectedValue = select.value;
+
+    if (vendorData[selectedValue]) {
+        // Fügt die Daten ein
+        infoBox.innerHTML = vendorData[selectedValue];
+        
+        // Fügt einen taktischen Rahmen und Padding hinzu, sobald etwas ausgewählt wurde
+        infoBox.style.padding = "15px";
+        infoBox.style.border = "1px solid #333";
+        infoBox.style.backgroundColor = "#111";
+        infoBox.style.marginTop = "15px";
+    } else {
+        // Reset, wenn nichts ausgewählt ist
+        infoBox.innerHTML = "Wähle einen Händler und sein Level aus, um das komplette Inventarprotokoll abzurufen.";
+        infoBox.style.border = "none";
+        infoBox.style.backgroundColor = "transparent";
+    }
+}
 
     function searchKeys() {
         const input = document.getElementById('keySearch').value.toLowerCase();
