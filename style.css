@@ -1,4 +1,25 @@
-    /* --- TACTICAL NEWS FRAME --- */
+        /* 1. Den Hintergrund der Seite definieren und Abstand schaffen */
+        body {
+        background-color: #050505; /* Der dunkle Hintergrund "hinter" dem Tool */
+        margin: 0;
+        padding: 30px 20px; /* Zwingt das Tool, Abstand zu den Bildschirmrändern zu halten */
+        font-family: 'Consolas', 'Courier New', Courier, monospace;
+        color: #dcdcdc;
+    }
+
+        /* 2. Den Hauptcontainer (dein Dashboard) einsperren und zentrieren */
+        /* WICHTIG: Schau nach, wie dein Haupt-Div in der HTML heißt. Meistens ist es .container */
+        .container {
+        max-width: 1400px; /* Das ist der magische Wert! Verhindert das unendliche Strecken */
+        margin: 0 auto; /* Zentriert das Tool perfekt in der Mitte des Bildschirms */
+        background-color: #111;
+        border: 2px solid var(--accent); /* Hier ist dein dynamischer Faction-Rahmen */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* Optional: Ein leichter Schatten nach außen */
+        border-radius: 5px; /* Optional: Leicht abgerundete Ecken */
+        overflow: hidden; /* Verhindert, dass Inhalte über den farbigen Rahmen rausragen */
+    }
+
+        /* --- TACTICAL NEWS FRAME --- */
         .tactical-news-frame {
             width: 100%;
             background-color: #0d0d0d;
