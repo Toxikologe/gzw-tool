@@ -2629,6 +2629,37 @@ function updateBossTimers() {
     });
 }
 
+// ==========================================
+// TACTICAL TRADER RESTOCK TIMER
+// ==========================================
+function startTraderTimer() {
+    const timerDisplay = document.getElementById('trader-timer-btn');
+    if (!timerDisplay) return;
+
+    setInterval(() => {
+        const now = new Date();
+        const nextHour = new Date(now);
+        nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+
+        const diff = nextHour - now;
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        const mDisplay = String(minutes).padStart(2, '0');
+        const sDisplay = String(seconds).padStart(2, '0');
+
+        timerDisplay.textContent = `🛒 Trader-Restock: ${mDisplay}:${sDisplay}`;
+
+        if (minutes < 5) {
+            timerDisplay.style.color = '#ff4c4c'; 
+            timerDisplay.style.textShadow = '0 0 8px rgba(255, 76, 76, 0.4)';
+        } else {
+            timerDisplay.style.color = ''; 
+            timerDisplay.style.textShadow = 'none';
+        }
+    }, 1000);
+}
+
 // ==============================================================
     // LIVE ZULU-TIME CLOCK (Taktische Uhrzeit)
     // ==============================================================
