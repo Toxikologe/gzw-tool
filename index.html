@@ -222,12 +222,11 @@
                     <div style="flex: 1;">
                         <label style="margin-top: 0; font-size: 0.8rem;">Gegnerische Rüstung:</label>
                         <select id="calcArmor" onchange="calculateBallistics()" style="padding: 8px;">
-                            <option value="1">Class 2 (Soft Armor)</option>
-                            <option value="2">Class 3 (NIJ III)</option>
-                            <option value="3">Class 3+ (NIJ III+)</option>
-                            <option value="4" selected>Class 4 (NIJ IV)</option>
-                            <option value="5">Class 5 (Heavy)</option>
-                            <option value="6">Class 6 (Zabralo)</option>
+                            <option value="1">Level I / IIA (Soft Armor)</option>
+                            <option value="2">Level IIA+ / IIIA (Pistolen-Schutz)</option>
+                            <option value="3">Level IIIA+ (Heavy Soft Armor)</option>
+                            <option value="4" selected>Level III (Standard Platten)</option>
+                            <option value="5">Level III+ (AP Platten / Endgame)</option>
                         </select>
                     </div>
                     <div style="font-weight: bold; padding-top: 20px;">VS</div>
@@ -433,29 +432,27 @@
                 <label for="gearFullSelect">Ausrüstungs-Datenbank</label>
                 <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
                     <option value="">-- Wähle Ausrüstung --</option>
-                    <optgroup label="Schwere Panzerung (Class 5 & 6)">
-                        <option value="6B43 Zabralo (Class 6): Maximaler Schutz im Spiel. Macht dich zu einem wandelnden Panzer, ist aber extrem schwer. Taktischer Sprint wird zur Qual.">6B43 Zabralo (Class 6)</option>
-                        <option value="IOTV Gen4 (Class 5): Hervorragender ballistischer Schutz für Brust, Bauch und Arme. Sehr beliebt bei Fort Narith Runs.">IOTV Gen4 Full (Class 5)</option>
-                        <option value="6B45 Ratnik (Class 5): Russischer Standard. Schützt Torso und Oberarme. Hoher Gewichts-Malus, aber extrem verlässlich.">6B45 Ratnik (Class 5)</option>
+                    <optgroup label="Schwere Panzerung (Level III & III+)">
+                        <option value="m2_carrier">M2 Plate Carrier (Level III+)</option>
+                        <option value="6b45">6B45 Plate Carrier (Level III+)</option>
+                        <option value="lancer">Lancer Plate Carrier (Level III)</option>
                     </optgroup>
-                    <optgroup label="Mittlere Panzerung (Class 3 & 4 - Meta)">
-                        <option value="RPC Plate Carrier (Class 4): Die absolute 0.4 Meta! Sehr leicht, schützt die lebenswichtigen Organe (Lunge/Herz) und hat fast keine Trägheits-Strafe (Inertia).">RPC Plate Carrier (Class 4)</option>
-                        <option value="JPC Vest (Class 4): Jumpable Plate Carrier. Sehr kompakt, perfekt für schnelle Aufklärer, schützt aber nur den oberen Torso.">JPC Vest (Class 4)</option>
-                        <option value="Ana Tactical M1 (Class 4): Armored Rig. Kombiniert Class 4 Platten mit viel Platz für Magazine. Toller Allrounder.">Ana Tactical M1 (Class 4)</option>
-                        <option value="LBT-6094 (Class 3+): Guter Allrounder für Mid-Tier POIs wie Ban Pa oder Hunter's Paradise.">LBT-6094 (Class 3+)</option>
-                        <option value="6B23-1 / 6B13 (Class 3): Robuste russische Westen. Gut gegen KI-Scavs, aber schwach gegen Spieler mit AP-Munition.">6B23-1 / 6B13 (Class 3)</option>
+                    <optgroup label="Mittlere Panzerung (Level IIIA & IIIA+)">
+                        <option value="6b23">6B23 Body Armor (Level IIIA+)</option>
+                        <option value="moc_vest">MOC Vest (Level IIIA)</option>
+                        <option value="unlra_vest">UNLRA Vest (Level IIIA)</option>
                     </optgroup>
-                    <optgroup label="Leichte Panzerung (Class 1 & 2)">
-                        <option value="PACA Soft Armor (Class 2): Schützt nur vor Schrot und 9mm PST. Leicht, aber im Endgame ein absolutes Risiko.">PACA Soft Armor (Class 2)</option>
-                        <option value="Zhuk-3 (Class 2): Press-Weste. Reiner Basisschutz für absolute Anfänger.">Zhuk-3 (Class 2)</option>
+                    <optgroup label="Leichte Panzerung (Level I, IIA & IIA+)">
+                        <option value="pasgt_vest">PASGT Vest (Level IIA+)</option>
+                        <option value="sec_vest">Security Guard Vest (Level IIA)</option>
+                        <option value="scav_vest">Scavenger Vest (Level I)</option>
                     </optgroup>
                     <optgroup label="Helme & Gesichtsschutz">
-                        <option value="Altyn / Vulcan Helm (Class 5): Schwerer Sturmmhelm mit Visier. Macht dich fast taub (Headsets nicht möglich!), stoppt aber fast jeden Kopftreffer.">Altyn Assault Helmet</option>
-                        <option value="AirFrame Helmet (Class 4): Hochmoderne westliche Ausrüstung. Kann mit Chops (Ohrenschutz) und Visier stark aufgewertet werden.">AirFrame Helmet</option>
-                        <option value="Fast MT (Class 4): High-End Helm. Sehr leicht, kann mit Side-Rails und Face-Shield (Class 3) nachgerüstet werden.">Fast MT Helmet</option>
-                        <option value="MICH 2000 / TC-2000 (Class 3): Der Standard-Armeehelm. Zuverlässig gegen KI-Streifschüsse und Schrotflinten.">MICH 2000 / TC-2000</option>
-                        <option value="6B47 Ratnik-B (Class 3): Russischer Standard-Helm, gute Ergo-Werte, kompatibel mit Nachtsichtgeräten (NVGs).">6B47 Ratnik-B</option>
-                        <option value="SSh-68 (Class 2): Der gute alte 'Penis-Helm' (Stahlhelm). Schützt fast gar nicht, sieht aber lustig aus und leitet manchmal Schüsse ab (Ricochet).">SSh-68 Stahlhelm</option>
+                        <option value="fast_mt">FAST / High Cut Helmet (Level IIIA+)</option>
+                        <option value="6b47">6B47 Ratnik-B (Level IIIA)</option>
+                        <option value="mich">MICH 2000 / ACH (Level IIIA)</option>
+                        <option value="ssh68">SSh-68 Stahlhelm (Level IIA+)</option>
+                        <option value="pasgt_helm">PASGT Helmet (Level IIA)</option>
                     </optgroup>
                     <optgroup label="Nachtsicht & Gehörschutz (Night Ops)">
                         <option value="GPNVG-18 (Quad-Node): Das 4-Röhren-Nachtsichtgerät der Elite. Riesiges Sichtfeld, keine toten Winkel, absoluter Luxus.">GPNVG-18 (NVG)</option>
@@ -602,27 +599,25 @@
                 <label for="lc_armor" style="margin-top:0;">Körperpanzerung</label>
                 <select id="lc_armor" onchange="calcLoadout()">
                     <option value="0">-- Keine --</option>
-                    <option value="11.0">6B43 Zabralo Class 6 (11.0 kg)</option>
-                    <option value="8.5">IOTV Gen4 Class 5 (8.5 kg)</option>
-                    <option value="7.8">6B45 Ratnik Class 5 (7.8 kg)</option>
-                    <option value="3.2">RPC Plate Carrier Class 4 (3.2 kg)</option>
-                    <option value="4.1">JPC Vest Class 4 (4.1 kg)</option>
-                    <option value="5.5">Ana Tactical M1 Class 4 (5.5 kg)</option>
-                    <option value="5.8">LBT-6094 Class 3+ (5.8 kg)</option>
-                    <option value="5.2">6B23-1 Class 3 (5.2 kg)</option>
-                    <option value="1.8">PACA Soft Armor Class 2 (1.8 kg)</option>
-                    <option value="1.2">Zhuk-3 Class 2 (1.2 kg)</option>
+                    <option value="11.0">M2 Plate Carrier Level III+ (11.0 kg)</option>
+                    <option value="8.5">6B45 Plate Carrier Level III+ (8.5 kg)</option>
+                    <option value="6.5">Lancer Plate Carrier Level III (6.5 kg)</option>
+                    <option value="5.2">6B23 Body Armor Level IIIA+ (5.2 kg)</option>
+                    <option value="4.1">MOC Vest Level IIIA (4.1 kg)</option>
+                    <option value="3.5">UNLRA Vest Level IIIA (3.5 kg)</option>
+                    <option value="2.8">PASGT Vest Level IIA+ (2.8 kg)</option>
+                    <option value="1.8">Security Vest Level IIA (1.8 kg)</option>
+                    <option value="1.2">Scavenger Vest Level I (1.2 kg)</option>
                 </select>
 
                 <label for="lc_helmet">Helm</label>
                 <select id="lc_helmet" onchange="calcLoadout()">
                     <option value="0">-- Keiner --</option>
-                    <option value="4.2">Altyn / Vulcan Class 5 (4.2 kg)</option>
-                    <option value="1.4">AirFrame Class 4 (1.4 kg)</option>
-                    <option value="1.2">Fast MT Class 4 (1.2 kg)</option>
-                    <option value="1.5">MICH 2000 Class 3 (1.5 kg)</option>
-                    <option value="1.3">6B47 Ratnik-B Class 3 (1.3 kg)</option>
-                    <option value="0.8">SSh-68 Stahlhelm Class 2 (0.8 kg)</option>
+                    <option value="1.4">FAST / High Cut Level IIIA+ (1.4 kg)</option>
+                    <option value="1.3">6B47 Ratnik-B Level IIIA (1.3 kg)</option>
+                    <option value="1.5">MICH 2000 / ACH Level IIIA (1.5 kg)</option>
+                    <option value="1.0">SSh-68 Stahlhelm Level IIA+ (1.0 kg)</option>
+                    <option value="1.2">PASGT Helmet Level IIA (1.2 kg)</option>
                 </select>
 
                 <label for="lc_rig">Tactical Rig / Belt</label>
