@@ -1,111 +1,215 @@
-      // --- FRAKTIONS-FARBEN & HOME-ADVANTAGE ---
-    const hqData = {
-        'mss': { city: 'Nam Thaven', lz: 'Alpha LZs' },
-        'csi': { city: 'Kiu Vongsa', lz: 'Charlie LZs' },
-        'lri': { city: 'Pha Lang', lz: 'Bravo LZs' }
-    };
+// ==============================================================
+// FRAKTIONS-FARBEN & HOME-ADVANTAGE
+// ==============================================================
+const hqData = {
+    'mss': { city: 'Nam Thaven', lz: 'Alpha LZs' },
+    'csi': { city: 'Kiu Vongsa', lz: 'Charlie LZs' },
+    'lri': { city: 'Pha Lang', lz: 'Bravo LZs' }
+};
 
-    function setFaction(facId, colorHex, btnElement) {
-        document.documentElement.style.setProperty('--accent', colorHex);
-        try {
-            localStorage.setItem('gzw_faction_color', colorHex);
-            localStorage.setItem('gzw_faction_id', facId);
-        } catch(e) {}
-        
-        // Aktiven Button visuell hervorheben
-        if (btnElement) {
-            let btns = document.getElementsByClassName("fac-btn");
-            for (let i = 0; i < btns.length; i++) {
-                btns[i].classList.remove("active");
-            }
-            btnElement.classList.add("active");
-        }
-
-        updateHomeAdvantage(facId);
-    }
-
-    function updateHomeAdvantage(facId) {
-        if(!facId || !hqData[facId]) return;
-        const hq = hqData[facId];
-        
-        // 1. Routenplaner anpassen (Option 1 ist der "Starter"-POI)
-        const routeSelect = document.getElementById('routePoiSelect');
-        if(routeSelect && routeSelect.options[1]) {
-            routeSelect.options[1].text = `Startstadt (${hq.city})`;
-        }
-
-        // 2. Heli Tool Basecamp anpassen
-        const heliStart = document.getElementById('heliStart');
-        const heliEnd = document.getElementById('heliEnd');
-        if(heliStart && heliStart.options[0]) heliStart.options[0].text = `Base Camp (${hq.city} - ${hq.lz})`;
-        if(heliEnd && heliEnd.options[0]) heliEnd.options[0].text = `Base Camp (${hq.city} - ${hq.lz})`;
-    }
-
-    // Beim Laden des Skripts die gespeicherte Fraktion wiederherstellen
+function setFaction(facId, colorHex, btnElement) {
+    document.documentElement.style.setProperty('--accent', colorHex);
+    try {
+        localStorage.setItem('gzw_faction_color', colorHex);
+        localStorage.setItem('gzw_faction_id', facId);
+    } catch(e) {}
     
-
-
-    // --- TAB NAVIGATION LOGIK ---
-    function openTab(tabId, btnElement) {
-        let tabs = document.getElementsByClassName("tab-content");
-        for (let i = 0; i < tabs.length; i++) {
-            tabs[i].classList.remove("active");
-        }
-        
-        let btns = document.getElementsByClassName("tab-btn");
+    if (btnElement) {
+        let btns = document.getElementsByClassName("fac-btn");
         for (let i = 0; i < btns.length; i++) {
             btns[i].classList.remove("active");
         }
-        
-        document.getElementById(tabId).classList.add("active");
         btnElement.classList.add("active");
     }
+    updateHomeAdvantage(facId);
+}
 
-    // --- KATEGORIE NAVIGATION LOGIK ---
-    function switchCategory(catId, btnElement) {
-        // 1. Alle Kategorie-Buttons zurücksetzen
-        let catBtns = document.getElementsByClassName("cat-btn");
-        for (let i = 0; i < catBtns.length; i++) {
-            catBtns[i].classList.remove("active");
-        }
-        btnElement.classList.add("active"); // Geklickten Button aktivieren
-
-        // 2. Alle Sub-Nav-Gruppen ausblenden
-        let groups = document.getElementsByClassName("sub-nav-group");
-        for (let i = 0; i < groups.length; i++) {
-            groups[i].classList.remove("active");
-        }
-        
-        // 3. Die gewählte Gruppe einblenden
-        let targetGroup = document.getElementById(catId);
-        targetGroup.classList.add("active");
-
-        // 4. Automatisch den ersten Tab in dieser neuen Gruppe öffnen!
-        let firstTabBtn = targetGroup.querySelector('.tab-btn');
-        if (firstTabBtn) {
-            firstTabBtn.click();
-        }
+function updateHomeAdvantage(facId) {
+    if(!facId || !hqData[facId]) return;
+    const hq = hqData[facId];
+    
+    const routeSelect = document.getElementById('routePoiSelect');
+    if(routeSelect && routeSelect.options[1]) {
+        routeSelect.options[1].text = `Startstadt (${hq.city})`;
     }
 
-    // --- ZURÜCK NACH OBEN LOGIK ---
-    let topButton = document.getElementById("backToTopBtn");
-    window.addEventListener("scroll", function() {
-        if (window.scrollY > 150) {
-            topButton.style.display = "block";
-        } else {
-            topButton.style.display = "none";
+    const heliStart = document.getElementById('heliStart');
+    const heliEnd = document.getElementById('heliEnd');
+    if(heliStart && heliStart.options[0]) heliStart.options[0].text = `Base Camp (${hq.city} - ${hq.lz})`;
+    if(heliEnd && heliEnd.options[0]) heliEnd.options[0].text = `Base Camp (${hq.city} - ${hq.lz})`;
+}
+
+// ==============================================================
+// NAVIGATION LOGIK
+// ==============================================================
+function openTab(tabId, btnElement) {
+    let tabs = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+    }
+    let btns = document.getElementsByClassName("tab-btn");
+    for (let i = 0; i < btns.length; i++) {
+        btns[i].classList.remove("active");
+    }
+    document.getElementById(tabId).classList.add("active");
+    btnElement.classList.add("active");
+}
+
+function switchCategory(catId, btnElement) {
+    let catBtns = document.getElementsByClassName("cat-btn");
+    for (let i = 0; i < catBtns.length; i++) {
+        catBtns[i].classList.remove("active");
+    }
+    btnElement.classList.add("active");
+
+    let groups = document.getElementsByClassName("sub-nav-group");
+    for (let i = 0; i < groups.length; i++) {
+        groups[i].classList.remove("active");
+    }
+    
+    let targetGroup = document.getElementById(catId);
+    targetGroup.classList.add("active");
+
+    let firstTabBtn = targetGroup.querySelector('.tab-btn');
+    if (firstTabBtn) firstTabBtn.click();
+}
+
+let topButton = document.getElementById("backToTopBtn");
+window.addEventListener("scroll", function() {
+    if (topButton) {
+        if (window.scrollY > 150) topButton.style.display = "block";
+        else topButton.style.display = "none";
+    }
+});
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleWidget(id) {
+    const widget = document.getElementById(id);
+    const btn = document.getElementById('btn-' + id);
+    if (!widget) return;
+
+    const isVisible = widget.style.display !== 'none';
+    if (isVisible) {
+        widget.style.display = 'none';
+        if (btn) btn.classList.remove('active');
+    } else {
+        widget.style.display = 'block';
+        if (btn) btn.classList.add('active');
+        widget.classList.remove('collapsed');
+    }
+}
+
+function makeDraggable(elementId) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    let isDragging = false, hasMoved = false;
+    let startX, startY, startLeft, startTop;
+
+    const header = el.querySelector('[id$="Header"], [id$="notepadHeader"]') || el;
+    header.style.cursor = 'grab';
+
+    header.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'BUTTON') return;
+        isDragging = true;
+        hasMoved = false;
+        startX = e.clientX;
+        startY = e.clientY;
+        const rect = el.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+        header.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
+        if (!hasMoved) return;
+
+        let newLeft = startLeft + dx;
+        let newTop = startTop + dy;
+        newLeft = Math.max(0, Math.min(window.innerWidth - el.offsetWidth, newLeft));
+        newTop = Math.max(0, Math.min(window.innerHeight - el.offsetHeight, newTop));
+
+        el.style.left = newLeft + 'px';
+        el.style.top = newTop + 'px';
+        el.style.right = 'auto';
+        el.style.bottom = 'auto';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        header.style.cursor = 'grab';
+        if (hasMoved) {
+            try {
+                localStorage.setItem(`gzw_pos_${elementId}`, JSON.stringify({ left: el.style.left, top: el.style.top }));
+            } catch(e) {}
         }
     });
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    // ==============================================================
-    // DATENBANKEN
-    // ==============================================================
+    try {
+        const saved = localStorage.getItem(`gzw_pos_${elementId}`);
+        if (saved) {
+            const pos = JSON.parse(saved);
+            el.style.left = pos.left;
+            el.style.top = pos.top;
+            el.style.right = 'auto';
+            el.style.bottom = 'auto';
+        }
+    } catch(e) {}
+}
 
-    // 1. TASK DATENBANK (VOLLSTÄNDIG - 0.4 AKTUALISIERT)
-    const allTasks = [
+// ==============================================================
+// DATENBANKEN
+// ==============================================================
+
+// --- GEAR & RÜSTUNG (NIJ UPDATE) ---
+const gearData = {
+    // Schwere Panzerung (Level III & III+)
+    "m2_carrier": `<h3>M2 Plate Carrier (Level III+)</h3><p><b>Schutz:</b> Höchster ballistischer Schutz im Spiel. Stoppt fast alle gängigen Sturmgewehr-Kaliber (M855, PS).</p><p><b style="color:#ff4c4c;">Warnung (0.4):</b> Extreme Trägheit. Der Taktische Sprint wird stark eingeschränkt.</p>`,
+    "6b45": `<h3>6B45 Plate Carrier (Level III+)</h3><p><b>Schutz:</b> Russisches Äquivalent zum M2. Schützt Torso und Oberarme zuverlässig gegen Beschuss.</p>`,
+    "lancer": `<h3>Lancer Plate Carrier (Level III)</h3><p><b>Eigenschaft:</b> Guter Kompromiss aus Schutz und Mobilität. Hält die Standard-Munition der KI problemlos auf.</p>`,
+
+    // Mittlere Panzerung (Level IIIA & IIIA+)
+    "6b23": `<h3>6B23 Body Armor (Level IIIA+)</h3><p><b>Eigenschaft:</b> Weichballistik mit leichten Einschüben. Gut gegen Pistolen-Kaliber und Schrotflinten.</p><p><b>Nachteil:</b> Sturmgewehre schlagen hier fast ungebremst durch.</p>`,
+    "moc_vest": `<h3>MOC Vest (Level IIIA)</h3><p><b>Eigenschaft:</b> Reiner Schutz gegen Faustfeuerwaffen und Splitter. Erlaubt extrem schnelle Bewegungen.</p>`,
+    "unlra_vest": `<h3>UNLRA Vest (Level IIIA)</h3><p><b>Eigenschaft:</b> Fraktionslose Weste (blau). Vorsicht, sie macht dich im Dschungel extrem sichtbar!</p>`,
+
+    // Leichte Panzerung (Level I bis IIA+)
+    "pasgt_vest": `<h3>PASGT Vest (Level IIA+)</h3><p><b>Eigenschaft:</b> Alter Splitterschutz. Besser als nichts in der Startzone, aber ein absolutes Risiko im Mid-Game.</p>`,
+    "sec_vest": `<h3>Security Guard Vest (Level IIA)</h3><p><b>Schutz:</b> Schützt maximal vor 9mm Makarov oder leichten Schrot-Treffern auf Distanz.</p>`,
+    "scav_vest": `<h3>Scavenger Vest (Level I)</h3><p><b>Eigenschaft:</b> Völlig veralteter Schutz, nur für absolute Notfälle geeignet.</p>`,
+
+    // Helme
+    "fast_mt": `<h3>FAST / High Cut Helmet (Level IIIA+)</h3><p><b>Eigenschaft:</b> Moderner Helm. Kann Headsets tragen und bietet den besten Kompromiss aus Gehör und Schutz.</p>`,
+    "mich": `<h3>MICH 2000 / ACH (Level IIIA)</h3><p><b>Eigenschaft:</b> Standard-Militärhelm. Sehr zuverlässig gegen Querschläger.</p>`,
+    "6b47": `<h3>6B47 Ratnik-B (Level IIIA)</h3><p><b>Eigenschaft:</b> Russischer Helm, perfekt für den Start. Leicht und Headset-kompatibel.</p>`,
+    "ssh68": `<h3>SSh-68 Stahlhelm (Level IIA+)</h3><p><b>Eigenschaft:</b> Hohe Abprallchance (Ricochet), schützt aber ballistisch kaum vor Frontaltreffern.</p>`,
+    "pasgt_helm": `<h3>PASGT Helmet (Level IIA)</h3><p><b>Eigenschaft:</b> Alter Kevlarhelm, bietet nur Basisschutz für den Start.</p>`,
+
+    // Zubehör
+    "gpnvg": `<h3>GPNVG-18 (Quad-Node)</h3><p><b>Eigenschaft:</b> Das 4-Röhren-Nachtsichtgerät der Elite. Riesiges Sichtfeld, keine toten Winkel, absoluter Luxus.</p>`,
+    "pvs31": `<h3>PVS-31 (Binocular)</h3><p><b>Eigenschaft:</b> 2-Röhren-NVG. Solides Sichtfeld, sehr guter Kontrast im Dschungel.</p>`,
+    "pvs14": `<h3>PVS-14 (Monocular)</h3><p><b>Eigenschaft:</b> 1-Röhren-NVG. Günstig, aber du hast stark eingeschränkte periphere Sicht.</p>`,
+    "comtac": `<h3>ComTac 2 / ComTac 4</h3><p><b>Eigenschaft:</b> <span style="color:#7ca35a; font-weight:bold;">0.4 META BUFF!</span> Aktiver Gehörschutz. Erhöht die akustische Reichweite für Schritte real um 40-50% (z.B. hörst du Sprints auf 75m statt 50m).</p>`,
+    "sordin": `<h3>Sordin / Gssh-01</h3><p><b>Eigenschaft:</b> Günstigere Headsets. Erhöhen deine Hörweite spürbar, klingen aber etwas 'bassiger' oder blecherner.</p>`,
+    "eberlestock": `<h3>Eberlestock G4 / Attack 2 (30-35 Slots)</h3><p><b>Eigenschaft:</b> Riesige Kapazität. Nur für reine Loot-Runs!</p><p><b style="color:#ff4c4c;">Warnung:</b> Führt zu extremer Trägheit.</p>`,
+    "mystery": `<h3>Mystery Ranch / Beta2 (25 Slots)</h3><p><b>Eigenschaft:</b> Der perfekte Kompromiss aus Platz und Agilität.</p>`,
+    "rush": `<h3>Rush 24 / Tri-Zip (20 Slots)</h3><p><b>Eigenschaft:</b> Der Standard für normale Raids.</p>`,
+    "assault": `<h3>Assault Pack (12 Slots)</h3><p><b>Eigenschaft:</b> Perfekt für PvP-Jagd. Minimales Gewicht.</p>`,
+    "sling": `<h3>Sling Bag / Duffle Bag (6-8 Slots)</h3><p><b>Eigenschaft:</b> Scav-Rucksäcke. Besser als nichts.</p>`,
+    "alpha": `<h3>LBT-1961A / Alpha Rig</h3><p><b>Eigenschaft:</b> Riesige Rigs (bis zu 16 Slots). Perfekt für Trommelmagazine.</p>`,
+    "triton": `<h3>Triton / Strike Rig (Medium)</h3><p><b>Eigenschaft:</b> Mittlere Rigs (10-12 Slots). Gute Balance.</p>`,
+    "micro": `<h3>Micro Rig / Bank Robber</h3><p><b>Eigenschaft:</b> Kleine Rigs (6-8 Slots). Extrem leicht.</p>`,
+    "warbelt": `<h3>Tactical War Belt</h3><p><b>Eigenschaft:</b> Zusätzlicher Platz an der Hüfte. Entlastet den Brustbereich und erhöht die Waffen-Ergonomie.</p>`
+};
+
+const allTasks = [
         // --- HANDSHAKE ---
         { de: "Erstaufklärung", en: "First Recon", v: "Handshake", desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (143 160), Rathaus (141 164)." },
         { de: "Abgestürzter Vogel", en: "Little Bird Down", v: "Handshake", desc: "Finde den Hubschrauber-Absturzplatz.", sol: "Nördlich der Stadt im Sumpf. Cockpit-Panel." },
@@ -431,10 +535,9 @@
         { de: "Squad Strike: Sichern & Halten", en: "Squad Strike: Secure & Hold", v: "Gunny", desc: "Halte Position.", sol: "5 Min. LZ Verteidigung." },
         { de: "Squad Strike: Datendiebstahl", en: "Squad Strike: Data Heist", v: "Turncoat", desc: "Infiltriere HQ.", sol: "YBL-1 oder Tiger Bay Daten." },
         { de: "Squad Strike: Night Raid", en: "Squad Strike: Night Raid", v: "Banshee", desc: "Leise Spec-Op.", sol: "Team Stealth Kills." }
-    ];
+];
 
-    // 2. WAFFEN DATENBANK
-    const weapons = {
+const weapons = {
         "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
         "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
         "mk18": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
@@ -477,10 +580,9 @@
         "m1a": { ammo: "7.62x51mm M80", pen: "Class 4-6", tip: "0.4 NEU: Zivile Version des M14. Exzellent als DMR mit den neuen 0.4 Scopes." },
         "rem788": { ammo: "5.56x45mm M855", pen: "Class 2-3", tip: "0.4 NEU: Remington Model 788 (.222). Repetierbüchse, ideal für Einsteiger-Jagd-Tasks." },
         "m201c": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 NEU: Stark modifizierbares Kompaktgewehr. Sehr starke Alternative zur M4A1." }
-    };
-    
-// 3. WAFFEN BILDER DATENBANK
-    const weaponImages = {
+};
+
+const weaponImages = {
         "ak74m": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/AK-74M_inspect.png",
         "ak74n": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e2/AK-74N_inspect.png",
         "ak103": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-12_inspect.png",
@@ -507,10 +609,9 @@
         "alien": "https://static.wikia.nocookie.net/grayzonewarfare/images/8/8b/Laugo_Alien_Icon.png",
         "glock17": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e4/Glock17_inspect.png",
         "m9a1": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/bc/M9A1_inspect.png"
-    };
-    
-// 4. BOSSE DATENBANK
-    const bosses = {
+};
+
+const bosses = {
         "market_leader": { loc: "Marktplatz / Rathaus (Startstadt)", gear: "Engraved AKMN / SKS", loot: "Büroschlüssel, gravierte AK.", tip: "Hält sich oft im Obergeschoss des Rathauses auf." },
         "lumber_boss": { loc: "Lumber Yard (Sägewerk)", gear: "Mosin / AK-74N", loot: "Lumber Yard Office Key.", tip: "Patrouilliert zwischen den Holzstapeln. Gute Sichtlinien." },
         "rebel_ybl": { loc: "YBL-1 Bunker", gear: "AK-103 Custom", loot: "Bunker-Generalschlüssel.", tip: "Vorsicht in den engen Gängen, nutzt Blendgranaten." },
@@ -525,10 +626,9 @@
         "viper": { loc: "Dschungel-Camps", gear: "Vz.58 / Stealth Gear", loot: "Gravierte Waffen", tip: "0.4 NEU: Extrem leise. Bewegt sich flankierend durch die Vegetation." },
         "bloodhound": { loc: "Militär-Checkpoints", gear: "M201C / Class 4", loot: "High-Tier Armor", tip: "0.4 NEU: Agiert mit einem Elite-Squad der neuen 7 KI-Fraktionen." },
         "golden_boy": { loc: "Midnight Sapphire", gear: "Alien Pistole / MP7", loot: "Rolex, VIP-Schlüssel", tip: "0.4 NEU: Trägt extrem viel Loot bei sich, schwer bewacht." }
-    };
-    
-// 5. AMMO DATENBANK
-    const ammoDb = {
+};
+
+const ammoDb = {
         "m855a1": { name: "5.56x45mm M855A1", pen: 4.5, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
         "m855": { name: "5.56x45mm M855", pen: 3.5, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
         "m193": { name: "5.56x45mm M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
@@ -566,9 +666,9 @@
         "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss." },
         "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Tödlich im Nahkampf." },
         "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Beste .45er Pen." }
-    };
-    
-// 6. KEYS DATENBANK
+};
+
+const allKeys = [
     const allKeys = [
         { name: "Doctor's Office Key", loc: "Startstadt (Arzthaus)", effect: "Öffnet das Büro des Arztes im 2. Stock.", loot: "Medizinische Vorräte, Task-Intel (Medical Detective)" },
         { name: "Mayor's Office Key", loc: "Startstadt (Rathaus)", effect: "Öffnet das Hauptbüro des Bürgermeisters.", loot: "Bargeld, Intel, Tresor" },
@@ -650,9 +750,9 @@
         { name: "TB Water Treatment Key", loc: "Tiger Bay", effect: "Öffnet das Pumpenhaus am Rand der Stadt.", loot: "Werkzeuge, Filter" },
         { name: "BP Fishing Hut Key", loc: "Ban Pa", effect: "Öffnet eine weitere Fischerhütte am Wasser.", loot: "Schrott, geringe Wertsachen" },
         { name: "BP Storage Key", loc: "Ban Pa", effect: "Öffnet einen Lagerschuppen im Dschungel nahe Ban Pa.", loot: "Waffen, Rigs" }
-    ];
-    
-// 7. LOOT DATENBANK
+];
+
+const valuables = {
     const valuables = {
         "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
         "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
@@ -685,9 +785,9 @@
         "cigarettes": { price: "~ $15", slots: "1", info: "Wertlos, nimmt nur Platz weg." },
         "tp": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
         "matches": { price: "~ $5", slots: "1", info: "Absoluter Müll. Liegen lassen." }
-    };
-    
-// 8. CONTAINER DATENBANK
+};
+
+const containers = {
     const containers = {
         "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Kauf bei Handshake (Lvl 1) ODER Standard Edition", info: "Der Standard-Container. Seit Patch 0.4 kannst du ihn ganz einfach bei Handshake nachkaufen!" },
         "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Kauf bei Handshake (Lvl 2) ODER Elite Edition", info: "Käufer der 'Elite Edition' haben ihn von Beginn an. Alternativ ab Level 2 bei Handshake erhältlich." },
@@ -700,9 +800,9 @@
         "key_holder": { name: "Key Holder", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Nimmt nur einen Slot weg, fasst unzählige Schlüssel." },
         "wallet": { name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Achtung: Kann nur noch Bargeld und Kreditkarten fassen." },
         "stash_upgrade": { name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", info: "Dein Haupt-Lager wächst komplett automatisch alle 10 Level." }
-    };
-    
-// 9. LZ DATENBANK
+};
+
+const lzDb = {
     const lzDb = {
         "mithras": { lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
         "lamang": { lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
@@ -716,9 +816,9 @@
         "midnight": { lzs: "Hotel 1, Hotel 2, Hotel 3", time: "2 Min.", danger: "Sehr Hoch", tip: "Bleib niemals auf dem Präsentierteller stehen." },
         "tiger_bay": { lzs: "Lima 1 & Lima 2", time: "1 Min.", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
         "ground_zero": { lzs: "Golf 1 & Golf 2", time: "3 Min.", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
-    };
+};
 
-    // 10. SYMPTOME DATENBANK
+const symptomDb = {
     const symptomDb = {
         "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
         "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
@@ -729,9 +829,9 @@
         "coughing": { diag: "Organschaden (Lunge/Magen)", treat: "Surkit", info: "Such dir sichere Deckung für die OP." },
         "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
         "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
-    };
+};
 
-    // 11. STATUS EFFECT DATENBANK
+const statusEffectsDb = {
     const statusEffectsDb = {
         "out_of_breath": { 
             de: "Außer Atem", en: "Out of Breath", 
@@ -841,30 +941,8 @@
             effect: "Akkumuliert im Körper. Führt unbehandelt zu Gewebeschäden, Übelkeit und letztendlich zum Tod. Erfordert Schutzanzug/Gasmaske.",
             img: "https://via.placeholder.com/150x150/222222/aaff00?text=Radiation"
         }
-    };
+};
 
-    function updateStatusEffect() {
-        const val = document.getElementById('statusSelect').value;
-        const infoDisplay = document.getElementById('statusInfo');
-        const imgElement = document.getElementById('statusImg');
-        
-        if (val === "") {
-            infoDisplay.innerHTML = "Wähle einen Effekt für Ursachen und Auswirkungen...";
-            imgElement.src = "https://via.placeholder.com/150x150/222222/7ca35a?text=Status+Wählen";
-        } else {
-            const info = statusEffectsDb[val];
-            infoDisplay.innerHTML = `
-                <div style="margin-bottom: 8px;"><strong>Ursache:</strong> ${info.desc}</div>
-                <div style="color: #ff4c4c; font-weight: bold; margin-bottom: 4px;">Auswirkung:</div>
-                <div style="line-height: 1.4;">${info.effect}</div>
-            `;
-            imgElement.src = info.img;
-        }
-    }
-    
-// ==========================================
-// TRADER DATABASE (UPDATE 0.4 SPEARHEAD)
-// ==========================================
 const vendorData = {
     // --- GUNNY (NATO) ---
     "gunny_1": `<h3>Gunny Level 1 (Start)</h3>
@@ -997,7 +1075,7 @@ const vendorData = {
         </ul>`
 };
 
-    // 13. FRAKTIONEN DATENBANK
+const factionDb = {
     const factionDb = {
         "mss": {
             name: "Mithras Security Systems",
@@ -1023,834 +1101,604 @@ const vendorData = {
             desc: "Die Streitkräfte von Lamang (LAF) sind die nationalen Streitkräfte des Landes. Sie bestehen größtenteils aus Angehörigen der Armee von Lamang, vom einfachen Soldaten bis zum Kommandeur. Diese Fraktion kann nicht von Spielern gespielt werden. Es handelt sich um eine KI-Fraktion, die dazu dient, Gebiete auf der Karte zu bevölkern und die Hintergrundgeschichte zu berücksichtigen.",
             logo: "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/9e/LAF_Faction_icon.png"
         }
-    };
+};
 
-    // ==============================================================
-    // FUNKTIONEN
-    // ==============================================================
+// ==============================================================
+// FUNKTIONEN FÜR DROPDOWNS & ANZEIGEN
+// ==============================================================
 
-    function updateWeaponCombined() {
-        const select = document.getElementById('weaponSelect');
-        const val = select.value;
-        const infoDisplay = document.getElementById('weaponInfo');
-        const imgElement = document.getElementById('weaponImg'); 
-        const metaElement = document.getElementById('weaponMeta'); 
-        
-        // Bild-Vorschau Logik
-        if (val === "") {
-            imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
-            metaElement.innerText = "";
-        } else if (weaponImages[val]) {
-            imgElement.src = weaponImages[val];
-            imgElement.style.display = "block";
-            metaElement.innerText = "Quelle: GZW Official Wiki Intel";
-        } else {
-            imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
-            metaElement.innerText = "Bildpfad wird noch aktualisiert...";
-        }
-
-        // Munitions-Details & Dropdown
-        const info = weapons[val];
-        if (info) {
-            infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
-            populateAmmoDropdown(val); 
-        } else {
-            infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
-            const ammoSelect = document.getElementById('calcAmmoDisplay');
-            ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
-            calculateBallistics(); 
-        }
-    }
-
-    function populateAmmoDropdown(weaponKey) {
-        const ammoSelect = document.getElementById('calcAmmoDisplay');
-        const weaponInfo = weapons[weaponKey];
-        
-        ammoSelect.innerHTML = "";
-
-        if (!weaponInfo) {
-            ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
-            return;
-        }
-
-        let caliber = weaponInfo.ammo.split(' ')[0]; 
-        
-        if(caliber.includes("7.62") || caliber.includes("5.45") || caliber.includes("5.56")) {
-            caliber = weaponInfo.ammo.substring(0, 7); 
-        }
-
-        let foundAmmo = false;
-        for (let key in ammoDb) {
-            const ammo = ammoDb[key];
-            if (ammo.name.toLowerCase().includes(caliber.toLowerCase())) {
-                const option = document.createElement('option');
-                option.value = ammo.name;
-                option.text = ammo.name;
-                ammoSelect.appendChild(option);
-                foundAmmo = true;
-            }
-        }
-
-        if (!foundAmmo) {
-            const option = document.createElement('option');
-            option.value = weaponInfo.ammo;
-            option.text = weaponInfo.ammo;
-            ammoSelect.appendChild(option);
-        }
-
-        calculateBallistics();
-    }
-
-    function getAmmoPenValue(ammoName) {
-        if (!ammoName) return 0;
-        for (let key in ammoDb) {
-            if (ammoDb[key].name === ammoName) {
-                return ammoDb[key].pen;
-            }
-        }
-        return 0;
-    }
-
-    function calculateBallistics() {
-        const armorLevel = parseFloat(document.getElementById('calcArmor').value);
-        const ammoName = document.getElementById('calcAmmoDisplay').value; 
-        const penValue = getAmmoPenValue(ammoName);
-        const resultBox = document.getElementById('calcResult');
-
-        if (!ammoName || ammoName === "") {
-            resultBox.innerHTML = "Wähle zuerst eine Waffe!";
-            resultBox.style.color = "#888";
-            resultBox.style.backgroundColor = "#1a1a1a";
-            return;
-        }
-
-        if (penValue >= armorLevel + 0.5) {
-            resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG (1-2 Schüsse)";
-            resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
-            resultBox.style.color = "#7ca35a";
-        } else if (penValue >= armorLevel) {
-            resultBox.innerHTML = "⚠️ WAHRSCHEINLICHER DURCHSCHLAG (3-5 Schüsse)";
-            resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
-            resultBox.style.color = "#ffa500";
-        } else {
-            resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Wirkungslos gegen Platte)";
-            resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
-            resultBox.style.color = "#ff4c4c";
-        }
-    }
-
-    function compareAmmo() {
-        const a1 = ammoDb[document.getElementById('ammo1').value];
-        const a2 = ammoDb[document.getElementById('ammo2').value];
-        if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden (Flesh): ${a1.damage}<br><small>${a1.info}</small>`;
-        if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden (Flesh): ${a2.damage}<br><small>${a2.info}</small>`;
-        if(a1 && a2) {
-            let winText = "";
-            if(a1.pen > a2.pen) winText = `${a1.name} gewinnt gegen Rüstung!`;
-            else if(a2.pen > a1.pen) winText = `${a2.name} gewinnt gegen Rüstung!`;
-            else winText = "Gleicher Durchschlag. Achte auf den Schaden!";
-            document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${winText}`;
-        } else {
-            document.getElementById('comparisonResult').innerHTML = "Wähle zwei Typen zum Vergleich aus.";
-        }
-    }
-
-    function updateGeneric(sId, iId) { document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details..."; }
-    function updateBoss() { const b = bosses[document.getElementById('bossSelect').value]; document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss..."; }
-    function updateLZ() { const l = lzDb[document.getElementById('lzSelect').value]; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small><b>Operator-Tipp:</b> ${l.tip}</small>` : "Wähle ein Zielgebiet für LZ-Tipps..."; }
-    function updateSymptom() { const s = symptomDb[document.getElementById('symptomSelect').value]; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><br><small><b>Medic-Tipp:</b> ${s.info}</small>` : "Wähle ein Symptom für Diagnose & Behandlung..."; }
-    function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
-    function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
-
-    function searchKeys() {
-        const input = document.getElementById('keySearch').value.toLowerCase();
-        const list = document.getElementById('keyList');
-        list.innerHTML = '';
-        if(input.length < 2) { list.style.display='none'; return; }
-        const filtered = allKeys.filter(k => k.name.toLowerCase().includes(input) || k.loc.toLowerCase().includes(input));
-        if(filtered.length > 0) {
-            list.style.display = 'block';
-            filtered.forEach(k => {
-                const d = document.createElement('div');
-                d.className = 'search-item';
-                d.innerHTML = `${k.name} (${k.loc})`;
-                d.onclick = () => {
-                    document.getElementById('keyTitle').innerText = k.name;
-                    document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${k.loc}</span>`;
-                    document.getElementById('keyEffect').innerHTML = `Nutzen: ${k.effect}<br>Erwarteter Loot: <span class="highlight">${k.loot}</span>`;
-                    list.style.display = 'none';
-                    document.getElementById('keySearch').value = k.name;
-                };
-                list.appendChild(d);
-            });
-        } else { list.style.display = 'none'; }
-    }
-
-    // ==============================================================
-    // RAID NOTIZBLOCK
-    // ==============================================================
-
-    let notepadSaveTimer = null;
-
-    function initNotepad() {
-        const textarea = document.getElementById('raidTextarea');
-        const collapsed = localStorage.getItem('gzw_notepad_collapsed') === 'true';
-
-        // Gespeicherten Text laden
-        try {
-            const saved = localStorage.getItem('gzw_notepad_text');
-            if (saved) {
-                textarea.value = saved;
-                updateCharCount();
-            }
-        } catch(e) {}
-
-        // Collapsed-State wiederherstellen
-        if (collapsed) {
-            document.getElementById('raidNotepad').classList.add('collapsed');
-        }
-    }
-
-    function saveNotepad() {
-        updateCharCount();
-
-        // Debounce — erst nach 600ms speichern
-        clearTimeout(notepadSaveTimer);
-        notepadSaveTimer = setTimeout(() => {
-            try {
-                const text = document.getElementById('raidTextarea').value;
-                localStorage.setItem('gzw_notepad_text', text);
-                showSavedIndicator();
-            } catch(e) {}
-        }, 600);
-    }
-
-    function updateCharCount() {
-        const textarea = document.getElementById('raidTextarea');
-        const count = document.getElementById('notepadCharCount');
-        const len = textarea.value.length;
-        count.textContent = len + ' Zeichen';
-        count.style.color = len > 800 ? '#ffa500' : '#555';
-    }
-
-    function showSavedIndicator() {
-        const el = document.getElementById('noteSavedIndicator');
-        el.textContent = '✓ Gespeichert';
-        el.style.color = 'var(--accent)';
-        setTimeout(() => {
-            el.textContent = '';
-        }, 2000);
-    }
-
-    function toggleNotepad() {
-        const pad = document.getElementById('raidNotepad');
-        pad.classList.toggle('collapsed');
-        try {
-            localStorage.setItem('gzw_notepad_collapsed', pad.classList.contains('collapsed'));
-        } catch(e) {}
-    }
-
-    function clearNotepad() {
-        if (!confirm("Notizblock leeren?")) return;
-        document.getElementById('raidTextarea').value = '';
-        updateCharCount();
-        try {
-            localStorage.removeItem('gzw_notepad_text');
-        } catch(e) {}
-        const el = document.getElementById('noteSavedIndicator');
-        el.textContent = '🗑️ Geleert';
-        el.style.color = '#b33939';
-        setTimeout(() => { el.textContent = ''; }, 2000);
-    }
-
-        
-
-
-    // ==============================================================
-    // SCHLÜSSEL DROPDOWN + SCHLÜSSELBUND (KEYRING MANAGER)
-    // ==============================================================
-
-    // Schlüsselbund aus localStorage laden
-    let myKeyRing = [];
-    try {
-        const savedKeys = localStorage.getItem('gzw_keyring');
-        if (savedKeys) myKeyRing = JSON.parse(savedKeys);
-        if (!Array.isArray(myKeyRing)) myKeyRing = [];
-    } catch(e) { myKeyRing = []; }
-
-    // Aktuell angezeigter Schlüssel
-    let currentKeyName = "";
-
-    // Dropdown beim Start befüllen (alphabetisch sortiert)
-    function buildKeyDropdown() {
-        const dropdown = document.getElementById('keyDropdown');
-        if (!dropdown) return;
-
-        const sorted = [...allKeys].sort((a, b) => a.name.localeCompare(b.name, 'de'));
-        
-        sorted.forEach(k => {
-            const opt = document.createElement('option');
-            opt.value = k.name;
-            const owned = myKeyRing.includes(k.name);
-            opt.text = owned ? `🗝️ ${k.name}` : k.name;
-            dropdown.appendChild(opt);
-        });
-    }
-
-    // Wird aufgerufen wenn man im Dropdown einen Schlüssel wählt
-    function selectKeyFromDropdown() {
-        const name = document.getElementById('keyDropdown').value;
-        if (!name) return;
-        showKeyData(name);
-    }
-
-    // Zeigt Schlüssel-Daten an (gemeinsame Funktion für Dropdown + Suche)
-    function showKeyData(name) {
-        const key = allKeys.find(k => k.name === name);
-        if (!key) return;
-
-        currentKeyName = key.name;
-
-        document.getElementById('keyTitle').innerText = key.name;
-        document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${key.loc}</span>`;
-        document.getElementById('keyEffect').innerHTML = `Nutzen: ${key.effect}<br>Erwarteter Loot: <span class="highlight">${key.loot}</span>`;
-
-        // Checkbox anzeigen und Status setzen
-        const wrapper = document.getElementById('keyRingWrapper');
-        const checkbox = document.getElementById('keyOwnedCheckbox');
-        if (wrapper) wrapper.style.display = 'block';
-        if (checkbox) {
-            checkbox.checked = myKeyRing.includes(key.name);
-            checkbox.onclick = toggleKeyOwnership;
-        }
-
-        // Missions-Hinweis prüfen
-        checkKeyMissionHint(key.name);
-    }
-
-    // Prüft ob eine Task diesen Schlüssel erwähnt
-    function checkKeyMissionHint(keyName) {
-        const hintBox = document.getElementById('keyMissionHint');
-        
-        // Suche in allen Tasks nach dem Schlüsselnamen
-        const shortName = keyName.replace(' Key', '').replace(' Card', '').toLowerCase();
-        const relatedTasks = allTasks.filter(t => 
-            t.sol.toLowerCase().includes(shortName) || 
-            t.desc.toLowerCase().includes(shortName)
-        );
-
-        const owned = myKeyRing.includes(keyName);
-
-        if (relatedTasks.length > 0) {
-            const taskNames = relatedTasks.map(t => `<strong>${t.de}</strong> (${t.v})`).join(', ');
-            if (owned) {
-                hintBox.style.display = 'block';
-                hintBox.innerHTML = `✅ Du hast diesen Schlüssel! Relevant für: ${taskNames}`;
-                hintBox.style.borderLeftColor = 'var(--accent)';
-                hintBox.style.background = 'rgba(124,163,90,0.15)';
-            } else {
-                hintBox.style.display = 'block';
-                hintBox.innerHTML = `🔒 Tür verschlossen – du hast den Schlüssel noch nicht. Relevant für: ${taskNames}`;
-                hintBox.style.borderLeftColor = '#ffa500';
-                hintBox.style.background = 'rgba(255,165,0,0.1)';
-            }
-        } else {
-            hintBox.style.display = 'none';
-        }
-    }
-
-    // Schlüssel zum Schlüsselbund hinzufügen / entfernen
-    function toggleKeyOwnership() {
-        if (!currentKeyName) return;
-
-        const checkbox = document.getElementById('keyOwnedCheckbox');
-        const isOwned = checkbox.checked;
-
-        if (isOwned) {
-            if (!myKeyRing.includes(currentKeyName)) {
-                myKeyRing.push(currentKeyName);
-            }
-        } else {
-            myKeyRing = myKeyRing.filter(k => k !== currentKeyName);
-        }
-
-        try {
-            localStorage.setItem('gzw_keyring', JSON.stringify(myKeyRing));
-        } catch(e) {}
-
-        // Dropdown-Eintrag aktualisieren
-        updateKeyDropdownEntry(currentKeyName, isOwned);
-
-        // Schlüsselbund-Anzeige aktualisieren
-        renderKeyRing();
-
-        // Missions-Hinweis aktualisieren
-        checkKeyMissionHint(currentKeyName);
-    }
-
-    // Dropdown-Eintrag mit/ohne 🗝️ aktualisieren
-    function updateKeyDropdownEntry(keyName, isOwned) {
-        const dropdown = document.getElementById('keyDropdown');
-        Array.from(dropdown.options).forEach(opt => {
-            if (opt.value === keyName) {
-                opt.text = isOwned ? `🗝️ ${keyName}` : keyName;
-            }
-        });
-    }
-
-    // Schlüsselbund-Übersicht rendern
-    function renderKeyRing() {
-        const display = document.getElementById('keyRingDisplay');
-        const count = document.getElementById('keyRingCount');
-        
-        count.textContent = myKeyRing.length;
-
-        if (myKeyRing.length === 0) {
-            display.innerHTML = '<span style="color: #888;">Noch keine Schlüssel markiert.</span>';
-            return;
-        }
-
-        const sorted = [...myKeyRing].sort((a, b) => a.localeCompare(b, 'de'));
-        display.innerHTML = sorted.map(k => 
-            `<span style="display:inline-block; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:3px 8px; margin:3px; font-size:0.85rem; cursor:pointer;" 
-             onclick="showKeyData('${k.replace(/'/g, "\\'")}'); document.getElementById('keyDropdown').value='${k.replace(/'/g, "\\'")}'"
-             title="Klicken für Details">🗝️ ${k}</span>`
-        ).join('');
-    }
-
-    // Schlüsselbund komplett leeren
-    function clearKeyRing() {
-        if (!confirm("Wirklich alle Schlüssel aus dem Schlüsselbund entfernen?")) return;
-        
-        myKeyRing = [];
-        try { localStorage.removeItem('gzw_keyring'); } catch(e) {}
-
-        // Alle Dropdown-Einträge zurücksetzen
-        const dropdown = document.getElementById('keyDropdown');
-        Array.from(dropdown.options).forEach(opt => {
-            if (opt.value) opt.text = opt.value;
-        });
-
-        // Aktuelle Checkbox zurücksetzen falls sichtbar
-        const checkbox = document.getElementById('keyOwnedCheckbox');
-        if (checkbox) checkbox.checked = false;
-
-        renderKeyRing();
-        if (currentKeyName) checkKeyMissionHint(currentKeyName);
-    }
-
-    // Alte searchKeys Funktion anpassen damit sie showKeyData nutzt
-    const _origSearchKeys = searchKeys;
-    searchKeys = function() {
-        const input = document.getElementById('keySearch').value.toLowerCase();
-        const list = document.getElementById('keyList');
-        list.innerHTML = '';
-        if(input.length < 2) { list.style.display='none'; return; }
-        const filtered = allKeys.filter(k => k.name.toLowerCase().includes(input) || k.loc.toLowerCase().includes(input));
-        if(filtered.length > 0) {
-            list.style.display = 'block';
-            filtered.forEach(k => {
-                const d = document.createElement('div');
-                d.className = 'search-item';
-                const owned = myKeyRing.includes(k.name);
-                d.innerHTML = `${owned ? '🗝️ ' : ''}${k.name} <small style="color:#888">(${k.loc})</small>`;
-                d.onclick = () => {
-                    showKeyData(k.name);
-                    document.getElementById('keyDropdown').value = k.name;
-                    list.style.display = 'none';
-                    document.getElementById('keySearch').value = k.name;
-                };
-                list.appendChild(d);
-            });
-        } else { list.style.display = 'none'; }
-    };
-
-    // Initialisierung beim Laden
+// 🟢 DAS IST DIE NEUE, INTELLIGENTE UPDATE-FUNKTION FÜR GEAR, MEDS UND ATTACHMENTS
+function updateGeneric(sId, iId) { 
+    const val = document.getElementById(sId).value;
+    const box = document.getElementById(iId);
     
+    if (!val) {
+        box.innerHTML = "Wähle einen Eintrag...";
+        box.style.border = "none";
+        box.style.backgroundColor = "transparent";
+        box.style.padding = "0";
+        return;
+    }
+    
+    // Prüft, ob es ein kurzer Code für die NIJ-Rüstungen ist (gearData)
+    if (typeof gearData !== 'undefined' && gearData[val]) {
+        box.innerHTML = gearData[val];
+    } else {
+        // Ansonsten ist es der lange Text (z.B. bei Meds oder Attachments)
+        box.innerHTML = val;
+    }
+    
+    box.style.padding = "15px";
+    box.style.border = "1px solid #333";
+    box.style.backgroundColor = "#111";
+}
 
-
-    // ==============================================================
-    // QUEST ITEM DATENBANK (KEEP OR SELL)
-    // ==============================================================
-    const questItemsDb = [
-        { name: "Autobatterie", qty: 4, quest: "Parts Needed (2x, Artisan), Mechanic's Trouble (2x, Artisan)" },
-        { name: "Benzinkanister (Gas Can / Rot)", qty: 2, quest: "Fuel Run (Artisan)" },
-        { name: "Beweise / Dokumente", qty: "Situativ", quest: "Fast jeder Händler (Quest-Items niemals wegwerfen!)" },
-        { name: "Holzstatue", qty: 3, quest: "Hazardous Treasures (Artisan)" },
-        { name: "Kupferkabel", qty: 5, quest: "Scrapyard (Artisan)" },
-        { name: "M4A1 Sturmgewehr", qty: 4, quest: "Brothers in Arms (2x, Gunny), In The Right Hands (2x, Turncoat)" },
-        { name: "Morphin-Injektor", qty: 5, quest: "Medical Supplies (Lab Rat)" },
-        { name: "MRE (Kampfration)", qty: 5, quest: "Supply Squeeze (Gunny)" },
-        { name: "Nägel", qty: 2, quest: "Supply Shortage (Artisan)" },
-        { name: "Panzertape / Duct Tape", qty: 5, quest: "Supply Shortage (3x, Artisan), The Builder (2x, Artisan)" },
-        { name: "Tourniquet (CAT)", qty: 5, quest: "Vital Signs (Lab Rat)" },
-        { name: "Unmodifizierte AKMN", qty: "Einige", quest: "Save the Rebellion (Artisan)" },
-        { name: "Verbandskasten / IFAK", qty: 3, quest: "Nachschubmangel (Handshake)" },
-        { name: "Werkzeugset / Toolset", qty: 5, quest: "Tooling Up (3x, Artisan), The Builder (1x, Artisan), Lines of Communication (1x, Handshake)" },
-        { name: "Zündkerze", qty: 2, quest: "Mechanic's Trouble (Artisan)" }
-    ];
-
-    // NEU: Baut das Dropdown beim Start auf (alphabetisch sortiert)
-    function buildQuestItemDropdown() {
-        const dropdown = document.getElementById('questItemDropdown');
-        if (!dropdown) return;
-        
-        const sortedItems = [...questItemsDb].sort((a, b) => a.name.localeCompare(b.name, 'de'));
-        
-        sortedItems.forEach(item => {
-            const opt = document.createElement('option');
-            opt.value = item.name;
-            opt.text = item.name;
-            dropdown.appendChild(opt);
-        });
+function updateWeaponCombined() {
+    const select = document.getElementById('weaponSelect');
+    const val = select.value;
+    const infoDisplay = document.getElementById('weaponInfo');
+    const imgElement = document.getElementById('weaponImg'); 
+    const metaElement = document.getElementById('weaponMeta'); 
+    
+    if (val === "") {
+        imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
+        metaElement.innerText = "";
+    } else if (weaponImages[val]) {
+        imgElement.src = weaponImages[val];
+        imgElement.style.display = "block";
+        metaElement.innerText = "Quelle: GZW Official Wiki Intel";
+    } else {
+        imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
+        metaElement.innerText = "Bildpfad wird noch aktualisiert...";
     }
 
-    // NEU: Wenn man ein Item im Dropdown anklickt
-    function selectQuestItemFromDropdown() {
-        const dropdownValue = document.getElementById('questItemDropdown').value;
-        const searchInput = document.getElementById('questItemSearch');
-        
-        if (dropdownValue) {
-            searchInput.value = dropdownValue; // Schreibt den Namen ins Suchfeld
-            searchQuestItems(); // Löst die Suche aus
-        } else {
-            searchInput.value = "";
-            document.getElementById('questItemList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">Wähle ein Item oder tippe den Namen ein...</div>';
+    const info = weapons[val];
+    if (info) {
+        infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
+        populateAmmoDropdown(val); 
+    } else {
+        infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
+        const ammoSelect = document.getElementById('calcAmmoDisplay');
+        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
+        calculateBallistics(); 
+    }
+}
+
+function populateAmmoDropdown(weaponKey) {
+    const ammoSelect = document.getElementById('calcAmmoDisplay');
+    const weaponInfo = weapons[weaponKey];
+    ammoSelect.innerHTML = "";
+    if (!weaponInfo) {
+        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
+        return;
+    }
+    let caliber = weaponInfo.ammo.split(' ')[0]; 
+    if(caliber.includes("7.62") || caliber.includes("5.45") || caliber.includes("5.56")) {
+        caliber = weaponInfo.ammo.substring(0, 7); 
+    }
+    let foundAmmo = false;
+    for (let key in ammoDb) {
+        const ammo = ammoDb[key];
+        if (ammo.name.toLowerCase().includes(caliber.toLowerCase())) {
+            const option = document.createElement('option');
+            option.value = ammo.name;
+            option.text = ammo.name;
+            ammoSelect.appendChild(option);
+            foundAmmo = true;
         }
     }
+    if (!foundAmmo) {
+        const option = document.createElement('option');
+        option.value = weaponInfo.ammo;
+        option.text = weaponInfo.ammo;
+        ammoSelect.appendChild(option);
+    }
+    calculateBallistics();
+}
 
-    function searchQuestItems() {
-        const input = document.getElementById('questItemSearch').value.toLowerCase();
-        const list = document.getElementById('questItemList');
-        list.innerHTML = '';
-        
-        if (input.length < 2) {
-            list.innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">Tippe mindestens 2 Buchstaben ein...</div>';
-            return;
-        }
+function getAmmoPenValue(ammoName) {
+    if (!ammoName) return 0;
+    for (let key in ammoDb) {
+        if (ammoDb[key].name === ammoName) return ammoDb[key].pen;
+    }
+    return 0;
+}
 
-        const filtered = questItemsDb.filter(i => i.name.toLowerCase().includes(input));
+function calculateBallistics() {
+    const armorLevel = parseFloat(document.getElementById('calcArmor').value);
+    const ammoName = document.getElementById('calcAmmoDisplay').value; 
+    const penValue = getAmmoPenValue(ammoName);
+    const resultBox = document.getElementById('calcResult');
 
-        if (filtered.length > 0) {
-            filtered.forEach(item => {
-                const box = document.createElement('div');
-                box.className = 'panel-box';
-                box.style.marginBottom = '10px';
-                box.style.borderTopColor = '#ffcc00'; // Warn-Gelb
-                box.innerHTML = `
-                    <h3 style="color: #ffcc00; margin-top: 0; font-size: 1.2rem;">⚠️ KEEP! (Behalten)</h3>
-                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; color: #fff;">${item.name}</div>
-                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                        <strong>Benötigte Menge gesamt:</strong> <span style="color: #ffcc00; font-weight: bold;">${item.qty}</span><br>
-                        <strong>Wird gebraucht für:</strong> ${item.quest}
-                    </div>
-                `;
-                list.appendChild(box);
-            });
-        } else {
-            list.innerHTML = `
-                <div class="panel-box" style="border-top: 4px solid #b33939;">
-                    <h3 style="color: #b33939; margin-top: 0; font-size: 1.2rem;">💰 SELL! (Verkaufen / Nutzen)</h3>
-                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                        Aktuell wird <strong>"${document.getElementById('questItemSearch').value}"</strong> für keine bekannte Sammel-Quest benötigt. Du kannst es zu Geld machen oder selbst ausrüsten.
-                    </div>
-                </div>
-            `;
-        }
+    if (!ammoName || ammoName === "") {
+        resultBox.innerHTML = "Wähle zuerst eine Waffe!";
+        resultBox.style.color = "#888";
+        resultBox.style.backgroundColor = "#1a1a1a";
+        return;
     }
 
-// Die Funktion, die durch das Dropdown (onchange) aufgerufen wird
+    if (penValue >= armorLevel + 0.5) {
+        resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG (1-2 Schüsse)";
+        resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
+        resultBox.style.color = "#7ca35a";
+    } else if (penValue >= armorLevel) {
+        resultBox.innerHTML = "⚠️ WAHRSCHEINLICHER DURCHSCHLAG (3-5 Schüsse)";
+        resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
+        resultBox.style.color = "#ffa500";
+    } else {
+        resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Wirkungslos gegen Platte)";
+        resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
+        resultBox.style.color = "#ff4c4c";
+    }
+}
+
+function compareAmmo() {
+    const a1 = ammoDb[document.getElementById('ammo1').value];
+    const a2 = ammoDb[document.getElementById('ammo2').value];
+    if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden (Flesh): ${a1.damage}<br><small>${a1.info}</small>`;
+    if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden (Flesh): ${a2.damage}<br><small>${a2.info}</small>`;
+    if(a1 && a2) {
+        let winText = "";
+        if(a1.pen > a2.pen) winText = `${a1.name} gewinnt gegen Rüstung!`;
+        else if(a2.pen > a1.pen) winText = `${a2.name} gewinnt gegen Rüstung!`;
+        else winText = "Gleicher Durchschlag. Achte auf den Schaden!";
+        document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${winText}`;
+    } else {
+        document.getElementById('comparisonResult').innerHTML = "Wähle zwei Typen zum Vergleich aus.";
+    }
+}
+
+function updateBoss() { const b = bosses[document.getElementById('bossSelect').value]; document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss..."; }
+function updateLZ() { const l = lzDb[document.getElementById('lzSelect').value]; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small><b>Operator-Tipp:</b> ${l.tip}</small>` : "Wähle ein Zielgebiet für LZ-Tipps..."; }
+function updateSymptom() { const s = symptomDb[document.getElementById('symptomSelect').value]; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><br><small><b>Medic-Tipp:</b> ${s.info}</small>` : "Wähle ein Symptom für Diagnose & Behandlung..."; }
+function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
+function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
+
+function updateStatusEffect() {
+    const val = document.getElementById('statusSelect').value;
+    const infoDisplay = document.getElementById('statusInfo');
+    const imgElement = document.getElementById('statusImg');
+    if (val === "") {
+        infoDisplay.innerHTML = "Wähle einen Effekt für Ursachen und Auswirkungen...";
+        imgElement.src = "https://via.placeholder.com/150x150/222222/7ca35a?text=Status+Wählen";
+    } else {
+        const info = statusEffectsDb[val];
+        infoDisplay.innerHTML = `<div style="margin-bottom: 8px;"><strong>Ursache:</strong> ${info.desc}</div><div style="color: #ff4c4c; font-weight: bold; margin-bottom: 4px;">Auswirkung:</div><div style="line-height: 1.4;">${info.effect}</div>`;
+        imgElement.src = info.img;
+    }
+}
+
+// 🟢 DIE EINZIGE UPDATE-VENDOR FUNKTION (Alle doppelten gelöscht)
 function updateVendor() {
     const select = document.getElementById('vendorSelect');
     const infoBox = document.getElementById('vendorInfo');
     const selectedValue = select.value;
 
     if (vendorData[selectedValue]) {
-        // Fügt die Daten ein
         infoBox.innerHTML = vendorData[selectedValue];
-        
-        // Fügt einen taktischen Rahmen und Padding hinzu, sobald etwas ausgewählt wurde
         infoBox.style.padding = "15px";
         infoBox.style.border = "1px solid #333";
         infoBox.style.backgroundColor = "#111";
         infoBox.style.marginTop = "15px";
     } else {
-        // Reset, wenn nichts ausgewählt ist
         infoBox.innerHTML = "Wähle einen Händler und sein Level aus, um das komplette Inventarprotokoll abzurufen.";
         infoBox.style.border = "none";
         infoBox.style.backgroundColor = "transparent";
     }
 }
 
-    // ==============================================================
-    // HELICOPTER ETA CALCULATOR & TIMER
-    // ==============================================================
-    let heliTimerInterval = null;
-    let heliSecondsRemaining = 0;
+function updateFactionInfo() {
+    const val = document.getElementById('factionInfoSelect').value;
+    const descBox = document.getElementById('factionDescBox');
+    const logoImg = document.getElementById('factionLogoImg');
+    const nameTitle = document.getElementById('factionNameTitle');
+    const mottoText = document.getElementById('factionMotto');
 
-    // Berechnet die geschätzte Flugzeit
-    function calcHeliTime() {
-        if (heliTimerInterval) return; // Nicht berechnen, wenn Timer gerade läuft
-
-        const startVal = parseInt(document.getElementById('heliStart').value);
-        const endVal = parseInt(document.getElementById('heliEnd').value);
-        
-        // Logik: Unterschied der Entfernungen (simuliert) + Strafzeit, wenn man nicht vom/zum HQ fliegt (Umlenken des Helis)
-        let flightTimeSeconds = Math.abs(startVal - endVal);
-        
-        // Wenn man von einer LZ zu einer anderen LZ fliegt (nicht Basecamp), dauert es durch die Umwege oft etwas länger
-        if (startVal !== 0 && endVal !== 0 && startVal !== endVal) {
-            flightTimeSeconds += 45; 
-        }
-
-        // Mindestflugzeit oder 0, wenn identisch
-        if (startVal === endVal) {
-            flightTimeSeconds = 0;
-        } else if (flightTimeSeconds < 45) {
-            flightTimeSeconds = 45; // Minimaler Transit
-        }
-
-        heliSecondsRemaining = flightTimeSeconds;
-        updateHeliDisplay();
+    if (!val) {
+        descBox.innerHTML = "Wähle eine Fraktion aus, um ihre Hintergrundgeschichte und Details zu sehen...";
+        logoImg.src = "https://via.placeholder.com/250x250/222222/7ca35a?text=Fraktions-Logo";
+        nameTitle.innerText = "";
+        mottoText.innerText = "";
+        return;
     }
 
-    // Aktualisiert die Text-Anzeige (MM:SS)
-    function updateHeliDisplay() {
-        const m = Math.floor(heliSecondsRemaining / 60);
-        const s = heliSecondsRemaining % 60;
-        document.getElementById('heliDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    const f = factionDb[val];
+    descBox.innerHTML = `<p style="margin-top: 0;">${f.desc}</p>`;
+    logoImg.src = f.logo;
+    nameTitle.innerText = f.name;
+    mottoText.innerText = `Motto: "${f.motto}"`;
+}
+
+
+// ==============================================================
+// SCHLÜSSEL & KEYRING
+// ==============================================================
+let myKeyRing = [];
+try {
+    const savedKeys = localStorage.getItem('gzw_keyring');
+    if (savedKeys) myKeyRing = JSON.parse(savedKeys);
+    if (!Array.isArray(myKeyRing)) myKeyRing = [];
+} catch(e) { myKeyRing = []; }
+
+let currentKeyName = "";
+
+function buildKeyDropdown() {
+    const dropdown = document.getElementById('keyDropdown');
+    if (!dropdown) return;
+    const sorted = [...allKeys].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    sorted.forEach(k => {
+        const opt = document.createElement('option');
+        opt.value = k.name;
+        opt.text = myKeyRing.includes(k.name) ? `🗝️ ${k.name}` : k.name;
+        dropdown.appendChild(opt);
+    });
+}
+
+function selectKeyFromDropdown() {
+    const name = document.getElementById('keyDropdown').value;
+    if (name) showKeyData(name);
+}
+
+function showKeyData(name) {
+    const key = allKeys.find(k => k.name === name);
+    if (!key) return;
+
+    currentKeyName = key.name;
+    document.getElementById('keyTitle').innerText = key.name;
+    document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${key.loc}</span>`;
+    document.getElementById('keyEffect').innerHTML = `Nutzen: ${key.effect}<br>Erwarteter Loot: <span class="highlight">${key.loot}</span>`;
+
+    const wrapper = document.getElementById('keyRingWrapper');
+    const checkbox = document.getElementById('keyOwnedCheckbox');
+    if (wrapper) wrapper.style.display = 'block';
+    if (checkbox) {
+        checkbox.checked = myKeyRing.includes(key.name);
+        checkbox.onclick = toggleKeyOwnership;
+    }
+    checkKeyMissionHint(key.name);
+}
+
+function checkKeyMissionHint(keyName) {
+    const hintBox = document.getElementById('keyMissionHint');
+    const shortName = keyName.replace(' Key', '').replace(' Card', '').toLowerCase();
+    const relatedTasks = allTasks.filter(t => t.sol.toLowerCase().includes(shortName) || t.desc.toLowerCase().includes(shortName));
+
+    if (relatedTasks.length > 0) {
+        const taskNames = relatedTasks.map(t => `<strong>${t.de}</strong> (${t.v})`).join(', ');
+        hintBox.style.display = 'block';
+        if (myKeyRing.includes(keyName)) {
+            hintBox.innerHTML = `✅ Du hast diesen Schlüssel! Relevant für: ${taskNames}`;
+            hintBox.style.borderLeftColor = 'var(--accent)';
+            hintBox.style.background = 'rgba(124,163,90,0.15)';
+        } else {
+            hintBox.innerHTML = `🔒 Tür verschlossen – du hast den Schlüssel noch nicht. Relevant für: ${taskNames}`;
+            hintBox.style.borderLeftColor = '#ffa500';
+            hintBox.style.background = 'rgba(255,165,0,0.1)';
+        }
+    } else {
+        hintBox.style.display = 'none';
+    }
+}
+
+function toggleKeyOwnership() {
+    if (!currentKeyName) return;
+    const isOwned = document.getElementById('keyOwnedCheckbox').checked;
+
+    if (isOwned && !myKeyRing.includes(currentKeyName)) {
+        myKeyRing.push(currentKeyName);
+    } else if (!isOwned) {
+        myKeyRing = myKeyRing.filter(k => k !== currentKeyName);
     }
 
-    // Startet oder stoppt den Timer
-    function toggleHeliTimer() {
-        const btn = document.getElementById('heliActionBtn');
-        
-        // Wenn Timer läuft -> Stoppen
-        if (heliTimerInterval) {
-            clearInterval(heliTimerInterval);
-            heliTimerInterval = null;
-            btn.textContent = "🚀 Start";
-            btn.className = "heli-btn btn-start";
-            document.getElementById('heliDisplay').style.color = "var(--accent)";
-            calcHeliTime(); // Setzt die Zeit wieder auf den berechneten Ursprungswert zurück
-            return;
-        }
+    try { localStorage.setItem('gzw_keyring', JSON.stringify(myKeyRing)); } catch(e) {}
+    updateKeyDropdownEntry(currentKeyName, isOwned);
+    renderKeyRing();
+    checkKeyMissionHint(currentKeyName);
+}
 
-        // Wenn Timer auf 0 steht -> Nichts tun
-        if (heliSecondsRemaining <= 0) {
-            calcHeliTime();
-            if (heliSecondsRemaining <= 0) return;
-        }
+function updateKeyDropdownEntry(keyName, isOwned) {
+    const dropdown = document.getElementById('keyDropdown');
+    Array.from(dropdown.options).forEach(opt => {
+        if (opt.value === keyName) opt.text = isOwned ? `🗝️ ${keyName}` : keyName;
+    });
+}
 
-        // Timer starten
-        btn.textContent = "🛑 Stop";
-        btn.className = "heli-btn btn-stop";
-        document.getElementById('heliDisplay').style.color = "#ffa500"; // Gelb während dem Flug
+function renderKeyRing() {
+    const display = document.getElementById('keyRingDisplay');
+    const count = document.getElementById('keyRingCount');
+    count.textContent = myKeyRing.length;
 
-        heliTimerInterval = setInterval(() => {
-            heliSecondsRemaining--;
-            updateHeliDisplay();
-
-            if (heliSecondsRemaining <= 0) {
-                // Flug beendet!
-                clearInterval(heliTimerInterval);
-                heliTimerInterval = null;
-                document.getElementById('heliDisplay').textContent = "TOUCHDOWN!";
-                document.getElementById('heliDisplay').style.color = "#ff4c4c"; // Rot bei Ankunft
-                btn.textContent = "↺ Reset";
-                btn.className = "heli-btn btn-calc";
-            }
-        }, 1000);
+    if (myKeyRing.length === 0) {
+        display.innerHTML = '<span style="color: #888;">Noch keine Schlüssel markiert.</span>';
+        return;
     }
+    const sorted = [...myKeyRing].sort((a, b) => a.localeCompare(b, 'de'));
+    display.innerHTML = sorted.map(k => 
+        `<span style="display:inline-block; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:3px 8px; margin:3px; font-size:0.85rem; cursor:pointer;" 
+         onclick="showKeyData('${k.replace(/'/g, "\\'")}'); document.getElementById('keyDropdown').value='${k.replace(/'/g, "\\'")}'"
+         title="Klicken für Details">🗝️ ${k}</span>`
+    ).join('');
+}
 
-    // Beim Start einmal die Standard-Werte durchrechnen
-    
+function clearKeyRing() {
+    if (!confirm("Wirklich alle Schlüssel entfernen?")) return;
+    myKeyRing = [];
+    try { localStorage.removeItem('gzw_keyring'); } catch(e) {}
+    const dropdown = document.getElementById('keyDropdown');
+    Array.from(dropdown.options).forEach(opt => { if (opt.value) opt.text = opt.value; });
+    const checkbox = document.getElementById('keyOwnedCheckbox');
+    if (checkbox) checkbox.checked = false;
+    renderKeyRing();
+    if (currentKeyName) checkKeyMissionHint(currentKeyName);
+}
 
+// 🟢 DIE EINZIGE SEARCH-KEYS FUNKTION
+function searchKeys() {
+    const input = document.getElementById('keySearch').value.toLowerCase();
+    const list = document.getElementById('keyList');
+    list.innerHTML = '';
+    if(input.length < 2) { list.style.display='none'; return; }
+    const filtered = allKeys.filter(k => k.name.toLowerCase().includes(input) || k.loc.toLowerCase().includes(input));
+    
+    if(filtered.length > 0) {
+        list.style.display = 'block';
+        filtered.forEach(k => {
+            const d = document.createElement('div');
+            d.className = 'search-item';
+            const owned = myKeyRing.includes(k.name);
+            d.innerHTML = `${owned ? '🗝️ ' : ''}${k.name} <small style="color:#888">(${k.loc})</small>`;
+            d.onclick = () => {
+                showKeyData(k.name);
+                document.getElementById('keyDropdown').value = k.name;
+                list.style.display = 'none';
+                document.getElementById('keySearch').value = k.name;
+            };
+            list.appendChild(d);
+        });
+    } else { list.style.display = 'none'; }
+}
 
-    // ==============================================================
-    // TASK TRACKER LOGIK (ABSOLUT KUGELSICHER)
-    // ==============================================================
-    
-    // Globale Variablen für den State
-    let completedTasks = [];
-    let currentTaskNameRaw = "";
-    let currentOpenTask = ""; // Alias für toggleTaskCompletion
-    
-    // Lade gespeicherte Tasks beim Start
+// ==============================================================
+// NOTIZBLOCK
+// ==============================================================
+let notepadSaveTimer = null;
+function initNotepad() {
+    const textarea = document.getElementById('raidTextarea');
+    const collapsed = localStorage.getItem('gzw_notepad_collapsed') === 'true';
     try {
-        const saved = localStorage.getItem('gzw_completed_tasks');
-        if (saved) {
-            completedTasks = JSON.parse(saved);
-        }
-        if (!Array.isArray(completedTasks)) completedTasks = [];
-    } catch(e) {
-        completedTasks = [];
-    }
+        const saved = localStorage.getItem('gzw_notepad_text');
+        if (saved) { textarea.value = saved; updateCharCount(); }
+    } catch(e) {}
+    if (collapsed) document.getElementById('raidNotepad').classList.add('collapsed');
+}
+function saveNotepad() {
+    updateCharCount();
+    clearTimeout(notepadSaveTimer);
+    notepadSaveTimer = setTimeout(() => {
+        try {
+            localStorage.setItem('gzw_notepad_text', document.getElementById('raidTextarea').value);
+            showSavedIndicator();
+        } catch(e) {}
+    }, 600);
+}
+function updateCharCount() {
+    const textarea = document.getElementById('raidTextarea');
+    const len = textarea.value.length;
+    document.getElementById('notepadCharCount').textContent = len + ' Zeichen';
+}
+function showSavedIndicator() {
+    const el = document.getElementById('noteSavedIndicator');
+    el.textContent = '✓ Gespeichert';
+    el.style.color = 'var(--accent)';
+    setTimeout(() => { el.textContent = ''; }, 2000);
+}
+function toggleNotepad() {
+    const pad = document.getElementById('raidNotepad');
+    pad.classList.toggle('collapsed');
+    try { localStorage.setItem('gzw_notepad_collapsed', pad.classList.contains('collapsed')); } catch(e) {}
+}
+function clearNotepad() {
+    if (!confirm("Notizblock leeren?")) return;
+    document.getElementById('raidTextarea').value = '';
+    updateCharCount();
+    try { localStorage.removeItem('gzw_notepad_text'); } catch(e) {}
+    const el = document.getElementById('noteSavedIndicator');
+    el.textContent = '🗑️ Geleert';
+    setTimeout(() => { el.textContent = ''; }, 2000);
+}
 
-    // Funktion, wenn die Checkbox geklickt wird
-    function toggleTaskCompletion() {
+// ==============================================================
+// QUEST ITEM TRACKER
+// ==============================================================
+const questItemsDb = [
+    { name: "Autobatterie", qty: 4, quest: "Parts Needed (2x, Artisan), Mechanic's Trouble (2x, Artisan)" },
+    { name: "Benzinkanister (Gas Can / Rot)", qty: 2, quest: "Fuel Run (Artisan)" },
+    { name: "Beweise / Dokumente", qty: "Situativ", quest: "Fast jeder Händler (Quest-Items niemals wegwerfen!)" },
+    { name: "Holzstatue", qty: 3, quest: "Hazardous Treasures (Artisan)" },
+    { name: "Kupferkabel", qty: 5, quest: "Scrapyard (Artisan)" },
+    { name: "M4A1 Sturmgewehr", qty: 4, quest: "Brothers in Arms (2x, Gunny), In The Right Hands (2x, Turncoat)" },
+    { name: "Morphin-Injektor", qty: 5, quest: "Medical Supplies (Lab Rat)" },
+    { name: "MRE (Kampfration)", qty: 5, quest: "Supply Squeeze (Gunny)" },
+    { name: "Nägel", qty: 2, quest: "Supply Shortage (Artisan)" },
+    { name: "Panzertape / Duct Tape", qty: 5, quest: "Supply Shortage (3x, Artisan), The Builder (2x, Artisan)" },
+    { name: "Tourniquet (CAT)", qty: 5, quest: "Vital Signs (Lab Rat)" },
+    { name: "Unmodifizierte AKMN", qty: "Einige", quest: "Save the Rebellion (Artisan)" },
+    { name: "Verbandskasten / IFAK", qty: 3, quest: "Nachschubmangel (Handshake)" },
+    { name: "Werkzeugset / Toolset", qty: 5, quest: "Tooling Up (3x, Artisan), The Builder (1x, Artisan)" },
+    { name: "Zündkerze", qty: 2, quest: "Mechanic's Trouble (Artisan)" }
+];
+
+function buildQuestItemDropdown() {
+    const dropdown = document.getElementById('questItemDropdown');
+    if (!dropdown) return;
+    const sortedItems = [...questItemsDb].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    sortedItems.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.name;
+        opt.text = item.name;
+        dropdown.appendChild(opt);
+    });
+}
+
+function selectQuestItemFromDropdown() {
+    const dropdownValue = document.getElementById('questItemDropdown').value;
+    const searchInput = document.getElementById('questItemSearch');
+    if (dropdownValue) {
+        searchInput.value = dropdownValue;
+        searchQuestItems();
+    } else {
+        searchInput.value = "";
+        document.getElementById('questItemList').innerHTML = '<div class="info-box" style="text-align: center; color: #888;">Wähle ein Item oder tippe den Namen ein...</div>';
+    }
+}
+
+function searchQuestItems() {
+    const input = document.getElementById('questItemSearch').value.toLowerCase();
+    const list = document.getElementById('questItemList');
+    list.innerHTML = '';
+    if (input.length < 2) return;
+
+    const filtered = questItemsDb.filter(i => i.name.toLowerCase().includes(input));
+    if (filtered.length > 0) {
+        filtered.forEach(item => {
+            const box = document.createElement('div');
+            box.className = 'panel-box';
+            box.style.marginBottom = '10px';
+            box.innerHTML = `<h3 style="color: #ffcc00; margin-top: 0;">⚠️ KEEP! (Behalten)</h3>
+                <div style="font-weight: bold; margin-bottom: 8px;">${item.name}</div>
+                <div style="color: #ccc; font-size: 0.95rem;"><strong>Menge:</strong> ${item.qty}<br><strong>Quest:</strong> ${item.quest}</div>`;
+            list.appendChild(box);
+        });
+    } else {
+        list.innerHTML = `<div class="panel-box" style="border-top: 4px solid #b33939;">
+            <h3 style="color: #b33939; margin-top: 0;">💰 SELL! (Verkaufen / Nutzen)</h3>
+            <div style="color: #ccc; font-size: 0.95rem;">Aktuell wird "${document.getElementById('questItemSearch').value}" für keine bekannte Sammel-Quest benötigt.</div>
+        </div>`;
+    }
+}
+
+// ==============================================================
+// TASK TRACKER LOGIK
+// ==============================================================
+let completedTasks = [];
+let currentTaskNameRaw = "";
+let currentOpenTask = ""; 
+try {
+    const saved = localStorage.getItem('gzw_completed_tasks');
+    if (saved) completedTasks = JSON.parse(saved);
+    if (!Array.isArray(completedTasks)) completedTasks = [];
+} catch(e) { completedTasks = []; }
+
+function toggleTaskCompletion() {
     if (!currentOpenTask) return;
-    
     const checkbox = document.getElementById('taskCompleteCheckbox');
     const titleEl = document.getElementById('taskTitle');
-    const isNowChecked = checkbox.checked;
-    
-    if (isNowChecked) {
-        if (!completedTasks.includes(currentOpenTask)) {
-            completedTasks.push(currentOpenTask);
-        }
+    if (checkbox.checked) {
+        if (!completedTasks.includes(currentOpenTask)) completedTasks.push(currentOpenTask);
     } else {
         completedTasks = completedTasks.filter(t => t !== currentOpenTask);
     }
-    
-    titleEl.style.textDecoration = isNowChecked ? 'line-through' : 'none';
-    titleEl.style.opacity = isNowChecked ? '0.6' : '1';
-    
-    try {
-        localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
-    } catch(e) {
-        console.warn('localStorage nicht verfügbar:', e);
-    }
-    
+    titleEl.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
+    titleEl.style.opacity = checkbox.checked ? '0.6' : '1';
+    try { localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks)); } catch(e) {}
     refreshTaskList();
 }
 
-    function refreshTaskList() {
-        updateTaskDropdown();
-        searchTasks();
-    }
+function refreshTaskList() { updateTaskDropdown(); searchTasks(); }
 
-    // --- Dropdown Logik ---
-    function updateTaskDropdown() {
-        const vendor = document.getElementById('vendorFilter').value;
-        const taskSelect = document.getElementById('taskDropdown');
-        const filterCheckbox = document.getElementById('filterOpenTasks');
-        const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
-        
-        // Merke dir den aktuell im Dropdown ausgewählten Wert
-        const selectedValue = taskSelect.value; 
+function updateTaskDropdown() {
+    const vendor = document.getElementById('vendorFilter').value;
+    const taskSelect = document.getElementById('taskDropdown');
+    const hideCompleted = document.getElementById('filterOpenTasks') ? document.getElementById('filterOpenTasks').checked : false;
+    const selectedValue = taskSelect.value; 
 
-        // Leere das Dropdown
-        taskSelect.innerHTML = '<option value="">-- Erst Händler wählen --</option>';
+    taskSelect.innerHTML = '<option value="">-- Erst Händler wählen --</option>';
+    if (vendor === 'all') return;
 
-        if (vendor === 'all') return;
+    let filteredTasks = allTasks.filter(t => t.v === vendor);
+    if (hideCompleted) filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.de));
 
-        // Filtere alle Tasks nach dem Händler
-        let filteredTasks = allTasks.filter(t => t.v === vendor);
-        
-        // Wenn "Nur offene" aktiv ist, filtere die erledigten raus
-        if (hideCompleted) {
-            filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.de));
-        }
-
-        // Fülle das Dropdown neu
-        filteredTasks.forEach(t => {
-            const option = document.createElement('option');
-            option.value = t.de; // WICHTIG: Der reine Name!
-            option.text = completedTasks.includes(t.de) ? `✓ ${t.de}` : t.de;
-            taskSelect.appendChild(option);
-        });
-        
-        // Setze das Dropdown wieder auf den vorherigen Wert, falls er noch existiert
-        if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
-            taskSelect.value = selectedValue;
-        } else if (currentTaskNameRaw && Array.from(taskSelect.options).some(opt => opt.value === currentTaskNameRaw)) {
-            taskSelect.value = currentTaskNameRaw;
-        }
-    }
-
-    // Wird aufgerufen, wenn man einen Task im Dropdown auswählt
-    function selectTaskFromDropdown() {
-        const taskName = document.getElementById('taskDropdown').value;
-        if (!taskName) return;
-        displayTaskData(taskName);
-    }
-
-    // --- Such-Logik ---
-    function searchTasks() {
-        const input = document.getElementById('taskSearchInput').value.toLowerCase();
-        const list = document.getElementById('taskList');
-        const filterCheckbox = document.getElementById('filterOpenTasks');
-        const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
-        
-        list.innerHTML = '';
-        
-        if(input.length < 2) { list.style.display = 'none'; return; }
-
-        let filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
-
-        if (hideCompleted) {
-            filtered = filtered.filter(t => !completedTasks.includes(t.de));
-        }
-
-        if(filtered.length > 0) {
-            list.style.display = 'block';
-            filtered.forEach(t => {
-                const d = document.createElement('div');
-                d.className = 'search-item';
-                
-                const isDone = completedTasks.includes(t.de);
-                const mark = isDone ? '<span style="color:#7ca35a; margin-right:5px; font-weight:bold;">✓</span>' : '';
-                const styling = isDone ? 'text-decoration: line-through; opacity: 0.5;' : '';
-
-                d.innerHTML = `<span style="${styling}">${mark}<strong>${t.de}</strong> <small>(${t.v || 'Divers'})</small></span>`;
-                d.onclick = () => {
-                    displayTaskData(t.de);
-                    list.style.display = 'none';
-                    document.getElementById('taskSearchInput').value = t.de;
-                };
-                list.appendChild(d);
-            });
-        } else { list.style.display = 'none'; }
-    }
-
-    // --- Task-Anzeige Logik ---
-    function displayTaskData(name) {
-        // Finde den Task anhand des reinen Namens
-        const task = allTasks.find(t => t.de === name);
-        if (!task) return;
-
-        // Speichere den REINEN Namen für die Checkbox-Logik
-        currentTaskNameRaw = task.de;
-        currentOpenTask = task.de;
-        
-        const isDone = completedTasks.includes(task.de);
-        
-        // Titel aktualisieren
-        const titleEl = document.getElementById('taskTitle');
-        titleEl.innerText = task.de;
-        titleEl.style.textDecoration = isDone ? 'line-through' : 'none';
-        titleEl.style.opacity = isDone ? '0.6' : '1';
-        
-        // Text-Inhalte aktualisieren
-        document.getElementById('taskNames').innerText = `Englisch: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
-        document.getElementById('taskDesc').innerText = task.desc;
-        document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
-        
-        // Lösungs-Button anzeigen, Lösungstext verstecken
-        document.getElementById('solBtn').style.display = 'block';
-        document.getElementById('taskSolution').style.display = 'none';
-        
-        // Checkbox-Bereich anzeigen und Status korrekt setzen
-        const wrapper = document.getElementById('taskCompleteWrapper');
-        const checkbox = document.getElementById('taskCompleteCheckbox');
-        if (wrapper) wrapper.style.display = 'block';
-        if (checkbox) {
-            checkbox.checked = completedTasks.includes(task.de);
-            checkbox.onchange = toggleTaskCompletion;
-        }
-    }
+    filteredTasks.forEach(t => {
+        const option = document.createElement('option');
+        option.value = t.de;
+        option.text = completedTasks.includes(t.de) ? `✓ ${t.de}` : t.de;
+        taskSelect.appendChild(option);
+    });
     
-    // RESET BUTTON
-    function resetAllTasks() {
+    if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
+        taskSelect.value = selectedValue;
+    }
+}
+
+function selectTaskFromDropdown() {
+    const taskName = document.getElementById('taskDropdown').value;
+    if (taskName) displayTaskData(taskName);
+}
+
+function searchTasks() {
+    const input = document.getElementById('taskSearchInput').value.toLowerCase();
+    const list = document.getElementById('taskList');
+    const hideCompleted = document.getElementById('filterOpenTasks') ? document.getElementById('filterOpenTasks').checked : false;
+    list.innerHTML = '';
+    
+    if(input.length < 2) { list.style.display = 'none'; return; }
+
+    let filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
+    if (hideCompleted) filtered = filtered.filter(t => !completedTasks.includes(t.de));
+
+    if(filtered.length > 0) {
+        list.style.display = 'block';
+        filtered.forEach(t => {
+            const d = document.createElement('div');
+            d.className = 'search-item';
+            const isDone = completedTasks.includes(t.de);
+            const mark = isDone ? '<span style="color:#7ca35a; margin-right:5px; font-weight:bold;">✓</span>' : '';
+            const styling = isDone ? 'text-decoration: line-through; opacity: 0.5;' : '';
+            d.innerHTML = `<span style="${styling}">${mark}<strong>${t.de}</strong> <small>(${t.v})</small></span>`;
+            d.onclick = () => {
+                displayTaskData(t.de);
+                list.style.display = 'none';
+                document.getElementById('taskSearchInput').value = t.de;
+            };
+            list.appendChild(d);
+        });
+    } else { list.style.display = 'none'; }
+}
+
+function displayTaskData(name) {
+    const task = allTasks.find(t => t.de === name);
+    if (!task) return;
+
+    currentTaskNameRaw = task.de;
+    currentOpenTask = task.de;
+    const isDone = completedTasks.includes(task.de);
+    
+    const titleEl = document.getElementById('taskTitle');
+    titleEl.innerText = task.de;
+    titleEl.style.textDecoration = isDone ? 'line-through' : 'none';
+    titleEl.style.opacity = isDone ? '0.6' : '1';
+    
+    document.getElementById('taskNames').innerText = `Englisch: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
+    document.getElementById('taskDesc').innerText = task.desc;
+    document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
+    
+    document.getElementById('solBtn').style.display = 'block';
+    document.getElementById('taskSolution').style.display = 'none';
+    
+    const wrapper = document.getElementById('taskCompleteWrapper');
+    const checkbox = document.getElementById('taskCompleteCheckbox');
+    if (wrapper) wrapper.style.display = 'block';
+    if (checkbox) {
+        checkbox.checked = completedTasks.includes(task.de);
+        checkbox.onchange = toggleTaskCompletion;
+    }
+}
+
+function resetAllTasks() {
     if (confirm("Wirklich alle erledigten Tasks zurücksetzen?")) {
         completedTasks = [];
-        try {
-            localStorage.removeItem('gzw_completed_tasks');
-        } catch(e) {}
+        try { localStorage.removeItem('gzw_completed_tasks'); } catch(e) {}
         refreshTaskList();
-        
-        // Aktuell angezeigten Task auch zurücksetzen
         const titleEl = document.getElementById('taskTitle');
         const checkbox = document.getElementById('taskCompleteCheckbox');
         if (titleEl) { titleEl.style.textDecoration = 'none'; titleEl.style.opacity = '1'; }
@@ -1858,836 +1706,283 @@ function updateVendor() {
     }
 }
 
-    function toggleSolution() {
-        const s = document.getElementById('taskSolution');
-        s.style.display = s.style.display === 'block' ? 'none' : 'block';
-    }
+function toggleSolution() {
+    const s = document.getElementById('taskSolution');
+    s.style.display = s.style.display === 'block' ? 'none' : 'block';
+}
 
-    // ==============================================================
-    // LOADOUT & INERTIA RECHNER
-    // ==============================================================
+// ==============================================================
+// LOADOUT & INERTIA RECHNER
+// ==============================================================
+const INERTIA_THRESHOLDS = {
+    agile:      { max: 20,  label: "🟢 Agil – Volle Beweglichkeit",          color: "#7ca35a", bg: "rgba(124,163,90,0.15)",    tip: "Perfekt für PvP. Maximale Sprint-Geschwindigkeit, sofortiger ADS nach Sprint, kein Trägheits-Malus." },
+    normal:     { max: 30,  label: "🟡 Normal – Leichte Einschränkungen",      color: "#f0c040", bg: "rgba(240,192,64,0.12)",    tip: "Guter Allrounder. Minimale Trägheit spürbar, aber noch sehr gut für Mid-Game POIs." },
+    heavy:      { max: 40,  label: "🟠 Schwer – Spürbarer Inertia-Malus",    color: "#ffa500", bg: "rgba(255,165,0,0.12)",     tip: "Taktischer Sprint verlangsamt sich deutlich. ADS-Recovery nach Sprint merkbar." },
+    veryheavy:  { max: 54,  label: "🔴 Sehr Schwer – Stark eingeschränkt",   color: "#e05c2a", bg: "rgba(224,92,42,0.15)",     tip: "Massiver Inertia-Malus. Sprinten kaum möglich, ADS sehr langsam. Nur für Fort Narith / Bunker-Raids." },
+    overloaded: { max: 999, label: "💀 Überlastet – Encumbered Status!",      color: "#b33939", bg: "rgba(179,57,57,0.2)",      tip: "WARNUNG: Ab 54 kg greift der 'Encumbered'-Status. Sprinten und Springen ist komplett deaktiviert!" }
+};
 
-    // Inertia-Schwellenwerte (in kg) – basierend auf GZW Spielmechanik
-    const INERTIA_THRESHOLDS = {
-        agile:      { max: 20,  label: "🟢 Agil – Volle Beweglichkeit",          color: "#7ca35a", bg: "rgba(124,163,90,0.15)",    tip: "Perfekt für PvP. Maximale Sprint-Geschwindigkeit, sofortiger ADS nach Sprint, kein Trägheits-Malus." },
-        normal:     { max: 30,  label: "🟡 Normal – Leichte Einschränkungen",     color: "#f0c040", bg: "rgba(240,192,64,0.12)",    tip: "Guter Allrounder. Minimale Trägheit spürbar, aber noch sehr gut für Mid-Game POIs." },
-        heavy:      { max: 40,  label: "🟠 Schwer – Spürbarer Inertia-Malus",    color: "#ffa500", bg: "rgba(255,165,0,0.12)",     tip: "Taktischer Sprint verlangsamt sich deutlich. ADS-Recovery nach Sprint merkbar. Nur für gedeckte Angriffe empfohlen." },
-        veryheavy:  { max: 54,  label: "🔴 Sehr Schwer – Stark eingeschränkt",   color: "#e05c2a", bg: "rgba(224,92,42,0.15)",     tip: "Massiver Inertia-Malus. Sprinten kaum möglich, ADS sehr langsam. Nur für Fort Narith / Bunker-Raids mit viel Deckung." },
-        overloaded: { max: 999, label: "💀 Überlastet – Encumbered Status!",      color: "#b33939", bg: "rgba(179,57,57,0.2)",      tip: "WARNUNG: Ab 54 kg greift der 'Encumbered'-Status. Sprinten und Springen ist komplett deaktiviert!" }
+function calcLoadout() {
+    const items = {
+        "Primärwaffe":        parseFloat(document.getElementById('lc_primary').value)    || 0,
+        "Schalldämpfer":      parseFloat(document.getElementById('lc_suppressor').value) || 0,
+        "Optik":              parseFloat(document.getElementById('lc_optic').value)      || 0,
+        "Magazine":           parseFloat(document.getElementById('lc_mags').value)       || 0,
+        "Sidearm":            parseFloat(document.getElementById('lc_sidearm').value)    || 0,
+        "Körperpanzerung":    parseFloat(document.getElementById('lc_armor').value)      || 0,
+        "Helm":               parseFloat(document.getElementById('lc_helmet').value)     || 0,
+        "Tactical Rig":       parseFloat(document.getElementById('lc_rig').value)        || 0,
+        "Nachtsicht (NVG)":   parseFloat(document.getElementById('lc_nvg').value)        || 0,
+        "Rucksack (leer)":    parseFloat(document.getElementById('lc_bag').value)        || 0,
+        "Loot / Inhalt":      parseFloat(document.getElementById('lc_loot').value)       || 0,
+        "Medizin":            parseFloat(document.getElementById('lc_medics').value)     || 0,
+        "Verpflegung":        parseFloat(document.getElementById('lc_food').value)       || 0,
     };
 
-    function calcLoadout() {
-        // Alle Gewichte einsammeln
-        const items = {
-            "Primärwaffe":        parseFloat(document.getElementById('lc_primary').value)    || 0,
-            "Schalldämpfer":      parseFloat(document.getElementById('lc_suppressor').value) || 0,
-            "Optik":              parseFloat(document.getElementById('lc_optic').value)      || 0,
-            "Magazine":           parseFloat(document.getElementById('lc_mags').value)       || 0,
-            "Sidearm":            parseFloat(document.getElementById('lc_sidearm').value)    || 0,
-            "Körperpanzerung":    parseFloat(document.getElementById('lc_armor').value)      || 0,
-            "Helm":               parseFloat(document.getElementById('lc_helmet').value)     || 0,
-            "Tactical Rig":       parseFloat(document.getElementById('lc_rig').value)        || 0,
-            "Nachtsicht (NVG)":   parseFloat(document.getElementById('lc_nvg').value)        || 0,
-            "Rucksack (leer)":    parseFloat(document.getElementById('lc_bag').value)        || 0,
-            "Loot / Inhalt":      parseFloat(document.getElementById('lc_loot').value)       || 0,
-            "Medizin":            parseFloat(document.getElementById('lc_medics').value)     || 0,
-            "Verpflegung":        parseFloat(document.getElementById('lc_food').value)       || 0,
-        };
+    const BASE_WEIGHT = 5.0;
+    const total = BASE_WEIGHT + Object.values(items).reduce((a, b) => a + b, 0);
 
-        // Charakter-Basisgewicht (Kleidung, Ausrüstung am Körper, Munition im Gürtel)
-        const BASE_WEIGHT = 5.0;
+    let status;
+    if      (total <= INERTIA_THRESHOLDS.agile.max)     status = INERTIA_THRESHOLDS.agile;
+    else if (total <= INERTIA_THRESHOLDS.normal.max)    status = INERTIA_THRESHOLDS.normal;
+    else if (total <= INERTIA_THRESHOLDS.heavy.max)     status = INERTIA_THRESHOLDS.heavy;
+    else if (total <= INERTIA_THRESHOLDS.veryheavy.max) status = INERTIA_THRESHOLDS.veryheavy;
+    else                                                status = INERTIA_THRESHOLDS.overloaded;
 
-        const total = BASE_WEIGHT + Object.values(items).reduce((a, b) => a + b, 0);
+    const barPct = Math.min(100, Math.round((total / 54) * 100));
 
-        // Inertia-Status bestimmen
-        let status;
-        if      (total <= INERTIA_THRESHOLDS.agile.max)     status = INERTIA_THRESHOLDS.agile;
-        else if (total <= INERTIA_THRESHOLDS.normal.max)    status = INERTIA_THRESHOLDS.normal;
-        else if (total <= INERTIA_THRESHOLDS.heavy.max)     status = INERTIA_THRESHOLDS.heavy;
-        else if (total <= INERTIA_THRESHOLDS.veryheavy.max) status = INERTIA_THRESHOLDS.veryheavy;
-        else                                                  status = INERTIA_THRESHOLDS.overloaded;
+    document.getElementById('lc_total_weight').textContent = total.toFixed(1) + ' kg';
+    document.getElementById('lc_total_weight').style.color = status.color;
 
-        // Balken berechnen (0-100%, cap bei 54 kg = 100%)
-        const barPct = Math.min(100, Math.round((total / 54) * 100));
+    const bar = document.getElementById('lc_inertia_bar');
+    bar.style.width = barPct + '%';
+    bar.style.background = status.color;
 
-        // UI aktualisieren
-        document.getElementById('lc_total_weight').textContent = total.toFixed(1) + ' kg';
-        document.getElementById('lc_total_weight').style.color = status.color;
+    document.getElementById('lc_inertia_pct').textContent = barPct + '%';
+    document.getElementById('lc_inertia_pct').style.color = status.color;
 
-        const bar = document.getElementById('lc_inertia_bar');
-        bar.style.width = barPct + '%';
-        bar.style.background = status.color;
+    const verdict = document.getElementById('lc_inertia_verdict');
+    verdict.textContent = status.label;
+    verdict.style.color = status.color;
+    verdict.style.background = status.bg;
+    verdict.style.border = `1px solid ${status.color}`;
 
-        document.getElementById('lc_inertia_pct').textContent = barPct + '%';
-        document.getElementById('lc_inertia_pct').style.color = status.color;
+    const breakdown = document.getElementById('lc_breakdown');
+    let rows = `<span style="color:#666;">── Basis (Charakter + Kleidung): ${BASE_WEIGHT.toFixed(1)} kg</span><br>`;
+    Object.entries(items).forEach(([name, weight]) => {
+        if (weight > 0) rows += `── ${name}: <span style="color:var(--accent);">${weight.toFixed(1)} kg</span><br>`;
+    });
+    rows += `<br><strong style="color:#fff;">Gesamt: ${total.toFixed(1)} kg</strong>`;
+    breakdown.innerHTML = rows;
 
-        const verdict = document.getElementById('lc_inertia_verdict');
-        verdict.textContent = status.label;
-        verdict.style.color = status.color;
-        verdict.style.background = status.bg;
-        verdict.style.border = `1px solid ${status.color}`;
+    const tipsEl = document.getElementById('lc_tips');
+    let tips = `<div style="color:#aaa; font-size:0.85rem; margin-bottom:8px; font-weight:bold;">💡 Operator-Empfehlung:</div>`;
+    tips += `<div style="font-size:0.9rem; color:#ccc; line-height:1.6; padding:10px 12px; background:${status.bg}; border-left:3px solid ${status.color}; border-radius:4px;">${status.tip}</div>`;
 
-        // Aufschlüsselung
-        const breakdown = document.getElementById('lc_breakdown');
-        let rows = `<span style="color:#666;">── Basis (Charakter + Kleidung): ${BASE_WEIGHT.toFixed(1)} kg</span><br>`;
-        Object.entries(items).forEach(([name, weight]) => {
-            if (weight > 0) {
-                rows += `── ${name}: <span style="color:var(--accent);">${weight.toFixed(1)} kg</span><br>`;
-            }
-        });
-        rows += `<br><strong style="color:#fff;">Gesamt: ${total.toFixed(1)} kg</strong>`;
-        breakdown.innerHTML = rows;
+    const hints = [];
+    if (parseFloat(document.getElementById('lc_suppressor').value) > 0) hints.push("🥷 <strong>Stealth-Taktik:</strong> Bei einem Überraschungsangriff hast du exakt <strong>0,5 Sekunden</strong> Zeit, um die KI zu eliminieren, bevor sie Alarm schlägt.");
+    if (parseFloat(document.getElementById('lc_armor').value) >= 7.8) hints.push("⚠️ <strong>Schwere Rüstung:</strong> Schränkt Mobilität ein. Nutze nur bei statischen Runs.");
+    if (total <= 20) hints.push("✅ <strong>PvP-optimiert:</strong> Ideal für aggressive Spielstile und Häuserkampf.");
+    if (total > 54) hints.push("🚨 <strong>ENCUMBERED!</strong> Gewicht sofort reduzieren um sprinten zu können.");
 
-        // Tipps & Empfehlungen
-        const tipsEl = document.getElementById('lc_tips');
-        let tips = `<div style="color:#aaa; font-size:0.85rem; margin-bottom:8px; font-weight:bold;">💡 Operator-Empfehlung:</div>`;
-        tips += `<div style="font-size:0.9rem; color:#ccc; line-height:1.6; padding:10px 12px; background:${status.bg}; border-left:3px solid ${status.color}; border-radius:4px;">${status.tip}</div>`;
+    if (hints.length > 0) tips += `<div style="margin-top:10px;">${hints.map(h => `<div style="margin-bottom:6px; font-size:0.85rem;">${h}</div>`).join('')}</div>`;
+    tipsEl.innerHTML = tips;
+}
 
-        // Spezifische Hinweise
-        const hints = [];
-        if (parseFloat(document.getElementById('lc_suppressor').value) > 0) {
-            hints.push("🥷 <strong>Stealth-Taktik (0.4 Meta):</strong> Du hast einen Schalldämpfer ausgerüstet! Bei einem Überraschungsangriff hast du exakt <strong>0,5 Sekunden</strong> Zeit, um die KI (z.B. per Headshot) zu eliminieren, bevor sie Alarm schlagen kann.");
-        }    
-        if (parseFloat(document.getElementById('lc_armor').value) >= 7.8) {
-            hints.push("⚠️ <strong>Schwere Rüstung erkannt:</strong> Zabralo/IOTV schränken deine Mobilität massiv ein. Nutze nur bei statischen Fort Narith Runs.");
-        }
-        if (parseFloat(document.getElementById('lc_bag').value) >= 2.5 && parseFloat(document.getElementById('lc_loot').value) >= 9.0) {
-            hints.push("⚠️ <strong>Voll beladener Rucksack:</strong> Großer Rucksack + viel Loot = extremer Inertia-Malus. Nur für reine Loot-Runs empfohlen.");
-        }
-        if (parseFloat(document.getElementById('lc_primary').value) >= 4.5) {
-            hints.push("📌 <strong>Schwere Primärwaffe:</strong> Sniper-Plattformen wie SVD/M14 haben hohes Eigengewicht. Spare bei Rüstung oder Rucksack.");
-        }
-        if (total <= 20) {
-            hints.push("✅ <strong>PvP-optimiertes Loadout:</strong> Du bist im grünen Bereich. Ideal für aggressive Spielstile und Häuserkampf.");
-        }
-        if (total > 54) {
-            hints.push("🚨 <strong>ENCUMBERED!</strong> Reduziere dein Gewicht sofort auf unter 54 kg um wieder sprinten zu können.");
-        }
-
-        if (hints.length > 0) {
-            tips += `<div style="margin-top:10px;">${hints.map(h => `<div style="margin-bottom:6px; font-size:0.85rem;">${h}</div>`).join('')}</div>`;
-        }
-
-        tipsEl.innerHTML = tips;
-    }
-
-    // Beim Laden einmal berechnen
-    
-
-
-    // UPDATE FUNKTION FÜR FRAKTIONEN
-    function updateFactionInfo() {
-        const val = document.getElementById('factionInfoSelect').value;
-        const descBox = document.getElementById('factionDescBox');
-        const logoImg = document.getElementById('factionLogoImg');
-        const nameTitle = document.getElementById('factionNameTitle');
-        const mottoText = document.getElementById('factionMotto');
-
-        if (!val) {
-            descBox.innerHTML = "Wähle eine Fraktion aus, um ihre Hintergrundgeschichte und Details zu sehen...";
-            logoImg.src = "https://via.placeholder.com/250x250/222222/7ca35a?text=Fraktions-Logo";
-            nameTitle.innerText = "";
-            mottoText.innerText = "";
-            return;
-        }
-
-        const f = factionDb[val];
-        descBox.innerHTML = `<p style="margin-top: 0;">${f.desc}</p>`;
-        logoImg.src = f.logo;
-        nameTitle.innerText = f.name;
-        mottoText.innerText = `Motto: "${f.motto}"`;
-    }
-
-    // ==============================================================
-// DRAG & DROP FÜR WIDGETS
 // ==============================================================
-
-function makeDraggable(elementId) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    let isDragging = false;
-    let hasMoved = false;
-    let startX, startY, startLeft, startTop;
-
-    const header = el.querySelector('[id$="Header"], [id$="notepadHeader"]') || el;
-
-    header.style.cursor = 'grab';
-
-    header.addEventListener('mousedown', (e) => {
-        if (e.target.tagName === 'BUTTON') return;
-
-        isDragging = true;
-        hasMoved = false;
-        startX = e.clientX;
-        startY = e.clientY;
-
-        const rect = el.getBoundingClientRect();
-        startLeft = rect.left;
-        startTop = rect.top;
-
-        header.style.cursor = 'grabbing';
-        // KEIN e.preventDefault() mehr hier!
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-
-        // Erst ab 5px Bewegung als "Drag" zählen
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-            hasMoved = true;
-        }
-
-        if (!hasMoved) return;
-
-        let newLeft = startLeft + dx;
-        let newTop = startTop + dy;
-
-        newLeft = Math.max(0, Math.min(window.innerWidth - el.offsetWidth, newLeft));
-        newTop = Math.max(0, Math.min(window.innerHeight - el.offsetHeight, newTop));
-
-        el.style.left = newLeft + 'px';
-        el.style.top = newTop + 'px';
-        el.style.right = 'auto';
-        el.style.bottom = 'auto';
-    });
-
-    document.addEventListener('mouseup', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        header.style.cursor = 'grab';
-
-        if (hasMoved) {
-            try {
-                localStorage.setItem(`gzw_pos_${elementId}`, JSON.stringify({
-                    left: el.style.left,
-                    top: el.style.top
-                }));
-            } catch(e) {}
-        }
-    });
-
-    try {
-        const saved = localStorage.getItem(`gzw_pos_${elementId}`);
-        if (saved) {
-            const pos = JSON.parse(saved);
-            el.style.left = pos.left;
-            el.style.top = pos.top;
-            el.style.right = 'auto';
-            el.style.bottom = 'auto';
-        }
-    } catch(e) {}
-}
-
-// Beim Laden initialisieren
-
-
-
-    function toggleWidget(id) {
-    const widget = document.getElementById(id);
-    const btn = document.getElementById('btn-' + id);
-    
-    if (!widget) return;
-
-    const isVisible = widget.style.display !== 'none';
-
-    if (isVisible) {
-        widget.style.display = 'none';
-        if (btn) btn.classList.remove('active');
-    } else {
-        widget.style.display = 'block';
-        if (btn) btn.classList.add('active');
-        // Widget collapsed-State beim Öffnen entfernen damit es voll aufgeht
-        widget.classList.remove('collapsed');
-    }
-}
-
-    // ==============================================================
 // AMMO MATRIX
 // ==============================================================
-
 const ammoMatrixData = [
-    // Format: { name, cal, pen, dmg }
-    // pen = Penetrationswert (1-7), wird gegen Klassengrenzwerte geprüft
-
-    // 5.56x45mm NATO
     { name: "5.56 M855A1",    cal: "5.56x45mm",   pen: 4.5, dmg: 52 },
     { name: "5.56 M855",      cal: "5.56x45mm",   pen: 3.5, dmg: 50 },
     { name: "5.56 M856A1",    cal: "5.56x45mm",   pen: 3.8, dmg: 51 },
-    { name: "5.56 M193",      cal: "5.56x45mm",   pen: 2.0, dmg: 58 },
-    { name: "5.56 MK255 HP",  cal: "5.56x45mm",   pen: 1.0, dmg: 65 },
-
-    // .300 BLK
-    { name: ".300 BLK AP",    cal: ".300 BLK",     pen: 4.5, dmg: 55 },
-    { name: ".300 BLK CBJ",   cal: ".300 BLK",     pen: 4.0, dmg: 58 },
-    { name: ".300 BLK M62",   cal: ".300 BLK",     pen: 3.8, dmg: 54 },
-    { name: ".300 BLK Whisper",cal: ".300 BLK",    pen: 2.5, dmg: 62 },
-
-    // 5.45x39mm
+    { name: ".300 BLK AP",    cal: ".300 BLK",    pen: 4.5, dmg: 55 },
     { name: "5.45 BS",        cal: "5.45x39mm",   pen: 5.5, dmg: 43 },
     { name: "5.45 BP",        cal: "5.45x39mm",   pen: 4.5, dmg: 48 },
-    { name: "5.45 PP",        cal: "5.45x39mm",   pen: 3.5, dmg: 50 },
-    { name: "5.45 7N6M",      cal: "5.45x39mm",   pen: 2.5, dmg: 52 },
-    { name: "5.45 HP",        cal: "5.45x39mm",   pen: 1.0, dmg: 68 },
-
-    // 7.62x39mm
     { name: "7.62x39 MAI AP", cal: "7.62x39mm",   pen: 5.5, dmg: 46 },
     { name: "7.62x39 BP",     cal: "7.62x39mm",   pen: 4.5, dmg: 58 },
-    { name: "7.62x39 PS",     cal: "7.62x39mm",   pen: 3.5, dmg: 54 },
-    { name: "7.62x39 US",     cal: "7.62x39mm",   pen: 2.0, dmg: 56 },
-    { name: "7.62x39 HP",     cal: "7.62x39mm",   pen: 1.0, dmg: 73 },
-
-    // 7.62x51mm NATO
     { name: "7.62 M993",      cal: "7.62x51mm",   pen: 6.5, dmg: 60 },
     { name: "7.62 M61",       cal: "7.62x51mm",   pen: 6.0, dmg: 64 },
-    { name: "7.62 M62",       cal: "7.62x51mm",   pen: 5.4, dmg: 68 },
     { name: "7.62 M80",       cal: "7.62x51mm",   pen: 4.2, dmg: 80 },
-    { name: "7.62 TCW SP",    cal: "7.62x51mm",   pen: 2.5, dmg: 90 },
-
-    // 7.62x54mmR
     { name: "7.62x54R SNB",   cal: "7.62x54mmR",  pen: 6.0, dmg: 75 },
-    { name: "7.62x54R 7N1",   cal: "7.62x54mmR",  pen: 4.5, dmg: 85 },
-    { name: "7.62x54R LPS",   cal: "7.62x54mmR",  pen: 4.0, dmg: 80 },
-
-    // 4.6x30mm
     { name: "4.6 AP SX",      cal: "4.6x30mm",    pen: 5.0, dmg: 35 },
-    { name: "4.6 FMJ SX",     cal: "4.6x30mm",    pen: 4.0, dmg: 43 },
-    { name: "4.6 Subsonic",   cal: "4.6x30mm",    pen: 2.0, dmg: 38 },
-    { name: "4.6 Action",     cal: "4.6x30mm",    pen: 1.5, dmg: 50 },
-
-    // 9x19mm
     { name: "9mm 7N31",       cal: "9x19mm",      pen: 3.5, dmg: 45 },
     { name: "9mm AP 6.3",     cal: "9x19mm",      pen: 2.5, dmg: 48 },
-    { name: "9mm PST Gzh",    cal: "9x19mm",      pen: 1.5, dmg: 52 },
     { name: "9mm RIP",        cal: "9x19mm",      pen: 0.5, dmg: 95 },
-
-    // 9x18mm
-    { name: "9x18 PMM",       cal: "9x18mm",      pen: 1.8, dmg: 50 },
-    { name: "9x18 SP7",       cal: "9x18mm",      pen: 2.2, dmg: 46 },
-    { name: "9x18 Gzh",       cal: "9x18mm",      pen: 0.8, dmg: 55 },
-
-    // 7.62x25mm TT
-    { name: "7.62x25 PST",    cal: "7.62x25mm",   pen: 2.8, dmg: 42 },
-    { name: "7.62x25 LRNPC",  cal: "7.62x25mm",   pen: 1.5, dmg: 48 },
-
-    // .45 ACP
     { name: ".45 ACP AP",     cal: ".45 ACP",     pen: 3.5, dmg: 60 },
-    { name: ".45 ACP Match",  cal: ".45 ACP",     pen: 2.0, dmg: 70 },
-    { name: ".45 ACP RIP",    cal: ".45 ACP",     pen: 0.5, dmg: 100 },
-
-    // .32 ACP
-    { name: ".32 ACP FMJ",    cal: ".32 ACP",     pen: 0.5, dmg: 38 },
-
-    // 12 Gauge
-    { name: "12G AP-20 Slug", cal: "12 Gauge",    pen: 3.5, dmg: 160 },
-    { name: "12G Copper Slug",cal: "12 Gauge",    pen: 2.0, dmg: 150 },
-    { name: "12G Flechette",  cal: "12 Gauge",    pen: 1.5, dmg: 120 },
-    { name: "12G 00 Buck",    cal: "12 Gauge",    pen: 1.0, dmg: 280 },
+    { name: "12G AP-20 Slug", cal: "12 Gauge",    pen: 3.5, dmg: 160 }
 ];
 
-// Rüstungsklassen-Grenzwerte (Penetrationswert muss >= sein um "durch")
 const armorClasses = [
-    { label: "Class 1", threshold: 1.0 },
-    { label: "Class 2", threshold: 2.0 },
-    { label: "Class 3", threshold: 3.0 },
-    { label: "Class 3+", threshold: 3.5 },
-    { label: "Class 4", threshold: 4.0 },
-    { label: "Class 5", threshold: 5.0 },
-    { label: "Class 6", threshold: 6.0 },
+    { label: "Class 1", threshold: 1.0 }, { label: "Class 2", threshold: 2.0 },
+    { label: "Class 3", threshold: 3.0 }, { label: "Class 3+", threshold: 3.5 },
+    { label: "Class 4", threshold: 4.0 }, { label: "Class 5", threshold: 5.0 },
+    { label: "Class 6", threshold: 6.0 }
 ];
 
 function getAmmoCell(pen, threshold) {
     const diff = pen - threshold;
-    if (diff >= 0.5) {
-        // Sicherer Durchschlag
-        return { bg: '#0d2e0d', color: '#7ca35a', text: '✅', title: 'Sicherer Durchschlag' };
-    } else if (diff >= -0.3) {
-        // Wahrscheinlicher Durchschlag
-        return { bg: '#2e2200', color: '#ffa500', text: '⚠️', title: 'Braucht mehrere Schuss' };
-    } else if (diff >= -1.0) {
-        // Kaum Chance
-        return { bg: '#2e0d0d', color: '#ff6b35', text: '❌', title: 'Kaum Durchschlag' };
-    } else {
-        // Kein Durchschlag — Leg Meta
-        return { bg: '#1a0505', color: '#b33939', text: '🦵', title: 'Kein Durchschlag — Beine anvisieren!' };
-    }
+    if (diff >= 0.5) return { bg: '#0d2e0d', color: '#7ca35a', text: '✅', title: 'Sicherer Durchschlag' };
+    else if (diff >= -0.3) return { bg: '#2e2200', color: '#ffa500', text: '⚠️', title: 'Braucht mehrere Schuss' };
+    else if (diff >= -1.0) return { bg: '#2e0d0d', color: '#ff6b35', text: '❌', title: 'Kaum Durchschlag' };
+    else return { bg: '#1a0505', color: '#b33939', text: '🦵', title: 'Leg Meta!' };
 }
 
 function buildAmmoMatrix() {
     const tbody = document.getElementById('ammoMatrixBody');
     if (!tbody) return;
     tbody.innerHTML = '';
-
-    // Gruppiere nach Kaliber
     const calibers = [...new Set(ammoMatrixData.map(a => a.cal))];
     let lastCal = '';
 
     ammoMatrixData.forEach(ammo => {
         const row = document.createElement('tr');
-
-        // Kaliber-Trennzeile
         if (ammo.cal !== lastCal) {
             const sepRow = document.createElement('tr');
-            sepRow.innerHTML = `<td colspan="8" style="background:#1a1a2e; color:#7ca35a; font-weight:bold; font-size:0.8rem; padding:6px 10px; border:1px solid #333; letter-spacing:1px;">⚡ ${ammo.cal}</td>`;
+            sepRow.innerHTML = `<td colspan="8" style="background:#1a1a2e; color:#7ca35a; font-weight:bold; font-size:0.8rem; padding:6px 10px; border:1px solid #333;">⚡ ${ammo.cal}</td>`;
             tbody.appendChild(sepRow);
             lastCal = ammo.cal;
         }
 
-        // Munitionsname
         let nameCell = `<td style="background:#1e1e1e; color:#ddd; padding:7px 10px; border:1px solid #2a2a2a; font-weight:bold; position:sticky; left:0; z-index:1; white-space:nowrap;">
-            ${ammo.name}
-            <small style="color:#555; font-weight:normal; display:block;">Pen: ${ammo.pen} | DMG: ${ammo.dmg}</small>
+            ${ammo.name} <small style="color:#555; font-weight:normal; display:block;">Pen: ${ammo.pen} | DMG: ${ammo.dmg}</small>
         </td>`;
-
         row.innerHTML = nameCell;
 
-        // Farbige Zellen für jede Rüstungsklasse
         armorClasses.forEach(ac => {
             const cell = getAmmoCell(ammo.pen, ac.threshold);
-            row.innerHTML += `<td title="${cell.title}" style="background:${cell.bg}; color:${cell.color}; text-align:center; padding:7px 4px; border:1px solid #2a2a2a; font-size:1rem; cursor:default;">${cell.text}</td>`;
+            row.innerHTML += `<td title="${cell.title}" style="background:${cell.bg}; color:${cell.color}; text-align:center; padding:7px 4px; border:1px solid #2a2a2a; font-size:1rem;">${cell.text}</td>`;
         });
-
         tbody.appendChild(row);
     });
 }
 
-// Beim Laden initialisieren
+// ==============================================================
+// ROUTENPLANER
+// ==============================================================
+let selectedRouteTasks = [];
+const poiBlueprints = {
+    "starter": { name: "Startstadt", infil: "Laufe zu Fuß oder LZs.", danger: "🟢 GERING", keywords: ["startstadt", "markt", "tankstelle", "rathaus", "schule"], steps: [{ name: "Phase 1: Randgebiete", keys: ["farm", "checkpoints"] }, { name: "Phase 2: Markt & Tankstelle", keys: ["markt", "tankstelle"] }, { name: "Phase 3: Schule & Rathaus", keys: ["schule", "rathaus", "boss"] }] },
+    "lumber": { name: "Lumber Yard", infil: "Echo LZs", danger: "🟡 MITTEL", keywords: ["lumber", "sawmill", "sägewerk"], steps: [{ name: "Phase 1: Randgebiet", keys: ["hügel", "spähe"] }, { name: "Phase 2: Arbeiterhütten", keys: ["hütte"] }, { name: "Phase 3: Haupthalle", keys: ["vorarbeiter", "sabotieren"] }] },
+    // ... restliche POIs ...
+};
 
+function onPoiChange() { selectedRouteTasks = []; generateRoutePlan(); }
+function addToRoute(taskName) { if (!selectedRouteTasks.includes(taskName)) { selectedRouteTasks.push(taskName); generateRoutePlan(); } }
+function removeFromRoute(taskName) { selectedRouteTasks = selectedRouteTasks.filter(t => t !== taskName); generateRoutePlan(); }
 
+function generateRoutePlan() {
+    const poiKey = document.getElementById('routePoiSelect').value;
+    const resultBox = document.getElementById('routeResult');
+    if (!poiKey) { resultBox.style.display = 'none'; return; }
+    
+    const poi = poiBlueprints[poiKey];
+    if (!poi) return;
+
+    let activeTasks = allTasks.filter(t => !completedTasks.includes(t.de));
+    let poiTasks = activeTasks.filter(t => poi.keywords.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw)));
+    let availableTasks = poiTasks.filter(t => !selectedRouteTasks.includes(t.de));
+    let routeTasks = poiTasks.filter(t => selectedRouteTasks.includes(t.de));
+
+    let availableHtml = `<div style="padding: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; border-left: 4px solid var(--accent);"><h4 style="color:#fff; margin-top:0; margin-bottom:10px;">📋 Verfügbare Missionen:</h4>`;
+    if (availableTasks.length === 0) availableHtml += `<span style="color:#888;">Keine Aufgaben mehr hier offen.</span>`;
+    else availableTasks.forEach(t => { availableHtml += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding:8px; background:#252525; border: 1px solid #444; border-radius:4px;"><div><strong style="color:#ccc;">${t.de}</strong> <small>(${t.v})</small></div><button onclick="addToRoute('${t.de.replace(/'/g, "\\'")}')" style="background:var(--accent); color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">➕</button></div>`; });
+    availableHtml += `</div>`;
+
+    let routeHtml = `<div class="panel-box" style="border-top: 4px solid var(--accent); margin-bottom: 20px;"><h3 style="margin-bottom: 5px;">📍 DEIN EINSATZPLAN: ${poi.name.toUpperCase()}</h3>`;
+    if (routeTasks.length === 0) routeHtml += `<p style="color:#aaa;">Füge aus der Liste unten Tasks hinzu.</p>`;
+    else {
+        let assignedTasks = new Set();
+        poi.steps.forEach(step => {
+            let stepTasks = routeTasks.filter(t => !assignedTasks.has(t.de) && step.keys.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw)));
+            if (stepTasks.length > 0) {
+                routeHtml += `<h4 style="color:#fff; margin-top:15px; margin-bottom:8px;">🎯 ${step.name}</h4>`;
+                stepTasks.forEach(t => { assignedTasks.add(t.de); routeHtml += `<div style="margin-bottom: 8px; color:#ccc;">- <strong style="color:var(--accent);">${t.de}</strong><br><small style="color: #aaa; margin-left:10px;">↳ ${t.sol}</small> <button onclick="removeFromRoute('${t.de.replace(/'/g, "\\'")}')" style="background:none; border:none; color:#b33939; cursor:pointer;">❌</button></div>`; });
+            }
+        });
+        let remainingTasks = routeTasks.filter(t => !assignedTasks.has(t.de));
+        if (remainingTasks.length > 0) {
+            routeHtml += `<h4 style="color:#ffa500; margin-top:15px; margin-bottom:8px;">📌 Allgemeine Ziele</h4>`;
+            remainingTasks.forEach(t => { routeHtml += `<div style="margin-bottom: 8px; color:#ccc;">- <strong style="color:#ffa500;">${t.de}</strong><br><small style="color: #aaa; margin-left:10px;">↳ ${t.sol}</small> <button onclick="removeFromRoute('${t.de.replace(/'/g, "\\'")}')" style="background:none; border:none; color:#b33939; cursor:pointer;">❌</button></div>`; });
+        }
+    }
+    routeHtml += `</div>`;
+
+    resultBox.style.display = 'block';
+    resultBox.innerHTML = routeHtml + availableHtml;
+}
 
 // ==============================================================
-    // ROUTENPLANER (TACTICAL BLUEPRINT) LOGIK - OPT-IN VERSION
-    // ==============================================================
-    
-    // Speicher für die aktuell geplante Route (leert sich beim Zonen-Wechsel)
-    let selectedRouteTasks = [];
-
-    function onPoiChange() {
-        selectedRouteTasks = []; // Reset der Route, wenn man das Gebiet wechselt
-        generateRoutePlan();
-    }
-
-    function addToRoute(taskName) {
-        if (!selectedRouteTasks.includes(taskName)) {
-            selectedRouteTasks.push(taskName);
-            generateRoutePlan();
-        }
-    }
-
-    function removeFromRoute(taskName) {
-        selectedRouteTasks = selectedRouteTasks.filter(t => t !== taskName);
-        generateRoutePlan();
-    }
-
-    // --- Die POI Datenbank ---
-    const poiBlueprints = {
-        "starter": {
-            name: "Startstadt (Startgebiet)",
-            infil: "Base Camp (Laufe zu Fuß) oder Alpha/Bravo/Charlie LZs.",
-            danger: "🟢 GERING (Straßengangs, ideal für Anfänger)",
-            keywords: ["startstadt", "markt", "tankstelle", "rathaus", "arzthaus", "schule", "nam thaven", "pha lang", "kiu vongsa", "startgebiet"],
-            steps: [
-                { name: "Phase 1: Randgebiete & Farmen", keys: ["scheune", "farm", "umland", "checkpoints", "versteck"] },
-                { name: "Phase 2: Markt & Tankstelle", keys: ["markt", "tankstelle", "mechaniker", "post"] },
-                { name: "Phase 3: Schule & Krankenhaus", keys: ["schule", "arzthaus", "krankenhaus", "blut"] },
-                { name: "Phase 4: Rathaus", keys: ["rathaus", "bürgermeister", "boss"] }
-            ]
-        },
-        "lumber": {
-            name: "Lumber Yard (Sägewerk)",
-            infil: "LZ Echo 1 oder Echo 2 (versteckter im Wald).",
-            danger: "🟡 MITTEL (Rebellen & Scharfschützen auf den Hügeln, Boss: Foreman)",
-            keywords: ["lumber", "sawmill", "sägewerk", "holz", "vorarbeiter"],
-            steps: [
-                { name: "Phase 1: Außenbereich & Hügel", keys: ["hügel", "spähe", "außen", "holzstapel"] },
-                { name: "Phase 2: Arbeiterhütten", keys: ["arbeiterhütte", "hütte", "uhren"] },
-                { name: "Phase 3: Haupthalle & Büro", keys: ["büro", "vorarbeiter", "haupthalle", "sabotieren", "mre"] },
-                { name: "Phase 4: Straßen & Fahrzeuge", keys: ["truck", "lkw", "straße"] }
-            ]
-        },
-        "blue_lagoon": {
-            name: "Blue Lagoon",
-            infil: "LZ Kilo 1 oder 2.",
-            danger: "🟡 MITTEL (Kartellmitglieder, Boss: Malo)",
-            keywords: ["blue lagoon", "lagune", "restaurant", "bootshaus", "malo", "kartell"],
-            steps: [
-                { name: "Phase 1: Randgebiet & Wasserfilter", keys: ["filter", "wasser", "rand"] },
-                { name: "Phase 2: Drogenlabor & Hütten", keys: ["labor", "drogen", "becherglas", "c4"] },
-                { name: "Phase 3: Bootshaus & Schmuggler", keys: ["bootshaus", "schmuggler", "wasserfall"] },
-                { name: "Phase 4: Restaurant & Büro", keys: ["büro", "schwarzgeld", "koffer"] }
-            ]
-        },
-        "ground_zero": {
-            name: "Ground Zero (Airfield)",
-            infil: "LZ Golf 1 oder 2. Vorsicht vor der Verstrahlung!",
-            danger: "🔴 EXTREM (Militär-Elite, Strahlung, Boss: Airfield Commander)",
-            keywords: ["ground zero", "airfield", "flugplatz", "krater", "c-130", "hangar", "tower", "jet", "landebahn"],
-            steps: [
-                { name: "Phase 1: Außenperimeter & Wracks", keys: ["c-130", "wrack", "schrott", "drohne", "heli", "landebahn"] },
-                { name: "Phase 2: Der Krater (Verstrahlt!)", keys: ["krater", "strahlung", "mutiert", "leichen"] },
-                { name: "Phase 3: Hangars", keys: ["hangar", "ap-munition", "jet"] },
-                { name: "Phase 4: Kontrollturm (Tower)", keys: ["tower", "zentrum", "flugplatz"] }
-            ]
-        },
-        "midnight": {
-            name: "Midnight Sapphire",
-            infil: "LZ Hotel 1 (Süd) für den Pool-Ansatz oder Hotel 3 (Nord) für die Villen.",
-            danger: "🔴 SEHR HOCH (Gepanzerte Söldner, Boss: Golden Boy / LAF Commander)",
-            keywords: ["midnight", "hotel", "villa", "pool", "rezeption", "zimmer", "golf", "späher"],
-            steps: [
-                { name: "Phase 1: Außenbereich & Pool", keys: ["pool", "golf", "außen", "späher"] },
-                { name: "Phase 2: Erdgeschoss & Rezeption", keys: ["rezeption", "erdgeschoss", "lobby"] },
-                { name: "Phase 3: Hotelzimmer", keys: ["zimmer", "schrank", "204", "301", "202", "pass"] },
-                { name: "Phase 4: Die Luxusvillen", keys: ["villa", "villen", "kongressabgeordnete"] }
-            ]
-        },
-        "fort": {
-            name: "Fort Narith",
-            infil: "LZ Delta 3 (Rückseite) bietet den sichersten Anmarsch durch den Wald.",
-            danger: "🔴 EXTREM (LAF Militär, Boss: General Pa)",
-            keywords: ["fort narith", "narith", "hq", "barracken", "tankstelle", "geschütze"],
-            steps: [
-                { name: "Phase 1: Außenbereich & Tankstelle", keys: ["tankstelle", "außen", "mauer", "geschütze", "artillerie"] },
-                { name: "Phase 2: Barracken & Hof", keys: ["barracken", "innenhof", "block c", "block a"] },
-                { name: "Phase 3: HQ Gebäude", keys: ["hq", "hauptquartier", "büro", "befehlskette"] },
-                { name: "Phase 4: Untergrund & Keller", keys: ["keller", "munitionsbunker", "schattenkrieg"] }
-            ]
-        },
-        "tiger": {
-            name: "Tiger Bay",
-            infil: "LZ Lima 1 oder 2. Bereite dich auf sofortigen Beschuss vor!",
-            danger: "💀 TODESZONE (Extreme KI-Dichte, UNLRA-Elite)",
-            keywords: ["tiger bay", "mall", "pier", "unlra", "einkaufszentrum", "vorstadt"],
-            steps: [
-                { name: "Phase 1: Vorstadt & Straßen", keys: ["vorstadt", "straße", "haus", "suv"] },
-                { name: "Phase 2: Das Einkaufszentrum", keys: ["mall", "einkaufszentrum", "bank"] },
-                { name: "Phase 3: Der Pier", keys: ["pier", "boot", "wasser"] },
-                { name: "Phase 4: UNLRA Hauptquartier & Labor", keys: ["unlra", "labor", "quarantäne", "zelt"] }
-            ]
-        },
-        "ybl": {
-            name: "YBL-1 Bunker",
-            infil: "LZ Juliet 2 (Südlicher Wald).",
-            danger: "🟠 HOCH (Enge Gänge, CQB Waffen empfohlen)",
-            keywords: ["ybl", "bunker", "ebene", "checkpoints", "zelle", "wasser"],
-            steps: [
-                { name: "Phase 1: Außenposten & Eingänge", keys: ["außen", "eingang", "hof", "checkpoints"] },
-                { name: "Phase 2: Ebene -1 (Verwaltung)", keys: ["ebene -1", "büro", "überwachung", "schatten"] },
-                { name: "Phase 3: Ebene -2 (Gefängnis & Waffen)", keys: ["ebene -2", "zelle", "server", "generator", "waffenlager", "gefangener"] },
-                { name: "Phase 4: Ebene -3 (Überflutet)", keys: ["ebene -3", "wasser", "fässer", "toxisch"] }
-            ]
-        },
-        "banpa": {
-            name: "Ban Pa",
-            infil: "LZ India 2 für einen leisen Ansatz über den Dschungel.",
-            danger: "🟡 MITTEL (Okkulte Fanatiker, viel Holz-Deckung)",
-            keywords: ["ban pa", "fischerdorf", "ältesten", "kult", "schmuggler", "dschungel", "schrein"],
-            steps: [
-                { name: "Phase 1: Dschungel & Gräber", keys: ["hügel", "dschungel", "grab", "schrein"] },
-                { name: "Phase 2: Äußere Hütten & Schmuggler", keys: ["hütte", "fischer", "schmuggler"] },
-                { name: "Phase 3: Zentrum & Ältesten-Haus", keys: ["zentrum", "ältesten", "brunnen", "kirche"] },
-                { name: "Phase 4: See & Steg", keys: ["see", "steg", "boot", "wasserfall"] }
-            ]
-        },
-        "hunters": {
-            name: "Hunter's Paradise",
-            infil: "LZ Foxtrot 1. Vorsicht: Foxtrot 2 wird oft von Huntern abgezielt!",
-            danger: "🟠 HOCH (Scharfschützen, Aggressive Söldner)",
-            keywords: ["hunter's", "hunters", "schießstand", "motel", "müllhalde", "hauptbüro"],
-            steps: [
-                { name: "Phase 1: Müllhalde & Lager", keys: ["müllhalde", "lager", "schack"] },
-                { name: "Phase 2: Das Motel", keys: ["motel", "kundenliste"] },
-                { name: "Phase 3: Hauptbüro", keys: ["hauptbüro", "funkgerät"] },
-                { name: "Phase 4: Schießstand & Waffenkammer", keys: ["schießstand", "boss", "barett"] }
-            ]
-        }
-    };
-
-    // --- Die Hauptfunktion (Generator) ---
-    function generateRoutePlan() {
-        const poiKey = document.getElementById('routePoiSelect').value;
-        const resultBox = document.getElementById('routeResult');
-
-        if (!poiKey) {
-            resultBox.style.display = 'none';
-            return;
-        }
-
-        const poi = poiBlueprints[poiKey];
-        if (!poi) return;
-
-        // Finde alle aktiven Tasks für diese Zone (die noch nicht abgehakt wurden)
-        let activeTasks = allTasks.filter(t => !completedTasks.includes(t.de));
-        let poiTasks = activeTasks.filter(t =>
-            poi.keywords.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw))
-        );
-
-        // Trenne in "Verfügbare" und "Ausgewählte" (Zur Route hinzugefügt)
-        let availableTasks = poiTasks.filter(t => !selectedRouteTasks.includes(t.de));
-        let routeTasks = poiTasks.filter(t => selectedRouteTasks.includes(t.de));
-
-        // 1. VERFÜGBARE MISSIONEN (Wird jetzt UNTEN angezeigt)
-        let availableHtml = `<div style="padding: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; border-left: 4px solid var(--accent);">`;
-        availableHtml += `<h4 style="color:#fff; margin-top:0; margin-bottom:10px; font-size: 1.1rem;">📋 Verfügbare Missionen in ${poi.name} (${availableTasks.length}):</h4>`;
-        
-        if (poiTasks.length === 0) {
-             availableHtml += `<span style="color:var(--accent); font-weight:bold;">✅ Zone Clear! Du hast hier keine offenen Missionen mehr.</span>`;
-        } else if (availableTasks.length === 0) {
-            availableHtml += `<span style="color:#888;">Alle verfügbaren Missionen wurden zur Route hinzugefügt! ☝️</span>`;
-        } else {
-            availableTasks.forEach(t => {
-                availableHtml += `
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding:8px 12px; background:#252525; border: 1px solid #444; border-radius:4px;">
-                    <div>
-                        <strong style="color:#ccc;">${t.de}</strong> <small style="color:#888;">(${t.v})</small>
-                    </div>
-                    <button onclick="addToRoute('${t.de.replace(/'/g, "\\'")}')" style="background:var(--accent); border:none; color:#fff; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.85rem; font-weight:bold; transition: background 0.2s;">➕ Zur Route</button>
-                </div>`;
-            });
-        }
-        availableHtml += `</div>`;
-
-        // 2. DER EIGENTLICHE EINSATZPLAN (Wird jetzt OBEN angezeigt)
-        let routeHtml = "";
-        
-        if (routeTasks.length === 0) {
-            routeHtml = `
-                <div class="panel-box" style="text-align:center; border-top: 4px solid #555; margin-bottom: 20px;">
-                    <h3 style="color:#888; font-size: 1.3rem;">📍 ROUTE LEER</h3>
-                    <p style="color:#aaa;">Füge aus der Liste unten Tasks hinzu, um deinen Einsatzplan für diesen Raid zu generieren.</p>
-                </div>
-            `;
-        } else {
-            let phasesHtml = "";
-            let assignedTasks = new Set();
-
-            poi.steps.forEach(step => {
-                let stepTasks = routeTasks.filter(t =>
-                    !assignedTasks.has(t.de) &&
-                    step.keys.some(kw => t.desc.toLowerCase().includes(kw) || t.sol.toLowerCase().includes(kw))
-                );
-
-                if (stepTasks.length > 0) {
-                    phasesHtml += `<div style="margin-bottom: 15px; border-left: 3px solid var(--accent); padding-left: 12px; background: rgba(255,255,255,0.02); border-radius: 0 6px 6px 0; padding-top: 8px; padding-bottom: 8px;">`;
-                    phasesHtml += `<h4 style="color:#fff; margin-top:0; margin-bottom:8px; font-size: 1.05rem;">🎯 ${step.name}</h4>`;
-                    stepTasks.forEach(t => {
-                        assignedTasks.add(t.de);
-                        phasesHtml += `
-                        <div style="margin-bottom: 8px; color:#ccc; display: flex; justify-content: space-between; align-items: flex-start;">
-                            <div>
-                                <strong style="color:var(--accent);">${t.de}</strong> <small>(${t.v})</small><br>
-                                <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
-                            </div>
-                            <button onclick="removeFromRoute('${t.de.replace(/'/g, "\\'")}')" title="Aus Route entfernen" style="background: none; border: none; color: #b33939; cursor: pointer; font-size: 0.9rem; padding: 2px 5px;">❌</button>
-                        </div>`;
-                    });
-                    phasesHtml += `</div>`;
-                }
-            });
-
-            // Allgemeine Ziele
-            let remainingTasks = routeTasks.filter(t => !assignedTasks.has(t.de));
-            if (remainingTasks.length > 0) {
-                phasesHtml += `<div style="margin-bottom: 15px; border-left: 3px solid #ffa500; padding-left: 12px; background: rgba(255,165,0,0.05); border-radius: 0 6px 6px 0; padding-top: 8px; padding-bottom: 8px;">`;
-                phasesHtml += `<h4 style="color:#ffa500; margin-top:0; margin-bottom:8px; font-size: 1.05rem;">📌 Allgemeine Ziele in der Zone</h4>`;
-                remainingTasks.forEach(t => {
-                    phasesHtml += `
-                    <div style="margin-bottom: 8px; color:#ccc; display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div>
-                            <strong style="color:#ffa500;">${t.de}</strong> <small>(${t.v})</small><br>
-                            <span style="font-size:0.85rem; color: #aaa;">↳ ${t.sol}</span>
-                        </div>
-                        <button onclick="removeFromRoute('${t.de.replace(/'/g, "\\'")}')" title="Aus Route entfernen" style="background: none; border: none; color: #b33939; cursor: pointer; font-size: 0.9rem; padding: 2px 5px;">❌</button>
-                    </div>`;
-                });
-                phasesHtml += `</div>`;
-            }
-
-            routeHtml = `
-                <div class="panel-box" style="border-top: 4px solid var(--accent); margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 5px; font-size: 1.3rem;">📍 DEIN EINSATZPLAN: ${poi.name.toUpperCase()}</h3>
-                    
-                    <div style="display:flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; margin-top: 15px;">
-                        <div style="flex:1; min-width: 200px; background:#1a1a1a; padding:10px; border-radius:6px; border:1px solid #333;">
-                            <span style="color:#888; font-size:0.8rem; display:block; margin-bottom: 3px;">🚁 Empfohlene Infiltration</span>
-                            <strong style="color:#fff; font-size:0.9rem;">${poi.infil}</strong>
-                        </div>
-                        <div style="flex:1; min-width: 200px; background:#1a1a1a; padding:10px; border-radius:6px; border:1px solid #333;">
-                            <span style="color:#888; font-size:0.8rem; display:block; margin-bottom: 3px;">⚠️ Gefahrenstufe</span>
-                            <strong style="font-size:0.9rem;">${poi.danger}</strong>
-                        </div>
-                    </div>
-
-                    <h3 style="color: #888; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 15px; font-size: 1rem;">DEINE GEPLANTE ROUTE:</h3>
-                    ${phasesHtml}
-                </div>
-            `;
-        }
-
-        // Beide Blöcke ausgeben: ERST Route, DANN Verfügbare
-        resultBox.style.display = 'block';
-        resultBox.innerHTML = routeHtml + availableHtml;
-    }
-
-   // ==============================================================
-    // DYNAMISCHER NEWS-FETCHER (Steam Offiziell + Auto-Übersetzung)
-    // ==============================================================
-    
-    // Versteckter Google-Translate Hack
-    async function translateToGerman(text) {
-        if (!text) return "";
-        try {
-            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=de&dt=t&q=${encodeURIComponent(text)}`;
-            const res = await fetch(url);
-            const data = await res.json();
-            let translatedText = "";
-            for (let i = 0; i < data[0].length; i++) {
-                translatedText += data[0][i][0];
-            }
-            return translatedText;
-        } catch (e) {
-            console.error("Übersetzungsfehler:", e);
-            return text; // Falls Google streikt, zeigen wir zumindest das Englische Original
-        }
-    }
-
-    async function fetchLatestNews() {
-        const newsContainer = document.getElementById('dynamic-news-alert');
-        if (!newsContainer) return;
-
-        const rssUrl = encodeURIComponent('https://store.steampowered.com/feeds/news/app/2479810/');
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
-
-        try {
-            // Zeige Lade-Status, während Google übersetzt
-            newsContainer.innerHTML = `
-                <h3 style="margin-top: 0; color: #ff4c4c;">🚨 ENTSCHLÜSSELE TRANSMISSION...</h3>
-                <p style="color: #ccc;">Analysiere und übersetze die neuesten Intel-Daten von Steam...</p>
-            `;
-
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            if (data.status === 'ok' && data.items.length > 0) {
-                // 1. ALLERNEUESTE NEWS (Immer als Headline)
-                const latestItem = data.items[0];
-                const pubDate = new Date(latestItem.pubDate).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-
-                let snippet = latestItem.description.replace(/(<([^>]+)>)/gi, "").replace(/&quot;/g, '"'); 
-                if (snippet.length > 200) snippet = snippet.substring(0, 200) + "...";
-
-                const translatedTitle = await translateToGerman(latestItem.title);
-                const translatedSnippet = await translateToGerman(snippet);
-
-                // 2. ÄLTERE ABER WICHTIGE NEWS FILTERN
-                // Wir scannen die nächsten 5 Posts auf diese Schlüsselwörter:
-                const keywords = ["update", "patch", "stream", "devlog", "release", "wipe", "spearhead", "0.4", "hotfix"];
-                let importantItemsHTML = "";
-                let importantFound = 0;
-
-                const olderItems = data.items.slice(1, 6); // Hole Post 2 bis 6
-
-                for (let item of olderItems) {
-                    const titleLower = item.title.toLowerCase();
-                    const hasKeyword = keywords.some(kw => titleLower.includes(kw));
-                    
-                    if (hasKeyword && importantFound < 3) { // Maximal die letzten 3 wichtigen anzeigen
-                        const itemDate = new Date(item.pubDate).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
-                        const transTitle = await translateToGerman(item.title);
-                        
-                        importantItemsHTML += `
-                            <li style="margin-bottom: 6px;">
-                                <span style="color: #ffcc00; font-weight: bold;">[${itemDate}]</span> 
-                                <a href="${item.link}" target="_blank" style="color: #ccc; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#ccc'">
-                                    ${transTitle}
-                                </a>
-                            </li>
-                        `;
-                        importantFound++;
-                    }
-                }
-
-                // Extra-HTML-Block für die wichtigen Termine zusammenbauen
-                let extraSection = "";
-                if (importantFound > 0) {
-                    extraSection = `
-                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #444;">
-                            <h4 style="margin-top: 0; margin-bottom: 8px; color: #ffa500; font-size: 0.95rem;">📌 Wichtige Ankündigungen & Termine:</h4>
-                            <ul style="margin: 0; padding-left: 20px; font-size: 0.85rem; color: #aaa;">
-                                ${importantItemsHTML}
-                            </ul>
-                        </div>
-                    `;
-                }
-
-                // Das fertige HTML rendern
-                newsContainer.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
-                        <h3 style="margin-top: 0; margin-bottom: 10px; color: #ff4c4c;">🚨 LATEST: ${translatedTitle}</h3>
-                        <span style="font-size: 0.75rem; color: #ffcc00; background: rgba(255,204,0,0.15); padding: 3px 6px; border-radius: 4px; white-space: nowrap;">📅 ${pubDate}</span>
-                    </div>
-                    <p style="margin-top: 0; color: #ccc; line-height: 1.5; font-size: 0.95rem;">${translatedSnippet}</p>
-                    <a href="${latestItem.link}" target="_blank" style="display: inline-block; margin-top: 8px; background: #b33939; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.85rem; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#e05c2a'" onmouseout="this.style.backgroundColor='#b33939'">
-                        Originalbericht auf Steam öffnen 🔗
-                    </a>
-                    
-                    ${extraSection}
-                `;
-            } else {
-                throw new Error("Keine News im Feed.");
-            }
-        } catch (error) {
-            console.error("News-Fehler:", error);
-            newsContainer.innerHTML = `
-                <h3 style="margin-top: 0; color: #ff4c4c;">🚨 OFFLINE</h3>
-                <p style="color: #ccc;">Verbindung zum News-Server abgebrochen. Überprüfe die offiziellen Kanäle manuell.</p>
-            `;
-        }
-    }
-
-    // ==============================================================
-// BOSS SPAWN TIMER
+// NEWS FETCHER
 // ==============================================================
+async function translateToGerman(text) {
+    if (!text) return "";
+    try {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=de&dt=t&q=${encodeURIComponent(text)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        let translatedText = "";
+        for (let i = 0; i < data[0].length; i++) translatedText += data[0][i][0];
+        return translatedText;
+    } catch (e) { return text; }
+}
 
+async function fetchLatestNews() {
+    const newsContainer = document.getElementById('dynamic-news-alert');
+    if (!newsContainer) return;
+    const rssUrl = encodeURIComponent('https://store.steampowered.com/feeds/news/app/2479810/');
+    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (data.status === 'ok' && data.items.length > 0) {
+            const latestItem = data.items[0];
+            const pubDate = new Date(latestItem.pubDate).toLocaleDateString('de-DE');
+            let snippet = latestItem.description.replace(/(<([^>]+)>)/gi, "").replace(/&quot;/g, '"'); 
+            if (snippet.length > 200) snippet = snippet.substring(0, 200) + "...";
+            const translatedTitle = await translateToGerman(latestItem.title);
+            const translatedSnippet = await translateToGerman(snippet);
+
+            newsContainer.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                    <h3 style="margin-top: 0; margin-bottom: 10px; color: #ff4c4c;">🚨 LATEST: ${translatedTitle}</h3>
+                    <span style="font-size: 0.75rem; color: #ffcc00; background: rgba(255,204,0,0.15); padding: 3px 6px; border-radius: 4px;">📅 ${pubDate}</span>
+                </div>
+                <p style="margin-top: 0; color: #ccc; line-height: 1.5;">${translatedSnippet}</p>
+                <a href="${latestItem.link}" target="_blank" style="display: inline-block; margin-top: 8px; background: #b33939; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold;">Originalbericht auf Steam öffnen 🔗</a>
+            `;
+        }
+    } catch (error) {
+        newsContainer.innerHTML = `<h3 style="color: #ff4c4c; margin-top: 0;">🚨 OFFLINE</h3><p style="color: #ccc;">Verbindung zum News-Server abgebrochen.</p>`;
+    }
+}
+
+// ==============================================================
+// BOSS TIMER & HELICOPTER & TRADER
+// ==============================================================
 const bossSpawnData = [
     { id: "market",   name: "🏙️ Market Boss",     timer: 15 * 60 },
     { id: "lumber",   name: "🪚 Lumber Boss",      timer: 15 * 60 },
     { id: "ybl",      name: "🏚️ YBL Rebel",        timer: 15 * 60 },
     { id: "hunters",  name: "🎯 HP Commander",     timer: 15 * 60 },
-    { id: "malo",     name: "🌊 Malo (Lagoon)",     timer: 20 * 60 },
-    { id: "banpa",    name: "🏘️ Ban Pa Elder",      timer: 15 * 60 },
-    { id: "general",  name: "🏯 General Pa",        timer: 25 * 60 },
-    { id: "midnight", name: "🏨 LAF Commander",     timer: 20 * 60 },
+    { id: "fort",     name: "🏯 General Pa",       timer: 25 * 60 },
+    { id: "midnight", name: "🏨 LAF Commander",    timer: 20 * 60 },
     { id: "tiger",    name: "🐯 Tiger Bay Boss",    timer: 20 * 60 },
     { id: "airfield", name: "✈️ Airfield Boss",     timer: 25 * 60 },
-    { id: "viper",    name: "🐍 Viper",             timer: 15 * 60 },
-    { id: "golden",   name: "💰 Golden Boy",        timer: 20 * 60 },
 ];
-
 let bossTimers = {};
 
-function toggleBossWidget() {
-    document.getElementById('bossSpawnWidget').classList.toggle('collapsed');
-}
+function toggleBossWidget() { document.getElementById('bossSpawnWidget').classList.toggle('collapsed'); }
 
 function buildBossTimerList() {
     const list = document.getElementById('bossTimerList');
+    if (!list) return;
     list.innerHTML = '';
-
     bossSpawnData.forEach(boss => {
         const row = document.createElement('div');
         row.className = 'boss-timer-row';
-        row.id = `boss-row-${boss.id}`;
-
-        row.innerHTML = `
-            <span class="boss-timer-name" title="${boss.name}">${boss.name}</span>
-            <span class="boss-timer-display" id="boss-time-${boss.id}">–:––</span>
-            <button class="boss-kill-btn" id="boss-btn-${boss.id}" onclick="bossKilled('${boss.id}')">✕ Tot</button>
-            <button class="boss-cancel-btn" id="boss-cancel-${boss.id}" onclick="bossCancel('${boss.id}')" style="display:none;">✕</button>
-        `;
+        row.innerHTML = `<span class="boss-timer-name">${boss.name}</span><span class="boss-timer-display" id="boss-time-${boss.id}">–:––</span><button class="boss-kill-btn" id="boss-btn-${boss.id}" onclick="bossKilled('${boss.id}')">✕ Tot</button><button class="boss-cancel-btn" id="boss-cancel-${boss.id}" onclick="bossCancel('${boss.id}')" style="display:none;">✕</button>`;
         list.appendChild(row);
     });
 }
@@ -2695,150 +1990,119 @@ function buildBossTimerList() {
 function bossKilled(id) {
     const boss = bossSpawnData.find(b => b.id === id);
     if (!boss) return;
-
-    const endTime = Date.now() + boss.timer * 1000;
-    bossTimers[id] = { endTime };
-
-    const btn = document.getElementById(`boss-btn-${id}`);
-    if (btn) {
-        btn.textContent = '↺ Reset';
-        btn.classList.remove('ready-btn');
-    }
-
-    const cancelBtn = document.getElementById(`boss-cancel-${id}`);
-    if (cancelBtn) cancelBtn.style.display = 'inline-block';
+    bossTimers[id] = { endTime: Date.now() + boss.timer * 1000 };
+    document.getElementById(`boss-btn-${id}`).textContent = '↺ Reset';
+    document.getElementById(`boss-cancel-${id}`).style.display = 'inline-block';
 }
 
 function bossCancel(id) {
     delete bossTimers[id];
-
-    const btn = document.getElementById(`boss-btn-${id}`);
-    const cancelBtn = document.getElementById(`boss-cancel-${id}`);
-    const display = document.getElementById(`boss-time-${id}`);
-
-    if (btn) {
-        btn.textContent = '✕ Tot';
-        btn.classList.remove('ready-btn');
-    }
-    if (cancelBtn) cancelBtn.style.display = 'none';
-    if (display) {
-        display.textContent = '–:––';
-        display.className = 'boss-timer-display';
-    }
+    document.getElementById(`boss-btn-${id}`).textContent = '✕ Tot';
+    document.getElementById(`boss-cancel-${id}`).style.display = 'none';
+    document.getElementById(`boss-time-${id}`).textContent = '–:––';
 }
 
 function updateBossTimers() {
     const now = Date.now();
-
     bossSpawnData.forEach(boss => {
         const display = document.getElementById(`boss-time-${boss.id}`);
-        const btn = document.getElementById(`boss-btn-${boss.id}`);
-        const cancelBtn = document.getElementById(`boss-cancel-${boss.id}`);
         if (!display) return;
-
         const data = bossTimers[boss.id];
-
-        if (!data) {
-            display.textContent = '–:––';
-            display.className = 'boss-timer-display';
-            return;
-        }
-
+        if (!data) return;
         const remaining = Math.max(0, Math.floor((data.endTime - now) / 1000));
-
         if (remaining <= 0) {
             display.textContent = '✅ SP!';
-            display.className = 'boss-timer-display ready';
-            if (btn) {
-                btn.textContent = '✕ Tot';
-                btn.classList.remove('ready-btn');
-            }
-            if (cancelBtn) cancelBtn.style.display = 'none';
+            display.style.color = '#7ca35a';
             delete bossTimers[boss.id];
+            document.getElementById(`boss-btn-${boss.id}`).textContent = '✕ Tot';
+            document.getElementById(`boss-cancel-${boss.id}`).style.display = 'none';
         } else {
             const m = Math.floor(remaining / 60);
             const s = remaining % 60;
             display.textContent = `${m}:${String(s).padStart(2, '0')}`;
-            display.className = 'boss-timer-display active';
+            display.style.color = '#ffa500';
         }
     });
 }
 
-// ==========================================
-// TACTICAL TRADER RESTOCK TIMER
-// ==========================================
-function startTraderTimer() {
-    const timerDisplay = document.getElementById('trader-timer-btn');
-    if (!timerDisplay) return;
-
-    setInterval(() => {
-        const now = new Date();
-        const nextHour = new Date(now);
-        nextHour.setHours(now.getHours() + 1, 0, 0, 0);
-
-        const diff = nextHour - now;
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        const mDisplay = String(minutes).padStart(2, '0');
-        const sDisplay = String(seconds).padStart(2, '0');
-
-        timerDisplay.textContent = `🛒 Trader-Restock: ${mDisplay}:${sDisplay}`;
-
-        if (minutes < 5) {
-            timerDisplay.style.color = '#ff4c4c'; 
-            timerDisplay.style.textShadow = '0 0 8px rgba(255, 76, 76, 0.4)';
-        } else {
-            timerDisplay.style.color = ''; 
-            timerDisplay.style.textShadow = 'none';
+let heliTimerInterval = null, heliSecondsRemaining = 0;
+function calcHeliTime() {
+    if (heliTimerInterval) return;
+    const startVal = parseInt(document.getElementById('heliStart').value);
+    const endVal = parseInt(document.getElementById('heliEnd').value);
+    let time = Math.abs(startVal - endVal);
+    if (startVal !== 0 && endVal !== 0 && startVal !== endVal) time += 45; 
+    if (startVal === endVal) time = 0; else if (time < 45) time = 45;
+    heliSecondsRemaining = time;
+    updateHeliDisplay();
+}
+function updateHeliDisplay() {
+    const m = Math.floor(heliSecondsRemaining / 60);
+    const s = heliSecondsRemaining % 60;
+    document.getElementById('heliDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+function toggleHeliTimer() {
+    const btn = document.getElementById('heliActionBtn');
+    if (heliTimerInterval) {
+        clearInterval(heliTimerInterval);
+        heliTimerInterval = null;
+        btn.textContent = "🚀 Start";
+        btn.style.background = "var(--accent)";
+        calcHeliTime();
+        return;
+    }
+    if (heliSecondsRemaining <= 0) { calcHeliTime(); if(heliSecondsRemaining <= 0) return; }
+    btn.textContent = "🛑 Stop";
+    btn.style.background = "#b33939";
+    heliTimerInterval = setInterval(() => {
+        heliSecondsRemaining--;
+        updateHeliDisplay();
+        if (heliSecondsRemaining <= 0) {
+            clearInterval(heliTimerInterval);
+            heliTimerInterval = null;
+            document.getElementById('heliDisplay').textContent = "TOUCHDOWN!";
+            btn.textContent = "↺ Reset";
+            btn.style.background = "#333";
         }
     }, 1000);
 }
 
-// ==============================================================
-    // LIVE ZULU-TIME CLOCK (Taktische Uhrzeit)
-    // ==============================================================
-    function updateLiveTime() {
-        const timeDisplay = document.getElementById('live-time-display');
-        if (!timeDisplay) return;
-
+function startTraderTimer() {
+    const timerDisplay = document.getElementById('trader-timer-btn');
+    if (!timerDisplay) return;
+    setInterval(() => {
         const now = new Date();
-        
-        // Militärische Monatsabkürzungen (Englisch)
-        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-        
-        // Hole die LOKALEN Werte deines Systems (GMT+1)
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = months[now.getMonth()];
-        const year = now.getFullYear();
-        
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const nextHour = new Date(now);
+        nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+        const diff = nextHour - now;
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        timerDisplay.textContent = `🛒 Trader-Restock: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        if (minutes < 5) timerDisplay.style.color = '#ff4c4c'; else timerDisplay.style.color = '';
+    }, 1000);
+}
 
-        // Text im Terminal aktualisieren
-        timeDisplay.textContent = `DATE: ${day} ${month} ${year} | TIME: ${hours}:${minutes}:${seconds} ZULU`;
-    }
-
-// Beim Laden initialisieren
+function updateLiveTime() {
+    const timeDisplay = document.getElementById('live-time-display');
+    if (!timeDisplay) return;
+    const now = new Date();
+    const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    timeDisplay.textContent = `DATE: ${String(now.getDate()).padStart(2, '0')} ${months[now.getMonth()]} ${now.getFullYear()} | TIME: ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} ZULU`;
+}
 
 // ==============================================================
-// EINZIGER INITIALISIERUNGS-LISTENER (ALLE ANDEREN ENTFERNT)
+// INITIALISIERUNG
 // ==============================================================
 window.addEventListener('DOMContentLoaded', () => {
-
-    // Fraktion & Akzentfarbe laden
     try {
         const savedColor = localStorage.getItem('gzw_faction_color') || '#7ca35a';
         const savedId    = localStorage.getItem('gzw_faction_id')    || 'mss';
         document.documentElement.style.setProperty('--accent', savedColor);
-        // Aktiven Fraktionsbutton markieren
         document.querySelectorAll('.fac-btn').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.querySelector(`.fac-btn.${savedId === 'mss' ? 'mithras' : savedId === 'csi' ? 'crimson' : 'lamang'}`);
         if (activeBtn) activeBtn.classList.add('active');
     } catch(e) {}
 
-    // Alle Initialisierungen — nur einmal, sauber und in Reihenfolge
     initNotepad();
     buildKeyDropdown();
     renderKeyRing();
@@ -2849,22 +2113,14 @@ window.addEventListener('DOMContentLoaded', () => {
     calcHeliTime();
     startTraderTimer();
 
-    // Widgets draggable machen
     makeDraggable('bossSpawnWidget');
     makeDraggable('raidNotepad');
     makeDraggable('heliWidget');
 
-    // Boss-Timer jede Sekunde aktualisieren
     setInterval(updateBossTimers, 1000);
+    
+    updateLiveTime();
+    setInterval(updateLiveTime, 1000);
 
-    // Live-Uhr starten
-    if (typeof updateLiveTime === 'function') {
-        updateLiveTime();
-        setInterval(updateLiveTime, 1000);
-    }
-
-    // Aktuelle News laden
-    if (typeof fetchLatestNews === 'function') {
-        fetchLatestNews();
-    }
+    fetchLatestNews();
 });
