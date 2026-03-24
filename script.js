@@ -2712,6 +2712,7 @@ window.addEventListener('DOMContentLoaded', () => {
     buildAmmoMatrix();
     calcLoadout();
     calcHeliTime();
+    startTraderTimer();
 
     // Widgets draggable machen
     makeDraggable('bossSpawnWidget');
