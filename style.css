@@ -560,24 +560,26 @@ body::before {
     gap: 8px;
 }
 
-/* --- FRAKTIONEN & YOUTUBE LAYOUT (2-ZEILIG) --- */
+/* ============================================================== */
+        /* FRAKTIONEN & YOUTUBE BEREICH (2-ZEILIG)                        */
+        /* ============================================================== */
         .faction-selector-wrapper {
             background: #111;
             border-bottom: 2px solid #222;
             padding: 15px;
             display: flex;
-            flex-direction: column; /* Ordnet Fraktionen und YouTube untereinander an */
+            flex-direction: column; /* Ordnet die beiden Zeilen untereinander an */
             gap: 15px; 
         }
 
         .selector-row {
             display: flex;
-            justify-content: space-between; /* Text links, Buttons rechts */
+            justify-content: space-between; /* Text links, Buttons ganz rechts! */
             align-items: center;
         }
 
         .youtube-row {
-            border-top: 1px dashed #333; /* Feine Trennlinie */
+            border-top: 1px dashed #333; /* Feine taktische Trennlinie */
             padding-top: 15px;
         }
 
@@ -590,7 +592,7 @@ body::before {
             font-family: 'Courier New', Courier, monospace;
         }
 
-        /* Container für die 3 Fraktionsbuttons (bleibt gleich) */
+        /* Container, der die 3 Fraktionsbuttons zusammenhält */
         .fac-group {
             display: flex;
             gap: 15px;
