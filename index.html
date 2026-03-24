@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gray Zone Warfare - Tactical Tool</title>
-    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -71,47 +70,47 @@
 
         </div>
 
+    </div>
+
+    <div class="nav-wrapper">
+        
+        <div class="main-categories">
+            <button class="cat-btn active" onclick="switchCategory('cat-basecamp', this)">⛺ Basecamp</button>
+            <button class="cat-btn" onclick="switchCategory('cat-arsenal', this)">🔫 Arsenal</button>
+            <button class="cat-btn" onclick="switchCategory('cat-ops', this)">🗺️ Feldeinsatz</button>
+            <button class="cat-btn" onclick="switchCategory('cat-medic', this)">🩸 Medizinisch</button>
         </div>
 
-        <div class="nav-wrapper">
-            
-            <div class="main-categories">
-                <button class="cat-btn active" onclick="switchCategory('cat-basecamp', this)">⛺ Basecamp</button>
-                <button class="cat-btn" onclick="switchCategory('cat-arsenal', this)">🔫 Arsenal</button>
-                <button class="cat-btn" onclick="switchCategory('cat-ops', this)">🗺️ Feldeinsatz</button>
-                <button class="cat-btn" onclick="switchCategory('cat-medic', this)">🩸 Medizinisch</button>
-            </div>
-
-            <div id="cat-basecamp" class="sub-nav-group active">
-                <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
-                <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
-                <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
-                <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>   
-            </div>
-
-            <div id="cat-arsenal" class="sub-nav-group">
-                <button class="tab-btn" onclick="openTab('tab-mods', this)">🔧 Waffen & Mods</button>
-                <button class="tab-btn" onclick="openTab('tab-ammo', this)">🔴 Ammo Matrix</button>
-                <button class="tab-btn" onclick="openTab('tab-gear', this)">🦺 Rüstung & Gear</button>
-                <button class="tab-btn" onclick="openTab('tab-loadout', this)">⚖️ Loadout-Rechner</button>
-            </div>
-
-            <div id="cat-ops" class="sub-nav-group">
-                <button class="tab-btn" onclick="openTab('tab-intel', this)">🚁 LZ & Bosse</button>
-                <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
-                <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Quest-Tracker</button>
-                <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
-                <button class="tab-btn" onclick="openTab('tab-route', this)">🗺️ Einsatzplaner</button>
-                <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
-            </div>
-
-            <div id="cat-medic" class="sub-nav-group">
-                <button class="tab-btn" onclick="openTab('tab-medic', this)">⚕️ Medizin & Verpflegung</button>
-            </div>
-
+        <div id="cat-basecamp" class="sub-nav-group active">
+            <button class="tab-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
+            <button class="tab-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
+            <button class="tab-btn" onclick="openTab('tab-factions', this)">🛡️ Fraktionen</button>
+            <button class="tab-btn" onclick="openTab('tab-vendors', this)">🏪 Händler & Stash</button>   
         </div>
 
-<div id="tab-home" class="tab-content active">
+        <div id="cat-arsenal" class="sub-nav-group">
+            <button class="tab-btn" onclick="openTab('tab-mods', this)">🔧 Waffen & Mods</button>
+            <button class="tab-btn" onclick="openTab('tab-ammo', this)">🔴 Ammo Matrix</button>
+            <button class="tab-btn" onclick="openTab('tab-gear', this)">🦺 Rüstung & Gear</button>
+            <button class="tab-btn" onclick="openTab('tab-loadout', this)">⚖️ Loadout-Rechner</button>
+        </div>
+
+        <div id="cat-ops" class="sub-nav-group">
+            <button class="tab-btn" onclick="openTab('tab-intel', this)">🚁 LZ & Bosse</button>
+            <button class="tab-btn" onclick="openTab('tab-loot', this)">💰 Loot & Keys</button>
+            <button class="tab-btn" onclick="openTab('tab-keep-sell', this)">📦 Quest-Tracker</button>
+            <button class="tab-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
+            <button class="tab-btn" onclick="openTab('tab-route', this)">🗺️ Einsatzplaner</button>
+            <button class="tab-btn" onclick="openTab('tab-map', this)">🌍 Map</button>
+        </div>
+
+        <div id="cat-medic" class="sub-nav-group">
+            <button class="tab-btn" onclick="openTab('tab-medic', this)">⚕️ Medizin & Verpflegung</button>
+        </div>
+
+    </div>
+
+    <div id="tab-home" class="tab-content active">
         
         <div class="news-alert" id="dynamic-news-alert">
             <h3 style="color: #ff4c4c; margin-top: 0;">🚨 EINGEHENDE TRANSMISSION...</h3>
@@ -425,7 +424,7 @@
             </tbody>
         </table>
     </div>
-</div>
+    </div>
 
     <div id="tab-gear" class="tab-content">
         <h2>Rüstung, Helme & Rucksäcke</h2>
@@ -502,9 +501,7 @@
     </p>
 
     <div class="grid">
-        <!-- LINKE SPALTE: Auswahl -->
         <div>
-            <!-- PRIMÄRWAFFE -->
             <div class="panel-box" style="margin-bottom:15px;">
                 <h3>🔫 Primärwaffe</h3>
                 <label for="lc_primary" style="margin-top:0;">Waffe wählen</label>
@@ -583,7 +580,6 @@
                 </select>
             </div>
 
-            <!-- SIDEARM -->
             <div class="panel-box" style="margin-bottom:15px;">
                 <h3>🔫 Sidearm (Pistole)</h3>
                 <select id="lc_sidearm" onchange="calcLoadout()">
@@ -599,9 +595,7 @@
             </div>
         </div>
 
-        <!-- RECHTE SPALTE: Schutzausrüstung -->
         <div>
-            <!-- RÜSTUNG -->
             <div class="panel-box" style="margin-bottom:15px;">
                 <h3>🛡️ Rüstung & Helm</h3>
 
@@ -649,7 +643,6 @@
                 </select>
             </div>
 
-            <!-- RUCKSACK & VORRÄTE -->
             <div class="panel-box">
                 <h3>🎒 Rucksack & Vorräte</h3>
 
@@ -690,7 +683,6 @@
         </div>
     </div>
 
-    <!-- ERGEBNIS-ANZEIGE -->
     <div style="margin-top:25px;">
         <div id="lc_result_box" class="panel-box" style="border-top: 4px solid var(--accent);">
             <h3 style="margin-bottom:15px;">📊 Loadout-Analyse</h3>
@@ -728,8 +720,7 @@
             <div id="lc_tips" style="margin-top:15px; border-top:1px solid #333; padding-top:15px;"></div>
         </div>
     </div>
-
-    <div id="tab-vendors" class="tab-content">
+</div> <div id="tab-vendors" class="tab-content">
         <h2>Händler, Freischaltungen & Lager</h2>
         <div class="grid">
             <div>
@@ -1080,7 +1071,6 @@
 
                 <div id="keyContainer" class="info-box" style="margin-top: 10px; position: relative;">
                     
-                    <!-- Schlüsselbund Checkbox -->
                     <div id="keyRingWrapper" style="display:none; position: absolute; top: 12px; right: 12px;">
                         <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; font-size: 0.9rem; margin-top: 0;">
                             <input type="checkbox" id="keyOwnedCheckbox" style="width: 18px; height: 18px; margin-right: 6px; margin-top: 0; cursor: pointer;">
@@ -1094,7 +1084,6 @@
                     <div id="keyMissionHint" style="display:none; margin-top: 8px; padding: 8px 12px; background: rgba(124,163,90,0.15); border-left: 3px solid var(--accent); border-radius: 4px; font-size: 0.9rem;"></div>
                 </div>
 
-                <!-- Schlüsselbund Übersicht -->
                 <div class="panel-box" style="margin-top: 15px;">
                     <h3 style="margin-bottom: 8px;">🗝️ Mein Schlüsselbund (<span id="keyRingCount">0</span>)</h3>
                     <div id="keyRingDisplay" style="color: #888; font-size: 0.9rem;">Noch keine Schlüssel markiert.</div>
@@ -1145,14 +1134,14 @@
         </div>
 
         <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 20px;">
-    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #ccc; margin-top: 0; font-size: 0.95rem;">
-        <input type="checkbox" id="filterOpenTasks" onchange="refreshTaskList()" style="width: auto; margin-right: 8px; margin-top: 0; cursor: pointer;">
-        Nur offene Tasks anzeigen
-    </label>
-    <button onclick="resetAllTasks()" style="background: #b33939; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">
-        🗑️ Alle Häkchen zurücksetzen
-    </button>
-</div>
+            <label style="display: inline-flex; align-items: center; cursor: pointer; color: #ccc; margin-top: 0; font-size: 0.95rem;">
+                <input type="checkbox" id="filterOpenTasks" onchange="refreshTaskList()" style="width: auto; margin-right: 8px; margin-top: 0; cursor: pointer;">
+                Nur offene Tasks anzeigen
+            </label>
+            <button onclick="resetAllTasks()" style="background: #b33939; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">
+                🗑️ Alle Häkchen zurücksetzen
+            </button>
+        </div>
 
         <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()">
         
@@ -1200,7 +1189,7 @@
         </div>
 
         <div id="routeResult" style="margin-top: 20px; display: none;">
-            </div>
+        </div>
     </div>
 
     <div id="tab-map" class="tab-content">
@@ -1242,7 +1231,6 @@
         </div>
     </div>
 
-    <!-- BOSS SPAWN TIMER -->
 <div id="bossSpawnWidget" style="display:none;">
     <div id="bossSpawnHeader">
         ☠️ Boss Spawn Timer
@@ -1253,7 +1241,6 @@
     </div>
 </div>
 
-    <!-- RAID NOTIZBLOCK -->
 <div id="raidNotepad" style="display:none;">
     <div id="notepadHeader" onclick="toggleNotepad()">
         <div id="notepadTitle">
@@ -1275,12 +1262,11 @@
     </div>
 </div>
 
-        <!-- HELI WIDGET -->
-    <div id="heliWidget" style="display:none;">
+<div id="heliWidget" style="display:none;">
     <div id="heliHeader" onclick="document.getElementById('heliWidget').classList.toggle('collapsed')">
     🚁 Heli Fluglotse
     <span class="toggle-icon">▼</span>
-</div>
+    </div>
     <div id="heliBody">
         <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:2px;">Startpunkt:</label>
         <select id="heliStart" class="heli-select" onchange="calcHeliTime()">
@@ -1316,6 +1302,7 @@
             <button class="heli-btn btn-calc" onclick="calcHeliTime()">⏱️ Calc</button>
             <button id="heliActionBtn" class="heli-btn btn-start" onclick="toggleHeliTimer()">🚀 Start</button>
         </div>
+    </div>
 </div> 
         
 <button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
