@@ -12,7 +12,7 @@
         /* 2. Den Hauptcontainer (dein Dashboard) einsperren und zentrieren */
         /* WICHTIG: Schau nach, wie dein Haupt-Div in der HTML heißt. Meistens ist es .container */
         .container {
-        max-width: 1400px; /* Das ist der magische Wert! Verhindert das unendliche Strecken */
+        max-width: 1200px; /* Das ist der magische Wert! Verhindert das unendliche Strecken */
         margin: 0 auto; /* Zentriert das Tool perfekt in der Mitte des Bildschirms */
         background-color: #111;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* Optional: Ein leichter Schatten nach außen */
