@@ -3,7 +3,7 @@
         background-color: #050505; /* Der dunkle Hintergrund "hinter" dem Tool */
         margin: 0;
         padding: 30px 20px; /* Zwingt das Tool, Abstand zu den Bildschirmrändern zu halten */
-        font-family: 'Consolas', 'Courier New', Courier, monospace;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #dcdcdc;
     }
 
@@ -495,17 +495,6 @@
         .highlight { 
             color: var(--accent); 
             font-weight: bold; 
-        }
-
-        /* --- GRUNDSTRUKTUR & TACTICAL AMBIENT GLOW --- */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #050505; /* Ein noch tieferes Schwarz für perfekten Kontrast */
-            color: #e0e0e0; 
-            margin: 0; 
-            padding: 20px; 
-            position: relative;
-            min-height: 100vh;
         }
 
         /* Der dynamische Fraktions-Leuchteffekt an den Rändern */
