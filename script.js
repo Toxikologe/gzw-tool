@@ -1,22 +1,3 @@
-      // ==========================================
-// 🚀 TACTICAL SYSTEM-START (ALL ENGINES GO)
-// ==========================================
-window.addEventListener('DOMContentLoaded', () => {
-    // 1. Keys & Loot laden
-    buildKeyDropdown();
-    renderKeyRing();
-    
-    // 2. Live-Zeit & Rechner starten
-    updateLiveTime();
-    setInterval(updateLiveTime, 1000);
-    updateInertia();
-    updateAllErgo();
-    calculateBallistics();
-
-    // 3. DEN TRADER TIMER ZÜNDEN!
-    startTraderTimer();
-});
-
       // --- FRAKTIONS-FARBEN & HOME-ADVANTAGE ---
     const hqData = {
         'mss': { city: 'Nam Thaven', lz: 'Alpha LZs' },
@@ -1178,7 +1159,6 @@ const vendorData = {
     function updateBoss() { const b = bosses[document.getElementById('bossSelect').value]; document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss..."; }
     function updateLZ() { const l = lzDb[document.getElementById('lzSelect').value]; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small><b>Operator-Tipp:</b> ${l.tip}</small>` : "Wähle ein Zielgebiet für LZ-Tipps..."; }
     function updateSymptom() { const s = symptomDb[document.getElementById('symptomSelect').value]; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><br><small><b>Medic-Tipp:</b> ${s.info}</small>` : "Wähle ein Symptom für Diagnose & Behandlung..."; }
-    function updateVendor() { const v = vendorDb[document.getElementById('vendorSelect').value]; document.getElementById('vendorInfo').innerHTML = v ? `Fokus: <span style="color: var(--accent); font-weight: bold;">${v.focus}</span><br><b>Highlights:</b> <span class="highlight">${v.unlocks}</span><br><br><small><b>Operator-Tipp:</b> ${v.tip}</small>` : "Wähle Händler & Level für Details..."; }
     function updateContainer() { const c = containers[document.getElementById('containerSelect').value]; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = valuables[document.getElementById('valSelect').value]; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
 
