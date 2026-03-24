@@ -734,7 +734,7 @@ body::before {
 /* 1. Haupt-Tabs verstecken */
 .tab-content {
     display: none; 
-    padding: 10px; /* 🟢 Gibt den Boxen auf der Startseite Luft zum Atmen */
+    padding: 20px; /* 🟢 Gibt den Boxen auf der Startseite Luft zum Atmen */
     animation: fadeIn 0.3s ease-in-out; 
 }
 
