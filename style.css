@@ -706,6 +706,41 @@
             box-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
 
+        /* ============================================================== */
+        /* 🗂️ TAB-NAVIGATION & KATEGORIEN (VERSTECKT INAKTIVE BEREICHE)   */
+        /* ============================================================== */
+        
+        /* 1. Haupt-Tabs verstecken */
+        .tab-content {
+            display: none; /* Zieht die Tarnkappe über alle Tabs */
+            animation: fadeIn 0.3s ease-in-out; /* Weiches Einblenden */
+        }
+
+        /* Nur der aktive Tab wird angezeigt */
+        .tab-content.active {
+            display: block; 
+        }
+
+        /* 2. Untermenüs (Sub-Nav-Groups) verstecken */
+        .sub-nav-group {
+            display: none;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        /* Nur das aktive Untermenü anzeigen */
+        .sub-nav-group.active {
+            display: flex; 
+        }
+
+        /* 3. Weiche Animation beim Tab-Wechsel (falls noch nicht vorhanden) */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
 /* ============================================================== */
 /* 📱 TACTICAL MOBILE OVERRIDE (SMARTPHONE RESPONSIVENESS)        */
 /* ============================================================== */
