@@ -560,21 +560,41 @@ body::before {
     gap: 8px;
 }
 
-/* Faction Selector Override */
-.faction-selector {
-    padding: 15px;
-    background: #111;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    border-bottom: 2px solid #222;
-}
+/* --- FRAKTIONEN & YOUTUBE LAYOUT (2-ZEILIG) --- */
+        .faction-selector-wrapper {
+            background: #111;
+            border-bottom: 2px solid #222;
+            padding: 15px;
+            display: flex;
+            flex-direction: column; /* Ordnet Fraktionen und YouTube untereinander an */
+            gap: 15px; 
+        }
 
-/* Container für die 3 Fraktionsbuttons */
-.fac-group {
-    display: flex;
-    gap: 15px;
-}
+        .selector-row {
+            display: flex;
+            justify-content: space-between; /* Text links, Buttons rechts */
+            align-items: center;
+        }
+
+        .youtube-row {
+            border-top: 1px dashed #333; /* Feine Trennlinie */
+            padding-top: 15px;
+        }
+
+        .row-label {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Container für die 3 Fraktionsbuttons (bleibt gleich) */
+        .fac-group {
+            display: flex;
+            gap: 15px;
+        }
 
 /* NEUER UNIFORMER DESIGN-STANDARD (Basierend auf Pater Judas-Button) */
 .fac-btn, .judas-btn {
