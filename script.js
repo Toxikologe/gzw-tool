@@ -1,4 +1,23 @@
-   // --- FRAKTIONS-FARBEN & HOME-ADVANTAGE ---
+      // ==========================================
+// 🚀 TACTICAL SYSTEM-START (ALL ENGINES GO)
+// ==========================================
+window.addEventListener('DOMContentLoaded', () => {
+    // 1. Keys & Loot laden
+    buildKeyDropdown();
+    renderKeyRing();
+    
+    // 2. Live-Zeit & Rechner starten
+    updateLiveTime();
+    setInterval(updateLiveTime, 1000);
+    updateInertia();
+    updateAllErgo();
+    calculateBallistics();
+
+    // 3. DEN TRADER TIMER ZÜNDEN!
+    startTraderTimer();
+});
+
+      // --- FRAKTIONS-FARBEN & HOME-ADVANTAGE ---
     const hqData = {
         'mss': { city: 'Nam Thaven', lz: 'Alpha LZs' },
         'csi': { city: 'Kiu Vongsa', lz: 'Charlie LZs' },
