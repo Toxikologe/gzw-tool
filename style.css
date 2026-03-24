@@ -1,11 +1,13 @@
         /* 1. Den Hintergrund der Seite definieren und Abstand schaffen */
-        body {
-        background-color: #050505; /* Der dunkle Hintergrund "hinter" dem Tool */
-        margin: 0;
-        padding: 30px 20px; /* Zwingt das Tool, Abstand zu den Bildschirmrändern zu halten */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: #dcdcdc;
-    }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #050505; /* Ein noch tieferes Schwarz für perfekten Kontrast */
+            color: #e0e0e0; 
+            margin: 0; 
+            padding: 20px; 
+            position: relative;
+            min-height: 100vh;
+        }
 
         /* 2. Den Hauptcontainer (dein Dashboard) einsperren und zentrieren */
         /* WICHTIG: Schau nach, wie dein Haupt-Div in der HTML heißt. Meistens ist es .container */
@@ -13,7 +15,6 @@
         max-width: 1400px; /* Das ist der magische Wert! Verhindert das unendliche Strecken */
         margin: 0 auto; /* Zentriert das Tool perfekt in der Mitte des Bildschirms */
         background-color: #111;
-        border: 2px solid var(--accent); /* Hier ist dein dynamischer Faction-Rahmen */
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* Optional: Ein leichter Schatten nach außen */
         border-radius: 5px; /* Optional: Leicht abgerundete Ecken */
         overflow: hidden; /* Verhindert, dass Inhalte über den farbigen Rahmen rausragen */
