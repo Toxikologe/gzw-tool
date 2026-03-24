@@ -454,25 +454,27 @@
                         <option value="ssh68">SSh-68 Stahlhelm (Level IIA+)</option>
                         <option value="pasgt_helm">PASGT Helmet (Level IIA)</option>
                     </optgroup>
-                    <optgroup label="Nachtsicht & Gehörschutz (Night Ops)">
-                        <option value="GPNVG-18 (Quad-Node): Das 4-Röhren-Nachtsichtgerät der Elite. Riesiges Sichtfeld, keine toten Winkel, absoluter Luxus.">GPNVG-18 (NVG)</option>
-                        <option value="PVS-31 (Binocular): 2-Röhren-NVG. Solides Sichtfeld, guter Kontrast im Dschungel.">PVS-31 (NVG)</option>
-                        <option value="PVS-14 (Monocular): 1-Röhren-NVG. Günstig, aber du hast stark eingeschränkte Sichtränder.">PVS-14 (NVG)</option>
-                        <option value="ComTac 2 / ComTac 4: 0.4 META BUFF! Aktiver Gehörschutz. Erhöht die akustische Reichweite für Schritte real um 40-50% (z.B. hörst du Sprints auf 75m statt 50m). Ein absolutes MUSS für PvP und Solo-Spieler!">ComTac Headset</option>
-                        <option value="Sordin / Gssh-01: Günstigere Headsets. Erhöhen ebenfalls deine Hörweite spürbar, klingen aber etwas 'bassiger' oder blecherner. Besser als ohne!">Sordin / Gssh-01</option>
+                    <optgroup label="Nachtsicht & Gehörschutz (Night Ops 0.4)">
+                        <option value="gpnvg">GPNVG-18 (Quad-Node NVG)</option>
+                        <option value="pvs31">AN/PVS-31 (Binocular NVG)</option>
+                        <option value="pvs14">AN/PVS-14 (Monocular NVG)</option>
+                        <option value="comtac">Peltor ComTac II / MSA Sordin</option>
+                        <option value="razor">Walker's Razor / Earmor M32</option>
+                        <option value="gssh">GSSh-01 (Budget Headset)</option>
                     </optgroup>
                     <optgroup label="Rucksäcke (Backpacks)">
-                        <option value="Eberlestock G4 / Attack 2 (30-35 Slots): Riesig. Voll beladen führen diese Rucksäcke zu extremer Trägheit. Nur für reine Loot-Runs!">Eberlestock / Attack 2 (Large)</option>
-                        <option value="Mystery Ranch / Beta2 (25 Slots): Perfekter Kompromiss aus Platz und Agilität.">Mystery Ranch (Medium-Large)</option>
-                        <option value="Rush 24 / Tri-Zip (20 Slots): Der Standard für normale Raids. Genug Platz für Quest-Items und Mags.">Rush 24 / Tri-Zip (Medium)</option>
-                        <option value="Assault Pack (12 Slots): Perfekt für PvP-Jagd. Minimales Gewicht, maximale Ausdauer.">Assault Pack (Small)</option>
-                        <option value="Sling Bag / Duffle Bag (6-8 Slots): Scav-Rucksäcke. Besser als nichts, aber du stößt sofort an dein Limit.">Sling Bag (Budget)</option>
+                        <option value="rush72">Rush 72 Backpack (42 Slots)</option>
+                        <option value="3day">3-Day Assault Pack (30 Slots)</option>
+                        <option value="rush24">Rush 24 Backpack (24 Slots)</option>
+                        <option value="patrol">Patrol Backpack (16 Slots)</option>
+                        <option value="sling">Sling Bag / Messenger Bag (8-12 Slots)</option>
                     </optgroup>
-                    <optgroup label="Tactical Rigs & Belts">
-                        <option value="LBT-1961A / Alpha Rig: Riesige Rigs (bis zu 16 Slots). Perfekt für Spieler, die viele Trommelmagazine oder Meds brauchen.">Alpha Rig (Heavy)</option>
-                        <option value="Triton / Blackhawk Strike: Mittlere Rigs (10-12 Slots). Gute Balance, passen über die meisten Westen.">Triton / Strike Rig (Medium)</option>
-                        <option value="Micro Rig / Bank Robber: Kleine Rigs (6-8 Slots). Extrem leicht, ideal für Sniper-Builds oder Low-Budget-Runs.">Micro Rig (Light)</option>
-                        <option value="Tactical War Belt: Zusätzlicher Platz an der Hüfte für Magazine und Meds, entlastet den Brustbereich und erhöht die Ergonomie.">Tactical War Belt</option>
+                    <optgroup label="Tactical Rigs & Belts (Ohne Platten)">
+                        <option value="heavy_rig">Heavy Modular Rig (Große Kapazität)</option>
+                        <option value="operator_rig">Operator Chest Rig (Medium)</option>
+                        <option value="moc_rig">MOC Chest Rig (Leicht)</option>
+                        <option value="chicom">Chicom / Type 56 Rig (Budget)</option>
+                        <option value="tac_belt">Tactical Belt / Duty Belt</option>
                     </optgroup>
                 </select>
                 <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
@@ -623,10 +625,11 @@
                 <label for="lc_rig">Tactical Rig / Belt</label>
                 <select id="lc_rig" onchange="calcLoadout()">
                     <option value="0">-- Keiner --</option>
-                    <option value="1.8">Alpha Rig Heavy (1.8 kg)</option>
-                    <option value="1.2">Triton / Strike Rig Medium (1.2 kg)</option>
-                    <option value="0.6">Micro Rig Light (0.6 kg)</option>
-                    <option value="0.5">Tactical War Belt (0.5 kg)</option>
+                    <option value="2.5">Heavy Modular Rig (2.5 kg)</option>
+                    <option value="1.5">Operator Chest Rig (1.5 kg)</option>
+                    <option value="1.0">MOC Chest Rig (1.0 kg)</option>
+                    <option value="0.6">Chicom / Type 56 Rig (0.6 kg)</option>
+                    <option value="0.4">Tactical / Duty Belt (0.4 kg)</option>
                 </select>
 
                 <label for="lc_nvg">Nachtsichtgerät (NVG)</label>
@@ -644,11 +647,11 @@
                 <label for="lc_bag" style="margin-top:0;">Rucksack (leer)</label>
                 <select id="lc_bag" onchange="calcLoadout()">
                     <option value="0">-- Keiner --</option>
-                    <option value="3.5">Eberlestock / Attack 2 Large (3.5 kg)</option>
-                    <option value="2.5">Mystery Ranch Medium-Large (2.5 kg)</option>
-                    <option value="1.8">Rush 24 / Tri-Zip Medium (1.8 kg)</option>
-                    <option value="1.0">Assault Pack Small (1.0 kg)</option>
-                    <option value="0.5">Sling Bag Budget (0.5 kg)</option>
+                    <option value="2.8">Rush 72 Backpack (2.8 kg)</option>
+                    <option value="2.1">3-Day Assault Pack (2.1 kg)</option>
+                    <option value="1.6">Rush 24 Backpack (1.6 kg)</option>
+                    <option value="1.0">Patrol Backpack (1.0 kg)</option>
+                    <option value="0.5">Sling Bag (0.5 kg)</option>
                 </select>
 
                 <label for="lc_loot">Loot / Inhalt (geschätzt)</label>
