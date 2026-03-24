@@ -706,6 +706,84 @@
             box-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
 
+/* ============================================================== */
+/* 📱 TACTICAL MOBILE OVERRIDE (SMARTPHONE RESPONSIVENESS)        */
+/* ============================================================== */
+@media (max-width: 768px) {
+    /* 1. Haupt-Grid von 2 Spalten auf 1 Spalte reduzieren */
+    .grid { 
+        grid-template-columns: 1fr; 
+        gap: 15px;
+    }
+
+    /* 2. Fraktionen & YouTube Button auf dem Handy stapeln */
+    .faction-selector-wrapper {
+        padding: 10px;
+    }
+    .selector-row {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    .fac-group {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    .youtube-row {
+        width: 100%;
+    }
+    .judas-btn {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    /* 3. Header-Bereiche (News & Console) aufräumen */
+    .console-header, .news-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    .console-tools {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .header-left, .header-right {
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* 4. Navigation (Basecamp, Arsenal etc.) anpassen */
+    .main-categories {
+        flex-wrap: wrap;
+    }
+    .cat-btn {
+        flex: 1 1 45%; /* Macht 2 Tabs nebeneinander statt 4 in einer Reihe */
+        font-size: 0.85rem;
+        padding: 10px 5px;
+    }
+
+    /* 5. Platz sparen beim Banner (falls vorhanden) */
+    div[style*="height: 250px;"] {
+        height: 130px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* 6. Ballistik-Check & kleine Anpassungen */
+    #armorCalcContainer > div:first-child {
+        flex-direction: column;
+    }
+    #armorCalcContainer > div:first-child > div:nth-child(2) {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    /* 7. Padding der gesamten Seite leicht reduzieren */
+    body {
+        padding: 10px
+
         /* Container für die Inhalte */
         .tab-content { display: none; animation: fadeIn 0.4s; }
         .tab-content.active { display: block; }
