@@ -192,21 +192,27 @@ const gearData = {
     "ssh68": `<h3>SSh-68 Stahlhelm (Level IIA+)</h3><p><b>Eigenschaft:</b> Hohe Abprallchance (Ricochet), schützt aber ballistisch kaum vor Frontaltreffern.</p>`,
     "pasgt_helm": `<h3>PASGT Helmet (Level IIA)</h3><p><b>Eigenschaft:</b> Alter Kevlarhelm, bietet nur Basisschutz für den Start.</p>`,
 
-    // Zubehör
-    "gpnvg": `<h3>GPNVG-18 (Quad-Node)</h3><p><b>Eigenschaft:</b> Das 4-Röhren-Nachtsichtgerät der Elite. Riesiges Sichtfeld, keine toten Winkel, absoluter Luxus.</p>`,
-    "pvs31": `<h3>PVS-31 (Binocular)</h3><p><b>Eigenschaft:</b> 2-Röhren-NVG. Solides Sichtfeld, sehr guter Kontrast im Dschungel.</p>`,
-    "pvs14": `<h3>PVS-14 (Monocular)</h3><p><b>Eigenschaft:</b> 1-Röhren-NVG. Günstig, aber du hast stark eingeschränkte periphere Sicht.</p>`,
-    "comtac": `<h3>ComTac 2 / ComTac 4</h3><p><b>Eigenschaft:</b> <span style="color:#7ca35a; font-weight:bold;">0.4 META BUFF!</span> Aktiver Gehörschutz. Erhöht die akustische Reichweite für Schritte real um 40-50% (z.B. hörst du Sprints auf 75m statt 50m).</p>`,
-    "sordin": `<h3>Sordin / Gssh-01</h3><p><b>Eigenschaft:</b> Günstigere Headsets. Erhöhen deine Hörweite spürbar, klingen aber etwas 'bassiger' oder blecherner.</p>`,
-    "eberlestock": `<h3>Eberlestock G4 / Attack 2 (30-35 Slots)</h3><p><b>Eigenschaft:</b> Riesige Kapazität. Nur für reine Loot-Runs!</p><p><b style="color:#ff4c4c;">Warnung:</b> Führt zu extremer Trägheit.</p>`,
-    "mystery": `<h3>Mystery Ranch / Beta2 (25 Slots)</h3><p><b>Eigenschaft:</b> Der perfekte Kompromiss aus Platz und Agilität.</p>`,
-    "rush": `<h3>Rush 24 / Tri-Zip (20 Slots)</h3><p><b>Eigenschaft:</b> Der Standard für normale Raids.</p>`,
-    "assault": `<h3>Assault Pack (12 Slots)</h3><p><b>Eigenschaft:</b> Perfekt für PvP-Jagd. Minimales Gewicht.</p>`,
-    "sling": `<h3>Sling Bag / Duffle Bag (6-8 Slots)</h3><p><b>Eigenschaft:</b> Scav-Rucksäcke. Besser als nichts.</p>`,
-    "alpha": `<h3>LBT-1961A / Alpha Rig</h3><p><b>Eigenschaft:</b> Riesige Rigs (bis zu 16 Slots). Perfekt für Trommelmagazine.</p>`,
-    "triton": `<h3>Triton / Strike Rig (Medium)</h3><p><b>Eigenschaft:</b> Mittlere Rigs (10-12 Slots). Gute Balance.</p>`,
-    "micro": `<h3>Micro Rig / Bank Robber</h3><p><b>Eigenschaft:</b> Kleine Rigs (6-8 Slots). Extrem leicht.</p>`,
-    "warbelt": `<h3>Tactical War Belt</h3><p><b>Eigenschaft:</b> Zusätzlicher Platz an der Hüfte. Entlastet den Brustbereich und erhöht die Waffen-Ergonomie.</p>`
+    // Zubehör & Headsets
+    "gpnvg": `<h3>GPNVG-18 (Quad-Node)</h3><p><b>Eigenschaft:</b> Das absolute High-End NVG in GZW 0.4. 4 Röhren, riesiges Sichtfeld (FOV), keine toten Winkel.</p>`,
+    "pvs31": `<h3>AN/PVS-31 (Binocular)</h3><p><b>Eigenschaft:</b> 2-Röhren-NVG. Hervorragender Kontrast und gute Tiefenwahrnehmung bei Night Ops.</p>`,
+    "pvs14": `<h3>AN/PVS-14 (Monocular)</h3><p><b>Eigenschaft:</b> 1-Röhren-NVG. Günstig, aber stark eingeschränkte periphere Sicht. Reicht für den Start.</p>`,
+    "comtac": `<h3>Peltor ComTac II / MSA Sordin</h3><p><b>Eigenschaft:</b> High-End Aktivgehörschutz. Filtert laute Schüsse und verstärkt Schritte (GZW 0.4 Buff!). Unverzichtbar im PvP.</p>`,
+    "razor": `<h3>Walker's Razor / Earmor M32</h3><p><b>Eigenschaft:</b> Solide Mittelklasse. Verbessern das Gehör deutlich, klingen aber etwas blecherner als die ComTacs.</p>`,
+    "gssh": `<h3>GSSh-01</h3><p><b>Eigenschaft:</b> Budget-Headset. Sehr basslastig und lautes eigenes Rascheln, aber besser als taub in Tiger Bay herumzulaufen.</p>`,
+
+    // Rucksäcke
+    "rush72": `<h3>Rush 72 Backpack (42 Slots)</h3><p><b>Eigenschaft:</b> Der größte Rucksack im Spiel. <br><b style="color:#ff4c4c;">Warnung (0.4):</b> Voll beladen führt dieser Rucksack durch das neue Gewicht fast immer zum "Encumbered" (Überlastet) Status!</p>`,
+    "3day": `<h3>3-Day Assault Pack (30 Slots)</h3><p><b>Eigenschaft:</b> Der perfekte Kompromiss für Mid- bis Endgame-Loot-Runs.</p>`,
+    "rush24": `<h3>Rush 24 Backpack (24 Slots)</h3><p><b>Eigenschaft:</b> Der Standard für normale Quests und leichte PvP-Setups.</p>`,
+    "patrol": `<h3>Patrol Backpack (16 Slots)</h3><p><b>Eigenschaft:</b> Guter, leichter Rucksack für schnelle Rein-und-Raus-Operationen ohne viel Loot-Fokus.</p>`,
+    "sling": `<h3>Sling Bag / Messenger Bag (8-12 Slots)</h3><p><b>Eigenschaft:</b> Reine Startausrüstung der Milizen. Nach 2-3 Items voll.</p>`,
+
+    // Rigs & Belts
+    "heavy_rig": `<h3>Heavy Modular Rig</h3><p><b>Eigenschaft:</b> Große Kapazität für Trommelmagazine und massig Meds. Beliebt bei Solo-Spielern in Tiger Bay.</p>`,
+    "operator_rig": `<h3>Operator Chest Rig</h3><p><b>Eigenschaft:</b> Mittlere Kapazität. Tolle Balance aus Gewicht und Platz. Passt gut über leichte Carrier.</p>`,
+    "moc_rig": `<h3>MOC Chest Rig</h3><p><b>Eigenschaft:</b> Leichtes Rig, perfekt für schnelle Sniper- oder SMG-Setups.</p>`,
+    "chicom": `<h3>Chicom / Type 56 Rig</h3><p><b>Eigenschaft:</b> Ostblock-Miliz-Ausrüstung. Günstig, aber sehr limitiert im Platzangebot.</p>`,
+    "tac_belt": `<h3>Tactical Belt / Duty Belt</h3><p><b>Eigenschaft:</b> Erweitert das Inventar um eine Hüft-Ebene. Entlastet die Rüstung und verbessert Ergo-Werte leicht.</p>`
 };
 
 const allTasks = [
