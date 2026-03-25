@@ -1059,6 +1059,17 @@ select, input { width: 100%; padding: 10px; background: #2a2a2a; color: #fff; bo
                         <option value="makarov">Makarov PM</option>
                         <option value="typ51">Typ-51</option>
                     </optgroup>
+                    <optgroup label="Wurfwaffen (Throwables)">
+                        <option value="rgd5">RGD-5 Splittergranate</option>
+                        <option value="m26">M26 Splittergranate</option>
+                        <option value="m67">M67 Splittergranate</option>
+                        <option value="f1">F-1 Splittergranate</option>
+                        <option value="m84">M84 Stun Grenade</option>
+                        <option value="m18_smoke">M18 Smoke Grenade</option>
+                    </optgroup>
+                    <optgroup label="Nahkampf (Melee)">
+                        <option value="kabar">USMC Fighting Knife (Ka-Bar)</option>
+                    </optgroup>
                 </select>
                 <div id="weaponInfo" class="info-box">Wähle eine Waffe für Munitions-Details...</div>
             </div>
@@ -2749,6 +2760,20 @@ const weapons = {
         "rem788": { ammo: "5.56x45mm M855", pen: "Class 2-3", tip: "0.4 NEU: Remington Model 788 (.222). Repetierbüchse, ideal für Einsteiger-Jagd-Tasks." },
         "m201c": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 NEU: Stark modifizierbares Kompaktgewehr. Sehr starke Alternative zur M4A1." }
 };
+    
+            // --- THROWABLES & MELEE (Wurfwaffen & Nahkampf) ---
+const throwablesDb = {
+        "rgd5": { name: "RGD-5", type: "Frag Grenade", fuse: "3.2 - 4.2 s", radius: "3 m", weight: "0.310 kg", info: "Zuverlässige russische Handgranate mit 350 Splittern." },
+        "m26": { name: "M26", type: "Frag Grenade", fuse: "4 - 5 s", radius: "5 m", weight: "0.453 kg", info: "Standardgranate mit 250 Splittern und solidem 5m Radius." },
+        "m67": { name: "M67", type: "Frag Grenade", fuse: "4 - 5 s", radius: "5 m", weight: "0.400 kg", info: "Klassische NATO-Splittergranate. 300 Splitter, ideal für Raumräumungen." },
+        "f1": { name: "F-1", type: "Frag Grenade", fuse: "3.5 - 4 s", radius: "6 m", weight: "0.600 kg", info: "Schwere Defensivgranate. Größter Explosionsradius (6m) und 250 Splitter." },
+        "m84": { name: "M84 Stun Grenade", type: "Stun Grenade", fuse: "1 - 2.3 s", radius: "3 - 6 m (Effektiv)", weight: "0.370 kg", info: "Blendgranate, zwingend notwendig für den Vorstoß in besetzte Räume." },
+        "m18_smoke": { name: "M18 Smoke Grenade", type: "Smoke Grenade", fuse: "1.2 - 2 s", radius: "N/A", weight: "0.539 kg", info: "Verfügbar in Gelb, Grün und Rot. Brenndauer liegt bei 50 bis 90 Sekunden." }
+};
+
+const meleeDb = {
+        "kabar": { name: "USMC Fighting Knife", type: "Melee", fuse: "N/A", radius: "N/A", weight: "Leicht", info: "Das klassische Ka-Bar. Die Waffe des letzten Auswegs, wenn die Munition zur Neige geht." }
+};
 
 const weaponImages = {
         "ak74m": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/AK-74M_inspect.png",
@@ -3300,11 +3325,20 @@ function updateWeaponCombined() {
     const infoDisplay = document.getElementById('weaponInfo');
     const imgElement = document.getElementById('weaponImg'); 
     const metaElement = document.getElementById('weaponMeta'); 
+    const ammoSelect = document.getElementById('calcAmmoDisplay');
     
+    // Wenn nichts ausgewählt ist
     if (val === "") {
         imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
         metaElement.innerText = "";
-    } else if (weaponImages[val]) {
+        infoDisplay.innerHTML = "Wähle eine Waffe für Details...";
+        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
+        calculateBallistics(); 
+        return;
+    } 
+    
+    // Bilder-Logik (falls vorhanden)
+    if (weaponImages[val]) {
         imgElement.src = weaponImages[val];
         imgElement.style.display = "block";
         metaElement.innerText = "Quelle: GZW Official Wiki Intel";
@@ -3313,15 +3347,29 @@ function updateWeaponCombined() {
         metaElement.innerText = "Bildpfad wird noch aktualisiert...";
     }
 
-    const info = weapons[val];
-    if (info) {
+    // 1. Ist es eine Schusswaffe?
+    if (weapons[val]) {
+        const info = weapons[val];
         infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
         populateAmmoDropdown(val); 
-    } else {
-        infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
-        const ammoSelect = document.getElementById('calcAmmoDisplay');
-        ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
-        calculateBallistics(); 
+    } 
+    // 2. Ist es eine Granate?
+    else if (throwablesDb[val]) {
+        const info = throwablesDb[val];
+        infoDisplay.innerHTML = `Zünder (Fuse): <span class="highlight">${info.fuse}</span><br>Radius: <span class="highlight">${info.radius}</span><br>Gewicht: <span class="highlight">${info.weight}</span><br>Tipp: ${info.tip}`;
+        ammoSelect.innerHTML = '<option value="">-- Keine Munition (Wurfwaffe) --</option>';
+        document.getElementById('calcResult').innerHTML = "Explosivschaden (Ignoriert ballistische Platten)";
+        document.getElementById('calcResult').style.backgroundColor = "rgba(255, 165, 0, 0.1)";
+        document.getElementById('calcResult').style.color = "#ffa500";
+    } 
+    // 3. Ist es eine Nahkampfwaffe?
+    else if (meleeDb[val]) {
+        const info = meleeDb[val];
+        infoDisplay.innerHTML = `Art: <span class="highlight">Nahkampf (Melee)</span><br>Gewicht: <span class="highlight">${info.weight}</span><br>Tipp: ${info.tip}`;
+        ammoSelect.innerHTML = '<option value="">-- Keine Munition (Nahkampf) --</option>';
+        document.getElementById('calcResult').innerHTML = "Nur Nahkampfschaden";
+        document.getElementById('calcResult').style.backgroundColor = "rgba(179, 57, 57, 0.2)";
+        document.getElementById('calcResult').style.color = "#ff4c4c";
     }
 }
 
