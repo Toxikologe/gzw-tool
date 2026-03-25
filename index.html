@@ -4401,46 +4401,60 @@ function updateLiveTime() {
 // ==============================================================
 // INITIALISIERUNG
 // ==============================================================
-// Wir packen alles in eine Funktion
-function initGZWTool() {
-    try {
-        const savedColor = localStorage.getItem('gzw_faction_color') || '#7ca35a';
-        const savedId    = localStorage.getItem('gzw_faction_id')    || 'mss';
-        document.documentElement.style.setProperty('--accent', savedColor);
-        document.querySelectorAll('.fac-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.querySelector(`.fac-btn.${savedId === 'mss' ? 'mithras' : savedId === 'csi' ? 'crimson' : 'lamang'}`);
-        if (activeBtn) activeBtn.classList.add('active');
-    } catch(e) {}
 
-    initNotepad();
-    buildKeyDropdown();
-    renderKeyRing();
-    buildQuestItemDropdown();
-    buildBossTimerList();
-    buildAmmoMatrix();
-    calcLoadout();
-    calcHeliTime();
-    startTraderTimer();
+window.initGZWTool = function() {
+    console.log("🚀 GZW Tool initialisiert...");
 
-    makeDraggable('bossSpawnWidget');
-    makeDraggable('raidNotepad');
-    makeDraggable('heliWidget');
+    try {
+        const savedColor = localStorage.getItem('gzw_faction_color') || '#7ca35a';
+        const savedId    = localStorage.getItem('gzw_faction_id')    || 'mss';
+        document.documentElement.style.setProperty('--accent', savedColor);
+        document.querySelectorAll('.fac-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.querySelector(`.fac-btn.${savedId === 'mss' ? 'mithras' : savedId === 'csi' ? 'crimson' : 'lamang'}`);
+        if (activeBtn) activeBtn.classList.add('active');
+    } catch(e) { console.warn("LocalStorage blockiert (Farben):", e); }
 
-    setInterval(updateBossTimers, 1000);
-    
-    updateLiveTime();
-    setInterval(updateLiveTime, 1000);
+    // Jede Funktion einzeln absichern, damit ein Fehler nicht das ganze Tool killt
+    try { initNotepad(); } catch(e) { console.error("Fehler in initNotepad:", e); }
+    try { buildKeyDropdown(); } catch(e) { console.error("Fehler in buildKeyDropdown:", e); }
+    try { renderKeyRing(); } catch(e) { console.error("Fehler in renderKeyRing:", e); }
+    try { buildQuestItemDropdown(); } catch(e) { console.error("Fehler in buildQuestItemDropdown:", e); }
+    try { buildBossTimerList(); } catch(e) { console.error("Fehler in buildBossTimerList:", e); }
+    try { buildAmmoMatrix(); } catch(e) { console.error("Fehler in buildAmmoMatrix:", e); }
+    try { calcLoadout(); } catch(e) { console.error("Fehler in calcLoadout:", e); }
+    try { calcHeliTime(); } catch(e) { console.error("Fehler in calcHeliTime:", e); }
+    try { startTraderTimer(); } catch(e) { console.error("Fehler in startTraderTimer:", e); }
 
-    fetchLatestNews();
-}
+    try { makeDraggable('bossSpawnWidget'); } catch(e) {}
+    try { makeDraggable('raidNotepad'); } catch(e) {}
+    try { makeDraggable('heliWidget'); } catch(e) {}
 
-// Hier prüfen wir: Ist die Seite schon geladen? Wenn ja, starte sofort. Wenn nein, warte.
+    try {
+        setInterval(updateBossTimers, 1000);
+        updateLiveTime();
+        setInterval(updateLiveTime, 1000);
+        fetchLatestNews();
+    } catch(e) { console.error("Fehler bei den Timern:", e); }
+};
+
+console.log("Skript geladen, warte auf DOM...");
+
+// Robuster Startmechanismus
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initGZWTool);
+    document.addEventListener('DOMContentLoaded', window.initGZWTool);
 } else {
-    initGZWTool();
+    window.initGZWTool();
 }
 
+// Fallback, falls das DOMContentLoaded-Event verschluckt wurde
+window.addEventListener('load', () => {
+    const timeDisplay = document.getElementById('live-time-display');
+    if (timeDisplay && !timeDisplay.innerText.includes('ZULU')) {
+         console.warn("Fallback-Start ausgelöst!");
+         window.initGZWTool();
+    }
+});
+    
 </script>
 </body>
 </html>
