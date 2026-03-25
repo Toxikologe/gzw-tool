@@ -1963,7 +1963,7 @@
             
             <div id="taskCompleteWrapper" style="display: none; position: absolute; top: 15px; right: 15px;">
                 <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin-top: 0; font-size: 1rem;">
-                    <input type="checkbox" id="taskCompleteCheckbox" onchange="toggleTaskCompletion()" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
+                    <input type="checkbox" id="taskCompleteCheckbox" onclick="toggleTaskCompletion()" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
                     Erledigt
                 </label>
             </div>
@@ -3960,8 +3960,7 @@ function updateVendor() {
     
     // Globale Variablen für den State
     let completedTasks = [];
-    let currentTaskNameRaw = "";
-    let currentOpenTask = ""; // Alias für toggleTaskCompletion
+    let currentOpenTask = ""; // Speichert ab jetzt die eindeutige ENGLISCHE ID
     
     // Lade gespeicherte Tasks beim Start
     try {
@@ -3976,31 +3975,32 @@ function updateVendor() {
 
     // Funktion, wenn die Checkbox geklickt wird
     function toggleTaskCompletion() {
-    if (!currentOpenTask) return;
-    
-    const checkbox = document.getElementById('taskCompleteCheckbox');
-    const titleEl = document.getElementById('taskTitle');
-    const isNowChecked = checkbox.checked;
-    
-    if (isNowChecked) {
-        if (!completedTasks.includes(currentOpenTask)) {
-            completedTasks.push(currentOpenTask);
+        if (!currentOpenTask) return;
+        
+        const checkbox = document.getElementById('taskCompleteCheckbox');
+        const titleEl = document.getElementById('taskTitle');
+        const isNowChecked = checkbox.checked; // Lese den neuen, sauberen Status aus
+        
+        if (isNowChecked) {
+            if (!completedTasks.includes(currentOpenTask)) {
+                completedTasks.push(currentOpenTask);
+            }
+        } else {
+            // Erschaffe ein komplett neues Array OHNE diesen Task (sauberes Abwählen)
+            completedTasks = completedTasks.filter(t => t !== currentOpenTask);
         }
-    } else {
-        completedTasks = completedTasks.filter(t => t !== currentOpenTask);
+        
+        titleEl.style.textDecoration = isNowChecked ? 'line-through' : 'none';
+        titleEl.style.opacity = isNowChecked ? '0.6' : '1';
+        
+        try {
+            localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
+        } catch(e) {
+            console.warn('localStorage nicht verfügbar:', e);
+        }
+        
+        refreshTaskList();
     }
-    
-    titleEl.style.textDecoration = isNowChecked ? 'line-through' : 'none';
-    titleEl.style.opacity = isNowChecked ? '0.6' : '1';
-    
-    try {
-        localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
-    } catch(e) {
-        console.warn('localStorage nicht verfügbar:', e);
-    }
-    
-    refreshTaskList();
-}
 
     function refreshTaskList() {
         updateTaskDropdown();
@@ -4014,43 +4014,42 @@ function updateVendor() {
         const filterCheckbox = document.getElementById('filterOpenTasks');
         const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
         
-        // Merke dir den aktuell im Dropdown ausgewählten Wert
         const selectedValue = taskSelect.value; 
 
-        // Leere das Dropdown
         taskSelect.innerHTML = '<option value="">-- Erst Händler wählen --</option>';
 
         if (vendor === 'all') return;
 
-        // Filtere alle Tasks nach dem Händler
         let filteredTasks = allTasks.filter(t => t.v === vendor);
         
-        // Wenn "Nur offene" aktiv ist, filtere die erledigten raus
         if (hideCompleted) {
-            filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.de));
+            // Nutze t.en und t.de für den Check (falls alte Speicherstände aktiv sind)
+            filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.en) && !completedTasks.includes(t.de));
         }
 
-        // Fülle das Dropdown neu
         filteredTasks.forEach(t => {
             const option = document.createElement('option');
-            option.value = t.de; // WICHTIG: Der reine Name!
-            option.text = completedTasks.includes(t.de) ? `✓ ${t.de}` : t.de;
+            option.value = t.en; // WICHTIG: Wir nutzen ab jetzt IMMER die englische ID als Value!
+            
+            const isDone = completedTasks.includes(t.en) || completedTasks.includes(t.de);
+            option.text = isDone ? `✓ ${t.de}` : t.de;
+            
             taskSelect.appendChild(option);
         });
         
-        // Setze das Dropdown wieder auf den vorherigen Wert, falls er noch existiert
+        // Dropdown-Wert wiederherstellen
         if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
             taskSelect.value = selectedValue;
-        } else if (currentTaskNameRaw && Array.from(taskSelect.options).some(opt => opt.value === currentTaskNameRaw)) {
-            taskSelect.value = currentTaskNameRaw;
+        } else if (currentOpenTask && Array.from(taskSelect.options).some(opt => opt.value === currentOpenTask)) {
+            taskSelect.value = currentOpenTask;
         }
     }
 
     // Wird aufgerufen, wenn man einen Task im Dropdown auswählt
     function selectTaskFromDropdown() {
-        const taskName = document.getElementById('taskDropdown').value;
-        if (!taskName) return;
-        displayTaskData(taskName);
+        const taskId = document.getElementById('taskDropdown').value;
+        if (!taskId) return;
+        displayTaskData(taskId);
     }
 
     // --- Such-Logik ---
@@ -4067,7 +4066,7 @@ function updateVendor() {
         let filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
 
         if (hideCompleted) {
-            filtered = filtered.filter(t => !completedTasks.includes(t.de));
+            filtered = filtered.filter(t => !completedTasks.includes(t.en) && !completedTasks.includes(t.de));
         }
 
         if(filtered.length > 0) {
@@ -4076,13 +4075,13 @@ function updateVendor() {
                 const d = document.createElement('div');
                 d.className = 'search-item';
                 
-                const isDone = completedTasks.includes(t.de);
+                const isDone = completedTasks.includes(t.en) || completedTasks.includes(t.de);
                 const mark = isDone ? '<span style="color:#7ca35a; margin-right:5px; font-weight:bold;">✓</span>' : '';
                 const styling = isDone ? 'text-decoration: line-through; opacity: 0.5;' : '';
 
                 d.innerHTML = `<span style="${styling}">${mark}<strong>${t.de}</strong> <small>(${t.v || 'Divers'})</small></span>`;
                 d.onclick = () => {
-                    displayTaskData(t.de);
+                    displayTaskData(t.en); // Übergebe die englische ID!
                     list.style.display = 'none';
                     document.getElementById('taskSearchInput').value = t.de;
                 };
@@ -4092,16 +4091,22 @@ function updateVendor() {
     }
 
     // --- Task-Anzeige Logik ---
-    function displayTaskData(name) {
-        // Finde den Task anhand des reinen Namens
-        const task = allTasks.find(t => t.de === name);
+    function displayTaskData(idOrName) {
+        // Finde den Task primär über die englische ID, Fallback auf den deutschen Namen
+        const task = allTasks.find(t => t.en === idOrName || t.de === idOrName);
         if (!task) return;
 
-        // Speichere den REINEN Namen für die Checkbox-Logik
-        currentTaskNameRaw = task.de;
-        currentOpenTask = task.de;
+        // Migrations-Check: Falls der Task früher unter deutschem Namen gespeichert war, auf Englisch updaten!
+        if (completedTasks.includes(task.de) && !completedTasks.includes(task.en)) {
+            completedTasks = completedTasks.filter(t => t !== task.de);
+            completedTasks.push(task.en);
+            localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks));
+        }
+
+        // Speichere ab jetzt IMMER die englische ID für die saubere Checkbox-Logik
+        currentOpenTask = task.en;
         
-        const isDone = completedTasks.includes(task.de);
+        const isDone = completedTasks.includes(task.en);
         
         // Titel aktualisieren
         const titleEl = document.getElementById('taskTitle');
@@ -4109,8 +4114,8 @@ function updateVendor() {
         titleEl.style.textDecoration = isDone ? 'line-through' : 'none';
         titleEl.style.opacity = isDone ? '0.6' : '1';
         
-        // Text-Inhalte aktualisieren
-        document.getElementById('taskNames').innerText = `Englisch: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
+        // Text-Inhalte aktualisieren (Zeigt die englische ID unsichtbar/klein für das System an)
+        document.getElementById('taskNames').innerText = `Original: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
         document.getElementById('taskDesc').innerText = task.desc;
         document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
         
@@ -4123,27 +4128,28 @@ function updateVendor() {
         const checkbox = document.getElementById('taskCompleteCheckbox');
         if (wrapper) wrapper.style.display = 'block';
         if (checkbox) {
-            checkbox.checked = completedTasks.includes(task.de);
-            checkbox.onchange = toggleTaskCompletion;
+            checkbox.checked = isDone;
+            // HINWEIS: Wir setzen hier KEIN checkbox.onchange mehr per Skript, 
+            // da wir das nun sicher über das onclick-Attribut im HTML regeln!
         }
     }
     
     // RESET BUTTON
     function resetAllTasks() {
-    if (confirm("Wirklich alle erledigten Tasks zurücksetzen?")) {
-        completedTasks = [];
-        try {
-            localStorage.removeItem('gzw_completed_tasks');
-        } catch(e) {}
-        refreshTaskList();
-        
-        // Aktuell angezeigten Task auch zurücksetzen
-        const titleEl = document.getElementById('taskTitle');
-        const checkbox = document.getElementById('taskCompleteCheckbox');
-        if (titleEl) { titleEl.style.textDecoration = 'none'; titleEl.style.opacity = '1'; }
-        if (checkbox) checkbox.checked = false;
+        if (confirm("Wirklich alle erledigten Tasks zurücksetzen?")) {
+            completedTasks = [];
+            try {
+                localStorage.removeItem('gzw_completed_tasks');
+            } catch(e) {}
+            refreshTaskList();
+            
+            // Aktuell angezeigten Task auch zurücksetzen
+            const titleEl = document.getElementById('taskTitle');
+            const checkbox = document.getElementById('taskCompleteCheckbox');
+            if (titleEl) { titleEl.style.textDecoration = 'none'; titleEl.style.opacity = '1'; }
+            if (checkbox) checkbox.checked = false;
+        }
     }
-}
 
     function toggleSolution() {
         const s = document.getElementById('taskSolution');
