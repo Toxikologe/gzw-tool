@@ -3767,13 +3767,17 @@ function searchKeys() {
 // ==============================================================
 let notepadSaveTimer = null;
 function initNotepad() {
-    const textarea = document.getElementById('raidTextarea');
-    const collapsed = localStorage.getItem('gzw_notepad_collapsed') === 'true';
-    try {
-        const saved = localStorage.getItem('gzw_notepad_text');
-        if (saved) { textarea.value = saved; updateCharCount(); }
-    } catch(e) {}
-    if (collapsed) document.getElementById('raidNotepad').classList.add('collapsed');
+    const textarea = document.getElementById('raidTextarea');
+    let collapsed = false;
+    try {
+        // Jetzt ist der Abruf sicher verpackt!
+        collapsed = localStorage.getItem('gzw_notepad_collapsed') === 'true';
+        const saved = localStorage.getItem('gzw_notepad_text');
+        if (saved) { textarea.value = saved; updateCharCount(); }
+    } catch(e) {
+        console.log("LocalStorage ist blockiert, Notizblock lädt ohne Speicher-Funktion.");
+    }
+    if (collapsed) document.getElementById('raidNotepad').classList.add('collapsed');
 }
 function saveNotepad() {
     updateCharCount();
@@ -4397,37 +4401,45 @@ function updateLiveTime() {
 // ==============================================================
 // INITIALISIERUNG
 // ==============================================================
-window.addEventListener('DOMContentLoaded', () => {
-    try {
-        const savedColor = localStorage.getItem('gzw_faction_color') || '#7ca35a';
-        const savedId    = localStorage.getItem('gzw_faction_id')    || 'mss';
-        document.documentElement.style.setProperty('--accent', savedColor);
-        document.querySelectorAll('.fac-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.querySelector(`.fac-btn.${savedId === 'mss' ? 'mithras' : savedId === 'csi' ? 'crimson' : 'lamang'}`);
-        if (activeBtn) activeBtn.classList.add('active');
-    } catch(e) {}
+// Wir packen alles in eine Funktion
+function initGZWTool() {
+    try {
+        const savedColor = localStorage.getItem('gzw_faction_color') || '#7ca35a';
+        const savedId    = localStorage.getItem('gzw_faction_id')    || 'mss';
+        document.documentElement.style.setProperty('--accent', savedColor);
+        document.querySelectorAll('.fac-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.querySelector(`.fac-btn.${savedId === 'mss' ? 'mithras' : savedId === 'csi' ? 'crimson' : 'lamang'}`);
+        if (activeBtn) activeBtn.classList.add('active');
+    } catch(e) {}
 
-    initNotepad();
-    buildKeyDropdown();
-    renderKeyRing();
-    buildQuestItemDropdown();
-    buildBossTimerList();
-    buildAmmoMatrix();
-    calcLoadout();
-    calcHeliTime();
-    startTraderTimer();
+    initNotepad();
+    buildKeyDropdown();
+    renderKeyRing();
+    buildQuestItemDropdown();
+    buildBossTimerList();
+    buildAmmoMatrix();
+    calcLoadout();
+    calcHeliTime();
+    startTraderTimer();
 
-    makeDraggable('bossSpawnWidget');
-    makeDraggable('raidNotepad');
-    makeDraggable('heliWidget');
+    makeDraggable('bossSpawnWidget');
+    makeDraggable('raidNotepad');
+    makeDraggable('heliWidget');
 
-    setInterval(updateBossTimers, 1000);
-    
-    updateLiveTime();
-    setInterval(updateLiveTime, 1000);
+    setInterval(updateBossTimers, 1000);
+    
+    updateLiveTime();
+    setInterval(updateLiveTime, 1000);
 
-    fetchLatestNews();
-});
+    fetchLatestNews();
+}
+
+// Hier prüfen wir: Ist die Seite schon geladen? Wenn ja, starte sofort. Wenn nein, warte.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGZWTool);
+} else {
+    initGZWTool();
+}
 
 </script>
 </body>
