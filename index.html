@@ -1037,12 +1037,11 @@
                     <div style="flex: 1;">
                         <label style="margin-top: 0; font-size: 0.8rem;">Gegnerische Rüstung:</label>
                         <select id="calcArmor" onchange="calculateBallistics()" style="padding: 8px;">
-                            <option value="1">Class 2 (Soft Armor)</option>
-                            <option value="2">Class 3 (NIJ III)</option>
-                            <option value="3">Class 3+ (NIJ III+)</option>
-                            <option value="4" selected>Class 4 (NIJ IV)</option>
-                            <option value="5">Class 5 (Heavy)</option>
-                            <option value="6">Class 6 (Zabralo)</option>
+                            <option value="1">NIJ IIA (Soft Armor / Helme)</option>
+                            <option value="2">NIJ IIIA (MICH / FAST MT Helme)</option>
+                            <option value="3">NIJ III (Lancer / Sentry Carriers)</option>
+                            <option value="3.5" selected>NIJ III+ (Recon Plate Carrier)</option>
+                            <option value="4">NIJ IV (Maximaler AP Schutz)</option>
                         </select>
                     </div>
                     <div style="font-weight: bold; padding-top: 20px;">VS</div>
@@ -1226,13 +1225,11 @@
             <thead>
                 <tr>
                     <th style="background:#1a1a1a; color:#aaa; padding:10px 8px; text-align:left; border:1px solid #333; min-width:160px; position:sticky; left:0; z-index:2;">Munition</th>
-                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">Class 1</th>
-                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">Class 2</th>
-                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">Class 3</th>
-                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">Class 3+</th>
-                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">Class 4</th>
-                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">Class 5</th>
-                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">Class 6</th>
+                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ IIA</th>
+                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ IIIA</th>
+                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ III</th>
+                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ III+</th>
+                    <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ IV</th>
                 </tr>
             </thead>
             <tbody id="ammoMatrixBody">
@@ -1242,72 +1239,63 @@
 </div>
 
     <div id="tab-gear" class="tab-content">
-        <h2>Rüstung, Helme & Rucksäcke</h2>
-        <div class="grid">
-            <div>
-                <label for="gearFullSelect">Ausrüstungs-Datenbank</label>
-                <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
-                    <option value="">-- Wähle Ausrüstung --</option>
-                    <optgroup label="Schwere Panzerung (Class 5 & 6)">
-                        <option value="6B43 Zabralo (Class 6): Maximaler Schutz im Spiel. Macht dich zu einem wandelnden Panzer, ist aber extrem schwer. Taktischer Sprint wird zur Qual.">6B43 Zabralo (Class 6)</option>
-                        <option value="IOTV Gen4 (Class 5): Hervorragender ballistischer Schutz für Brust, Bauch und Arme. Sehr beliebt bei Fort Narith Runs.">IOTV Gen4 Full (Class 5)</option>
-                        <option value="6B45 Ratnik (Class 5): Russischer Standard. Schützt Torso und Oberarme. Hoher Gewichts-Malus, aber extrem verlässlich.">6B45 Ratnik (Class 5)</option>
-                    </optgroup>
-                    <optgroup label="Mittlere Panzerung (Class 3 & 4 - Meta)">
-                        <option value="RPC Plate Carrier (Class 4): Die absolute 0.4 Meta! Sehr leicht, schützt die lebenswichtigen Organe (Lunge/Herz) und hat fast keine Trägheits-Strafe (Inertia).">RPC Plate Carrier (Class 4)</option>
-                        <option value="JPC Vest (Class 4): Jumpable Plate Carrier. Sehr kompakt, perfekt für schnelle Aufklärer, schützt aber nur den oberen Torso.">JPC Vest (Class 4)</option>
-                        <option value="Ana Tactical M1 (Class 4): Armored Rig. Kombiniert Class 4 Platten mit viel Platz für Magazine. Toller Allrounder.">Ana Tactical M1 (Class 4)</option>
-                        <option value="LBT-6094 (Class 3+): Guter Allrounder für Mid-Tier POIs wie Ban Pa oder Hunter's Paradise.">LBT-6094 (Class 3+)</option>
-                        <option value="6B23-1 / 6B13 (Class 3): Robuste russische Westen. Gut gegen KI-Scavs, aber schwach gegen Spieler mit AP-Munition.">6B23-1 / 6B13 (Class 3)</option>
-                    </optgroup>
-                    <optgroup label="Leichte Panzerung (Class 1 & 2)">
-                        <option value="PACA Soft Armor (Class 2): Schützt nur vor Schrot und 9mm PST. Leicht, aber im Endgame ein absolutes Risiko.">PACA Soft Armor (Class 2)</option>
-                        <option value="Zhuk-3 (Class 2): Press-Weste. Reiner Basisschutz für absolute Anfänger.">Zhuk-3 (Class 2)</option>
-                    </optgroup>
-                    <optgroup label="Helme & Gesichtsschutz">
-                        <option value="Altyn / Vulcan Helm (Class 5): Schwerer Sturmmhelm mit Visier. Macht dich fast taub (Headsets nicht möglich!), stoppt aber fast jeden Kopftreffer.">Altyn Assault Helmet</option>
-                        <option value="AirFrame Helmet (Class 4): Hochmoderne westliche Ausrüstung. Kann mit Chops (Ohrenschutz) und Visier stark aufgewertet werden.">AirFrame Helmet</option>
-                        <option value="Fast MT (Class 4): High-End Helm. Sehr leicht, kann mit Side-Rails und Face-Shield (Class 3) nachgerüstet werden.">Fast MT Helmet</option>
-                        <option value="MICH 2000 / TC-2000 (Class 3): Der Standard-Armeehelm. Zuverlässig gegen KI-Streifschüsse und Schrotflinten.">MICH 2000 / TC-2000</option>
-                        <option value="6B47 Ratnik-B (Class 3): Russischer Standard-Helm, gute Ergo-Werte, kompatibel mit Nachtsichtgeräten (NVGs).">6B47 Ratnik-B</option>
-                        <option value="SSh-68 (Class 2): Der gute alte 'Penis-Helm' (Stahlhelm). Schützt fast gar nicht, sieht aber lustig aus und leitet manchmal Schüsse ab (Ricochet).">SSh-68 Stahlhelm</option>
-                    </optgroup>
-                    <optgroup label="Nachtsicht & Gehörschutz (Night Ops)">
-                        <option value="GPNVG-18 (Quad-Node): Das 4-Röhren-Nachtsichtgerät der Elite. Riesiges Sichtfeld, keine toten Winkel, absoluter Luxus.">GPNVG-18 (NVG)</option>
-                        <option value="PVS-31 (Binocular): 2-Röhren-NVG. Solides Sichtfeld, guter Kontrast im Dschungel.">PVS-31 (NVG)</option>
-                        <option value="PVS-14 (Monocular): 1-Röhren-NVG. Günstig, aber du hast stark eingeschränkte Sichtränder.">PVS-14 (NVG)</option>
-                        <option value="ComTac 2 / ComTac 4: 0.4 META BUFF! Aktiver Gehörschutz. Erhöht die akustische Reichweite für Schritte real um 40-50% (z.B. hörst du Sprints auf 75m statt 50m). Ein absolutes MUSS für PvP und Solo-Spieler!">ComTac Headset</option>
-                        <option value="Sordin / Gssh-01: Günstigere Headsets. Erhöhen ebenfalls deine Hörweite spürbar, klingen aber etwas 'bassiger' oder blecherner. Besser als ohne!">Sordin / Gssh-01</option>
-                    </optgroup>
-                    <optgroup label="Rucksäcke (Backpacks)">
-                        <option value="Eberlestock G4 / Attack 2 (30-35 Slots): Riesig. Voll beladen führen diese Rucksäcke zu extremer Trägheit. Nur für reine Loot-Runs!">Eberlestock / Attack 2 (Large)</option>
-                        <option value="Mystery Ranch / Beta2 (25 Slots): Perfekter Kompromiss aus Platz und Agilität.">Mystery Ranch (Medium-Large)</option>
-                        <option value="Rush 24 / Tri-Zip (20 Slots): Der Standard für normale Raids. Genug Platz für Quest-Items und Mags.">Rush 24 / Tri-Zip (Medium)</option>
-                        <option value="Assault Pack (12 Slots): Perfekt für PvP-Jagd. Minimales Gewicht, maximale Ausdauer.">Assault Pack (Small)</option>
-                        <option value="Sling Bag / Duffle Bag (6-8 Slots): Scav-Rucksäcke. Besser als nichts, aber du stößt sofort an dein Limit.">Sling Bag (Budget)</option>
-                    </optgroup>
-                    <optgroup label="Tactical Rigs & Belts">
-                        <option value="LBT-1961A / Alpha Rig: Riesige Rigs (bis zu 16 Slots). Perfekt für Spieler, die viele Trommelmagazine oder Meds brauchen.">Alpha Rig (Heavy)</option>
-                        <option value="Triton / Blackhawk Strike: Mittlere Rigs (10-12 Slots). Gute Balance, passen über die meisten Westen.">Triton / Strike Rig (Medium)</option>
-                        <option value="Micro Rig / Bank Robber: Kleine Rigs (6-8 Slots). Extrem leicht, ideal für Sniper-Builds oder Low-Budget-Runs.">Micro Rig (Light)</option>
-                        <option value="Tactical War Belt: Zusätzlicher Platz an der Hüfte für Magazine und Meds, entlastet den Brustbereich und erhöht die Ergonomie.">Tactical War Belt</option>
-                    </optgroup>
-                </select>
-                <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
-            </div>
-            
-            <div style="padding-top: 15px;">
-                <div class="panel-box" style="border-left: none;">
-                    <h3 style="margin-top: 0; color: var(--accent);">🎒 Loadout Tipps (0.4 Meta)</h3>
-                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
-                        <li><strong>Armor-Material:</strong> Keramik-Platten reparieren sich schlechter als Stahl, schlucken aber den ersten Treffer besser.</li>
-                        <li><strong>Inertia (Trägheit):</strong> Je schwerer deine Ausrüstung, desto langsamer erreichst du deine Sprint-Geschwindigkeit und desto länger dauert es, bis du nach dem Sprint schussbereit bist.</li>
-                        <li><strong>PvP-Meta:</strong> Aktuell schwören Elite-Spieler auf den leichten <strong>RPC Plate Carrier</strong>, um im Häuserkampf agil zu bleiben.</li>
-                    </ul>
-                </div>
+    <h2>Rüstung, Helme & Rucksäcke</h2>
+    <div class="grid">
+        <div>
+            <label for="gearFullSelect">Ausrüstungs-Datenbank (GZW)</label>
+            <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
+                <option value="">-- Wähle Ausrüstung --</option>
+                <optgroup label="Plate Carriers (NIJ III / III+ / IV)">
+                    <option value="Recon Plate Carrier (RPC) - NIJ III+: Bietet sehr guten ballistischen Schutz bei gleichzeitig hoher Mobilität.">Recon Plate Carrier (RPC) - NIJ III+</option>
+                    <option value="CZ 4M Lancer - NIJ III: Sehr populärer Plate Carrier mit solider Verteilung von Gewicht und Schutz.">CZ 4M Lancer - NIJ III</option>
+                    <option value="LCS Sentry - NIJ III: Schlanker Plate Carrier für maximale Manövrierfähigkeit im Dschungel.">LCS Sentry - NIJ III</option>
+                    <option value="M2 Plate Carrier - NIJ III: Standard-Ausrüstung für schwerere Gefechte.">M2 Plate Carrier - NIJ III</option>
+                    <option value="Modular Operator Carrier Gen II - NIJ III: Bietet guten Schutz und ausreichend Platz für Taschen.">Modular Operator Gen II - NIJ III</option>
+                </optgroup>
+                <optgroup label="Armor Vests (NIJ IIA / IIIA / III)">
+                    <option value="ATBV Vest - NIJ III: Eine robuste ballistische Weste mit Front- und Rückenpanzerung.">ATBV Vest - NIJ III</option>
+                    <option value="Soft Armor Westen - NIJ IIA/IIIA: Schützt primär vor Pistolenmunition und Schrot, stoppt keine Gewehrkugeln.">Soft Armor / Zivile Westen - NIJ IIA/IIIA</option>
+                </optgroup>
+                <optgroup label="Helme & Kopfbedeckungen">
+                    <option value="FAST MT (Multicam / Tan) - NIJ IIIA: Hochmoderner, leichter Helm. Erlaubt viele Attachments wie NVGs.">FAST MT - NIJ IIIA</option>
+                    <option value="EXFIL Helm - NIJ IIIA: Hervorragende Passform und Modularität, beliebter Helm im Endgame.">EXFIL Helm - NIJ IIIA</option>
+                    <option value="Mich TC-2000 / TC-2002 - NIJ IIIA: Der Standard für viele PMCs. Zuverlässig gegen Streifschüsse.">Mich TC-2000 / TC-2002 - NIJ IIIA</option>
+                    <option value="LSHZ 1+ - NIJ IIIA: Russischer Helm mit gutem Schutzbereich.">LSHZ 1+ - NIJ IIIA</option>
+                    <option value="6B47 Ratnik - NIJ IIIA: Standardhelm östlicher Fraktionen. Solide und leicht.">6B47 Ratnik - NIJ IIIA</option>
+                    <option value="SSh-68N / SSh-60 - NIJ IIA: Alter Stahlhelm. Schützt minimal, besser als nichts.">SSh-68N / SSh-60 - NIJ IIA</option>
+                    <option value="Skull Crusher (NVG Mount): Bietet KEINEN Rüstungsschutz, dient nur als extrem leichte Halterung für Nachtsichtgeräte.">Skull Crusher (NVG Mount)</option>
+                </optgroup>
+                <optgroup label="Tactical Rigs (Ungepanzert)">
+                    <option value="Recon Chest Rig: 12 Slots (4x3). Bietet Platz für bis zu 6 AR/Pistolen-Magazine.">Recon Chest Rig</option>
+                    <option value="TacTec Chest Rig: 10 Slots (5x2). Solides Tragesystem für längere Einsätze.">TacTec Chest Rig</option>
+                    <option value="Training Mini Rig: 8 Slots (3x3). Minimalistisch, ideal für schnelle Runs.">Training Mini Rig</option>
+                    <option value="Type 56 AK Rig: 6 Slots. Klassisches Chicom-Design, perfekt für Low-Budget AK-Runs.">Type 56 AK Rig</option>
+                    <option value="Improvized Rig: 2 Slots. Das absolute Minimum.">Improvized Rig</option>
+                </optgroup>
+                <optgroup label="Backpacks (Rucksäcke)">
+                    <option value="Rush 72 2.0 (Groß): 30 Slots. Sehr großer Rucksack, ideal für intensive Loot-Runs in Tiger Bay.">Rush 72 2.0</option>
+                    <option value="Delta Backpack (Groß): 30+ Slots. Gigantischer Rucksack für maximale Beuteausbeute.">Delta Backpack</option>
+                    <option value="Falang 28 (Mittel): Viel Stauraum für den zivilen Look, sehr beliebt für Mid-Tier Runs.">Falang 28</option>
+                    <option value="Scorpion OCP Pack (Mittel): 16 Slots (4x4). Der perfekte, robuste Standard-Rucksack.">Scorpion OCP Convoy Pack</option>
+                    <option value="Assault / Patrol Backpack (Mittel): Solider Rucksack für schnelle militärische Einsätze.">Assault / Patrol Backpack</option>
+                    <option value="Drawstring / Sport Backpack (Klein): Sehr klein, eher für den absoluten Start oder Notfälle.">Drawstring / Sport Backpack</option>
+                </optgroup>
+            </select>
+            <div id="gearFullInfo" class="info-box">Gear-Spezifikationen...</div>
+        </div>
+        
+        <div style="padding-top: 15px;">
+            <div class="panel-box" style="border-left: none;">
+                <h3 style="margin-top: 0; color: var(--accent);">🎒 Loadout Tipps (GZW Meta)</h3>
+                <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
+                    <li><strong>NIJ Klassen:</strong> Gray Zone Warfare nutzt das reale NIJ-System. NIJ IIIA stoppt Pistolen, NIJ III stoppt Standard-Gewehre, NIJ III+ stoppt leichte AP-Muni.</li>
+                    <li><strong>Inertia (Trägheit):</strong> Schwere Plate Carriers wie der Lancer reduzieren deinen Sprint. Leichtere Westen (LCS Sentry) erhöhen deine Überlebenschancen im Häuserkampf.</li>
+                    <li><strong>Kombinationen:</strong> Du kannst Tactical Rigs über Armor Vests (ATBV) tragen, aber Plate Carriers (RPC) haben bereits eingebaute Magazintaschen!</li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
     <div id="tab-loadout" class="tab-content">
     <h2>⚖️ Loadout & Inertia-Rechner (Theorycrafting)</h2>
@@ -1419,39 +1407,38 @@
             <div class="panel-box" style="margin-bottom:15px;">
                 <h3>🛡️ Rüstung & Helm</h3>
 
-                <label for="lc_armor" style="margin-top:0;">Körperpanzerung</label>
+                <label for="lc_armor" style="margin-top:0;">Körperpanzerung (Plate Carriers / Vests)</label>
                 <select id="lc_armor" onchange="calcLoadout()">
                     <option value="0">-- Keine --</option>
-                    <option value="11.0">6B43 Zabralo Class 6 (11.0 kg)</option>
-                    <option value="8.5">IOTV Gen4 Class 5 (8.5 kg)</option>
-                    <option value="7.8">6B45 Ratnik Class 5 (7.8 kg)</option>
-                    <option value="3.2">RPC Plate Carrier Class 4 (3.2 kg)</option>
-                    <option value="4.1">JPC Vest Class 4 (4.1 kg)</option>
-                    <option value="5.5">Ana Tactical M1 Class 4 (5.5 kg)</option>
-                    <option value="5.8">LBT-6094 Class 3+ (5.8 kg)</option>
-                    <option value="5.2">6B23-1 Class 3 (5.2 kg)</option>
-                    <option value="1.8">PACA Soft Armor Class 2 (1.8 kg)</option>
-                    <option value="1.2">Zhuk-3 Class 2 (1.2 kg)</option>
+                    <option value="9.5">CZ 4M Lancer (NIJ III) (9.5 kg)</option>
+                    <option value="8.2">Modular Operator Gen II (NIJ III) (8.2 kg)</option>
+                    <option value="5.6">Recon Plate Carrier (NIJ III+) (5.6 kg)</option>
+                    <option value="5.5">ATBV Vest (NIJ III) (5.5 kg)</option>
+                    <option value="4.2">LCS Sentry (NIJ III) (4.2 kg)</option>
+                    <option value="3.8">M2 Plate Carrier (NIJ III) (3.8 kg)</option>
                 </select>
 
                 <label for="lc_helmet">Helm</label>
                 <select id="lc_helmet" onchange="calcLoadout()">
                     <option value="0">-- Keiner --</option>
-                    <option value="4.2">Altyn / Vulcan Class 5 (4.2 kg)</option>
-                    <option value="1.4">AirFrame Class 4 (1.4 kg)</option>
-                    <option value="1.2">Fast MT Class 4 (1.2 kg)</option>
-                    <option value="1.5">MICH 2000 Class 3 (1.5 kg)</option>
-                    <option value="1.3">6B47 Ratnik-B Class 3 (1.3 kg)</option>
-                    <option value="0.8">SSh-68 Stahlhelm Class 2 (0.8 kg)</option>
+                    <option value="1.5">LSHZ 1+ (NIJ IIIA) (1.5 kg)</option>
+                    <option value="1.3">Mich TC-2000 (NIJ IIIA) (1.3 kg)</option>
+                    <option value="1.2">FAST MT (NIJ IIIA) (1.2 kg)</option>
+                    <option value="1.1">EXFIL (NIJ IIIA) (1.1 kg)</option>
+                    <option value="1.1">6B47 Ratnik (NIJ IIIA) (1.1 kg)</option>
+                    <option value="1.4">SSh-68N Stahlhelm (NIJ IIA) (1.4 kg)</option>
+                    <option value="0.3">Skull Crusher (NVG Mount) (0.3 kg)</option>
                 </select>
 
                 <label for="lc_rig">Tactical Rig / Belt</label>
                 <select id="lc_rig" onchange="calcLoadout()">
                     <option value="0">-- Keiner --</option>
-                    <option value="1.8">Alpha Rig Heavy (1.8 kg)</option>
-                    <option value="1.2">Triton / Strike Rig Medium (1.2 kg)</option>
-                    <option value="0.6">Micro Rig Light (0.6 kg)</option>
-                    <option value="0.5">Tactical War Belt (0.5 kg)</option>
+                    <option value="0.8">Recon Chest Rig (0.8 kg)</option>
+                    <option value="0.6">Training Mini Rig (0.6 kg)</option>
+                    <option value="0.5">TacTec Chest Rig (0.5 kg)</option>
+                    <option value="0.5">Type 56 AK Rig (0.5 kg)</option>
+                    <option value="0.3">Improvized Rig (0.3 kg)</option>
+                    <option value="0.2">Light Anatomical Belt (0.2 kg)</option>
                 </select>
 
                 <label for="lc_nvg">Nachtsichtgerät (NVG)</label>
@@ -1463,18 +1450,18 @@
                 </select>
             </div>
 
-            <!-- RUCKSACK & VORRÄTE -->
             <div class="panel-box">
                 <h3>🎒 Rucksack & Vorräte</h3>
 
                 <label for="lc_bag" style="margin-top:0;">Rucksack (leer)</label>
                 <select id="lc_bag" onchange="calcLoadout()">
                     <option value="0">-- Keiner --</option>
-                    <option value="3.5">Eberlestock / Attack 2 Large (3.5 kg)</option>
-                    <option value="2.5">Mystery Ranch Medium-Large (2.5 kg)</option>
-                    <option value="1.8">Rush 24 / Tri-Zip Medium (1.8 kg)</option>
-                    <option value="1.0">Assault Pack Small (1.0 kg)</option>
-                    <option value="0.5">Sling Bag Budget (0.5 kg)</option>
+                    <option value="2.6">Delta Backpack (2.6 kg)</option>
+                    <option value="2.4">Rush 72 2.0 (2.4 kg)</option>
+                    <option value="1.8">Falang 28 (1.8 kg)</option>
+                    <option value="1.3">Scorpion OCP Pack (1.3 kg)</option>
+                    <option value="1.1">Assault / Patrol Backpack (1.1 kg)</option>
+                    <option value="0.4">Drawstring / Sport Backpack (0.4 kg)</option>
                 </select>
 
                 <label for="lc_loot">Loot / Inhalt (geschätzt)</label>
@@ -2642,50 +2629,50 @@ function startTraderTimer() {
         { de: "Squad Strike: Night Raid", en: "Squad Strike: Night Raid", v: "Banshee", desc: "Leise Spec-Op.", sol: "Team Stealth Kills bei Nacht." }
     ];
 
-    // 2. WAFFEN DATENBANK
+    // 2. WAFFEN DATENBANK (NIJ UPDATED)
     const weapons = {
-        "ks1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
-        "m4a1": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
-        "mk18": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
-        "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "Class 3", tip: "Hohe Mündungsgeschwindigkeit sorgt für weniger Bullet-Drop auf Distanz." },
-        "cqa1": { ammo: "5.56x45mm M855", pen: "Class 3", tip: "Chinesischer M4-Klon. Gute Budget-Alternative, aber etwas schlechtere Basis-Werte." },
-        "ddm4": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "Daniel Defense Plattform. Fantastische Basiswerte für Rückstoß und Ergonomie." },
-        "sicmcx": { ammo: "5.56x45mm / .300 BLK", pen: "Class 4", tip: "Sehr flexibel. Ein absolutes Biest im Nahkampf, besonders mit Schalldämpfer." },
-        "akm": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Viel Rückstoß, aber extrem hoher Schaden pro Schuss." },
-        "akmn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Der Klassiker. Mit BP-Munition extrem gefährlich gegen Class 3+ Westen." },
-        "akmsn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Klappschaft-Version. Kompakter im Rucksack, erlaubt Optik-Montage via Dovetail." },
-        "ak74n": { ammo: "5.45x39mm 7N6M / PP", pen: "Class 3", tip: "Sehr geringer Rückstoß. Präziser als die 7.62er Varianten." },
-        "ak74m": { ammo: "5.45x39mm PP / BP", pen: "Class 4", tip: "Modernisierte AK-74. Geringes Gewicht, gute Trägheits-Werte." },
-        "aks74u": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Die 'Krinkov'. Genial für CQB, verliert aber auf Distanz stark an Genauigkeit." },
-        "ak103": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Beste 7.62er AK. Kann alle modernen Aufsätze nutzen." },
-        "ak105": { ammo: "5.45x39mm PP", pen: "Class 3", tip: "Kurze AK-Variante. Perfekt für das neue Bewegungssystem." },
-        "vz58": { ammo: "7.62x39mm PS / BP", pen: "Class 4", tip: "Keine AK! Nutzt eigene Magazine. Höhere Feuerrate als die AKMN." },
-        "ak12": { ammo: "5.45x39mm BP", pen: "Class 4", tip: "Modernste russische Armee-Waffe. Integrierte Schienen und tolles Schussgefühl." },
-        "ak15": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Verbindet das moderne Handling der AK-12 mit der brachialen Kraft der 7.62 Patrone." },
-        "ak19": { ammo: "5.56x45mm NATO", pen: "Class 4", tip: "Nutzt westliche Munition auf der modernen AK-12 Plattform. Sehr vielseitig." },
-        "ak308": { ammo: "7.62x51mm M80/M61", pen: "Class 5-6", tip: "AK-Plattform auf Steroiden. Verschießt fette NATO-Muni. Extrem laut, extrem tödlich." },
-        "m14": { ammo: "7.62x51mm M80 / M61", pen: "Class 4-6", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
-        "m700": { ammo: "7.62x51mm M61", pen: "Class 6", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
-        "svd": { ammo: "7.62x54mmR 7N1", pen: "Class 5", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
-        "mosin": { ammo: "7.62x54mmR SNB", pen: "Class 6", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
-        "skn": { ammo: "7.62x39mm BP", pen: "Class 4", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
-        "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "Ein Laser auf kurze Distanz. Ziele auf Kopf oder Beine." },
-        "mp7a1": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Kleine Waffe, gigantischer Durchschlag. Perfekte Backup-Waffe für Sniper." },
-        "mp7a2": { ammo: "4.6x30mm AP", pen: "Class 4", tip: "Wie die A1, aber erlaubt die Montage eigener Vordergriffe für noch bessere Ergo." },
-        "vz61": { ammo: "9x18mm / .32 ACP", pen: "Class 0-1", tip: "Skorpion Maschinenpistole. Enorme Feuerrate, aber durchdringt keine Rüstung. Leg-Meta!" },
-        "vityaz": { ammo: "9x19mm 7N21", pen: "Class 2+", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
-        "m870": { ammo: "12G Slug / 00 Buck", pen: "Class 0-2", tip: "In 0.4 sind Slugs gegen weiche Ziele verheerend." },
-        "590a1": { ammo: "12G 00 Buckshot", pen: "Class 0-1", tip: "Maximale Stopwirkung auf 5-10 Meter." },
-        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "Class 2+", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS und fast kein Rückstoß." },
-        "glock17": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Zuverlässig, große Magazine verfügbar." },
-        "m9a1": { ammo: "9x19mm PST Gzh", pen: "Class 1+", tip: "Gute Standard-Pistole für den Start." },
-        "makarov": { ammo: "9x18mm PM Gzh", pen: "Class 0", tip: "Nur im absoluten Notfall." },
-        "1911": { ammo: ".45 ACP", pen: "Class 1", tip: "Massiver Fleischschaden, aber geringe Magazinkapazität." },
-        "ccc": { ammo: ".45 ACP", pen: "Class 1", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
-        "typ51": { ammo: "7.62x25mm Tokarev", pen: "Class 2+", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." },
-        "m1a": { ammo: "7.62x51mm M80", pen: "Class 4-6", tip: "0.4 NEU: Zivile Version des M14. Exzellent als DMR mit den neuen 0.4 Scopes." },
-        "rem788": { ammo: "5.56x45mm M855", pen: "Class 2-3", tip: "0.4 NEU: Remington Model 788 (.222). Repetierbüchse, ideal für Einsteiger-Jagd-Tasks." },
-        "m201c": { ammo: "5.56x45mm M855A1", pen: "Class 4", tip: "0.4 NEU: Stark modifizierbares Kompaktgewehr. Sehr starke Alternative zur M4A1." }
+        "ks1": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
+        "m4a1": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
+        "mk18": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
+        "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "NIJ III", tip: "Hohe Mündungsgeschwindigkeit sorgt für weniger Bullet-Drop auf Distanz." },
+        "cqa1": { ammo: "5.56x45mm M855", pen: "NIJ III", tip: "Chinesischer M4-Klon. Gute Budget-Alternative, aber etwas schlechtere Basis-Werte." },
+        "ddm4": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "Daniel Defense Plattform. Fantastische Basiswerte für Rückstoß und Ergonomie." },
+        "sicmcx": { ammo: "5.56x45mm / .300 BLK", pen: "NIJ III+", tip: "Sehr flexibel. Ein absolutes Biest im Nahkampf, besonders mit Schalldämpfer." },
+        "akm": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Viel Rückstoß, aber extrem hoher Schaden pro Schuss." },
+        "akmn": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Der Klassiker. Mit BP-Munition extrem gefährlich gegen NIJ III+ Westen." },
+        "akmsn": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Klappschaft-Version. Kompakter im Rucksack, erlaubt Optik-Montage via Dovetail." },
+        "ak74n": { ammo: "5.45x39mm 7N6M / PP", pen: "NIJ III", tip: "Sehr geringer Rückstoß. Präziser als die 7.62er Varianten." },
+        "ak74m": { ammo: "5.45x39mm PP / BP", pen: "NIJ III+", tip: "Modernisierte AK-74. Geringes Gewicht, gute Trägheits-Werte." },
+        "aks74u": { ammo: "5.45x39mm PP", pen: "NIJ III", tip: "Die 'Krinkov'. Genial für CQB, verliert aber auf Distanz stark an Genauigkeit." },
+        "ak103": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Beste 7.62er AK. Kann alle modernen Aufsätze nutzen." },
+        "ak105": { ammo: "5.45x39mm PP", pen: "NIJ III", tip: "Kurze AK-Variante. Perfekt für das neue Bewegungssystem." },
+        "vz58": { ammo: "7.62x39mm PS / BP", pen: "NIJ III+", tip: "Keine AK! Nutzt eigene Magazine. Höhere Feuerrate als die AKMN." },
+        "ak12": { ammo: "5.45x39mm BP", pen: "NIJ III+", tip: "Modernste russische Armee-Waffe. Integrierte Schienen und tolles Schussgefühl." },
+        "ak15": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Verbindet das moderne Handling der AK-12 mit der brachialen Kraft der 7.62 Patrone." },
+        "ak19": { ammo: "5.56x45mm NATO", pen: "NIJ III+", tip: "Nutzt westliche Munition auf der modernen AK-12 Plattform. Sehr vielseitig." },
+        "ak308": { ammo: "7.62x51mm M80/M61", pen: "NIJ IV", tip: "AK-Plattform auf Steroiden. Verschießt fette NATO-Muni. Extrem laut, extrem tödlich." },
+        "m14": { ammo: "7.62x51mm M80 / M61", pen: "NIJ IV", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
+        "m700": { ammo: "7.62x51mm M61", pen: "NIJ IV", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
+        "svd": { ammo: "7.62x54mmR 7N1", pen: "NIJ IV", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
+        "mosin": { ammo: "7.62x54mmR SNB", pen: "NIJ IV", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
+        "skn": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
+        "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "NIJ IIIA", tip: "Ein Laser auf kurze Distanz. Ziele auf Kopf oder Beine." },
+        "mp7a1": { ammo: "4.6x30mm AP", pen: "NIJ III+", tip: "Kleine Waffe, gigantischer Durchschlag. Perfekte Backup-Waffe für Sniper." },
+        "mp7a2": { ammo: "4.6x30mm AP", pen: "NIJ III+", tip: "Wie die A1, aber erlaubt die Montage eigener Vordergriffe für noch bessere Ergo." },
+        "vz61": { ammo: "9x18mm / .32 ACP", pen: "NIJ IIA", tip: "Skorpion Maschinenpistole. Enorme Feuerrate, aber durchdringt keine Rüstung. Leg-Meta!" },
+        "vityaz": { ammo: "9x19mm 7N21", pen: "NIJ IIIA", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
+        "m870": { ammo: "12G Slug / 00 Buck", pen: "NIJ IIA", tip: "In 0.4 sind Slugs gegen weiche Ziele verheerend." },
+        "590a1": { ammo: "12G 00 Buckshot", pen: "NIJ IIA", tip: "Maximale Stopwirkung auf 5-10 Meter." },
+        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "NIJ IIIA", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS und fast kein Rückstoß." },
+        "glock17": { ammo: "9x19mm PST Gzh", pen: "NIJ IIA", tip: "Zuverlässig, große Magazine verfügbar." },
+        "m9a1": { ammo: "9x19mm PST Gzh", pen: "NIJ IIA", tip: "Gute Standard-Pistole für den Start." },
+        "makarov": { ammo: "9x18mm PM Gzh", pen: "NIJ IIA", tip: "Nur im absoluten Notfall." },
+        "1911": { ammo: ".45 ACP", pen: "NIJ IIA", tip: "Massiver Fleischschaden, aber geringe Magazinkapazität." },
+        "ccc": { ammo: ".45 ACP", pen: "NIJ IIA", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
+        "typ51": { ammo: "7.62x25mm Tokarev", pen: "NIJ IIIA", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." },
+        "m1a": { ammo: "7.62x51mm M80", pen: "NIJ IV", tip: "0.4 NEU: Zivile Version des M14. Exzellent als DMR mit den neuen 0.4 Scopes." },
+        "rem788": { ammo: "5.56x45mm M855", pen: "NIJ IIIA", tip: "0.4 NEU: Remington Model 788 (.222). Repetierbüchse, ideal für Einsteiger-Jagd-Tasks." },
+        "m201c": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "0.4 NEU: Stark modifizierbares Kompaktgewehr. Sehr starke Alternative zur M4A1." }
     };
     
 // 3. WAFFEN BILDER DATENBANK
@@ -3433,12 +3420,12 @@ const vendorData = {
     function compareAmmo() {
         const a1 = ammoDb[document.getElementById('ammo1').value];
         const a2 = ammoDb[document.getElementById('ammo2').value];
-        if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Durchschlag: Class <span class="highlight">${a1.pen}</span><br>Schaden (Flesh): ${a1.damage}<br><small>${a1.info}</small>`;
-        if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Durchschlag: Class <span class="highlight">${a2.pen}</span><br>Schaden (Flesh): ${a2.damage}<br><small>${a2.info}</small>`;
+        if(a1) document.getElementById('ammo1Info').innerHTML = `<b>${a1.name}</b><br>Penetrations-Wert: <span class="highlight">${a1.pen}</span><br>Schaden (Flesh): ${a1.damage}<br><small>${a1.info}</small>`;
+        if(a2) document.getElementById('ammo2Info').innerHTML = `<b>${a2.name}</b><br>Penetrations-Wert: <span class="highlight">${a2.pen}</span><br>Schaden (Flesh): ${a2.damage}<br><small>${a2.info}</small>`;
         if(a1 && a2) {
             let winText = "";
-            if(a1.pen > a2.pen) winText = `${a1.name} gewinnt gegen Rüstung!`;
-            else if(a2.pen > a1.pen) winText = `${a2.name} gewinnt gegen Rüstung!`;
+            if(a1.pen > a2.pen) winText = `${a1.name} schlägt stärkere NIJ-Klassen!`;
+            else if(a2.pen > a1.pen) winText = `${a2.name} schlägt stärkere NIJ-Klassen!`;
             else winText = "Gleicher Durchschlag. Achte auf den Schaden!";
             document.getElementById('comparisonResult').innerHTML = `<span class="highlight">FAZIT:</span> ${winText}`;
         } else {
@@ -4492,16 +4479,14 @@ const ammoMatrixData = [
     { name: "12G 00 Buck",    cal: "12 Gauge",    pen: 1.0, dmg: 280 },
 ];
 
-// Rüstungsklassen-Grenzwerte (Penetrationswert muss >= sein um "durch")
-const armorClasses = [
-    { label: "Class 1", threshold: 1.0 },
-    { label: "Class 2", threshold: 2.0 },
-    { label: "Class 3", threshold: 3.0 },
-    { label: "Class 3+", threshold: 3.5 },
-    { label: "Class 4", threshold: 4.0 },
-    { label: "Class 5", threshold: 5.0 },
-    { label: "Class 6", threshold: 6.0 },
-];
+// Rüstungsklassen-Grenzwerte für die Ammo-Matrix (NIJ Updates)
+    const armorClasses = [
+        { label: "NIJ IIA", threshold: 1.0 },
+        { label: "NIJ IIIA", threshold: 2.0 },
+        { label: "NIJ III", threshold: 3.0 },
+        { label: "NIJ III+", threshold: 3.5 },
+        { label: "NIJ IV", threshold: 4.0 }
+    ];
 
 function getAmmoCell(pen, threshold) {
     const diff = pen - threshold;
@@ -4521,42 +4506,39 @@ function getAmmoCell(pen, threshold) {
 }
 
 function buildAmmoMatrix() {
-    const tbody = document.getElementById('ammoMatrixBody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
+        const tbody = document.getElementById('ammoMatrixBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
 
-    // Gruppiere nach Kaliber
-    const calibers = [...new Set(ammoMatrixData.map(a => a.cal))];
-    let lastCal = '';
+        const calibers = [...new Set(ammoMatrixData.map(a => a.cal))];
+        let lastCal = '';
 
-    ammoMatrixData.forEach(ammo => {
-        const row = document.createElement('tr');
+        ammoMatrixData.forEach(ammo => {
+            const row = document.createElement('tr');
 
-        // Kaliber-Trennzeile
-        if (ammo.cal !== lastCal) {
-            const sepRow = document.createElement('tr');
-            sepRow.innerHTML = `<td colspan="8" style="background:#1a1a2e; color:#7ca35a; font-weight:bold; font-size:0.8rem; padding:6px 10px; border:1px solid #333; letter-spacing:1px;">⚡ ${ammo.cal}</td>`;
-            tbody.appendChild(sepRow);
-            lastCal = ammo.cal;
-        }
+            // Kaliber-Trennzeile mit Colspan 6 (1 Spalte Name + 5 Spalten Rüstung)
+            if (ammo.cal !== lastCal) {
+                const sepRow = document.createElement('tr');
+                sepRow.innerHTML = `<td colspan="6" style="background:#1a1a2e; color:#7ca35a; font-weight:bold; font-size:0.8rem; padding:6px 10px; border:1px solid #333; letter-spacing:1px;">⚡ ${ammo.cal}</td>`;
+                tbody.appendChild(sepRow);
+                lastCal = ammo.cal;
+            }
 
-        // Munitionsname
-        let nameCell = `<td style="background:#1e1e1e; color:#ddd; padding:7px 10px; border:1px solid #2a2a2a; font-weight:bold; position:sticky; left:0; z-index:1; white-space:nowrap;">
-            ${ammo.name}
-            <small style="color:#555; font-weight:normal; display:block;">Pen: ${ammo.pen} | DMG: ${ammo.dmg}</small>
-        </td>`;
+            let nameCell = `<td style="background:#1e1e1e; color:#ddd; padding:7px 10px; border:1px solid #2a2a2a; font-weight:bold; position:sticky; left:0; z-index:1; white-space:nowrap;">
+                ${ammo.name}
+                <small style="color:#555; font-weight:normal; display:block;">Pen: ${ammo.pen} | DMG: ${ammo.dmg}</small>
+            </td>`;
 
-        row.innerHTML = nameCell;
+            row.innerHTML = nameCell;
 
-        // Farbige Zellen für jede Rüstungsklasse
-        armorClasses.forEach(ac => {
-            const cell = getAmmoCell(ammo.pen, ac.threshold);
-            row.innerHTML += `<td title="${cell.title}" style="background:${cell.bg}; color:${cell.color}; text-align:center; padding:7px 4px; border:1px solid #2a2a2a; font-size:1rem; cursor:default;">${cell.text}</td>`;
+            armorClasses.forEach(ac => {
+                const cell = getAmmoCell(ammo.pen, ac.threshold);
+                row.innerHTML += `<td title="${cell.title}" style="background:${cell.bg}; color:${cell.color}; text-align:center; padding:7px 4px; border:1px solid #2a2a2a; font-size:1rem; cursor:default;">${cell.text}</td>`;
+            });
+
+            tbody.appendChild(row);
         });
-
-        tbody.appendChild(row);
-    });
-}
+    }
 
 // Beim Laden initialisieren
 window.addEventListener('DOMContentLoaded', () => {
