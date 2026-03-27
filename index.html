@@ -4858,7 +4858,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const pubDate = new Date(latestItem.pubDate).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
                 let snippet = latestItem.description.replace(/(<([^>]+)>)/gi, "").replace(/&quot;/g, '"'); 
-                if (snippet.length > 200) snippet = snippet.substring(0, 200) + "...";
+                if (snippet.length > 400) snippet = snippet.substring(0, 200) + "...";
 
                 const translatedTitle = await translateToGerman(latestItem.title);
                 const translatedSnippet = await translateToGerman(snippet);
