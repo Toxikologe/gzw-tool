@@ -838,7 +838,7 @@
         
         <div class="news-ticker-container">
             <div class="news-ticker-text">
-                ⚠️ Vorabzugang für Supporter Edition ab 27. März, vollständige Version 0.4 ab 31. März ⚠️
+                ⚠️ Neue Sektion - Blueprints - Neue Sektion - Blueprints - Neue Sektion - Blueprints -  ⚠️
             </div>
         </div>
         
@@ -4076,7 +4076,8 @@ function updateBlueprintInfo() {
     const val = document.getElementById('blueprintSelect').value;
     const display = document.getElementById('blueprintDisplay');
     
-    if (!val) {
+    // Falls nichts ausgewählt ist ODER die Datenbank fehlt
+    if (!val || typeof blueprintDb === 'undefined' || !blueprintDb[val]) {
         display.style.display = 'none';
         return;
     }
@@ -4087,6 +4088,19 @@ function updateBlueprintInfo() {
     document.getElementById('bpDesc').innerText = bp.desc;
     document.getElementById('bpTip').innerText = bp.tip;
     display.style.display = 'block';
+}
+
+function initBlueprints() {
+    const bpSelect = document.getElementById('blueprintSelect');
+    if (bpSelect && typeof blueprintDb !== 'undefined') {
+        const sortedBPs = Object.keys(blueprintDb).sort();
+        sortedBPs.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.text = name;
+            bpSelect.appendChild(opt);
+        });
+    }
 }
 
 // Initialisierung beim Laden
@@ -4136,6 +4150,7 @@ window.addEventListener('DOMContentLoaded', () => {
         calcLoadout();
         calcHeliTime();
         buildBossTimerList();
+        initBlueprints();
         
         // --- NEU HINZUGEFÜGT ---
         fetchLatestNews(); 
