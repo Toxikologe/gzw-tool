@@ -1446,6 +1446,63 @@ const codesDb = [
     { name: "UNLRA Hauptquartier (UNLRA HQ Keypad)", code: "Dynamisch", loc: "Tiger Bay", info: "Der Code für das Tastenfeld spawnt zufällig in der direkten Umgebung des UNLRA-Gebäudes (oft auf Schreibtischen)." }
 ];
 
+// ==========================================
+// 12. LOOT RUNS & FARMING ROUTEN (0.4 SPEARHEAD)
+// ==========================================
+const lootRoutesDb = [
+    {
+        id: "route_midnight",
+        name: "Der Millionärs-Run (The Millionaire's Run)",
+        location: "Midnight Sapphire (Hotel & Villen)",
+        danger: "Hoch (High)",
+        time: "~ 20-25 Minuten",
+        requirements: "Taschen für Wertsachen (Wallet), Hotel- & Villen-Schlüssel (Hotel/Villa Keys).",
+        target: "Bargeld (Cash), Elektronik (Electronics), M700 & SIG MCX Blueprint.",
+        steps: [
+            "<b>1. Landung:</b> Nutze Landezone (LZ) Hotel 1 oder 2.",
+            "<b>2. Die Villen (Villas):</b> Klappere die äußeren Villen ab. Durchsuche die Schlafzimmer nach Tresoren (Safes) und PCs nach Elektronik (GPUs, USB-Drives).",
+            "<b>3. Erdgeschoss Hotel:</b> Dringe in das Hauptgebäude ein. Gehe auf die hintere rechte Seite, um dir den <b>SIG MCX Blueprint</b> zu sichern.",
+            "<b>4. Hotelzimmer (Hotel Rooms):</b> Nutze deine Schlüssel für die abgesperrten Zimmer. Hier spawnen oft hochwertige Waffen-Aufsätze (Attachments) und Wertsachen.",
+            "<b>5. Das Dach (The Roof):</b> Kämpfe dich über das Treppenhaus auf das Dach. Am entfernten Ende findest du den <b>M700 Sniper Blueprint</b> und oft den wertvollsten Loot im Spiel (LTSD Laser Designator)."
+        ],
+        tip: "Verkaufe Schmuck und Gold immer an <b>Turncoat</b> und Elektronik an <b>Lab Rat</b>, um den 125% Preis-Bonus zu kassieren!"
+    },
+    {
+        id: "route_narith",
+        name: "Die Waffenkammer (The Armory Run)",
+        location: "Fort Narith (HQ & Baracken)",
+        danger: "Extrem (Extreme)",
+        time: "~ 30 Minuten",
+        requirements: "Großer Rucksack (Delta Backpack), Rüstung (NIJ III+).",
+        target: "Rüstung (Armor), AP-Munition (AP Ammo), DDM4 Blueprint.",
+        steps: [
+            "<b>1. Landung:</b> Nutze LZ Delta 1 oder 2. ⚠️ Vorsicht: Achte auf die neuen Artillerie/Mörser-Einschläge (Mortar Strikes) in 0.4!",
+            "<b>2. Schrottplatz (Dumping Ground):</b> Lauf nördlich zum Schrottplatz. Wenn du den dynamischen Code aus Nakasa Village hast, öffne hier die Militärkiste für ersten High-Tier Loot.",
+            "<b>3. Baracken (Barracks):</b> Säubere die Baracken. Auf einem Tisch im 2. Stock liegt der <b>DDM4 Blueprint</b>. Gehe in den Serverraum A204 und merke dir den Code auf dem Zettel.",
+            "<b>4. Flugkontrollturm (Air Control Tower):</b> Nutze den Code (meist 9198) am Tower, um die Waffen-Racks zu plündern.",
+            "<b>5. Hauptquartier (HQ):</b> Arbeite dich vorsichtig ins HQ und die umliegenden Garagen vor. Hier farmst du Elite-Gegner für Level III/IV Rüstungen und panzerbrechende Munition (AP Ammo)."
+        ],
+        tip: "Zerlege gefundene Waffen! Nimm nur die teuren Attachments (Visiere, Schalldämpfer) mit, um massiv Platz im Rucksack zu sparen."
+    },
+    {
+        id: "route_hunters",
+        name: "Der Schrottsammler (The Scavenger Run)",
+        location: "Hunter's Paradise",
+        danger: "Mittel (Medium)",
+        time: "~ 15 Minuten",
+        requirements: "Keine speziellen Anforderungen. Ideal für Solo-Spieler.",
+        target: "Waffenteile (Weapon Parts), M14 EBR Blueprint, Basis-Medizin.",
+        steps: [
+            "<b>1. Landung:</b> Nutze LZ Foxtrot 1 oder 2.",
+            "<b>2. Schießstand (Firing Range):</b> Plündere die Tische und Bänke am Schießstand. Hier spawnen massenhaft Munitionsschachteln und Waffen-Mods (Weapon Mods).",
+            "<b>3. Alter Bunker (Old Bunker):</b> Gehe zum Büro hinter der Waffenkammer. Suche an der Wand (neben der gefesselten Leiche) nach einer gelben Haftnotiz. Nutze diesen dynamischen Code, um das Vorhängeschloss des Bunkers zu öffnen.",
+            "<b>4. Waffenkammer (Armory):</b> Im Raum direkt neben der verschlossenen Haupt-Waffenkammer findest du den neuen <b>M14 EBR Blueprint</b>.",
+            "<b>5. Boss-Check:</b> Prüfe, ob der Boss (Hostile Commander) spawnt. Er droppt oft gute Mid-Game Rüstung und Schlüssel."
+        ],
+        tip: "Diese Route eignet sich perfekt, um die wiederholbaren 'Maintenance Contracts' von Artisan abzuschließen (Defekte Waffenteile sammeln)."
+    }
+];
+
     // 14. Waffen Blueprints
     const blueprintDb = {
         "AK-308": { loc: "Fort Narith Jail (142, 130)", desc: "Hinter einer aufkickbaren Tür unter der Kaffeemaschine.", tip: "Du musst den Jail Key besitzen." },
