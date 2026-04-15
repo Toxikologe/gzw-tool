@@ -278,7 +278,7 @@
     <div class="sidebar-title">Basecamp</div>
     <button class="sidebar-btn" onclick="openTab('tab-vendors', this)">🤝 Händler</button>
     <button class="sidebar-btn" onclick="openTab('tab-stash', this)">📦 Stash</button>
-    <button class="sidebar-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
+    <button class="sidebar-btn" onclick="openTab('tab-tasks', this)">📋 Tasks (in Rework)</button>
 
     <div class="sidebar-title">Arsenal</div>
     <button class="sidebar-btn" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
@@ -363,13 +363,40 @@
             </div>
             <div class="panel-box" style="margin-top: 20px;">
                 <h3>📜 Die Geschichte & Das "Ereignis"</h3>
-                <p style="line-height: 1.6; color: #ccc; margin-bottom: 0;">
+                <p style="line-height: 1.6; color: #ccc; margin-bottom: 15px;">
                     Lamang trägt noch immer die tiefen Narben jahrzehntelanger Konflikte. Doch das, was die Insel in den heutigen Abgrund stürzte, war unerwartet. Ein plötzliches Phänomen am Ground Zero verwandelte die Region über Nacht in eine Sperrzone. War es ein Waffentest? Ein Asteroideneinschlag? 
                     <br><br>
                     Nun streifen zurückgelassene Milizen der LAF, Kriminelle, fanatische Kultisten und rivalisierende Elite-Söldner durch den Dschungel. Dein Auftrag: Erfülle Befehle für deine Händler, stärke deine Fraktion und erreiche das Epizentrum der Katastrophe.
                 </p>
+                
+                <button class="tool-btn" onclick="toggleLore()" id="loreBtn" style="background-color: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.95rem; transition: 0.2s;" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter='brightness(1)'">📖 Komplette Lore lesen</button>
+
+                <div id="full-lore" style="display: none; margin-top: 25px; padding-top: 20px; border-top: 1px dashed #444; animation: fadeIn 0.4s;">
+                    
+                    <h4 style="color: var(--accent); margin-bottom: 5px; font-size: 1.1rem;">🌍 Der Fall von Lamang (Die Vorgeschichte)</h4>
+                    <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+                        Die fiktive südostasiatische Insel Lamang war einst eine britische Kolonie. Nur zwei Jahrzehnte nach ihrer hart erkämpften Unabhängigkeit wurde sie von einem brutalen Bürgerkrieg zerrissen. Die anti-britische Widerstandsgruppe "Sons of Lamang" (SOL) war mit der neuen Regierung unzufrieden und stürzte diese innerhalb weniger Monate, da die offizielle Armee katastrophal ausgerüstet war. Der SOL-Kommandant Raksmei Sayavong ernannte sich selbst zum Präsidenten und Diktator. Dies hinterließ eine Region, die bereits vor der eigentlichen Katastrophe stark von politischer Unruhe und Armut geplagt war.
+                    </p>
+
+                    <h4 style="color: var(--accent); margin-bottom: 5px; font-size: 1.1rem;">☢️ Das mysteriöse "Ereignis" (The Event)</h4>
+                    <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 10px;">
+                        Die wahre Apokalypse geschah völlig unerwartet: Ein gigantischer Lichtblitz und eine massive Explosion erschütterten das Gebiet, das heute als <em>Ground Zero</em> bekannt ist. Seltsamerweise gab es keine der typischen massiven Zerstörungen einer Atombombe, jedoch entstanden extrem tödliche radioaktive Zonen. Einige entdeckte Leichen im Epizentrum sind regelrecht geschmolzen und strahlen so stark, dass pure Nähe tödlich ist. 
+                    </p>
+                    <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+                        Nachdem Massenpanik ausbrach, startete die UNLRA (eine UN-Hilfsorganisation) eine hastige Evakuierungsmission, gab die Insel aber kurz darauf komplett auf. Lamang wurde international unter strikte Quarantäne gestellt. Seither kursieren düstere Theorien: Von schiefgelaufenen nuklearen Experimenten bis hin zu Alien-Kontakt, da wissenschaftliche Messgeräte der ominösen "Fifth Dimension Industries" und Aufzeichnungen über Signale aus dem Weltall gefunden wurden. Operator berichten von Flüstern im Dschungel, okkulten Opferaltären nahe Ban Pa und Leichen, die auf unerklärliche Weise mutiert sind.
+                    </p>
+
+                    <h4 style="color: var(--accent); margin-bottom: 5px; font-size: 1.1rem;">⚔️ Die 3 Fraktionen (PMCs)</h4>
+                    <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 10px;">
+                        Als das Gebiet verlassen wurde, übernahmen Kartelle, die verbliebenen Lamang Armed Forces (LAF) und fanatische Sekten die Kontrolle. Kurz darauf trafen drei Private Military Companies (PMCs) im Auftrag geheimer Elite-Klienten ein, um die Sperrzone zu sichern und wertvolle Proben zu bergen:
+                    </p>
+                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px; margin-bottom: 0;">
+                        <li style="margin-bottom: 10px;"><strong style="color: #227093;">Lamang Recovery Initiative (LRI):</strong> Finanziert von einem Tech-Milliardär, präsentiert sich LRI der Öffentlichkeit als philanthropische Hilfsorganisation. Ihre hochprofessionellen, bewaffneten Operator sollen offiziell Evakuierungs- und Aufräumarbeiten beschützen.</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: #7ca35a;">Mithras Security Systems (MSS):</strong> Eine ehrliche Söldner-Truppe, die von kampferprobten Veteranen für Soldaten geführt wird. Sie operieren nach einer an die römischen Legionen angelehnten Philosophie, bei der die wertvolle Kriegsbeute und Bezahlung strikt nach Leistung im Feld aufgeteilt wird.</li>
+                        <li><strong style="color: #b33939;">Crimson Shield International (CSI):</strong> Eine skrupellose PMC, die während des syrischen Bürgerkriegs zu trauriger Berühmtheit gelangte. Sie brüsten sich mit einer 95%igen Erfolgsquote, sind aber für ihre extrem brutalen Methoden und schweren zivilen Kollateralschäden berüchtigt.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
         <div id="tab-patchnotes" class="tab-content">
             <h2>Aktuelle Patch Notes (Changelog)</h2>
@@ -2640,6 +2667,22 @@
 
             tbody.appendChild(row);
         });
+    }
+
+    // --- LORE TOGGLE LOGIK ---
+    function toggleLore() {
+        const loreDiv = document.getElementById('full-lore');
+        const btn = document.getElementById('loreBtn');
+        
+        if (loreDiv.style.display === 'none' || loreDiv.style.display === '') {
+            loreDiv.style.display = 'block';
+            btn.innerHTML = '📖 Lore schließen';
+            btn.style.backgroundColor = '#b33939'; // Rote Farbe beim Schließen
+        } else {
+            loreDiv.style.display = 'none';
+            btn.innerHTML = '📖 Komplette Lore lesen';
+            btn.style.backgroundColor = 'var(--accent)'; // Wieder grün
+        }
     }
 
     // ==============================================================
