@@ -97,6 +97,93 @@
             margin: 0 auto;
         }
 
+        /* Feedback Button & Modal */
+#feedback-trigger {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+#feedback-trigger:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.feedback-modal {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background: #1a1a1a;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 15px;
+    z-index: 10001;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+    animation: fadeIn 0.3s;
+}
+
+.feedback-modal h4 {
+    margin: 0 0 10px 0;
+    color: var(--accent);
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.feedback-modal textarea {
+    width: 100%;
+    height: 100px;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    resize: none;
+    font-family: inherit;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.feedback-modal .path-info {
+    font-size: 0.7rem;
+    color: #888;
+    margin-bottom: 10px;
+    background: #111;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #333;
+}
+
+.feedback-send-btn {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.feedback-send-btn:disabled {
+    background: #444;
+    cursor: not-allowed;
+}
+
         /* --- DEIN BESTEHENDES CSS (100% ERHALTEN) --- */
         .tactical-news-frame {
             width: 100%; background-color: #0d0d0d; border: 3px solid #333;
@@ -202,6 +289,19 @@
     </style>
 </head>
 <body>
+
+    <button id="feedback-trigger" onclick="toggleFeedbackModal()">
+    💬 Feedback
+</button>
+
+<div id="feedback-modal" class="feedback-modal">
+    <h4>Fehler/Info melden</h4>
+    <div class="path-info">
+        📍 Pfad: <span id="feedback-path">Dashboard</span>
+    </div>
+    <textarea id="feedback-text" placeholder="Was ist dir aufgefallen? (z.B. falsche Munitionswerte...)"></textarea>
+    <button id="feedback-send-btn" class="feedback-send-btn" onclick="sendFeedback()">Senden</button>
+</div>
 
 <div id="bossSpawnWidget" style="display:none;">
     <div id="bossSpawnHeader">
@@ -2835,6 +2935,82 @@
 
         timeDisplay.textContent = `DATE: ${day} ${month} ${year} | TIME: ${hours}:${minutes}:${seconds} ZULU`;
     }
+
+    // ==============================================================
+    // FEEDBACK BUTTON (Standardmäßig eingeklappt)
+    // ==============================================================
+    // Öffnet/Schließt das Feedback-Fenster und erkennt den aktuellen Pfad
+function toggleFeedbackModal() {
+    const modal = document.getElementById('feedback-modal');
+    const pathDisplay = document.getElementById('feedback-path');
+    
+    if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+    } else {
+        // Erkennt die aktuell aktive Sektion anhand der .active Klasse
+        const activeTab = document.querySelector('.tab-content.active');
+        const activeTabTitle = activeTab ? activeTab.querySelector('h2')?.innerText || activeTab.id : "Unbekannt";
+        
+        pathDisplay.innerText = activeTabTitle;
+        modal.style.display = 'block';
+        document.getElementById('feedback-text').focus();
+    }
+}
+
+// Sendet das Feedback direkt an deinen Discord-Kanal via Webhook
+async function sendFeedback() {
+    const text = document.getElementById('feedback-text').value;
+    const path = document.getElementById('feedback-path').innerText;
+    const btn = document.getElementById('feedback-send-btn');
+
+    if (!text.trim()) {
+        alert("Bitte gib eine kurze Nachricht ein.");
+        return;
+    }
+
+    // Button deaktivieren, damit User nicht doppelt klicken
+    btn.disabled = true;
+    btn.innerText = "Sendet...";
+
+    // DEIN DISCORD WEBHOOK
+    const webhookUrl = "https://discord.com/api/webhooks/1494037850356846624/0TOtksyE4LrDqLWUEhTwlJQP5xN7XqMKG7mBstHJ7yAKjmYMJ286jpgtEg1aYroE0gQ-";
+
+    // Das Payload-Objekt formatiert die Nachricht für Discord
+    // Wir nutzen Markdown (**, `, >) damit es im Discord wie ein echter Bug-Report aussieht
+    const payload = {
+        username: "GZW Tactical Tool", // Der Name des Bots im Discord
+        avatar_url: "https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Banner%204.png", // Optional: Profilbild des Bots
+        content: `🚨 **Neues Feedback / Bug Report** 🚨\n**📍 Sektion:** \`${path}\`\n**💬 Nachricht:**\n> ${text}`
+    };
+
+    try {
+        // HTTP POST Request an Discord senden
+        const response = await fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        // Prüfen, ob Discord den Request akzeptiert hat (Status 200-299)
+        if (response.ok || response.status === 204) {
+            alert("Vielen Dank! Dein Feedback wurde direkt an die Entwickler übermittelt.");
+            document.getElementById('feedback-text').value = ""; // Textfeld leeren
+            document.getElementById('feedback-modal').style.display = 'none'; // Modal schließen
+        } else {
+            console.error("Discord API Fehler:", response.status, response.statusText);
+            alert("Uff... Fehler beim Senden. Bitte versuche es später nochmal.");
+        }
+    } catch (error) {
+        console.error("Netzwerkfehler:", error);
+        alert("Netzwerkfehler: Konnte keine Verbindung zum Server herstellen.");
+    } finally {
+        // Button wieder aktivieren, egal ob Erfolg oder Fehler
+        btn.disabled = false;
+        btn.innerText = "Senden";
+    }
+}
 
     // ==============================================================
     // AMMO MATRIX RENDER LOGIK (Standardmäßig eingeklappt)
