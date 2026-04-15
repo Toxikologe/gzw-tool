@@ -974,18 +974,18 @@
             <h2>🔢 Codes & Passwörter (Locks & Keypads)</h2>
             <div class="panel-box">
                 <p style="color: #ccc; font-size: 0.95rem; margin-top: 0; margin-bottom: 20px;">
-                    Hier findest du alle bekannten Codes für Vorhängeschlösser, Keypads und Tresore. Wähle ein Schloss aus der Liste oder suche manuell nach dem Ort.
+                    Viele Codes in GZW ändern sich bei jedem Server-Neustart (Dynamisch). Hier erfährst du, wo die Notizzettel mit den Codes für die jeweiligen Türen versteckt sind!
                 </p>
-                <label for="codeDropdown" style="margin-top: 0;">Schloss / Tür aus Liste wählen:</label>
+                <label for="codeDropdown" style="margin-top: 0;">Schloss / Tresor aus Liste wählen:</label>
                 <select id="codeDropdown" onchange="selectCodeFromDropdown()" style="margin-bottom: 15px;">
                     <option value="">-- Wähle ein Schloss / Code --</option>
                 </select>
                 <label for="codeSearch" style="margin-top: 0;">Oder manuell suchen:</label>
-                <input type="text" id="codeSearch" placeholder="z.B. Ban Suk, Farm, Nakasa, Tresor..." onkeyup="searchCodes()">
+                <input type="text" id="codeSearch" placeholder="z.B. Ban Suk, Farm, Nakasa, Tresor, 9135..." onkeyup="searchCodes()">
                 
                 <div id="codeList" style="margin-top: 20px;">
                     <div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">
-                        Wähle ein Schloss oder tippe den Ort ein...
+                        Wähle ein Schloss oder tippe einen Ort ein...
                     </div>
                 </div>
             </div>
@@ -1859,7 +1859,7 @@
             searchCodes(); 
         } else {
             searchInput.value = "";
-            document.getElementById('codeList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Wähle ein Schloss oder tippe den Ort ein...</div>';
+            document.getElementById('codeList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Wähle ein Schloss oder tippe einen Ort ein...</div>';
         }
     }
 
@@ -1876,7 +1876,8 @@
 
         const filtered = codesDb.filter(i => 
             i.name.toLowerCase().includes(input) || 
-            i.loc.toLowerCase().includes(input)
+            i.loc.toLowerCase().includes(input) ||
+            i.code.toLowerCase().includes(input)
         );
 
         if (filtered.length > 0) {
@@ -1885,12 +1886,16 @@
                 box.className = 'panel-box';
                 box.style.marginBottom = '10px';
                 box.style.borderTopColor = 'var(--accent)'; 
+                
+                // Optische Unterscheidung, ob es ein dynamischer oder fester Code ist
+                const codeColor = item.code.includes('Dynamisch') ? '#ffa500' : '#7ca35a';
+                
                 box.innerHTML = `
-                    <h3 style="color: var(--accent); margin-top: 0; font-size: 1.4rem; letter-spacing: 2px;">🔢 ${item.code}</h3>
+                    <h3 style="color: ${codeColor}; margin-top: 0; font-size: 1.3rem; letter-spacing: 1px;">🔢 ${item.code}</h3>
                     <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; color: #fff;">${item.name}</div>
                     <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
                         <strong>📍 Ort:</strong> <span style="color: #fff;">${item.loc}</span><br>
-                        <strong>📖 Info:</strong> ${item.info}
+                        <strong>📖 Info / Fundort:</strong> ${item.info}
                     </div>
                 `;
                 list.appendChild(box);
@@ -1900,7 +1905,8 @@
                 <div class="panel-box" style="border-top: 4px solid #b33939;">
                     <h3 style="color: #b33939; margin-top: 0; font-size: 1.2rem;">❌ NICHT GEFUNDEN</h3>
                     <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                        Es gibt keinen bekannten Code für <strong>"${document.getElementById('codeSearch').value}"</strong>. Manche Türen in GZW sind rein kosmetisch oder öffnen sich nur durch physische Schlüssel.
+                        Es gibt keinen bekannten Code für <strong>"${document.getElementById('codeSearch').value}"</strong>. 
+                        Manche Türen in GZW sind rein kosmetisch oder öffnen sich nur durch physische Schlüssel, nicht durch Keypads.
                     </div>
                 </div>
             `;
