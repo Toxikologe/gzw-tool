@@ -1490,6 +1490,7 @@
         const ammoSelect = document.getElementById('calcAmmoDisplay');
         if (!ammoSelect) return;
 
+        // Wir holen die Waffen-Info aus der 'weapons' Datenbank
         const weaponInfo = typeof weapons !== 'undefined' ? weapons[weaponKey] : null;
         ammoSelect.innerHTML = "";
 
@@ -1498,24 +1499,21 @@
             return;
         }
 
+        // Wir extrahieren das Kaliber (z.B. "5.56x45mm")
         let caliber = weaponInfo.ammo.split(' ')[0]; 
         
-        if(caliber.includes("7.62") || caliber.includes("5.45") || caliber.includes("5.56")) {
-            caliber = weaponInfo.ammo.substring(0, 7); 
-        }
-
+        // Suche in der NEUEN ammoMatrixData nach passender Munition
         let foundAmmo = false;
-        if (typeof ammoDb !== 'undefined') {
-            for (let key in ammoDb) {
-                const ammo = ammoDb[key];
-                if (ammo.name.toLowerCase().includes(caliber.toLowerCase())) {
+        if (typeof ammoMatrixData !== 'undefined') {
+            ammoMatrixData.forEach(ammo => {
+                if (ammo.cal.toLowerCase().includes(caliber.toLowerCase())) {
                     const option = document.createElement('option');
                     option.value = ammo.name;
                     option.text = ammo.name;
                     ammoSelect.appendChild(option);
                     foundAmmo = true;
                 }
-            }
+            });
         }
 
         if (!foundAmmo) {
@@ -1529,13 +1527,10 @@
     }
 
     function getAmmoPenValue(ammoName) {
-        if (!ammoName || typeof ammoDb === 'undefined') return 0;
-        for (let key in ammoDb) {
-            if (ammoDb[key].name === ammoName) {
-                return ammoDb[key].pen;
-            }
-        }
-        return 0;
+        if (!ammoName || typeof ammoMatrixData === 'undefined') return 0;
+        // Suche den Penetrationswert in der Matrix-Datenbank
+        const ammo = ammoMatrixData.find(a => a.name === ammoName);
+        return ammo ? ammo.pen : 0;
     }
 
     function calculateBallistics() {
