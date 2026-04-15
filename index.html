@@ -1694,7 +1694,7 @@
         setTimeout(() => { el.textContent = ''; }, 2000);
     }
 
-    // ==============================================================
+   // ==============================================================
     // SCHLÜSSEL DROPDOWN + SCHLÜSSELBUND (KEYRING MANAGER)
     // ==============================================================
     let myKeyRing = [];
@@ -1706,18 +1706,54 @@
 
     let currentKeyName = "";
 
+    // Das NEUE Dropdown (mit Kategorien & Emojis)
     function buildKeyDropdown() {
         const dropdown = document.getElementById('keyDropdown');
         if (!dropdown || typeof allKeys === 'undefined') return;
 
-        const sorted = [...allKeys].sort((a, b) => a.name.localeCompare(b.name, 'de'));
-        
-        sorted.forEach(k => {
-            const opt = document.createElement('option');
-            opt.value = k.name;
-            const owned = myKeyRing.includes(k.name);
-            opt.text = owned ? `🗝️ ${k.name}` : k.name;
-            dropdown.appendChild(opt);
+        // Reset
+        dropdown.innerHTML = '<option value="">-- Schlüssel nach Region wählen --</option>';
+
+        // Schlüssel nach 'group' organisieren
+        const groupedKeys = {};
+        allKeys.forEach(k => {
+            if (!groupedKeys[k.group]) groupedKeys[k.group] = [];
+            groupedKeys[k.group].push(k);
+        });
+
+        // Definierte Reihenfolge der Gruppen
+        const groupOrder = [
+            "🔰 Startregionen (Mithras)",
+            "🔰 Startregionen (Crimson)",
+            "🔰 Startregionen (Lamang LRI)",
+            "🌲 Sägewerk (Lumber Yard)",
+            "🎯 Hunter's Paradise",
+            "🎣 Ban Pa (Fischerdorf)",
+            "🌊 Blaue Lagune (Blue Lagoon)",
+            "☢️ YBL-1 Bunker",
+            "🪖 Fort Narith (Basis)",
+            "💎 Midnight Sapphire (Hotel)",
+            "🏙️ Tiger Bay (Großstadt)",
+            "✈️ Ground Zero & Airfield",
+            "🗺️ Lamang Island (Dörfer & POIs)",
+            "🆕 Update 0.4 (Spearhead)"
+        ];
+
+        groupOrder.forEach(gName => {
+            if (groupedKeys[gName]) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = gName;
+                
+                groupedKeys[gName].sort((a, b) => a.name.localeCompare(b.name, 'de')).forEach(k => {
+                    const opt = document.createElement('option');
+                    opt.value = k.name;
+                    const owned = myKeyRing.includes(k.name);
+                    opt.text = owned ? `🗝️ ${k.name}` : k.name;
+                    optgroup.appendChild(opt);
+                });
+                
+                dropdown.appendChild(optgroup);
+            }
         });
     }
 
@@ -1727,6 +1763,7 @@
         showKeyData(name);
     }
 
+    // Deine Logik für das Anzeigen der Schlüssel-Infos
     function showKeyData(name) {
         if (typeof allKeys === 'undefined') return;
         const key = allKeys.find(k => k.name === name);
