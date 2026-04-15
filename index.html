@@ -1543,12 +1543,29 @@
     }
 
     function updateGeneric(sId, iId) { document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details..."; }
-    function updateBoss() { const b = typeof bosses !== 'undefined' ? bosses[document.getElementById('bossSelect').value] : null; document.getElementById('bossInfo').innerHTML = b ? `Ort: <span class="highlight">${b.loc}</span><br>Loot: <span class="highlight">${b.loot}</span><br>Tipp: ${b.tip}` : "Wähle einen Boss..."; }
     function updateLZ() { const l = typeof lzDb !== 'undefined' ? lzDb[document.getElementById('lzSelect').value] : null; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small><b>Operator-Tipp:</b> ${l.tip}</small>` : "Wähle ein Zielgebiet für LZ-Tipps..."; }
     function updateSymptom() { const s = typeof symptomDb !== 'undefined' ? symptomDb[document.getElementById('symptomSelect').value] : null; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><br><small><b>Medic-Tipp:</b> ${s.info}</small>` : "Wähle ein Symptom für Diagnose & Behandlung..."; }
     function updateContainer() { const c = typeof containers !== 'undefined' ? containers[document.getElementById('containerSelect').value] : null; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = typeof valuables !== 'undefined' ? valuables[document.getElementById('valSelect').value] : null; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
 
+    function updateBoss() { 
+        const b = typeof bosses !== 'undefined' ? bosses[document.getElementById('bossSelect').value] : null; 
+        const infoBox = document.getElementById('bossInfo');
+        
+        if (b) {
+            infoBox.innerHTML = `
+                <h3 style="color: #ff4c4c; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem;">${b.name}</h3>
+                <div style="margin-bottom: 8px; color: #ccc;"><strong>📍 Zuletzt gesichtet:</strong> <span style="color: #fff;">${b.loc}</span></div>
+                <div style="margin-bottom: 15px; color: #ccc;"><strong>🎒 Erwarteter Loot:</strong> <span style="color: #ffcc00; font-weight: bold;">${b.loot}</span></div>
+                <div style="padding: 10px; background: rgba(255, 76, 76, 0.1); border-left: 3px solid #ff4c4c; border-radius: 4px; font-size: 0.9rem; color: #ddd;">
+                    <strong>💡 Tactical Intel:</strong> ${b.tip}
+                </div>
+            `;
+        } else {
+            infoBox.innerHTML = "Wähle ein Ziel für Dossier, Fundort und Loot-Informationen...";
+        }
+    }
+    
     function updateGearInfo() {
         const select = document.getElementById('gearFullSelect');
         const display = document.getElementById('gearFullInfo');
