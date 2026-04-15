@@ -1123,21 +1123,88 @@ const containers = {
     }
 };
     
-// 9. LZ DATENBANK
-    const lzDb = {
-        "mithras": { lzs: "Base Camp, Alpha 1, Alpha 2, Alpha 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von MSS (Nam Thaven)." },
-        "lamang": { lzs: "Base Camp, Bravo 1, Bravo 2, Bravo 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von LRI (Pha Lang)." },
-        "crimson": { lzs: "Base Camp, Charlie 1, Charlie 2, Charlie 3", time: "0-1 Min.", danger: "Sicher / Mittel", tip: "Startgebiet von CSI (Kiu Vongsa)." },
-        "lumber": { lzs: "Echo 1 & Echo 2", time: "1-2 Min.", danger: "Niedrig-Mittel", tip: "Echo 2 ist versteckter im Wald." },
-        "hunters": { lzs: "Foxtrot 1 & Foxtrot 2", time: "2 Min.", danger: "Mittel", tip: "Foxtrot 2 wird oft abgezielt!" },
-        "banpa": { lzs: "India 1 & India 2", time: "1-3 Min.", danger: "Mittel", tip: "India 2 ist sicherer für einen Sneak-Angriff." },
-        "blue_lagoon": { lzs: "Kilo 1 & Kilo 2", time: "2-4 Min.", danger: "Mittel", tip: "Kilo 2 gibt dir einen Flanken-Vorteil." },
-        "ybl": { lzs: "Juliet 1, Juliet 2, Juliet 3", time: "1 Min.", danger: "Hoch", tip: "Vorsicht vor LZ-Campern!" },
-        "fort_narith": { lzs: "Delta 1, Delta 2, Delta 3", time: "3-5 Min.", danger: "Extrem", tip: "Delta 3 ist die sicherste Wahl (Rückseite)." },
-        "midnight": { lzs: "Hotel 1, Hotel 2, Hotel 3", time: "2 Min.", danger: "Sehr Hoch", tip: "Bleib niemals auf dem Präsentierteller stehen." },
-        "tiger_bay": { lzs: "Lima 1 & Lima 2", time: "1 Min.", danger: "Todeszone", tip: "Sofort Smoke werfen und sprinten!" },
-        "ground_zero": { lzs: "Golf 1 & Golf 2", time: "3 Min.", danger: "Extrem", tip: "Das Airfield ist ein Sniper-Gefecht." }
-    };
+// ==========================================
+// 14. LANDEZONEN & NAVIGATION (0.4 SPEARHEAD - 100% COMPLETE)
+// ==========================================
+const lzDb = {
+    // --- STARTGEBIETE (Safe Zones) ---
+    "lz_alpha": { 
+        name: "Nam Thaven (Mithras)", 
+        lzs: "Alpha 1, Alpha 2, Alpha 3", 
+        danger: "Gering (Low)", 
+        tip: "Das Startgebiet für Mithras-Operator. Sehr sicher. LZ Alpha 3 ist perfekt, um das östliche Reisfeld ohne KI-Kontakt zu durchqueren." 
+    },
+    "lz_bravo": { 
+        name: "Pha Lang (LRI)", 
+        lzs: "Bravo 1, Bravo 2, Bravo 3", 
+        danger: "Gering (Low)", 
+        tip: "Startgebiet der LRI. Gute Deckung durch den dichten Dschungel direkt an den Landezonen. Ideal für Solo-Neulinge." 
+    },
+    "lz_charlie": { 
+        name: "Kiu Vongsa (Crimson)", 
+        lzs: "Charlie 1, Charlie 2, Charlie 3", 
+        danger: "Gering (Low)", 
+        tip: "Crimson Startgebiet. Die LZs liegen recht offen. Achte auf KI-Sniper, die sich in den Randgebäuden des Dorfes verstecken." 
+    },
+
+    // --- MID-GAME POIs ---
+    "lz_echo": { 
+        name: "Sägewerk (Lumber Yard)", 
+        lzs: "Echo 1, Echo 2", 
+        danger: "Mittel (Medium)", 
+        tip: "Echo 1 liegt gefährlich nah am Hauptlager und wird oft von KIs gepusht. Echo 2 bietet einen deutlich sichereren Anmarsch durch den Wald." 
+    },
+    "lz_foxtrot": { 
+        name: "Hunter's Paradise", 
+        lzs: "Foxtrot 1, Foxtrot 2", 
+        danger: "Mittel-Hoch (PvP Hotspot)", 
+        tip: "Foxtrot 1 bietet extrem schnellen Zugang zum Schießstand, wird aber im PvP sehr oft von gegnerischen Fraktionen belagert (LZ-Camping)!" 
+    },
+    "lz_india": { 
+        name: "Fischerdorf (Ban Pa)", 
+        lzs: "India 1, India 2", 
+        danger: "Mittel-Hoch (Medium-High)", 
+        tip: "LZ India 1 liegt extrem gefährlich direkt neben den Hütten. Nutze India 2 für einen getarnten Vorstoß durch den Sumpf." 
+    },
+    "lz_kilo": { 
+        name: "Blaue Lagune (Blue Lagoon)", 
+        lzs: "Kilo 1, Kilo 2", 
+        danger: "Mittel-Hoch (Medium-High)", 
+        tip: "Wenig Deckung bei Kilo 1. Kilo 2 ist taktisch klüger, um das Restaurant von der bewaldeten Südseite aus anzugreifen." 
+    },
+
+    // --- END-GAME POIs (High Danger) ---
+    "lz_juliet": { 
+        name: "YBL-1 Bunker", 
+        lzs: "Juliet 1, Juliet 2", 
+        danger: "Hoch (High)", 
+        tip: "Bereite dich sofort nach der Landung auf Gegenwehr vor. Juliet 2 eignet sich hervorragend, um die Hintereingänge des Bunkers zu flankieren." 
+    },
+    "lz_delta": { 
+        name: "Fort Narith (Militärbasis)", 
+        lzs: "Delta 1, Delta 2, Delta 3", 
+        danger: "Extrem (Extreme)", 
+        tip: "⚠️ 0.4 UPDATE: Das Gebiet wird nun sporadisch mit Mörsern (Mortar Strikes) beschossen! Delta 3 ist Selbstmord, wenn du nicht sofort in Deckung sprintest." 
+    },
+    "lz_hotel": { 
+        name: "Midnight Sapphire", 
+        lzs: "Hotel 1, Hotel 2, Hotel 3", 
+        danger: "Extrem (Extreme)", 
+        tip: "Hotel 1 führt dich in die Nähe der Villen (Millionärs-Run). Hotel 2 über den Golfplatz. Beide LZs sind von tödlichen Scharfschützen umgeben." 
+    },
+    "lz_lima": { 
+        name: "Tiger Bay (Großstadt)", 
+        lzs: "Lima 1, Lima 2", 
+        danger: "Absolutes Maximum (Insane)", 
+        tip: "Die gefährlichste Zone im Spiel. KIs stürmen den Heli oft schon beim Landen. Nutze dichten Rauch (Smoke Grenades) direkt beim Aussteigen!" 
+    },
+    "lz_golf": { 
+        name: "Ground Zero", 
+        lzs: "Golf 1, Golf 2", 
+        danger: "Tödlich (Lethal - Radiation)", 
+        tip: "Das Epizentrum. Extreme Radioaktivität! Ohne die neue Gasmaske und Anti-Strahlen-Medikation stirbst du hier innerhalb von Sekunden." 
+    }
+};
 
     // 10. SYMPTOME DATENBANK
     const symptomDb = {
