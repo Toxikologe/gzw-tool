@@ -323,8 +323,8 @@
             </div>
         </div>
 
-        <div style="width: 100%; height: 250px; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111;">
-            <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Banner%204.png" alt="Gray Zone Warfare Tool" style="width: 100%; height: 100%; object-fit: cover;">
+        <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111;">
+            <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Banner%204.png" alt="Gray Zone Warfare Tool" style="width: 100%; height: auto; display: block;">
         </div>
 
         <div style="background-color: #0d0d0d; border: 3px solid #333; border-radius: 6px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); padding: 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -528,61 +528,86 @@
         </div>
 
         <div id="tab-mods" class="tab-content">
-            <h2>Waffen-Modifikationen & Ergonomie</h2>
+            <h2>Waffen-Modifikationen & Ergonomie (0.4 Meta)</h2>
             <div class="grid">
                 <div>
-                    <label for="weaponSelect" style="margin-top: 0;">Waffen-Auswahl</label>
+                    <label for="weaponSelect" style="margin-top: 0;">Waffen-Auswahl (Deutscher Name / Englisch)</label>
                     <select id="weaponSelect" onchange="updateWeaponCombined()">
                         <option value="">-- Wähle eine Waffe --</option>
-                        <optgroup label="Sturmgewehre">
-                            <option value="ak-74m">AK-74M (Klappschaft)</option>
-                            <option value="ak74n">AK-74N (5.45mm)</option>
-                            <option value="ak103">AK-103 (7.62mm Modern)</option>
-                            <option value="ak105">AK-105 (Kompakt)</option>
-                            <option value="ak12">AK-12</option>
-                            <option value="ak15">AK-15</option>
-                            <option value="ak19">AK-19</option>
-                            <option value="ak308">AK-308</option>
-                            <option value="akm">AKM</option>
-                            <option value="akmn">AKMN (Modernisiert)</option>
-                            <option value="akmsn">AKMSN</option>
-                            <option value="aks74u">AKS-74U</option>
-                            <option value="cqa1">CQ-A1</option>
-                            <option value="ddm4">DDM4</option>
-                            <option value="ks1">KAC KS-1 (L403A1) - 0.4 Meta</option>
-                            <option value="m16a1">M16A1 (Retro-Präzision)</option>
-                            <option value="m4a1">M4A1</option>
-                            <option value="mk18">MK18 (Kompakt)</option>
-                            <option value="sicmcx">SIG-MCX</option>
-                            <option value="vz58">Vz. 58</option>
-                            <option value="m1a">M1A</option>
-                            <option value="m201c">M-201C</option>
+                        <optgroup label="Sturmgewehre (NATO)">
+                            <option value="m4a1">M4A1 Sturmgewehr (M4A1)</option>
+                            <option value="m16a1">M16A1 Sturmgewehr (M16A1) [0.4 NEU]</option>
+                            <option value="m201c">Norinco M-201C (M-201C) [0.4 NEU]</option>
+                            <option value="cqa1">CQ-A1 (CQ-A1)</option>
+                            <option value="ddm4">Daniel Defense DDM4 (DDM4)</option>
+                            <option value="ks1">KAC KS-1 L403A1 (KS-1) [0.4 NEU]</option>
+                            <option value="sicmcx">SIG MCX (SIG MCX)</option>
+                            <option value="mk18">MK18 (MK18)</option>
                         </optgroup>
-                        <optgroup label="DMR & Scharfschützen">
-                            <option value="m14">M14 EBR / Battle Rifle</option>
-                            <option value="m700">M700 Remington</option>
-                            <option value="mosin">Mosin-Nagant</option>
-                            <option value="skn">SKS (Modernisiert)</option>
-                            <option value="svd">SVD Dragunov</option>
-                            <option value="rem788">Remington Model 788</option>
+                        <optgroup label="Sturmgewehre (Ostblock)">
+                            <option value="ak74">AK-74 (AK-74)</option>
+                            <option value="ak74n">AK-74N (AK-74N)</option>
+                            <option value="ak74m">AK-74M (AK-74M)</option>
+                            <option value="aks74u">AKS-74U (AKS-74U)</option>
+                            <option value="aks74un">AKS-74UN (AKS-74UN)</option>
+                            <option value="akm">AKM (AKM)</option>
+                            <option value="akmn">AKMN (AKMN)</option>
+                            <option value="akms">AKMS (AKMS)</option>
+                            <option value="akmsn">AKMSN (AKMSN)</option>
+                            <option value="ak101">AK-101 (AK-101)</option>
+                            <option value="ak102">AK-102 (AK-102)</option>
+                            <option value="ak103">AK-103 (AK-103)</option>
+                            <option value="ak104">AK-104 (AK-104)</option>
+                            <option value="ak105">AK-105 (AK-105)</option>
+                            <option value="ak12">AK-12 (AK-12)</option>
+                            <option value="ak15">AK-15 (AK-15)</option>
+                            <option value="ak19">AK-19 (AK-19)</option>
+                            <option value="ak308">AK-308 (AK-308)</option>
+                            <option value="vz58">SA vz. 58 (SA vz. 58) [0.4 NEU]</option>
+                            <option value="vz58v">SA vz. 58 V (SA vz. 58 V) [0.4 NEU]</option>
+                            <option value="typ56">Type 56 (Type 56)</option>
+                            <option value="typ56_1">Type 56-1 (Type 56-1)</option>
+                            <option value="typ56_2">Type 56-2 (Type 56-2)</option>
+                        </optgroup>
+                        <optgroup label="DMR & Scharfschützen (Snipers)">
+                            <option value="m14">M14 Battle Rifle (M14) [0.4 NEU]</option>
+                            <option value="m14ebr">M14 EBR (M14 EBR) [0.4 NEU]</option>
+                            <option value="m1a">M1A (M1A) [0.4 NEU]</option>
+                            <option value="m700">M700 Remington (M700)</option>
+                            <option value="rem788">Remington 788 (Model 788) [0.4 NEU]</option>
+                            <option value="mosin">Mosin-Nagant (Mosin)</option>
+                            <option value="mosin_sniper">Mosin-Nagant Sniper (Mosin Sniper)</option>
+                            <option value="mosin_obrez">Mosin Obrez (Mosin Obrez)</option>
+                            <option value="svd">SVD Dragunov (SVD)</option>
+                            <option value="svds">SVDS (SVDS)</option>
+                            <option value="sks">SKS (SKS)</option>
+                            <option value="op_sks">OP-SKS (OP-SKS)</option>
                         </optgroup>
                         <optgroup label="SMGs & Shotguns">
-                            <option value="m870">M870 Pump-Action</option>
-                            <option value="590a1">Mossberg 590A1</option>
-                            <option value="mp5">MP5A3 / SD</option>
-                            <option value="mp7a1">MP7A1</option>
-                            <option value="mp7a2">MP7A2</option>
-                            <option value="vityaz">PP-19-01 Vityaz</option>
-                            <option value="vz61">VZ-61 Skorpio</option>
+                            <option value="mp7a1">MP7A1 (MP7A1)</option>
+                            <option value="mp7a2">MP7A2 (MP7A2)</option>
+                            <option value="mp5a2">MP5A2 (MP5A2)</option>
+                            <option value="mp5a3">MP5A3 (MP5A3)</option>
+                            <option value="mp5sd">MP5SD (MP5SD)</option>
+                            <option value="mp5k">MP5K (MP5K)</option>
+                            <option value="vityaz">PP-19-01 Vityaz (Vityaz)</option>
+                            <option value="vz61">VZ-61 Skorpion (Skorpion)</option>
+                            <option value="m870">M870 Pump-Action (M870)</option>
+                            <option value="moss590">Mossberg 590 (Mossberg 590)</option>
+                            <option value="moss590a1">Mossberg 590A1 (Mossberg 590A1)</option>
+                            <option value="moss590_shock">Mossberg 590 Shockwave</option>
                         </optgroup>
-                        <optgroup label="Pistolen">
-                            <option value="1911">Colt 1911</option>
-                            <option value="ccc">Colt Combat Commander</option>
-                            <option value="glock17">Glock 17</option>
-                            <option value="alien">Laugo Alien (0.4 Meta)</option>
-                            <option value="m9a1">M9A1 Beretta</option>
-                            <option value="makarov">Makarov PM</option>
-                            <option value="typ51">Typ-51</option>
+                        <optgroup label="Pistolen (Handguns)">
+                            <option value="alien">Laugo Alien (Alien) [0.4 NEU]</option>
+                            <option value="glock17">Glock 17 (Glock 17)</option>
+                            <option value="glock19">Glock 19 (Glock 19)</option>
+                            <option value="m9a1">M9A1 Beretta (M9A1)</option>
+                            <option value="m9a3">M9A3 Beretta (M9A3)</option>
+                            <option value="1911">Colt M1911A1 (1911)</option>
+                            <option value="ccc">Colt Combat Commander (CCC)</option>
+                            <option value="makarov">Makarov PM (Makarov)</option>
+                            <option value="makarov_pb">Makarov PB (Makarov PB)</option>
+                            <option value="typ51">Type-51 / TT (Type-51)</option>
                         </optgroup>
                     </select>
                     <div id="weaponInfo" class="info-box" style="margin-top:15px; padding:15px; background:#111; border-left:4px solid var(--accent);">Wähle eine Waffe für Munitions-Details...</div>
@@ -595,67 +620,54 @@
             </div>
 
             <div class="panel-box" style="margin-top: 20px;">
-                <h3>🔧 Attachments & Ergo</h3>
+                <h3>🔧 Attachments & Ergo (0.4 Meta Guide)</h3>
+                <p style="color: #ccc; font-size: 0.9rem;"><strong>WICHTIG:</strong> In Version 0.4 ist Ergonomie (Ergo) oft wichtiger als Recoil-Reduction! Klobige Waffen zielen extrem langsam und machen dich im PvP/PvE zu einem leichten Ziel.</p>
                 <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')" style="margin-top: 0;">
-                    <option value="">-- Wähle Attachment --</option>
-                    <optgroup label="Optiken (Nahkampf & Red Dots)">
-                        <option value="EOTech EXPS3: Bestes Holographic-Visier. Perfektes Sichtfeld, ideal für schnelles Aiming im Nahkampf (CQB).">EOTech EXPS3 (Holo)</option>
-                        <option value="Aimpoint T-2 Micro: Extrem kleiner Leuchtpunkt. Nimmt null Platz auf dem Bildschirm ein. Super für SMGs und leichte ARs.">Aimpoint T-2 Micro</option>
-                        <option value="Kobra EKP-8-18: Russisches Standard-Reflexvisier. Günstig, zuverlässig, verschiedene Fadenkreuze wählbar.">Kobra EKP-8-18</option>
-                        <option value="OKP-7: Sehr beliebtes russisches Visier mit grünem Absehen. Bietet ein unglaublich freies Sichtfeld.">OKP-7 (Dovetail)</option>
-                        <option value="Magnifier (G33 / G45): NEU! Klappbare Vergrößerung (3x oder 5x) für Red Dots wie das EXPS3. Absolute Meta für Häuserkampf & Mid-Range.">EOTech G33 / G45 Magnifier</option>
-                        <option value="Trijicon MRO / RMR: Neue, extrem saubere Red-Dots für ARs und als Backup auf Scopes.">Trijicon MRO / RMR Type 2</option>
+                    <option value="">-- Wähle ein Attachment / Mod --</option>
+                    <optgroup label="Optiken & Visiere (0.4 Magnifier Meta)">
+                        <option value="EOTech EXPS3 + G33/G45 Magnifier: Die absolute 0.4 Meta. Erlaubt schnelles Umschalten zwischen 1x für Gebäude und 3x/5x Zoom für den Dschungel.">Holo + Magnifier (G33/G45) [0.4 META]</option>
+                        <option value="Vortex Razor HD 1-6x: Bestes LPVO im Spiel. Sehr klares Sichtfeld, extrem dünner Rand.">Vortex Razor HD 1-6x (LPVO)</option>
+                        <option value="EOTech Vudu 1-6x / 3-9x32: Hervorragend für ARs und die neue M14/M1A.">EOTech Vudu (LPVO)</option>
+                        <option value="Elcan SpecterDR 1x/4x: Umschaltbares Visier. Sehr robuster Allrounder für die neue KS-1.">Elcan SpecterDR 1x/4x</option>
+                        <option value="Aimpoint T-2 Micro / Trijicon RMR: Extrem kleine Leuchtpunkte. Verdecken nicht den Bildschirm, ideal als Backup-Visier.">Micro Red Dots (T-2 / RMR)</option>
+                        <option value="OKP-7 / Kobra / PSO-1: Russische Standard-Visiere. Günstig, blockieren wenig Sicht, PSO-1 ist der Standard für SVD/AKMN.">Russische Optiken (OKP-7 / PSO-1)</option>
+                        <option value="Nightforce ATACR 1-8x / 7-35x: Maximale Vergrößerung. Nur für reine Sniper (M700 / Mosin).">Nightforce ATACR (Sniper Scope)</option>
                     </optgroup>
-                    <optgroup label="Optiken (Mid & Long Range / LPVOs)">
-                        <option value="Vudu 1-6x: Die absolute Meta für Sturmgewehre. Perfekt für Distanz und durch den 1x Zoom auch stark im Nahkampf.">EOTech Vudu 1-6x</option>
-                        <option value="Razor HD Gen II 1-6x: Sehr klares Bild, extrem dünner Rand. Bietet fast die beste Sicht im ADS im ganzen Spiel.">Vortex Razor HD 1-6x</option>
-                        <option value="Elcan SpecterDR 1x/4x: Umschaltbares Visier. Sehr robuster Allrounder für M4 und KS-1.">Elcan SpecterDR 1x/4x</option>
-                        <option value="Trijicon ACOG 4x32: Der Klassiker. Festvergrößerung, extrem gute Sichtbarkeit des Fadenkreuzes (Tritium).">Trijicon ACOG 4x32</option>
-                        <option value="Valday PS-320 1x/6x: Das russische Äquivalent zum Vudu/Razor. Exzellent für AKs auf mittlere und weite Distanzen.">Valday PS-320 1x/6x</option>
-                        <option value="Nightforce ATACR 1-8x / 7-35x: Maximale Vergrößerung. Nur für reine Sniper (M700 / Mosin) oder DMRs (M14 / SVD) zu empfehlen.">Nightforce ATACR</option>
-                        <option value="RAZOR 1-10x24: Das ultimative neue LPVO. Gigantischer Zoom-Bereich, extrem flexibel.">Vortex RAZOR 1-10x24</option>
-                        <option value="Vudu 3-9x32: Mehr Vergrößerung als das alte Vudu, perfekt für die neue M1A oder M14.">EOTech Vudu 3-9x32 SFP</option>
+                    <optgroup label="Vordergriffe (Ergo vs. Recoil)">
+                        <option value="Fortis Shift Grip: Sehr leichter Skeleton-Griff. Pusht die Ergonomie massiv nach oben! Ideal, um Waffenträgheit zu minimieren.">Fortis Shift Grip (High Ergo)</option>
+                        <option value="BCM Vertical Grip / TangoDown: Leicht, unauffällig und reduziert die Waffen-Trägheit (Inertia) bei Drehungen enorm.">BCM / TangoDown (Ergo Meta)</option>
+                        <option value="Zenit RK-0 / RK-4 / RK-6: Die kleinen russischen Griffe. Ein toller Kompromiss aus Ergo und Recoil.">Zenit RK-0 / RK-4 / RK-6 (AK Griffe)</option>
+                        <option value="Zenit RK-1 / RK-2: Die absolute Rückstoß-Bremse für AKs. ACHTUNG: Senkt die Ergonomie massiv, Waffe wird sehr träge!">Zenit RK-1 / RK-2 (Max Recoil)</option>
+                        <option value="Zenit B-25U + RK-1 (Schräg): Der beste Kompromiss zwischen Rückstoßkontrolle und Ergo für AK-Plattformen.">Zenit B-25U + RK-1 (Schräg)</option>
+                        <option value="Magpul RVG / AFG / M-LOK: Zuverlässige Allrounder der westlichen Fraktionen. AFG bringt mehr Ergo.">Magpul RVG / AFG</option>
                     </optgroup>
-                    <optgroup label="Mündung (Schalldämpfer / Suppressors)">
-                        <option value="KAC NT4 Suppressor (5.56): Der Standard für M4. Reduziert Schall und Mündungsfeuer zuverlässig.">KAC NT4 (5.56mm)</option>
-                        <option value="Surefire RC2 / Monster: Bester Rückstoß-Schutz für 5.56mm Waffen, sehr gute Haltbarkeit.">Surefire RC2 (5.56mm)</option>
-                        <option value="PBS-1 Suppressor: Essenziell für AKM/AK-103 (7.62x39), um bei Schüssen nicht die ganze Map anzulocken.">PBS-1 (7.62mm AK)</option>
-                        <option value="PBS-4 Suppressor: Der Standard-Schalldämpfer für die kleinen 5.45x39 Kaliber (AK-74/AK-105).">PBS-4 (5.45mm AK)</option>
-                        <option value="Hybrid 46: Schwerer, vielseitiger Schalldämpfer. Passt auf viele große Kaliber wie das M14 EBR.">Hybrid 46 Multi-Cal</option>
-                        <option value="Rotor 43: Sehr effektive Schalldämpfer-Reihe für russische Plattformen. Etwas schwerer, aber extrem leise.">Rotor 43 (Diverse)</option>
+                    <optgroup label="Mündung (Schalldämpfer & Bremsen)">
+                        <option value="KAC NT4 / Surefire RC2 / AAC: Der Standard für 5.56 (M4/KS-1). Reduziert Schall und Mündungsfeuer zuverlässig.">Surefire RC2 / KAC / AAC (5.56mm)</option>
+                        <option value="PBS-1 / PBS-4 / Rotor 43: Essenziell für AK-Modelle, um im Dschungel nicht sofort von jeder Patrouille gehört zu werden.">PBS-1 / PBS-4 / Rotor (AK Suppressors)</option>
+                        <option value="Lantac Dragon / SRVV: Beste Kompensatoren. Reduzieren den Rückstoß massiv, sind aber extrem laut und locken AI an!">Lantac Dragon / SRVV (Brakes)</option>
+                        <option value="Hybrid 46 / SR-25 Suppressor: Schwere Schalldämpfer. Passen auf viele große Kaliber wie die neue M14 EBR oder M700.">Hybrid 46 / SR-25 (Sniper Suppressors)</option>
                     </optgroup>
-                    <optgroup label="Mündung (Kompensatoren & Bremsen)">
-                        <option value="Lantac Dragon: Bester Kompensator für M4/KS-1. Reduziert den Rückstoß massiv, ist aber extrem laut!">Lantac Dragon (5.56)</option>
-                        <option value="SRVV Mündungsbremse: Russischer High-End Kompensator. Macht die AKM zu einem kontrollierbaren Laser.">SRVV (7.62x39)</option>
-                        <option value="Bulletec / Hexagon: Sehr effiziente Mündungsbremsen für maximale Rückstoß-Kontrolle, wenn Lautstärke egal ist.">Bulletec / Hexagon</option>
+                    <optgroup label="Handguards & Chassis (Montage-Systeme)">
+                        <option value="Daniel Defense RIS II / URX: Die besten Handguards für die M4 Plattform, um Laser und Griffe zu montieren.">DD RIS II / URX (M4)</option>
+                        <option value="Sureshot Mk3 Chassis: Tauscht das halbe AK-Gehäuse aus. Erlaubt die Montage modernster westlicher Optiken auf AKs.">Sureshot MK3 Chassis (AK)</option>
+                        <option value="Zenit B-10 / B-30 / B-33: Der russische Standard für Optiken (B-33 Dust Cover) und Handguards (B-10/B-30).">Zenitco B-10 / B-30 (AK)</option>
+                        <option value="Sage International EBR Chassis: Das schwere, taktische Gehäuse, das eine normale M14 in eine M14 EBR verwandelt.">EBR Chassis (M14)</option>
                     </optgroup>
-                    <optgroup label="Vordergriffe (Foregrips / Ergo & Recoil)">
-                        <option value="Zenit RK-2: Die absolute Rückstoß-Bremse für AKs. Reduziert Recoil extrem, senkt aber die Ergonomie spürbar.">Zenit RK-2 (Recoil Meta)</option>
-                        <option value="Zenit RK-1 auf B-25U: Schräger Vordergriff. Die perfekte Balance zwischen Rückstoßkontrolle und Ergo für AK-Plattformen.">Zenit B-25U + RK-1 (Schräg)</option>
-                        <option value="Magpul RVG / AFG: Zuverlässige Allrounder. Der AFG (Angled) bringt mehr Ergo, der RVG (Vertical) mehr Rückstoßkontrolle.">Magpul RVG / AFG</option>
-                        <option value="Fortis Shift: Sehr leichter Skeleton-Griff. Pusht die Ergonomie massiv nach oben, ideal für schnelles Zielen (ADS).">Fortis Shift Grip</option>
-                        <option value="BCM Gunfighter: Leicht, unauffällig und reduziert die Waffen-Trägheit (Inertia) bei Drehungen.">BCM Vertical Grip</option>
-                    </optgroup>
-                    <optgroup label="Pistolengriffe (Pistol Grips)">
-                        <option value="Zenit RK-3: Bester Pistolengriff für AK-Plattformen. Massiver Ergo-Boost.">Zenit RK-3 Grip (AK)</option>
-                        <option value="Magpul MOE K2: Top-Ergonomie für westliche M4/AR-15 Plattformen. Pflicht-Upgrade!">Magpul MOE K2 (M4)</option>
-                        <option value="Ergo Grip / TangoDown: Sehr gute Alternativen für AR-Systeme, falls Magpul nicht verfügbar ist.">Ergo Grip / TangoDown</option>
-                    </optgroup>
-                    <optgroup label="Schäfte & Chassis (Stocks & Handguards)">
-                        <option value="Zenit PT-3 / PT-1: Klappschäfte für AKs. Hohe Ergo, extrem gute Rückstoßdämpfung.">Zenit PT-3 Klassika (AK)</option>
-                        <option value="Magpul PRS Gen3: Schwerer Präzisionsschaft für DMRs (M14/M700). Reduziert das Wackeln (Sway) durch Atmung massiv.">Magpul PRS Gen3 (Sniper)</option>
-                        <option value="Magpul CTR / MOE: Leichte, anpassbare Schäfte für M4-Buffer-Tubes. Perfekt für Sturmgewehre.">Magpul CTR Stock</option>
-                        <option value="Daniel Defense Stock: Stabilisiert das Visierbild nach dem Schuss extrem schnell. Sehr beliebt.">DD Stock (M4)</option>
-                        <option value="Sureshot Mk3 Chassis: Tauscht das halbe AK-Gehäuse aus. Erlaubt die Montage modernster westlicher Optiken und Laser auf AKs.">Sureshot MK3 (AK Chassis)</option>
+                    <optgroup label="Pistolengriffe & Schäfte">
+                        <option value="Magpul MOE K2 / HK Battle Grip: Top-Ergonomie für westliche M4/AR-15 Plattformen. Pflicht-Upgrade für schnelleres Zielen!">Magpul MOE K2 / HK Grip (M4)</option>
+                        <option value="Zenit RK-3 Grip: Bester Pistolengriff für AK-Plattformen. Massiver Ergo-Boost.">Zenit RK-3 Grip (AK)</option>
+                        <option value="Zenit PT-3 / PT-1: Klappschäfte für AKs. Hohe Ergo, extrem gute Rückstoßdämpfung.">Zenit PT-3 / PT-1 Stock (AK)</option>
+                        <option value="Magpul PRS Gen3: Schwerer Präzisionsschaft für DMRs (M14/M700). Reduziert das Wackeln (Sway) durch Atmung massiv.">Magpul PRS Gen3 Stock (Sniper)</option>
+                        <option value="Magpul CTR / B5 Systems: Leichte, extrem zuverlässige Schäfte für schnelle Sturmgewehre.">Magpul CTR / B5 Stock (AR-15)</option>
                     </optgroup>
                     <optgroup label="Taktische Module (Laser & Licht)">
-                        <option value="AN/PEQ-15: Das Standard-Modul des Westens. Bietet Laser (Sichtbar/IR) und Taschenlampe. Verbessert Point-Fire Präzision.">AN/PEQ-15 (Laser/Licht)</option>
+                        <option value="AN/PEQ-15 / LA-5: Das Standard-Modul des Westens. Bietet Laser (Sichtbar/IR) und Taschenlampe. Verbessert Point-Fire Präzision massiv.">AN/PEQ-15 / LA-5 (Laser/Licht)</option>
                         <option value="Steiner DBAL: Sehr helles Licht und präziser Laser. Hervorragend für Night Ops (Nachteinsätze).">Steiner DBAL (Laser/Licht)</option>
-                        <option value="Klesch-2P / Perst: Russische Laser-Licht-Kombinationen. Sehr starker Laser, blendet Feinde auf kurze Distanz extrem.">Zenit Klesch / Perst</option>
-                        <option value="Surefire X400: Kompaktes Modul, eigentlich für Pistolen gedacht, macht sich aber auch gut an SMGs (MP5/MP7).">Surefire X400</option>
+                        <option value="Zenit Perst-3 / Klesch-2P: Russische Laser-Licht-Kombinationen. Extrem starker Laser, blendet Feinde.">Zenit Perst-3 / Klesch (AK)</option>
+                        <option value="Surefire X400 / X300: Kompakte Module für Pistolen, machen sich aber auch gut an SMGs (MP5/MP7).">Surefire X400 / X300 (Pistolen)</option>
                     </optgroup>
                 </select>
-                <div id="attachInfo" class="info-box" style="margin-top: 15px; padding:15px; background:#111; border-left:4px solid var(--accent);">Wähle ein Attachment für Spezifikationen...</div>
+                <div id="attachInfo" class="info-box" style="margin-top: 15px; padding:15px; background:#111; border-left:4px solid var(--accent);">Wähle ein Attachment, um die 0.4 Meta-Vorteile zu sehen...</div>
             </div>
         </div>
 
