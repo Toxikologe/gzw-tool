@@ -349,51 +349,85 @@
         { de: "Squad Strike: Night Raid", en: "Squad Strike: Night Raid", v: "Banshee", desc: "Leise Spec-Op.", sol: "Team Stealth Kills bei Nacht." }
     ];
 
-    // 2. WAFFEN DATENBANK (NIJ UPDATED)
-    const weapons = {
-        "ks1": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "0.4 Meta. Extrem leise mit Suppressor und bester Ergo-Wert." },
-        "m4a1": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "Allrounder. Nutze den 10.3-Zoll Lauf für bessere Mobilität." },
-        "mk18": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "Ideal für CQB. Sehr kurzes Profil, perfekt für Gebäude-Raids." },
-        "m16a1": { ammo: "5.56x45mm M193 / M855", pen: "NIJ III", tip: "Hohe Mündungsgeschwindigkeit sorgt für weniger Bullet-Drop auf Distanz." },
-        "cqa1": { ammo: "5.56x45mm M855", pen: "NIJ III", tip: "Chinesischer M4-Klon. Gute Budget-Alternative, aber etwas schlechtere Basis-Werte." },
-        "ddm4": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "Daniel Defense Plattform. Fantastische Basiswerte für Rückstoß und Ergonomie." },
-        "sicmcx": { ammo: "5.56x45mm / .300 BLK", pen: "NIJ III+", tip: "Sehr flexibel. Ein absolutes Biest im Nahkampf, besonders mit Schalldämpfer." },
-        "akm": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Viel Rückstoß, aber extrem hoher Schaden pro Schuss." },
-        "akmn": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Der Klassiker. Mit BP-Munition extrem gefährlich gegen NIJ III+ Westen." },
-        "akmsn": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Klappschaft-Version. Kompakter im Rucksack, erlaubt Optik-Montage via Dovetail." },
-        "ak74n": { ammo: "5.45x39mm 7N6M / PP", pen: "NIJ III", tip: "Sehr geringer Rückstoß. Präziser als die 7.62er Varianten." },
-        "ak74m": { ammo: "5.45x39mm PP / BP", pen: "NIJ III+", tip: "Modernisierte AK-74. Geringes Gewicht, gute Trägheits-Werte." },
-        "aks74u": { ammo: "5.45x39mm PP", pen: "NIJ III", tip: "Die 'Krinkov'. Genial für CQB, verliert aber auf Distanz stark an Genauigkeit." },
-        "ak103": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Beste 7.62er AK. Kann alle modernen Aufsätze nutzen." },
-        "ak105": { ammo: "5.45x39mm PP", pen: "NIJ III", tip: "Kurze AK-Variante. Perfekt für das neue Bewegungssystem." },
-        "vz58": { ammo: "7.62x39mm PS / BP", pen: "NIJ III+", tip: "Keine AK! Nutzt eigene Magazine. Höhere Feuerrate als die AKMN." },
-        "ak12": { ammo: "5.45x39mm BP", pen: "NIJ III+", tip: "Modernste russische Armee-Waffe. Integrierte Schienen und tolles Schussgefühl." },
-        "ak15": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Verbindet das moderne Handling der AK-12 mit der brachialen Kraft der 7.62 Patrone." },
-        "ak19": { ammo: "5.56x45mm NATO", pen: "NIJ III+", tip: "Nutzt westliche Munition auf der modernen AK-12 Plattform. Sehr vielseitig." },
-        "ak308": { ammo: "7.62x51mm M80/M61", pen: "NIJ IV", tip: "AK-Plattform auf Steroiden. Verschießt fette NATO-Muni. Extrem laut, extrem tödlich." },
-        "m14": { ammo: "7.62x51mm M80 / M61", pen: "NIJ IV", tip: "Dominante Waffe in 0.4. M80 für KI, M61 für High-End Player Armor." },
-        "m700": { ammo: "7.62x51mm M61", pen: "NIJ IV", tip: "Repetiergewehr. Erfordert Disziplin, aber ignoriert fast jede Rüstung." },
-        "svd": { ammo: "7.62x54mmR 7N1", pen: "NIJ IV", tip: "Sehr laut! Zieht KI-Horden an, aber tötet fast alles mit einem Brusttreffer." },
-        "mosin": { ammo: "7.62x54mmR SNB", pen: "NIJ IV", tip: "Günstig und tödlich. SNB-Munition schlägt durch jeden Helm im Spiel." },
-        "skn": { ammo: "7.62x39mm BP", pen: "NIJ III+", tip: "Modernisierte SKS. Präziser als die AK, ideal für Unterdrückungsfeuer." },
-        "mp5": { ammo: "9x19mm AP 6.3 / 7N21", pen: "NIJ IIIA", tip: "Ein Laser auf kurze Distanz. Ziele auf Kopf oder Beine." },
-        "mp7a1": { ammo: "4.6x30mm AP", pen: "NIJ III+", tip: "Kleine Waffe, gigantischer Durchschlag. Perfekte Backup-Waffe für Sniper." },
-        "mp7a2": { ammo: "4.6x30mm AP", pen: "NIJ III+", tip: "Wie die A1, aber erlaubt die Montage eigener Vordergriffe für noch bessere Ergo." },
-        "vz61": { ammo: "9x18mm / .32 ACP", pen: "NIJ IIA", tip: "Skorpion Maschinenpistole. Enorme Feuerrate, aber durchdringt keine Rüstung. Leg-Meta!" },
-        "vityaz": { ammo: "9x19mm 7N21", pen: "NIJ IIIA", tip: "Russische SMG. Nutzt AK-Aufsätze für hohe Ergonomie." },
-        "m870": { ammo: "12G Slug / 00 Buck", pen: "NIJ IIA", tip: "In 0.4 sind Slugs gegen weiche Ziele verheerend." },
-        "590a1": { ammo: "12G 00 Buckshot", pen: "NIJ IIA", tip: "Maximale Stopwirkung auf 5-10 Meter." },
-        "alien": { ammo: "9x19mm AP 6.3 / 7N21", pen: "NIJ IIIA", tip: "0.4 Meta für Sidearms. Extrem schnell im ADS und fast kein Rückstoß." },
-        "glock17": { ammo: "9x19mm PST Gzh", pen: "NIJ IIA", tip: "Zuverlässig, große Magazine verfügbar." },
-        "m9a1": { ammo: "9x19mm PST Gzh", pen: "NIJ IIA", tip: "Gute Standard-Pistole für den Start." },
-        "makarov": { ammo: "9x18mm PM Gzh", pen: "NIJ IIA", tip: "Nur im absoluten Notfall." },
-        "1911": { ammo: ".45 ACP", pen: "NIJ IIA", tip: "Massiver Fleischschaden, aber geringe Magazinkapazität." },
-        "ccc": { ammo: ".45 ACP", pen: "NIJ IIA", tip: "Colt Combat Commander. Kompakt, schlägt aber genauso hart zu wie die 1911." },
-        "typ51": { ammo: "7.62x25mm Tokarev", pen: "NIJ IIIA", tip: "Chinesischer TT-33 Klon. Die schnelle Munition penetriert weiche Rüstungen überraschend gut." },
-        "m1a": { ammo: "7.62x51mm M80", pen: "NIJ IV", tip: "0.4 NEU: Zivile Version des M14. Exzellent als DMR mit den neuen 0.4 Scopes." },
-        "rem788": { ammo: "5.56x45mm M855", pen: "NIJ IIIA", tip: "0.4 NEU: Remington Model 788 (.222). Repetierbüchse, ideal für Einsteiger-Jagd-Tasks." },
-        "m201c": { ammo: "5.56x45mm M855A1", pen: "NIJ III+", tip: "0.4 NEU: Stark modifizierbares Kompaktgewehr. Sehr starke Alternative zur M4A1." }
-    };
+    // ==========================================
+    // 2. WAFFEN-DATENBANK (0.4 SPEARHEAD - 100% COMPLETE)
+    // ==========================================
+const weapons = {
+    // --- STURMGEWEHRE (NATO) ---
+    "m4a1": { name: "M4A1 Sturmgewehr", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Die Standard-NATO-Waffe. Stark modifizierbar." },
+    "m16a1": { name: "M16A1 Sturmgewehr", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 NEU: 'The Black Rifle'. Retro-Look, extrem präzise." },
+    "m201c": { name: "Norinco M-201C", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 NEU: Kompakte chinesische M4-Alternative. Hoher Durability Burn!" },
+    "cqa1": { name: "CQ-A1", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Chinesischer M4-Klon. Günstig für den Start, später austauschen." },
+    "ddm4": { name: "Daniel Defense DDM4", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 S-TIER: Perfekte Ergonomie ab Werk. Erfordert Blueprint-Unlock." },
+    "ks1": { name: "KAC KS-1 (L403A1)", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 META: Bestes Rückstoßverhalten im Spiel." },
+    "sicmcx": { name: "SIG MCX", ammo: ".300 Blackout", pen: "Sehr hoch", tip: "Tödlich im Nahkampf. Munition ist extrem selten. Blueprint im Hotel." },
+    "mk18": { name: "MK18", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Kurzer Lauf, hohe Ergonomie. Perfekt für den Häuserkampf." },
+
+    // --- STURMGEWEHRE (OSTBLOCK) ---
+    "ak74": { name: "AK-74", ammo: "5.45x39mm", pen: "Gut", tip: "Das Original mit Holzschäftung." },
+    "ak74n": { name: "AK-74N", ammo: "5.45x39mm", pen: "Gut", tip: "Mit Schwalbenschwanz-Montage für russische Optiken." },
+    "ak74m": { name: "AK-74M", ammo: "5.45x39mm", pen: "Gut", tip: "Modernisierte Version mit Polymerschaft und Klappschaft." },
+    "aks74u": { name: "AKS-74U", ammo: "5.45x39mm", pen: "Mittel", tip: "Sehr kurz. Starker Rückstoß, nur für CQB." },
+    "aks74un": { name: "AKS-74UN", ammo: "5.45x39mm", pen: "Mittel", tip: "AKS-74U mit seitlicher Montage-Schiene." },
+    "akm": { name: "AKM", ammo: "7.62x39mm", pen: "Hoch", tip: "Hoher Rückstoß, massive Stoppwirkung." },
+    "akmn": { name: "AKMN", ammo: "7.62x39mm", pen: "Hoch", tip: "AKM mit Optik-Montage." },
+    "akms": { name: "AKMS", ammo: "7.62x39mm", pen: "Hoch", tip: "AKM mit nach unten klappendem Schaft." },
+    "akmsn": { name: "AKMSN", ammo: "7.62x39mm", pen: "Hoch", tip: "AKMS mit Optik-Montage." },
+    "ak101": { name: "AK-101", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Export-AK, die NATO-Munition verschießt." },
+    "ak102": { name: "AK-102", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Kurzversion der AK-101." },
+    "ak103": { name: "AK-103", ammo: "7.62x39mm", pen: "Hoch", tip: "Moderne Polymer-AK. Spürbar besserer Basis-Rückstoß als die AKM." },
+    "ak104": { name: "AK-104", ammo: "7.62x39mm", pen: "Hoch", tip: "Kurzversion der AK-103." },
+    "ak105": { name: "AK-105", ammo: "5.45x39mm", pen: "Gut", tip: "Kompakter Kompromiss der AK-74M." },
+    "ak12": { name: "AK-12", ammo: "5.45x39mm", pen: "Gut", tip: "Modernste russische Plattform. Sehr hohe Ergonomie." },
+    "ak15": { name: "AK-15", ammo: "7.62x39mm", pen: "Hoch", tip: "7.62 Variante der AK-12." },
+    "ak19": { name: "AK-19", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Neueste AK-Variante für NATO-Munition." },
+    "ak308": { name: "AK-308", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 S-TIER: .308 Sniper-Muni im Vollauto-Modus. Jailbreak-Blueprint nötig!" },
+    "vz58": { name: "SA vz. 58", ammo: "7.62x39mm", pen: "Hoch", tip: "0.4 NEU: 'Moravian Buzzsaw'. Hohe Feuerrate, frisst aber Haltbarkeit." },
+    "vz58v": { name: "SA vz. 58 V", ammo: "7.62x39mm", pen: "Hoch", tip: "0.4 NEU: Variante mit Klappschaft." },
+    "typ56": { name: "Type 56", ammo: "7.62x39mm", pen: "Mittel", tip: "Die absolute Einsteiger-Waffe. Schnell ersetzen." },
+    "typ56_1": { name: "Type 56-1", ammo: "7.62x39mm", pen: "Mittel", tip: "Type 56 Variante mit Klappschaft." },
+    "typ56_2": { name: "Type 56-2", ammo: "7.62x39mm", pen: "Mittel", tip: "Type 56 Variante mit seitlichem Klappschaft." },
+
+    // --- DMR & SCHARFSCHÜTZEN ---
+    "m14": { name: "M14 Battle Rifle", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 NEU: S-Tier DMR. Sehr präzise auf Distanz." },
+    "m14ebr": { name: "M14 EBR", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 NEU: Modernisiertes Chassis der M14." },
+    "m1a": { name: "M1A", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 NEU: Zivile Semi-Auto Variante der M14." },
+    "m700": { name: "M700 Remington", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "⚠️ 0.4 MECHANIK: Erfordert Manual Bolting! Tödlich auf Distanz." },
+    "rem788": { name: "Remington Model 788", ammo: "5.56x45mm / .308", pen: "Hoch", tip: "0.4 NEU: 'Baby's First Sniper'. Günstig für den Anfang. Manual Bolting!" },
+    "mosin": { name: "Mosin-Nagant", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "⚠️ 0.4 MECHANIK: Manual Bolting! Die SNB-Munition durchschlägt fast alles." },
+    "mosin_sniper": { name: "Mosin-Nagant (Sniper)", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "Mit gebogenem Kammerstängel, um Zielfernrohre zu montieren." },
+    "mosin_obrez": { name: "Mosin Obrez", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "Abgesägte Mosin. Furchtbarer Rückstoß, aber enormer Schaden auf kurze Distanz." },
+    "svd": { name: "SVD Dragunov", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "0.4 S-TIER: Semi-Auto Sniper. Blueprint in der Tiger Bay Mall." },
+    "svds": { name: "SVDS", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "Klappschaft-Version der SVD." },
+    "sks": { name: "SKS", ammo: "7.62x39mm", pen: "Gut", tip: "Solides Einsteiger-DMR." },
+    "op_sks": { name: "OP-SKS", ammo: "7.62x39mm", pen: "Gut", tip: "SKS mit Montage für Optiken." },
+
+    // --- SMG & SHOTGUNS ---
+    "mp7a1": { name: "MP7A1", ammo: "4.6x30mm", pen: "Sehr Hoch (AP)", tip: "Hat einen fest verbauten Frontgriff." },
+    "mp7a2": { name: "MP7A2", ammo: "4.6x30mm", pen: "Sehr Hoch (AP)", tip: "Ohne festen Griff, erlaubt eigene Attachments. Blueprint im Shelter." },
+    "mp5a2": { name: "MP5A2", ammo: "9x19mm", pen: "Gering", tip: "Fester Schaft, extrem wenig Rückstoß." },
+    "mp5a3": { name: "MP5A3", ammo: "9x19mm", pen: "Gering", tip: "Ausziehbarer Schaft für mehr Mobilität." },
+    "mp5sd": { name: "MP5SD", ammo: "9x19mm", pen: "Gering", tip: "Integrierter Schalldämpfer. Sehr leise." },
+    "mp5k": { name: "MP5K", ammo: "9x19mm", pen: "Gering", tip: "Kurzversion, ideal als Backup-Waffe." },
+    "vityaz": { name: "PP-19-01 Vityaz", ammo: "9x19mm", pen: "Gering", tip: "Russische MP5-Alternative. Spielt sich wie eine kompakte AK." },
+    "vz61": { name: "VZ-61 Skorpion", ammo: ".32 ACP", pen: "Minimal", tip: "Eher ein Spielzeug. Munition prallt an Rüstungen ab." },
+    "m870": { name: "M870 Pump-Action", ammo: "12 Gauge", pen: "Gering", tip: "Standard-Shotgun. Unbedingt auf die Beine zielen!" },
+    "moss590": { name: "Mossberg 590", ammo: "12 Gauge", pen: "Gering", tip: "Bessere Shotgun-Alternative zur 870." },
+    "moss590a1": { name: "Mossberg 590A1", ammo: "12 Gauge", pen: "Gering", tip: "Schwere Militärversion der 590." },
+    "moss590_shock": { name: "Mossberg 590 Shockwave", ammo: "12 Gauge", pen: "Gering", tip: "Extrem kurz, ohne Schaft. Sehr hoher Rückstoß." },
+
+    // --- PISTOLEN ---
+    "alien": { name: "Laugo Alien", ammo: "9x19mm", pen: "Mittel", tip: "0.4 NEU: 'Ein Sportwagen auf Schotterpisten'. Feuert so präzise wie ein Laser!" },
+    "glock17": { name: "Glock 17", ammo: "9x19mm", pen: "Gering", tip: "Beste Standard-Backup-Waffe. Lässt sich mit Red-Dots modifizieren." },
+    "glock19": { name: "Glock 19", ammo: "9x19mm", pen: "Gering", tip: "Kompakte Glock. Sehr zuverlässig." },
+    "m9a1": { name: "M9A1 Beretta", ammo: "9x19mm", pen: "Gering", tip: "Solide Pistole mit großer Magazinkapazität." },
+    "m9a3": { name: "M9A3 Beretta", ammo: "9x19mm", pen: "Gering", tip: "Modernisierte Beretta mit Gewindelauf für Schalldämpfer." },
+    "1911": { name: "Colt M1911A1", ammo: ".45 ACP", pen: "Mittel", tip: "Nur 7 Schuss, aber .45 ACP richtet enormen Fleischschaden an." },
+    "ccc": { name: "Colt Combat Commander", ammo: ".45 ACP", pen: "Mittel", tip: "Kompakte, kürzere Version der 1911." },
+    "makarov": { name: "Makarov PM", ammo: "9x18mm", pen: "Minimal", tip: "Absolute Notfall-Waffe. Schnell austauschen." },
+    "makarov_pb": { name: "Makarov PB", ammo: "9x18mm", pen: "Minimal", tip: "Makarov mit integriertem Schalldämpfer für Stealth-Kills." },
+    "typ51": { name: "Type-51 / TT", ammo: "7.62x25mm", pen: "Mittel", tip: "Hohe Penetration für eine Pistole, aber winziges Magazin." }
+};
     
 // 3. WAFFEN BILDER DATENBANK
     const weaponImages = {
