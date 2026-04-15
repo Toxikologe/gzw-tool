@@ -2255,14 +2255,20 @@
                 completedTasks.push(taskEn);
             }
         } else {
-            // Entfernt das Häkchen wieder, falls man sich verklickt hat
+            // Häkchen entfernen (einzeln oder per X-Button)
             completedTasks = completedTasks.filter(t => t !== taskEn && t !== taskDe);
+            
+            // Falls dieser Task gerade links in der Detail-Ansicht offen ist, Checkbox dort entmarkieren
+            const currentTitle = document.getElementById('taskTitle').innerText;
+            if (currentTitle === taskDe) {
+                document.getElementById('taskCompleteCheckbox').checked = false;
+            }
         }
         
         try { localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks)); } catch(e) {}
         
         const titleEl = document.getElementById('taskTitle');
-        if (titleEl) {
+        if (titleEl && document.getElementById('taskTitle').innerText === taskDe) {
             titleEl.style.textDecoration = isChecked ? 'line-through' : 'none';
             titleEl.style.opacity = isChecked ? '0.6' : '1';
         }
@@ -2293,9 +2299,12 @@
         doneTasks.sort((a, b) => a.de.localeCompare(b.de));
 
         display.innerHTML = doneTasks.map(t => 
-            `<span style="display:inline-block; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:4px 10px; margin:4px; font-size:0.85rem; cursor:pointer;" 
-             onclick="displayTaskData('${t.en.replace(/'/g, "\\'")}'); document.getElementById('taskDropdown').value='${t.en.replace(/'/g, "\\'")}'"
-             title="Klicken für Details">✅ ${t.de}</span>`
+            `<div style="display:inline-flex; align-items:center; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:2px 8px; margin:4px; font-size:0.85rem;">
+                <span onclick="displayTaskData('${t.en.replace(/'/g, "\\'")}'); document.getElementById('taskDropdown').value='${t.en.replace(/'/g, "\\'")}'" 
+                      style="cursor:pointer; color:#ccc;" title="Klicken für Details">✅ ${t.de}</span>
+                <span onclick="toggleTaskCompletion('${t.en.replace(/'/g, "\\'")}', '${t.de.replace(/'/g, "\\'")}', false)" 
+                      style="margin-left:8px; cursor:pointer; color:#ff4c4c; font-weight:bold; padding:2px 5px;" title="Einzeln entfernen">✕</span>
+            </div>`
         ).join('');
     }
 
