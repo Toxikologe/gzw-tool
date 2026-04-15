@@ -7,11 +7,11 @@
     // DATENBANKEN
     // ==============================================================
 
-    // 1. TASK DATENBANK (VOLLSTÄNDIG - 0.4 AKTUALISIERT)
+    // ==============================================================
+    // 1. MISSIONS-DATENBANK (TASKS) - 0.4 SPEARHEAD (100% COMPLETE)
+    // ==============================================================
     const allTasks = [
-        // ==========================================
-        // --- HANDSHAKE ---
-        // ==========================================
+        // --- HANDSHAKE TASKS ---
         { de: "Erstaufklärung", en: "First Recon", v: "Handshake", desc: "Erkunde Markt, Tankstelle und Rathaus.", sol: "Markt (141 162), Tankstelle (144 161), Ruine (141 165)." },
         { de: "Agent der Paranoia", en: "Paranoia Agent", v: "Handshake", desc: "Haus des Informanten suchen.", sol: "Startgebiet. Finde das Versteck des Informanten und sichere Hinweise." },
         { de: "Abgestürzter Vogel", en: "Little Bird Down", v: "Handshake", desc: "Finde den Heli-Absturzplatz.", sol: "Crashed Heli (145 159), Crew-Leichen (145 160)." },
@@ -29,20 +29,20 @@
         { de: "Neue Nachbarn", en: "New Neighbors", v: "Handshake", desc: "Checkpoints YBL-1.", sol: "Bunker Ebene -1 (142 121). Intel sichern." },
         { de: "Der Schatten über Ban Pa", en: "The Shadow Over Ban Pa", v: "Handshake", desc: "Süd/Nord-Eingänge Ban Pa.", sol: "Scoute Ban Pa Süd (204 136) und Nord (205 138)." },
         { de: "Letzter Check-Out", en: "Final Check Out", v: "Handshake", desc: "Lila Koffer identifizieren.", sol: "Pha Lang Airfield (183 158). Untersuche den Koffer." },
-        { de: "Zahme Ratte", en: "Domesticated Rat", v: "Handshake", desc: "Shack-Kontakt ausmachen.", sol: "Hunter's Paradise Waldhütte (Nachts 22:00-05:00). Intel holen." },
+        { de: "Zahme Ratte", en: "Domesticated Rat", v: "Handshake", desc: "Shack-Kontakt ausmachen.", sol: "Hunter's Paradise Waldhütte. ACHTUNG: Nur Nachts (22:00-05:00). Intel holen." },
         { de: "Rebellengesindel", en: "Rebel Scum", v: "Handshake", desc: "20 Feinde Bunker YBL-1.", sol: "YBL-1 Bunker (142 121). 20 Kills erzielen." },
-        { de: "Ich kam, sah, siegte I", en: "I Went, I Saw, I Conquered I", v: "Handshake", desc: "Sägewerk ausspähen.", sol: "Sawmill (138 143). Spähe Straßen/Hügel aus (Nachts 22:00-05:00)." },
+        { de: "Ich kam, sah, siegte I", en: "I Went, I Saw, I Conquered I", v: "Handshake", desc: "Sägewerk ausspähen.", sol: "Sawmill (138 143). Spähe Straßen/Hügel aus (Nur Nachts 22:00-05:00)." },
         { de: "Ich kam, sah, siegte II", en: "I Went, I Saw, I Conquered II", v: "Handshake", desc: "Sprengstoffwerkstatt.", sol: "Sawmill (138 143). Finde die Werkstatt und Fässer." },
         { de: "Ich kam, sah, siegte III", en: "I Went, I Saw, I Conquered III", v: "Handshake", desc: "20 Kills Sägewerk.", sol: "Sawmill. 20 Kills." },
-        { de: "Manifest Destiny", en: "Manifest Destiny", v: "Handshake", desc: "Festplatte extrahieren.", sol: "Airfield (182 158). Datenbank auf dem PC checken (Nachts)." },
+        { de: "Manifest Destiny", en: "Manifest Destiny", v: "Handshake", desc: "Festplatte extrahieren.", sol: "Airfield (182 158). Datenbank auf dem PC checken (Nur Nachts)." },
         { de: "Schießstand", en: "Shooting Gallery", v: "Handshake", desc: "20 Kills Hunter's Paradise.", sol: "Hunter's Paradise (159 168). 20 Kills erzielen." },
-        { de: "UNLRA", en: "UNLRA", v: "Handshake", desc: "Intel aus UNLRA Camp.", sol: "Tiger Bay. Finde den Ordner im Zelt (Nachts 22:00-05:00)." },
+        { de: "UNLRA", en: "UNLRA", v: "Handshake", desc: "Intel aus UNLRA Camp.", sol: "Tiger Bay. Finde den Ordner im Zelt (Nur Nachts 22:00-05:00)." },
         { de: "Abkürzung", en: "Shortcut", v: "Handshake", desc: "Durchgang Fort Narith.", sol: "Bunker Ebene -2 (142 121). In den Trümmern suchen." },
         { de: "Schatten über Ban Pa II", en: "The Shadow Over Ban Pa II", v: "Handshake", desc: "Kult in Ban Pa.", sol: "Hole Intel aus Ban Pa (205 137)." },
-        { de: "Geschäft oder Vergnügen", en: "Business Or Pleasure", v: "Handshake", desc: "Airfield untersuchen.", sol: "Airfield (183 158). USB auf Holztisch bei Laptop (Nachts)." },
+        { de: "Geschäft oder Vergnügen", en: "Business Or Pleasure", v: "Handshake", desc: "Airfield untersuchen.", sol: "Airfield (183 158). USB auf Holztisch bei Laptop (Nur Nachts)." },
         { de: "Flügel stutzen", en: "Wing Clipping", v: "Handshake", desc: "20 Feinde Flugplatz.", sol: "Pha Lang Airfield. 20 Kills." },
         { de: "Wahrer Mut", en: "True Grit", v: "Handshake", desc: "Antiker Revolver.", sol: "Hunter's Paradise (160 167). Revolver aus Motel 102 holen." },
-        { de: "Ein Schuss, ein Treffer", en: "One Shot, One Kill", v: "Handshake", desc: "Commander ausschalten.", sol: "Hunter's Paradise (159 168). Boss (Cap, lila Shirt) töten." },
+        { de: "Ein Schuss, ein Treffer", en: "One Shot, One Kill", v: "Handshake", desc: "Commander ausschalten.", sol: "Hunter's Paradise (159 168). HP Boss (Cap, lila Shirt) töten." },
         { de: "Blick auf den Fluss", en: "Riverfront View", v: "Handshake", desc: "Schicksal Späher.", sol: "Midnight Sapphire. Finde Hinweise über den Späher." },
         { de: "Tiefste, dunkelste Fantasien", en: "Deepest, Darkest Fantasies", v: "Handshake", desc: "Flash Drive holen.", sol: "Midnight Sapphire. USB sichern." },
         { de: "Revolutionäre Straße", en: "Revolutionary Road", v: "Handshake", desc: "Tankstelle Fort Narith.", sol: "Fort Narith Tankstelle. Laptop und Notizen finden." },
@@ -50,15 +50,15 @@
         { de: "Was hochkommt", en: "What Comes Up", v: "Handshake", desc: "Flugschreiber bergen.", sol: "Pha Lang Airfield (192 152). Blackbox am Wrack finden." },
         { de: "Gewaltsame Aufklärung", en: "Reconnaissance-in-Force", v: "Handshake", desc: "30 Soldaten Fort Narith.", sol: "Töte 30 Soldaten im Fort Narith." },
         { de: "Bis zur Schnupftabakdose", en: "Up To Snuff", v: "Handshake", desc: "VIP Kundenliste.", sol: "Hunter's Paradise (160 168). Gebäude, Schreibtisch rechts." },
-        { de: "Gefährliche Schätze", en: "Hazardous Treasures", v: "Handshake", desc: "Eliminieren & Container.", sol: "Kills/Container in: Sawmill, Lagoon, HP (159 168), Ban Pa (205 137), Airfield, YBL-1 (30kg Container!)." },
-        { de: "Hacker", en: "Hacker", v: "Handshake", desc: "4 Kameras hacken.", sol: "Fort Narith (Nachts). Air Traffic, Main, North, HQ." },
+        { de: "Gefährliche Schätze", en: "Hazardous Treasures", v: "Handshake", desc: "Eliminieren & Container.", sol: "Finde 30kg Container in: Sawmill, Lagoon, HP, Ban Pa, Airfield, YBL-1." },
+        { de: "Hacker", en: "Hacker", v: "Handshake", desc: "4 Kameras hacken.", sol: "Fort Narith (Nur Nachts). Air Traffic, Main, North, HQ." },
         { de: "Zurückgelassen II", en: "Left Behind II", v: "Handshake", desc: "Identität Leiche.", sol: "Midnight Sapphire. Leiche identifizieren." },
         { de: "Unkraut jäten", en: "Weeding", v: "Handshake", desc: "30 LAF Forces MS.", sol: "Midnight Sapphire. 30 LAF Feinde töten." },
-        { de: "Je mehr desto besser", en: "The More the Merrier", v: "Handshake", desc: "Patrouillen-Dokumente.", sol: "Fort Narith Barracks (Nachts). Intel finden." },
+        { de: "Je mehr desto besser", en: "The More the Merrier", v: "Handshake", desc: "Patrouillen-Dokumente.", sol: "Fort Narith Barracks (Nur Nachts). Intel finden." },
         { de: "Der Kongressabgeordnete", en: "The Congressman", v: "Handshake", desc: "Smartphone Hotel.", sol: "Midnight Sapphire (173 166). Smartphone holen." },
-        { de: "Hacker II", en: "Hacker II", v: "Handshake", desc: "Codebuch finden.", sol: "Fort Narith (Nachts). 3 Antennen hacken. Codebuch HQ 2. Stock." },
+        { de: "Hacker II", en: "Hacker II", v: "Handshake", desc: "Codebuch finden.", sol: "Fort Narith (Nur Nachts). 3 Antennen hacken. Codebuch HQ 2. Stock." },
         { de: "Trollbrücke", en: "Troll Bridge", v: "Handshake", desc: "Verminte Brücke.", sol: "Tiger Bay (West). Untersuche die Brücke." },
-        { de: "UNLRA II", en: "UNLRA II", v: "Handshake", desc: "3 Checkpoints untersuchen.", sol: "Tiger Bay Checkpoints (Nachts). Ordner sichern." },
+        { de: "UNLRA II", en: "UNLRA II", v: "Handshake", desc: "3 Checkpoints untersuchen.", sol: "Tiger Bay Checkpoints (Nur Nachts). Ordner sichern." },
         { de: "Paparazzi", en: "Paparazzi", v: "Handshake", desc: "Vernehmungsraum.", sol: "Hotel (171 166). MS Supply Key nutzen. Blutraum (171 169)." },
         { de: "Der Verschwundene", en: "The Man Who Disappeared", v: "Handshake", desc: "Pass im Schrank.", sol: "Midnight Sapphire (171 166) hinter Rezeption. Pass nachts ablegen." },
         { de: "Lippe riskieren", en: "Lip Out", v: "Handshake", desc: "Donald J. Dortmunder.", sol: "Midnight Sapphire. Finde Zielperson/Wohnort." },
@@ -73,16 +73,18 @@
         { de: "Funküberwachung", en: "Radio Intercept", v: "Handshake", desc: "Peilsender Antenne.", sol: "Midnight Sapphire Dach." },
         { de: "Terminal-Initiative", en: "Terminal Initiative", v: "Handshake", desc: "Stürme Airfield.", sol: "Airfield Landebahn sichern." },
         { de: "Der Befreier", en: "The Liberator", v: "Handshake", desc: "Kommunikationszentrale.", sol: "Hütte 199 193. Dokument vom Tisch." },
+        { de: "Familien-Erbstück", en: "Family Heirloom", v: "Handshake", desc: "Erbstück bergen.", sol: "Suche das Haus im Startgebiet ab." },
+        { de: "Ein kleiner Gefallen", en: "A Small Favor", v: "Handshake", desc: "Kleinigkeit besorgen.", sol: "Sammle spezifische Items (z.B. Zigarren/MREs)." },
+        { de: "Verlorener Liebhaber", en: "Lost Lover", v: "Handshake", desc: "Suche nach PMC.", sol: "Untersuche die Häuser in Nam Thaven/Kiu Vongsa." },
+        { de: "Sherpa: Erste Schritte", en: "Sherpa: First Steps", v: "Handshake", desc: "Hilfe Operators.", sol: "Begleite Spieler in der Startstadt." },
 
-        // ==========================================
-        // --- GUNNY ---
-        // ==========================================
+        // --- GUNNY TASKS ---
         { de: "Medikamente gesucht", en: "Meds Wanted", v: "Gunny", desc: "Hilfsgüter Wasserturm.", sol: "Wasserturm (140 161). Kiste am Fundament." },
         { de: "Schießplatz-Check", en: "Range Check", v: "Gunny", desc: "Munitionskisten Schießstand.", sol: "Rechts unter Wellblechdach." },
         { de: "Luftabwehr-Sichtung", en: "AA Sighting", v: "Gunny", desc: "Markiere FLAK.", sol: "Fort Narith Block A, B, C Dächer markieren." },
         { de: "Treibstoffdiebe", en: "Fuel Thieves", v: "Gunny", desc: "Benzinkanister Hangar.", sol: "Hangar 2 hinter den Wracks." },
         { de: "Scharfschützen-Nest", en: "Sniper's Nest", v: "Gunny", desc: "Wasserturm Sniper.", sol: "Töte Wache oben auf dem Turm." },
-        { de: "Herzliches Willkommen", en: "Warm Welcome", v: "Gunny", desc: "Boss in Ban Pa killen.", sol: "Ban Pa (204 136). Boss bei Stelzenhäusern töten." },
+        { de: "Herzliches Willkommen", en: "Warm Welcome", v: "Gunny", desc: "Boss in Ban Pa killen.", sol: "Ban Pa (204 136). Naga (Boss) bei Stelzenhäusern töten." },
         { de: "Waffen & Munition", en: "Guns & Ammo", v: "Gunny", desc: "Waffenlager Bunker.", sol: "Hunter's Paradise (159 168). Braucht HP WEP KEY." },
         { de: "Schießübung", en: "Shooting Practice", v: "Gunny", desc: "100m Sniper Kills.", sol: "10 Kills aus über 100m Entfernung." },
         { de: "Kampfmittelbeseitigung", en: "EOD", v: "Gunny", desc: "IEDs entschärfen.", sol: "3 Sprengsätze Hauptstraße Fort Narith." },
@@ -99,11 +101,11 @@
         { de: "Scharfschützen-Duell", en: "Sniper Duel", v: "Gunny", desc: "Sniper Flugplatz.", sol: "3 Sniper Tower/Hangar Ground Zero töten." },
         { de: "Häuserkampf", en: "CQB Mastery", v: "Gunny", desc: "Kills <10m.", sol: "15 Kills auf kurze Distanz." },
         { de: "Panzerabwehr", en: "Anti-Armor", v: "Gunny", desc: "RPG-Sprengköpfe.", sol: "Fort Narith Waffenkammer (2 Stück holen)." },
-        { de: "Waffenbrüder", en: "Brothers in Arms", v: "Gunny", desc: "Verlorene M4A1.", sol: "2 M4A1 aus Hunter's Paradise an Gunny übergeben." },
+        { de: "Waffenbrüder", en: "Brothers in Arms", v: "Gunny", desc: "Verlorene M4A1.", sol: "2 unmodifizierte M4A1 aus Hunter's Paradise an Gunny übergeben." },
         { de: "Feuer frei", en: "Weapons Free", v: "Gunny", desc: "25 Kills Sägewerk.", sol: "Massive Räumung im Lumber Yard." },
         { de: "Sturm auf das Fort", en: "Storm the Fort", v: "Gunny", desc: "Fort Narith Innenhof.", sol: "Erreiche zentralen Appellplatz." },
         { de: "Säuberung der Lagune", en: "Lagoon Sweep", v: "Gunny", desc: "Kartell vertreiben.", sol: "20 Kills Blue Lagoon." },
-        { de: "Kopfgeld", en: "Bounty", v: "Gunny", desc: "Barett Commander.", sol: "Rotes Barett Boss Hunter's Paradise." },
+        { de: "Kopfgeld", en: "Bounty", v: "Gunny", desc: "Barett Commander.", sol: "Rotes Barett des Hunter's Paradise Bosses looten." },
         { de: "Guerilla-Taktiken", en: "Guerrilla Tactics", v: "Gunny", desc: "Vorräte zerstören.", sol: "C4 an 3 Stapel in Ban Pa anbringen." },
         { de: "Hinter feindlichen Linien", en: "Behind Enemy Lines", v: "Gunny", desc: "Heli markieren.", sol: "Ground Zero Kampfhubschrauber markieren." },
         { de: "Schießerei", en: "Shootout", v: "Gunny", desc: "20 Kills AR.", sol: "Hunter's Paradise Feuerkampf mit Assault Rifle." },
@@ -127,10 +129,12 @@
         { de: "Güterjagd", en: "Goods Hunting", v: "Gunny", desc: "Vorräte Safe House.", sol: "Nördlich von Khonwan Dorf." },
         { de: "Sie sind überall", en: "They Are Everywhere", v: "Gunny", desc: "Camp W Tiger Bay.", sol: "Tiger Bay Untersuchung durchführen." },
         { de: "Inkognito", en: "Incognito", v: "Gunny", desc: "Haus mysteriöse Person.", sol: "W Tiger Bay Central." },
+        { de: "Das verlorene Lager", en: "The Campsite", v: "Gunny", desc: "Verlassenes Lager.", sol: "W-Juliet 4 Leiche." },
+        { de: "Vorratsengpass", en: "Supply Squeeze", v: "Gunny", desc: "Rationen Lumber.", sol: "5 MREs Sägewerk." },
+        { de: "Linie im Sand", en: "Line In The Sand", v: "Gunny", desc: "Ban Pa verteidigen.", sol: "Ban Pa (205 137). Ban Pa Pier (206 137)." },
+        { de: "Tiefe Gewässer", en: "Deep Waters", v: "Gunny", desc: "Kills Blue Lagoon.", sol: "Kill 20 Bots an der Blue Lagoon. ACHTUNG: Boss Malo rotiert!" },
 
-        // ==========================================
-        // --- LAB RAT ---
-        // ==========================================
+        // --- LAB RAT TASKS ---
         { de: "Medizinischer Detektiv", en: "Medical Detective", v: "Lab Rat", desc: "Büro Arzt Notizen.", sol: "Arzthaus (141 166). Braucht DOC KEY." },
         { de: "Ein einziger Tropfen", en: "A Single Drop", v: "Lab Rat", desc: "Wasserprobe Wasserturm.", sol: "Airfield Tanker Trucks: 182 156, 183 158, 183 158." },
         { de: "Geheimes Mitgefühl", en: "Secret Compassion", v: "Lab Rat", desc: "Hilfsgüter Farmen.", sol: "Drei Standorte: East (146 162), SW (140 160), West (139 162)." },
@@ -169,10 +173,10 @@
         { de: "Toxische Umgebung", en: "Toxic Environment", v: "Lab Rat", desc: "Sumpf Bodenproben.", sol: "Nördlicher Sumpf Proben entnehmen." },
         { de: "Testresultate", en: "Test Results", v: "Lab Rat", desc: "Akten Labor.", sol: "Hole Testergebnisse." },
         { de: "Krümelsammler", en: "Crumb Collector", v: "Lab Rat", desc: "Diamanten-Zelt.", sol: "Westliches Zelt. Item auf Tisch (Alternativ zu Turncoat)." },
+        { de: "Gefährliche Beute", en: "Hazardous Haul", v: "Lab Rat", desc: "Kontaminierte Proben.", sol: "YBL-1 Ebene -3." },
+        { de: "Gefährliche Beute II", en: "Hazardous Haul II", v: "Lab Rat", desc: "Bringe Proben.", sol: "Übergabe an Lab Rat." },
 
-        // ==========================================
-        // --- ARTISAN ---
-        // ==========================================
+        // --- ARTISAN TASKS ---
         { de: "Versteck-Bergung", en: "Cache Retrieval", v: "Artisan", desc: "Altes Versteck Wald.", sol: "Warehouse (140 163) und Lumber Yard (141 161)." },
         { de: "Werkzeugbeschaffung", en: "Tooling Up", v: "Artisan", desc: "3 Werkzeugsets.", sol: "Besorge 3 Toolsets im Raid." },
         { de: "Gefährliche Schätze", en: "Hazardous Treasures", v: "Artisan", desc: "Relikte in 30kg Kisten.", sol: "Sawmill Mitte (OFC Storage Key), HP West (HP WEP Key), Ban Pa Elder's House." },
@@ -217,10 +221,10 @@
         { de: "Die Werkstatt", en: "The Workshop", v: "Artisan", desc: "Geheime Werkstatt.", sol: "Tiger Bay Vorstadt finden." },
         { de: "Treibstoffmangel", en: "Fuel Shortage", v: "Artisan", desc: "Treibstoff Sägewerk.", sol: "Sawmill (139 144)." },
         { de: "Invasoren aus der Ferne", en: "Invaders From Afar", v: "Artisan", desc: "Mediziner Notiz.", sol: "Sawmill (139 144). Medic's Note finden." },
+        { de: "Rauchzeichen", en: "Smoke Signals", v: "Artisan", desc: "Signalfeuer Miliz.", sol: "Hügel zw. Ban Pa/Lumber." },
+        { de: "Schwarze Liste", en: "Blacklist", v: "Artisan", desc: "Buch Namen.", sol: "Ban Pa Elder's House Dielen." },
 
-        // ==========================================
-        // --- TURNCOAT ---
-        // ==========================================
+        // --- TURNCOAT TASKS ---
         { de: "Der Unterhändler", en: "The Negotiator", v: "Turncoat", desc: "Leiche Unterhändler.", sol: "Bunker Ebene -2 (142 121). Benötigt YBL OFFICE 02 KEY." },
         { de: "Keine Zeugen", en: "No Witnesses", v: "Turncoat", desc: "Leise Kills.", sol: "10 Kills mit Schalldämpfer." },
         { de: "Deal des Jahrhunderts", en: "Deal of the Century", v: "Turncoat", desc: "Schwarzgeld Lagune.", sol: "Blue Lagoon Koffer unter Theke." },
@@ -247,29 +251,30 @@
         { de: "Lokaler Golf-Star", en: "Local Golf Star", v: "Turncoat", desc: "Golfclub sichern.", sol: "Midnight Sapphire Golfplatz." },
         { de: "Letzte Befreiung", en: "Final Liberation", v: "Turncoat", desc: "Räume Bunker EG-2.", sol: "Bunker (142 121). Töte Boss mit blauem Bandana." },
         { de: "Narkotika-Deal", en: "Narcotic Bargain", v: "Turncoat", desc: "Drogen finden.", sol: "Blue Lagoon Drogenlabor." },
-        { de: "In den richtigen Händen", en: "In The Right Hands", v: "Turncoat", desc: "Evakuierungsbefehle.", sol: "Fort Narith, Barracks A, Raum 112. Akte liegt links auf dem Tisch (Wahl zwischen Turncoat/Lab Rat)." },
+        { de: "In den richtigen Händen", en: "In The Right Hands", v: "Turncoat", desc: "Evakuierungsbefehle.", sol: "Fort Narith, Barracks A, Raum 112. Akte liegt links auf dem Tisch." },
         { de: "Evakuierungsfrage", en: "Evacuation Question", v: "Turncoat", desc: "Evakuierungsbefehle.", sol: "Fort Narith, Barracks A, Raum 112 (Alternativer Weg für In The Right Hands)." },
         { de: "Eines Mannes Müll", en: "One Man's Trash", v: "Turncoat", desc: "Blue Lagoon Lager.", sol: "Blue Lagoon Restaurant Lager (Storage Key nötig)!" },
         { de: "Keine Fragen gestellt", en: "No Questions Asked", v: "Turncoat", desc: "Villen plündern.", sol: "Finde Wertsachen in Villa Anna Jana und Marta Monica (172 165)." },
         { de: "Verspätetes Paket", en: "Delayed Package", v: "Turncoat", desc: "Post-LKW.", sol: "Straße Tiger Bay DHL Wagen." },
         { de: "Käufer unerzählter Dinge", en: "Buyer of Untold Truths", v: "Turncoat", desc: "Diamanten im Zelt.", sol: "West-Zelt bei Tiger Bay. Item auf Tisch (Alternativ zu Crumb Collector)." },
         { de: "Nenne dein Gift", en: "Name your Poison", v: "Turncoat", desc: "Chemikalien Wassertank.", sol: "Wassertank NW neben Barracken. ACHTUNG: Beendet alternative Lab Rat Quest!" },
-        { de: "Drachentöter", en: "Dragonslayer", v: "Turncoat", desc: "General Pa.", sol: "Töte Boss in Fort Narith." },
+        { de: "Drachentöter", en: "Dragonslayer", v: "Turncoat", desc: "General Pa.", sol: "Töte Boss in Fort Narith. [0.4 Hinweis: General Pa hat extremes AP-Gear]." },
         { de: "Kenne deinen Feind", en: "Know Your Enemy", v: "Turncoat", desc: "Artillerie markieren.", sol: "Fort Narith Geschütze." },
         { de: "Akademisches Interesse", en: "Academic Interest", v: "Turncoat", desc: "Schul-Daten.", sol: "Startstadt Schule Akten." },
         { de: "Freundlicher Hinweis", en: "Friendly Suggestion", v: "Turncoat", desc: "Bürgermeister Drohung.", sol: "Munition in Bett Bürgermeister ablegen." },
         { de: "Frischfleisch", en: "Fresh Meat", v: "Turncoat", desc: "Gästeliste.", sol: "Haus bei Kilo 2 LZ, im Schlafzimmer auf kleinem Tisch." },
         { de: "Frischfleisch II", en: "Fresh Meat II", v: "Turncoat", desc: "Weitere Kills.", sol: "Gegner ausschalten (Folgequest)." },
         { de: "Frischfleisch III", en: "Fresh Meat III", v: "Turncoat", desc: "Zielperson killen.", sol: "Spezifischen Feind ausschalten." },
+        { de: "Drogen-Lieferung", en: "Narco Delivery", v: "Turncoat", desc: "Golfplatz Sandbunker.", sol: "Midnight Sapphire 3. Loch." },
+        { de: "Suchender der Veränderung", en: "Seeker of change", v: "Turncoat", desc: "Proben aus Bett.", sol: "Barracks C, Raum 110 (141 132). Probe mit Kit aus blutigem Bett nehmen." },
+        { de: "Unheimliche Akten", en: "Uncanny Files", v: "Turncoat", desc: "Geheime Dokumente.", sol: "Bunker YBL-1 Akten suchen." },
 
-        // ==========================================
-        // --- BANSHEE ---
-        // ==========================================
+        // --- BANSHEE TASKS ---
         { de: "Holz", en: "Timber", v: "Banshee", desc: "Boss Sägewerk.", sol: "Sawmill (139 144). Töte den Boss (patrouilliert NE/Ost und große Halle)." },
         { de: "An den Hügeln", en: "At The Mounds", v: "Banshee", desc: "Gräber Ban Pa.", sol: "NE-Ban Pa Dokument Hügel." },
         { de: "Flugschreiber", en: "Flight Recorder", v: "Banshee", desc: "Blackbox C-130.", sol: "Ground Zero Wrack Heck." },
         { de: "Kopfgeldjäger", en: "Bounty Hunter", v: "Banshee", desc: "Commander Tiger Bay.", sol: "Töte Boss am Pier/HQ." },
-        { de: "Nachtwache", en: "Night Watch", v: "Banshee", desc: "Stealth Raid.", sol: "Kills & Extraction leise abschließen." },
+        { de: "Nachtwache", en: "Night Watch", v: "Banshee", desc: "Stealth Raid.", sol: "Kills & Extraction bei Nacht (22:00-05:00)." },
         { de: "Blut und Sand", en: "Blood and Sand", v: "Banshee", desc: "Schmuggel Küste.", sol: "Strand S-Tiger Bay Kisten." },
         { de: "Geisterstadt", en: "Ghost Town", v: "Banshee", desc: "Tiger Bay infiltrieren.", sol: "Überleben." },
         { de: "Blutopfer", en: "Blood Sacrifice", v: "Banshee", desc: "Ritualstätte.", sol: "O-Ban Pa Schrein Knochen." },
@@ -317,36 +322,30 @@
         { de: "Verlorenes Mädchen II", en: "Lost Girl II", v: "Banshee", desc: "Spuren folgen.", sol: "Startgebiet Hinweise suchen." },
         { de: "Unnennbar", en: "Unnameable", v: "Banshee", desc: "Kult-Hinweise.", sol: "Ban Pa Elder's House." },
         { de: "Was bleibt", en: "What Remains", v: "Banshee", desc: "Überreste.", sol: "Untersuche die Ruinen." },
-
-        // ==========================================
-        // --- SONSTIGE / EXPLORATION / MULTI ---
-        // ==========================================
-        { de: "Doomsgate", en: "Doomsgate", v: "Handshake", desc: "Checkpoint LAF.", sol: "Ground Zero Übersichtskarte." },
-        { de: "Das verlorene Lager", en: "The Campsite", v: "Gunny", desc: "Verlassenes Lager.", sol: "W-Juliet 4 Leiche." },
-        { de: "Drogen-Lieferung", en: "Narco Delivery", v: "Turncoat", desc: "Golfplatz Sandbunker.", sol: "Midnight Sapphire 3. Loch." },
-        { de: "Rauchzeichen", en: "Smoke Signals", v: "Artisan", desc: "Signalfeuer Miliz.", sol: "Hügel zw. Ban Pa/Lumber." },
-        { de: "Schwarze Liste", en: "Blacklist", v: "Artisan", desc: "Buch Namen.", sol: "Ban Pa Elder's House Dielen." },
         { de: "Ungläubig", en: "Unbeliever", v: "Banshee", desc: "Manifest Kapelle.", sol: "Kapelle O-Stadt Altar." },
-        { de: "Gefährliche Beute", en: "Hazardous Haul", v: "Lab Rat", desc: "Kontaminierte Proben.", sol: "YBL-1 Ebene -3." },
-        { de: "Gefährliche Beute II", en: "Hazardous Haul II", v: "Lab Rat", desc: "Bringe Proben.", sol: "Übergabe an Lab Rat." },
-        { de: "Vorratsengpass", en: "Supply Squeeze", v: "Gunny", desc: "Rationen Lumber.", sol: "5 MREs Sägewerk." },
-        { de: "Sherpa: Erste Schritte", en: "Sherpa: First Steps", v: "Handshake", desc: "Hilfe Operators.", sol: "Begleite Spieler Startstadt." },
         { de: "Aasfresser", en: "Scavenger", v: "Banshee", desc: "Wertsachen Todeszone.", sol: "Ground Zero Rucksäcke." },
-        { de: "Linie im Sand", en: "Line In The Sand", v: "Gunny", desc: "Ban Pa verteidigen.", sol: "Ban Pa (205 137). Ban Pa Pier (206 137)." },
-        { de: "Tiefe Gewässer", en: "Deep Waters", v: "Gunny", desc: "Kills Blue Lagoon.", sol: "Kill 20 bots at Blue Lagoon." },
-        { de: "Familien-Erbstück", en: "Family Heirloom", v: "Handshake", desc: "Erbstück bergen.", sol: "Suche das Haus im Startgebiet ab." },
-        { de: "Ein kleiner Gefallen", en: "A Small Favor", v: "Handshake", desc: "Kleinigkeit besorgen.", sol: "Sammle spezifische Items (z.B. Zigarren/MREs)." },
-        { de: "Verlorener Liebhaber", en: "Lost Lover", v: "Handshake", desc: "Suche nach PMC.", sol: "Untersuche die Häuser in Nam Thaven/Kiu Vongsa." },
-        { de: "Suchender der Veränderung", en: "Seeker of change", v: "Turncoat", desc: "Proben aus Bett.", sol: "Barracks C, Raum 110 (141 132). Probe mit Kit aus blutigem Bett nehmen." },
-        { de: "Unheimliche Akten", en: "Uncanny Files", v: "Turncoat", desc: "Geheime Dokumente.", sol: "Bunker YBL-1 Akten suchen." },
 
-        // ==========================================
-        // --- SQUAD MISSIONS ---
-        // ==========================================
-        { de: "Squad Strike: HVT", en: "Squad Strike: HVT", v: "Handshake", desc: "Boss-Eliminierung Team.", sol: "Teamplay POI Boss." },
-        { de: "Squad Strike: Sichern & Halten", en: "Squad Strike: Secure & Hold", v: "Gunny", desc: "Halte Position.", sol: "5 Min. LZ Verteidigung." },
-        { de: "Squad Strike: Datendiebstahl", en: "Squad Strike: Data Heist", v: "Turncoat", desc: "Infiltriere HQ.", sol: "YBL-1 oder Tiger Bay Daten." },
-        { de: "Squad Strike: Night Raid", en: "Squad Strike: Night Raid", v: "Banshee", desc: "Leise Spec-Op.", sol: "Team Stealth Kills bei Nacht." }
+        // ==============================================================
+        // --- 🆕 UPDATE 0.4 SPEARHEAD TASKS (BLUEPRINTS, VULTURE & SQUAD) ---
+        // ==============================================================
+        
+        // --- VULTURE (SECRET VENDOR) ---
+        { de: "Der neue Kontakt", en: "The New Contact", v: "Vulture", desc: "Aktenkoffer von der Farm holen.", sol: "Na Xieng Farm. Nutze den Code 9135 am Vorhängeschloss, um Vultures Respekt zu gewinnen." },
+        { de: "Chamäleon", en: "Chameleon", v: "Vulture", desc: "AK-308 Blueprint besorgen.", sol: "Fort Narith Jail. Finde den Blueprint hinter der kickbaren Tür und übergib ihn an Vulture." },
+        { de: "Wie ein Boss", en: "Like a Boss", v: "Vulture", desc: "Versteckte Boss-Pistolen.", sol: "Töte den Boss Malo an der Blue Lagoon und loote seine 1911 C manuell aus dem Holster!" },
+        
+        // --- BLUEPRINT UNLOCKS (Andere Händler) ---
+        { de: "Phantom-Lanze", en: "Phantom Lance", v: "Gunny", desc: "DDM4 Blueprint besorgen.", sol: "Fort Narith. Gehe in die Baracken, 2. Stock. Extrahiere den Blueprint und gib ihn bei Gunny ab." },
+        { de: "Stille Bedrohung", en: "Silent Threat", v: "Artisan", desc: "SVD Blueprint besorgen.", sol: "Tiger Bay Mall. Buchladen-Hinterzimmer (TB-Mall-Key nötig)." },
+        { de: "Kompakte Feuerkraft", en: "Compact Firepower", v: "Handshake", desc: "MP7A2 Blueprint besorgen.", sol: "Ransacked Shelter (188 130). Den Blueprint sichern und zu Handshake bringen." },
+        { de: "Yens M700 (Side Task)", en: "Yen's M700", v: "Banshee", desc: "M700 Skin freischalten.", sol: "Midnight Sapphire. Töte den LAF Commander und sichere dir den Blueprint auf dem Hoteldach." },
+        { de: "Plan B", en: "Plan B", v: "Lab Rat", desc: "Kong Thab Depot Bunker.", sol: "Kong Thab Depot. Dynamischen Keypad-Code im Umkreis finden, um die Medikamente zu sichern." },
+
+        // --- SQUAD STRIKE MISSIONEN ---
+        { de: "Squad Strike: HVT", en: "Squad Strike: HVT", v: "Handshake", desc: "Boss-Eliminierung Team.", sol: "Töte einen POI Boss im Squad. ACHTUNG: Nur der letzte Treffer (Lasthit) zählt für den Kill!" },
+        { de: "Squad Strike: Sichern & Halten", en: "Squad Strike: Secure & Hold", v: "Gunny", desc: "Halte Position.", sol: "5 Min. LZ Verteidigung. ACHTUNG: Stirbst du, erhältst du einen Cooldown auf die Aufgabe!" },
+        { de: "Squad Strike: Datendiebstahl", en: "Squad Strike: Data Heist", v: "Turncoat", desc: "Infiltriere HQ.", sol: "YBL-1 oder Tiger Bay Daten. Extraktion im Squad zwingend nötig." },
+        { de: "Squad Strike: Night Raid", en: "Squad Strike: Night Raid", v: "Banshee", desc: "Leise Spec-Op.", sol: "Team Stealth Kills bei Nacht (22:00-05:00)." }
     ];
 
     // ==========================================
@@ -460,7 +459,7 @@ const weapons = {
     };
 
 // ==========================================
-// 10. AUSRÜSTUNG & GEAR (0.4 SPEARHEAD - 100% COMPLETE)
+// 4. AUSRÜSTUNG & GEAR (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 const gearDb = {
     // --- PLATE CARRIERS (Plattenträger) ---
@@ -545,7 +544,7 @@ const gearDb = {
 };
     
 // ==========================================
-// 15. BOSS DATENBANK & INTEL (0.4 SPEARHEAD - 100% COMPLETE)
+// 5. BOSS DATENBANK & INTEL (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 const bosses = {
     // --- STARTREGIONEN & WÄLDER ---
@@ -642,7 +641,7 @@ const bosses = {
 };
     
 // ==========================================
-// 13. AMMO MATRIX & BALLISTIK (0.4 SPEARHEAD - 100% COMPLETE)
+// 6. AMMO MATRIX & BALLISTIK (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 // Die Penetrationswerte (pen) sind exakt auf die Rüstungsklassen abgestimmt:
 // 2.0 = NIJ IIIA | 3.0 = NIJ III | 3.5 = NIJ III+ | 4.0 = NIJ III++
@@ -763,7 +762,7 @@ const ammoMatrixData = [
 ];
     
 // ==========================================
-// 16. SCHLÜSSEL & RÄUME (0.4 SPEARHEAD - 100% COMPLETE)
+// 7. SCHLÜSSEL & RÄUME (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 const allKeys = [
     // ==========================================
@@ -940,7 +939,7 @@ const allKeys = [
 ];
     
 // ==============================================================
-// 7. LOOT DATENBANK (UPDATE 0.4 SPEARHEAD - INKL. QUEST ITEMS)
+// 8. LOOT DATENBANK (UPDATE 0.4 SPEARHEAD - INKL. QUEST ITEMS)
 // TIPP: ⚠️ Markiert Items, die zwingend für Quests oder Verträge gesammelt werden müssen!
 // ==============================================================
 const valuables = {
@@ -1018,7 +1017,7 @@ const valuables = {
 };
     
 // ==========================================
-// 8. STASH & CONTAINER DATENBANK (0.4 SPEARHEAD)
+// 9. STASH & CONTAINER DATENBANK (0.4 SPEARHEAD)
 // ==========================================
 const containers = {
     // --- SECURE CONTAINERS ---
@@ -1205,7 +1204,7 @@ const containers = {
 };
     
 // ==========================================
-// 14. LANDEZONEN & NAVIGATION (0.4 SPEARHEAD - 100% COMPLETE)
+// 10. LANDEZONEN & NAVIGATION (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 const lzDb = {
     // --- STARTGEBIETE (Safe Zones) ---
@@ -1287,7 +1286,7 @@ const lzDb = {
     }
 };
 
-    // 10. SYMPTOME DATENBANK
+    // 11. SYMPTOME DATENBANK
     const symptomDb = {
         "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
         "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
@@ -1300,7 +1299,7 @@ const lzDb = {
         "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
     };
 
-    // 11. STATUS EFFECT DATENBANK
+    // 12. STATUS EFFECT DATENBANK
     const statusEffectsDb = {
         "out_of_breath": { 
             de: "Außer Atem", en: "Out of Breath", 
@@ -1432,7 +1431,7 @@ const lzDb = {
     }
     
 // ==========================================
-// TRADER DATABASE (UPDATE 0.4 SPEARHEAD)
+// 13.TRADER DATABASE (UPDATE 0.4 SPEARHEAD)
 // ==========================================
 const vendorData = {
     // --- GUNNY (NATO) ---
@@ -1612,7 +1611,7 @@ const vendorData = {
         </ul>`
 };
 
-    // 13. FRAKTIONEN DATENBANK
+    // 14. FRAKTIONEN DATENBANK
     const factionDb = {
         "mss": {
             name: "Mithras Security Systems",
@@ -1641,7 +1640,7 @@ const vendorData = {
     };
 
     // ==========================================
-// 11. CODES & PASSWÖRTER (0.4 SPEARHEAD - 100% COMPLETE)
+// 15. CODES & PASSWÖRTER (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 const codesDb = [
     // --- 0.4 SPEARHEAD (NEU) ---
@@ -1675,7 +1674,7 @@ const codesDb = [
 ];
 
 // ==========================================
-// 12. LOOT RUNS & FARMING ROUTEN (0.4 SPEARHEAD)
+// 16. LOOT RUNS & FARMING ROUTEN (0.4 SPEARHEAD)
 // ==========================================
 const lootRoutesDb = [
     {
@@ -1770,7 +1769,7 @@ const lootRoutesDb = [
     }
 ];
 
-    // 14. Waffen Blueprints
+    // 17. Waffen Blueprints
     const blueprintDb = {
         "AK-308": { loc: "Fort Narith Jail (142, 130)", desc: "Hinter einer aufkickbaren Tür unter der Kaffeemaschine.", tip: "Du musst den Jail Key besitzen." },
         "AKMN": { loc: "Erhöhte Hütte (195, 153)", desc: "In der kleinen Hütte auf halbem Weg zwischen Ban Pa und Tiger Bay.", tip: "Vorsicht vor den Patrouillen im Dschungel." },
