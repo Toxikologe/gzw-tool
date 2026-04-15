@@ -659,8 +659,10 @@
         { name: "Remote Campsite Key", de: "Entlegenes Lager Schlüssel", loc: "Südlich YBL-1 (149, 111)", effect: "Öffnet die verschlossene Kiste am Flusslager.", loot: "Mossberg 590 Blueprint" }
     ];
     
-// 7. LOOT DATENBANK (UPDATE 0.4 SPEARHEAD)
-// TIPP: Wertvolle Items an den Händler 'Vulture' zu verkaufen, ist die primäre Methode, um seinen Ruf zu steigern!
+// ==============================================================
+// 7. LOOT DATENBANK (UPDATE 0.4 SPEARHEAD - INKL. QUEST ITEMS)
+// TIPP: ⚠️ Markiert Items, die zwingend für Quests oder Verträge gesammelt werden müssen!
+// ==============================================================
 const valuables = {
     // ==========================================
     // --- 💎 HIGH-END & JACKPOTS ---
@@ -673,9 +675,10 @@ const valuables = {
     // --- 💍 SCHMUCK & WERTSACHEN ---
     // ==========================================
     "gold_phone": { price: "~ $800", slots: "1", info: "Sehr seltener Fund. Eines der besten Items im Spiel für 1 Slot." },
-    "diamond_ring": { price: "~ $600 - $800", slots: "1", info: "Spawnt häufig in Tresoren und Schmuckkästchen." },
+    "diamond_ring": { price: "~ $600 - $800", slots: "1", info: "Spawnt häufig in Tresoren und Schmuckkästchen. Turncoat zahlt gut!" },
     "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
     "gold_coin": { price: "~ $350", slots: "1", info: "Ein perfekter Lückenfüller für deinen Rucksack." },
+    "gold_chain": { price: "~ $150", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Für Banshee und die Vulture-Boss-Freischaltung sammeln!). Ansonsten an Turncoat." },
     "silver_coin": { price: "~ $150", slots: "1", info: "Immer mitnehmen, solange Platz ist." },
     "pocket_watch": { price: "~ $120", slots: "1", info: "Häufig bei toten Scavs zu finden." },
     "silver_chain": { price: "~ $100", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
@@ -685,29 +688,48 @@ const valuables = {
     // ==========================================
     "military_radio": { price: "~ $800", slots: "2", info: "Gute Ausbeute. Findet man oft in Militärgebieten oder Garagen (z.B. Fort Narith)." },
     "rt97s": { price: "~ $675", slots: "6", info: "Achtung: Nimmt 6 Slots ein! Sehr ineffizient für den reinen Slot-Wert, am besten liegen lassen." },
-    "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Oft für Tasks gebraucht, aber auch ein super 1-Slot-Geldmacher." },
-    "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, frisst aber massiv Platz. Nur mitnehmen, wenn der Rucksack fast leer ist." },
-    "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Im Lategame solltest du es liegen lassen." },
+    "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, frisst aber massiv Platz. Lab Rat zahlt hier am besten." },
+    "laptop": { price: "~ $400", slots: "4 (2x2)", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Du brauchst mind. 2 Stück für Mid-Game Quests). Ansonsten an Lab Rat." },
     "tablet": { price: "~ $300", slots: "2", info: "Guter Elektronik-Wert. Oft in Büros und dem Hotel auf Tischen zu finden." },
+    "slr_camera": { price: "~ $200", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Banshee verlangt 2 Stück). Viel wertvoller als die digitalen!" },
     "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot, oft auf Schreibtischen." },
+    "digital_camera": { price: "~ $120", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Banshee verlangt 2 blaue und 2 schwarze Modelle für Aufklärung). Nicht sofort verkaufen!" },
     "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
     "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Elektronik-Wert für nur einen Slot." },
 
     // ==========================================
     // --- 📁 DOKUMENTE & INTEL ---
     // ==========================================
-    "weapon_blueprint": { price: "Unbezahlbar", slots: "1-2", info: "0.4 Spearhead Update: Schaltet Waffen dauerhaft beim Händler frei. Niemals verkaufen!" },
-    "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Wichtige Geheimdokumente, bringen sehr gutes Geld." },
-    "intel_folder": { price: "~ $300", slots: "2", info: "Oft in Basen und HQs zu finden." },
-    "passport": { price: "~ $120", slots: "1", info: "Identitätsdokumente. Passt perfekt in kleine Slots." },
-    "wallet": { price: "~ $50 - $200", slots: "1", info: "Kann manchmal wertvolles Bargeld enthalten. Immer prüfen!" },
+    "weapon_blueprint": { price: "Unbezahlbar", slots: "1-2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Schaltet 0.4 Waffen dauerhaft beim Händler frei. Niemals verkaufen!" },
+    "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Wichtige Geheimdokumente, bringen sehr gutes Geld (Handshake zahlt Premium)." },
+    "usb_drive": { price: "~ $450", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Oft für Handshake-Intel-Missionen gesammelt." },
+    "intel_folder": { price: "~ $300", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Oft in feindlichen Basen und HQs zu finden." },
+    "passport": { price: "~ $120", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Banshee braucht 2 Stück für seine Schmuggel-Tasks). Schwer zu finden!" },
+    "credit_card": { price: "~ $150", slots: "1", info: "Artisan zahlt Bestpreise für Kreditkarten. Passt perfekt in dein Wallet." },
+    "wallet": { price: "~ $50 - $200", slots: "1", info: "0.4 MECHANIK: Packe es in deinen Secure Container! Es hält 4 kleine Slots (Karten, Geld, Pässe)." },
 
+    // ==========================================
+    // --- 🔧 WERKZEUGE, MATERIAL & VERBRAUCHSGÜTER ---
+    // ==========================================
+    "acetylene_cylinder": { price: "~ $150", slots: "4", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Achtung: Wiegt massive 15kg! Extrem selten, sofort sichern wenn gefunden." },
+    "lithium_grease": { price: "~ $80", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Wird u.a. an Baustellen wie bei Tiger Bay verlangt)." },
+    "low_grade_gunpowder": { price: "~ $60", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Gunny verlangt oft 2 Stück davon)." },
+    "weapon_parts": { price: "~ $50", slots: "1-2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Defekte Waffenteile unter 50% für Artisan Maintenance Contracts sammeln)." },
+    "mre_ration": { price: "~ $30", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Handshake Daily Contracts verlangen oft 3 MRE Rationen)." },
+
+    // ==========================================
+    // --- 🧪 CHEMIKALIEN & MEDIZIN ---
+    // ==========================================
+    "sulfuric_acid": { price: "~ $120", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Säureflaschen für Lab Rat! Spawnen oft bei Gegnern nahe Villa Vongphet & Sabai Lake)." },
+    "water_samples": { price: "~ $100", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Lab Rat Biohazard Contracts aus den neuen 0.4 Sumpfgebieten)." },
+    
     // ==========================================
     // --- 🗑️ SONSTIGES & TRASH (Low Value) ---
     // ==========================================
+    "vintage_alcohol": { price: "~ $250", slots: "2", info: "Gunny kauft Vintage-Alkohol zu Top-Preisen." },
     "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel zu viel Platz weg. Eher ineffizient." },
     "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
-    "fancy_cigarettes": { price: "~ $85", slots: "1", info: "Viel besser als normale Zigaretten." },
+    "fancy_cigarettes": { price: "~ $85", slots: "1", info: "Viel besser als normale Zigaretten. Gunny liebt sie." },
     "sunglasses": { price: "~ $60", slots: "1", info: "Netter Lückenfüller für 1 Slot. Oft auf Tischen oder in Cafés zu finden." },
     "zippo_lighter": { price: "~ $27", slots: "1", info: "Das Minimum, was du mitnehmen solltest." },
     "hand_mirror": { price: "~ $10", slots: "1", info: "Absoluter Müll, bricht einem das Herz. Lohnt sich überhaupt nicht zum Mitnehmen." },
