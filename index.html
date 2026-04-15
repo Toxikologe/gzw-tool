@@ -980,33 +980,53 @@
         </div>
 
         <div id="tab-bosses" class="tab-content">
-            <h2>💀 Boss Datenbank & Intel</h2>
-            <div class="panel-box">
-                <label for="bossSelect" style="margin-top: 0;">Boss-Datenbank</label>
-                <select id="bossSelect" onchange="updateBoss()">
-                    <option value="">-- Wähle einen Boss --</option>
-                    <optgroup label="Startregionen">
-                        <option value="market_leader">Criminal Leader (Marktplatz)</option>
-                        <option value="lumber_boss">Lumber Yard Foreman</option>
-                        <option value="rebel_ybl">Rebel Leader (YBL-1 Bunker)</option>
-                    </optgroup>
-                    <optgroup label="Mid-Game POIs">
-                        <option value="hunter_commander">Hostile Commander (Hunter's Paradise)</option>
-                        <option value="malo_blue">Malo Luangrath (Blue Lagoon)</option>
-                        <option value="banpa_leader">Elder Leader (Ban Pa)</option>
-                    </optgroup>
-                    <optgroup label="End-Game & High Danger">
-                        <option value="fort_commander">General Pa (Fort Narith HQ)</option>
-                        <option value="midnight_laf">LAF Commander (Midnight Sapphire)</option>
-                        <option value="tiger_bay_unlra">UNLRA Officer (Tiger Bay HQ)</option>
-                        <option value="tiger_bay_pier">Pier Boss (Tiger Bay)</option>
-                        <option value="airfield_boss">Airfield Commander (Ground Zero)</option>
-                        <option value="viper">Viper (Dschungel Camps)</option>
-                        <option value="bloodhound">Bloodhound (Militär Checkpoints)</option>
-                        <option value="golden_boy">Golden Boy (Midnight Sapphire)</option>
-                    </optgroup>
-                </select>
-                <div id="bossInfo" class="info-box" style="margin-top: 15px; padding: 15px; background: #111; border-left: 4px solid var(--accent);">Boss-Details & Loot...</div>
+            <h2>💀 Boss Datenbank & Intel (0.4 Spearhead)</h2>
+            <div class="grid">
+                <div class="panel-box">
+                    <label for="bossSelect" style="margin-top: 0;">Zielperson auswählen (HVT)</label>
+                    <select id="bossSelect" onchange="updateBoss()" style="font-weight: bold; color: #ff4c4c; padding: 10px; border-radius: 6px; background: #222; border: 1px solid #444;">
+                        <option value="">-- Wähle einen Boss --</option>
+                        
+                        <optgroup label="🔰 Startregionen & Wälder">
+                            <option value="market_leader">Krimineller Anführer (Criminal Leader)</option>
+                            <option value="lumber_boss">Sägewerk-Vorarbeiter (Lumber Yard Foreman)</option>
+                            <option value="rebel_ybl">Rebellen-Anführer (Rebel Leader)</option>
+                        </optgroup>
+                        
+                        <optgroup label="⚔️ Mid-Game POIs">
+                            <option value="hunter_commander">Feindlicher Kommandant (Hostile Commander)</option>
+                            <option value="malo_blue">Grin / Malo Luangrath (Blue Lagoon Boss)</option>
+                            <option value="banpa_leader">Naga / Ältester (Elder Leader)</option>
+                        </optgroup>
+                        
+                        <optgroup label="☠️ End-Game & High Danger">
+                            <option value="fort_commander">General Pa (Fort Commander)</option>
+                            <option value="midnight_laf">LAF Kommandant (LAF Commander)</option>
+                            <option value="tiger_bay_unlra">UNLRA Offizier (UNLRA Officer)</option>
+                            <option value="tiger_bay_pier">Pier Boss (Tiger Bay)</option>
+                            <option value="airfield_boss">Airfield Commander (Ground Zero)</option>
+                        </optgroup>
+                        
+                        <optgroup label="👻 Roaming Bosses (Wechselnde Spawns)">
+                            <option value="viper">Viper (Jungle Camps)</option>
+                            <option value="bloodhound">Bloodhound (Military Checkpoints)</option>
+                            <option value="golden_boy">Golden Boy (Midnight Sapphire)</option>
+                        </optgroup>
+                    </select>
+                    
+                    <div id="bossInfo" class="info-box" style="margin-top: 20px; padding: 20px; background: #111; border-left: 4px solid #ff4c4c; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
+                        Wähle ein Ziel für Dossier, Fundort und Loot-Informationen...
+                    </div>
+                </div>
+
+                <div class="panel-box">
+                    <h3 style="margin-top: 0; color: #ff4c4c;">📋 HVT Takedown Protokolle (0.4 Meta)</h3>
+                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
+                        <li><strong>Rotierende Spawns:</strong> Bosse wie <em>Grin</em> oder der <em>Airfield Commander</em> verweilen nicht mehr an einem Ort. Sie haben im 0.4 Update bis zu drei verschiedene Spawnpunkte innerhalb ihres Gebietes!</li>
+                        <li><strong>Die Leibgarde:</strong> Jeder Boss wird von 2-4 Elite-Wachen begleitet. Diese pushen extrem aggressiv, sobald der Boss unter Beschuss gerät. Lock sie in einen Engpass (Chokepoint)!</li>
+                        <li><strong>Versteckter Quest-Loot:</strong> Viele Bosse haben spezielle Waffen (wie Grins 1911 C Pistole), die <strong>im Halster versteckt sind</strong> und für Side-Tasks benötigt werden. Niemals nur die Hauptwaffe looten!</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
