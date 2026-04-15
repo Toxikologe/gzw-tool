@@ -2837,7 +2837,7 @@
     }
 
     // ==============================================================
-    // AMMO MATRIX RENDER LOGIK
+    // AMMO MATRIX RENDER LOGIK (Mit Akkordeon-Funktion)
     // ==============================================================
     function buildAmmoMatrix() {
         const tbody = document.getElementById('ammoMatrixBody');
@@ -2846,17 +2846,31 @@
         
         tbody.innerHTML = '';
         let lastCal = '';
+        let currentCalGroup = 0; // Zähler für die Gruppen-Klassen
 
         ammoMatrixData.forEach(ammo => {
-            const row = document.createElement('tr');
             
-            // Trennzeile für neue Kaliber einfügen
+            // Trennzeile für neue Kaliber einfügen (Der blaue Kasten)
             if (ammo.cal !== lastCal) {
+                currentCalGroup++; // Erhöht die Gruppen-ID für das neue Kaliber
+                
                 const sepRow = document.createElement('tr');
-                sepRow.innerHTML = `<td colspan="6" style="background:#1a1a2e; color:var(--accent); font-weight:bold; font-size:0.85rem; padding:8px 12px; border:1px solid #333; letter-spacing:1px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">⚡ Kaliber: ${ammo.cal}</td>`;
+                // Fügt den Klick-Event und den Pointer-Cursor hinzu
+                sepRow.style.cursor = 'pointer';
+                sepRow.setAttribute('onclick', `toggleAmmoGroup('ammo-group-${currentCalGroup}', this)`);
+                
+                sepRow.innerHTML = `
+                    <td colspan="6" style="background:#1a1a2e; color:var(--accent); font-weight:bold; font-size:0.9rem; padding:10px 12px; border:1px solid #333; letter-spacing:1px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); user-select: none;">
+                        <span class="ammo-toggle-icon" style="display:inline-block; transition:transform 0.2s; margin-right:8px; font-size: 0.8rem;">▼</span>
+                        ⚡ Kaliber: ${ammo.cal}
+                    </td>`;
                 tbody.appendChild(sepRow);
                 lastCal = ammo.cal;
             }
+
+            // Normale Munitionsreihe erstellen
+            const row = document.createElement('tr');
+            row.className = `ammo-group-${currentCalGroup}`; // WICHTIG: Verbindet die Reihe mit der Header-Gruppe
 
             // Zelle für den Namen der Munition
             let nameCell = `<td style="background:#1e1e1e; color:#ddd; padding:10px 12px; border:1px solid #2a2a2a; font-weight:bold; position:sticky; left:0; z-index:1; white-space:nowrap; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
@@ -2874,6 +2888,28 @@
 
             tbody.appendChild(row);
         });
+    }
+
+    // Steuert das Ein- und Ausklappen der Kaliber-Gruppen in der Ammo Matrix
+    function toggleAmmoGroup(groupClass, headerRow) {
+        const rows = document.querySelectorAll('.' + groupClass);
+        const icon = headerRow.querySelector('.ammo-toggle-icon');
+        let isCollapsed = false;
+
+        // Prüfen, ob das erste Element der Gruppe versteckt ist
+        if (rows.length > 0) {
+            isCollapsed = rows[0].style.display === 'none';
+        }
+
+        // Alle Reihen der angeklickten Gruppe umschalten
+        rows.forEach(row => {
+            row.style.display = isCollapsed ? 'table-row' : 'none';
+        });
+
+        // Pfeil-Animation (▼ nach rechts drehen, wenn zugeklappt)
+        if (icon) {
+            icon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(-90deg)';
+        }
     }
 
     // --- LORE TOGGLE LOGIK ---
