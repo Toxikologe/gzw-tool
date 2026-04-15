@@ -993,62 +993,16 @@
             </div>
         </div>
 
-        <div id="tab-lootruns" class="tab-content">
+       <div id="tab-lootruns" class="tab-content">
             <h2>🏃‍♂️ Loot Runs & Farming Routen (0.4 Meta)</h2>
             <div class="panel-box">
                 <p style="color: #ccc; font-size: 0.95rem; margin-top: 0; margin-bottom: 20px;">
-                    Effizienz ist alles. Hier sind die aktuell besten Farming-Routen der Spearhead-Version, aufbereitet als taktische Briefings.
+                    In GZW gewinnt nicht der mit dem besten Aiming, sondern der mit der meisten Effizienz. Hier sind die aktuell profitabelsten Farming-Routen der Spearhead-Version, aufbereitet als taktische Operator-Briefings.
                 </p>
                 <div id="lootRoutesContainer" style="display: flex; flex-direction: column; gap: 20px;">
                     </div>
             </div>
         </div>
-
-        <script>
-            // --- LOOT RUNS RENDER LOGIK ---
-            // Diese kleine Funktion baut die Missions-Briefings optisch extrem ansprechend auf
-            function renderLootRoutes() {
-                const container = document.getElementById('lootRoutesContainer');
-                if (!container || typeof lootRoutesDb === 'undefined') return;
-                
-                container.innerHTML = '';
-                
-                lootRoutesDb.forEach(route => {
-                    // Farben für Gefahrenstufen
-                    let dangerColor = "#7ca35a"; // Grün
-                    if (route.danger.includes("Mittel")) dangerColor = "#ffa500"; // Orange
-                    if (route.danger.includes("Hoch") || route.danger.includes("Extrem")) dangerColor = "#ff4c4c"; // Rot
-
-                    const routeHTML = `
-                        <div style="background: #111; border: 1px solid #333; border-left: 4px solid var(--accent); border-radius: 6px; overflow: hidden; padding: 0;">
-                            <div style="background: #1a1a1a; padding: 15px 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                                <h3 style="margin: 0; color: var(--accent); font-size: 1.2rem; letter-spacing: 1px;">${route.name}</h3>
-                                <span style="font-size: 0.85rem; background: #222; padding: 4px 10px; border-radius: 4px; border: 1px solid #444;">⏱️ ${route.time}</span>
-                            </div>
-                            <div style="padding: 20px; font-size: 0.95rem; color: #ddd; line-height: 1.6;">
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; background: #0a0a0a; padding: 15px; border-radius: 6px; border: 1px dashed #333;">
-                                    <div><strong style="color: #888;">📍 Zielort:</strong> <br>${route.location}</div>
-                                    <div><strong style="color: #888;">⚠️ Gefahr:</strong> <br><span style="color: ${dangerColor}; font-weight: bold;">${route.danger}</span></div>
-                                    <div><strong style="color: #888;">🎒 Voraussetzungen:</strong> <br>${route.requirements}</div>
-                                    <div><strong style="color: #888;">🎯 Haupt-Loot:</strong> <br><span style="color: #ffcc00;">${route.target}</span></div>
-                                </div>
-                                <h4 style="margin-top: 0; color: #aaa; border-bottom: 1px solid #333; padding-bottom: 5px;">🗺️ Die Route</h4>
-                                <div style="display: flex; flex-direction: column; gap: 8px;">
-                                    ${route.steps.map(step => `<div style="background: #1a1a1a; padding: 8px 12px; border-left: 2px solid #444; border-radius: 0 4px 4px 0;">${step}</div>`).join('')}
-                                </div>
-                                <div style="margin-top: 20px; padding: 12px; background: rgba(124, 163, 90, 0.1); border-left: 3px solid var(--accent); color: #ccc; font-size: 0.9rem;">
-                                    <strong>💡 Operator-Tipp:</strong> ${route.tip}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += routeHTML;
-                });
-            }
-            
-            // Führt die Funktion aus, sobald das Dokument geladen ist
-            window.addEventListener('DOMContentLoaded', renderLootRoutes);
-        </script>
 
         <div id="tab-loot" class="tab-content">
             <h2>💰 Loot & Verkaufspreise (0.4 Meta)</h2>
@@ -1973,6 +1927,49 @@
     }
 
     // ==============================================================
+    // LOOT RUNS & FARMING ROUTEN LOGIK
+    // ==============================================================
+    function renderLootRoutes() {
+        const container = document.getElementById('lootRoutesContainer');
+        if (!container || typeof lootRoutesDb === 'undefined') return;
+        
+        container.innerHTML = '';
+        
+        lootRoutesDb.forEach(route => {
+            // Farbcodierung für die Gefahrenstufen
+            let dangerColor = "#7ca35a"; // Grün
+            if (route.danger.includes("Mittel")) dangerColor = "#ffa500"; // Orange
+            if (route.danger.includes("Hoch")) dangerColor = "#ff4c4c"; // Rot
+            if (route.danger.includes("Extrem") || route.danger.includes("Maximum")) dangerColor = "#b33939"; // Dunkelrot
+
+            const routeHTML = `
+                <div style="background: #111; border: 1px solid #333; border-left: 4px solid var(--accent); border-radius: 6px; overflow: hidden; padding: 0;">
+                    <div style="background: #1a1a1a; padding: 15px 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="margin: 0; color: var(--accent); font-size: 1.2rem; letter-spacing: 1px;">${route.name}</h3>
+                        <span style="font-size: 0.85rem; background: #222; padding: 4px 10px; border-radius: 4px; border: 1px solid #444; color: #ccc;">⏱️ ${route.time}</span>
+                    </div>
+                    <div style="padding: 20px; font-size: 0.95rem; color: #ddd; line-height: 1.6;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; background: #0a0a0a; padding: 15px; border-radius: 6px; border: 1px dashed #333;">
+                            <div><strong style="color: #888;">📍 Zielort:</strong> <br><span style="color: #fff;">${route.location}</span></div>
+                            <div><strong style="color: #888;">⚠️ Gefahr:</strong> <br><span style="color: ${dangerColor}; font-weight: bold;">${route.danger}</span></div>
+                            <div><strong style="color: #888;">🎒 Voraussetzungen:</strong> <br><span style="color: #ccc;">${route.requirements}</span></div>
+                            <div><strong style="color: #888;">🎯 Haupt-Loot:</strong> <br><span style="color: #ffcc00; font-weight: bold;">${route.target}</span></div>
+                        </div>
+                        <h4 style="margin-top: 0; color: #aaa; border-bottom: 1px solid #333; padding-bottom: 5px; font-size: 1.05rem;">🗺️ Die Route</h4>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            ${route.steps.map(step => `<div style="background: #1a1a1a; padding: 10px 15px; border-left: 2px solid #444; border-radius: 0 4px 4px 0; color: #eee;">${step}</div>`).join('')}
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(124, 163, 90, 0.1); border-left: 3px solid var(--accent); color: #ccc; font-size: 0.95rem;">
+                            <strong style="color: var(--accent);">💡 Operator-Tipp:</strong> ${route.tip}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += routeHTML;
+        });
+    }
+
+    // ==============================================================
     // HELICOPTER ETA CALCULATOR & TIMER
     // ==============================================================
     let heliTimerInterval = null;
@@ -2678,6 +2675,7 @@
         buildKeyDropdown();
         renderKeyRing();
         buildCodeDropdown();
+        renderLootRoutes();
         buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
