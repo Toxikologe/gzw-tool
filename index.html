@@ -1702,29 +1702,56 @@
     }
 
     // ==============================================================
-    // QUEST ITEM DATENBANK (KEEP OR SELL)
-    // ==============================================================
+    // QUEST ITEM DATENBANK (KEEP OR SELL) - 100% COMPLETE 0.4
+    // ==========================================
     const questItemsDb = [
-        { name: "Autobatterie", qty: 4, quest: "Parts Needed (2x, Artisan), Mechanic's Trouble (2x, Artisan)" },
-        { name: "Benzinkanister (Gas Can / Rot)", qty: 2, quest: "Fuel Run (Artisan)" },
-        { name: "Beweise / Dokumente", qty: "Situativ", quest: "Fast jeder Händler (Quest-Items niemals wegwerfen!)" },
-        { name: "Holzstatue", qty: 3, quest: "Hazardous Treasures (Artisan)" },
-        { name: "Kupferkabel", qty: 5, quest: "Scrapyard (Artisan)" },
-        { name: "M4A1 Sturmgewehr", qty: 4, quest: "Brothers in Arms (2x, Gunny), In The Right Hands (2x, Turncoat)" },
-        { name: "Morphin-Injektor", qty: 5, quest: "Medical Supplies (Lab Rat)" },
-        { name: "MRE (Kampfration)", qty: 5, quest: "Supply Squeeze (Gunny)" },
-        { name: "Nägel", qty: 2, quest: "Supply Shortage (Artisan)" },
+        // Werkzeuge & Baumaterial
+        { name: "Acetylen-Flasche (Acetylene Cylinder)", qty: 1, quest: "Heavy Metal (Artisan) - ACHTUNG: Wiegt 15kg!" },
+        { name: "Autobatterie (Car Battery)", qty: 4, quest: "Parts Needed (2x, Artisan), Mechanic's Trouble (2x, Artisan)" },
+        { name: "Benzinkanister / Gas Can (Rot)", qty: 2, quest: "Fuel Run (Artisan)" },
+        { name: "Kupferkabel (Copper Wire)", qty: 5, quest: "Scrapyard (Artisan)" },
+        { name: "Lithiumfett (Lithium Grease)", qty: 3, quest: "Smooth Operation (Artisan)" },
+        { name: "Nägel (Nails)", qty: 2, quest: "Supply Shortage (Artisan)" },
         { name: "Panzertape / Duct Tape", qty: 5, quest: "Supply Shortage (3x, Artisan), The Builder (2x, Artisan)" },
+        { name: "Schießpulver (Low Grade Gunpowder)", qty: 2, quest: "Explosive Material (Gunny)" },
+        { name: "Waffenteile (Weapon Parts)", qty: 5, quest: "Maintenance Contract (Artisan Daily)" },
+        { name: "Werkzeugset / Toolset", qty: 5, quest: "Tooling Up (3x, Artisan), The Builder (1x, Artisan), Lines of Comm. (1x, Handshake)" },
+        { name: "Zündkerze (Spark Plug)", qty: 2, quest: "Mechanic's Trouble (Artisan)" },
+
+        // Elektronik & Kameras
+        { name: "Digitalkamera (Digital Camera)", qty: 4, quest: "Smile for the Camera (Banshee) - Braucht 2x Blau, 2x Schwarz!" },
+        { name: "Laptop (Notebook)", qty: 2, quest: "Tech Recovery (Lab Rat / Handshake)" },
+        { name: "Spiegelreflexkamera (SLR Camera)", qty: 2, quest: "Paparazzi (Banshee)" },
+
+        // Dokumente & Intel
+        { name: "Beweise / Dokumente / Intel", qty: "Situativ", quest: "Fast jeder Händler (Quest-Intel niemals wegwerfen!)" },
+        { name: "Goldkette (Gold Chain)", qty: 5, quest: "Black Market (Banshee / Vulture Unlock)" },
+        { name: "Reisepass (Passport)", qty: 2, quest: "Smuggling Route (Banshee)" },
+        { name: "Verschlüsselter USB-Stick (Secure USB Drive)", qty: 3, quest: "Data Extraction (Handshake)" },
+
+        // Waffen & Ausrüstung
+        { name: "M4A1 Sturmgewehr (M4A1)", qty: 4, quest: "Brothers in Arms (2x, Gunny), In The Right Hands (2x, Turncoat)" },
+        { name: "Unmodifizierte AKMN", qty: 3, quest: "Save the Rebellion (Artisan)" },
+
+        // Medizin & Essen
+        { name: "Blutbeutel 500ml (Blood Bag)", qty: 3, quest: "Blood Donation (Lab Rat)" },
+        { name: "MRE (Kampfration)", qty: 5, quest: "Supply Squeeze (Gunny) & Resupply Daily (Handshake)" },
+        { name: "Morphin-Injektor (Morphine)", qty: 5, quest: "Medical Supplies (Lab Rat)" },
+        { name: "Schwefelsäure (Sulfuric Acid)", qty: 2, quest: "Toxic Environment (Lab Rat)" },
         { name: "Tourniquet (CAT)", qty: 5, quest: "Vital Signs (Lab Rat)" },
-        { name: "Unmodifizierte AKMN", qty: "Einige", quest: "Save the Rebellion (Artisan)" },
         { name: "Verbandskasten / IFAK", qty: 3, quest: "Nachschubmangel (Handshake)" },
-        { name: "Werkzeugset / Toolset", qty: 5, quest: "Tooling Up (3x, Artisan), The Builder (1x, Artisan), Lines of Communication (1x, Handshake)" },
-        { name: "Zündkerze", qty: 2, quest: "Mechanic's Trouble (Artisan)" }
+        { name: "Wasserproben (Water Samples)", qty: 3, quest: "Biohazard Contract (Lab Rat Daily)" },
+
+        // Wertsachen
+        { name: "Holzstatue (Wood Statue)", qty: 3, quest: "Hazardous Treasures (Turncoat / Artisan)" },
+        { name: "Goldene Uhr / Rolex (Gold Watch)", qty: 2, quest: "Bribe Money (Turncoat)" }
     ];
 
     function buildQuestItemDropdown() {
         const dropdown = document.getElementById('questItemDropdown');
         if (!dropdown) return;
+        dropdown.innerHTML = '<option value="">-- Wähle ein Item --</option>'; // Reset
+        
         const sortedItems = [...questItemsDb].sort((a, b) => a.name.localeCompare(b.name, 'de'));
         sortedItems.forEach(item => {
             const opt = document.createElement('option');
@@ -1742,7 +1769,7 @@
             searchQuestItems(); 
         } else {
             searchInput.value = "";
-            document.getElementById('questItemList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">Wähle ein Item oder tippe den Namen ein...</div>';
+            document.getElementById('questItemList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Wähle ein Item oder tippe den Namen ein...</div>';
         }
     }
 
@@ -1752,7 +1779,7 @@
         list.innerHTML = '';
         
         if (input.length < 2) {
-            list.innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent);">Tippe mindestens 2 Buchstaben ein...</div>';
+            list.innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Tippe mindestens 2 Buchstaben ein...</div>';
             return;
         }
 
@@ -1765,7 +1792,7 @@
                 box.style.marginBottom = '10px';
                 box.style.borderTopColor = '#ffcc00'; 
                 box.innerHTML = `
-                    <h3 style="color: #ffcc00; margin-top: 0; font-size: 1.2rem;">⚠️ KEEP! (Behalten)</h3>
+                    <h3 style="color: #ffcc00; margin-top: 0; font-size: 1.2rem;">⚠️ KEEP! (Aufheben)</h3>
                     <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; color: #fff;">${item.name}</div>
                     <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
                         <strong>Benötigte Menge gesamt:</strong> <span style="color: #ffcc00; font-weight: bold;">${item.qty}</span><br>
