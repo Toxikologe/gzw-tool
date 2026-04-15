@@ -562,46 +562,126 @@ const gearDb = {
         "golden_boy": { loc: "Midnight Sapphire", gear: "Alien Pistole / MP7", loot: "Rolex, VIP-Schlüssel", tip: "0.4 NEU: Trägt extrem viel Loot bei sich, schwer bewacht." }
     };
     
-// 5. AMMO DATENBANK
-    const ammoDb = {
-        "m855a1": { name: "5.56x45mm M855A1", pen: 4.5, damage: 52, info: "Standard Meta. Bricht Class 4 zuverlässig." },
-        "m855": { name: "5.56x45mm M855", pen: 3.5, damage: 50, info: "Gut gegen Scavs, schwach gegen Spieler-Platten." },
-        "m193": { name: "5.56x45mm M193", pen: 2.0, damage: 58, info: "Hoher Fleischschaden, prallt an Class 3 ab." },
-        "m856a1": { name: "5.56x45mm M856A1", pen: 3.8, damage: 51, info: "Tracer-Munition (Leuchtspur). Gut für Squads." },
-        "mk255": { name: "5.56x45mm MK255", pen: 1.0, damage: 65, info: "Hollow Point. Verheerend gegen ungepanzerte Ziele." },
-        "300_ap": { name: ".300 BLK AP", pen: 4.5, damage: 55, info: "Hervorragende Penetration auf kurze Distanz." },
-        "300_cbj": { name: ".300 BLK CBJ", pen: 4.0, damage: 58, info: "Gute Balance zwischen Durchschlag und Schaden." },
-        "300_m62": { name: ".300 BLK M62", pen: 3.8, damage: 54, info: "Leuchtspurmunition für die SIG-MCX." },
-        "300_whisper": { name: ".300 BLK Whisper", pen: 2.5, damage: 62, info: "Subsonic. In Kombination mit Schalldämpfer flüsterleise." },
-        "ak74_bs": { name: "5.45x39mm BS", pen: 5.5, damage: 43, info: "Durchschlägt Class 5 problemlos." },
-        "ak74_bp": { name: "5.45x39mm BP", pen: 4.5, damage: 48, info: "Die Meta-Muni für 5.45. Bricht Class 4." },
-        "ak74_pp": { name: "5.45x39mm PP", pen: 3.5, damage: 50, info: "Guter Mid-Tier Durchschlag." },
-        "ak74_7n6": { name: "5.45x39mm 7N6M", pen: 2.5, damage: 52, info: "Standard-KI Munition." },
-        "ak74_hp": { name: "5.45x39mm HP", pen: 1.0, damage: 68, info: "Null Durchschlag, Beine anvisieren!" },
-        "ak_mai_ap": { name: "7.62x39mm MAI AP", pen: 5.5, damage: 46, info: "Bricht fast jede Rüstung." },
-        "ak_bp": { name: "7.62x39mm BP", pen: 4.5, damage: 58, info: "Härtester Standard-Durchschlag für AKs." },
-        "ak_ps": { name: "7.62x39mm PS", pen: 3.5, damage: 54, info: "Solider Allrounder." },
-        "ak_us": { name: "7.62x39mm US", pen: 2.0, damage: 56, info: "Subsonic. Sehr leise." },
-        "ak_hp": { name: "7.62x39mm HP", pen: 1.0, damage: 73, info: "Ideal für Leg-Meta." },
-        "m993": { name: "7.62x51mm M993", pen: 6.5, damage: 60, info: "Geht durch Class 6 wie Butter." },
-        "m61": { name: "7.62x51mm M61", pen: 6.0, damage: 64, info: "Ignoriert fast jede Rüstung." },
-        "m62": { name: "7.62x51mm M62", pen: 5.4, damage: 68, info: "Hohe Penetration + Leuchtspur." },
-        "m80": { name: "7.62x51mm M80", pen: 4.2, damage: 80, info: "Enormer Schaden." },
-        "tcw_sp": { name: "7.62x51mm TCW SP", pen: 2.5, damage: 90, info: "Gigantischer Fleischschaden." },
-        "snb": { name: "7.62x54mmR SNB", pen: 6.0, damage: 75, info: "Schlägt durch jeden Helm." },
-        "7n1": { name: "7.62x54mmR 7N1", pen: 4.5, damage: 85, info: "One-Shot Potenzial gegen Class 4." },
-        "lps": { name: "7.62x54mmR LPS", pen: 4.0, damage: 80, info: "Standard-Munition für Mosin." },
-        "46_apsx": { name: "4.6x30mm AP SX", pen: 5.0, damage: 35, info: "Bricht Class 5!" },
-        "46_fmjsx": { name: "4.6x30mm FMJ SX", pen: 4.0, damage: 43, info: "Gute Allround-Munition." },
-        "7n31": { name: "9x19mm 7N31", pen: 3.5, damage: 45, info: "Beste 9mm Penetration." },
-        "ap63": { name: "9x19mm AP 6.3", pen: 2.5, damage: 48, info: "Stark gegen Face-Shields." },
-        "pst": { name: "9x19mm PST Gzh", pen: 1.5, damage: 52, info: "Nur für Kopfschüsse ohne Helm." },
-        "rip": { name: "9x19mm RIP", pen: 0.5, damage: 95, info: "Leg-Meta Königin." },
-        "ap20": { name: "12G AP-20 Slug", pen: 3.5, damage: 160, info: "Panzerbrechender Eisenblock." },
-        "slug": { name: "12G Copper Slug", pen: 2.0, damage: 150, info: "Präzises Einzelgeschoss." },
-        "buck": { name: "12G 00 Buckshot", pen: 1.0, damage: "8x35", info: "Tödlich im Nahkampf." },
-        "45_ap": { name: ".45 ACP AP", pen: 3.5, damage: 60, info: "Beste .45er Pen." }
-    };
+// ==========================================
+// 13. AMMO MATRIX & BALLISTIK (0.4 SPEARHEAD - 100% COMPLETE)
+// ==========================================
+// Die Penetrationswerte (pen) sind exakt auf die Rüstungsklassen abgestimmt:
+// 2.0 = NIJ IIIA | 3.0 = NIJ III | 3.5 = NIJ III+ | 4.0 = NIJ III++
+
+const armorClasses = [
+    { label: "NIJ IIIA", threshold: 2.0 },
+    { label: "NIJ III", threshold: 3.0 },
+    { label: "NIJ III+", threshold: 3.5 },
+    { label: "NIJ III++", threshold: 4.0 }
+];
+
+const ammoMatrixData = [
+    // --- 5.56x45mm NATO (M4A1, KS-1, DDM4, M16A1, CQ-A1) ---
+    { name: "5.56 M995 Panzerbrechend (M995 AP)", cal: "5.56x45mm", pen: 4.5, dmg: 40 },
+    { name: "5.56 SSA AP Hochgeschwindigkeits-AP (SSA AP)", cal: "5.56x45mm", pen: 4.2, dmg: 38 },
+    { name: "5.56 M855A1 Verbesserte Pen. (M855A1)", cal: "5.56x45mm", pen: 3.5, dmg: 50 },
+    { name: "5.56 M856A1 Leuchtspur AP (M856A1 Tracer)", cal: "5.56x45mm", pen: 3.2, dmg: 51 },
+    { name: "5.56 M855 Standard (M855 Ball)", cal: "5.56x45mm", pen: 3.0, dmg: 52 },
+    { name: "5.56 M856 Leuchtspur (M856 Tracer)", cal: "5.56x45mm", pen: 2.8, dmg: 54 },
+    { name: "5.56 M193 Zivil (M193)", cal: "5.56x45mm", pen: 2.5, dmg: 58 },
+    { name: "5.56 MK255 Mod 0 RRLP (MK255 Mod 0)", cal: "5.56x45mm", pen: 1.5, dmg: 65 },
+    { name: "5.56 HP BT Hohlspitz (HP BT)", cal: "5.56x45mm", pen: 1.0, dmg: 75 },
+    { name: "5.56 Warmageddon Fleischschaden (Warmageddon)", cal: "5.56x45mm", pen: 0.5, dmg: 85 },
+
+    // --- 5.45x39mm (AK-74, AK-12, AK-105, AKS-74U) ---
+    { name: "5.45 7N39 Igolnik / PPBS (7N39)", cal: "5.45x39mm", pen: 4.5, dmg: 37 },
+    { name: "5.45 BS Panzerbrechend (BS)", cal: "5.45x39mm", pen: 4.0, dmg: 40 },
+    { name: "5.45 BP Gehärtet (BP)", cal: "5.45x39mm", pen: 3.5, dmg: 45 },
+    { name: "5.45 BT Leuchtspur (BT Tracer)", cal: "5.45x39mm", pen: 3.5, dmg: 44 },
+    { name: "5.45 PP Verbessert (PP)", cal: "5.45x39mm", pen: 3.0, dmg: 48 },
+    { name: "5.45 PS Standard (PS)", cal: "5.45x39mm", pen: 2.5, dmg: 50 },
+    { name: "5.45 FMJ Vollmantel (FMJ)", cal: "5.45x39mm", pen: 2.0, dmg: 54 },
+    { name: "5.45 PRS Übungsmunition (PRS)", cal: "5.45x39mm", pen: 1.5, dmg: 60 },
+    { name: "5.45 US Unterschall (US Subsonic)", cal: "5.45x39mm", pen: 1.5, dmg: 65 },
+    { name: "5.45 SP Teilmantel (SP)", cal: "5.45x39mm", pen: 1.0, dmg: 68 },
+    { name: "5.45 HP Hohlspitz (HP)", cal: "5.45x39mm", pen: 0.5, dmg: 75 },
+
+    // --- 7.62x39mm (AKM, SKS, SA vz. 58, Type 56) ---
+    { name: "7.62x39 MAI AP High-End AP (MAI AP)", cal: "7.62x39mm", pen: 4.5, dmg: 46 },
+    { name: "7.62x39 BP Panzerbrechend (BP)", cal: "7.62x39mm", pen: 3.5, dmg: 50 },
+    { name: "7.62x39 PS Standard (PS)", cal: "7.62x39mm", pen: 3.0, dmg: 55 },
+    { name: "7.62x39 T45M Leuchtspur (T45M Tracer)", cal: "7.62x39mm", pen: 2.5, dmg: 57 },
+    { name: "7.62x39 FMJ Vollmantel (FMJ)", cal: "7.62x39mm", pen: 2.5, dmg: 60 },
+    { name: "7.62x39 US Unterschall (US Subsonic)", cal: "7.62x39mm", pen: 2.0, dmg: 58 },
+    { name: "7.62x39 SP Teilmantel (SP)", cal: "7.62x39mm", pen: 1.5, dmg: 70 },
+    { name: "7.62x39 HP Hohlspitz (HP)", cal: "7.62x39mm", pen: 0.5, dmg: 80 },
+
+    // --- 7.62x51mm NATO / .308 (M14, M1A, M700, AK-308) ---
+    { name: "7.62 M993 Schweres AP (M993 AP)", cal: "7.62x51mm", pen: 5.0, dmg: 65 },
+    { name: "7.62 M61 Panzerbrechend (M61)", cal: "7.62x51mm", pen: 4.5, dmg: 70 },
+    { name: "7.62 M62 Leuchtspur (M62 Tracer)", cal: "7.62x51mm", pen: 3.8, dmg: 75 },
+    { name: "7.62 M80 Standard (M80 Ball)", cal: "7.62x51mm", pen: 3.2, dmg: 80 },
+    { name: "7.62 BCP FMJ Zivil (BCP FMJ)", cal: "7.62x51mm", pen: 2.8, dmg: 85 },
+    { name: "7.62 TCW SP Jagdmunition (TCW SP)", cal: "7.62x51mm", pen: 1.5, dmg: 100 },
+    { name: "7.62 Ultra Nosler Fleischschaden (Ultra Nosler)", cal: "7.62x51mm", pen: 1.0, dmg: 110 },
+
+    // --- 7.62x54mmR (SVD Dragunov, Mosin-Nagant) ---
+    { name: "7.62x54R BS Panzerbrechend (BS)", cal: "7.64x54mmR", pen: 5.0, dmg: 72 },
+    { name: "7.62x54R SNB Spezial-AP (SNB)", cal: "7.64x54mmR", pen: 4.5, dmg: 75 },
+    { name: "7.62x54R 7N1 Sniper (7N1 Sniper)", cal: "7.64x54mmR", pen: 4.0, dmg: 82 },
+    { name: "7.62x54R LPS Standard (LPS Gzh)", cal: "7.64x54mmR", pen: 3.5, dmg: 80 },
+    { name: "7.62x54R T-46M Leuchtspur (T-46M)", cal: "7.64x54mmR", pen: 3.0, dmg: 82 },
+    { name: "7.62x54R FMJ Vollmantel (FMJ)", cal: "7.64x54mmR", pen: 2.5, dmg: 84 },
+    { name: "7.62x54R SP Teilmantel (SP)", cal: "7.64x54mmR", pen: 1.5, dmg: 95 },
+
+    // --- .300 Blackout (SIG MCX) [0.4 NEU] ---
+    { name: ".300 BLK AP Panzerbrechend (AP)", cal: ".300 BLK", pen: 3.8, dmg: 55 },
+    { name: ".300 BLK CBJ Militär (CBJ)", cal: ".300 BLK", pen: 3.2, dmg: 60 },
+    { name: ".300 BLK M62 Leuchtspur (M62 Tracer)", cal: ".300 BLK", pen: 3.0, dmg: 58 },
+    { name: ".300 BLK BCP FMJ Zivil (BCP FMJ)", cal: ".300 BLK", pen: 2.5, dmg: 62 },
+    { name: ".300 BLK Whisper Unterschall (Whisper)", cal: ".300 BLK", pen: 2.0, dmg: 65 },
+    { name: ".300 BLK V-MAX Fleischschaden (V-MAX)", cal: ".300 BLK", pen: 0.5, dmg: 85 },
+
+    // --- 4.6x30mm (MP7A1, MP7A2) [0.4 NEU] ---
+    { name: "4.6x30 AP SX Rüstungsbrecher (AP SX)", cal: "4.6x30mm", pen: 3.8, dmg: 35 },
+    { name: "4.6x30 FMJ SX Vollmantel (FMJ SX)", cal: "4.6x30mm", pen: 3.0, dmg: 43 },
+    { name: "4.6x30 Subsonic SX Unterschall (Subsonic)", cal: "4.6x30mm", pen: 2.0, dmg: 45 },
+    { name: "4.6x30 Action SX Zivil (Action SX)", cal: "4.6x30mm", pen: 1.0, dmg: 50 },
+
+    // --- 9x19mm Parabellum (Glock, MP5, Alien, Vityaz) ---
+    { name: "9mm 7N31 Panzerbrechend (7N31 AP)", cal: "9x19mm", pen: 3.0, dmg: 45 },
+    { name: "9mm AP 6.3 Militär (AP 6.3)", cal: "9x19mm", pen: 2.5, dmg: 52 },
+    { name: "9mm PST Gzh Standard (PST Gzh)", cal: "9x19mm", pen: 1.8, dmg: 55 },
+    { name: "9mm PSO Gzh Übung (PSO Gzh)", cal: "9x19mm", pen: 1.0, dmg: 60 },
+    { name: "9mm Luger CCI Hohlspitz (Luger CCI)", cal: "9x19mm", pen: 0.8, dmg: 70 },
+    { name: "9mm QuakeMaker Expansion (QuakeMaker)", cal: "9x19mm", pen: 0.5, dmg: 85 },
+    { name: "9mm RIP Beinschredder (RIP)", cal: "9x19mm", pen: 0.2, dmg: 100 },
+
+    // --- .45 ACP (Colt 1911, CCC) ---
+    { name: ".45 ACP AP Panzerbrechend (AP)", cal: ".45 ACP", pen: 2.5, dmg: 65 },
+    { name: ".45 ACP Match Vollmantel (Match FMJ)", cal: ".45 ACP", pen: 1.5, dmg: 72 },
+    { name: ".45 ACP Lasermatch Leuchtspur (Lasermatch)", cal: ".45 ACP", pen: 1.0, dmg: 80 },
+    { name: ".45 ACP RIP Fleischschaden (RIP)", cal: ".45 ACP", pen: 0.2, dmg: 120 },
+
+    // --- Russische Pistolen (9x18 Makarov, 7.62x25 Tokarev) ---
+    { name: "7.62x25 Tokarev PST (PST Gzh)", cal: "7.62x25mm", pen: 2.0, dmg: 48 },
+    { name: "7.62x25 Tokarev PT Gzh (PT Gzh)", cal: "7.62x25mm", pen: 1.5, dmg: 55 },
+    { name: "7.62x25 Tokarev LRNPC Hohlspitz (LRNPC)", cal: "7.62x25mm", pen: 0.5, dmg: 65 },
+    { name: "9x18 Makarov PMM Verbessert (PMM)", cal: "9x18mm", pen: 1.8, dmg: 50 },
+    { name: "9x18 Makarov PST Standard (PST)", cal: "9x18mm", pen: 1.2, dmg: 55 },
+    { name: "9x18 Makarov BZT Leuchtspur (BZT)", cal: "9x18mm", pen: 1.0, dmg: 58 },
+    { name: "9x18 Makarov SP8 Hohlspitz (SP8)", cal: "9x18mm", pen: 0.8, dmg: 68 },
+    { name: "9x18 Makarov SP7 Fleischschaden (SP7)", cal: "9x18mm", pen: 0.5, dmg: 75 },
+
+    // --- .32 ACP (VZ-61 Skorpion) ---
+    { name: ".32 ACP FMJ Vollmantel (.32 FMJ)", cal: ".32 ACP", pen: 1.0, dmg: 40 },
+    { name: ".32 ACP JHP Hohlspitz (.32 JHP)", cal: ".32 ACP", pen: 0.5, dmg: 50 },
+
+    // --- 12 Gauge (Shotguns: M870, Mossberg 590) ---
+    { name: "12G AP-20 Flintenlaufgeschoss (AP-20 Slug)", cal: "12 Gauge", pen: 3.0, dmg: 160 },
+    { name: "12G Copper Sabot Slug (Copper Sabot)", cal: "12 Gauge", pen: 2.5, dmg: 140 },
+    { name: "12G Grizzly Slug Massivgeschoss (Grizzly 40)", cal: "12 Gauge", pen: 1.8, dmg: 190 },
+    { name: "12G Flechette Pfeilmunition (Flechette)", cal: "12 Gauge", pen: 1.5, dmg: 120 },
+    { name: "12G RIP Slug Beinschredder (RIP Slug)", cal: "12 Gauge", pen: 0.5, dmg: 260 },
+    { name: "12G 8.5mm Magnum Schrot (8.5mm Magnum)", cal: "12 Gauge", pen: 0.5, dmg: 400 },
+    { name: "12G 00 Buckshot Schrot (00 Buck)", cal: "12 Gauge", pen: 0.5, dmg: 280 },
+    { name: "12G 7mm Buckshot Schrot (7mm Buck)", cal: "12 Gauge", pen: 0.2, dmg: 320 }
+];
     
 // 6. KEYS DATENBANK
     const allKeys = [
