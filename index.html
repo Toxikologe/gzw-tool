@@ -546,44 +546,73 @@
         </div>
 
         <div id="tab-tasks" class="tab-content">
-            <h2>Missions-Datenbank (Tasks)</h2>
-            <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 10px;">
-                <select id="vendorFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1;">
-                    <option value="all">-- Händler wählen --</option>
-                    <option value="Handshake">Handshake</option>
-                    <option value="Gunny">Gunny</option>
-                    <option value="Lab Rat">Lab Rat</option>
-                    <option value="Artisan">Artisan</option>
-                    <option value="Turncoat">Turncoat</option>
-                    <option value="Banshee">Banshee</option>
-                </select>
-                <select id="taskDropdown" onchange="selectTaskFromDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: var(--accent); cursor: pointer; flex: 2; font-weight: bold;">
-                    <option value="">-- Erst Händler wählen --</option>
-                </select>
-            </div>
-            <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 20px;">
-                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #ccc; margin-top: 0; font-size: 0.95rem;">
-                    <input type="checkbox" id="filterOpenTasks" onchange="refreshTaskList()" style="width: auto; margin-right: 8px; margin-top: 0; cursor: pointer;">
-                    Nur offene Tasks anzeigen
-                </label>
-                <button onclick="resetAllTasks()" style="background: #b33939; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">
-                    🗑️ Alle Häkchen zurücksetzen
-                </button>
-            </div>
-            <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()">
-            <div id="taskList"></div>
-            <div id="taskContainer" class="panel-box" style="position: relative; margin-top: 15px;">
-                <div id="taskCompleteWrapper" style="display: none; position: absolute; top: 15px; right: 15px;">
-                    <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin-top: 0; font-size: 1rem;">
-                        <input type="checkbox" id="taskCompleteCheckbox" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
-                        Erledigt
-                    </label>
+            <h2>📋 Missions-Datenbank (Tasks)</h2>
+            <div class="grid">
+                <div>
+                    <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+                        <select id="vendorFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1; min-width: 150px;">
+                            <option value="all">-- Alle Händler --</option>
+                            <option value="Handshake">Handshake</option>
+                            <option value="Gunny">Gunny</option>
+                            <option value="Lab Rat">Lab Rat</option>
+                            <option value="Artisan">Artisan</option>
+                            <option value="Turncoat">Turncoat</option>
+                            <option value="Banshee">Banshee</option>
+                            <option value="Vulture">Vulture</option>
+                        </select>
+                        
+                        <select id="regionFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1; min-width: 150px;">
+                            <option value="all">-- Alle Gebiete --</option>
+                            <option value="🔰 Startregionen">🔰 Startregionen</option>
+                            <option value="🌲 Sägewerk">🌲 Sägewerk (Lumber Yard)</option>
+                            <option value="🎯 Hunter's Paradise">🎯 Hunter's Paradise</option>
+                            <option value="🎣 Ban Pa">🎣 Ban Pa</option>
+                            <option value="🌊 Blaue Lagune">🌊 Blaue Lagune</option>
+                            <option value="☢️ YBL-1 Bunker">☢️ YBL-1 Bunker</option>
+                            <option value="🪖 Fort Narith">🪖 Fort Narith</option>
+                            <option value="💎 Midnight Sapphire">💎 Midnight Sapphire</option>
+                            <option value="🏙️ Tiger Bay">🏙️ Tiger Bay</option>
+                            <option value="✈️ Airfield & Ground Zero">✈️ Airfield & Ground Zero</option>
+                            <option value="🗺️ Lamang Island (Umland)">🗺️ Lamang Island (Umland)</option>
+                        </select>
+                    </div>
+
+                    <select id="taskDropdown" onchange="selectTaskFromDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: var(--accent); cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 10px;">
+                        <option value="">-- Wähle einen Task --</option>
+                    </select>
+
+                    <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 20px;">
+                        <label style="display: inline-flex; align-items: center; cursor: pointer; color: #ccc; margin-top: 0; font-size: 0.95rem;">
+                            <input type="checkbox" id="filterOpenTasks" onchange="refreshTaskList()" style="width: auto; margin-right: 8px; margin-top: 0; cursor: pointer;">
+                            Nur offene Tasks anzeigen
+                        </label>
+                    </div>
+                    
+                    <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()" style="margin-bottom: 10px;">
+                    <div id="taskList"></div>
+                    
+                    <div id="taskContainer" class="panel-box" style="position: relative; margin-top: 15px;">
+                        <div id="taskCompleteWrapper" style="display: none; position: absolute; top: 15px; right: 15px;">
+                            <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin-top: 0; font-size: 1rem;">
+                                <input type="checkbox" id="taskCompleteCheckbox" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
+                                Erledigt
+                            </label>
+                        </div>
+                        <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; padding-right: 100px;">Wähle einen Task...</div>
+                        <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
+                        <div id="taskDesc" style="margin-bottom: 15px;">Die Zielbeschreibung erscheint hier.</div>
+                        <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
+                        <div id="taskSolution" class="task-solution" style="margin-top: 15px; display: none; background: #111; padding: 15px; border-left: 3px solid var(--accent);"></div>
+                    </div>
                 </div>
-                <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; padding-right: 100px;">Wähle einen Task...</div>
-                <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
-                <div id="taskDesc" style="margin-bottom: 15px;">Die Zielbeschreibung erscheint hier.</div>
-                <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
-                <div id="taskSolution" class="task-solution" style="margin-top: 15px; display: none; background: #111; padding: 15px; border-left: 3px solid var(--accent);"></div>
+
+                <div class="panel-box">
+                    <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--accent);">✅ Abgeschlossene Tasks (<span id="completedTaskCount">0</span>)</h3>
+                    <div id="completedTaskDisplay" style="color: #ccc; font-size: 0.95rem; line-height: 2; max-height: 500px; overflow-y: auto; padding-right: 10px;">
+                        Noch keine Tasks erledigt.
+                    </div>
+                    <button onclick="resetAllTasks()" style="margin-top: 20px; background: #b33939; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s;" onmouseover="this.style.background='#e05c2a'" onmouseout="this.style.background='#b33939'">🗑️ Alle Häkchen zurücksetzen</button>
+                </div>
             </div>
         </div>
 
@@ -2192,7 +2221,7 @@
     }
 
     // ==============================================================
-    // TASK TRACKER LOGIK
+    // TASK TRACKER LOGIK (INKL. REGIONEN & ABGESCHLOSSENE LISTE)
     // ==============================================================
     let completedTasks = [];
     
@@ -2204,12 +2233,29 @@
         if (!Array.isArray(completedTasks)) completedTasks = [];
     } catch(e) { completedTasks = []; }
 
+    // Intelligente Funktion, die aus dem Lösungs-Text die Region erkennt
+    function getTaskRegion(task) {
+        const text = (task.sol + " " + task.desc + " " + task.de).toLowerCase();
+        if (text.includes('tiger bay') || text.includes('unlra') || text.includes('mall') || text.includes('pier')) return "🏙️ Tiger Bay";
+        if (text.includes('midnight sapphire') || text.includes('hotel') || text.includes('villa') || text.includes('golf')) return "💎 Midnight Sapphire";
+        if (text.includes('fort narith') || text.includes('barracks') || text.includes('hq') || text.includes('general pa')) return "🪖 Fort Narith";
+        if (text.includes('ybl') || text.includes('bunker')) return "☢️ YBL-1 Bunker";
+        if (text.includes("hunter's paradise") || text.includes('hp') || text.includes('schießstand') || text.includes('shooting')) return "🎯 Hunter's Paradise";
+        if (text.includes('ban pa') || text.includes('ältester') || text.includes('stelzen')) return "🎣 Ban Pa";
+        if (text.includes('sawmill') || text.includes('sägewerk') || text.includes('lumber')) return "🌲 Sägewerk";
+        if (text.includes('ground zero') || text.includes('airfield') || text.includes('flugplatz') || text.includes('hangar')) return "✈️ Airfield & Ground Zero";
+        if (text.includes('blue lagoon') || text.includes('lagune') || text.includes('malo')) return "🌊 Blaue Lagune";
+        if (text.includes('startstadt') || text.includes('markt') || text.includes('basecamp') || text.includes('base camp') || text.includes('rathaus') || text.includes('nam thaven') || text.includes('kiu vongsa') || text.includes('pha lang')) return "🔰 Startregionen";
+        return "🗺️ Lamang Island (Umland)";
+    }
+
     function toggleTaskCompletion(taskEn, taskDe, isChecked) {
         if (isChecked) {
             if (!completedTasks.includes(taskEn)) {
                 completedTasks.push(taskEn);
             }
         } else {
+            // Entfernt das Häkchen wieder, falls man sich verklickt hat
             completedTasks = completedTasks.filter(t => t !== taskEn && t !== taskDe);
         }
         
@@ -2222,6 +2268,35 @@
         }
         
         refreshTaskList();
+        renderCompletedTasks();
+    }
+
+    function renderCompletedTasks() {
+        const display = document.getElementById('completedTaskDisplay');
+        const count = document.getElementById('completedTaskCount');
+        if (!display || !count) return;
+        
+        count.textContent = completedTasks.length;
+
+        if (completedTasks.length === 0) {
+            display.innerHTML = '<span style="color: #888;">Noch keine Tasks erledigt.</span>';
+            return;
+        }
+
+        const doneTasks = [];
+        completedTasks.forEach(id => {
+            const t = allTasks.find(task => task.en === id || task.de === id);
+            if (t) doneTasks.push(t);
+        });
+
+        // Alphabetisch nach deutschem Namen sortieren
+        doneTasks.sort((a, b) => a.de.localeCompare(b.de));
+
+        display.innerHTML = doneTasks.map(t => 
+            `<span style="display:inline-block; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:4px 10px; margin:4px; font-size:0.85rem; cursor:pointer;" 
+             onclick="displayTaskData('${t.en.replace(/'/g, "\\'")}'); document.getElementById('taskDropdown').value='${t.en.replace(/'/g, "\\'")}'"
+             title="Klicken für Details">✅ ${t.de}</span>`
+        ).join('');
     }
 
     function refreshTaskList() {
@@ -2243,7 +2318,7 @@
         titleEl.style.textDecoration = isDone ? 'line-through' : 'none';
         titleEl.style.opacity = isDone ? '0.6' : '1';
         
-        document.getElementById('taskNames').innerText = `Original: ${task.en} | Händler: ${task.v || 'Unbekannt'}`;
+        document.getElementById('taskNames').innerText = `Original: ${task.en} | Händler: ${task.v || 'Unbekannt'} | Region: ${getTaskRegion(task)}`;
         document.getElementById('taskDesc').innerText = task.desc;
         document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
         
@@ -2266,19 +2341,29 @@
     function updateTaskDropdown() {
         if (typeof allTasks === 'undefined') return;
         const vendor = document.getElementById('vendorFilter').value;
+        const region = document.getElementById('regionFilter').value;
         const taskSelect = document.getElementById('taskDropdown');
         const filterCheckbox = document.getElementById('filterOpenTasks');
         const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
         
         const selectedValue = taskSelect.value; 
-        taskSelect.innerHTML = '<option value="">-- Erst Händler wählen --</option>';
+        taskSelect.innerHTML = '<option value="">-- Wähle einen Task --</option>';
 
-        if (vendor === 'all' || !vendor) return;
+        let filteredTasks = allTasks;
 
-        let filteredTasks = allTasks.filter(t => t.v === vendor);
+        // Filter anwenden
+        if (vendor !== 'all' && vendor !== '') {
+            filteredTasks = filteredTasks.filter(t => t.v === vendor);
+        }
+        if (region !== 'all' && region !== '') {
+            filteredTasks = filteredTasks.filter(t => getTaskRegion(t) === region);
+        }
         if (hideCompleted) {
             filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.en) && !completedTasks.includes(t.de));
         }
+
+        // Alphabetisch sortieren
+        filteredTasks.sort((a, b) => a.de.localeCompare(b.de));
 
         filteredTasks.forEach(t => {
             const option = document.createElement('option');
@@ -2342,6 +2427,7 @@
             completedTasks = [];
             try { localStorage.removeItem('gzw_completed_tasks'); } catch(e) {}
             refreshTaskList();
+            renderCompletedTasks();
             
             const titleEl = document.getElementById('taskTitle');
             const checkbox = document.getElementById('taskCompleteCheckbox');
@@ -2811,6 +2897,8 @@
         initNotepad();
         buildKeyDropdown();
         renderKeyRing();
+        renderCompletedTasks();
+    	updateTaskDropdown();
         buildCodeDropdown();
         renderLootRoutes();
         buildQuestItemDropdown();
