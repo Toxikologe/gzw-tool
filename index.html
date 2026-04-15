@@ -788,11 +788,11 @@
                         <div style="flex: 1;">
                             <label style="margin-top: 0; font-size: 0.8rem;">Gegnerische Rüstung:</label>
                             <select id="calcArmor" onchange="calculateBallistics()" style="padding: 8px;">
-                                <option value="1">NIJ IIIA (6B2 Schutzweste)</option>
-                                <option value="2">NIJ III (M2 Plattenträger)</option>
-                                <option value="3">NIJ III+ (Recon Plattenträger)</option>
-                                <option value="4">NIJ III++ (Defender-2 Schutzweste)</option>
-                            </select>
+                                    <option value="2.0">NIJ IIIA (Helme / Weichballistik)</option>
+                                    <option value="3.0">NIJ III (Lancer / M2 Westen)</option>
+                                    <option value="3.5">NIJ III+ (Recon Plate Carrier)</option>
+                                    <option value="4.0">NIJ III++ (Defender-2 / NIJ IV)</option>
+                                </select>
                         </div>
                         <div style="font-weight: bold; padding-top: 20px;">VS</div>
                         <div style="flex: 1;">
@@ -1544,23 +1544,24 @@
         const ammoName = ammoElement.value; 
         const penValue = getAmmoPenValue(ammoName);
         
-        if (!ammoName || ammoName === "") {
-            resultBox.innerHTML = "Wähle zuerst eine Waffe im Arsenal-Tab!";
+        if (!ammoName || ammoName === "" || ammoName.includes("--")) {
+            resultBox.innerHTML = "Wähle eine Waffe im Arsenal-Tab!";
             resultBox.style.color = "#888";
             resultBox.style.backgroundColor = "#1a1a1a";
             return;
         }
 
-        if (penValue >= armorLevel + 0.5) {
+        // Neue GZW 0.4 Logik: Pen vs Armor
+        if (penValue >= armorLevel) {
             resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG (1-2 Schüsse)";
             resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
             resultBox.style.color = "#7ca35a";
-        } else if (penValue >= armorLevel) {
-            resultBox.innerHTML = "⚠️ WAHRSCHEINLICHER DURCHSCHLAG (3-5 Schüsse)";
+        } else if (penValue >= armorLevel - 0.5) {
+            resultBox.innerHTML = "⚠️ RÜSTUNGSSCHADEN (Platte muss erst brechen)";
             resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
             resultBox.style.color = "#ffa500";
         } else {
-            resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Wirkungslos gegen Platte)";
+            resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Ziele auf die Beine!)";
             resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
             resultBox.style.color = "#ff4c4c";
         }
