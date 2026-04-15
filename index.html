@@ -441,24 +441,26 @@
                     <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
                     <select id="containerSelect" onchange="updateContainer()">
                         <option value="">-- Wähle einen Container --</option>
-                        <optgroup label="Secure Containers (Lockbox)">
-                            <option value="safe_lock">Safe Lock (2x2) - 4 Slots</option>
-                            <option value="snook_908">Snook 908 (2x3) - 6 Slots</option>
-                            <option value="tas">TAS Container (3x3) - 9 Slots</option>
+                        <optgroup label="Secure Containers (Überleben den Tod)">
+                            <option value="secure_2x2">Safe Lock Box (2x2)</option>
+                            <option value="admin_pouch">Admin Pouch (2x3)</option>
+                            <option value="secure_3x3">Elite / Supporter Pouch (3x3)</option>
                         </optgroup>
-                        <optgroup label="Lagerkisten (Stash Cases / Boxes)">
-                            <option value="ammo_box">Ammo Container (Munitionskiste)</option>
-                            <option value="weapon_box">Weapon Container (Waffenkiste)</option>
-                            <option value="med_box">Medical Container (Medikamentenkiste)</option>
-                            <option value="armor_box">Armor/Gear Container (Ausrüstungskiste)</option>
-                            <option value="food_box">Provisions Container (Kühlbox/Essen)</option>
+                        <optgroup label="Stash Cases (Lagerkisten)">
+                            <option value="muxxum_rifle">Muxxum Rifle Case</option>
+                            <option value="parts_case">Parts Case</option>
+                            <option value="ammo_crate">Ammo Crate</option>
+                            <option value="mag_crate">Magazine Crate</option>
+                            <option value="gear_case">Gear Case</option>
+                            <option value="med_container">Medical Container</option>
+                            <option value="mortar_case">Mortar Round Case</option>
                         </optgroup>
-                        <optgroup label="Kleine Behälter (Inventar)">
+                        <optgroup label="Micro-Container & Pouches (Raid-Inventar)">
+                            <option value="wallet">Wallet (Geldbörse)</option>
                             <option value="key_holder">Key Holder (Schlüsselbund)</option>
-                            <option value="wallet">Leather Wallet (Geldbörse)</option>
-                        </optgroup>
-                        <optgroup label="Lagerplatz (Base Stash)">
-                            <option value="stash_upgrade">Locker / Schließfach Erweiterungen</option>
+                            <option value="mfak">M-FAK (Micro First Aid Kit)</option>
+                            <option value="qfak">QFAK (Quick First Aid Kit)</option>
+                            <option value="qrkit">QRKit (Quick Response Kit)</option>
                         </optgroup>
                     </select>
                     <div id="containerInfoDisplay" class="info-box" style="margin-top: 15px; background: #1a1a1a; padding: 15px; border-left: 4px solid var(--accent);">Wähle einen Container für Details zum Fundort...</div>
