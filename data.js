@@ -985,6 +985,8 @@ const valuables = {
     "intel_folder": { price: "~ $300", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Oft in feindlichen Basen und HQs zu finden." },
     "passport": { price: "~ $120", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Banshee braucht 2 Stück für seine Schmuggel-Tasks). Schwer zu finden!" },
     "credit_card": { price: "~ $150", slots: "1", info: "Artisan zahlt Bestpreise für Kreditkarten. Passt perfekt in dein Wallet." },
+    "gold_credit_card": { price: "~ $900", slots: "1", info: "Artisan zahlt Bestpreise für Kreditkarten. Passt perfekt in dein Wallet." },
+    "platin_credit_card": { price: "~ $1500", slots: "1", info: "Artisan zahlt Bestpreise für Kreditkarten. Passt perfekt in dein Wallet." },
     "wallet": { price: "~ $50 - $200", slots: "1", info: "0.4 MECHANIK: Packe es in deinen Secure Container! Es hält 4 kleine Slots (Karten, Geld, Pässe)." },
 
     // ==========================================
