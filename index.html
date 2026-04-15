@@ -2888,6 +2888,10 @@
         });
     }
 
+    // ==============================================================
+    // BLUEPRINTS LOGIK
+    // ==============================================================
+    
     function initBlueprints() {
         const bpSelect = document.getElementById('blueprintSelect');
         if (bpSelect && typeof blueprintDb !== 'undefined') {
@@ -2902,19 +2906,49 @@
     }
 
     function updateBlueprintInfo() {
-        const val = document.getElementById('blueprintSelect').value;
-        const display = document.getElementById('blueprintDisplay');
-        if (!val || typeof blueprintDb === 'undefined' || !blueprintDb[val]) {
-            display.style.display = 'none';
-            return;
-        }
-        const bp = blueprintDb[val];
-        document.getElementById('bpName').innerText = val;
-        document.getElementById('bpLoc').innerText = bp.loc;
-        document.getElementById('bpDesc').innerText = bp.desc;
-        document.getElementById('bpTip').innerText = bp.tip;
-        display.style.display = 'block';
+    const val = document.getElementById('blueprintSelect').value;
+    const display = document.getElementById('blueprintDisplay');
+    
+    if (!val || typeof blueprintDb === 'undefined' || !blueprintDb[val]) {
+        display.style.display = 'none';
+        return;
     }
+    
+    const bp = blueprintDb[val];
+    document.getElementById('bpName').innerText = val;
+    
+    // NEU: Nutzt unsere Map-Link Funktion, um aus dem Text einen Hyperlink zu machen
+    document.getElementById('bpLoc').innerHTML = getMapLinkHTML(bp.loc);
+    
+    document.getElementById('bpDesc').innerText = bp.desc;
+    document.getElementById('bpTip').innerText = bp.tip;
+    display.style.display = 'block';
+}
+
+    // ==============================================================
+// MAP LINK GENERATOR (FÜR KOORDINATEN)
+// ==============================================================
+function getMapLinkHTML(locationText) {
+    // Sucht im Text nach dem Muster von Koordinaten, z.B. (142, 130) oder (142 130)
+    const coordRegex = /\(\s*(\d+)\s*[, ]\s*(\d+)\s*\)/;
+    
+    if (coordRegex.test(locationText)) {
+        // Link zur interaktiven Map (MapGenie)
+        const mapUrl = "https://mapgenie.io/gray-zone-warfare/maps/lamang-island";
+        
+        // Baut den HTML-Link zusammen (inklusive Hover-Effekt im Inline-CSS)
+        return `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" 
+                   style="color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); transition: 0.2s;" 
+                   onmouseover="this.style.color='#fff'; this.style.borderBottom='1px solid #fff';" 
+                   onmouseout="this.style.color='var(--accent)'; this.style.borderBottom='1px dashed var(--accent)';" 
+                   title="Auf interaktiver Karte öffnen">
+            📍 ${locationText}
+        </a>`;
+    }
+    
+    // Falls keine Koordinaten im String enthalten sind (z.B. nur "Startgebiet")
+    return `📍 ${locationText}`;
+}
 
     // ==============================================================
     // AMMO MATRIX ZELLEN-LOGIK (FARBEN & DURCHSCHLAG)
