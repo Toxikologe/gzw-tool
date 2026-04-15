@@ -659,40 +659,61 @@
         { name: "Remote Campsite Key", de: "Entlegenes Lager Schlüssel", loc: "Südlich YBL-1 (149, 111)", effect: "Öffnet die verschlossene Kiste am Flusslager.", loot: "Mossberg 590 Blueprint" }
     ];
     
-// 7. LOOT DATENBANK
-    const valuables = {
-        "gold_phone": { price: "~ $800", slots: "1", info: "Absoluter Jackpot. Eines der besten Items im Spiel für 1 Slot." },
-        "diamond_ring": { price: "~ $600", slots: "1", info: "Extrem selten. Spawnt häufig in Tresoren (Villen, Hotel)." },
-        "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
-        "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Hoher Gesamtwert, erfordert aber 2 horizontale Slots." },
-        "gold_coin": { price: "~ $350", slots: "1", info: "Perfekter Lückenfüller für den Rucksack." },
-        "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Findet man meist in PC-Gehäusen oder auf Schreibtischen." },
-        "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, aber frisst viel Platz. Nur mitnehmen, wenn Platz ist." },
-        "tablet": { price: "~ $300", slots: "2", info: "Guter Wert, findet man oft in Büros und dem Hotel." },
-        "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Tausche es gegen 1-Slot-Items aus, wenn möglich." },
-        "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel Platz weg. Eher ineffizient." },
-        "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
-        "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot für 1 Slot." },
-        "camera": { price: "~ $150", slots: "2", info: "Guter Beifang, oft in zivilen Gebäuden." },
-        "silver_coin": { price: "~ $150", slots: "1", info: "Nicht so gut wie Gold, aber definitiv mitnehmen!" },
-        "silver_chain": { price: "~ $120", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
-        "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Wert für nur einen Slot." },
-        "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
-        "flash_drive": { price: "~ $80", slots: "1", info: "Normaler USB-Stick. Nimmt kaum Platz weg." },
-        "calculator": { price: "~ $80", slots: "1", info: "Guter Filler für den Secure Container am Anfang." },
-        "wallet": { price: "~ $50 - $200", slots: "1", info: "Kann manchmal wertvolles Bargeld enthalten. Prüfen!" },
-        "sunglasses": { price: "~ $60", slots: "1", info: "Oft auf Tischen oder in Cafés zu finden." },
-        "old_book": { price: "~ $70", slots: "2", info: "Nimmt zu viel Platz weg für den geringen Wert." },
-        "glasses": { price: "~ $35", slots: "1", info: "Lesebrillen. Kaum Wert." },
-        "cutlery": { price: "~ $30", slots: "1", info: "Spawnt oft in Restaurants. Eher wertlos." },
-        "lighter": { price: "~ $25", slots: "1", info: "Kaum der Rede wert. Wegwerfen, sobald etwas Besseres droppt." },
-        "cards": { price: "~ $20", slots: "1", info: "Sehr geringer Wert." },
-        "notebook_paper": { price: "~ $15", slots: "1", info: "Papier-Notizblock. Völlig wertlos." },
-        "pen": { price: "~ $10", slots: "1", info: "Kugelschreiber. Bringt fast nichts." },
-        "cigarettes": { price: "~ $15", slots: "1", info: "Wertlos, nimmt nur Platz weg." },
-        "tp": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Gegenstand im Spiel (Wert pro Slot). Niemals mitnehmen!" },
-        "matches": { price: "~ $5", slots: "1", info: "Absoluter Müll. Liegen lassen." }
-    };
+// 7. LOOT DATENBANK (UPDATE 0.4 SPEARHEAD)
+// TIPP: Wertvolle Items an den Händler 'Vulture' zu verkaufen, ist die primäre Methode, um seinen Ruf zu steigern!
+const valuables = {
+    // ==========================================
+    // --- 💎 HIGH-END & JACKPOTS ---
+    // ==========================================
+    "ltsd_laser_designator": { price: "~ $60.000", slots: "2", info: "Das wertvollste Item im Spiel! Gefunden u.a. in Tiger Bay oder auf dem Hoteldach." },
+    "moutai_alcohol": { price: "~ $15.000", slots: "1", info: "Extrem wertvoller Alkohol. Ein absoluter Jackpot-Fund für nur einen Slot!" },
+    "pearl_earrings": { price: "~ $3.500", slots: "1", info: "Sehr lukrativer 1-Slot Gegenstand. Perfekt für den Secure Container." },
+    
+    // ==========================================
+    // --- 💍 SCHMUCK & WERTSACHEN ---
+    // ==========================================
+    "gold_phone": { price: "~ $800", slots: "1", info: "Sehr seltener Fund. Eines der besten Items im Spiel für 1 Slot." },
+    "diamond_ring": { price: "~ $600 - $800", slots: "1", info: "Spawnt häufig in Tresoren und Schmuckkästchen." },
+    "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
+    "gold_coin": { price: "~ $350", slots: "1", info: "Ein perfekter Lückenfüller für deinen Rucksack." },
+    "silver_coin": { price: "~ $150", slots: "1", info: "Immer mitnehmen, solange Platz ist." },
+    "pocket_watch": { price: "~ $120", slots: "1", info: "Häufig bei toten Scavs zu finden." },
+    "silver_chain": { price: "~ $100", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
+
+    // ==========================================
+    // --- 💻 ELEKTRONIK & TECHNIK ---
+    // ==========================================
+    "military_radio": { price: "~ $800", slots: "2", info: "Gute Ausbeute. Findet man oft in Militärgebieten oder Garagen (z.B. Fort Narith)." },
+    "rt97s": { price: "~ $675", slots: "6", info: "Achtung: Nimmt 6 Slots ein! Sehr ineffizient für den reinen Slot-Wert, am besten liegen lassen." },
+    "usb_drive": { price: "~ $450", slots: "1", info: "Verschlüsselt. Oft für Tasks gebraucht, aber auch ein super 1-Slot-Geldmacher." },
+    "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, frisst aber massiv Platz. Nur mitnehmen, wenn der Rucksack fast leer ist." },
+    "laptop": { price: "~ $400", slots: "4 (2x2)", info: "Viel zu groß für den Preis. Im Lategame solltest du es liegen lassen." },
+    "tablet": { price: "~ $300", slots: "2", info: "Guter Elektronik-Wert. Oft in Büros und dem Hotel auf Tischen zu finden." },
+    "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot, oft auf Schreibtischen." },
+    "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
+    "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Elektronik-Wert für nur einen Slot." },
+
+    // ==========================================
+    // --- 📁 DOKUMENTE & INTEL ---
+    // ==========================================
+    "weapon_blueprint": { price: "Unbezahlbar", slots: "1-2", info: "0.4 Spearhead Update: Schaltet Waffen dauerhaft beim Händler frei. Niemals verkaufen!" },
+    "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Wichtige Geheimdokumente, bringen sehr gutes Geld." },
+    "intel_folder": { price: "~ $300", slots: "2", info: "Oft in Basen und HQs zu finden." },
+    "passport": { price: "~ $120", slots: "1", info: "Identitätsdokumente. Passt perfekt in kleine Slots." },
+    "wallet": { price: "~ $50 - $200", slots: "1", info: "Kann manchmal wertvolles Bargeld enthalten. Immer prüfen!" },
+
+    // ==========================================
+    // --- 🗑️ SONSTIGES & TRASH (Low Value) ---
+    // ==========================================
+    "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel zu viel Platz weg. Eher ineffizient." },
+    "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
+    "fancy_cigarettes": { price: "~ $85", slots: "1", info: "Viel besser als normale Zigaretten." },
+    "sunglasses": { price: "~ $60", slots: "1", info: "Netter Lückenfüller für 1 Slot. Oft auf Tischen oder in Cafés zu finden." },
+    "zippo_lighter": { price: "~ $27", slots: "1", info: "Das Minimum, was du mitnehmen solltest." },
+    "hand_mirror": { price: "~ $10", slots: "1", info: "Absoluter Müll, bricht einem das Herz. Lohnt sich überhaupt nicht zum Mitnehmen." },
+    "toilet_paper": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Slot-Wert im Spiel. Liegen lassen!" },
+    "matches": { price: "~ $5", slots: "1", info: "Niemals looten!" }
+};
     
 // 8. CONTAINER DATENBANK
     const containers = {
