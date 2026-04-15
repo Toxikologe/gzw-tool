@@ -268,32 +268,32 @@
         /* ============================================================== */
         /* BACK TO TOP BUTTON (FIXED) */
         /* ============================================================== */
-        #backToTop {
-        position: fixed !important;
-        bottom: 85px !important;    /* Etwas höher wegen Feedback-Button */
-        right: 25px !important;
-        width: 45px !important;
-        height: 45px !important;
-        background-color: var(--accent) !important;
-        color: #ffffff !important;
-        border-radius: 50% !important;
-        display: none;              /* Wird via JS zu 'flex' */
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 1.2rem !important;
-        cursor: pointer !important;
-        z-index: 99999 !important;
-        border: none !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.6) !important;
-        transition: transform 0.2s ease, filter 0.2s !important;
-        padding: 0 !important;
-        margin: 0 !important;
-}
+        #backToTopBtn {
+            position: fixed !important;
+            bottom: 85px !important;    /* Schwebt über dem Feedback-Button */
+            right: 25px !important;
+            width: 45px !important;
+            height: 45px !important;
+            background-color: var(--accent) !important;
+            color: #ffffff !important;
+            border-radius: 50% !important;
+            display: none;              /* Wird via JS zu 'flex' */
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1.2rem !important;
+            cursor: pointer !important;
+            z-index: 99999 !important;
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6) !important;
+            transition: transform 0.2s ease, filter 0.2s !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
 
-        #backToTop:hover {
-        transform: scale(1.1) !important;
-        filter: brightness(1.2);
-}
+        #backToTopBtn:hover {
+            transform: scale(1.1) !important;
+            filter: brightness(1.2) !important;
+        }
 
         #keyList, #taskList { background: #2a2a2a; border: 1px solid #444; max-height: 200px; overflow-y: auto; display: none; border-radius: 0 0 6px 6px; }
         .search-item { padding: 10px; border-bottom: 1px solid #333; cursor: pointer; }
@@ -1562,16 +1562,23 @@
     }
 
     // --- ZURÜCK NACH OBEN LOGIK ---
-    let topButton = document.getElementById("backToTopBtn");
-    document.querySelector('.main-wrapper').addEventListener("scroll", function(e) {
-        if (mainWrapper.scrollTop > 300) {
-    backToTopBtn.style.display = 'flex'; // GEÄNDERT von 'block' zu 'flex'
-} else {
-    backToTopBtn.style.display = 'none';
-}
-    });
+    const mainWrapperEl = document.querySelector('.main-wrapper');
+    const topButtonEl = document.getElementById("backToTopBtn");
+
+    if (mainWrapperEl && topButtonEl) {
+        mainWrapperEl.addEventListener("scroll", function() {
+            if (mainWrapperEl.scrollTop > 300) {
+                topButtonEl.style.display = 'flex';
+            } else {
+                topButtonEl.style.display = 'none';
+            }
+        });
+    }
+
     function scrollToTop() {
-        document.querySelector('.main-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
+        if (mainWrapperEl) {
+            mainWrapperEl.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 
     // ==============================================================
