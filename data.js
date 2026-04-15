@@ -737,20 +737,106 @@ const valuables = {
     "matches": { price: "~ $5", slots: "1", info: "Niemals looten!" }
 };
     
-// 8. CONTAINER DATENBANK
-    const containers = {
-        "safe_lock": { name: "Safe Lock", size: "2x2 (4 Slots)", source: "Kauf bei Handshake (Lvl 1) ODER Standard Edition", info: "Der Standard-Container. Seit Patch 0.4 kannst du ihn ganz einfach bei Handshake nachkaufen!" },
-        "snook_908": { name: "Snook 908", size: "2x3 (6 Slots)", source: "Kauf bei Handshake (Lvl 2) ODER Elite Edition", info: "Käufer der 'Elite Edition' haben ihn von Beginn an. Alternativ ab Level 2 bei Handshake erhältlich." },
-        "tas": { name: "TAS Container", size: "3x3 (9 Slots)", source: "Kauf bei Handshake (Lvl 3) ODER Supporter Edition", info: "Der größte Container im Spiel. Supporter starten damit, alle anderen Spieler können ihn sich nun im Endgame freischalten!" },
-        "ammo_box": { name: "Ammo Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Gunny / Banshee)", info: "Kann aktuell nicht bei Händlern gekauft werden. Bietet riesigen Lagerraum nur für Munition." },
-        "weapon_box": { name: "Weapon Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Die rettende Kiste für alle Waffensammler." },
-        "med_box": { name: "Medical Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests (Lab Rat)", info: "Verdient man relativ früh durch Quests von Lab Rat." },
-        "armor_box": { name: "Armor / Gear Container", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Löst das Platzproblem für dicke Rüstungen." },
-        "food_box": { name: "Provisions Container (Cooler)", size: "Spart massiv Platz im Stash", source: "In-Game durch Quests", info: "Eine Kühlbox für all deine Rationen und Getränke." },
-        "key_holder": { name: "Key Holder", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Nimmt nur einen Slot weg, fasst unzählige Schlüssel." },
-        "wallet": { name: "Leather Wallet", size: "1 Slot (Im Rucksack/Secure Container)", source: "Supporter Edition ODER In-Game", info: "Achtung: Kann nur noch Bargeld und Kreditkarten fassen." },
-        "stash_upgrade": { name: "Locker / Schließfach Erweiterung", size: "Dynamisch (Bis zu +50 Reihen)", source: "Level-Ups & Spiel-Editionen", info: "Dein Haupt-Lager wächst komplett automatisch alle 10 Level." }
-    };
+// ==========================================
+// 8. STASH & CONTAINER DATENBANK (0.4 SPEARHEAD)
+// ==========================================
+const containers = {
+    // --- SECURE CONTAINERS (Gehen bei Tod nicht verloren) ---
+    "secure_2x2": { 
+        name: "Safe Lock Box (2x2)", 
+        size: "4 Slots intern", 
+        source: "Standard Edition / Artisan Level 1", 
+        info: "<b>Wofür:</b> Basis-Schutz für kleine Wertsachen und Schlüssel.<br><b>Kosten:</b> ~ $10.000<br><b>Kaufempfehlung:</b> Dein Standard-Container. Bietet Platz für 1 Wallet, 1 Key Holder und kleine Meds." 
+    },
+    "admin_pouch": { 
+        name: "Admin Pouch (2x3)", 
+        size: "6 Slots intern", 
+        source: "Tactical Edition / Artisan Level 2", 
+        info: "<b>Wofür:</b> Mittlerer Secure Container.<br><b>Kosten:</b> ~ $35.000<br><b>Kaufempfehlung:</b> Sehr wichtiges Upgrade für Standard-Edition-Spieler. Gibt dir den dringend benötigten Platz, um auch OP-Kits sicher mitzunehmen." 
+    },
+    "secure_3x3": { 
+        name: "Elite / Supporter Pouch (3x3)", 
+        size: "9 Slots intern", 
+        source: "Elite & Supporter Edition / Artisan Level 4", 
+        info: "<b>Wofür:</b> Maximaler Schutz für dicken Loot (GPUs, große Intel).<br><b>Kosten:</b> ~ $150.000<br><b>Kaufempfehlung:</b> Das absolute Endgame-Ziel für jeden Spieler ohne teure Spiel-Edition. Erspart extrem viel Frust bei schweren Fetch-Quests." 
+    },
+
+    // --- STASH CASES (Nur für das Basecamp-Schließfach) ---
+    "muxxum_rifle": { 
+        name: "Muxxum Rifle Case (Waffenkiste)", 
+        size: "Gigantisches Raster für Schusswaffen", 
+        source: "Gunny Level 4", 
+        info: "<b>Wofür:</b> Ausschließlich für komplette Schusswaffen.<br><b>Kosten:</b> ~ $105.000<br><b>Kaufempfehlung:</b> <b>Pflichtkauf im Endgame!</b> <i>Pro-Tipp:</i> Lange Waffen (M16/SVD mit 20\" Barrels) passen oft nicht aufrecht hinein. Nimm das Magazin und den Pistolengriff ab, damit die Waffe nur 1 Slot breit ist!" 
+    },
+    "parts_case": { 
+        name: "Parts Case (Zubehörkiste)", 
+        size: "Großes Raster für Waffen-Mods", 
+        source: "Gunny Level 3", 
+        info: "<b>Wofür:</b> Aufbewahrung von Visieren, Griffen, Schalldämpfern und Schäften.<br><b>Kosten:</b> ~ $60.000<br><b>Kaufempfehlung:</b> Sehr nützlich. Räumt den Stash sofort auf, wenn man viele gefundene Attachments hortet." 
+    },
+    "ammo_crate": { 
+        name: "Ammo Crate (Munitionskiste)", 
+        size: "Massiver Speicher für Munition", 
+        source: "Gunny Level 2", 
+        info: "<b>Wofür:</b> Für lose Patronen und Munitionsschachteln.<br><b>Kosten:</b> ~ $45.000<br><b>Kaufempfehlung:</b> Kauf direkt 2-3 Stück. Im Mid-Game sammeln sich tausende Schuss 5.56mm und 5.45mm an." 
+    },
+    "mag_crate": { 
+        name: "Magazine Crate (Magazinkiste)", 
+        size: "Raster speziell für Waffenmagazine", 
+        source: "Gunny Level 3", 
+        info: "<b>Wofür:</b> Lagerung von leeren oder geladenen Magazinen.<br><b>Kosten:</b> ~ $55.000<br><b>Kaufempfehlung:</b> Hilft enorm bei der Übersicht. Am besten nutzt man eine Box für NATO-Mags und eine für Ost-Block-Mags." 
+    },
+    "gear_case": { 
+        name: "Gear Case (Ausrüstungskiste)", 
+        size: "Sehr großes Raster für Westen/Rigs", 
+        source: "Artisan Level 3", 
+        info: "<b>Wofür:</b> Verstauen von Rüstungen (Plate Carriers), Rigs und Helmen.<br><b>Kosten:</b> ~ $85.000<br><b>Kaufempfehlung:</b> Sehr sinnvoll, da Armor (wie der RPC oder Helme) extrem viel der wertvollen normalen Locker-Slots frisst." 
+    },
+    "med_container": { 
+        name: "Medical Container (Medizinkiste)", 
+        size: "Großes Raster für Medizin", 
+        source: "Lab Rat Level 2", 
+        info: "<b>Wofür:</b> Bandagen, Blutbeutel, Tourniquets und OP-Kits.<br><b>Kosten:</b> ~ $40.000<br><b>Kaufempfehlung:</b> Lohnt sich extrem und ist relativ früh im Spiel verfügbar." 
+    },
+    "mortar_case": { 
+        name: "Mortar Round Case", 
+        size: "Nimmt viele Slots ein, gibt nur minimal mehr zurück", 
+        source: "Gunny Level 3", 
+        info: "<b>Wofür:</b> Lagerung von Mörsergranaten / Sprengmitteln.<br><b>Kosten:</b> ~ $75.000<br><b>Kaufempfehlung:</b> <b>NICHT KAUFEN!</b> Für den horrenden Preis von 75k sparst du am Ende effektiv nur lächerliche 5 Slots im Stash. In der Community als absolute Geldverschwendung verschrien." 
+    },
+
+    // --- MICRO-CONTAINER & POUCHES (Im Inventar tragbar) ---
+    "wallet": { 
+        name: "Wallet (Geldbörse)", 
+        size: "Nimmt 1 Slot ein, bietet 4 interne Slots", 
+        source: "Artisan Level 1", 
+        info: "<b>Wofür:</b> Bargeld, Kreditkarten, Pässe und USB-Sticks.<br><b>Kosten:</b> ~ $3.500<br><b>Kaufempfehlung:</b> <b>Gehört sofort in deine Secure Pouch!</b> Vervierfacht effektiv deinen Platz für Wertsachen." 
+    },
+    "key_holder": { 
+        name: "Key Holder (Schlüsselbund)", 
+        size: "Nimmt 1 Slot ein, fasst viele Schlüssel", 
+        source: "Artisan / Banshee Level 1", 
+        info: "<b>Wofür:</b> Ordnet alle Raumschlüssel und Zugangskarten.<br><b>Kosten:</b> ~ $5.000<br><b>Kaufempfehlung:</b> <b>Must-Have ab Tag 1.</b> Unbedingt in die Secure Pouch packen, damit du keine seltenen Schlüssel verlierst!" 
+    },
+    "mfak": { 
+        name: "M-FAK (Micro First Aid Kit)", 
+        size: "1x1 Slot", 
+        source: "Lab Rat Level 1", 
+        info: "<b>Wofür:</b> Kleine Medizintasche (z.B. für 1 Bandage, 1 Tourniquet).<br><b>Kosten:</b> ~ $2.500<br><b>Kaufempfehlung:</b> Günstig, hilft das Inventar am Anfang ordentlich zu halten." 
+    },
+    "qfak": { 
+        name: "QFAK (Quick First Aid Kit)", 
+        size: "1x2 Slots", 
+        source: "Lab Rat Level 2", 
+        info: "<b>Wofür:</b> Mittlere Med-Pouch (Perfekt für Splints und Blut).<br><b>Kosten:</b> ~ $5.000<br><b>Kaufempfehlung:</b> Sehr effizient. Lässt sich gut auf dem Tactical Belt ausrüsten." 
+    },
+    "qrkit": { 
+        name: "QRKit (Quick Response Kit)", 
+        size: "2x2 Slots", 
+        source: "Lab Rat Level 3", 
+        info: "<b>Wofür:</b> Große Sanitätertasche für Surgery-Kits und 1000ml Blutbeutel.<br><b>Kosten:</b> ~ $12.000<br><b>Kaufempfehlung:</b> Ideal für den Rucksack, wenn man im Squad die Rolle des Medics übernimmt." 
+    }
+};
     
 // 9. LZ DATENBANK
     const lzDb = {
