@@ -480,9 +480,10 @@ const gearDb = {
     "av_security": { name: "Security Weste (Security Vest)", class: "NIJ IIA", info: "<b>Warum sie nützlich ist:</b> Das absolute Minimum an Schutz. Blockt höchstens Querschläger oder extrem kleine Kaliber." },
 
     // --- BACKPACKS (Rucksäcke) ---
+    "bp_wanderer": { name: "Wanderer Rucksack (Civilian Trekstars 70L Backpack)", class: "42 Slots (6x7)", info: "<b>Warum er extrem beliebt ist:</b> Der absolute Favorit der Community für Loot-Touren!" },
     "bp_delta": { name: "Delta Rucksack (Delta Backpack)", class: "36 Slots (6x6)", info: "<b>Warum er der Beste ist:</b> Der absolut größte Rucksack im Spiel. Unverzichtbar für ausgedehnte Loot-Runs in den Endgame-Zonen (Tiger Bay), um massiv Beute mitzunehmen." },
-    "bp_wanderer": { name: "Wanderer Rucksack (Wanderer Backpack)", class: "30 Slots (5x6)", info: "<b>Warum er extrem beliebt ist:</b> Der absolute Favorit der Community für Loot-Touren! Bietet fast so viel Platz wie die Militär-Rucksäcke, hat aber einen zivilen Look, der dich im Dschungel deutlich weniger auffällig macht als die klobigen Armee-Packs." },
     "bp_rush72": { name: "Rush 72 2.0 (Rush 72 Backpack)", class: "30 Slots (5x6)", info: "<b>Warum er gut ist:</b> Hervorragender, robuster Militär-Rucksack für lange Tasks. Bietet Platz für 2-3 zerlegte Waffen." },
+    "bp_ratnik": { name: "6Sh118 Ratnik V2 (6Sh118 Ratnik V2)", class: "30 Slots (5x6)", info: "<b>Warum er gut ist:</b> kam Neu mit den Speahead Update. ähnlich wie der Rush Rucksack nur etwas schwerer." },
     "bp_falang": { name: "Falang 28 (Falang 28)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Ziviler Rucksack. Toller Kompromiss aus Stauraum und unauffälligem Profil." },
     "bp_rush24": { name: "Rush 24 (Rush 24 Backpack)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Die kompaktere Version des Rush 72. Perfekter Allrounder." },
     "bp_3day": { name: "3-Tages-Sturmrucksack (3-Day Assault Pack)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Der militärische Standard von Gunny. Sehr verlässliches Platzangebot." },
