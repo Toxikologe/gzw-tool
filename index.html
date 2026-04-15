@@ -440,29 +440,37 @@
                 <div>
                     <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
                     <select id="containerSelect" onchange="updateContainer()">
-                        <option value="">-- Wähle einen Container --</option>
-                        <optgroup label="Secure Containers (Überleben den Tod)">
-                            <option value="secure_2x2">Safe Lock Box (2x2)</option>
-                            <option value="admin_pouch">Admin Pouch (2x3)</option>
-                            <option value="secure_3x3">Elite / Supporter Pouch (3x3)</option>
-                        </optgroup>
-                        <optgroup label="Stash Cases (Lagerkisten)">
-                            <option value="muxxum_rifle">Muxxum Rifle Case</option>
-                            <option value="parts_case">Parts Case</option>
-                            <option value="ammo_crate">Ammo Crate</option>
-                            <option value="mag_crate">Magazine Crate</option>
-                            <option value="gear_case">Gear Case</option>
-                            <option value="med_container">Medical Container</option>
-                            <option value="mortar_case">Mortar Round Case</option>
-                        </optgroup>
-                        <optgroup label="Micro-Container & Pouches (Raid-Inventar)">
-                            <option value="wallet">Wallet (Geldbörse)</option>
-                            <option value="key_holder">Key Holder (Schlüsselbund)</option>
-                            <option value="mfak">M-FAK (Micro First Aid Kit)</option>
-                            <option value="qfak">QFAK (Quick First Aid Kit)</option>
-                            <option value="qrkit">QRKit (Quick Response Kit)</option>
-                        </optgroup>
-                    </select>
+    <option value="">-- Wähle einen Container --</option>
+    <optgroup label="Secure Containers (Überleben den Tod)">
+        <option value="secure_2x2">Safe Lock Box (2x2) (Safe Lock Box)</option>
+        <option value="admin_pouch">Admin Tasche (2x3) (Admin Pouch)</option>
+        <option value="secure_3x3">TAS Schließfach (3x3) (TAS Lockbox)</option>
+    </optgroup>
+    <optgroup label="Stash Cases (Lagerkisten)">
+        <option value="muxxum_rifle">Muxxum Waffenkoffer (Muxxum Rifle Case)</option>
+        <option value="parts_case">Zubehörkiste (Weapon Parts Case)</option>
+        <option value="ammo_crate">Munitionskiste (Ammo Crate)</option>
+        <option value="mag_crate">Magazinkiste (Magazine Crate)</option>
+        <option value="gear_trunk">Ausrüstungskiste (Gear Trunk)</option>
+        <option value="med_container">Medizinkiste (Medical Container)</option>
+        <option value="cooler_case">Kühlbox / Proviant (Cooler Case)</option>
+        <option value="huge_key_case">Großer Schlüsselkoffer (Huge Key Case)</option>
+        <option value="small_safe">Kleiner Tresor (Small Safe)</option>
+        <option value="large_safe">Großer Tresor (Large Safe)</option>
+        <option value="mortar_case">Mörser-Kiste (Mortar Round Case)</option>
+    </optgroup>
+    <optgroup label="Micro-Container & Pouches (Raid-Inventar)">
+        <option value="wallet">Geldbörse (Tactical Wallet)</option>
+        <option value="key_holder">Schlüsselbund (Key Holder)</option>
+        <option value="injector_case">Injektoren-Etui (Injector Case)</option>
+        <option value="mfak">M-FAK Medizintasche (Micro First Aid Kit)</option>
+        <option value="qfak">QFAK Medizintasche (Quick First Aid Kit)</option>
+        <option value="qrkit">QRKit Sanitätstasche (Quick Response Kit)</option>
+    </optgroup>
+    <optgroup label="Stash-Erweiterung (Locker)">
+        <option value="locker_upgrades">Locker-Erweiterungen (Locker Expansions)</option>
+    </optgroup>
+</select>
                     <div id="containerInfoDisplay" class="info-box" style="margin-top: 15px; background: #1a1a1a; padding: 15px; border-left: 4px solid var(--accent);">Wähle einen Container für Details zum Fundort...</div>
                 </div>
                 
