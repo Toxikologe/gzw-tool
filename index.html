@@ -275,9 +275,9 @@
         </a>
     </div>
 
-    <div class="sidebar-header" onclick="goToHome()" style="cursor: pointer;">
-    <h1 style="margin:0; font-size: 1.4rem;">GRAY ZONE <span style="color: var(--accent);">WARFARE</span></h1>
-    <div style="font-size: 0.7rem; letter-spacing: 2px; opacity: 0.7;">TACTICAL DATABASE & TOOL</div>
+    <div class="sidebar-header" onclick="goToHome()" style="cursor: pointer; text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px;">
+    <h2 style="color: var(--accent); border: none; margin: 0; padding: 0; font-size: 1.3rem;">GRAY ZONE WARFARE</h2>
+    <div style="color: #888; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;">Tactical Database & Tool</div>
 </div>
 
     <div class="sidebar-title">Allgemein</div>
@@ -2892,14 +2892,22 @@
         }
     }
 
-    // Navigiert zurück zur Startseite (Dashboard)
+    // Navigiert zur Startseite und aktualisiert den Sidebar-Status
 function goToHome() {
-    // Ruft deine bereits existierende Funktion auf, um die Sektion zu wechseln
-    showSection('dashboard');
+    // 1. Suche den Startseite-Button in der Sidebar
+    const homeBtn = document.querySelector('.sidebar-btn'); 
     
-    // Optional: Scrollt das Hauptfenster nach oben, falls man weit unten war
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) mainContent.scrollTop = 0;
+    // 2. Rufe die existierende openTab Funktion auf
+    // Wir übergeben 'tab-home' und den gefundenen Button für das Styling
+    if (homeBtn) {
+        openTab('tab-home', homeBtn);
+    } else {
+        // Fallback, falls der Button nicht gefunden wird
+        openTab('tab-home');
+    }
+
+    // 3. Scroll den Content-Bereich ganz nach oben
+    document.querySelector('.main-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
 }
 
     // ==============================================================
