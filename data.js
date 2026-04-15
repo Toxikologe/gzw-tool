@@ -1456,16 +1456,17 @@ const lootRoutesDb = [
         location: "Midnight Sapphire (Hotel & Villen)",
         danger: "Hoch (High)",
         time: "~ 20-25 Minuten",
-        requirements: "Taschen für Wertsachen (Wallet), Hotel- & Villen-Schlüssel (Hotel/Villa Keys).",
-        target: "Bargeld (Cash), Elektronik (Electronics), M700 & SIG MCX Blueprint.",
+        requirements: "Wallet, Hotel/Villa Keys.",
+        target: "Bargeld, Elektronik, M700 & SIG MCX Blueprint.",
+        video: "https://www.youtube.com/watch?v=xoHA6eLkHSc",
         steps: [
-            "<b>1. Landung:</b> Nutze Landezone (LZ) Hotel 1 oder 2.",
-            "<b>2. Die Villen (Villas):</b> Klappere die äußeren Villen ab. Durchsuche die Schlafzimmer nach Tresoren (Safes) und PCs nach Elektronik (GPUs, USB-Drives).",
-            "<b>3. Erdgeschoss Hotel:</b> Dringe in das Hauptgebäude ein. Gehe auf die hintere rechte Seite, um dir den <b>SIG MCX Blueprint</b> zu sichern.",
-            "<b>4. Hotelzimmer (Hotel Rooms):</b> Nutze deine Schlüssel für die abgesperrten Zimmer. Hier spawnen oft hochwertige Waffen-Aufsätze (Attachments) und Wertsachen.",
-            "<b>5. Das Dach (The Roof):</b> Kämpfe dich über das Treppenhaus auf das Dach. Am entfernten Ende findest du den <b>M700 Sniper Blueprint</b> und oft den wertvollsten Loot im Spiel (LTSD Laser Designator)."
+            "<b>1. Landung:</b> LZ Hotel 1 oder 2.",
+            "<b>2. Villen:</b> Tresore in Schlafzimmern und PCs in Büros looten.",
+            "<b>3. Hotel EG:</b> Rechts hinten den <b>SIG MCX Blueprint</b> sichern.",
+            "<b>4. Hotelzimmer:</b> Attachments und Wertsachen hinter verschlossenen Türen.",
+            "<b>5. Dach:</b> Am Ende den <b>M700 Blueprint</b> und LTSD Laser finden."
         ],
-        tip: "Verkaufe Schmuck und Gold immer an <b>Turncoat</b> und Elektronik an <b>Lab Rat</b>, um den 125% Preis-Bonus zu kassieren!"
+        tip: "Verkaufe Schmuck an Turncoat (125%) und Elektronik an Lab Rat (125%)."
     },
     {
         id: "route_narith",
@@ -1473,33 +1474,35 @@ const lootRoutesDb = [
         location: "Fort Narith (HQ & Baracken)",
         danger: "Extrem (Extreme)",
         time: "~ 30-35 Minuten",
-        requirements: "Großer Rucksack (Delta Backpack), Rüstung (NIJ III+).",
-        target: "Rüstung (Armor), AP-Munition (AP Ammo), DDM4 & AK-308 Blueprint.",
+        requirements: "Delta Backpack, Rüstung NIJ III+.",
+        target: "Rüstung, AP-Munition, DDM4 & AK-308 Blueprint.",
+        video: "https://www.youtube.com/watch?v=AIDko0yBmos",
         steps: [
-            "<b>1. Landung:</b> Nutze LZ Delta 1 oder 2. ⚠️ Vorsicht: Achte auf die neuen Artillerie/Mörser-Einschläge (Mortar Strikes) in 0.4!",
-            "<b>2. Schrottplatz (Dumping Ground):</b> Lauf nördlich zum Schrottplatz. Wenn du den dynamischen Code aus Nakasa Village hast, öffne hier die Militärkiste für ersten High-Tier Loot.",
-            "<b>3. Baracken (Barracks):</b> Säubere die Baracken. Auf einem Tisch im 2. Stock liegt der <b>DDM4 Blueprint</b>. Gehe in den Serverraum A204 und merke dir den Code auf dem Zettel (meist 9198).",
-            "<b>4. Gefängnis (Jail):</b> Gehe zum Gefängnis-Bereich. Säubere die Gänge und suche nach dem <b>AK-308 Blueprint</b>. Extrahiere diesen sofort und bring ihn zu Vulture!",
-            "<b>5. Flugkontrollturm (Air Control Tower):</b> Nutze den Code am Tower, um die Waffen-Racks zu plündern."
+            "<b>1. Landung:</b> LZ Delta 1/2. Achtung vor Mörserbeschuss!",
+            "<b>2. Schrottplatz:</b> Militärkiste looten (Nakasa-Code nötig).",
+            "<b>3. Baracken:</b> 2. Stock <b>DDM4 Blueprint</b>, Raum A204 Code holen.",
+            "<b>4. Gefängnis:</b> In den Zellen-Gängen nach dem <b>AK-308 Blueprint</b> suchen.",
+            "<b>5. Tower:</b> Code nutzen und Waffen-Racks am Airfield plündern."
         ],
-        tip: "Zerlege gefundene Waffen! Nimm nur die teuren Attachments (Visiere, Schalldämpfer) mit, um massiv Platz im Rucksack zu sparen."
+        tip: "Nimm nur die teuren Attachments mit, um Platz für Rüstungen zu sparen."
     },
     {
         id: "route_tigerbay",
         name: "Das Urbane Chaos (The Urban Jungle)",
         location: "Tiger Bay (UNLRA & Mall)",
-        danger: "Absolutes Maximum (Insane)",
+        danger: "Maximum (Insane)",
         time: "~ 40-50 Minuten",
-        requirements: "Squad (Team) extrem empfohlen, extrem viel Munition, große Med-Kits.",
-        target: "High-Tier Meds, SVD Dragunov Blueprint, UNLRA Intel.",
+        requirements: "Squad empfohlen, viel Munition, große Med-Kits.",
+        target: "SVD Dragunov Blueprint, High-Tier Meds, UNLRA Intel.",
+        video: "https://www.youtube.com/watch?v=6TaADu5-Fl4",
         steps: [
-            "<b>1. Landung:</b> Lande bei India 2 und laufe nach Süden in die Stadt, oder nutze Lima LZs, falls verfügbar.",
-            "<b>2. UNLRA Refugee Camp:</b> Kämpfe dich durch die Straßen zum Flüchtlingslager. Die KI hat hier gnadenloses Aiming, bleib in Deckung! Plündere die Sanitätszelte für OP-Kits (Surgery Kits) und Stims.",
-            "<b>3. UNLRA HQ:</b> Suche auf den Tischen nach dem dynamischen Keypad-Code für das HQ und sichere die Quest-Intel (blauer Ordner auf dem Klapptisch).",
-            "<b>4. Schrottplatz-Schleichweg:</b> Vermeide die Hauptstraßen! Nutze den Spalt im Zaun beim Schrottplatz (Wrecking Yard), um ungesehen an die Rückseite der Mall zu gelangen.",
-            "<b>5. Tiger Bay Mall:</b> Kämpfe dich von Laden zu Laden bis zum Buchgeschäft (Bookstore) vor. Im Hinterzimmer findest du den <b>SVD Dragunov Blueprint</b>. Sofort extrahieren!"
+            "<b>1. Landung:</b> India 2 oder Lima LZs.",
+            "<b>2. UNLRA Camp:</b> Sanitätszelte für OP-Kits und Stims plündern.",
+            "<b>3. UNLRA HQ:</b> Dynamischen Code suchen und blaue Quest-Ordner sichern.",
+            "<b>4. Schleichweg:</b> Durch den Zaun beim Schrottplatz zur Mall-Rückseite.",
+            "<b>5. Mall:</b> Im Hinterzimmer des Bookstores den <b>SVD Blueprint</b> holen."
         ],
-        tip: "Wenn du den Schlüssel für das Bookstore-Hinterzimmer nicht hast, farme die KI-Gegner rund um die Mall. Sie lassen den 'TB-Mall-Key' sehr oft fallen."
+        tip: "Farme KI rund um die Mall für den 'TB-Mall-Key', falls er dir fehlt."
     },
     {
         id: "route_hunters",
@@ -1507,33 +1510,35 @@ const lootRoutesDb = [
         location: "Hunter's Paradise",
         danger: "Mittel (Medium)",
         time: "~ 15 Minuten",
-        requirements: "Keine speziellen Anforderungen. Ideal für Solo-Spieler.",
-        target: "Waffenteile (Weapon Parts), M14 EBR Blueprint, Basis-Medizin.",
+        requirements: "Ideal für Solo-Spieler.",
+        target: "Weapon Parts, M14 EBR Blueprint, Mods.",
+        video: "https://www.youtube.com/watch?v=am99ZXCWC10",
         steps: [
-            "<b>1. Landung:</b> Nutze LZ Foxtrot 1 oder 2.",
-            "<b>2. Schießstand (Firing Range):</b> Plündere die Tische und Bänke am Schießstand. Hier spawnen massenhaft Munitionsschachteln und Waffen-Mods (Weapon Mods).",
-            "<b>3. Alter Bunker (Old Bunker):</b> Gehe zum Büro hinter der Waffenkammer. Suche an der Wand (neben der gefesselten Leiche) nach einer gelben Haftnotiz. Nutze diesen dynamischen Code, um das Vorhängeschloss des Bunkers zu öffnen.",
-            "<b>4. Waffenkammer (Armory):</b> Im Raum direkt neben der verschlossenen Haupt-Waffenkammer findest du den neuen <b>M14 EBR Blueprint</b>.",
-            "<b>5. Boss-Check:</b> Prüfe, ob der Boss (Hostile Commander) spawnt. Er droppt oft gute Mid-Game Rüstung und Schlüssel."
+            "<b>1. Landung:</b> LZ Foxtrot 1 oder 2.",
+            "<b>2. Schießstand:</b> Munition und Weapon Mods auf Tischen/Bänken.",
+            "<b>3. Bunker:</b> Gelbe Notiz im Büro lesen und Bunker-Schloss öffnen.",
+            "<b>4. Waffenkammer:</b> Im Nebenraum den <b>M14 EBR Blueprint</b> einsammeln.",
+            "<b>5. Boss:</b> Hostile Commander für Rüstung und Keys ausschalten."
         ],
-        tip: "Diese Route eignet sich perfekt, um die wiederholbaren 'Maintenance Contracts' von Artisan abzuschließen (Defekte Waffenteile sammeln)."
+        tip: "Perfekt für Artisan-Dailies (Defekte Waffenteile sammeln)."
     },
     {
         id: "route_banpa",
         name: "Die Ban Pa Schatzsuche (The Ban Pa Treasure Hunt)",
-        location: "Ban Pa (Fischerdorf / Fishing Village)",
+        location: "Ban Pa (Fischerdorf)",
         danger: "Mittel (Medium)",
         time: "~ 20 Minuten",
-        requirements: "Keine. Super für Solo-Spieler.",
-        target: "Holzstatuen (Wood Statues), Lithiumfett (Lithium Grease), Schmuck.",
+        requirements: "Keine speziellen Anforderungen.",
+        target: "Holzstatuen, Lithiumfett, Schmuck.",
+        video: "https://www.youtube.com/watch?v=9TJg6uGjifA",
         steps: [
-            "<b>1. Landung:</b> Nutze LZ India 1 oder 2.",
-            "<b>2. Pfahlbauten (Stilt Houses):</b> Durchsuche die Häuser am Wasser. Hier findest du oft die Haftnotizen mit dem dynamischen Code für das Ban Pa Depot sowie rote Werkzeugkästen mit Lithiumfett (Quest-Item!).",
-            "<b>3. Ältestenhaus (Elder's House):</b> Gehe zum Haus des Ältesten. <b>Glitch-Tipp:</b> Wenn dir der Schlüssel fehlt, klettere über das Geländer der Außentreppe auf das Vordach, um über den Balkon in den verschlossenen Raum zu gelangen!",
-            "<b>4. Versteckter Loot:</b> Im verschlossenen Raum findest du Schmuck und Quest-Bücher. Vergiss nicht die versteckte Munitionskiste unter dem kleinen Tisch!",
-            "<b>5. Naga Boss:</b> Töte den Boss 'Naga' und hole seinen Aktenkoffer oben beim Radioturm (Koordinaten 192, 137)."
+            "<b>1. Landung:</b> LZ India 1 oder 2.",
+            "<b>2. Pfahlbauten:</b> Depot-Codes auf Zetteln suchen, Lithiumfett looten.",
+            "<b>3. Ältestenhaus:</b> Via Außengeländer/Balkon ohne Key eindringen.",
+            "<b>4. Versteck:</b> Munitionskiste unter dem Tisch im Geheimraum plündern.",
+            "<b>5. Naga Boss:</b> Aktenkoffer beim Radioturm (192, 137) sichern."
         ],
-        tip: "Ban Pa ist der beste Ort im Spiel, um die 3 Holzstatuen für Turncoats 'Hazardous Treasures' Quest zu farmen!"
+        tip: "Bester Ort für die 3 Holzstatuen der 'Hazardous Treasures' Quest."
     }
 ];
 
