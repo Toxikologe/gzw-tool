@@ -292,6 +292,7 @@
     <button class="sidebar-btn" onclick="openTab('tab-lz', this)">🚁 Landezonen</button>
     <button class="sidebar-btn" onclick="openTab('tab-bosses', this)">💀 Boss Datenbank</button>
     <button class="sidebar-btn" onclick="openTab('tab-keys', this)">🔑 Schlüsselbund</button>
+    <button class="sidebar-btn" onclick="openTab('tab-codes', this)">🔢 Codes & Passwörter</button>
 
     <div class="sidebar-title">Wirtschaft</div>
     <button class="sidebar-btn" onclick="openTab('tab-loot', this)">💰 Loot</button>
@@ -966,6 +967,26 @@
                     <h3 style="margin-bottom: 15px;">🗝️ Mein Schlüsselbund (<span id="keyRingCount">0</span>)</h3>
                     <div id="keyRingDisplay" style="color: #ccc; font-size: 0.95rem; line-height: 2;">Noch keine Schlüssel markiert.</div>
                     <button onclick="clearKeyRing()" style="margin-top: 20px; background: #b33939; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s;" onmouseover="this.style.background='#e05c2a'" onmouseout="this.style.background='#b33939'">🗑️ Schlüsselbund leeren</button>
+                </div>
+            </div>
+
+        <div id="tab-codes" class="tab-content">
+            <h2>🔢 Codes & Passwörter (Locks & Keypads)</h2>
+            <div class="panel-box">
+                <p style="color: #ccc; font-size: 0.95rem; margin-top: 0; margin-bottom: 20px;">
+                    Hier findest du alle bekannten Codes für Vorhängeschlösser, Keypads und Tresore. Wähle ein Schloss aus der Liste oder suche manuell nach dem Ort.
+                </p>
+                <label for="codeDropdown" style="margin-top: 0;">Schloss / Tür aus Liste wählen:</label>
+                <select id="codeDropdown" onchange="selectCodeFromDropdown()" style="margin-bottom: 15px;">
+                    <option value="">-- Wähle ein Schloss / Code --</option>
+                </select>
+                <label for="codeSearch" style="margin-top: 0;">Oder manuell suchen:</label>
+                <input type="text" id="codeSearch" placeholder="z.B. Ban Suk, Farm, Nakasa, Tresor..." onkeyup="searchCodes()">
+                
+                <div id="codeList" style="margin-top: 20px;">
+                    <div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">
+                        Wähle ein Schloss oder tippe den Ort ein...
+                    </div>
                 </div>
             </div>
         </div>
@@ -1814,6 +1835,79 @@
     }
 
     // ==============================================================
+    // CODES & PASSWÖRTER LOGIK
+    // ==============================================================
+    function buildCodeDropdown() {
+        const dropdown = document.getElementById('codeDropdown');
+        if (!dropdown || typeof codesDb === 'undefined') return;
+        dropdown.innerHTML = '<option value="">-- Wähle ein Schloss / Code --</option>'; 
+        
+        const sortedCodes = [...codesDb].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+        sortedCodes.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.name;
+            opt.text = item.name;
+            dropdown.appendChild(opt);
+        });
+    }
+
+    function selectCodeFromDropdown() {
+        const dropdownValue = document.getElementById('codeDropdown').value;
+        const searchInput = document.getElementById('codeSearch');
+        if (dropdownValue) {
+            searchInput.value = dropdownValue; 
+            searchCodes(); 
+        } else {
+            searchInput.value = "";
+            document.getElementById('codeList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Wähle ein Schloss oder tippe den Ort ein...</div>';
+        }
+    }
+
+    function searchCodes() {
+        if (typeof codesDb === 'undefined') return;
+        const input = document.getElementById('codeSearch').value.toLowerCase();
+        const list = document.getElementById('codeList');
+        list.innerHTML = '';
+        
+        if (input.length < 2) {
+            list.innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Tippe mindestens 2 Buchstaben ein...</div>';
+            return;
+        }
+
+        const filtered = codesDb.filter(i => 
+            i.name.toLowerCase().includes(input) || 
+            i.loc.toLowerCase().includes(input)
+        );
+
+        if (filtered.length > 0) {
+            filtered.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'panel-box';
+                box.style.marginBottom = '10px';
+                box.style.borderTopColor = 'var(--accent)'; 
+                box.innerHTML = `
+                    <h3 style="color: var(--accent); margin-top: 0; font-size: 1.4rem; letter-spacing: 2px;">🔢 ${item.code}</h3>
+                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; color: #fff;">${item.name}</div>
+                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
+                        <strong>📍 Ort:</strong> <span style="color: #fff;">${item.loc}</span><br>
+                        <strong>📖 Info:</strong> ${item.info}
+                    </div>
+                `;
+                list.appendChild(box);
+            });
+        } else {
+            list.innerHTML = `
+                <div class="panel-box" style="border-top: 4px solid #b33939;">
+                    <h3 style="color: #b33939; margin-top: 0; font-size: 1.2rem;">❌ NICHT GEFUNDEN</h3>
+                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
+                        Es gibt keinen bekannten Code für <strong>"${document.getElementById('codeSearch').value}"</strong>. Manche Türen in GZW sind rein kosmetisch oder öffnen sich nur durch physische Schlüssel.
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // ==============================================================
     // HELICOPTER ETA CALCULATOR & TIMER
     // ==============================================================
     let heliTimerInterval = null;
@@ -2518,6 +2612,7 @@
         initNotepad();
         buildKeyDropdown();
         renderKeyRing();
+        buildCodeDropdown();
         buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
