@@ -2603,6 +2603,46 @@
     }
 
     // ==============================================================
+    // AMMO MATRIX RENDER LOGIK
+    // ==============================================================
+    function buildAmmoMatrix() {
+        const tbody = document.getElementById('ammoMatrixBody');
+        // Prüfen, ob Tabelle und Daten aus der data.js vorhanden sind
+        if (!tbody || typeof ammoMatrixData === 'undefined' || typeof armorClasses === 'undefined') return;
+        
+        tbody.innerHTML = '';
+        let lastCal = '';
+
+        ammoMatrixData.forEach(ammo => {
+            const row = document.createElement('tr');
+            
+            // Trennzeile für neue Kaliber einfügen
+            if (ammo.cal !== lastCal) {
+                const sepRow = document.createElement('tr');
+                sepRow.innerHTML = `<td colspan="6" style="background:#1a1a2e; color:var(--accent); font-weight:bold; font-size:0.85rem; padding:8px 12px; border:1px solid #333; letter-spacing:1px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">⚡ Kaliber: ${ammo.cal}</td>`;
+                tbody.appendChild(sepRow);
+                lastCal = ammo.cal;
+            }
+
+            // Zelle für den Namen der Munition
+            let nameCell = `<td style="background:#1e1e1e; color:#ddd; padding:10px 12px; border:1px solid #2a2a2a; font-weight:bold; position:sticky; left:0; z-index:1; white-space:nowrap; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
+                ${ammo.name}
+                <small style="color:#777; font-weight:normal; display:block; margin-top:3px;">Penetration: ${ammo.pen} | Schaden: ${ammo.dmg}</small>
+            </td>`;
+
+            row.innerHTML = nameCell;
+
+            // Die Zellen für jede Rüstungsklasse berechnen und einfügen
+            armorClasses.forEach(ac => {
+                const cell = getAmmoCell(ammo.pen, ac.threshold);
+                row.innerHTML += `<td title="${cell.title}" style="background:${cell.bg}; color:${cell.color}; text-align:center; padding:10px 4px; border:1px solid #2a2a2a; font-size:1.1rem; cursor:help; transition: 0.2s;" onmouseover="this.style.filter='brightness(1.5)'" onmouseout="this.style.filter='brightness(1)'">${cell.text}</td>`;
+            });
+
+            tbody.appendChild(row);
+        });
+    }
+
+    // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
