@@ -275,10 +275,10 @@
         </a>
     </div>
 
-    <div style="text-align: center; margin-bottom: 20px; border-top: 1px solid #333; padding-top: 15px;">
-        <h2 style="color: var(--accent); border: none; margin: 0; padding: 0;">Gray Zone Warfare</h2>
-        <div style="color: #888; font-size: 0.75rem; letter-spacing: 2px;">TOOL</div>
-    </div>
+    <div class="sidebar-header" onclick="goToHome()" style="cursor: pointer;">
+    <h1 style="margin:0; font-size: 1.4rem;">GRAY ZONE <span style="color: var(--accent);">WARFARE</span></h1>
+    <div style="font-size: 0.7rem; letter-spacing: 2px; opacity: 0.7;">TACTICAL DATABASE & TOOL</div>
+</div>
 
     <div class="sidebar-title">Allgemein</div>
     <button class="sidebar-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
@@ -2891,6 +2891,16 @@
             btn.style.backgroundColor = 'var(--accent)'; // Wieder grün
         }
     }
+
+    // Navigiert zurück zur Startseite (Dashboard)
+function goToHome() {
+    // Ruft deine bereits existierende Funktion auf, um die Sektion zu wechseln
+    showSection('dashboard');
+    
+    // Optional: Scrollt das Hauptfenster nach oben, falls man weit unten war
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) mainContent.scrollTop = 0;
+}
 
     // ==============================================================
     // STARTUP & INITIALISIERUNG
