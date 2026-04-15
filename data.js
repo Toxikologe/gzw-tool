@@ -762,180 +762,182 @@ const ammoMatrixData = [
     { name: "12G 7mm Buckshot Schrot (7mm Buck)", cal: "12 Gauge", pen: 0.2, dmg: 320 }
 ];
     
-// 6. KEYS DATENBANK
-    const allKeys = [
-        // ==========================================
-        // --- NAM THAVEN (Mithras Startstadt) ---
-        // ==========================================
-        { name: "Nam Thaven Doctor's Office Key", de: "Arztpraxis-Schlüssel (NT DOC)", loc: "Nam Thaven", effect: "Öffnet das Büro des Arztes.", loot: "Medizinische Vorräte, Task-Intel" },
-        { name: "Nam Thaven Restaurant Storage Key", de: "Restaurant-Lager (NT)", loc: "Nam Thaven", effect: "Öffnet das Lager des Restaurants.", loot: "Provisions, Task-Items" },
-        { name: "Nam Thaven Marketplace Office Key", de: "Markt-Büro (NT)", loc: "Nam Thaven", effect: "Öffnet das Marktbüro.", loot: "Bargeld, Intel" },
-        { name: "Nam Thaven Marketplace Broom Closet Key", de: "Markt-Besenkammer (NT)", loc: "Nam Thaven", effect: "Öffnet die Besenkammer am Markt.", loot: "Werkzeuge, Schrott" },
-        { name: "Nam Thaven Marketplace Storeroom Key", de: "Markt-Lagerraum (NT)", loc: "Nam Thaven", effect: "Öffnet den Lagerraum des Marktes.", loot: "Materialien, Rucksäcke" },
-        { name: "Nam Thaven Motel Room Key", de: "Motelzimmer (NT)", loc: "Nam Thaven", effect: "Öffnet ein Motelzimmer am Stadtrand.", loot: "Kleidung, Wertsachen" },
-        { name: "Nam Thaven UNLRA Office Key", de: "UNLRA-Büro (NT)", loc: "Nam Thaven", effect: "Öffnet das lokale UNLRA Büro.", loot: "Medizin, Dokumente" },
-        { name: "Nam Thaven Lumberyard Maintenance Room Key", de: "Sägewerk Wartungsraum (NT)", loc: "Nam Thaven", effect: "Öffnet den städtischen Wartungsraum.", loot: "Werkzeuge" },
-        { name: "Nam Thaven Town Hall Finance Department Key Card", de: "Rathaus Finanzabteilung (NT)", loc: "Nam Thaven", effect: "Keycard für das Rathaus.", loot: "Bargeld, Tresor" },
+// ==========================================
+// 16. SCHLÜSSEL & RÄUME (0.4 SPEARHEAD - 100% COMPLETE)
+// ==========================================
+const allKeys = [
+    // ==========================================
+    // --- NAM THAVEN (Mithras Startstadt) ---
+    // ==========================================
+    { group: "🔰 Startregionen (Mithras)", name: "Arztpraxis-Schlüssel (Nam Thaven Doctor's Office Key)", loc: "Nam Thaven", effect: "Öffnet das Büro des Arztes.", loot: "Medizinische Vorräte, Task-Intel" },
+    { group: "🔰 Startregionen (Mithras)", name: "Restaurant-Lager (Nam Thaven Restaurant Storage Key)", loc: "Nam Thaven", effect: "Öffnet das Lager des Restaurants.", loot: "Provisions, Task-Items" },
+    { group: "🔰 Startregionen (Mithras)", name: "Markt-Büro (Nam Thaven Marketplace Office Key)", loc: "Nam Thaven", effect: "Öffnet das Marktbüro.", loot: "Bargeld, Intel" },
+    { group: "🔰 Startregionen (Mithras)", name: "Markt-Besenkammer (Nam Thaven Marketplace Broom Closet Key)", loc: "Nam Thaven", effect: "Öffnet die Besenkammer am Markt.", loot: "Werkzeuge, Schrott" },
+    { group: "🔰 Startregionen (Mithras)", name: "Markt-Lagerraum (Nam Thaven Marketplace Storeroom Key)", loc: "Nam Thaven", effect: "Öffnet den Lagerraum des Marktes.", loot: "Materialien, Rucksäcke" },
+    { group: "🔰 Startregionen (Mithras)", name: "Motelzimmer (Nam Thaven Motel Room Key)", loc: "Nam Thaven", effect: "Öffnet ein Motelzimmer am Stadtrand.", loot: "Kleidung, Wertsachen" },
+    { group: "🔰 Startregionen (Mithras)", name: "UNLRA-Büro (Nam Thaven UNLRA Office Key)", loc: "Nam Thaven", effect: "Öffnet das lokale UNLRA Büro.", loot: "Medizin, Dokumente" },
+    { group: "🔰 Startregionen (Mithras)", name: "Sägewerk Wartungsraum (Nam Thaven Lumberyard Maintenance Key)", loc: "Nam Thaven", effect: "Öffnet den städtischen Wartungsraum.", loot: "Werkzeuge" },
+    { group: "🔰 Startregionen (Mithras)", name: "Rathaus Finanzabteilung (Nam Thaven Town Hall Finance Key)", loc: "Nam Thaven", effect: "Keycard für das Rathaus.", loot: "Bargeld, Tresor" },
 
-        // ==========================================
-        // --- KIU VONGSA (Crimson Startstadt) ---
-        // ==========================================
-        { name: "Kiu Vongsa Doctor's Office Key", de: "Arztpraxis-Schlüssel (KV DOC)", loc: "Kiu Vongsa", effect: "Öffnet das Büro des Arztes.", loot: "Medizinische Vorräte, Task-Intel" },
-        { name: "Kiu Vongsa Restaurant Storage Key", de: "Restaurant-Lager (KV)", loc: "Kiu Vongsa", effect: "Öffnet das Lager des Restaurants.", loot: "Provisions, Task-Items" },
-        { name: "Kiu Vongsa Marketplace Office Key", de: "Markt-Büro (KV)", loc: "Kiu Vongsa", effect: "Öffnet das Marktbüro.", loot: "Bargeld, Intel" },
-        { name: "Kiu Vongsa Marketplace Broom Closet Key", de: "Markt-Besenkammer (KV)", loc: "Kiu Vongsa", effect: "Öffnet die Besenkammer am Markt.", loot: "Werkzeuge, Schrott" },
-        { name: "Kiu Vongsa Marketplace Storeroom Key", de: "Markt-Lagerraum (KV)", loc: "Kiu Vongsa", effect: "Öffnet den Lagerraum des Marktes.", loot: "Materialien, Rucksäcke" },
-        { name: "Kiu Vongsa Motel Room Key", de: "Motelzimmer (KV)", loc: "Kiu Vongsa", effect: "Öffnet ein Motelzimmer.", loot: "Kleidung, Wertsachen" },
-        { name: "Kiu Vongsa UNLRA Office Key", de: "UNLRA-Büro (KV)", loc: "Kiu Vongsa", effect: "Öffnet das lokale UNLRA Büro.", loot: "Medizin, Dokumente" },
-        { name: "Kiu Vongsa Lumberyard Maintenance Room Key", de: "Sägewerk Wartungsraum (KV)", loc: "Kiu Vongsa", effect: "Öffnet den städtischen Wartungsraum.", loot: "Werkzeuge" },
-        { name: "Kiu Vongsa Mayor's Mansion Room Key", de: "Bürgermeister-Villa Zimmer (KV)", loc: "Kiu Vongsa", effect: "Öffnet ein Zimmer in der Bürgermeister-Villa.", loot: "Wertsachen, Safe" },
-        { name: "Kiu Vongsa Town Hall Finance Department Key Card", de: "Rathaus Finanzabteilung (KV)", loc: "Kiu Vongsa", effect: "Keycard für das Rathaus.", loot: "Bargeld, Tresor" },
+    // ==========================================
+    // --- KIU VONGSA (Crimson Startstadt) ---
+    // ==========================================
+    { group: "🔰 Startregionen (Crimson)", name: "Arztpraxis-Schlüssel (Kiu Vongsa Doctor's Office Key)", loc: "Kiu Vongsa", effect: "Öffnet das Büro des Arztes.", loot: "Medizinische Vorräte, Task-Intel" },
+    { group: "🔰 Startregionen (Crimson)", name: "Restaurant-Lager (Kiu Vongsa Restaurant Storage Key)", loc: "Kiu Vongsa", effect: "Öffnet das Lager des Restaurants.", loot: "Provisions, Task-Items" },
+    { group: "🔰 Startregionen (Crimson)", name: "Markt-Büro (Kiu Vongsa Marketplace Office Key)", loc: "Kiu Vongsa", effect: "Öffnet das Marktbüro.", loot: "Bargeld, Intel" },
+    { group: "🔰 Startregionen (Crimson)", name: "Markt-Besenkammer (Kiu Vongsa Marketplace Broom Closet Key)", loc: "Kiu Vongsa", effect: "Öffnet die Besenkammer am Markt.", loot: "Werkzeuge, Schrott" },
+    { group: "🔰 Startregionen (Crimson)", name: "Markt-Lagerraum (Kiu Vongsa Marketplace Storeroom Key)", loc: "Kiu Vongsa", effect: "Öffnet den Lagerraum des Marktes.", loot: "Materialien, Rucksäcke" },
+    { group: "🔰 Startregionen (Crimson)", name: "Motelzimmer (Kiu Vongsa Motel Room Key)", loc: "Kiu Vongsa", effect: "Öffnet ein Motelzimmer.", loot: "Kleidung, Wertsachen" },
+    { group: "🔰 Startregionen (Crimson)", name: "UNLRA-Büro (Kiu Vongsa UNLRA Office Key)", loc: "Kiu Vongsa", effect: "Öffnet das lokale UNLRA Büro.", loot: "Medizin, Dokumente" },
+    { group: "🔰 Startregionen (Crimson)", name: "Sägewerk Wartungsraum (Kiu Vongsa Lumberyard Maintenance Key)", loc: "Kiu Vongsa", effect: "Öffnet den städtischen Wartungsraum.", loot: "Werkzeuge" },
+    { group: "🔰 Startregionen (Crimson)", name: "Bürgermeister-Villa Zimmer (Kiu Vongsa Mayor's Mansion Key)", loc: "Kiu Vongsa", effect: "Öffnet ein Zimmer in der Bürgermeister-Villa.", loot: "Wertsachen, Safe" },
+    { group: "🔰 Startregionen (Crimson)", name: "Rathaus Finanzabteilung (Kiu Vongsa Town Hall Finance Key)", loc: "Kiu Vongsa", effect: "Keycard für das Rathaus.", loot: "Bargeld, Tresor" },
 
-        // ==========================================
-        // --- PHA LANG (Lamang Startstadt) ---
-        // ==========================================
-        { name: "Pha Lang Doctor's Office Key", de: "Arztpraxis-Schlüssel (PL DOC)", loc: "Pha Lang", effect: "Öffnet das Büro des Arztes.", loot: "Medizinische Vorräte, Task-Intel" },
-        { name: "Pha Lang Restaurant Storage Key", de: "Restaurant-Lager (PL)", loc: "Pha Lang", effect: "Öffnet das Lager des Restaurants.", loot: "Provisions, Task-Items" },
-        { name: "Pha Lang Marketplace Office Key", de: "Markt-Büro (PL)", loc: "Pha Lang", effect: "Öffnet das Marktbüro.", loot: "Bargeld, Intel" },
-        { name: "Pha Lang Marketplace Broom Closet Key", de: "Markt-Besenkammer (PL)", loc: "Pha Lang", effect: "Öffnet die Besenkammer am Markt.", loot: "Werkzeuge, Schrott" },
-        { name: "Pha Lang Marketplace Storeroom Key", de: "Markt-Lagerraum (PL)", loc: "Pha Lang", effect: "Öffnet den Lagerraum des Marktes.", loot: "Materialien, Rucksäcke" },
-        { name: "Pha Lang Motel Room Key", de: "Motelzimmer (PL)", loc: "Pha Lang", effect: "Öffnet ein Motelzimmer.", loot: "Kleidung, Wertsachen" },
-        { name: "Pha Lang UNLRA Office Key", de: "UNLRA-Büro (PL)", loc: "Pha Lang", effect: "Öffnet das lokale UNLRA Büro.", loot: "Medizin, Dokumente" },
-        { name: "Pha Lang Lumberyard Maintenance Room Key", de: "Sägewerk Wartungsraum (PL)", loc: "Pha Lang", effect: "Öffnet den städtischen Wartungsraum.", loot: "Werkzeuge" },
-        { name: "Pha Lang Town Hall Finance Department Key Card", de: "Rathaus Finanzabteilung (PL)", loc: "Pha Lang", effect: "Keycard für das Rathaus.", loot: "Bargeld, Tresor" },
+    // ==========================================
+    // --- PHA LANG (Lamang LRI Startstadt) ---
+    // ==========================================
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Arztpraxis-Schlüssel (Pha Lang Doctor's Office Key)", loc: "Pha Lang", effect: "Öffnet das Büro des Arztes.", loot: "Medizinische Vorräte, Task-Intel" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Restaurant-Lager (Pha Lang Restaurant Storage Key)", loc: "Pha Lang", effect: "Öffnet das Lager des Restaurants.", loot: "Provisions, Task-Items" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Markt-Büro (Pha Lang Marketplace Office Key)", loc: "Pha Lang", effect: "Öffnet das Marktbüro.", loot: "Bargeld, Intel" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Markt-Besenkammer (Pha Lang Marketplace Broom Closet Key)", loc: "Pha Lang", effect: "Öffnet die Besenkammer am Markt.", loot: "Werkzeuge, Schrott" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Markt-Lagerraum (Pha Lang Marketplace Storeroom Key)", loc: "Pha Lang", effect: "Öffnet den Lagerraum des Marktes.", loot: "Materialien, Rucksäcke" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Motelzimmer (Pha Lang Motel Room Key)", loc: "Pha Lang", effect: "Öffnet ein Motelzimmer.", loot: "Kleidung, Wertsachen" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "UNLRA-Büro (Pha Lang UNLRA Office Key)", loc: "Pha Lang", effect: "Öffnet das lokale UNLRA Büro.", loot: "Medizin, Dokumente" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Sägewerk Wartungsraum (Pha Lang Lumberyard Maintenance Key)", loc: "Pha Lang", effect: "Öffnet den städtischen Wartungsraum.", loot: "Werkzeuge" },
+    { group: "🔰 Startregionen (Lamang LRI)", name: "Rathaus Finanzabteilung (Pha Lang Town Hall Finance Key)", loc: "Pha Lang", effect: "Keycard für das Rathaus.", loot: "Bargeld, Tresor" },
 
-        // ==========================================
-        // --- HUNTER'S PARADISE ---
-        // ==========================================
-        { name: "Hunter's Paradise Weapon Storage Key", de: "HP Waffenkammer (HP Wep)", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer.", loot: "High-Tier Waffen, Task-Container" },
-        { name: "Hunter's Paradise Motel Room 102 Key", de: "HP Motel 102", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 102 im Motel.", loot: "Task-Intel (True Grit)" },
-        { name: "Hunter's Paradise Motel Room 101 Key", de: "HP Motel 101", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 101 im Motel.", loot: "Low-Tier Waffen, Munition" },
-        { name: "Hunter's Paradise Improvised Motel Armory Key", de: "HP Improvisierte Waffenkammer", loc: "Hunter's Paradise", effect: "Öffnet eine umfunktionierte Waffenkammer im Motel.", loot: "Waffen, Aufsätze" },
-        { name: "Hunter's Paradise Shooting Lines Storage Key", de: "HP Schießstand-Lager", loc: "Hunter's Paradise", effect: "Öffnet das Lager an den Schießbahnen.", loot: "Munition, Gehörschutz" },
-        { name: "Hunter's Paradise Bunker Key", de: "HP Bunker-Schlüssel", loc: "Hunter's Paradise", effect: "Öffnet den kleinen Bunker-Bereich.", loot: "Militärbedarf, Waffen" },
+    // ==========================================
+    // --- HUNTER'S PARADISE ---
+    // ==========================================
+    { group: "🎯 Hunter's Paradise", name: "HP Waffenkammer (Hunter's Paradise Weapon Storage Key)", loc: "Hunter's Paradise", effect: "Öffnet die Waffenkammer.", loot: "High-Tier Waffen, Task-Container" },
+    { group: "🎯 Hunter's Paradise", name: "HP Motel 102 (Hunter's Paradise Motel Room 102 Key)", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 102 im Motel.", loot: "Task-Intel (True Grit)" },
+    { group: "🎯 Hunter's Paradise", name: "HP Motel 101 (Hunter's Paradise Motel Room 101 Key)", loc: "Hunter's Paradise", effect: "Öffnet Zimmer 101 im Motel.", loot: "Low-Tier Waffen, Munition" },
+    { group: "🎯 Hunter's Paradise", name: "HP Improvisierte Waffenkammer (Hunter's Paradise Improvised Armory Key)", loc: "Hunter's Paradise", effect: "Öffnet eine umfunktionierte Waffenkammer im Motel.", loot: "Waffen, Aufsätze" },
+    { group: "🎯 Hunter's Paradise", name: "HP Schießstand-Lager (Hunter's Paradise Shooting Lines Storage Key)", loc: "Hunter's Paradise", effect: "Öffnet das Lager an den Schießbahnen.", loot: "Munition, Gehörschutz" },
+    { group: "🎯 Hunter's Paradise", name: "HP Bunker-Schlüssel (Hunter's Paradise Bunker Key)", loc: "Hunter's Paradise", effect: "Öffnet den kleinen Bunker-Bereich.", loot: "Militärbedarf, Waffen" },
 
-        // ==========================================
-        // --- SAWMILL ---
-        // ==========================================
-        { name: "Sawmill Office Key", de: "Vorarbeiter-Büro (SM Ofc)", loc: "Sawmill", effect: "Öffnet das Hauptbüro.", loot: "Task-Dokumente, Safe" },
-        { name: "Sawmill Office Storage Room Key", de: "Sägewerk Büro-Lager (SM OStrg)", loc: "Sawmill", effect: "Öffnet den Lagerraum am Büro.", loot: "Task-Container (30kg)" },
-        { name: "Sawmill Storage Shed Key", de: "Sägewerk Lagerschuppen", loc: "Sawmill", effect: "Öffnet den Geräteschuppen.", loot: "Werkzeuge, Materialien" },
-        { name: "Sawmill Toilet Key", de: "Sägewerk Toiletten-Schlüssel", loc: "Sawmill", effect: "Öffnet die sanitären Anlagen.", loot: "Geringe Wertsachen, Medizin" },
+    // ==========================================
+    // --- SAWMILL ---
+    // ==========================================
+    { group: "🌲 Sägewerk (Lumber Yard)", name: "Vorarbeiter-Büro (Sawmill Office Key)", loc: "Sawmill", effect: "Öffnet das Hauptbüro.", loot: "Task-Dokumente, Safe" },
+    { group: "🌲 Sägewerk (Lumber Yard)", name: "Sägewerk Büro-Lager (Sawmill Office Storage Room Key)", loc: "Sawmill", effect: "Öffnet den Lagerraum am Büro.", loot: "Task-Container (30kg)" },
+    { group: "🌲 Sägewerk (Lumber Yard)", name: "Sägewerk Lagerschuppen (Sawmill Storage Shed Key)", loc: "Sawmill", effect: "Öffnet den Geräteschuppen.", loot: "Werkzeuge, Materialien" },
+    { group: "🌲 Sägewerk (Lumber Yard)", name: "Sägewerk Toiletten (Sawmill Toilet Key)", loc: "Sawmill", effect: "Öffnet die sanitären Anlagen.", loot: "Geringe Wertsachen, Medizin" },
 
-        // ==========================================
-        // --- BAN PA ---
-        // ==========================================
-        { name: "Ban Pa Fishing Hut Key", de: "BP Fischerhütte", loc: "Ban Pa", effect: "Öffnet eine verschlossene Hütte am Wasser.", loot: "Task-Intel, Schrott" },
-        { name: "Ban Pa Elder's House Key", de: "Haus des Ältesten (Ban Pa)", loc: "Ban Pa", effect: "Öffnet das große Haus des Dorfältesten.", loot: "Statuen, Task-Item" },
-        { name: "Ban Pa Elder's Room Key", de: "Zimmer des Ältesten (Ban Pa)", loc: "Ban Pa", effect: "Öffnet das Schlafzimmer des Ältesten.", loot: "Wertsachen, Tresor" },
-        { name: "Ban Pa Warehouse Key", de: "BP Lagerhaus", loc: "Ban Pa", effect: "Öffnet das Lagergebäude am Rand.", loot: "Schmuggelware, Waffen" },
+    // ==========================================
+    // --- BAN PA ---
+    // ==========================================
+    { group: "🎣 Ban Pa (Fischerdorf)", name: "BP Fischerhütte (Ban Pa Fishing Hut Key)", loc: "Ban Pa", effect: "Öffnet eine verschlossene Hütte am Wasser.", loot: "Task-Intel, Schrott" },
+    { group: "🎣 Ban Pa (Fischerdorf)", name: "Haus des Ältesten (Ban Pa Elder's House Key)", loc: "Ban Pa", effect: "Öffnet das große Haus des Dorfältesten.", loot: "Statuen, Task-Item" },
+    { group: "🎣 Ban Pa (Fischerdorf)", name: "Zimmer des Ältesten (Ban Pa Elder's Room Key)", loc: "Ban Pa", effect: "Öffnet das Schlafzimmer des Ältesten.", loot: "Wertsachen, Tresor" },
+    { group: "🎣 Ban Pa (Fischerdorf)", name: "BP Lagerhaus (Ban Pa Warehouse Key)", loc: "Ban Pa", effect: "Öffnet das Lagergebäude am Rand.", loot: "Schmuggelware, Waffen" },
 
-        // ==========================================
-        // --- YBL-1 BUNKER ---
-        // ==========================================
-        { name: "YBL-1 Bedroom Key", de: "YBL-1 Schlafzimmer", loc: "YBL-1 Bunker", effect: "Öffnet die Schlafräume.", loot: "Kleidung, Wertsachen" },
-        { name: "YBL-1 Corridor D Storage Room Key", de: "YBL-1 Flur D Lager", loc: "YBL-1 Bunker", effect: "Öffnet das Lager in Sektor D.", loot: "Munition, Rucksäcke" },
-        { name: "YBL-1 Maintenance Door Key", de: "YBL-1 Wartungstür", loc: "YBL-1 Bunker", effect: "Öffnet einen Wartungsschacht.", loot: "Werkzeuge, Elektronik" },
-        { name: "YBL-1 Weapon Storage Key", de: "YBL-1 Waffenkammer", loc: "YBL-1 Bunker", effect: "Öffnet die Bunker-Waffenkammer.", loot: "Militär-Waffen, Aufsätze" },
-        { name: "YBL-1 Office 02 Key", de: "YBL-1 Büro 02", loc: "YBL-1 Bunker", effect: "Öffnet Büro 02.", loot: "Task-Intel (The Negotiator)" },
-        { name: "YBL-1 Office Key 01", de: "YBL-1 Büro 01", loc: "YBL-1 Bunker", effect: "Öffnet Büro 01.", loot: "Dokumente, Intel" },
-        { name: "YBL-1 Generator Room Key", de: "YBL-1 Generatorraum", loc: "YBL-1 Bunker", effect: "Öffnet den Hauptgeneratorraum.", loot: "Task-Zugang, Werkzeug" },
+    // ==========================================
+    // --- YBL-1 BUNKER ---
+    // ==========================================
+    { group: "☢️ YBL-1 Bunker", name: "YBL-1 Schlafzimmer (YBL-1 Bedroom Key)", loc: "YBL-1 Bunker", effect: "Öffnet die Schlafräume.", loot: "Kleidung, Wertsachen" },
+    { group: "☢️ YBL-1 Bunker", name: "YBL-1 Flur D Lager (YBL-1 Corridor D Storage Room Key)", loc: "YBL-1 Bunker", effect: "Öffnet das Lager in Sektor D.", loot: "Munition, Rucksäcke" },
+    { group: "☢️ YBL-1 Bunker", name: "YBL-1 Wartungstür (YBL-1 Maintenance Door Key)", loc: "YBL-1 Bunker", effect: "Öffnet einen Wartungsschacht.", loot: "Werkzeuge, Elektronik" },
+    { group: "☢️ YBL-1 Bunker", name: "YBL-1 Waffenkammer (YBL-1 Weapon Storage Key)", loc: "YBL-1 Bunker", effect: "Öffnet die Bunker-Waffenkammer.", loot: "Militär-Waffen, Aufsätze" },
+    { group: "☢️ YBL-1 Bunker", name: "YBL-1 Büro 02 (YBL-1 Office 02 Key)", loc: "YBL-1 Bunker", effect: "Öffnet Büro 02.", loot: "Task-Intel (The Negotiator)" },
+    { group: "☢️ YBL-1 Bunker", name: "YBL-1 Büro 01 (YBL-1 Office Key 01)", loc: "YBL-1 Bunker", effect: "Öffnet Büro 01.", loot: "Dokumente, Intel" },
+    { group: "☢️ YBL-1 Bunker", name: "YBL-1 Generatorraum (YBL-1 Generator Room Key)", loc: "YBL-1 Bunker", effect: "Öffnet den Hauptgeneratorraum.", loot: "Task-Zugang, Werkzeug" },
 
-        // ==========================================
-        // --- PHA LANG AIRFIELD ---
-        // ==========================================
-        { name: "Hangar 03 Key", de: "Hangar 03 Schlüssel", loc: "Pha Lang Airfield", effect: "Öffnet Hangar 3.", loot: "Waffen-Teile, Militär-Kisten" },
-        { name: "Pha Lang Airfield Storage Office Key", de: "Airfield Lagerbüro", loc: "Pha Lang Airfield", effect: "Öffnet das Büro im Lagerbereich.", loot: "Intel, Safe" },
-        { name: "Pha Lang Airfield Meeting Room Key", de: "Airfield Besprechungsraum", loc: "Pha Lang Airfield", effect: "Öffnet den Meeting-Raum.", loot: "Militärische Pläne, Akten" },
-        { name: "Airport Storage Shed Key", de: "Airport Lagerschuppen", loc: "Pha Lang Airfield", effect: "Öffnet den Schuppen am Flugfeld.", loot: "Werkzeuge, Treibstoff" },
+    // ==========================================
+    // --- PHA LANG AIRFIELD ---
+    // ==========================================
+    { group: "✈️ Ground Zero & Airfield", name: "Hangar 03 Schlüssel (Hangar 03 Key)", loc: "Pha Lang Airfield", effect: "Öffnet Hangar 3.", loot: "Waffen-Teile, Militär-Kisten" },
+    { group: "✈️ Ground Zero & Airfield", name: "Airfield Lagerbüro (Pha Lang Airfield Storage Office Key)", loc: "Pha Lang Airfield", effect: "Öffnet das Büro im Lagerbereich.", loot: "Intel, Safe" },
+    { group: "✈️ Ground Zero & Airfield", name: "Airfield Besprechungsraum (Pha Lang Airfield Meeting Room Key)", loc: "Pha Lang Airfield", effect: "Öffnet den Meeting-Raum.", loot: "Militärische Pläne, Akten" },
+    { group: "✈️ Ground Zero & Airfield", name: "Airport Lagerschuppen (Airport Storage Shed Key)", loc: "Pha Lang Airfield", effect: "Öffnet den Schuppen am Flugfeld.", loot: "Werkzeuge, Treibstoff" },
 
-        // ==========================================
-        // --- BLUE LAGOON ---
-        // ==========================================
-        { name: "Blue Lagoon Shack Key", de: "Malo's Hütte (BL Shack)", loc: "Blue Lagoon", effect: "Öffnet die Hütte über dem Wasser.", loot: "Waffen, Task-Items" },
-        { name: "Blue Lagoon Office Storage Key", de: "Lagunen-Bürolager", loc: "Blue Lagoon", effect: "Öffnet das Verwaltungsbüro-Lager.", loot: "Intel, Wertsachen" },
-        { name: "Blue Lagoon Restaurant Storage Key", de: "BL Restaurant-Lager", loc: "Blue Lagoon", effect: "Öffnet den Storage Room im Restaurant.", loot: "Task-Intel (One Man's Trash)" },
+    // ==========================================
+    // --- BLUE LAGOON ---
+    // ==========================================
+    { group: "🌊 Blaue Lagune (Blue Lagoon)", name: "Malo's Hütte (Blue Lagoon Shack Key)", loc: "Blue Lagoon", effect: "Öffnet die Hütte über dem Wasser.", loot: "Waffen, Task-Items" },
+    { group: "🌊 Blaue Lagune (Blue Lagoon)", name: "Lagunen-Bürolager (Blue Lagoon Office Storage Key)", loc: "Blue Lagoon", effect: "Öffnet das Verwaltungsbüro-Lager.", loot: "Intel, Wertsachen" },
+    { group: "🌊 Blaue Lagune (Blue Lagoon)", name: "BL Restaurant-Lager (Blue Lagoon Restaurant Storage Key)", loc: "Blue Lagoon", effect: "Öffnet den Storage Room im Restaurant.", loot: "Task-Intel (One Man's Trash)" },
 
-        // ==========================================
-        // --- FORT NARITH ---
-        // ==========================================
-        { name: "Fort Narith HQ Reception Storage Key Card", de: "FN HQ Rezeption Lager", loc: "Fort Narith", effect: "Öffnet das Lager hinter der HQ-Rezeption.", loot: "Bargeld, Elektronik" },
-        { name: "Fort Narith Air Traffic Control Tower Key", de: "FN Tower-Schlüssel", loc: "Fort Narith", effect: "Öffnet den ATC-Tower.", loot: "Militär-Funk, Waffen" },
-        { name: "Fort Narith HQ Archive Key", de: "FN HQ Archiv", loc: "Fort Narith", effect: "Öffnet das Archiv im Hauptquartier.", loot: "Intel, Geheimdokumente" },
-        { name: "A102 Key", de: "Baracke A102", loc: "Fort Narith", effect: "Öffnet Raum A102.", loot: "Waffen, Westen" },
-        { name: "A103 Key", de: "Baracke A103", loc: "Fort Narith", effect: "Öffnet Raum A103.", loot: "Munition, Kleidung" },
-        { name: "A208 Key", de: "Baracke A208", loc: "Fort Narith", effect: "Öffnet Raum A208.", loot: "Wertsachen, Helme" },
-        { name: "A210 Key", de: "Baracke A210", loc: "Fort Narith", effect: "Öffnet Raum A210.", loot: "Waffen-Koffer" },
-        { name: "C101 Key", de: "Baracke C101", loc: "Fort Narith", effect: "Öffnet Raum C101.", loot: "Task-Items, High-Tier Loot" },
-        { name: "C108 Key", de: "Baracke C108", loc: "Fort Narith", effect: "Öffnet Raum C108.", loot: "Militär-Ausrüstung" },
-        { name: "Fort Narith Dumping Ground Storage Shed Key", de: "FN Schrottplatz-Schuppen", loc: "Fort Narith", effect: "Öffnet den Schuppen am Schrottplatz.", loot: "Werkzeuge" },
-        { name: "Fort Narith Garage Office Key", de: "FN Garagenbüro", loc: "Fort Narith", effect: "Öffnet das Büro in der Fahrzeughalle.", loot: "Fahrzeugteile, Safe" },
-        { name: "Forth Narith HQ Comms Room Key", de: "FN HQ Funkraum", loc: "Fort Narith", effect: "Öffnet den Kommunikationsraum.", loot: "Elektronik, Task-Infos" },
-        { name: "Fort Narith HQ Storage Room Key", de: "FN HQ Lagerraum", loc: "Fort Narith", effect: "Öffnet den allgemeinen Lagerraum im HQ.", loot: "Rucksäcke, Helme" },
-        { name: "Fort Narith Infirmary ICU Key", de: "FN Lazarett Intensivstation", loc: "Fort Narith", effect: "Öffnet die ICU.", loot: "High-Tier Medizin (Stims, Surkits)" },
-        { name: "Fort Narith Outskirts Improvised Armory Key", de: "FN Randgebiet Waffenkammer", loc: "Fort Narith", effect: "Öffnet ein improvisiertes Waffenlager.", loot: "Waffen, Granaten" },
-        { name: "Fort Narith Motel Improvised Armory Key", de: "FN Motel Waffenkammer", loc: "Fort Narith", effect: "Öffnet eine Waffenkammer im Motel-Bereich.", loot: "Militär-Waffen" },
-        { name: "Fort Narith Shooting Range Office Key", de: "FN Schießstand-Büro", loc: "Fort Narith", effect: "Öffnet das Büro am Schießstand.", loot: "Munition, Aufsätze" },
-        { name: "Turncoat's House Key", de: "Turncoats Haus", loc: "Fort Narith / Umland", effect: "Öffnet das Versteck des Turncoats.", loot: "Spezifischer Loot, Intel" },
+    // ==========================================
+    // --- FORT NARITH ---
+    // ==========================================
+    { group: "🪖 Fort Narith (Basis)", name: "FN HQ Rezeption Lager (Fort Narith HQ Reception Storage Key)", loc: "Fort Narith", effect: "Öffnet das Lager hinter der HQ-Rezeption.", loot: "Bargeld, Elektronik" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN Tower-Schlüssel (Fort Narith Air Traffic Control Tower Key)", loc: "Fort Narith", effect: "Öffnet den ATC-Tower.", loot: "Militär-Funk, Waffen" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN HQ Archiv (Fort Narith HQ Archive Key)", loc: "Fort Narith", effect: "Öffnet das Archiv im Hauptquartier.", loot: "Intel, Geheimdokumente" },
+    { group: "🪖 Fort Narith (Basis)", name: "Baracke A102 (A102 Key)", loc: "Fort Narith", effect: "Öffnet Raum A102.", loot: "Waffen, Westen" },
+    { group: "🪖 Fort Narith (Basis)", name: "Baracke A103 (A103 Key)", loc: "Fort Narith", effect: "Öffnet Raum A103.", loot: "Munition, Kleidung" },
+    { group: "🪖 Fort Narith (Basis)", name: "Baracke A208 (A208 Key)", loc: "Fort Narith", effect: "Öffnet Raum A208.", loot: "Wertsachen, Helme" },
+    { group: "🪖 Fort Narith (Basis)", name: "Baracke A210 (A210 Key)", loc: "Fort Narith", effect: "Öffnet Raum A210.", loot: "Waffen-Koffer" },
+    { group: "🪖 Fort Narith (Basis)", name: "Baracke C101 (C101 Key)", loc: "Fort Narith", effect: "Öffnet Raum C101.", loot: "Task-Items, High-Tier Loot" },
+    { group: "🪖 Fort Narith (Basis)", name: "Baracke C108 (C108 Key)", loc: "Fort Narith", effect: "Öffnet Raum C108.", loot: "Militär-Ausrüstung" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN Schrottplatz-Schuppen (Fort Narith Dumping Ground Storage Shed Key)", loc: "Fort Narith", effect: "Öffnet den Schuppen am Schrottplatz.", loot: "Werkzeuge" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN Garagenbüro (Fort Narith Garage Office Key)", loc: "Fort Narith", effect: "Öffnet das Büro in der Fahrzeughalle.", loot: "Fahrzeugteile, Safe" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN HQ Funkraum (Forth Narith HQ Comms Room Key)", loc: "Fort Narith", effect: "Öffnet den Kommunikationsraum.", loot: "Elektronik, Task-Infos" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN HQ Lagerraum (Fort Narith HQ Storage Room Key)", loc: "Fort Narith", effect: "Öffnet den allgemeinen Lagerraum im HQ.", loot: "Rucksäcke, Helme" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN Lazarett Intensivstation (Fort Narith Infirmary ICU Key)", loc: "Fort Narith", effect: "Öffnet die ICU.", loot: "High-Tier Medizin (Stims, Surkits)" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN Randgebiet Waffenkammer (Fort Narith Outskirts Improvised Armory Key)", loc: "Fort Narith", effect: "Öffnet ein improvisiertes Waffenlager.", loot: "Waffen, Granaten" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN Motel Waffenkammer (Fort Narith Motel Improvised Armory Key)", loc: "Fort Narith", effect: "Öffnet eine Waffenkammer im Motel-Bereich.", loot: "Militär-Waffen" },
+    { group: "🪖 Fort Narith (Basis)", name: "FN Schießstand-Büro (Fort Narith Shooting Range Office Key)", loc: "Fort Narith", effect: "Öffnet das Büro am Schießstand.", loot: "Munition, Aufsätze" },
+    { group: "🪖 Fort Narith (Basis)", name: "Turncoats Haus (Turncoat's House Key)", loc: "Fort Narith / Umland", effect: "Öffnet das Versteck des Turncoats.", loot: "Spezifischer Loot, Intel" },
 
-        // ==========================================
-        // --- MIDNIGHT SAPPHIRE ---
-        // ==========================================
-        { name: "Golf Club Storage Key", de: "Golfclub-Lager", loc: "Midnight Sapphire", effect: "Öffnet das Lagerhäuschen am Golfplatz.", loot: "Sporttaschen, Wertsachen" },
-        { name: "Villa Marta Monica Garage Key", de: "Garage Marta Monica", loc: "Midnight Sapphire", effect: "Öffnet die Garage der östlichen Villa.", loot: "Werkzeug, Safe" },
-        { name: "Midnight Sapphire Hotel Office Key", de: "Hotel-Büro", loc: "Midnight Sapphire", effect: "Öffnet das Management-Büro.", loot: "Safe, Bargeld, Intel" },
-        { name: "Hotel Supply Closet Key Card", de: "Hotel Versorgungsraum (Keycard)", loc: "Midnight Sapphire", effect: "Gewährt Zugang zum Supply Closet (Task).", loot: "Zugang CCTV-Raum" },
-        { name: "Villa Katherine Key", de: "Villa Katherine", loc: "Midnight Sapphire", effect: "Öffnet eine weitere Luxusvilla.", loot: "Geld, Schmuck, Safe" },
-        { name: "Villa Anna Jana Key", de: "Villa Anna Jana", loc: "Midnight Sapphire", effect: "Öffnet die mittlere Villa.", loot: "Task-Dokumente, Safe" },
-        { name: "Villa Luisa Key", de: "Villa Luisa", loc: "Midnight Sapphire", effect: "Öffnet die Villa Luisa.", loot: "High-Tier Wertsachen" },
-        { name: "Villa Elena Garage Key", de: "Garage Elena", loc: "Midnight Sapphire", effect: "Öffnet die Garage von Villa Elena.", loot: "Waffen-Koffer, Schrott" },
+    // ==========================================
+    // --- MIDNIGHT SAPPHIRE ---
+    // ==========================================
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Golfclub-Lager (Golf Club Storage Key)", loc: "Midnight Sapphire", effect: "Öffnet das Lagerhäuschen am Golfplatz.", loot: "Sporttaschen, Wertsachen" },
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Garage Marta Monica (Villa Marta Monica Garage Key)", loc: "Midnight Sapphire", effect: "Öffnet die Garage der östlichen Villa.", loot: "Werkzeug, Safe" },
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Hotel-Büro (Midnight Sapphire Hotel Office Key)", loc: "Midnight Sapphire", effect: "Öffnet das Management-Büro.", loot: "Safe, Bargeld, Intel" },
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Hotel Versorgungsraum (Hotel Supply Closet Key Card)", loc: "Midnight Sapphire", effect: "Gewährt Zugang zum Supply Closet (Task).", loot: "Zugang CCTV-Raum" },
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Villa Katherine (Villa Katherine Key)", loc: "Midnight Sapphire", effect: "Öffnet eine weitere Luxusvilla.", loot: "Geld, Schmuck, Safe" },
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Villa Anna Jana (Villa Anna Jana Key)", loc: "Midnight Sapphire", effect: "Öffnet die mittlere Villa.", loot: "Task-Dokumente, Safe" },
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Villa Luisa (Villa Luisa Key)", loc: "Midnight Sapphire", effect: "Öffnet die Villa Luisa.", loot: "High-Tier Wertsachen" },
+    { group: "💎 Midnight Sapphire (Hotel)", name: "Garage Elena (Villa Elena Garage Key)", loc: "Midnight Sapphire", effect: "Öffnet die Garage von Villa Elena.", loot: "Waffen-Koffer, Schrott" },
 
-        // ==========================================
-        // --- TIGER BAY ---
-        // ==========================================
-        { name: "Cement Factory Storage Key", de: "Zementfabrik-Lager", loc: "Tiger Bay", effect: "Öffnet das Lager in der Fabrik.", loot: "Baumaterial, Werkzeuge" },
-        { name: "Tiger Bay Central Armory Key", de: "TB Zentrale Waffenkammer", loc: "Tiger Bay", effect: "Öffnet die Haupt-Waffenkammer.", loot: "Massive Waffen- & Munitionsmengen" },
-        { name: "Improvised Bandit Lookout Key", de: "Banditen-Ausguck", loc: "Tiger Bay", effect: "Öffnet einen verschlossenen Sniper-Spot.", loot: "Scharfschützengewehre, Optiken" },
-        { name: "Toto Hardware Storage Key", de: "Toto Baumarkt-Lager", loc: "Tiger Bay", effect: "Öffnet das Lager des Baumarkts.", loot: "Werkzeuge (Toolsets)" },
-        { name: "Tiger Bay Trade Depot Office Key", de: "Handelsdepot-Büro", loc: "Tiger Bay", effect: "Öffnet das Depotbüro.", loot: "Geldkästen, Intel" },
-        { name: "Pier Storage Key", de: "Pier Lagerhaus", loc: "Tiger Bay", effect: "Öffnet das Lagerhaus direkt am Pier.", loot: "Waffen-Kisten, Aufsätze" },
-        { name: "Tiger Bay Outskirts Garage Key", de: "TB Randgebiet-Garage", loc: "Tiger Bay", effect: "Öffnet eine Garage im Außenbereich.", loot: "Fahrzeugteile" },
-        { name: "UNLRA Equipment Container Key", de: "UNLRA Ausrüstungscontainer", loc: "Tiger Bay", effect: "Öffnet einen Container im Flüchtlingslager.", loot: "Rucksäcke, Westen" },
-        { name: "UNLRA Quarantine Key", de: "UNLRA Quarantäne", loc: "Tiger Bay", effect: "Öffnet die Isolationsstation.", loot: "Medizinische High-Tier Güter, Task-Items" },
-        { name: "UNLRA Medical Container Key", de: "UNLRA Medizincontainer", loc: "Tiger Bay", effect: "Öffnet den Sanitäts-Container.", loot: "IFAKs, Surkits, Stims" },
-        { name: "House by the Pond Key", de: "Haus am Teich", loc: "Tiger Bay", effect: "Öffnet ein spezifisches Haus am Wasser.", loot: "Ziviler Loot, Wertsachen" },
+    // ==========================================
+    // --- TIGER BAY ---
+    // ==========================================
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "Zementfabrik-Lager (Cement Factory Storage Key)", loc: "Tiger Bay", effect: "Öffnet das Lager in der Fabrik.", loot: "Baumaterial, Werkzeuge" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "TB Zentrale Waffenkammer (Tiger Bay Central Armory Key)", loc: "Tiger Bay", effect: "Öffnet die Haupt-Waffenkammer.", loot: "Massive Waffen- & Munitionsmengen" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "Banditen-Ausguck (Improvised Bandit Lookout Key)", loc: "Tiger Bay", effect: "Öffnet einen verschlossenen Sniper-Spot.", loot: "Scharfschützengewehre, Optiken" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "Toto Baumarkt-Lager (Toto Hardware Storage Key)", loc: "Tiger Bay", effect: "Öffnet das Lager des Baumarkts.", loot: "Werkzeuge (Toolsets)" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "Handelsdepot-Büro (Tiger Bay Trade Depot Office Key)", loc: "Tiger Bay", effect: "Öffnet das Depotbüro.", loot: "Geldkästen, Intel" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "Pier Lagerhaus (Pier Storage Key)", loc: "Tiger Bay", effect: "Öffnet das Lagerhaus direkt am Pier.", loot: "Waffen-Kisten, Aufsätze" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "TB Randgebiet-Garage (Tiger Bay Outskirts Garage Key)", loc: "Tiger Bay", effect: "Öffnet eine Garage im Außenbereich.", loot: "Fahrzeugteile" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "UNLRA Ausrüstungscontainer (UNLRA Equipment Container Key)", loc: "Tiger Bay", effect: "Öffnet einen Container im Flüchtlingslager.", loot: "Rucksäcke, Westen" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "UNLRA Quarantäne (UNLRA Quarantine Key)", loc: "Tiger Bay", effect: "Öffnet die Isolationsstation.", loot: "Medizinische High-Tier Güter, Task-Items" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "UNLRA Medizincontainer (UNLRA Medical Container Key)", loc: "Tiger Bay", effect: "Öffnet den Sanitäts-Container.", loot: "IFAKs, Surkits, Stims" },
+    { group: "🏙️ Tiger Bay (Großstadt)", name: "Haus am Teich (House by the Pond Key)", loc: "Tiger Bay", effect: "Öffnet ein spezifisches Haus am Wasser.", loot: "Ziviler Loot, Wertsachen" },
 
-        // ==========================================
-        // --- LAMANG ISLAND (Allgemeine POIs / Dörfer) ---
-        // ==========================================
-        { name: "Villa Vongphet Room Key", de: "Villa Vongphet Zimmer", loc: "Lamang Island", effect: "Öffnet ein Zimmer in Villa Vongphet.", loot: "Safe, Schmuck" },
-        { name: "Sunset Chalet Firearms Case Key", de: "Sunset Chalet Waffenkoffer", loc: "Lamang Island", effect: "Öffnet einen bestimmten Waffenkoffer.", loot: "High-Tier Waffe" },
-        { name: "Fanny Paradise Office Key", de: "Fanny Paradise Büro", loc: "Lamang Island", effect: "Öffnet das Büro im Fanny Paradise.", loot: "Intel, Bargeld" },
-        { name: "Small Marketplace House Key", de: "Marktplatz-Haus", loc: "Lamang Island", effect: "Öffnet ein kleines Haus am lokalen Markt.", loot: "Provisions" },
-        { name: "School Room Key", de: "Klassenzimmer-Schlüssel", loc: "Lamang Island", effect: "Öffnet einen Raum in der verlassenen Schule.", loot: "Rucksäcke, Elektronik" },
-        { name: "Inthavong Farm Shed Key", de: "Inthavong Farmschuppen", loc: "Inthavong", effect: "Öffnet den Schuppen der Farm.", loot: "Werkzeuge" },
-        { name: "Hidden Fields 03 Hut Key", de: "Hidden Fields Hütte 03", loc: "Hidden Fields", effect: "Öffnet Hütte 03.", loot: "Schmuggelware, Drogen" },
-        { name: "Hidden Fields 02 Hut Key", de: "Hidden Fields Hütte 02", loc: "Hidden Fields", effect: "Öffnet Hütte 02.", loot: "Waffen, Munition" },
-        { name: "Phouarun Restaurant Attic Room Key", de: "Phouarun Restaurant Dachboden", loc: "Phouarun", effect: "Öffnet den Dachbodenraum.", loot: "Versteckte Kisten, Intel" },
-        { name: "Phousai Village House Key", de: "Phousai Dorfhaus", loc: "Phousai", effect: "Öffnet ein verschlossenes Haus im Dorf.", loot: "Provisions, Wertsachen" },
-        { name: "LAF Radio Tower Room Key", de: "LAF Funkturm-Raum", loc: "Lamang Island", effect: "Öffnet den Raum unter dem Funkturm.", loot: "Militärische Kommunikation, Aufsätze" },
-        { name: "Khonwan Village House Key", de: "Khonwan Dorfhaus", loc: "Khonwan", effect: "Öffnet ein Gebäude in Khonwan.", loot: "Kleidung, einfache Waffen" },
-        { name: "Khamhao Rice Depot Room Key", de: "Khamhao Reisdepot", loc: "Khamhao", effect: "Öffnet einen Raum im Reisdepot.", loot: "Große Mengen Nahrung, Geld" },
-        { name: "Dongphou Hiking Camp Cottage Key", de: "Dongphou Wander-Hütte", loc: "Dongphou", effect: "Öffnet die Wanderhütte.", loot: "Zeltbedarf, Rucksäcke" },
-        { name: "Construction Site Storage Key", de: "Baustellen-Lager", loc: "Lamang Island", effect: "Öffnet den Baucontainer.", loot: "Baumaterial (Nägel, Tape), Werkzeuge" },
-        { name: "Ban Khamphet House Key", de: "Ban Khamphet Haus", loc: "Ban Khamphet", effect: "Öffnet ein Haus im Dorf Ban Khamphet.", loot: "Provisions" },
-        { name: "Ban Phouphienge Room Key", de: "Ban Phouphienge Zimmer", loc: "Ban Phouphienge", effect: "Öffnet ein privates Zimmer.", loot: "Wertsachen, Tresor" },
-        { name: "Siang Radio Station Room Key", de: "Siang Radiostation", loc: "Lamang Island", effect: "Öffnet einen Technikraum der Radiostation.", loot: "Elektronik, Kabel" },
-    
-        // ==========================================
-        // --- Ergänzung Keys Spearhead - Update 0.4 ---
-        // ==========================================
-        { name: "Fort Narith Jail Key", de: "FN Gefängnisschlüssel", loc: "Fort Narith Jail", effect: "Öffnet Zellenblock-Bereiche.", loot: "AK-308 Blueprint (hinter kickbarer Tür)" },
-        { name: "Tiger Bay Mall Key (TB-Mall-Key)", de: "TB Einkaufszentrum Schlüssel", loc: "Tiger Bay Mall", effect: "Öffnet den Hinterraum der Buchhandlung.", loot: "SVD Dragunov Blueprint" },
-        { name: "Viper's Car Key", de: "Vipers Autoschlüssel", loc: "Pha Lang Airfield", effect: "Öffnet den Wagen am Fluss für die 'Like a Boss' Quest.", loot: "Intel für Vulture" },
-        { name: "Ransacked Tourist Shelter Key", de: "Touristenunterkunft Schlüssel", loc: "Ransacked Shelter (188, 130)", effect: "Öffnet den Hauptraum der Unterkunft.", loot: "MP7A2 Blueprint" },
-        { name: "Remote Campsite Key", de: "Entlegenes Lager Schlüssel", loc: "Südlich YBL-1 (149, 111)", effect: "Öffnet die verschlossene Kiste am Flusslager.", loot: "Mossberg 590 Blueprint" }
-    ];
+    // ==========================================
+    // --- LAMANG ISLAND (Dörfer & POIs) ---
+    // ==========================================
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Villa Vongphet Zimmer (Villa Vongphet Room Key)", loc: "Lamang Island", effect: "Öffnet ein Zimmer in Villa Vongphet.", loot: "Safe, Schmuck" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Sunset Chalet Waffenkoffer (Sunset Chalet Firearms Case Key)", loc: "Lamang Island", effect: "Öffnet einen bestimmten Waffenkoffer.", loot: "High-Tier Waffe" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Fanny Paradise Büro (Fanny Paradise Office Key)", loc: "Lamang Island", effect: "Öffnet das Büro im Fanny Paradise.", loot: "Intel, Bargeld" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Marktplatz-Haus (Small Marketplace House Key)", loc: "Lamang Island", effect: "Öffnet ein kleines Haus am lokalen Markt.", loot: "Provisions" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Klassenzimmer-Schlüssel (School Room Key)", loc: "Lamang Island", effect: "Öffnet einen Raum in der verlassenen Schule.", loot: "Rucksäcke, Elektronik" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Inthavong Farmschuppen (Inthavong Farm Shed Key)", loc: "Inthavong", effect: "Öffnet den Schuppen der Farm.", loot: "Werkzeuge" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Hidden Fields Hütte 03 (Hidden Fields 03 Hut Key)", loc: "Hidden Fields", effect: "Öffnet Hütte 03.", loot: "Schmuggelware, Drogen" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Hidden Fields Hütte 02 (Hidden Fields 02 Hut Key)", loc: "Hidden Fields", effect: "Öffnet Hütte 02.", loot: "Waffen, Munition" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Phouarun Restaurant Dachboden (Phouarun Restaurant Attic Key)", loc: "Phouarun", effect: "Öffnet den Dachbodenraum.", loot: "Versteckte Kisten, Intel" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Phousai Dorfhaus (Phousai Village House Key)", loc: "Phousai", effect: "Öffnet ein verschlossenes Haus im Dorf.", loot: "Provisions, Wertsachen" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "LAF Funkturm-Raum (LAF Radio Tower Room Key)", loc: "Lamang Island", effect: "Öffnet den Raum unter dem Funkturm.", loot: "Militärische Kommunikation, Aufsätze" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Khonwan Dorfhaus (Khonwan Village House Key)", loc: "Khonwan", effect: "Öffnet ein Gebäude in Khonwan.", loot: "Kleidung, einfache Waffen" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Khamhao Reisdepot (Khamhao Rice Depot Room Key)", loc: "Khamhao", effect: "Öffnet einen Raum im Reisdepot.", loot: "Große Mengen Nahrung, Geld" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Dongphou Wander-Hütte (Dongphou Hiking Camp Cottage Key)", loc: "Dongphou", effect: "Öffnet die Wanderhütte.", loot: "Zeltbedarf, Rucksäcke" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Baustellen-Lager (Construction Site Storage Key)", loc: "Lamang Island", effect: "Öffnet den Baucontainer.", loot: "Baumaterial (Nägel, Tape), Werkzeuge" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Ban Khamphet Haus (Ban Khamphet House Key)", loc: "Ban Khamphet", effect: "Öffnet ein Haus im Dorf Ban Khamphet.", loot: "Provisions" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Ban Phouphienge Zimmer (Ban Phouphienge Room Key)", loc: "Ban Phouphienge", effect: "Öffnet ein privates Zimmer.", loot: "Wertsachen, Tresor" },
+    { group: "🗺️ Lamang Island (Dörfer & POIs)", name: "Siang Radiostation (Siang Radio Station Room Key)", loc: "Lamang Island", effect: "Öffnet einen Technikraum der Radiostation.", loot: "Elektronik, Kabel" },
+
+    // ==========================================
+    // --- UPDATE 0.4 SPEARHEAD KEYS ---
+    // ==========================================
+    { group: "🆕 Update 0.4 (Spearhead)", name: "FN Gefängnisschlüssel (Fort Narith Jail Key)", loc: "Fort Narith Jail", effect: "Öffnet Zellenblock-Bereiche.", loot: "AK-308 Blueprint (hinter kickbarer Tür)" },
+    { group: "🆕 Update 0.4 (Spearhead)", name: "TB Einkaufszentrum Schlüssel (Tiger Bay Mall Key / TB-Mall-Key)", loc: "Tiger Bay Mall", effect: "Öffnet den Hinterraum der Buchhandlung.", loot: "SVD Dragunov Blueprint" },
+    { group: "🆕 Update 0.4 (Spearhead)", name: "Vipers Autoschlüssel (Viper's Car Key)", loc: "Pha Lang Airfield", effect: "Öffnet den Wagen am Fluss für die 'Like a Boss' Quest.", loot: "Intel für Vulture" },
+    { group: "🆕 Update 0.4 (Spearhead)", name: "Touristenunterkunft Schlüssel (Ransacked Tourist Shelter Key)", loc: "Ransacked Shelter (188, 130)", effect: "Öffnet den Hauptraum der Unterkunft.", loot: "MP7A2 Blueprint" },
+    { group: "🆕 Update 0.4 (Spearhead)", name: "Entlegenes Lager Schlüssel (Remote Campsite Key)", loc: "Südlich YBL-1 (149, 111)", effect: "Öffnet die verschlossene Kiste am Flusslager.", loot: "Mossberg 590 Blueprint" }
+];
     
 // ==============================================================
 // 7. LOOT DATENBANK (UPDATE 0.4 SPEARHEAD - INKL. QUEST ITEMS)
