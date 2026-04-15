@@ -931,31 +931,51 @@
         </div>
 
         <div id="tab-lz" class="tab-content">
-            <h2>🚁 Landezonen & Navigation</h2>
-            <div class="panel-box">
-                <label for="lzSelect" style="margin-top: 0;">LZ & Navigation (Helikopter)</label>
-                <select id="lzSelect" onchange="updateLZ()">
-                    <option value="">-- Wähle ein Zielgebiet --</option>
-                    <optgroup label="Fraktions-Startgebiete (Safe Zones)">
-                        <option value="mithras">Mithras (Nam Thaven) - Alpha LZs</option>
-                        <option value="lamang">Lamang (Pha Lang) - Bravo LZs</option>
-                        <option value="crimson">Crimson (Kiu Vongsa) - Charlie LZs</option>
-                    </optgroup>
-                    <optgroup label="Early & Mid Game POIs">
-                        <option value="lumber">Lumber Yard (Sägewerk) - Echo LZs</option>
-                        <option value="hunters">Hunter's Paradise - Foxtrot LZs</option>
-                        <option value="banpa">Ban Pa (Fischerdorf) - India LZs</option>
-                        <option value="blue_lagoon">Blue Lagoon (See) - Kilo LZs</option>
-                    </optgroup>
-                    <optgroup label="End Game POIs (High Danger)">
-                        <option value="ybl">YBL-1 Bunker - Juliet LZs</option>
-                        <option value="fort_narith">Fort Narith (Basis) - Delta LZs</option>
-                        <option value="midnight">Midnight Sapphire - Hotel LZs</option>
-                        <option value="tiger_bay">Tiger Bay (Großstadt) - Lima LZs</option>
-                        <option value="ground_zero">Ground Zero (Airfield) - Golf LZs</option>
-                    </optgroup>
-                </select>
-                <div id="lzInfo" class="info-box" style="margin-top: 15px; padding: 15px; background: #111; border-left: 4px solid var(--accent);">Landeplatz-Sicherheit & Tipps...</div>
+            <h2>🚁 Landezonen & Navigation (LZ)</h2>
+            <div class="grid">
+                <div class="panel-box">
+                    <label for="lzSelect" style="margin-top: 0;">Einsatzgebiet auswählen (POI)</label>
+                    <select id="lzSelect" onchange="updateLZ()" style="font-weight: bold; color: var(--accent); padding: 10px; border-radius: 6px; background: #222; border: 1px solid #444;">
+                        <option value="">-- Wähle ein Zielgebiet --</option>
+                        
+                        <optgroup label="🔰 Fraktions-Startgebiete (Safe Zones)">
+                            <option value="lz_alpha">Mithras (Nam Thaven) - Alpha LZs</option>
+                            <option value="lz_bravo">Lamang LRI (Pha Lang) - Bravo LZs</option>
+                            <option value="lz_charlie">Crimson (Kiu Vongsa) - Charlie LZs</option>
+                        </optgroup>
+                        
+                        <optgroup label="🌲 Mid-Game Zonen (Dschungel & Dörfer)">
+                            <option value="lz_echo">Sägewerk (Lumber Yard) - Echo LZs</option>
+                            <option value="lz_foxtrot">Hunter's Paradise - Foxtrot LZs</option>
+                            <option value="lz_india">Fischerdorf (Ban Pa) - India LZs</option>
+                            <option value="lz_kilo">Blaue Lagune (Blue Lagoon) - Kilo LZs</option>
+                        </optgroup>
+                        
+                        <optgroup label="☠️ End-Game POIs (Hochrisiko-Gebiete)">
+                            <option value="lz_juliet">YBL-1 Bunker - Juliet LZs</option>
+                            <option value="lz_delta">Fort Narith (Militärbasis) - Delta LZs</option>
+                            <option value="lz_hotel">Midnight Sapphire (Hotel) - Hotel LZs</option>
+                            <option value="lz_lima">Tiger Bay (Großstadt) - Lima LZs</option>
+                        </optgroup>
+
+                        <optgroup label="☢️ Sperrzone">
+                            <option value="lz_golf">Ground Zero (Epizentrum) - Golf LZs</option>
+                        </optgroup>
+                    </select>
+                    
+                    <div id="lzInfo" class="info-box" style="margin-top: 20px; padding: 20px; background: #111; border-left: 4px solid var(--accent); box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
+                        Wähle ein Zielgebiet für LZ-Tipps, Gefahrenstufen und taktische Navigation...
+                    </div>
+                </div>
+
+                <div class="panel-box">
+                    <h3 style="margin-top: 0; color: var(--accent);">🚁 Heli-Protokolle (0.4 Meta)</h3>
+                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
+                        <li><strong>LZ-Camping:</strong> In PvP-Zonen (wie Hunter's Paradise) lauern feindliche Operator oft im Gebüsch an den Landezonen. Lade deine Waffe bereits im Hubschrauber durch!</li>
+                        <li><strong>Mörser & Artillerie:</strong> Das 0.4 Update hat dynamische Mörserschläge bei <em>Fort Narith</em> eingeführt. Wenn du das Pfeifen hörst, sprinte sofort in Gebäude!</li>
+                        <li><strong>Der Rückweg:</strong> Helikopter können an denselben LZs auch zur Extraktion gerufen werden. Achte darauf, dass du das Gebiet 3 Minuten vorher sicherst.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
