@@ -1412,6 +1412,24 @@ const vendorData = {
         }
     };
 
+    // ==========================================
+    // 11. CODES & PASSWÖRTER (0.4 SPEARHEAD)
+    // ==========================================
+    const codesDb = {
+    { name: "Na Xieng Farm Vorhängeschloss (Farm Padlock)", code: "9135", loc: "Na Xieng Mohnfelder (Poppy Fields)", info: "Schaltet oft den Koffer für die Vulture-Quest 'The New Contact' frei. Die Haftnotizen mit dem Code liegen versteckt bei den Koordinaten 192,154 und 178,153." },
+    { name: "Ban Suk Tür (Ban Suk Door)", code: "8777", loc: "Ban Suk (Halbinsel)", info: "Der Code steht in einem kleinen roten Buch auf einem Boot am östlichen Rand. <b>Pro-Tipp:</b> Man kann auch einfach über das Bücherregal links neben der Tür klettern, um den Code zu umgehen!" },
+    { name: "Fort Narith Müllplatz-Kiste (Dumping Ground Crate)", code: "2812 (oder 451)", loc: "Schrottplatz (Dumping Ground) nördlich von Fort Narith", info: "Einer der 5 Codes aus dem blauen Haus in Nakasa Village. Schaltet wertvollen Militär-Loot frei." },
+    { name: "Fort Narith Garagen-Kiste (Garage Crate)", code: "0408", loc: "Bürogebäude gegenüber dem FN-Haupttor", info: "Verschlossene Militärkiste auf dem unteren Regal in der Garage. Code stammt aus Nakasa." },
+    { name: "Nakasa Village Munitionskiste (Ammo Box)", code: "0955", loc: "Holzhütte neben dem blauen Haus in Nakasa", info: "Enthält oft High-Tier AP-Munition (z.B. M62). Der Code liegt auf dem Tisch im blauen Haus." },
+    { name: "Fort Narith Flugkontrollturm (AirControl Tower)", code: "9198", loc: "Fort Narith Airfield", info: "Der Code für den Turm findet sich oft auf einem Zettel im Serverraum A204 der Baracken." },
+    { name: "Nakasa Village Squad Tür (Squad Mission Door)", code: "4229", loc: "Nakasa Village (Erdgeschoss)", info: "Öffnet eine gesicherte Tür für spezielle 'Squad Strike' Waffenkisten-Missionen." },
+    { name: "Nakasa Village Obergeschoss (Upper Floor Door)", code: "7204", loc: "Nakasa Village (Blaues Haus)", info: "Öffnet die erste Sicherheitstür im oberen Stockwerk des Code-Hauses." },
+    { name: "Static Echoes Tür (Static Echoes Door)", code: "2063", loc: "Nakasa Village (Hinter Tür 7204)", info: "Den Code 2063 findet man in einem Buch, nachdem man die Tür 7204 im oberen Stockwerk erfolgreich geöffnet hat." },
+    { name: "HP Alter Bunker (Old Bunker)", code: "Dynamisch (Gelbe Notiz)", loc: "Hunter's Paradise", info: "Der Code generiert sich dynamisch. Er steht auf einer leuchtend gelben Haftnotiz im Büro hinter der Waffenkammer (direkt an der rechten Wand neben der gefesselten Leiche)." },
+    { name: "Villa Elena Tresor (Villa Garage Safe)", code: "Dynamisch (Notizblock)", loc: "Startstadt (Starter Town)", info: "Der Code für den Safe in der Garage steht auf einem Notizblock auf dem Nachttisch im Schlafzimmer im Obergeschoss der Villa Elena." },
+    { name: "Survival Unit Level 1 (Easter Egg)", code: "8369", loc: "Unbekannte Anlage", info: "Ein Community-Easter-Egg (Resident Evil Anspielung). Wird manchmal von Spielern für versteckte Safe-Boxen genutzt." }
+};
+
     // 14. Waffen Blueprints
     const blueprintDb = {
         "AK-308": { loc: "Fort Narith Jail (142, 130)", desc: "Hinter einer aufkickbaren Tür unter der Kaffeemaschine.", tip: "Du musst den Jail Key besitzen." },
