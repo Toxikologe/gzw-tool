@@ -487,9 +487,12 @@ const gearDb = {
     "bp_rush24": { name: "Rush 24 (Rush 24 Backpack)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Die kompaktere Version des Rush 72. Perfekter Allrounder." },
     "bp_3day": { name: "3-Tages-Sturmrucksack (3-Day Assault Pack)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Der militärische Standard von Gunny. Sehr verlässliches Platzangebot." },
     "bp_amp12": { name: "AMP12 Rucksack (AMP12 Backpack)", class: "20 Slots (4x5)", info: "<b>Warum er gut ist:</b> Beliebte Quest-Belohnung (Gunny). Perfekte Größe für Mid-Game Missionen, wo Geschwindigkeit wichtig ist." },
+    "bp_patrol": { name: "Patrouillen-Rucksack (Patrol Backpack)", class: "20 Slots (4x5)", info: "<b>Warum er nützlich ist:</b> Reiner Anfänger-Rucksack für die ersten Stunden." },
     "bp_scorpion": { name: "Scorpion OCP (Scorpion OCP Pack)", class: "16 Slots (4x4)", info: "<b>Warum er gut ist:</b> Bester Rucksack für das Early-Game. Reicht genau für ein OP-Kit, Wasser und ein bisschen Loot." },
     "bp_daypack": { name: "Tagesrucksack (Daypack)", class: "16 Slots (4x4)", info: "<b>Warum er gut ist:</b> Ziviles Äquivalent zum Scorpion OCP. Liegt oft in Häusern herum." },
-    "bp_patrol": { name: "Patrouillen-Rucksack (Patrol Backpack)", class: "12 Slots (3x4)", info: "<b>Warum er nützlich ist:</b> Reiner Anfänger-Rucksack für die ersten Stunden." },
+    "bp_gunfigther": { name: "Gunfigther 14 (Gunfigther 14)", class: "9 Slots (3x3)", info: "<b>Warum er nützlich ist:</b> Kompakter Taktischer Rucksack gerade am Anfang sehr beliebt." },
+    "bp_sport": { name: "Sport Rucksack (Sport Backpack)", class: "9 Slots (3x3)", info: "<b>Warum er nützlich ist:</b> Ähnlich wie der Touristenrucksack, kann man sehr oft finden, wenn du keinen hast ist er besser als nichts" },
+    "bp_tourist": { name: "Kleiner Touristenrucksack (Small Tourist Backpack)", class: "6 Slots (2x3)", info: "<b>Warum er nützlich ist:</b> Kann man sehr oft finden, wenn du keinen hast ist er besser als nichts" },
     "bp_drawstring": { name: "Turnbeutel / Sporttasche (Drawstring Bag)", class: "8 Slots (2x4)", info: "<b>Warum er nützlich ist:</b> Wenn du absolut pleite bist. Besser als nichts, aber mehr als ein Med-Kit passt nicht rein." },
 
     // --- TACTICAL RIGS (Tragesysteme) ---
@@ -883,17 +886,35 @@ const containers = {
         source: "Gunny Level 4", 
         info: "<b>Wofür:</b> Ausschließlich für Schusswaffen.<br><b>Kosten:</b> ~ $105.000<br><b>Kaufempfehlung:</b> <b>Pflichtkauf!</b> Hinweis: Sehr lange Waffen (SVD / M16) passen oft nicht aufrecht. Nimm Magazin und Griff ab, dann sind die Waffen nur 1 Slot breit!" 
     },
+    "harde_case": { 
+        name: "HARDE-Kiste (HARDE Case)", 
+        size: "60 Slots intern", 
+        source: "Gunny Level 3", 
+        info: "<b>Wofür:</b> Ausschließlich für Schusswaffen.<br><b>Kosten:</b> ~ $77.000<br><b>Kaufempfehlung:</b> <b>Pflichtkauf!</b> Hinweis: Sehr lange Waffen (SVD / M16) passen oft nicht aufrecht. Nimm Magazin und Griff ab, dann sind die Waffen nur 1 Slot breit!" 
+    },
     "parts_case": { 
-        name: "Zubehörkiste (Weapon Parts Case)", 
+        name: "Waffenteilkiste (Weapon Parts Case)", 
         size: "42 Slots intern", 
         source: "Gunny Level 3", 
         info: "<b>Wofür:</b> Visiere, Griffe, Schalldämpfer und Schäfte.<br><b>Kosten:</b> ~ $60.000<br><b>Kaufempfehlung:</b> Sehr nützlich, wenn du gerne teure Scopes und Attachments hortest." 
     },
-    "ammo_crate": { 
-        name: "Munitionskiste (Ammo Crate)", 
+    "ammo_box": { 
+        name: "Metal-Munitionskiste (Metal Ammo Box)", 
         size: "Nimmt 4 Slots ein, massiver Innenraum", 
-        source: "Gunny Level 2", 
-        info: "<b>Wofür:</b> Munitionsschachteln und lose Patronen.<br><b>Kosten:</b> ~ $45.000<br><b>Kaufempfehlung:</b> Mindestens 2 Stück kaufen! Spart extrem viel Platz." 
+        source: "Turncoat Level 2", 
+        info: "<b>Wofür:</b> Munitionskiste für lose Patronen.<br><b>Kosten:</b> ~ $60.300<br><b>Kaufempfehlung:</b> Mindestens 2 Stück kaufen! Spart extrem viel Platz." 
+    },
+    "mmammo_box": { 
+        name: "MM-Munitionskiste (MM Ammo Box)", 
+        size: "Nimmt 6 Slots ein, massiver Innenraum", 
+        source: "Turncoat Level 4", 
+        info: "<b>Wofür:</b> Munitionskiste für lose Patronen.<br><b>Kosten:</b> ~ $45.000<br><b>Kaufempfehlung:</b> Mindestens 2 Stück kaufen! Spart extrem viel Platz." 
+    },
+    "grenade_box": { 
+        name: "Handgranatenkoffer (Hand Grenade Storage Box)", 
+        size: "Nimmt 6 Slots ein, fasst 20 Granaten", 
+        source: "Turncoat Level 3", 
+        info: "<b>Wofür:</b> Granatenkoffer für alle Sprengstoff Enthusiasten.<br><b>Kosten:</b> ~ $75.500<br><b>Kaufempfehlung:</b> Wer viel und gerne mit Granaten spielt sollte sich 1-2 Stück kaufen." 
     },
     "mag_crate": { 
         name: "Magazinkiste (Magazine Crate)", 
@@ -901,23 +922,23 @@ const containers = {
         source: "Gunny Level 3", 
         info: "<b>Wofür:</b> Leere und geladene Waffenmagazine.<br><b>Kosten:</b> ~ $55.000<br><b>Kaufempfehlung:</b> Sehr wichtig, um das Chaos im Inventar zu besiegen." 
     },
-    "gear_trunk": { 
-        name: "Ausrüstungskiste (Gear Trunk)", 
+    "truncase": { 
+        name: "IV-Schutzkoffer (IV Truncase)", 
         size: "Riesiges Raster für Rüstung & Rucksäcke", 
-        source: "Artisan Level 2 / 3", 
-        info: "<b>Wofür:</b> Helme, Westen, Rigs, Gürtel und Rucksäcke.<br><b>Kosten:</b> ~ $85.000<br><b>Kaufempfehlung:</b> <b>Top!</b> Achtung: Du kannst keinen Rucksack hineinlegen, wenn sich in dem Rucksack eine Waffe befindet!" 
+        source: "Artisan Level 2", 
+        info: "<b>Wofür:</b> Helme, Westen, Rigs, Gürtel und Rucksäcke.<br><b>Kosten:</b> ~ $61.700<br><b>Kaufempfehlung:</b> <b>Top!</b> Achtung: Du kannst keinen Rucksack hineinlegen, wenn sich in dem Rucksack eine Waffe befindet!" 
     },
-    "med_container": { 
-        name: "Medizinkiste (Medical Container)", 
+    "first_aid_case": { 
+        name: "Erste-Hilfe-Koffer (First Aid Case)", 
         size: "Großes Raster für Medizin", 
         source: "Lab Rat Level 2", 
         info: "<b>Wofür:</b> OP-Kits, Blutbeutel, Bandagen.<br><b>Kosten:</b> ~ $40.000<br><b>Kaufempfehlung:</b> Sehr wichtiges Mid-Game Upgrade." 
     },
     "cooler_case": { 
-        name: "Kühlbox / Proviantkiste (Cooler Case)", 
+        name: "Kühlbox / Proviantkiste (Personal Cooler)", 
         size: "Großes Raster für Essen/Trinken", 
-        source: "Banshee / Lab Rat", 
-        info: "<b>Wofür:</b> Getränke, Rationen und Snacks.<br><b>Kosten:</b> ~ $35.000<br><b>Kaufempfehlung:</b> Gut, um MREs und Wasser auf Vorrat zu halten." 
+        source: "Artisan Level 2", 
+        info: "<b>Wofür:</b> Getränke, Rationen und Snacks.<br><b>Kosten:</b> ~ $60.200<br><b>Kaufempfehlung:</b> Gut, um MREs und Wasser auf Vorrat zu halten." 
     },
     "huge_key_case": { 
         name: "Großer Schlüsselkoffer (Huge Key Case)", 
@@ -943,6 +964,12 @@ const containers = {
         source: "Vulture Level 4", 
         info: "<b>Wofür:</b> Der ultimative Geldtresor.<br><b>Kosten:</b> ~ $105.000<br><b>Kaufempfehlung:</b> Reiner Endgame-Flex für Spieler mit Millionen auf dem Konto." 
     },
+    "desk": { 
+        name: "Verwaltungstisch (Administrative desk)", 
+        size: "210 Slots", 
+        source: "Artisan Level 3", 
+        info: "<b>Wofür:</b> Aufbewahrung von großen Dokumentenmengen.<br><b>Kosten:</b> ~ $89.500<br><b>Kaufempfehlung:</b> Wer Spaß am Sammeln von allen Dokumenten hat und mehr der Lore verstehen will sollte die Kiste kaufen." 
+    },
 
     // --- MICRO-CONTAINER & POUCHES (Für den Raid) ---
     "wallet": { 
@@ -952,10 +979,16 @@ const containers = {
         info: "<b>Wofür:</b> Bargeld, Kreditkarten und Pässe.<br><b>Kosten:</b> ~ $3.500<br><b>Kaufempfehlung:</b> <b>Absolutes Must-Have!</b> Gehört sofort in deine Secure Pouch." 
     },
     "key_holder": { 
-        name: "Schlüsselbund (Key Holder / Leather Key)", 
+        name: "Lederschlüsselhalter (Key Holder / Leather Key)", 
         size: "Nimmt 1 Slot ein, fasst viele Schlüssel", 
-        source: "Artisan / Banshee Level 1", 
-        info: "<b>Wofür:</b> Raumschlüssel und Zugangskarten.<br><b>Kosten:</b> ~ $5.000<br><b>Kaufempfehlung:</b> <b>Must-Have!</b> Sichern, um Schlüssel beim Tod nicht zu verlieren." 
+        source: "Artisan Level 2", 
+        info: "<b>Wofür:</b> Raumschlüssel und Zugangskarten.<br><b>Kosten:</b> ~ $4.500<br><b>Kaufempfehlung:</b> <b>Must-Have!</b> Sichern, um Schlüssel beim Tod nicht zu verlieren." 
+    },
+    "key_case": { 
+        name: "Schlüsseltasche (Key Case)", 
+        size: "Nimmt 2 Slots ein, fasst sehr viele Schlüssel", 
+        source: "Artisan Level 3", 
+        info: "<b>Wofür:</b> Raumschlüssel und Zugangskarten.<br><b>Kosten:</b> ~ $6.000<br><b>Kaufempfehlung:</b> <b>Must-Have!</b> Sichern, um Schlüssel beim Tod nicht zu verlieren." 
     },
     "injector_case": { 
         name: "Injektoren-Etui (Injector Case / Stim Pouch)", 
@@ -963,23 +996,41 @@ const containers = {
         source: "Lab Rat Level 4", 
         info: "<b>Wofür:</b> Aufbewahrung von Adrenalin, Morphin und anderen Stims.<br><b>Kosten:</b> Variiert<br><b>Kaufempfehlung:</b> Ein starkes Endgame-Item, um massiv Platz im Container oder Belt zu sparen." 
     },
-    "mfak": { 
-        name: "M-FAK Medizintasche (Micro First Aid Kit)", 
-        size: "1x1 Slot", 
+    "admin_bag": { 
+        name: "Verwaltungstasche (Administration Bag)", 
+        size: "Nimmt 2 Slots ein, fasst 6 Slots", 
+        source: "Artisan Level 2", 
+        info: "<b>Wofür:</b> Aufbewahrung von Dokumenten, Karten,Schlüssel und Geld.<br><b>Kosten:</b> ~ $75.900<br><b>Kaufempfehlung:</b> Kann man Kaufen, muss man aber nicht, bleibt euch überlassen." 
+    },
+    "kombat_folder": { 
+        name: "Kombat-Ordner (Kombat Folder)", 
+        size: "Nimmt 4 Slots ein, fasst 16 Slots", 
+        source: "Artisan Level 3", 
+        info: "<b>Wofür:</b> Aufbewahrung von Dokumenten, Karten,Schlüssel und Geld.<br><b>Kosten:</b> ~ $75.400<br><b>Kaufempfehlung:</b> Kann man Kaufen, muss man aber nicht, bleibt euch überlassen. Auf jedenfall besser als die Verwaltungstasche." 
+    },
+    "hfak": { 
+        name: "Hartschalen-Erste-Hilfe-Set (Hard Case First Aid Kit)", 
+        size: "1x2 Slot", 
         source: "Lab Rat Level 1", 
-        info: "<b>Wofür:</b> Kleine Medizintasche für den Gürtel.<br><b>Kosten:</b> ~ $2.500<br><b>Kaufempfehlung:</b> Günstig, hilft am Anfang." 
+        info: "<b>Wofür:</b> Kleine Medizintasche für den Gürtel.<br><b>Kosten:</b> ~ $90<br><b>Kaufempfehlung:</b> Kann man sehr oft finden." 
+    },
+    "mfak": { 
+        name: "Mini-Erste-Hilfe-Set (Mini First Aid Kit)", 
+        size: "1x3 Slot", 
+        source: "Lab Rat Level 2", 
+        info: "<b>Wofür:</b> Kleine Medizintasche für den Gürtel.<br><b>Kosten:</b> ~ $200<br><b>Kaufempfehlung:</b> Günstig, hilft am Anfang." 
     },
     "qfak": { 
-        name: "QFAK Medizintasche (Quick First Aid Kit)", 
-        size: "1x2 Slots", 
-        source: "Lab Rat Level 2", 
-        info: "<b>Wofür:</b> Mittlere Med-Pouch.<br><b>Kosten:</b> ~ $5.000<br><b>Kaufempfehlung:</b> Sehr effizient auf dem Tactical Belt." 
-    },
-    "qrkit": { 
-        name: "QRKit Sanitätstasche (Quick Response Kit)", 
-        size: "2x2 Slots", 
+        name: "Schnellverschluss-Erste-Hilfe-Set (Quick Release First Aid Kit)", 
+        size: "2x3 Slots", 
         source: "Lab Rat Level 3", 
-        info: "<b>Wofür:</b> Große Sanitätstasche für den Rucksack.<br><b>Kosten:</b> ~ $12.000<br><b>Kaufempfehlung:</b> Ideal für Squad-Medics." 
+        info: "<b>Wofür:</b> Mittlere Med-Pouch.<br><b>Kosten:</b> ~ $320<br><b>Kaufempfehlung:</b> Sehr effizient auf dem Tactical Belt." 
+    },
+    "emt": { 
+        name: "EMT (RIP-AWAY EMT POUCH)", 
+        size: "3x3 Slots", 
+        source: "Lab Rat Level 4", 
+        info: "<b>Wofür:</b> Große Sanitätstasche für den Rucksack.<br><b>Kosten:</b> ~ $000<br><b>Kaufempfehlung:</b> Ideal für Squad-Medics." 
     },
 
     // --- STASH-ERWEITERUNGEN ---
