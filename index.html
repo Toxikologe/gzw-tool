@@ -265,29 +265,35 @@
         label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #aaa; }
         select, input { width: 100%; padding: 10px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 6px; box-sizing: border-box; }
 
+        /* ============================================================== */
+        /* BACK TO TOP BUTTON (FIXED) */
+        /* ============================================================== */
         #backToTop {
-    position: fixed;
-    bottom: 80px; /* Von 20px auf 80px erhöht, damit er über dem Feedback-Button schwebt */
-    right: 20px;
-    background: var(--accent);
-    color: #fff;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: none; /* Wird via JS eingeblendet */
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 9999;
-    border: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: 0.3s;
-}
+        position: fixed;
+        bottom: 80px;         /* Schwebt exakt über dem Feedback-Button */
+        right: 20px;
+        background-color: var(--accent);
+        color: #fff;
+        width: 45px !important;  /* WICHTIG: Erzwingt die Breite */
+        height: 45px !important; /* WICHTIG: Erzwingt die Höhe */
+        border-radius: 50%;      /* Macht den Button perfekt rund */
+        display: none;           /* Startet unsichtbar */
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+        z-index: 9999;
+        border: none;
+        padding: 0;
+        line-height: 1;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        transition: transform 0.3s, filter 0.3s;
+    }
+    
         #backToTop:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2);
-}
+        transform: scale(1.1);
+        filter: brightness(1.2);
+    }
 
         #keyList, #taskList { background: #2a2a2a; border: 1px solid #444; max-height: 200px; overflow-y: auto; display: none; border-radius: 0 0 6px 6px; }
         .search-item { padding: 10px; border-bottom: 1px solid #333; cursor: pointer; }
