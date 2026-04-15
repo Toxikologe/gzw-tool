@@ -752,42 +752,87 @@
             <div class="grid">
                 <div class="panel-box">
                     <label for="gearFullSelect" style="margin-top: 0;">Ausrüstungs-Datenbank (GZW)</label>
-                    <select id="gearFullSelect" onchange="updateGeneric('gearFullSelect', 'gearFullInfo')">
+                    <select id="gearFullSelect" onchange="updateGearInfo()" style="font-weight: bold; color: var(--accent);">
                         <option value="">-- Wähle Ausrüstung --</option>
-                        <optgroup label="Plate Carriers (NIJ III / III+ / IV)">
-                            <option value="Recon Plate Carrier (RPC) - NIJ III+: Bietet sehr guten ballistischen Schutz bei gleichzeitig hoher Mobilität.">Recon Plate Carrier (RPC) - NIJ III+</option>
-                            <option value="CZ 4M Lancer - NIJ III: Sehr populärer Plate Carrier mit solider Verteilung von Gewicht und Schutz.">CZ 4M Lancer - NIJ III</option>
-                            <option value="LCS Sentry - NIJ III: Schlanker Plate Carrier für maximale Manövrierfähigkeit im Dschungel.">LCS Sentry - NIJ III</option>
-                            <option value="M2 Plate Carrier - NIJ III: Standard-Ausrüstung für schwerere Gefechte.">M2 Plate Carrier - NIJ III</option>
-                            <option value="Modular Operator Carrier Gen II - NIJ III: Bietet guten Schutz und ausreichend Platz für Taschen.">Modular Operator Gen II - NIJ III</option>
+                        
+                        <optgroup label="Plate Carriers (Plattenträger) - NIJ III bis III++">
+                            <option value="pc_defender">Defender-2 Schutzweste (Defender-2) [NIJ III++]</option>
+                            <option value="pc_rpc">Recon Plattenträger (Recon Plate Carrier) [NIJ III+]</option>
+                            <option value="pc_lancer">CZ 4M Lancer (CZ 4M Lancer) [NIJ III]</option>
+                            <option value="pc_sentry">LCS Sentry (LCS Sentry) [NIJ III]</option>
+                            <option value="pc_m2">M2 Plattenträger (M2 Plate Carrier) [NIJ III]</option>
+                            <option value="pc_6b13">6B13 Sturm-Panzerung (6B13 Assault Armor) [NIJ III]</option>
+                            <option value="pc_6b23">6B23-1 Panzerung (6B23-1 Armor) [NIJ III]</option>
                         </optgroup>
-                        <optgroup label="Armor Vests (NIJ IIA / IIIA / III)">
-                            <option value="ATBV Vest - NIJ III: Eine robuste ballistische Weste mit Front- und Rückenpanzerung.">ATBV Vest - NIJ III</option>
-                            <option value="Soft Armor Westen - NIJ IIA/IIIA: Schützt primär vor Pistolenmunition und Schrot, stoppt keine Gewehrkugeln.">Soft Armor / Zivile Westen - NIJ IIA/IIIA</option>
+                        
+                        <optgroup label="Armor Vests (Weichballistik) - NIJ IIIA bis III">
+                            <option value="av_atbv">ATBV Schutzweste (ATBV Vest) [NIJ III]</option>
+                            <option value="av_paca">PACA Schutzweste (PACA Body Armor) [NIJ IIIA]</option>
+                            <option value="av_6b2">6B2 Schutzweste (6B2 Armor) [NIJ IIIA]</option>
+                            <option value="av_security">Security Weste (Security Vest) [NIJ IIA]</option>
                         </optgroup>
-                        <optgroup label="Helme & Kopfbedeckungen">
-                            <option value="FAST MT (Multicam / Tan) - NIJ IIIA: Hochmoderner, leichter Helm. Erlaubt viele Attachments wie NVGs.">FAST MT - NIJ IIIA</option>
-                            <option value="EXFIL Helm - NIJ IIIA: Hervorragende Passform und Modularität, beliebter Helm im Endgame.">EXFIL Helm - NIJ IIIA</option>
-                            <option value="Mich TC-2000 / TC-2002 - NIJ IIIA: Der Standard für viele PMCs. Zuverlässig gegen Streifschüsse.">Mich TC-2000 / TC-2002 - NIJ IIIA</option>
-                            <option value="LSHZ 1+ - NIJ IIIA: Russischer Helm mit gutem Schutzbereich.">LSHZ 1+ - NIJ IIIA</option>
-                            <option value="6B47 Ratnik - NIJ IIIA: Standardhelm östlicher Fraktionen. Solide und leicht.">6B47 Ratnik - NIJ IIIA</option>
-                            <option value="SSh-68N / SSh-60 - NIJ IIA: Alter Stahlhelm. Schützt minimal, besser als nichts.">SSh-68N / SSh-60 - NIJ IIA</option>
-                            <option value="Skull Crusher (NVG Mount): Bietet KEINEN Rüstungsschutz, dient nur als extrem leichte Halterung für Nachtsichtgeräte.">Skull Crusher (NVG Mount)</option>
-                        </optgroup>
-                        <optgroup label="Tactical Rigs (Ungepanzert)">
-                            <option value="Recon Chest Rig: 12 Slots (4x3). Bietet Platz für bis zu 6 AR/Pistolen-Magazine.">Recon Chest Rig</option>
-                            <option value="TacTec Chest Rig: 10 Slots (5x2). Solides Tragesystem für längere Einsätze.">TacTec Chest Rig</option>
-                            <option value="Training Mini Rig: 8 Slots (3x3). Minimalistisch, ideal für schnelle Runs.">Training Mini Rig</option>
-                            <option value="Type 56 AK Rig: 6 Slots. Klassisches Chicom-Design, perfekt für Low-Budget AK-Runs.">Type 56 AK Rig</option>
-                            <option value="Improvized Rig: 2 Slots. Das absolute Minimum.">Improvized Rig</option>
-                        </optgroup>
+
                         <optgroup label="Backpacks (Rucksäcke)">
-                            <option value="Rush 72 2.0 (Groß): 30 Slots. Sehr großer Rucksack, ideal für intensive Loot-Runs in Tiger Bay.">Rush 72 2.0</option>
-                            <option value="Delta Backpack (Groß): 30+ Slots. Gigantischer Rucksack für maximale Beuteausbeute.">Delta Backpack</option>
-                            <option value="Falang 28 (Mittel): Viel Stauraum für den zivilen Look, sehr beliebt für Mid-Tier Runs.">Falang 28</option>
-                            <option value="Scorpion OCP Pack (Mittel): 16 Slots (4x4). Der perfekte, robuste Standard-Rucksack.">Scorpion OCP Convoy Pack</option>
-                            <option value="Assault / Patrol Backpack (Mittel): Solider Rucksack für schnelle militärische Einsätze.">Assault / Patrol Backpack</option>
-                            <option value="Drawstring / Sport Backpack (Klein): Sehr klein, eher für den absoluten Start oder Notfälle.">Drawstring / Sport Backpack</option>
+                            <option value="bp_delta">Delta Rucksack (Delta Backpack) [36 Slots]</option>
+                            <option value="bp_rush72">Rush 72 2.0 (Rush 72 Backpack) [30 Slots]</option>
+                            <option value="bp_rush24">Rush 24 (Rush 24 Backpack) [24 Slots]</option>
+                            <option value="bp_falang">Falang 28 (Falang 28 Backpack) [24 Slots]</option>
+                            <option value="bp_3day">3-Tages-Sturmrucksack (3-Day Assault Pack) [24 Slots]</option>
+                            <option value="bp_scorpion">Scorpion OCP (Scorpion OCP Pack) [16 Slots]</option>
+                            <option value="bp_daypack">Tagesrucksack (Daypack) [16 Slots]</option>
+                            <option value="bp_patrol">Patrouillen-Rucksack (Patrol Backpack) [12 Slots]</option>
+                            <option value="bp_drawstring">Sporttasche / Turnbeutel (Drawstring Bag) [8 Slots]</option>
+                        </optgroup>
+
+                        <optgroup label="Tactical Rigs (Tragesysteme)">
+                            <option value="rig_lbt">LBT-1961A Rig (LBT-1961A Chest Rig)</option>
+                            <option value="rig_recon">Recon Brust-Rig (Recon Chest Rig)</option>
+                            <option value="rig_tactec">TacTec Brust-Rig (TacTec Chest Rig)</option>
+                            <option value="rig_viper">Viper Rig (Viper Chest Rig)</option>
+                            <option value="rig_training">Training Mini Rig (Training Mini Rig)</option>
+                            <option value="rig_type81">Type 81 AK-Rig (Type 81 Rig)</option>
+                            <option value="rig_type56">Type 56 AK-Rig (Type 56 Rig)</option>
+                            <option value="rig_improvised">Improvisiertes Rig (Improvised Rig)</option>
+                        </optgroup>
+
+                        <optgroup label="Headwear (Helme & Kopfbedeckung)">
+                            <option value="hw_altyn">Altyn Helm (Altyn Helmet) [NIJ III]</option>
+                            <option value="hw_fastmt">FAST MT Helm (FAST MT Helmet) [NIJ IIIA]</option>
+                            <option value="hw_exfil">EXFIL Helm (Team Wendy EXFIL) [NIJ IIIA]</option>
+                            <option value="hw_mich2000">MICH TC-2000 (MICH TC-2000) [NIJ IIIA]</option>
+                            <option value="hw_mich2002">MICH TC-2002 (MICH TC-2002) [NIJ IIIA]</option>
+                            <option value="hw_lshz">LSHZ 1+ Helm (LSHZ 1+) [NIJ IIIA]</option>
+                            <option value="hw_6b47">6B47 Ratnik Helm (6B47 Ratnik) [NIJ IIIA]</option>
+                            <option value="hw_ssh">SSh-68 Stahlhelm (SSh-68) [NIJ IIA]</option>
+                            <option value="hw_skull">Skull Crusher (NVG Mount)</option>
+                            <option value="hw_boonie">Dschungelhut (Boonie Hat)</option>
+                            <option value="hw_cap">Baseballkappe (Baseball Cap)</option>
+                        </optgroup>
+
+                        <optgroup label="Headsets (Gehörschutz / Audio Meta)">
+                            <option value="hs_comtac4">ComTac 4 (ComTac 4 Headset) [META]</option>
+                            <option value="hs_sordin">Sordin Supreme (Sordin Supreme Pro-X)</option>
+                            <option value="hs_comtac2">ComTac 2 (ComTac 2 Headset)</option>
+                            <option value="hs_m32">Earmor M32 (M32 Headset)</option>
+                            <option value="hs_razor">Walker's Razor (Razor Headset)</option>
+                            <option value="hs_gssh">GSSh-01 (GSSh-01 Headset)</option>
+                        </optgroup>
+
+                        <optgroup label="Glasses & Face Cover (Brillen & Masken)">
+                            <option value="gl_tactical">Taktische Schutzbrille (Tactical Goggles)</option>
+                            <option value="gl_sports">Sportsonnenbrille (Sports Sunglasses)</option>
+                            <option value="gl_aviator">Fliegerbrille (Aviator Glasses)</option>
+                            <option value="fc_balaclava">Sturmhaube (Balaclava) [PvP META]</option>
+                            <option value="fc_shemagh">Shemagh (Shemagh)</option>
+                            <option value="fc_neck">Schlauchschal (Neck Gaiter)</option>
+                            <option value="fc_bandana">Bandana (Bandana)</option>
+                        </optgroup>
+
+                        <optgroup label="Belts (Taktische Gürtel)">
+                            <option value="belt_operator">Operator Gürtel (Operator Belt) [2x3 Slots]</option>
+                            <option value="belt_battle">Gefechtsgürtel (Battle Belt) [2x2 Slots]</option>
+                            <option value="belt_tactical">Taktischer Gürtel (Tactical Belt) [1x2 Slots]</option>
+                            <option value="belt_duty">Dienstgürtel (Duty Belt) [1x2 Slots]</option>
                         </optgroup>
                     </select>
                     <div id="gearFullInfo" class="info-box" style="margin-top: 15px; padding: 15px; background: #111; border-left: 4px solid var(--accent);">Gear-Spezifikationen...</div>
@@ -1319,6 +1364,25 @@
     function updateContainer() { const c = typeof containers !== 'undefined' ? containers[document.getElementById('containerSelect').value] : null; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = typeof valuables !== 'undefined' ? valuables[document.getElementById('valSelect').value] : null; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
 
+    function updateGearInfo() {
+        const select = document.getElementById('gearFullSelect');
+        const display = document.getElementById('gearFullInfo');
+        const val = select.value;
+
+        if (typeof gearDb !== 'undefined' && gearDb[val]) {
+            const gear = gearDb[val];
+            display.innerHTML = `
+                <h3 style="color: var(--accent); margin-top: 0; margin-bottom: 8px;">${gear.name}</h3>
+                <div style="margin-bottom: 10px; color: #aaa;"><strong>Klassifizierung:</strong> <span style="color: #fff;">${gear.class}</span></div>
+                <div style="font-size: 0.95rem; line-height: 1.5; color: #ccc;">${gear.info}</div>
+            `;
+            display.style.borderLeftColor = "var(--accent)";
+        } else {
+            display.innerHTML = "Wähle einen Ausrüstungsgegenstand für Details und Meta-Tipps...";
+            display.style.borderLeftColor = "#444";
+        }
+    }
+    
     function updateVendor() {
         const select = document.getElementById('vendorSelect');
         const infoBox = document.getElementById('vendorInfo');
