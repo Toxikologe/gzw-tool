@@ -732,23 +732,27 @@
         </div>
 
         <div id="tab-ammo" class="tab-content">
-            <h2>🔴 Ammo Matrix — Munitions-Cheatsheet</h2>
-            <p style="color:#aaa; font-size:0.85rem; margin-top:-5px; margin-bottom:15px;">
-                Farbcodierung: 
-                <span style="background:#1a4a1a; color:#7ca35a; padding:2px 8px; border-radius:3px; margin-right:6px;">🟢 Durchschlag sicher</span>
-                <span style="background:#4a3a00; color:#ffa500; padding:2px 8px; border-radius:3px; margin-right:6px;">🟡 Braucht mehrere Schuss</span>
-                <span style="background:#4a1a1a; color:#ff4c4c; padding:2px 8px; border-radius:3px;">🔴 Kein Durchschlag / Leg-Meta</span>
-            </p>
-            <div style="overflow-x: auto; border: 2px solid #333; border-radius: 6px;">
-                <table id="ammoMatrix" style="width:100%; border-collapse:collapse; font-size:0.78rem; min-width:700px;">
+            <h2>🔴 Ammo Matrix — Penetrations-Cheatsheet (0.4 Meta)</h2>
+            <div class="panel-box" style="margin-bottom: 20px;">
+                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
+                    <strong>WICHTIG (Spearhead Update 0.4):</strong> Die Rüstungsklassen in GZW sind jetzt hochkomplex. Die höchste Klasse im Spiel ist <strong>NIJ III++</strong> (Defender-2). Nutze diese Matrix, um sofort zu sehen, ob deine Kugeln durch die Platten gehen oder ob du auf die ungeschützten Beine zielen musst (Leg-Meta)!
+                </p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <span style="background:rgba(124, 163, 90, 0.15); border: 1px solid #7ca35a; color:#7ca35a; padding:6px 12px; border-radius:4px; font-weight: bold; box-shadow: 0 0 8px rgba(124, 163, 90, 0.2);">🟢 Durchschlag sicher (1-2 Treffer)</span>
+                    <span style="background:rgba(255, 165, 0, 0.15); border: 1px solid #ffa500; color:#ffa500; padding:6px 12px; border-radius:4px; font-weight: bold; box-shadow: 0 0 8px rgba(255, 165, 0, 0.2);">🟡 Rüstungsschaden (Braucht mehrere Treffer)</span>
+                    <span style="background:rgba(179, 57, 57, 0.15); border: 1px solid #ff4c4c; color:#ff4c4c; padding:6px 12px; border-radius:4px; font-weight: bold; box-shadow: 0 0 8px rgba(179, 57, 57, 0.2);">🔴 Kein Durchschlag (Flesh / Leg-Meta!)</span>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto; border: 2px solid #333; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                <table id="ammoMatrix" style="width:100%; border-collapse:collapse; font-size:0.85rem; min-width:850px; background: #111;">
                     <thead>
                         <tr>
-                            <th style="background:#1a1a1a; color:#aaa; padding:10px 8px; text-align:left; border:1px solid #333; min-width:160px; position:sticky; left:0; z-index:2;">Munition</th>
-                            <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ IIA</th>
-                            <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ IIIA</th>
-                            <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ III</th>
-                            <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ III+</th>
-                            <th style="background:#1a1a1a; color:#ccc; padding:10px 8px; text-align:center; border:1px solid #333; min-width:80px;">NIJ IV</th>
+                            <th style="background:#1a1a1a; color:#aaa; padding:15px 12px; text-align:left; border:1px solid #333; min-width:240px; position:sticky; left:0; z-index:2;">Munition (Kaliber)</th>
+                            <th style="background:#1a1a1a; color:#ccc; padding:15px 12px; text-align:center; border:1px solid #333; min-width:110px;">NIJ IIIA<br><small style="color:#777; font-weight:normal;">(Helme / PACA)</small></th>
+                            <th style="background:#1a1a1a; color:#ccc; padding:15px 12px; text-align:center; border:1px solid #333; min-width:110px;">NIJ III<br><small style="color:#777; font-weight:normal;">(Lancer Weste)</small></th>
+                            <th style="background:#1a1a1a; color:#ccc; padding:15px 12px; text-align:center; border:1px solid #333; min-width:110px;">NIJ III+<br><small style="color:#777; font-weight:normal;">(Recon Carrier)</small></th>
+                            <th style="background:#1a1a1a; color:#ccc; padding:15px 12px; text-align:center; border:1px solid #333; min-width:110px;">NIJ III++<br><small style="color:#777; font-weight:normal;">(Defender-2)</small></th>
                         </tr>
                     </thead>
                     <tbody id="ammoMatrixBody">
@@ -2545,106 +2549,36 @@
     }
 
     // ==============================================================
-    // AMMO MATRIX
+    // AMMO MATRIX ZELLEN-LOGIK (FARBEN & DURCHSCHLAG)
     // ==============================================================
-    const ammoMatrixData = [
-        { name: "5.56 M855A1",    cal: "5.56x45mm",   pen: 4.5, dmg: 52 },
-        { name: "5.56 M855",      cal: "5.56x45mm",   pen: 3.5, dmg: 50 },
-        { name: "5.56 M856A1",    cal: "5.56x45mm",   pen: 3.8, dmg: 51 },
-        { name: "5.56 M193",      cal: "5.56x45mm",   pen: 2.0, dmg: 58 },
-        { name: "5.56 MK255 HP",  cal: "5.56x45mm",   pen: 1.0, dmg: 65 },
-        { name: ".300 BLK AP",    cal: ".300 BLK",     pen: 4.5, dmg: 55 },
-        { name: ".300 BLK CBJ",   cal: ".300 BLK",     pen: 4.0, dmg: 58 },
-        { name: ".300 BLK M62",   cal: ".300 BLK",     pen: 3.8, dmg: 54 },
-        { name: ".300 BLK Whisper",cal: ".300 BLK",    pen: 2.5, dmg: 62 },
-        { name: "5.45 BS",        cal: "5.45x39mm",   pen: 5.5, dmg: 43 },
-        { name: "5.45 BP",        cal: "5.45x39mm",   pen: 4.5, dmg: 48 },
-        { name: "5.45 PP",        cal: "5.45x39mm",   pen: 3.5, dmg: 50 },
-        { name: "5.45 7N6M",      cal: "5.45x39mm",   pen: 2.5, dmg: 52 },
-        { name: "5.45 HP",        cal: "5.45x39mm",   pen: 1.0, dmg: 68 },
-        { name: "7.62x39 MAI AP", cal: "7.62x39mm",   pen: 5.5, dmg: 46 },
-        { name: "7.62x39 BP",     cal: "7.62x39mm",   pen: 4.5, dmg: 58 },
-        { name: "7.62x39 PS",     cal: "7.62x39mm",   pen: 3.5, dmg: 54 },
-        { name: "7.62x39 US",     cal: "7.62x39mm",   pen: 2.0, dmg: 56 },
-        { name: "7.62x39 HP",     cal: "7.62x39mm",   pen: 1.0, dmg: 73 },
-        { name: "7.62 M993",      cal: "7.62x51mm",   pen: 6.5, dmg: 60 },
-        { name: "7.62 M61",       cal: "7.62x51mm",   pen: 6.0, dmg: 64 },
-        { name: "7.62 M62",       cal: "7.62x51mm",   pen: 5.4, dmg: 68 },
-        { name: "7.62 M80",       cal: "7.62x51mm",   pen: 4.2, dmg: 80 },
-        { name: "7.62 TCW SP",    cal: "7.62x51mm",   pen: 2.5, dmg: 90 },
-        { name: "7.62x54R SNB",   cal: "7.62x54mmR",  pen: 6.0, dmg: 75 },
-        { name: "7.62x54R 7N1",   cal: "7.62x54mmR",  pen: 4.5, dmg: 85 },
-        { name: "7.62x54R LPS",   cal: "7.62x54mmR",  pen: 4.0, dmg: 80 },
-        { name: "4.6 AP SX",      cal: "4.6x30mm",    pen: 5.0, dmg: 35 },
-        { name: "4.6 FMJ SX",     cal: "4.6x30mm",    pen: 4.0, dmg: 43 },
-        { name: "4.6 Subsonic",   cal: "4.6x30mm",    pen: 2.0, dmg: 38 },
-        { name: "4.6 Action",     cal: "4.6x30mm",    pen: 1.5, dmg: 50 },
-        { name: "9mm 7N31",       cal: "9x19mm",      pen: 3.5, dmg: 45 },
-        { name: "9mm AP 6.3",     cal: "9x19mm",      pen: 2.5, dmg: 48 },
-        { name: "9mm PST Gzh",    cal: "9x19mm",      pen: 1.5, dmg: 52 },
-        { name: "9mm RIP",        cal: "9x19mm",      pen: 0.5, dmg: 95 },
-        { name: "9x18 PMM",       cal: "9x18mm",      pen: 1.8, dmg: 50 },
-        { name: "9x18 SP7",       cal: "9x18mm",      pen: 2.2, dmg: 46 },
-        { name: "9x18 Gzh",       cal: "9x18mm",      pen: 0.8, dmg: 55 },
-        { name: "7.62x25 PST",    cal: "7.62x25mm",   pen: 2.8, dmg: 42 },
-        { name: "7.62x25 LRNPC",  cal: "7.62x25mm",   pen: 1.5, dmg: 48 },
-        { name: ".45 ACP AP",     cal: ".45 ACP",     pen: 3.5, dmg: 60 },
-        { name: ".45 ACP Match",  cal: ".45 ACP",     pen: 2.0, dmg: 70 },
-        { name: ".45 ACP RIP",    cal: ".45 ACP",     pen: 0.5, dmg: 100 },
-        { name: ".32 ACP FMJ",    cal: ".32 ACP",     pen: 0.5, dmg: 38 },
-        { name: "12G AP-20 Slug", cal: "12 Gauge",    pen: 3.5, dmg: 160 },
-        { name: "12G Copper Slug",cal: "12 Gauge",    pen: 2.0, dmg: 150 },
-        { name: "12G Flechette",  cal: "12 Gauge",    pen: 1.5, dmg: 120 },
-        { name: "12G 00 Buck",    cal: "12 Gauge",    pen: 1.0, dmg: 280 },
-    ];
-
-    const armorClasses = [
-        { label: "NIJ IIA", threshold: 1.0 },
-        { label: "NIJ IIIA", threshold: 2.0 },
-        { label: "NIJ III", threshold: 3.0 },
-        { label: "NIJ III+", threshold: 3.5 },
-        { label: "NIJ IV", threshold: 4.0 }
-    ];
-
     function getAmmoCell(pen, threshold) {
         const diff = pen - threshold;
-        if (diff >= 0.5) return { bg: '#0d2e0d', color: '#7ca35a', text: '✅', title: 'Sicherer Durchschlag' };
-        else if (diff >= -0.3) return { bg: '#2e2200', color: '#ffa500', text: '⚠️', title: 'Braucht mehrere Schuss' };
-        else if (diff >= -1.0) return { bg: '#2e0d0d', color: '#ff6b35', text: '❌', title: 'Kaum Durchschlag' };
-        else return { bg: '#1a0505', color: '#b33939', text: '🦵', title: 'Kein Durchschlag — Beine anvisieren!' };
-    }
-
-    function buildAmmoMatrix() {
-        const tbody = document.getElementById('ammoMatrixBody');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        const calibers = [...new Set(ammoMatrixData.map(a => a.cal))];
-        let lastCal = '';
-
-        ammoMatrixData.forEach(ammo => {
-            const row = document.createElement('tr');
-            if (ammo.cal !== lastCal) {
-                const sepRow = document.createElement('tr');
-                sepRow.innerHTML = `<td colspan="6" style="background:#1a1a2e; color:var(--accent); font-weight:bold; font-size:0.8rem; padding:6px 10px; border:1px solid #333; letter-spacing:1px;">⚡ ${ammo.cal}</td>`;
-                tbody.appendChild(sepRow);
-                lastCal = ammo.cal;
-            }
-
-            let nameCell = `<td style="background:#1e1e1e; color:#ddd; padding:7px 10px; border:1px solid #2a2a2a; font-weight:bold; position:sticky; left:0; z-index:1; white-space:nowrap;">
-                ${ammo.name}
-                <small style="color:#555; font-weight:normal; display:block;">Pen: ${ammo.pen} | DMG: ${ammo.dmg}</small>
-            </td>`;
-
-            row.innerHTML = nameCell;
-
-            armorClasses.forEach(ac => {
-                const cell = getAmmoCell(ammo.pen, ac.threshold);
-                row.innerHTML += `<td title="${cell.title}" style="background:${cell.bg}; color:${cell.color}; text-align:center; padding:7px 4px; border:1px solid #2a2a2a; font-size:1rem; cursor:default;">${cell.text}</td>`;
-            });
-
-            tbody.appendChild(row);
-        });
+        
+        if (diff >= 0) {
+            // Durchschlag sicher (Grün) - Pen-Wert ist gleich oder höher als Rüstung
+            return { 
+                bg: 'rgba(124, 163, 90, 0.15)', 
+                color: '#7ca35a', 
+                text: '🟢', 
+                title: 'Sicherer Durchschlag (Ignoriert die Rüstung größtenteils - 1 bis 2 Schüsse tödlich)' 
+            };
+        } else if (diff >= -0.5) {
+            // Rüstungsschaden (Gelb) - Pen-Wert ist nur minimal (0.5) unter der Rüstung
+            return { 
+                bg: 'rgba(255, 165, 0, 0.15)', 
+                color: '#ffa500', 
+                text: '🟡', 
+                title: 'Rüstungsschaden (Braucht mehrere Treffer auf die gleiche Platte, bis sie bricht)' 
+            };
+        } else {
+            // Kein Durchschlag (Rot) - Pen-Wert ist massiv drunter
+            return { 
+                bg: 'rgba(179, 57, 57, 0.15)', 
+                color: '#ff4c4c', 
+                text: '🔴', 
+                title: 'Kein Durchschlag (Absolut wirkungslos gegen die Platte! Auf Beine, Arme oder Gesicht zielen!)' 
+            };
+        }
     }
 
     // ==============================================================
