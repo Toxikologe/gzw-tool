@@ -883,17 +883,24 @@ const vendorData = {
         </ul>`,
     "gunny_2": `<h3>Gunny Level 2</h3>
         <ul>
-            <li><b>Waffen:</b> M16A1 <span style="color:#ff4c4c;">[NEU 0.4]</span>, verbesserte M4A1-Varianten</li>
+            <li><b>Waffen:</b> M16A1, verbesserte M4A1-Varianten</li>
             <li><b>Munition:</b> 5.56x45mm (M855A1, SOST), 9x19mm (JHP, +P)</li>
             <li><b>Visiere:</b> Elcan SpecterDR (1x/4x), ACOG (4x), verbesserte Holos</li>
-            <li><b>Attachments:</b> KAC Schalldämpfer (5.56), Magpul CTR Stocks, abgewinkelte Griffe (bessere Ergonomie!), 40-Schuss Magazine</li>
+            <li><b>Attachments:</b> KAC Schalldämpfer (5.56), Magpul CTR Stocks, 40-Schuss Magazine</li>
         </ul>`,
-    "gunny_3": `<h3>Gunny Level 3 (Endgame NATO)</h3>
+    "gunny_3": `<h3>Gunny Level 3</h3>
         <ul>
             <li><b>Waffen:</b> M4A1 SOPMOD (Voll aufgerüstet), High-End CQB Builds</li>
-            <li><b>Munition:</b> 5.56x45mm (M995 AP, M856A1 Tracer), 9x19mm (AP - Rüstungsbrechend)</li>
-            <li><b>Visiere:</b> Vortex Razor HD Gen II (LPVO für Mid/Long Range), Thermal-Hybride</li>
-            <li><b>Attachments:</b> 60-Schuss SureFire Magazine, beste Ergonomie-Griffe, PEQ-15 Laser/Licht-Module</li>
+            <li><b>Munition:</b> 5.56x45mm (M995 AP, M856A1 Tracer)</li>
+            <li><b>Visiere:</b> Vortex Razor HD Gen II (LPVO)</li>
+            <li><b>Attachments:</b> 60-Schuss SureFire Magazine, PEQ-15 Laser/Licht-Module</li>
+        </ul>`,
+    "gunny_4": `<h3>Gunny Level 4 <span style="color:#ff4c4c;">[NEU 0.4]</span></h3>
+        <ul>
+            <li><b>Waffen:</b> DDM4 <span style="color:#7ca35a;">(Erfordert Blueprint-Unlock!)</span></li>
+            <li><b>Munition:</b> 5.56x45mm SSA AP (Absolute Rüstungsbrecher)</li>
+            <li><b>Attachments:</b> Die besten Ergonomie-Griffe und C-Clamp Handguards für minimalen Rückstoß</li>
+            <li><b>Spezial:</b> Thermal-Hybride für westliche Waffensysteme</li>
         </ul>`,
 
     // --- HANDSHAKE (RÜSTUNG & GEAR) ---
@@ -906,17 +913,23 @@ const vendorData = {
         </ul>`,
     "handshake_2": `<h3>Handshake Level 2</h3>
         <ul>
-            <li><b>Rüstung:</b> Level III Platten (Stahl/Keramik - <i>Achtung: Stahl erhöht Trägheit massiv in 0.4!</i>), Ops-Core Fast Helme</li>
+            <li><b>Rüstung:</b> Level III Platten (Stahl/Keramik - <i>Achtung: Stahl erhöht Trägheit in 0.4!</i>), Ops-Core Helme</li>
             <li><b>Tragesysteme:</b> Taktische Plattenträger (Medium Kapazität)</li>
             <li><b>Rucksäcke:</b> Rush 24 (Medium), 3-Day Assault Packs</li>
             <li><b>Kopfhörer:</b> Basic ComTacs (verbessertes Gehör)</li>
         </ul>`,
-    "handshake_3": `<h3>Handshake Level 3 (Endgame Gear)</h3>
+    "handshake_3": `<h3>Handshake Level 3</h3>
         <ul>
-            <li><b>Rüstung:</b> Level III+ / IV Platten (UHMWPE - extrem leicht, bestes Movement!), schwere Schutzhelme mit Gesichtspanzerung</li>
+            <li><b>Rüstung:</b> Level III+ / IV Platten (UHMWPE - extrem leicht, bestes Movement!)</li>
             <li><b>Tragesysteme:</b> Heavy Modular Rigs (Maximale Magazine)</li>
             <li><b>Rucksäcke:</b> Rush 72 (Groß), Operator Rucksäcke</li>
             <li><b>Zubehör:</b> High-End Aktivgehörschutz, Nachtsichtgeräte (NVG) Halterungen</li>
+        </ul>`,
+    "handshake_4": `<h3>Handshake Level 4 <span style="color:#ff4c4c;">[NEU 0.4]</span></h3>
+        <ul>
+            <li><b>Rüstung:</b> Level IV+ High-End Platten und schwere Schutzhelme mit ballistischem Visier</li>
+            <li><b>Zubehör:</b> Beste Panoramische Nachtsichtgeräte (GPNVG-18)</li>
+            <li><b>Spezial:</b> Exklusive Fraktions-Kosmetika und Westen für Squad-Leader</li>
         </ul>`,
 
     // --- LAB RAT (MEDIZIN) ---
@@ -930,20 +943,26 @@ const vendorData = {
         <ul>
             <li><b>OP-Kits:</b> Kleine Surgery-Kits (stellt Organ-Schäden wieder her)</li>
             <li><b>Kreislauf:</b> Blutbeutel (stellt Blutvolumen wieder her)</li>
-            <li><b>Schmerzmittel:</b> Ibuprofen, Basis-Painkillers (hilft gegen Sichtverschwimmen)</li>
+            <li><b>Schmerzmittel:</b> Ibuprofen, Basis-Painkillers</li>
         </ul>`,
     "labrat_3": `<h3>Lab Rat Level 3</h3>
         <ul>
             <li><b>OP-Kits:</b> Große Surgery-Kits (mehrere Anwendungen, volle Organgesundheit)</li>
             <li><b>Stims:</b> Auto-Injektoren (schnelle Notfallheilung im Kampf)</li>
-            <li><b>High-End:</b> Spezielle Strahlenschutz- oder Toxin-Medikamente, High-Energy Food</li>
+            <li><b>Verpflegung:</b> High-Energy Food für lange Raids</li>
+        </ul>`,
+    "labrat_4": `<h3>Lab Rat Level 4 <span style="color:#ff4c4c;">[NEU 0.4]</span></h3>
+        <ul>
+            <li><b>Spezial:</b> Strahlenschutz-Pillen und Toxin-Gegenmittel für die neuen Sumpf/Ground-Zero Gebiete</li>
+            <li><b>Stims:</b> Combat-Stims für kurzzeitige Ausdauer-Boosts ("Unlimited Stamina Trick")</li>
+            <li><b>Kits:</b> Elite-Feldsanitäter-Taschen</li>
         </ul>`,
 
-    // --- ARTISAN (OST-BLOCK) ---
+    // --- ARTISAN (OST-BLOCK & CONTAINERS) ---
     "artisan_1": `<h3>Artisan Level 1 (Start)</h3>
         <ul>
             <li><b>Waffen:</b> AKMN, SKS, Type 56, Makarov Pistole</li>
-            <li><b>Munition:</b> 7.62x39mm (PS, US-Subsonic), 9x18mm Makarov</li>
+            <li><b>Spezial:</b> Basis Secure Containers (2x2) <span style="color:#7ca35a;">[NEU 0.4]</span></li>
             <li><b>Visiere:</b> PSO-1 Scope (SKS), Basis Red-Dots (Cobra)</li>
             <li><b>Attachments:</b> Holzschäfte, Basis-Dämpfer (PBS-1)</li>
         </ul>`,
@@ -952,17 +971,23 @@ const vendorData = {
             <li><b>Waffen:</b> AK-74M, modernisierte SKS-Chassis</li>
             <li><b>Munition:</b> 5.45x39mm (PS, BT), 7.62x39mm (T-45M)</li>
             <li><b>Visiere:</b> OKP-7, Kobra EKP-8-02</li>
-            <li><b>Attachments:</b> Zenitco PT-1 Stocks, B-33 Dust Cover (für Optiken), Hexagon Schalldämpfer</li>
+            <li><b>Attachments:</b> Zenitco PT-1 Stocks, B-33 Dust Cover, Hexagon Schalldämpfer</li>
         </ul>`,
     "artisan_3": `<h3>Artisan Level 3</h3>
         <ul>
-            <li><b>Waffen:</b> Voll modifizierte AK-Systeme (geringer Rückstoß)</li>
+            <li><b>Waffen:</b> SVD Dragunov <span style="color:#7ca35a;">(Erfordert Blueprint-Unlock!)</span></li>
             <li><b>Munition:</b> 5.45x39mm (BP, BS - Armor Piercing), 7.62x39mm (BP)</li>
             <li><b>Visiere:</b> Fortschrittliche russische Optiken</li>
-            <li><b>Attachments:</b> 60-Schuss AK-Magazine, Perst-3 Laser, beste Zenitco Ergonomie-Teile</li>
+            <li><b>Attachments:</b> 60-Schuss AK-Magazine, Perst-3 Laser, Zenitco Handguards</li>
+        </ul>`,
+    "artisan_4": `<h3>Artisan Level 4 <span style="color:#ff4c4c;">[NEU 0.4]</span></h3>
+        <ul>
+            <li><b>Waffen:</b> Modifizierte Mosins (z.B. mit Razor Scopes) und SKS mit MOE Stocks (Verkauft komplette Builds)</li>
+            <li><b>Spezial:</b> Größere Secure Containers für dein Locker-Upgrade</li>
+            <li><b>Attachments:</b> High-End Ost-Block Schalldämpfer und Griffe</li>
         </ul>`,
 
-    // --- TURNCOAT (WESTERN / SNIPER) ---
+    // --- TURNCOAT (WESTERN / SNIPER / BAGS) ---
     "turncoat_1": `<h3>Turncoat Level 1</h3>
         <ul>
             <li><b>Waffen:</b> Remington 870 Shotgun, Basis-Zivilwaffen</li>
@@ -971,17 +996,23 @@ const vendorData = {
         </ul>`,
     "turncoat_2": `<h3>Turncoat Level 2</h3>
         <ul>
-            <li><b>Waffen:</b> M14 Battle Rifle <span style="color:#ff4c4c;">[NEU 0.4]</span>, M700 Sniper Rifle</li>
+            <li><b>Waffen:</b> M14 Battle Rifle, M700 Sniper Rifle</li>
             <li><b>Munition:</b> 7.62x51mm NATO (M80)</li>
             <li><b>Visiere:</b> Basis-Sniper-Scopes (Leupold)</li>
             <li><b>Attachments:</b> M14 Scope-Mounts, westliche Schalldämpfer für .308</li>
         </ul>`,
-    "turncoat_3": `<h3>Turncoat Level 3 (Sniper Meta)</h3>
+    "turncoat_3": `<h3>Turncoat Level 3</h3>
         <ul>
             <li><b>Waffen:</b> AICS Chassis für M700, EBR Chassis für M14</li>
             <li><b>Munition:</b> 7.62x51mm NATO (M61, M62 Tracer - durchschlägt Level 4!)</li>
+            <li><b>Ausrüstung:</b> Type 2 Belts und die riesige 36-Slot "Delta Bag" <span style="color:#7ca35a;">[NEU 0.4]</span></li>
             <li><b>Visiere:</b> High-Power Scopes (Vudu, Nightforce)</li>
-            <li><b>Attachments:</b> High-End Zweibeine (Bipods), lange Sniper-Läufe</li>
+        </ul>`,
+    "turncoat_4": `<h3>Turncoat Level 4 <span style="color:#ff4c4c;">[NEU 0.4]</span></h3>
+        <ul>
+            <li><b>Waffen:</b> M14 EBR <span style="color:#7ca35a;">(Erfordert Blueprint-Unlock!)</span>, voll modifizierte Sniper-Setups</li>
+            <li><b>Munition:</b> M993 (.308 AP Munition)</li>
+            <li><b>Attachments:</b> High-End Zweibeine (Bipods), extrem lange Sniper-Läufe für maximale Präzision</li>
         </ul>`,
 
     // --- BANSHEE (BLACK MARKET) ---
@@ -992,15 +1023,30 @@ const vendorData = {
         </ul>`,
     "banshee_2": `<h3>Banshee Level 2</h3>
         <ul>
-            <li><b>Waffen:</b> Laugo Alien Pistole <span style="color:#ff4c4c;">[NEU 0.4]</span> (Extrem geringer Rückstoß!)</li>
+            <li><b>Waffen:</b> Laugo Alien Pistole (Extrem geringer Rückstoß!)</li>
             <li><b>Munition:</b> Spezielle 9mm AP-Munition für die Alien</li>
             <li><b>Spezial:</b> Keycards für Mid-Tier Zonen</li>
         </ul>`,
-    "banshee_3": `<h3>Banshee Level 3 (Endgame Spezial)</h3>
+    "banshee_3": `<h3>Banshee Level 3</h3>
         <ul>
-            <li><b>Waffen:</b> KS-1 Bullpup <span style="color:#ff4c4c;">[NEU 0.4]</span> (Beste Ergonomie im Spiel!)</li>
-            <li><b>Munition:</b> Seltene AP-Munitionstypen aller Kaliber (oft limitiert im Stock!)</li>
-            <li><b>Gear:</b> Wärmebildkameras (Thermals), Elite-Nachtsichtgeräte, Level IV+ Rüstungs-Inserts</li>
+            <li><b>Waffen:</b> KS-1 Bullpup (Beste Ergonomie im Spiel!)</li>
+            <li><b>Munition:</b> Seltene AP-Munitionstypen aller Kaliber</li>
+            <li><b>Gear:</b> Wärmebildkameras (Thermals), Elite-Nachtsichtgeräte</li>
+        </ul>`,
+    "banshee_4": `<h3>Banshee Level 4 <span style="color:#ff4c4c;">[NEU 0.4]</span></h3>
+        <ul>
+            <li><b>Waffen:</b> MP7A2 <span style="color:#7ca35a;">(Erfordert Blueprint-Unlock!)</span>, MPX</li>
+            <li><b>Munition:</b> 4.6x30mm AP (Rüstungsdurchschlag für MP7)</li>
+            <li><b>Attachments:</b> MPX/MP7 Waffenteile, Razor Scopes & passende Scope-Rings</li>
+        </ul>`,
+
+    // --- VULTURE (SECRET VENDOR) ---
+    "vulture_1": `<h3>Vulture <span style="color:#ff4c4c;">[SECRET VENDOR 0.4]</span></h3>
+        <ul>
+            <li><b>Waffen:</b> AK-308 <span style="color:#7ca35a;">(Erfordert Blueprint-Unlock im Jail!)</span>, Elite-Waffen der Lamang Warlords</li>
+            <li><b>Freischaltung:</b> Verlangt das Abschließen einer Questreihe (Boss Viper am Pha Lang Airfield, Briefcase 9135 an der Farm).</li>
+            <li><b>Standort:</b> Vulture ist ein rotierender Händler. Er befindet sich meist in extrem gefährlichen Endgame-Zonen (wie dem Fort Narith Medical Outpost).</li>
+            <li><b>Angebot:</b> Sein Inventar rotiert und bietet oft Boss-Waffen (wie Vipers M1911 C) und einzigartige Munitionstypen gegen exklusive Barter-Items.</li>
         </ul>`
 };
 
