@@ -647,7 +647,7 @@
         { name: "Construction Site Storage Key", de: "Baustellen-Lager", loc: "Lamang Island", effect: "Öffnet den Baucontainer.", loot: "Baumaterial (Nägel, Tape), Werkzeuge" },
         { name: "Ban Khamphet House Key", de: "Ban Khamphet Haus", loc: "Ban Khamphet", effect: "Öffnet ein Haus im Dorf Ban Khamphet.", loot: "Provisions" },
         { name: "Ban Phouphienge Room Key", de: "Ban Phouphienge Zimmer", loc: "Ban Phouphienge", effect: "Öffnet ein privates Zimmer.", loot: "Wertsachen, Tresor" },
-        { name: "Siang Radio Station Room Key", de: "Siang Radiostation", loc: "Lamang Island", effect: "Öffnet einen Technikraum der Radiostation.", loot: "Elektronik, Kabel" }
+        { name: "Siang Radio Station Room Key", de: "Siang Radiostation", loc: "Lamang Island", effect: "Öffnet einen Technikraum der Radiostation.", loot: "Elektronik, Kabel" },
     
         // ==========================================
         // --- Ergänzung Keys Spearhead - Update 0.4 ---
@@ -1029,7 +1029,7 @@ const vendorData = {
             motto: "-",
             desc: "Die Streitkräfte von Lamang (LAF) sind die nationalen Streitkräfte des Landes. Sie bestehen größtenteils aus Angehörigen der Armee von Lamang, vom einfachen Soldaten bis zum Kommandeur. Diese Fraktion kann nicht von Spielern gespielt werden. Es handelt sich um eine KI-Fraktion, die dazu dient, Gebiete auf der Karte zu bevölkern und die Hintergrundgeschichte zu berücksichtigen.",
             logo: "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/9e/LAF_Faction_icon.png"
-        },
+        }
     };
 
     // 14. Waffen Blueprints
