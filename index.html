@@ -4072,6 +4072,19 @@ function updateBossTimers() {
     });
 }
 
+function initBlueprints() {
+    const bpSelect = document.getElementById('blueprintSelect');
+    if (bpSelect && typeof blueprintDb !== 'undefined') {
+        const sortedBPs = Object.keys(blueprintDb).sort();
+        sortedBPs.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.text = name;
+            bpSelect.appendChild(opt);
+        });
+    }
+}
+
 function updateBlueprintInfo() {
     const val = document.getElementById('blueprintSelect').value;
     const display = document.getElementById('blueprintDisplay');
@@ -4088,19 +4101,6 @@ function updateBlueprintInfo() {
     document.getElementById('bpDesc').innerText = bp.desc;
     document.getElementById('bpTip').innerText = bp.tip;
     display.style.display = 'block';
-}
-
-function initBlueprints() {
-    const bpSelect = document.getElementById('blueprintSelect');
-    if (bpSelect && typeof blueprintDb !== 'undefined') {
-        const sortedBPs = Object.keys(blueprintDb).sort();
-        sortedBPs.forEach(name => {
-            const opt = document.createElement('option');
-            opt.value = name;
-            opt.text = name;
-            bpSelect.appendChild(opt);
-        });
-    }
 }
 
 // Initialisierung beim Laden
