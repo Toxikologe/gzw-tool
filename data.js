@@ -1472,17 +1472,34 @@ const lootRoutesDb = [
         name: "Die Waffenkammer (The Armory Run)",
         location: "Fort Narith (HQ & Baracken)",
         danger: "Extrem (Extreme)",
-        time: "~ 30 Minuten",
+        time: "~ 30-35 Minuten",
         requirements: "Großer Rucksack (Delta Backpack), Rüstung (NIJ III+).",
-        target: "Rüstung (Armor), AP-Munition (AP Ammo), DDM4 Blueprint.",
+        target: "Rüstung (Armor), AP-Munition (AP Ammo), DDM4 & AK-308 Blueprint.",
         steps: [
             "<b>1. Landung:</b> Nutze LZ Delta 1 oder 2. ⚠️ Vorsicht: Achte auf die neuen Artillerie/Mörser-Einschläge (Mortar Strikes) in 0.4!",
             "<b>2. Schrottplatz (Dumping Ground):</b> Lauf nördlich zum Schrottplatz. Wenn du den dynamischen Code aus Nakasa Village hast, öffne hier die Militärkiste für ersten High-Tier Loot.",
-            "<b>3. Baracken (Barracks):</b> Säubere die Baracken. Auf einem Tisch im 2. Stock liegt der <b>DDM4 Blueprint</b>. Gehe in den Serverraum A204 und merke dir den Code auf dem Zettel.",
-            "<b>4. Flugkontrollturm (Air Control Tower):</b> Nutze den Code (meist 9198) am Tower, um die Waffen-Racks zu plündern.",
-            "<b>5. Hauptquartier (HQ):</b> Arbeite dich vorsichtig ins HQ und die umliegenden Garagen vor. Hier farmst du Elite-Gegner für Level III/IV Rüstungen und panzerbrechende Munition (AP Ammo)."
+            "<b>3. Baracken (Barracks):</b> Säubere die Baracken. Auf einem Tisch im 2. Stock liegt der <b>DDM4 Blueprint</b>. Gehe in den Serverraum A204 und merke dir den Code auf dem Zettel (meist 9198).",
+            "<b>4. Gefängnis (Jail):</b> Gehe zum Gefängnis-Bereich. Säubere die Gänge und suche nach dem <b>AK-308 Blueprint</b>. Extrahiere diesen sofort und bring ihn zu Vulture!",
+            "<b>5. Flugkontrollturm (Air Control Tower):</b> Nutze den Code am Tower, um die Waffen-Racks zu plündern."
         ],
         tip: "Zerlege gefundene Waffen! Nimm nur die teuren Attachments (Visiere, Schalldämpfer) mit, um massiv Platz im Rucksack zu sparen."
+    },
+    {
+        id: "route_tigerbay",
+        name: "Das Urbane Chaos (The Urban Jungle)",
+        location: "Tiger Bay (UNLRA & Mall)",
+        danger: "Absolutes Maximum (Insane)",
+        time: "~ 40-50 Minuten",
+        requirements: "Squad (Team) extrem empfohlen, extrem viel Munition, große Med-Kits.",
+        target: "High-Tier Meds, SVD Dragunov Blueprint, UNLRA Intel.",
+        steps: [
+            "<b>1. Landung:</b> Lande bei India 2 und laufe nach Süden in die Stadt, oder nutze Lima LZs, falls verfügbar.",
+            "<b>2. UNLRA Refugee Camp:</b> Kämpfe dich durch die Straßen zum Flüchtlingslager. Die KI hat hier gnadenloses Aiming, bleib in Deckung! Plündere die Sanitätszelte für OP-Kits (Surgery Kits) und Stims.",
+            "<b>3. UNLRA HQ:</b> Suche auf den Tischen nach dem dynamischen Keypad-Code für das HQ und sichere die Quest-Intel (blauer Ordner auf dem Klapptisch).",
+            "<b>4. Schrottplatz-Schleichweg:</b> Vermeide die Hauptstraßen! Nutze den Spalt im Zaun beim Schrottplatz (Wrecking Yard), um ungesehen an die Rückseite der Mall zu gelangen.",
+            "<b>5. Tiger Bay Mall:</b> Kämpfe dich von Laden zu Laden bis zum Buchgeschäft (Bookstore) vor. Im Hinterzimmer findest du den <b>SVD Dragunov Blueprint</b>. Sofort extrahieren!"
+        ],
+        tip: "Wenn du den Schlüssel für das Bookstore-Hinterzimmer nicht hast, farme die KI-Gegner rund um die Mall. Sie lassen den 'TB-Mall-Key' sehr oft fallen."
     },
     {
         id: "route_hunters",
@@ -1500,6 +1517,23 @@ const lootRoutesDb = [
             "<b>5. Boss-Check:</b> Prüfe, ob der Boss (Hostile Commander) spawnt. Er droppt oft gute Mid-Game Rüstung und Schlüssel."
         ],
         tip: "Diese Route eignet sich perfekt, um die wiederholbaren 'Maintenance Contracts' von Artisan abzuschließen (Defekte Waffenteile sammeln)."
+    },
+    {
+        id: "route_banpa",
+        name: "Die Ban Pa Schatzsuche (The Ban Pa Treasure Hunt)",
+        location: "Ban Pa (Fischerdorf / Fishing Village)",
+        danger: "Mittel (Medium)",
+        time: "~ 20 Minuten",
+        requirements: "Keine. Super für Solo-Spieler.",
+        target: "Holzstatuen (Wood Statues), Lithiumfett (Lithium Grease), Schmuck.",
+        steps: [
+            "<b>1. Landung:</b> Nutze LZ India 1 oder 2.",
+            "<b>2. Pfahlbauten (Stilt Houses):</b> Durchsuche die Häuser am Wasser. Hier findest du oft die Haftnotizen mit dem dynamischen Code für das Ban Pa Depot sowie rote Werkzeugkästen mit Lithiumfett (Quest-Item!).",
+            "<b>3. Ältestenhaus (Elder's House):</b> Gehe zum Haus des Ältesten. <b>Glitch-Tipp:</b> Wenn dir der Schlüssel fehlt, klettere über das Geländer der Außentreppe auf das Vordach, um über den Balkon in den verschlossenen Raum zu gelangen!",
+            "<b>4. Versteckter Loot:</b> Im verschlossenen Raum findest du Schmuck und Quest-Bücher. Vergiss nicht die versteckte Munitionskiste unter dem kleinen Tisch!",
+            "<b>5. Naga Boss:</b> Töte den Boss 'Naga' und hole seinen Aktenkoffer oben beim Radioturm (Koordinaten 192, 137)."
+        ],
+        tip: "Ban Pa ist der beste Ort im Spiel, um die 3 Holzstatuen für Turncoats 'Hazardous Treasures' Quest zu farmen!"
     }
 ];
 
