@@ -1936,17 +1936,21 @@
         container.innerHTML = '';
         
         lootRoutesDb.forEach(route => {
-            // Farbcodierung für die Gefahrenstufen
-            let dangerColor = "#7ca35a"; // Grün
-            if (route.danger.includes("Mittel")) dangerColor = "#ffa500"; // Orange
-            if (route.danger.includes("Hoch")) dangerColor = "#ff4c4c"; // Rot
-            if (route.danger.includes("Extrem") || route.danger.includes("Maximum")) dangerColor = "#b33939"; // Dunkelrot
+            let dangerColor = "#7ca35a"; 
+            if (route.danger.includes("Mittel")) dangerColor = "#ffa500"; 
+            if (route.danger.includes("Hoch")) dangerColor = "#ff4c4c"; 
+            if (route.danger.includes("Maximum")) dangerColor = "#b33939"; 
 
             const routeHTML = `
                 <div style="background: #111; border: 1px solid #333; border-left: 4px solid var(--accent); border-radius: 6px; overflow: hidden; padding: 0;">
                     <div style="background: #1a1a1a; padding: 15px 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <h3 style="margin: 0; color: var(--accent); font-size: 1.2rem; letter-spacing: 1px;">${route.name}</h3>
-                        <span style="font-size: 0.85rem; background: #222; padding: 4px 10px; border-radius: 4px; border: 1px solid #444; color: #ccc;">⏱️ ${route.time}</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <span style="font-size: 0.85rem; background: #222; padding: 4px 10px; border-radius: 4px; border: 1px solid #444; color: #ccc;">⏱️ ${route.time}</span>
+                            <a href="${route.video}" target="_blank" style="font-size: 0.85rem; background: #b33939; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 5px; transition: 0.2s;" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter='brightness(1)'">
+                                📺 Video Guide
+                            </a>
+                        </div>
                     </div>
                     <div style="padding: 20px; font-size: 0.95rem; color: #ddd; line-height: 1.6;">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; background: #0a0a0a; padding: 15px; border-radius: 6px; border: 1px dashed #333;">
