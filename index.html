@@ -1952,6 +1952,13 @@
     let activeKeyRegion = "🔰 Startregionen (Mithras)";
     let selectedKeyForDossier = null;
 
+    let myKeyRing = [];
+    try {
+        const savedRing = localStorage.getItem('gzw_keyring');
+        if (savedRing) myKeyRing = JSON.parse(savedRing);
+        if (!Array.isArray(myKeyRing)) myKeyRing = [];
+    } catch(e) { myKeyRing = []; }
+
     function initKeyCabinet() {
         const regionList = document.getElementById('keyRegionList');
         if (!regionList || typeof allKeys === 'undefined') return;
@@ -4016,7 +4023,6 @@ function goToHome() {
         makeDraggable('heliWidget');
         initNotepad();
         initKeyCabinet();
-        renderKeyRing();
         renderCompletedTasks();
     	updateTaskDropdown();
         renderDecryptionTerminal();
