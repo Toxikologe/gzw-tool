@@ -8,6 +8,47 @@
     <style>
 
         /* ============================================================== */
+/* DIGITAL MEDICAL CENTER (HOSPITAL INTERFACE) */
+/* ============================================================== */
+.med-center {
+    display: flex; gap: 20px; min-height: 650px; margin-top: 15px;
+}
+.med-panel {
+    background: #0a0a0a; border: 1px solid #333; border-radius: 8px; padding: 20px;
+    position: relative; overflow: hidden;
+}
+/* Vital-Monitor Effekt */
+.med-panel::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.3; animation: scanline 3s linear infinite;
+}
+@keyframes scanline { 0% { top: 0; } 100% { top: 100%; } }
+
+.med-left { width: 300px; display: flex; flex-direction: column; gap: 15px; }
+.med-main { flex: 1; border-top: 4px solid var(--accent); }
+
+.symptom-card {
+    background: #1a1a1a; border: 1px solid #444; padding: 10px 15px; border-radius: 4px;
+    cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px;
+}
+.symptom-card:hover { border-color: var(--accent); background: #222; }
+.symptom-card.active { background: rgba(124,163,90,0.15); border-color: var(--accent); }
+.symptom-card .icon { font-size: 1.2rem; }
+
+.diag-header { border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+.diag-title { font-size: 1.8rem; color: #fff; margin: 0; text-transform: uppercase; font-family: 'Courier New', monospace; }
+
+.treatment-step {
+    background: rgba(255,255,255,0.03); border-left: 4px solid var(--accent);
+    padding: 15px; margin-bottom: 10px; border-radius: 0 4px 4px 0;
+}
+.med-vital-bar {
+    height: 4px; background: #222; border-radius: 2px; margin-top: 5px; overflow: hidden;
+}
+.med-vital-fill { height: 100%; background: var(--accent); transition: width 1s ease; }
+
+        /* ============================================================== */
 /* LZ DISPATCHER (AVIATION DESIGN) */
 /* ============================================================== */
 .lz-dispatcher {
@@ -837,8 +878,7 @@
     <button class="sidebar-btn" onclick="openTab('tab-questitems', this)">🔍 Quest Tracker</button>
 
     <div class="sidebar-title">Medical</div>
-    <button class="sidebar-btn" onclick="openTab('tab-health', this)">🩸 Status-Effekte</button>
-    <button class="sidebar-btn" onclick="openTab('tab-treatment', this)">💉 Diagnose & Behandlung</button>
+    <button class="sidebar-btn" onclick="openTab('tab-medical', this)">🏥 Digital Medical Center</button>
     <button class="sidebar-btn" onclick="openTab('tab-food', this)">🥫 Verpflegung</button>
 </div>
 
@@ -1531,97 +1571,47 @@
             </div>
         </div>
 
-        <div id="tab-health" class="tab-content">
-            <h2>🩸 Status-Effekte & Vitalwerte</h2>
-            <div class="grid">
-                <div class="panel-box">
-                    <label for="statusSelect" style="margin-top: 0;">Temporäre Status-Effekte</label>
-                    <select id="statusSelect" onchange="updateStatusEffect()">
-                        <option value="">-- Wähle einen Status-Effekt --</option>
-                        <option value="out_of_breath">Außer Atem (Out of Breath)</option>
-                        <option value="cramps">Krämpfe (Cramps)</option>
-                        <option value="sore_arms">Schmerzende Arme (Sore Arms)</option>
-                        <option value="fatigued">Erschöpft (Gelb) (Fatigued)</option>
-                        <option value="exhausted">Erschöpft (Rot) (Exhausted)</option>
-                        <option value="encumbered">Überlastet (Encumbered)</option>
-                        <option value="dazed">Benommenheit (Dazed)</option>
-                        <option value="bleed_light">Blutung: Leicht (Light Bleeding)</option>
-                        <option value="bleed_med">Blutung: Mittel (Medium Bleeding)</option>
-                        <option value="bleed_heavy">Blutung: Schwer (Severe Bleeding)</option>
-                        <option value="coma">Koma (Coma)</option>
-                        <option value="suffering">Leiden (Suffering)</option>
-                        <option value="pain">Schmerz (Pain)</option>
-                        <option value="nausea">Übelkeit (Nausea)</option>
-                        <option value="intoxication">Vergiftung (Intoxication)</option>
-                        <option value="radiation">Verstrahlung (Radiation)</option>
-                    </select>
-                    <div id="statusInfo" class="info-box" style="margin-top: 15px; padding: 15px; background: #111; border-left: 4px solid var(--accent);">Wähle einen Effekt für Ursachen und Auswirkungen...</div>
-                </div>
-                <div class="panel-box" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
-                    <img id="statusImg" src="https://via.placeholder.com/400x200?text=Status+Icon" alt="Status Icon" style="max-width: 100%; max-height: 180px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(124,163,90,0.2)); margin: 0 auto;">
-                </div>
+        <div id="tab-medical" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>🏥 Digital Medical Center (Health & Diagnostics)</h2>
+                <div style="font-size: 0.8rem; color: #666; font-family: monospace;">OS: MED_CORE_V4.2 // VITAL SIGNS: NOMINAL</div>
             </div>
-        </div>
 
-        <div id="tab-treatment" class="tab-content">
-            <h2>💉 Diagnose & Behandlung</h2>
-            <div class="grid">
-                <div class="panel-box">
-                    <label for="symptomSelect" style="margin-top: 0;">Symptom-Checker (Schnell-Diagnose)</label>
-                    <select id="symptomSelect" onchange="updateSymptom()">
-                        <option value="">-- Was fühlst/siehst du? --</option>
-                        <optgroup label="Sicht & Wahrnehmung">
-                            <option value="gray_vision">Schwarz-Weiß-Sicht / Farbe verschwindet</option>
-                            <option value="blurry_vision">Verschwommenes Sichtfeld / Pulsieren</option>
-                            <option value="tunnel_vision">Tunnelblick / Schwarzer Rand wird größer</option>
-                        </optgroup>
-                        <optgroup label="Bewegung & Waffen-Handling">
-                            <option value="limping">Starkes Humpeln / Sprinten unmöglich</option>
-                            <option value="weapon_sway">Extremes Wackeln beim Zielen (Sway)</option>
-                            <option value="stamina_drain">Ausdauer regeneriert extrem langsam</option>
-                        </optgroup>
-                        <optgroup label="Akustik (Geräusche)">
-                            <option value="coughing">Charakter hustet Blut / Stöhnt ständig</option>
-                            <option value="heartbeat">Lauter Herzschlag / Schweres Atmen</option>
-                            <option value="stomach">Magenknurren</option>
-                        </optgroup>
-                    </select>
-                    <div id="symptomInfo" class="info-box" style="margin-top: 15px; padding: 15px; background: #111; border-left: 4px solid var(--accent);">Wähle ein Symptom für Diagnose & Behandlung...</div>
+            <div class="med-center">
+                <div class="med-panel med-left">
+                    <h3 style="margin-top:0; color:var(--accent); font-size: 0.9rem; text-transform: uppercase;">1. Symptom-Analyse</h3>
+                    <p style="font-size:0.8rem; color:#888;">Wähle die aktuellen Anzeichen deines Charakters aus:</p>
+                    <div id="symptomList" style="display: flex; flex-direction: column; gap: 8px; overflow-y: auto;">
+                        </div>
                 </div>
-                <div class="panel-box">
-                    <label for="medFullSelect" style="margin-top: 0;">Medizinische Versorgung (Items)</label>
-                    <select id="medFullSelect" onchange="updateGeneric('medFullSelect', 'medFullInfo')">
-                        <option value="">-- Wähle Medizin-Item --</option>
-                        <optgroup label="Blutungen (Wundversorgung)">
-                            <option value="Bandage: Stoppt leichte Blutungen. Günstig und schnell, aber verbraucht sich sofort.">Bandage</option>
-                            <option value="Combat Gauze: Hämostatische Gaze. Stoppt leichte bis mittelschwere Blutungen sehr schnell.">Combat Gauze (QuikClot)</option>
-                            <option value="Notfallbandage (Israeli Bandage): Sehr zuverlässig. Stoppt mittelschwere Blutungen effektiv.">Notfallbandage</option>
-                            <option value="Tourniquet (CAT): Lebensretter! Stoppt schwere (arterielle) Blutungen an Gliedmaßen sofort. Schnellste Anwendung im Spiel.">Tourniquet (CAT)</option>
-                        </optgroup>
-                        <optgroup label="Blutvolumen & Kreislauf (Hypovolämie)">
-                            <option value="Kochsalzlösung: Hilft bei leichtem Flüssigkeitsverlust und stabilisiert den Kreislauf ein wenig.">Kochsalzlösung</option>
-                            <option value="Blutbeutel (250ml): Stellt eine kleine Menge Blutvolumen wieder her. Gut für leichte Streifschüsse.">Blutbeutel (250ml)</option>
-                            <option value="Blutbeutel (500ml): Der Standard-Beutel. Stellt eine mittlere Menge Blut wieder her.">Blutbeutel (500ml)</option>
-                            <option value="Blutbeutel (1000ml): Retter in der Not. Stellt das Blutvolumen bei massiven Verlusten (Koma-Gefahr) fast vollständig wieder her.">Blutbeutel (1000ml)</option>
-                        </optgroup>
-                        <optgroup label="Chirurgie & Organe">
-                            <option value="Chirurgie-Set: Repariert beschädigte Organe (Magen, Lunge, Leber). Sehr lange Animationszeit, suche dir sichere Deckung!">Chirurgie-Set</option>
-                            <option value="Erweitertes Chirurgie-Set: Die Militär-Version. Hat mehr Anwendungen und heilt Organe etwas zuverlässiger. Goldstandard für Squad-Medics.">Erweitertes Chirurgie-Set</option>
-                        </optgroup>
-                        <optgroup label="Knochen & Brüche">
-                            <option value="Chirurgisches Tape: Medizinisches Klebeband. Kann für minimale Fixierungen oder als Notlösung genutzt werden.">Chirurgisches Tape</option>
-                            <option value="Schiene (Holz): Repariert Frakturen sofort. Behebt starkes Humpeln oder das extreme Zittern beim Zielen.">Schiene (Holz)</option>
-                            <option value="SAM-Schiene: Hochwertige, formbare Militär-Schiene. Kompakt und hocheffizient bei Brüchen.">SAM-Schiene</option>
-                        </optgroup>
-                        <optgroup label="Schmerzmittel (Dauer & Stärke)">
-                            <option value="Paracetamol: Sehr leichtes Schmerzmittel. Unterdrückt den Schmerzeffekt (verschwommene Sicht) nur für kurze Zeit.">Paracetamol</option>
-                            <option value="Ibuprofen: Mittleres Schmerzmittel. Der Standard für leichte Verletzungen und längere Fußmärsche.">Ibuprofen</option>
-                            <option value="Meloxicam: Starkes Schmerzmittel in Tablettenform. Hält sehr lange an, ideal vor großen Feuergefechten.">Meloxicam</option>
-                            <option value="Morphin-Injektor: Extrem starke, sofortige Schmerzausschaltung. Hilft bei critical Verletzungen, um trotzdem noch zur Extraktion rennen zu können.">Morphine Injektor</option>
-                            <option value="Adrenalin-Injektor: Gibt dir sofort einen massiven Ausdauer-Boost. Perfekt, um unter schwerem Beschuss in Deckung zu sprinten (Tactical Sprint).">Adrenalin-Injektor</option>
-                        </optgroup>
-                    </select>
-                    <div id="medFullInfo" class="info-box" style="margin-top: 15px; padding: 15px; background: #111; border-left: 4px solid var(--accent);">Medizinische Details...</div>
+
+                <div class="med-panel med-main" id="medicalOutput">
+                    <div class="diag-header">
+                        <div style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">DIAGNOSE-RESULTAT:</div>
+                        <h3 id="diagTitle" class="diag-title">BEREIT FÜR SCAN...</h3>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div>
+                            <span style="color:var(--accent); font-size:0.75rem; font-weight:bold; text-transform:uppercase;">Zustandsbeschreibung:</span>
+                            <p id="diagDesc" style="color:#ccc; line-height:1.5;">Bitte wähle links ein Symptom aus, um den automatischen Diagnose-Prozess zu starten.</p>
+                            
+                            <div style="margin-top:20px;">
+                                <span style="color:var(--accent); font-size:0.75rem; font-weight:bold; text-transform:uppercase;">Vital-Auswirkung:</span>
+                                <div id="vitalEffect" style="margin-top:10px;">
+                                    </div>
+                            </div>
+                        </div>
+                        <div>
+                            <span style="color:#ff4c4c; font-size:0.75rem; font-weight:bold; text-transform:uppercase;">Behandlungsprotokoll:</span>
+                            <div id="treatmentSteps" style="margin-top:15px;">
+                                </div>
+                        </div>
+                    </div>
+
+                    <div style="position: absolute; bottom: 10px; right: 20px; opacity: 0.03; pointer-events: none;">
+                        <svg width="300" height="300" viewBox="0 0 24 24" fill="white"><path d="M19,3H5C3.89,3 3,3.89 3,5V19C3,20.11 3.89,21 5,21H19C20.11,21 21,20.11 21,19V5C21,3.89 20.11,3 19,3M12,17.5L9.5,15L10.91,13.59L12,14.67L14.59,12.08L16,13.5L12,17.5M19,9H5V7H19V9Z"/></svg>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1900,11 +1890,65 @@
         }
     }
 
-    function updateGeneric(sId, iId) { document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details..."; }
-    function updateSymptom() { const s = typeof symptomDb !== 'undefined' ? symptomDb[document.getElementById('symptomSelect').value] : null; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><br><small><b>Medic-Tipp:</b> ${s.info}</small>` : "Wähle ein Symptom für Diagnose & Behandlung..."; }
     function updateContainer() { const c = typeof containers !== 'undefined' ? containers[document.getElementById('containerSelect').value] : null; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = typeof valuables !== 'undefined' ? valuables[document.getElementById('valSelect').value] : null; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
 
+    // ==============================================================
+    // DIGITAL MEDICAL CENTER ENGINE
+    // ==============================================================
+    function initMedicalCenter() {
+        const list = document.getElementById('symptomList');
+        if (!list || typeof medicalDb === 'undefined') return;
+
+        list.innerHTML = '';
+        medicalDb.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'symptom-card';
+            card.id = `symptom-${item.id}`;
+            card.innerHTML = `<span class="icon">${item.icon}</span> <span>${item.name}</span>`;
+            card.onclick = () => runMedicalScan(item);
+            list.appendChild(card);
+        });
+    }
+
+    function runMedicalScan(data) {
+        // Visuelles Feedback
+        document.querySelectorAll('.symptom-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`symptom-${data.id}`).classList.add('active');
+
+        // Titel & Beschreibung
+        document.getElementById('diagTitle').innerText = data.diag.toUpperCase();
+        document.getElementById('diagDesc').innerHTML = `<strong>Symptom:</strong> ${data.symptom}<br><br>${data.desc}`;
+
+        // Vital-Balken
+        const vitalBox = document.getElementById('vitalEffect');
+        vitalBox.innerHTML = '';
+        data.vitals.forEach(v => {
+            vitalBox.innerHTML += `
+                <div style="font-size:0.8rem; color:#888; margin-bottom:5px;">${v.label}</div>
+                <div class="med-vital-bar">
+                    <div class="med-vital-fill" style="width: ${v.val}%; background-color: ${v.color};"></div>
+                </div>
+            `;
+        });
+
+        // Behandlung
+        const treatBox = document.getElementById('treatmentSteps');
+        treatBox.innerHTML = '';
+        data.treat.forEach((t, index) => {
+            treatBox.innerHTML += `
+                <div class="treatment-step">
+                    <strong style="color:var(--accent);">Phase ${index + 1}:</strong> ${t}
+                </div>
+            `;
+        });
+        treatBox.innerHTML += `
+            <div style="margin-top:15px; font-size:0.85rem; color:#ffcc00; padding:10px; background:rgba(255,204,0,0.05); border:1px solid #ffcc00; border-radius:4px;">
+                <strong>💡 PRO-TIPP:</strong> ${data.tip}
+            </div>
+        `;
+    }
+    
     // ==============================================================
     // LZ DISPATCHER LOGIK (AVIATION SYSTEM)
     // ==============================================================
@@ -4289,6 +4333,7 @@ function goToHome() {
         initKeyCabinet();
         initLZDispatcher();
         initBossHVT();
+        initMedicalCenter();
         renderCompletedTasks();
     	updateTaskDropdown();
         renderDecryptionTerminal();
