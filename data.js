@@ -1096,191 +1096,41 @@ const lootItemsDb = [
 ];
     
 // ==========================================
-// 9. STASH & CONTAINER DATENBANK (0.4 SPEARHEAD)
+// 20. STASH, CONTAINERS & CASES (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
-const containers = {
-    // --- SECURE CONTAINERS ---
-    "secure_2x2": { 
-        name: "Safe Lock Box (2x2) (Safe Lock Box)", 
-        size: "4 Slots intern", 
-        source: "Standard Edition / Artisan Level 1", 
-        info: "<b>Wofür:</b> Basis-Schutz für Wertsachen und Schlüssel.<br><b>Kosten:</b> ~ $10.000<br><b>Kaufempfehlung:</b> Dein Start-Container. Bietet Platz für 1 Wallet, 1 Key Holder und kleine Meds." 
-    },
-    "admin_pouch": { 
-        name: "Admin Tasche (2x3) (Admin Pouch)", 
-        size: "6 Slots intern", 
-        source: "Tactical Edition / Artisan Level 2", 
-        info: "<b>Wofür:</b> Mittlerer Secure Container.<br><b>Kosten:</b> ~ $35.000<br><b>Kaufempfehlung:</b> Teuer, aber wichtiges Upgrade für Standard-Spieler, um z.B. ein OP-Kit (Surg Kit) verlustfrei mitzunehmen." 
-    },
-    "secure_3x3": { 
-        name: "TAS Schließfach (3x3) (TAS Lockbox)", 
-        size: "9 Slots intern", 
-        source: "Elite & Supporter Edition / Artisan Level 4", 
-        info: "<b>Wofür:</b> Maximaler Schutz für dicken Loot.<br><b>Kosten:</b> ~ $150.000<br><b>Kaufempfehlung:</b> Das ultimative Endgame-Ziel. Absoluter Luxus für schwere Quests und teuren Loot." 
-    },
+// isMeta: true markiert absolute Game-Changer Items!
 
-    // --- STASH CASES (Lagerkisten im Basecamp) ---
-    "muxxum_rifle": { 
-        name: "Muxxum Waffenkoffer (Muxxum Rifle Case)", 
-        size: "96 Slots intern", 
-        source: "Gunny Level 4", 
-        info: "<b>Wofür:</b> Ausschließlich für Schusswaffen.<br><b>Kosten:</b> ~ $105.000<br><b>Kaufempfehlung:</b> <b>Pflichtkauf!</b> Hinweis: Sehr lange Waffen (SVD / M16) passen oft nicht aufrecht. Nimm Magazin und Griff ab, dann sind die Waffen nur 1 Slot breit!" 
-    },
-    "harde_case": { 
-        name: "HARDE-Kiste (HARDE Case)", 
-        size: "60 Slots intern", 
-        source: "Gunny Level 3", 
-        info: "<b>Wofür:</b> Ausschließlich für Schusswaffen.<br><b>Kosten:</b> ~ $77.000<br><b>Kaufempfehlung:</b> <b>Pflichtkauf!</b> Hinweis: Sehr lange Waffen (SVD / M16) passen oft nicht aufrecht. Nimm Magazin und Griff ab, dann sind die Waffen nur 1 Slot breit!" 
-    },
-    "parts_case": { 
-        name: "Waffenteilkiste (Weapon Parts Case)", 
-        size: "42 Slots intern", 
-        source: "Gunny Level 3", 
-        info: "<b>Wofür:</b> Visiere, Griffe, Schalldämpfer und Schäfte.<br><b>Kosten:</b> ~ $60.000<br><b>Kaufempfehlung:</b> Sehr nützlich, wenn du gerne teure Scopes und Attachments hortest." 
-    },
-    "ammo_box": { 
-        name: "Metal-Munitionskiste (Metal Ammo Box)", 
-        size: "Nimmt 4 Slots ein, massiver Innenraum", 
-        source: "Turncoat Level 2", 
-        info: "<b>Wofür:</b> Munitionskiste für lose Patronen.<br><b>Kosten:</b> ~ $60.300<br><b>Kaufempfehlung:</b> Mindestens 2 Stück kaufen! Spart extrem viel Platz." 
-    },
-    "mmammo_box": { 
-        name: "MM-Munitionskiste (MM Ammo Box)", 
-        size: "Nimmt 6 Slots ein, massiver Innenraum", 
-        source: "Turncoat Level 4", 
-        info: "<b>Wofür:</b> Munitionskiste für lose Patronen.<br><b>Kosten:</b> ~ $45.000<br><b>Kaufempfehlung:</b> Mindestens 2 Stück kaufen! Spart extrem viel Platz." 
-    },
-    "grenade_box": { 
-        name: "Handgranatenkoffer (Hand Grenade Storage Box)", 
-        size: "Nimmt 6 Slots ein, fasst 20 Granaten", 
-        source: "Turncoat Level 3", 
-        info: "<b>Wofür:</b> Granatenkoffer für alle Sprengstoff Enthusiasten.<br><b>Kosten:</b> ~ $75.500<br><b>Kaufempfehlung:</b> Wer viel und gerne mit Granaten spielt sollte sich 1-2 Stück kaufen." 
-    },
-    "mag_crate": { 
-        name: "Magazinkiste (Magazine Crate)", 
-        size: "Großes Raster für Magazine", 
-        source: "Gunny Level 3", 
-        info: "<b>Wofür:</b> Leere und geladene Waffenmagazine.<br><b>Kosten:</b> ~ $55.000<br><b>Kaufempfehlung:</b> Sehr wichtig, um das Chaos im Inventar zu besiegen." 
-    },
-    "truncase": { 
-        name: "IV-Schutzkoffer (IV Truncase)", 
-        size: "Riesiges Raster für Rüstung & Rucksäcke", 
-        source: "Artisan Level 2", 
-        info: "<b>Wofür:</b> Helme, Westen, Rigs, Gürtel und Rucksäcke.<br><b>Kosten:</b> ~ $61.700<br><b>Kaufempfehlung:</b> <b>Top!</b> Achtung: Du kannst keinen Rucksack hineinlegen, wenn sich in dem Rucksack eine Waffe befindet!" 
-    },
-    "first_aid_case": { 
-        name: "Erste-Hilfe-Koffer (First Aid Case)", 
-        size: "Großes Raster für Medizin", 
-        source: "Lab Rat Level 2", 
-        info: "<b>Wofür:</b> OP-Kits, Blutbeutel, Bandagen.<br><b>Kosten:</b> ~ $40.000<br><b>Kaufempfehlung:</b> Sehr wichtiges Mid-Game Upgrade." 
-    },
-    "cooler_case": { 
-        name: "Kühlbox / Proviantkiste (Personal Cooler)", 
-        size: "Großes Raster für Essen/Trinken", 
-        source: "Artisan Level 2", 
-        info: "<b>Wofür:</b> Getränke, Rationen und Snacks.<br><b>Kosten:</b> ~ $60.200<br><b>Kaufempfehlung:</b> Gut, um MREs und Wasser auf Vorrat zu halten." 
-    },
-    "huge_key_case": { 
-        name: "Großer Schlüsselkoffer (Huge Key Case)", 
-        size: "Nimmt 3 Slots ein, bietet Platz für 30 Keys", 
-        source: "Banshee Level 3", 
-        info: "<b>Wofür:</b> Lagerung ALLER Schlüssel, die du nicht im Raid brauchst.<br><b>Kosten:</b> ~ $65.000<br><b>Kaufempfehlung:</b> Sehr praktisch für Sammler, denen der kleine Key Holder im Stash nicht reicht." 
-    },
-    "mortar_case": { 
-        name: "Mörser-Kiste (Mortar Round Case)", 
-        size: "Spezialraster für Sprengmittel", 
-        source: "Gunny Level 3", 
-        info: "<b>Wofür:</b> Mörsergranaten.<br><b>Kosten:</b> ~ $75.000<br><b>Kaufempfehlung:</b> <b>Finger weg!</b> Kostet 75k und spart effektiv nur mickrige 5 Slots. Absolute Geldverschwendung." 
-    },
-    "small_safe": { 
-        name: "Kleiner Tresor (Small Safe)", 
-        size: "24 Slots intern", 
-        source: "Vulture Level 3", 
-        info: "<b>Wofür:</b> Bargeld und High-Value Loot (Gold, Diamanten).<br><b>Kosten:</b> ~ $75.000<br><b>Kaufempfehlung:</b> Nette Spielerei, aber Bargeld nimmt viel weniger Platz weg als das Loot selbst. Besser direkt verkaufen." 
-    },
-    "large_safe": { 
-        name: "Großer Tresor (Large Safe)", 
-        size: "108 Slots intern", 
-        source: "Vulture Level 4", 
-        info: "<b>Wofür:</b> Der ultimative Geldtresor.<br><b>Kosten:</b> ~ $105.000<br><b>Kaufempfehlung:</b> Reiner Endgame-Flex für Spieler mit Millionen auf dem Konto." 
-    },
-    "desk": { 
-        name: "Verwaltungstisch (Administrative desk)", 
-        size: "210 Slots", 
-        source: "Artisan Level 3", 
-        info: "<b>Wofür:</b> Aufbewahrung von großen Dokumentenmengen.<br><b>Kosten:</b> ~ $89.500<br><b>Kaufempfehlung:</b> Wer Spaß am Sammeln von allen Dokumenten hat und mehr der Lore verstehen will sollte die Kiste kaufen." 
-    },
+const containersDb = [
+    // --- SECURE CONTAINERS (Überleben den Tod) ---
+    { category: "🔒 Secure Containers (Raid-Schutz)", name: "Safe Lock Box (2x2)", size: "4 Slots", source: "Standard Edition / Artisan Quest", isMeta: false, info: "Der kleinste Sicherheitsbehälter. Schützt deine Munition, Meds oder Schlüssel vor dem Verlust beim Tod." },
+    { category: "🔒 Secure Containers (Raid-Schutz)", name: "Admin Tasche (Admin Pouch) (2x3)", size: "6 Slots", source: "Tactical Edition / Artisan (Level 2)", isMeta: true, info: "Sehr gutes Upgrade. Endlich genug Platz für ein SurvKit, Munition und wertvollen Loot." },
+    { category: "🔒 Secure Containers (Raid-Schutz)", name: "TAS Schließfach (TAS Lockbox) (3x3)", size: "9 Slots", source: "Supporter Edition / Endgame Quests", isMeta: true, info: "Der beste Container im Spiel! Ermöglicht es dir, riesige Wertsachen oder ganze Ersatzhelme sicher aus dem Raid zu bringen." },
 
-    // --- MICRO-CONTAINER & POUCHES (Für den Raid) ---
-    "wallet": { 
-        name: "Geldbörse (Tactical Wallet)", 
-        size: "Nimmt 1 Slot ein, bietet 4 interne Slots", 
-        source: "Artisan Level 1", 
-        info: "<b>Wofür:</b> Bargeld, Kreditkarten und Pässe.<br><b>Kosten:</b> ~ $3.500<br><b>Kaufempfehlung:</b> <b>Absolutes Must-Have!</b> Gehört sofort in deine Secure Pouch." 
-    },
-    "key_holder": { 
-        name: "Lederschlüsselhalter (Key Holder / Leather Key)", 
-        size: "Nimmt 1 Slot ein, fasst viele Schlüssel", 
-        source: "Artisan Level 2", 
-        info: "<b>Wofür:</b> Raumschlüssel und Zugangskarten.<br><b>Kosten:</b> ~ $4.500<br><b>Kaufempfehlung:</b> <b>Must-Have!</b> Sichern, um Schlüssel beim Tod nicht zu verlieren." 
-    },
-    "key_case": { 
-        name: "Schlüsseltasche (Key Case)", 
-        size: "Nimmt 2 Slots ein, fasst sehr viele Schlüssel", 
-        source: "Artisan Level 3", 
-        info: "<b>Wofür:</b> Raumschlüssel und Zugangskarten.<br><b>Kosten:</b> ~ $6.000<br><b>Kaufempfehlung:</b> <b>Must-Have!</b> Sichern, um Schlüssel beim Tod nicht zu verlieren." 
-    },
-    "injector_case": { 
-        name: "Injektoren-Etui (Injector Case / Stim Pouch)", 
-        size: "9 Slots intern für Injektoren", 
-        source: "Lab Rat Level 4", 
-        info: "<b>Wofür:</b> Aufbewahrung von Adrenalin, Morphin und anderen Stims.<br><b>Kosten:</b> Variiert<br><b>Kaufempfehlung:</b> Ein starkes Endgame-Item, um massiv Platz im Container oder Belt zu sparen." 
-    },
-    "admin_bag": { 
-        name: "Verwaltungstasche (Administration Bag)", 
-        size: "Nimmt 2 Slots ein, fasst 6 Slots", 
-        source: "Artisan Level 2", 
-        info: "<b>Wofür:</b> Aufbewahrung von Dokumenten, Karten,Schlüssel und Geld.<br><b>Kosten:</b> ~ $75.900<br><b>Kaufempfehlung:</b> Kann man Kaufen, muss man aber nicht, bleibt euch überlassen." 
-    },
-    "kombat_folder": { 
-        name: "Kombat-Ordner (Kombat Folder)", 
-        size: "Nimmt 4 Slots ein, fasst 16 Slots", 
-        source: "Artisan Level 3", 
-        info: "<b>Wofür:</b> Aufbewahrung von Dokumenten, Karten,Schlüssel und Geld.<br><b>Kosten:</b> ~ $75.400<br><b>Kaufempfehlung:</b> Kann man Kaufen, muss man aber nicht, bleibt euch überlassen. Auf jedenfall besser als die Verwaltungstasche." 
-    },
-    "hfak": { 
-        name: "Hartschalen-Erste-Hilfe-Set (Hard Case First Aid Kit)", 
-        size: "1x2 Slot", 
-        source: "Lab Rat Level 1", 
-        info: "<b>Wofür:</b> Kleine Medizintasche für den Gürtel.<br><b>Kosten:</b> ~ $90<br><b>Kaufempfehlung:</b> Kann man sehr oft finden." 
-    },
-    "mfak": { 
-        name: "Mini-Erste-Hilfe-Set (Mini First Aid Kit)", 
-        size: "1x3 Slot", 
-        source: "Lab Rat Level 2", 
-        info: "<b>Wofür:</b> Kleine Medizintasche für den Gürtel.<br><b>Kosten:</b> ~ $200<br><b>Kaufempfehlung:</b> Günstig, hilft am Anfang." 
-    },
-    "qfak": { 
-        name: "Schnellverschluss-Erste-Hilfe-Set (Quick Release First Aid Kit)", 
-        size: "2x3 Slots", 
-        source: "Lab Rat Level 3", 
-        info: "<b>Wofür:</b> Mittlere Med-Pouch.<br><b>Kosten:</b> ~ $320<br><b>Kaufempfehlung:</b> Sehr effizient auf dem Tactical Belt." 
-    },
-    "emt": { 
-        name: "EMT (RIP-AWAY EMT POUCH)", 
-        size: "3x3 Slots", 
-        source: "Lab Rat Level 4", 
-        info: "<b>Wofür:</b> Große Sanitätstasche für den Rucksack.<br><b>Kosten:</b> ~ $000<br><b>Kaufempfehlung:</b> Ideal für Squad-Medics." 
-    },
+    // --- LOCKER UPGRADES (Stash-Erweiterung) ---
+    { category: "🏗️ Locker Upgrades (Stash-Erweiterung)", name: "Locker Upgrade 1 (+20 Reihen)", size: "+20 Reihen Platz", source: "Quest: 'Lagererweiterung' (Handshake Lvl 2)", isMeta: true, info: "Ein absoluter Lebensretter im Mid-Game, wenn sich Rüstungen und Waffen stapeln." },
+    { category: "🏗️ Locker Upgrades (Stash-Erweiterung)", name: "Locker Upgrade 2 (+20 Reihen)", size: "+20 Reihen Platz", source: "Quest: 'Logistik-Meister' (Turncoat Lvl 3)", isMeta: true, info: "Massives Endgame-Upgrade für deine Basis. Verhindert das lästige Tetris-Spielen im Stash." },
 
-    // --- STASH-ERWEITERUNGEN ---
-    "locker_upgrades": { 
-        name: "Locker-Erweiterungen (Locker Expansions)", 
-        size: "Dauerhafte Stash-Vergrößerung", 
-        source: "Quests & Spielerlevel", 
-        info: "<b>Wofür:</b> Vergrößert dauerhaft dein Basecamp-Schließfach.<br><b>Kosten:</b> Kostenlos durch Fortschritt.<br><b>Wann:</b> Handshake/Turncoat Quests UND automatisch bei Spielerlevel 20, 30, 40, 50." 
-    }
-};
+    // --- STASH CASES (Lagerkisten für die Basis) ---
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Muxxum Waffenkoffer (Muxxum Rifle Case)", size: "Nimmt 3x5 ein, bietet 5x10 (50 Slots)", source: "Gunny / Loot", isMeta: true, info: "Pflichtkauf! Spart enorm viel Platz, indem du all deine Gewehre (ohne Magazin und Griff) darin stapelst." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Metal-Munitionskiste (Metal Ammo Box)", size: "Nimmt 2x2 ein, bietet 4x4 (16 Slots)", source: "Gunny / Turncoat", isMeta: true, info: "Die beste Möglichkeit, deine teure AP-Munition (M995 / BS) sicher und platzsparend in der Basis zu bunkern." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "MM-Munitionskiste (MM Ammo Box)", size: "Nimmt 2x2 ein, bietet 5x5 (25 Slots)", source: "Loot / Endgame Händler", isMeta: true, info: "Größere Version der Munitionskiste. Absolutes Meta für High-Tier Operator." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Waffenteilkiste (Weapon Parts Case)", size: "Nimmt 3x3 ein, bietet 6x6 (36 Slots)", source: "Artisan / Gunny", isMeta: false, info: "Perfekt, um Visiere, Schalldämpfer und Griffe zu sortieren, ohne die Basis vollzumüllen." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Erste-Hilfe-Koffer (First Aid Case)", size: "Nimmt 2x2 ein, bietet 4x4 (16 Slots)", source: "Lab Rat", isMeta: false, info: "Ordnet dein Chaos an Bandagen und Tourniquets." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "IV-Schutzkoffer (IV Truncase)", size: "Nimmt 3x3 ein, bietet 6x6 (36 Slots)", source: "Lab Rat", isMeta: true, info: "Riesige Medizin-Kiste. Hier passen all deine teuren Stims, SurKits und Blutbeutel rein!" },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Kühlbox (Personal Cooler)", size: "Nimmt 2x3 ein, bietet 5x5 (25 Slots)", source: "Loot", isMeta: false, info: "Lagerkiste ausschließlich für Essen und Trinken (MREs, Wasser)." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Großer Schlüsselkoffer (Huge Key Case)", size: "Nimmt 2x2 ein, bietet riesigen Platz für Keys", source: "Banshee / Vulture", isMeta: true, info: "Das 0.4 Update hat so viele Keys gebracht, dass dieser Koffer für deine Stash absolut zwingend notwendig ist!" },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Handgranatenkoffer (Grenade Storage Box)", size: "Nimmt 2x2 ein, bietet Platz für Granaten", source: "Handshake", isMeta: false, info: "Gut für Spieler, die gerne Räume mit Splittergranaten säubern." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Magazinkiste (Magazine Crate)", size: "Nimmt 2x3 ein, bietet 5x5 (25 Slots)", source: "Gunny / Turncoat", isMeta: false, info: "Lagert all deine 60-Schuss und Trommel-Magazine perfekt sortiert." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Kleiner Tresor (Small Safe)", size: "Nimmt 2x2 ein, bietet 4x4 (16 Slots)", source: "Loot", isMeta: false, info: "Speichert Bargeld und wertvolle Dokumente." },
+    { category: "📦 Stash Cases (Lagerkisten)", name: "Großer Tresor (Large Safe)", size: "Nimmt 3x3 ein, bietet 6x6 (36 Slots)", source: "Loot / Vulture", isMeta: true, info: "Das ultimative Lager für deine Millionen und High-End Intel-Ordner." },
+
+    // --- MICRO-CONTAINER & POUCHES (Raid-Inventar) ---
+    { category: "👝 Micro-Container & Pouches (Inventar)", name: "Geldbörse (Tactical Wallet)", size: "1 Slot (Bietet 4 Slots für Geld)", source: "Loot / Handshake", isMeta: false, info: "Nimmt nur 1 Slot im Secure Container ein, fasst aber 4 Stacks Bargeld!" },
+    { category: "👝 Micro-Container & Pouches (Inventar)", name: "Schlüsselhalter (Key Holder)", size: "1 Slot (Bietet Platz für Keys)", source: "Loot / Banshee", isMeta: true, info: "Dein treuester Begleiter auf jedem Raid. Gehört immer in den Secure Container!" },
+    { category: "👝 Micro-Container & Pouches (Inventar)", name: "Injektoren-Etui (Injector Case)", size: "1 Slot (Bietet Platz für Stims)", source: "Lab Rat", isMeta: true, info: "Ein absoluter Game-Changer! Erlaubt es dir, Morphium, Adrenalin und Heal-Stims auf einem einzigen Slot zu tragen." },
+    { category: "👝 Micro-Container & Pouches (Inventar)", name: "Kombat-Ordner (Kombat Folder)", size: "1x2 Slots (Für Dokumente)", source: "Handshake", isMeta: false, info: "Gut, um Quest-Dokumente und Intel sicher zu transportieren." },
+    { category: "👝 Micro-Container & Pouches (Inventar)", name: "MFAK / HFAK / QFAK (Med-Pouches)", size: "1-2 Slots", source: "Lab Rat", isMeta: false, info: "Kleine Medizintaschen für deinen Tactical Belt, um Verbände schneller parat zu haben." }
+];
     
 // ==========================================
 // 10. LANDEZONEN & NAVIGATION (0.4 SPEARHEAD - 100% COMPLETE)
