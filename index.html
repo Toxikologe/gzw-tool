@@ -8,6 +8,78 @@
     <style>
 
         /* ============================================================== */
+/* TAC-PAD: MILITARY TABLET DESIGN (TASKS & BRIEFINGS) */
+/* ============================================================== */
+.tac-pad-frame {
+    border: 14px solid #151515; border-radius: 20px; background: #000;
+    padding: 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);
+    position: relative; margin-top: 15px;
+}
+/* Kamera/Sensor Notch oben */
+.tac-pad-frame::before {
+    content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 10px; background: #0a0a0a; border-radius: 0 0 10px 10px;
+}
+.tac-pad-status-bar {
+    display: flex; justify-content: space-between; padding: 5px 15px; color: #666;
+    font-family: monospace; font-size: 0.8rem; background: #05070a; border-radius: 8px 8px 0 0;
+}
+.tac-pad-screen {
+    background: #05070a; border: 2px solid #1a2230; border-radius: 0 0 8px 8px;
+    display: flex; height: 650px; overflow: hidden; position: relative;
+    /* Taktisches Bildschirm-Raster */
+    background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+}
+
+/* Linke Seite: Händler & Liste */
+.tac-pad-sidebar {
+    width: 320px; background: #0a0d14; border-right: 2px solid #1a2230;
+    display: flex; flex-direction: column; z-index: 2;
+}
+.trader-nav { display: flex; flex-wrap: wrap; gap: 2px; padding: 10px; background: #05070a; border-bottom: 1px solid #1a2230; }
+.trader-btn {
+    flex: 1 1 30%; background: #111622; color: #888; border: 1px solid #222c3f;
+    padding: 8px 5px; font-size: 0.75rem; font-weight: bold; cursor: pointer; text-align: center; transition: 0.2s; border-radius: 3px; text-transform: uppercase;
+}
+.trader-btn:hover { background: #1a2230; color: #fff; }
+.trader-btn.active { background: rgba(124,163,90,0.2); color: var(--accent); border-color: var(--accent); }
+
+.task-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.task-card {
+    background: #111622; border: 1px solid #1a2230; padding: 12px; border-radius: 4px;
+    cursor: pointer; border-left: 3px solid #33415c; transition: 0.2s;
+}
+.task-card:hover { background: #1a2230; border-color: #44577c; }
+.task-card.active { background: rgba(124,163,90,0.1); border-left-color: var(--accent); border-color: var(--accent); }
+.task-card.completed { border-left-color: #ffcc00; opacity: 0.6; }
+.task-card.completed .task-name { text-decoration: line-through; color: #888; }
+.task-name { color: #eee; font-weight: bold; font-size: 0.9rem; margin-bottom: 5px; display: block; }
+.task-loc { color: #6688cc; font-size: 0.75rem; text-transform: uppercase; }
+
+/* Rechte Seite: Briefing */
+.tac-pad-main {
+    flex: 1; padding: 30px; overflow-y: auto; z-index: 2; position: relative;
+    background: radial-gradient(circle at center, #0a0d14 0%, #05070a 100%);
+}
+.briefing-header { border-bottom: 2px dashed #1a2230; padding-bottom: 15px; margin-bottom: 20px; }
+.briefing-stamp { color: #ff4c4c; font-family: monospace; font-size: 0.9rem; font-weight: bold; letter-spacing: 2px; }
+.briefing-title { color: #fff; font-size: 2rem; margin: 10px 0; text-transform: uppercase; }
+
+.briefing-box { background: rgba(0,0,0,0.3); border: 1px solid #1a2230; padding: 20px; border-radius: 6px; margin-bottom: 20px; }
+.briefing-label { color: #6688cc; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; display: block; }
+.briefing-text { color: #ccc; line-height: 1.6; font-size: 1rem; }
+
+.intel-warning { background: rgba(255,165,0,0.1); border-left: 4px solid #ffa500; padding: 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0; }
+
+.complete-toggle {
+    display: inline-flex; align-items: center; cursor: pointer; background: #111622;
+    border: 1px solid #1a2230; padding: 10px 20px; border-radius: 6px; transition: 0.2s; user-select: none;
+}
+.complete-toggle:hover { background: #1a2230; }
+.complete-toggle.is-done { background: rgba(255,204,0,0.1); border-color: #ffcc00; }
+.complete-check { width: 20px; height: 20px; margin-right: 15px; pointer-events: none; }
+
+        /* ============================================================== */
 /* LOCAL MARKET DESIGN (PROVISIONS) */
 /* ============================================================== */
 .market-container {
@@ -1131,72 +1203,71 @@
         </div>
 
         <div id="tab-tasks" class="tab-content">
-            <h2>📋 Missions-Datenbank (Tasks)</h2>
-            <div class="grid">
-                <div>
-                    <div class="filter-container" style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
-                        <select id="vendorFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1; min-width: 150px;">
-                            <option value="all">-- Alle Händler --</option>
-                            <option value="Handshake">Handshake</option>
-                            <option value="Gunny">Gunny</option>
-                            <option value="Lab Rat">Lab Rat</option>
-                            <option value="Artisan">Artisan</option>
-                            <option value="Turncoat">Turncoat</option>
-                            <option value="Banshee">Banshee</option>
-                            <option value="Vulture">Vulture</option>
-                        </select>
-                        
-                        <select id="regionFilter" onchange="updateTaskDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; cursor: pointer; flex: 1; min-width: 150px;">
-                            <option value="all">-- Alle Gebiete --</option>
-                            <option value="🔰 Startregionen">🔰 Startregionen</option>
-                            <option value="🌲 Sägewerk">🌲 Sägewerk (Lumber Yard)</option>
-                            <option value="🎯 Hunter's Paradise">🎯 Hunter's Paradise</option>
-                            <option value="🎣 Ban Pa">🎣 Ban Pa</option>
-                            <option value="🌊 Blaue Lagune">🌊 Blaue Lagune</option>
-                            <option value="☢️ YBL-1 Bunker">☢️ YBL-1 Bunker</option>
-                            <option value="🪖 Fort Narith">🪖 Fort Narith</option>
-                            <option value="💎 Midnight Sapphire">💎 Midnight Sapphire</option>
-                            <option value="🏙️ Tiger Bay">🏙️ Tiger Bay</option>
-                            <option value="✈️ Airfield & Ground Zero">✈️ Airfield & Ground Zero</option>
-                            <option value="🗺️ Lamang Island (Umland)">🗺️ Lamang Island (Umland)</option>
-                        </select>
-                    </div>
+            <h2>📱 TAC-PAD (Einsatz-Zentrale & Briefings)</h2>
+            <p style="color: #ccc; margin-bottom: 15px;">
+                Greife auf das verschlüsselte Händler-Netzwerk zu. Verwalte deine laufenden Operationen, analysiere Einsatzgebiete und markiere abgeschlossene Aufträge, um den Überblick zu behalten.
+            </p>
 
-                    <select id="taskDropdown" onchange="selectTaskFromDropdown()" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: var(--accent); cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 10px;">
-                        <option value="">-- Wähle einen Task --</option>
-                    </select>
-
-                    <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 20px;">
-                        <label style="display: inline-flex; align-items: center; cursor: pointer; color: #ccc; margin-top: 0; font-size: 0.95rem;">
-                            <input type="checkbox" id="filterOpenTasks" onchange="refreshTaskList()" style="width: auto; margin-right: 8px; margin-top: 0; cursor: pointer;">
-                            Nur offene Tasks anzeigen
-                        </label>
-                    </div>
-                    
-                    <input type="text" id="taskSearchInput" placeholder="Oder manuell suchen..." onkeyup="searchTasks()" style="margin-bottom: 10px;">
-                    <div id="taskList"></div>
-                    
-                    <div id="taskContainer" class="panel-box" style="position: relative; margin-top: 15px;">
-                        <div id="taskCompleteWrapper" style="display: none; position: absolute; top: 15px; right: 15px;">
-                            <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin-top: 0; font-size: 1rem;">
-                                <input type="checkbox" id="taskCompleteCheckbox" style="width: 20px; height: 20px; margin-right: 8px; margin-top: 0; cursor: pointer;">
-                                Erledigt
-                            </label>
-                        </div>
-                        <div id="taskTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; padding-right: 100px;">Wähle einen Task...</div>
-                        <div id="taskNames" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;"></div>
-                        <div id="taskDesc" style="margin-bottom: 15px;">Die Zielbeschreibung erscheint hier.</div>
-                        <button class="task-btn" id="solBtn" style="display:none; background-color: var(--accent); color: white; padding: 10px; border:none; border-radius: 5px; cursor:pointer;" onclick="toggleSolution()">LÖSUNG ANZEIGEN</button>
-                        <div id="taskSolution" class="task-solution" style="margin-top: 15px; display: none; background: #111; padding: 15px; border-left: 3px solid var(--accent);"></div>
-                    </div>
+            <div class="tac-pad-frame">
+                <div class="tac-pad-status-bar">
+                    <span>SYS_OS: SPEARHEAD_V0.4</span>
+                    <span id="tacPadTime">14:00:00</span>
+                    <span style="color: var(--accent);">[|||||] 100% PWR</span>
                 </div>
+                
+                <div class="tac-pad-screen">
+                    <div class="tac-pad-sidebar">
+                        <div class="trader-nav" id="traderNav">
+                            </div>
+                        
+                        <div style="padding: 10px; background: #05070a; border-bottom: 1px solid #1a2230;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #888; margin-bottom: 5px;">
+                                <span>OPERATIONEN ABGESCHLOSSEN:</span>
+                                <span id="traderProgressText">0/0</span>
+                            </div>
+                            <div style="height: 4px; background: #111622; border-radius: 2px; overflow: hidden;">
+                                <div id="traderProgressBar" style="height: 100%; width: 0%; background: #ffcc00; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
 
-                <div class="panel-box">
-                    <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--accent);">✅ Abgeschlossene Tasks (<span id="completedTaskCount">0</span>)</h3>
-                    <div id="completedTaskDisplay" style="color: #ccc; font-size: 0.95rem; line-height: 2; max-height: 500px; overflow-y: auto; padding-right: 10px;">
-                        Noch keine Tasks erledigt.
+                        <div class="task-list" id="tabletTaskList">
+                            </div>
                     </div>
-                    <button onclick="resetAllTasks()" style="margin-top: 20px; background: #b33939; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s;" onmouseover="this.style.background='#e05c2a'" onmouseout="this.style.background='#b33939'">🗑️ Alle Häkchen zurücksetzen</button>
+
+                    <div class="tac-pad-main" id="tabletBriefing">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div class="briefing-header" style="flex: 1;">
+                                <div class="briefing-stamp">STATUS: <span id="tbStatus" style="color: var(--accent);">AKTIV</span></div>
+                                <h3 id="tbTitle" class="briefing-title">MISSION AUSWÄHLEN</h3>
+                                <div id="tbLoc" style="color: #6688cc; font-family: monospace; font-size: 1.1rem;">-</div>
+                            </div>
+                            
+                            <div id="tbCompleteBtn" class="complete-toggle" onclick="toggleTaskCompletion()">
+                                <input type="checkbox" id="tbCheckbox" class="complete-check">
+                                <span id="tbCompleteText" style="color: #ccc; font-weight: bold; font-size: 0.9rem;">ALS ERLEDIGT MARKIEREN</span>
+                            </div>
+                        </div>
+
+                        <div id="tbIntelWarning" class="intel-warning" style="display: none;">
+                            <strong style="color:#ffa500; font-size: 0.85rem;">⚠️ TAKTISCHE KI-ANALYSE:</strong><br>
+                            <span id="tbIntelText" style="color: #ddd; font-size: 0.9rem;">-</span>
+                        </div>
+
+                        <div class="briefing-box">
+                            <span class="briefing-label">Einsatz-Ziele (Objectives)</span>
+                            <div id="tbObj" class="briefing-text">-</div>
+                        </div>
+
+                        <div class="briefing-box">
+                            <span class="briefing-label">Taktische Lösungs-Akte (Briefing)</span>
+                            <div id="tbDesc" class="briefing-text" style="font-style: italic; color: #aaa;">-</div>
+                        </div>
+
+                        <div class="briefing-box" style="background: rgba(124,163,90,0.05); border-color: rgba(124,163,90,0.2);">
+                            <span class="briefing-label" style="color: var(--accent);">Belohnungen (Rewards)</span>
+                            <div id="tbRewards" class="briefing-text" style="font-family: monospace;">-</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2801,233 +2872,179 @@
     }
 
     // ==============================================================
-    // TASK TRACKER LOGIK (INKL. REGIONEN & ABGESCHLOSSENE LISTE)
+    // TAC-PAD ENGINE (TASKS & BRIEFINGS)
     // ==============================================================
+    let activeTrader = "Handshake";
+    let selectedTaskId = null;
     let completedTasks = [];
-    
+
+    // Speicher laden
     try {
-        const saved = localStorage.getItem('gzw_completed_tasks');
-        if (saved) {
-            completedTasks = JSON.parse(saved);
-        }
+        const savedTasks = localStorage.getItem('gzw_completedTasks');
+        if (savedTasks) completedTasks = JSON.parse(savedTasks);
         if (!Array.isArray(completedTasks)) completedTasks = [];
     } catch(e) { completedTasks = []; }
 
     // Intelligente Funktion, die aus dem Lösungs-Text die Region erkennt
     function getTaskRegion(task) {
+        if (task.loc) return task.loc; // Falls in data.js schon eine Location steht
         const text = (task.sol + " " + task.desc + " " + task.de).toLowerCase();
-        if (text.includes('tiger bay') || text.includes('unlra') || text.includes('mall') || text.includes('pier')) return "🏙️ Tiger Bay";
-        if (text.includes('midnight sapphire') || text.includes('hotel') || text.includes('villa') || text.includes('golf')) return "💎 Midnight Sapphire";
-        if (text.includes('fort narith') || text.includes('barracks') || text.includes('hq') || text.includes('general pa')) return "🪖 Fort Narith";
-        if (text.includes('ybl') || text.includes('bunker')) return "☢️ YBL-1 Bunker";
-        if (text.includes("hunter's paradise") || text.includes('hp') || text.includes('schießstand') || text.includes('shooting')) return "🎯 Hunter's Paradise";
-        if (text.includes('ban pa') || text.includes('ältester') || text.includes('stelzen')) return "🎣 Ban Pa";
-        if (text.includes('sawmill') || text.includes('sägewerk') || text.includes('lumber')) return "🌲 Sägewerk";
-        if (text.includes('ground zero') || text.includes('airfield') || text.includes('flugplatz') || text.includes('hangar')) return "✈️ Airfield & Ground Zero";
-        if (text.includes('blue lagoon') || text.includes('lagune') || text.includes('malo')) return "🌊 Blaue Lagune";
-        if (text.includes('startstadt') || text.includes('markt') || text.includes('basecamp') || text.includes('base camp') || text.includes('rathaus') || text.includes('nam thaven') || text.includes('kiu vongsa') || text.includes('pha lang')) return "🔰 Startregionen";
-        return "🗺️ Lamang Island (Umland)";
+        if (text.includes('tiger bay') || text.includes('unlra') || text.includes('mall') || text.includes('pier')) return "Tiger Bay";
+        if (text.includes('midnight sapphire') || text.includes('hotel') || text.includes('villa') || text.includes('golf')) return "Midnight Sapphire";
+        if (text.includes('fort narith') || text.includes('barracks') || text.includes('hq') || text.includes('general pa')) return "Fort Narith";
+        if (text.includes('ybl') || text.includes('bunker')) return "YBL-1 Bunker";
+        if (text.includes("hunter's paradise") || text.includes('hp') || text.includes('schießstand')) return "Hunter's Paradise";
+        if (text.includes('ban pa') || text.includes('ältester') || text.includes('stelzen')) return "Ban Pa";
+        if (text.includes('sawmill') || text.includes('sägewerk') || text.includes('lumber')) return "Sägewerk";
+        if (text.includes('ground zero') || text.includes('airfield') || text.includes('flugplatz') || text.includes('hangar')) return "Ground Zero";
+        if (text.includes('blue lagoon') || text.includes('lagune') || text.includes('malo')) return "Blaue Lagune";
+        if (text.includes('startstadt') || text.includes('rathaus') || text.includes('nam thaven') || text.includes('kiu vongsa') || text.includes('pha lang')) return "Startregion";
+        return "Lamang Island";
     }
 
-    function toggleTaskCompletion(taskEn, taskDe, isChecked) {
-        if (isChecked) {
-            if (!completedTasks.includes(taskEn)) {
-                completedTasks.push(taskEn);
-            }
-        } else {
-            // Häkchen entfernen (einzeln oder per X-Button)
-            completedTasks = completedTasks.filter(t => t !== taskEn && t !== taskDe);
-            
-            // Falls dieser Task gerade links in der Detail-Ansicht offen ist, Checkbox dort entmarkieren
-            const currentTitle = document.getElementById('taskTitle').innerText;
-            if (currentTitle === taskDe) {
-                document.getElementById('taskCompleteCheckbox').checked = false;
-            }
-        }
-        
-        try { localStorage.setItem('gzw_completed_tasks', JSON.stringify(completedTasks)); } catch(e) {}
-        
-        const titleEl = document.getElementById('taskTitle');
-        if (titleEl && document.getElementById('taskTitle').innerText === taskDe) {
-            titleEl.style.textDecoration = isChecked ? 'line-through' : 'none';
-            titleEl.style.opacity = isChecked ? '0.6' : '1';
-        }
-        
-        refreshTaskList();
-        renderCompletedTasks();
-    }
-
-    function renderCompletedTasks() {
-        const display = document.getElementById('completedTaskDisplay');
-        const count = document.getElementById('completedTaskCount');
-        if (!display || !count) return;
-        
-        count.textContent = completedTasks.length;
-
-        if (completedTasks.length === 0) {
-            display.innerHTML = '<span style="color: #888;">Noch keine Tasks erledigt.</span>';
-            return;
-        }
-
-        const doneTasks = [];
-        completedTasks.forEach(id => {
-            const t = allTasks.find(task => task.en === id || task.de === id);
-            if (t) doneTasks.push(t);
-        });
-
-        // Alphabetisch nach deutschem Namen sortieren
-        doneTasks.sort((a, b) => a.de.localeCompare(b.de));
-
-        display.innerHTML = doneTasks.map(t => 
-            `<div style="display:inline-flex; align-items:center; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:2px 8px; margin:4px; font-size:0.85rem;">
-                <span onclick="displayTaskData('${t.en.replace(/'/g, "\\'")}'); document.getElementById('taskDropdown').value='${t.en.replace(/'/g, "\\'")}'" 
-                      style="cursor:pointer; color:#ccc;" title="Klicken für Details">✅ ${t.de}</span>
-                <span onclick="toggleTaskCompletion('${t.en.replace(/'/g, "\\'")}', '${t.de.replace(/'/g, "\\'")}', false)" 
-                      style="margin-left:8px; cursor:pointer; color:#ff4c4c; font-weight:bold; padding:2px 5px;" title="Einzeln entfernen">✕</span>
-            </div>`
-        ).join('');
-    }
-
-    function refreshTaskList() {
-        updateTaskDropdown();
-        if (document.getElementById('taskSearchInput').value.length >= 2) {
-            searchTasks();
-        }
-    }
-
-    function displayTaskData(idOrName) {
+    function initTaskTablet() {
         if (typeof allTasks === 'undefined') return;
-        const task = allTasks.find(t => t.en === idOrName || t.de === idOrName);
-        if (!task) return;
 
-        const isDone = completedTasks.includes(task.en) || completedTasks.includes(task.de);
+        // 1. Trader-Buttons oben links generieren (basierend auf "v" property in data.js)
+        const traders = [...new Set(allTasks.map(t => t.v))].filter(Boolean);
+        if(traders.length > 0 && !traders.includes(activeTrader)) activeTrader = traders[0];
+
+        const nav = document.getElementById('traderNav');
+        if(!nav) return;
+        nav.innerHTML = '';
         
-        const titleEl = document.getElementById('taskTitle');
-        titleEl.innerText = task.de;
-        titleEl.style.textDecoration = isDone ? 'line-through' : 'none';
-        titleEl.style.opacity = isDone ? '0.6' : '1';
-        
-        document.getElementById('taskNames').innerText = `Original: ${task.en} | Händler: ${task.v || 'Unbekannt'} | Region: ${getTaskRegion(task)}`;
-        document.getElementById('taskDesc').innerText = task.desc;
-        document.getElementById('taskSolution').innerHTML = `<strong>Lösung:</strong><br>${task.sol}`;
-        
-        document.getElementById('solBtn').style.display = 'block';
-        document.getElementById('taskSolution').style.display = 'none';
-        
-        const wrapper = document.getElementById('taskCompleteWrapper');
-        const checkbox = document.getElementById('taskCompleteCheckbox');
-        
-        if (wrapper && checkbox) {
-            wrapper.style.display = 'block';
-            checkbox.onchange = null; 
-            checkbox.checked = isDone;
-            checkbox.onchange = function() {
-                toggleTaskCompletion(task.en, task.de, this.checked);
+        traders.forEach(trader => {
+            const btn = document.createElement('button');
+            btn.className = `trader-btn ${trader === activeTrader ? 'active' : ''}`;
+            btn.innerText = trader;
+            btn.onclick = () => {
+                activeTrader = trader;
+                document.querySelectorAll('.trader-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderTabletTaskList();
             };
-        }
-    }
-
-    function updateTaskDropdown() {
-        if (typeof allTasks === 'undefined') return;
-        const vendor = document.getElementById('vendorFilter').value;
-        const region = document.getElementById('regionFilter').value;
-        const taskSelect = document.getElementById('taskDropdown');
-        const filterCheckbox = document.getElementById('filterOpenTasks');
-        const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
-        
-        const selectedValue = taskSelect.value; 
-        taskSelect.innerHTML = '<option value="">-- Wähle einen Task --</option>';
-
-        let filteredTasks = allTasks;
-
-        // Filter anwenden
-        if (vendor !== 'all' && vendor !== '') {
-            filteredTasks = filteredTasks.filter(t => t.v === vendor);
-        }
-        if (region !== 'all' && region !== '') {
-            filteredTasks = filteredTasks.filter(t => getTaskRegion(t) === region);
-        }
-        if (hideCompleted) {
-            filteredTasks = filteredTasks.filter(t => !completedTasks.includes(t.en) && !completedTasks.includes(t.de));
-        }
-
-        // Alphabetisch sortieren
-        filteredTasks.sort((a, b) => a.de.localeCompare(b.de));
-
-        filteredTasks.forEach(t => {
-            const option = document.createElement('option');
-            option.value = t.en; 
-            const isDone = completedTasks.includes(t.en) || completedTasks.includes(t.de);
-            option.text = isDone ? `✓ ${t.de}` : t.de;
-            taskSelect.appendChild(option);
+            nav.appendChild(btn);
         });
-        
-        if (selectedValue && Array.from(taskSelect.options).some(opt => opt.value === selectedValue)) {
-            taskSelect.value = selectedValue;
-        }
+
+        // Uhrzeit im Tablet-Rand (Live)
+        setInterval(() => {
+            const d = new Date();
+            const timeSpan = document.getElementById('tacPadTime');
+            if (timeSpan) timeSpan.innerText = d.toLocaleTimeString('de-DE');
+        }, 1000);
+
+        renderTabletTaskList();
     }
 
-    function selectTaskFromDropdown() {
-        const taskId = document.getElementById('taskDropdown').value;
-        if (!taskId) return;
-        displayTaskData(taskId);
-    }
-
-    function searchTasks() {
-        if (typeof allTasks === 'undefined') return;
-        const input = document.getElementById('taskSearchInput').value.toLowerCase();
-        const list = document.getElementById('taskList');
-        const filterCheckbox = document.getElementById('filterOpenTasks');
-        const hideCompleted = filterCheckbox ? filterCheckbox.checked : false;
-        
+    function renderTabletTaskList() {
+        const list = document.getElementById('tabletTaskList');
+        if(!list) return;
         list.innerHTML = '';
-        if(input.length < 2) { list.style.display = 'none'; return; }
 
-        let filtered = allTasks.filter(t => t.de.toLowerCase().includes(input) || t.en.toLowerCase().includes(input));
+        // Wir filtern nach der alten Property "v" (Vendor)
+        let traderTasks = allTasks.filter(t => t.v === activeTrader);
+        
+        // Alphabetisch sortieren
+        traderTasks.sort((a, b) => a.de.localeCompare(b.de));
 
-        if (hideCompleted) {
-            filtered = filtered.filter(t => !completedTasks.includes(t.en) && !completedTasks.includes(t.de));
-        }
+        let completedCount = 0;
 
-        if(filtered.length > 0) {
-            list.style.display = 'block';
-            filtered.forEach(t => {
-                const d = document.createElement('div');
-                d.className = 'search-item';
-                
-                const isDone = completedTasks.includes(t.en) || completedTasks.includes(t.de);
-                const mark = isDone ? '<span style="color:#7ca35a; margin-right:5px; font-weight:bold;">✓</span>' : '';
-                const styling = isDone ? 'text-decoration: line-through; opacity: 0.5;' : '';
+        traderTasks.forEach((task, index) => {
+            const tId = task.en || task.de; 
+            const isDone = completedTasks.includes(tId);
+            if (isDone) completedCount++;
 
-                d.innerHTML = `<span style="${styling}">${mark}<strong>${t.de}</strong> <small>(${t.v})</small></span>`;
-                d.onclick = () => {
-                    displayTaskData(t.en);
-                    document.getElementById('taskDropdown').value = t.en;
-                    list.style.display = 'none';
-                    document.getElementById('taskSearchInput').value = t.de;
-                };
-                list.appendChild(d);
-            });
-        } else { list.style.display = 'none'; }
-    }
+            const card = document.createElement('div');
+            card.className = `task-card ${isDone ? 'completed' : ''} ${tId === selectedTaskId ? 'active' : ''}`;
+            card.id = `task-card-${index}`;
+            card.innerHTML = `
+                <span class="task-name">${task.de}</span>
+                <span class="task-loc">📍 ${getTaskRegion(task)}</span>
+            `;
+            card.onclick = () => openTaskBriefing(task, card.id, tId, isDone);
+            list.appendChild(card);
+        });
 
-    function resetAllTasks() {
-        if (confirm("Wirklich alle erledigten Tasks zurücksetzen?")) {
-            completedTasks = [];
-            try { localStorage.removeItem('gzw_completed_tasks'); } catch(e) {}
-            refreshTaskList();
-            renderCompletedTasks();
-            
-            const titleEl = document.getElementById('taskTitle');
-            const checkbox = document.getElementById('taskCompleteCheckbox');
-            if (titleEl) { titleEl.style.textDecoration = 'none'; titleEl.style.opacity = '1'; }
-            if (checkbox) { checkbox.checked = false; }
+        // Fortschrittsbalken updaten
+        const total = traderTasks.length;
+        document.getElementById('traderProgressText').innerText = `${completedCount} / ${total}`;
+        const pct = total === 0 ? 0 : (completedCount / total) * 100;
+        document.getElementById('traderProgressBar').style.width = `${pct}%`;
+
+        // Automatisch erste Task öffnen, wenn nichts ausgewählt ist
+        if (traderTasks.length > 0 && !selectedTaskId) {
+            const firstId = traderTasks[0].en || traderTasks[0].de;
+            openTaskBriefing(traderTasks[0], 'task-card-0', firstId, completedTasks.includes(firstId));
         }
     }
 
-    function toggleSolution() {
-        const s = document.getElementById('taskSolution');
-        s.style.display = s.style.display === 'block' ? 'none' : 'block';
+    function openTaskBriefing(task, cardDomId, taskId, isDone) {
+        selectedTaskId = taskId;
+
+        // Visuelles Highlight in der Liste
+        document.querySelectorAll('.task-card').forEach(c => c.classList.remove('active'));
+        const activeCard = document.getElementById(cardDomId);
+        if (activeCard) activeCard.classList.add('active');
+
+        // Textfelder füllen
+        document.getElementById('tbTitle').innerText = task.de;
+        document.getElementById('tbLoc').innerHTML = `📍 ZIELGEBIET: ${getTaskRegion(task).toUpperCase()}`;
+        document.getElementById('tbObj').innerHTML = (task.desc || '-').replace(/\\n/g, '<br>'); // Objective war bei dir oft in desc
+        
+        // Da du "sol" (Solution) für das Briefing/die Lösung hattest:
+        document.getElementById('tbDesc').innerHTML = task.sol ? task.sol.replace(/\\n/g, '<br>') : '-';
+        document.getElementById('tbRewards').innerText = task.rewards || 'Unbekannte Belohnung / Kein Intel';
+
+        // Erledigt-Button Status
+        const btn = document.getElementById('tbCompleteBtn');
+        const check = document.getElementById('tbCheckbox');
+        const text = document.getElementById('tbCompleteText');
+        const statusStamp = document.getElementById('tbStatus');
+        
+        if (isDone) {
+            btn.classList.add('is-done'); check.checked = true;
+            text.innerText = "MISSION ABGESCHLOSSEN"; text.style.color = "#ffcc00";
+            statusStamp.innerText = "ARCHIVIERT (ERLEDIGT)"; statusStamp.style.color = "#888";
+        } else {
+            btn.classList.remove('is-done'); check.checked = false;
+            text.innerText = "ALS ERLEDIGT MARKIEREN"; text.style.color = "#ccc";
+            statusStamp.innerText = "AKTIV (IN BEARBEITUNG)"; statusStamp.style.color = "var(--accent)";
+        }
+
+        // --- TAKTISCHE KI-ANALYSE ---
+        const intelWarning = document.getElementById('tbIntelWarning');
+        const searchString = (task.desc + " " + task.sol + " " + task.de).toLowerCase();
+        
+        if (searchString.includes("schlüssel") || searchString.includes("key")) {
+            intelWarning.style.display = 'block';
+            intelWarning.querySelector('#tbIntelText').innerText = "Für diese Mission wird mit hoher Wahrscheinlichkeit ein Schlüssel benötigt. Überprüfe deinen Schlüsselbund, bevor du abrückst!";
+        } else {
+            intelWarning.style.display = 'none';
+        }
+    }
+
+    function toggleTaskCompletion() {
+        if (!selectedTaskId) return;
+
+        const isCurrentlyDone = completedTasks.includes(selectedTaskId);
+        if (isCurrentlyDone) {
+            completedTasks = completedTasks.filter(id => id !== selectedTaskId);
+        } else {
+            completedTasks.push(selectedTaskId);
+        }
+        
+        localStorage.setItem('gzw_completedTasks', JSON.stringify(completedTasks));
+        
+        // Liste neu laden, damit die Durchstreich-Effekte greifen
+        renderTabletTaskList();
+        
+        // Briefing sofort updaten
+        const currentTask = allTasks.find(t => (t.en || t.de) === selectedTaskId);
+        if (currentTask) {
+            const traderTasks = allTasks.filter(t => t.v === activeTrader).sort((a, b) => a.de.localeCompare(b.de));
+            const index = traderTasks.findIndex(t => (t.en || t.de) === selectedTaskId);
+            openTaskBriefing(currentTask, `task-card-${index}`, selectedTaskId, !isCurrentlyDone);
+        }
     }
 
     // ==============================================================
@@ -4454,14 +4471,13 @@ function goToHome() {
         makeDraggable('bossSpawnWidget');
         makeDraggable('raidNotepad');
         makeDraggable('heliWidget');
+        initTaskTablet();
         initNotepad();
         initKeyCabinet();
         initLZDispatcher();
         initBossHVT();
         initMedicalCenter();
         initMarket();
-        renderCompletedTasks();
-    	updateTaskDropdown();
         renderDecryptionTerminal();
         renderLootRoutes();
         renderLootAccordions();
