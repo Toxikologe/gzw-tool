@@ -1805,15 +1805,64 @@ const lootRoutesDb = [
     }
 ];
 
-    // 17. Waffen Blueprints
-    const blueprintDb = {
-        "AK-308": { loc: "Fort Narith Jail (142, 130)", desc: "Hinter einer aufkickbaren Tür unter der Kaffeemaschine.", tip: "Du musst den Jail Key besitzen." },
-        "AKMN": { loc: "Erhöhte Hütte (195, 153)", desc: "In der kleinen Hütte auf halbem Weg zwischen Ban Pa und Tiger Bay.", tip: "Vorsicht vor den Patrouillen im Dschungel." },
-        "DDM4": { loc: "Fort Narith Barracks (141, 131)", desc: "Im 2. Stock der Baracken auf einem Tisch.", tip: "Häufig umkämpftes Gebiet!" },
-        "M700 Sniper": { loc: "Hotel Dach (Midnight Sapphire)", desc: "Am entfernten Ende des Dachs (Treppe hoch).", tip: "Nutze den Heli-Landeplatz Hotel 1." },
-        "M14 EBR": { loc: "Hunter's Paradise (159, 168)", desc: "Im Raum direkt neben der verschlossenen Waffenkammer.", tip: "Kein Schlüssel für diesen spezifischen Raum nötig." },
-        "MP7A2": { loc: "Ransacked Tourist Shelter (188, 130)", desc: "Liegt auf der Couch im Hauptraum.", tip: "Benötigt den Tourist Shelter Key." },
-        "SIG MCX": { loc: "Hotel Midnight Sapphire (171, 166)", desc: "Im Erdgeschoss, hintere rechte Seite.", tip: "Gute Tarnung ist hier Pflicht." },
-        "SVD Dragunov": { loc: "Tiger Bay Mall (197, 129)", desc: "Im Hinterraum der Buchhandlung auf einem Regal.", tip: "Extreme KI-Dichte, bring genug Munition mit." },
-        "Mossberg 590": { loc: "Remote Campsite (149, 111)", desc: "Südöstlich von YBL-1, in einer Kiste beim Flusslager.", tip: "Relativ friedliche Zone für Anfänger." }
-    };
+    // ==========================================
+    // 17. WAFFEN-BLUEPRINTS DATENBANK (0.4 SPEARHEAD - VIDEO SYNCED)
+    // ==========================================
+    // Trage deine MapGenie-Links zwischen die Anführungszeichen bei "mapUrl" ein!
+
+const blueprintDb = {
+    "Mossberg 590": {
+        loc: "Remote Campsite (Südlich von Lima 2 / Mike 3)",
+        desc: "Schaltet die Mossberg 590 Schrotflinte (Range/Rifle Magazin) frei.",
+        tip: "Gehe von Lima 2 nach Süden zum Fluss. Überquere die kleine Brücke am Flussbogen. Die Blaupause liegt dort in einer kleinen Hütte.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "DDM4 (Camo)": {
+        loc: "Fort Narith - Zweite Kaserne (Top Floor)",
+        desc: "Schaltet die DDM4 (Camo-Version) mit 60-Schuss-Magazin frei.",
+        tip: "Nähere dich über das Old Service Gate. Es ist das zweite Kasernengebäude. Geh die Treppen ganz nach oben und dann am Ende des Flurs auf der linken Seite.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "AK-308": {
+        loc: "Fort Narith - Das neue Gefängnis (Jail)",
+        desc: "Schaltet das mächtige AK-308 Sturmgewehr frei.",
+        tip: "Das neue Gefängnis-Gebäude liegt exakt zwischen der Krankenstation (Infirmary) und der Kantine. Geh rein und nimm direkt den linken Raum.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "M14 Rifle": {
+        loc: "Hunter's Paradise (Nahe Waffenlager)",
+        desc: "Schaltet das M14 DMR frei.",
+        tip: "Lande am besten bei Foxtrot 1. Die Blaupause liegt in einem Gebäude direkt neben / außerhalb des Haupt-Waffenlagers (Weapon Storage).",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "SIG MCX": {
+        loc: "Midnight Sapphire - Hotel Lobby (Erdgeschoss)",
+        desc: "Schaltet die SIG MCX (.300 Blackout) frei.",
+        tip: "Gehe durch den Haupteingang in die Rezeption. Dreh dich direkt neben der großen Haupttreppe nach rechts. Liegt dort auf einem Tisch.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "M700 Sniper": {
+        loc: "Midnight Sapphire - Hotel Dach (Roof)",
+        desc: "Schaltet das M700 Scharfschützengewehr frei.",
+        tip: "Geh ganz nach oben aufs Dach zum Helipad (Vorsicht vor Snipern/Boss!). Lauf ganz nach hinten zu den Satellitenschüsseln. Liegt auf einem kleinen Ecktisch.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "AKMN": {
+        loc: "Occupied Cottage (Nahe Oscar 2)",
+        desc: "Schaltet die AKMN (mit Optik-Montage) frei.",
+        tip: "TÖDLICHE GEFAHR: Wenn du von Oscar 2 kommst und die kleine Brücke zum Cottage überquerst, pass auf den Stolperdraht (Tripwire) auf! Die Blueprint liegt direkt im Haus.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "MP7A2": {
+        loc: "Ransacked Tourist Shelter (Juliet 4)",
+        desc: "Schaltet die MP7A2 (ohne festen Griff) frei.",
+        tip: "Lande bei Juliet 4. Das Shelter befindet sich direkt neben der Gladius-Markierung auf der Map. Einfach reinlaufen und einsammeln.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    },
+    "SVD Dragunov": {
+        loc: "Tiger Bay Mall - 'Cake Time' Shop",
+        desc: "Schaltet das SVD DMR permanent frei.",
+        tip: "Geh ins Erdgeschoss der großen Mall. Suche den Laden 'Cake Time' (direkt neben dem Galaxy Store). Die Blaupause liegt im hinteren Büro auf dem Schreibtisch.",
+        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+    }
+};
