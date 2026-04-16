@@ -563,53 +563,21 @@
             </div>
         </div>
 
-        <div id="tab-vendors" class="tab-content">
-            <h2>Händler & Freischaltungen</h2>
+        <div id="tab-traders" class="tab-content">
+            <h2>🛒 Händler-Freischaltungen (0.4 Spearhead)</h2>
             <div class="panel-box">
-                <label for="vendorSelect">Händler-Freischaltungen (Vendors)</label>
-                <select id="vendorSelect" onchange="updateVendor()">
-                    <option value="">-- Wähle Händler & Level --</option>
-                    <optgroup label="Gunny (NATO-Waffen & Munition)">
-                        <option value="gunny_1">Gunny Level 1 (Start)</option>
-                        <option value="gunny_2">Gunny Level 2</option>
-                        <option value="gunny_3">Gunny Level 3</option>
-                        <option value="gunny_3">Gunny Level 4 (Endgame)</option>
-                    </optgroup>
-                    <optgroup label="Handshake (Rüstung & Rucksäcke)">
-                        <option value="handshake_1">Handshake Level 1 (Start)</option>
-                        <option value="handshake_2">Handshake Level 2</option>
-                        <option value="handshake_3">Handshake Level 3</option>
-                        <option value="handshake_3">Handshake Level 4 (Endgame)</option>
-                    </optgroup>
-                    <optgroup label="Lab Rat (Medizin & Verpflegung)">
-                        <option value="labrat_1">Lab Rat Level 1 (Start)</option>
-                        <option value="labrat_2">Lab Rat Level 2</option>
-                        <option value="labrat_3">Lab Rat Level 3</option>
-                        <option value="labrat_3">Lab Rat Level 4 (Endgame)</option>
-                    </optgroup>
-                    <optgroup label="Artisan (AK-Plattformen & Ost-Gear)">
-                        <option value="artisan_1">Artisan Level 1 (Start)</option>
-                        <option value="artisan_2">Artisan Level 2</option>
-                        <option value="artisan_3">Artisan Level 3</option>
-                        <option value="artisan_3">Artisan Level 4 (Endgame)</option>
-                    </optgroup>
-                    <optgroup label="Turncoat (Westliche Spezialwaffen)">
-                        <option value="turncoat_1">Turncoat Level 1</option>
-                        <option value="turncoat_2">Turncoat Level 2</option>
-                        <option value="turncoat_3">Turncoat Level 3</option>
-                        <option value="turncoat_3">Turncoat Level 4 (Endgame)</option>
-                    </optgroup>
-                    <optgroup label="Banshee (High-End & Seltenes)">
-                        <option value="banshee_1">Banshee Level 1</option>
-                        <option value="banshee_2">Banshee Level 2</option>
-                        <option value="banshee_3">Banshee Level 3</option>
-                        <option value="banshee_3">Banshee Level 4 (Endgame)</option>
-                    </optgroup>
-                    <optgroup label="Vulture (Secret Vendor)">
-                        <option value="vulture_1">Vulture Level 1</option>
-                    </optgroup>
-                </select>
-                <div id="vendorInfo">Wähle einen Händler und sein Level aus...</div>
+                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
+                    Hier siehst du genau, welches Level du bei Handshake, Gunny & Co. erreichen musst, um die besten Items freizuschalten. 
+                    Absolute <span style="color: #ffcc00; font-weight: bold;">Game-Changer</span> sind mit einem 🔥 markiert!
+                </p>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="sortAlphaBtn" onclick="renderTraderAccordions('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔤 Alphabetisch sortieren</button>
+                    <button id="sortMetaBtn" onclick="renderTraderAccordions('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔥 Nach Wichtigkeit (Meta) sortieren</button>
+                </div>
+                
+                <div id="traderAccordionsContainer">
+                    </div>
             </div>
         </div>
 
@@ -2849,6 +2817,150 @@
 }
 
     // ==============================================================
+    // HÄNDLER-DATENBANK RENDER-LOGIK (AKKORDEON & SORTIERUNG)
+    // ==============================================================
+    let currentTraderSort = 'alpha'; // Standard-Sortierung
+
+    function renderTraderAccordions(sortMode = currentTraderSort) {
+        currentTraderSort = sortMode;
+        const container = document.getElementById('traderAccordionsContainer');
+        if (!container || typeof tradersDb === 'undefined') return;
+
+        container.innerHTML = '';
+
+        // Button-Styling anpassen je nach aktivem Sortiermodus
+        const alphaBtn = document.getElementById('sortAlphaBtn');
+        const metaBtn = document.getElementById('sortMetaBtn');
+        if (alphaBtn && metaBtn) {
+            if (sortMode === 'alpha') {
+                alphaBtn.style.background = 'rgba(124,163,90,0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
+                metaBtn.style.background = '#222'; metaBtn.style.borderColor = '#444';
+            } else {
+                metaBtn.style.background = 'rgba(255,204,0,0.2)'; metaBtn.style.borderColor = '#ffcc00';
+                alphaBtn.style.background = '#222'; alphaBtn.style.borderColor = '#444';
+            }
+        }
+
+        // Nach Händler gruppieren
+        const groupedTraders = {};
+        tradersDb.forEach(item => {
+            if (!groupedTraders[item.trader]) groupedTraders[item.trader] = [];
+            groupedTraders[item.trader].push(item);
+        });
+
+        // Feste Reihenfolge der Händler
+        const traderOrder = ["Gunny", "Handshake", "Lab Rat", "Artisan", "Turncoat", "Banshee", "Vulture"];
+
+        traderOrder.forEach(traderName => {
+            const items = groupedTraders[traderName];
+            if (!items) return;
+
+            // Sortierung anwenden
+            if (sortMode === 'alpha') {
+                // Erst nach Level, dann Alphabetisch
+                items.sort((a, b) => {
+                    if (a.level !== b.level) return a.level - b.level;
+                    return a.name.localeCompare(b.name, 'de');
+                });
+            } else if (sortMode === 'meta') {
+                // Erst nach Meta (Wichtigkeit), dann nach Level
+                items.sort((a, b) => {
+                    if (a.isMeta !== b.isMeta) return a.isMeta ? -1 : 1; // Meta nach oben
+                    if (a.level !== b.level) return a.level - b.level;
+                    return a.name.localeCompare(b.name, 'de');
+                });
+            }
+
+            const groupDiv = document.createElement('div');
+            groupDiv.style.marginBottom = "10px";
+
+            // Der blaue Akkordeon-Button
+            const btn = document.createElement('button');
+            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Freischaltungen) ▼</span>`;
+            btn.style.width = "100%";
+            btn.style.textAlign = "left";
+            btn.style.padding = "12px 15px";
+            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+            btn.style.color = "#5dade2";
+            btn.style.border = "1px solid #2980b9";
+            btn.style.borderRadius = "4px";
+            btn.style.cursor = "pointer";
+            btn.style.fontWeight = "bold";
+            btn.style.fontSize = "1.05rem";
+            btn.style.transition = "0.2s";
+
+            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+            btn.onmouseout = () => {
+                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+            };
+
+            // Der Inhalt (Die Tabelle)
+            const contentDiv = document.createElement('div');
+            contentDiv.style.display = "none";
+            contentDiv.style.border = "1px solid #2980b9";
+            contentDiv.style.borderTop = "none";
+            contentDiv.style.padding = "10px";
+            contentDiv.style.backgroundColor = "#0a0a0a";
+            contentDiv.style.borderBottomLeftRadius = "4px";
+            contentDiv.style.borderBottomRightRadius = "4px";
+
+            let tableHTML = `
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead style="background: #151515; color: var(--accent);">
+                            <tr>
+                                <th style="padding: 10px; text-align: center; border-bottom: 1px solid #333; width: 80px;">Level</th>
+                                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #333;">Gegenstand & Taktische Info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            items.forEach(item => {
+                const metaTag = item.isMeta ? `<span style="background: rgba(255, 204, 0, 0.15); color: #ffcc00; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; border: 1px solid #ffcc00; margin-left: 10px;">🔥 META</span>` : '';
+                const infoText = item.info ? `<div style="font-size: 0.8rem; color: #888; font-style: italic; margin-top: 4px;">↳ ${item.info}</div>` : '';
+                
+                // Hervorhebung der Reihe, falls es ein Meta-Item ist
+                const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
+
+                tableHTML += `
+                    <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
+                        <td style="padding: 12px 8px; text-align: center; color: #aaa; font-weight: bold; font-size: 1.1rem;">LL${item.level}</td>
+                        <td style="padding: 12px 8px;">
+                            <div style="color: #eee; font-weight: bold;">${item.name} ${metaTag}</div>
+                            ${infoText}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `</tbody></table></div>`;
+            contentDiv.innerHTML = tableHTML;
+
+            // Akkordeon Toggle-Logik
+            btn.onclick = function() {
+                if (contentDiv.style.display === "none") {
+                    contentDiv.style.display = "block";
+                    btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Freischaltungen) ▲</span>`;
+                    btn.style.borderBottomLeftRadius = "0";
+                    btn.style.borderBottomRightRadius = "0";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                } else {
+                    contentDiv.style.display = "none";
+                    btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Freischaltungen) ▼</span>`;
+                    btn.style.borderBottomLeftRadius = "4px";
+                    btn.style.borderBottomRightRadius = "4px";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                }
+            };
+
+            groupDiv.appendChild(btn);
+            groupDiv.appendChild(contentDiv);
+            container.appendChild(groupDiv);
+        });
+    }
+
+    // ==============================================================
 // MAP LINK GENERATOR (FÜR KOORDINATEN)
 // ==============================================================
 function getMapLinkHTML(locationText) {
@@ -3326,6 +3438,7 @@ function goToHome() {
         buildCodeDropdown();
         renderLootRoutes();
         renderLootAccordions();
+        renderTraderAccordions();
         buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
