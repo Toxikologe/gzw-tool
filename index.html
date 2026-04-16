@@ -67,6 +67,51 @@
 .gs-select {
     width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold;
 }
+
+        /* ============================================================== */
+        /* FACTION SELECTION MODAL */
+        /* ============================================================== */
+        .faction-card {
+            width: 260px;
+            padding: 30px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        .faction-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            filter: brightness(1.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+        .faction-card h2 {
+            border: none;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .faction-btn-top {
+            position: absolute; 
+            top: 20px; 
+            right: 40px; 
+            background: #111; 
+            color: var(--accent); 
+            border: 1px solid var(--accent); 
+            padding: 8px 15px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            z-index: 999; 
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .faction-btn-top:hover {
+            background: rgba(255,255,255,0.1);
+        }
         
         /* ============================================================== */
         /* --- TACTICAL SIDEBAR DASHBOARD LAYOUT (NEU) --- */
@@ -504,6 +549,35 @@
 </div>
 
 <div class="main-wrapper">
+    <button id="changeFactionBtn" class="faction-btn-top" onclick="openFactionModal()">
+        🛡️ Fraktion wählen
+    </button>
+
+    <div id="factionModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5,5,5,0.92); z-index: 100000; align-items: center; justify-content: center; flex-direction: column;">
+        <h1 style="color: #fff; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; font-size: 2.5rem; text-shadow: 0 0 15px rgba(255,255,255,0.3);">Wähle deine PMC Fraktion</h1>
+        <p style="color: #aaa; margin-bottom: 40px; font-size: 1.1rem;">Deine Wahl passt das Farbschema, die Basecamps und das Taktik-System an.</p>
+        
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+            <div class="faction-card" onclick="setFaction('mithras')" style="border: 2px solid #7ca35a; background: rgba(124,163,90,0.08);">
+                <img src="https://via.placeholder.com/100/7ca35a/000000?text=MSS" alt="Mithras" style="border-radius: 50%; margin-bottom: 15px; width: 80px; height: 80px;">
+                <h2 style="color: #7ca35a;">MITHRAS</h2>
+                <p style="color: #ccc; text-align: center; font-size: 0.95rem; margin: 0;">Security Systems<br><strong style="color: #7ca35a;">(Nam Thaven)</strong></p>
+            </div>
+            
+            <div class="faction-card" onclick="setFaction('crimson')" style="border: 2px solid #b33939; background: rgba(179,57,57,0.08);">
+                <img src="https://via.placeholder.com/100/b33939/000000?text=CSI" alt="Crimson" style="border-radius: 50%; margin-bottom: 15px; width: 80px; height: 80px;">
+                <h2 style="color: #b33939;">CRIMSON</h2>
+                <p style="color: #ccc; text-align: center; font-size: 0.95rem; margin: 0;">Shield Int.<br><strong style="color: #b33939;">(Kiu Vongsa)</strong></p>
+            </div>
+            
+            <div class="faction-card" onclick="setFaction('lamang')" style="border: 2px solid #227093; background: rgba(34,112,147,0.08);">
+                <img src="https://via.placeholder.com/100/227093/000000?text=LRI" alt="Lamang" style="border-radius: 50%; margin-bottom: 15px; width: 80px; height: 80px;">
+                <h2 style="color: #227093;">LAMANG</h2>
+                <p style="color: #ccc; text-align: center; font-size: 0.95rem; margin: 0;">Recovery Initiative<br><strong style="color: #227093;">(Pha Lang)</strong></p>
+            </div>
+        </div>
+    </div>
+    
     <div class="container">
         
         <div class="tactical-news-frame">
@@ -1261,8 +1335,75 @@
 <script src="data.js?v=0.4"></script>
 
 <script>
-    // GLOBALE FARB-VARIABLE (Mithras Grün als Default, da Fraktionen gelöscht wurden)
-    document.documentElement.style.setProperty('--accent', '#7ca35a');
+    
+    // ==============================================================
+    // FRAKTIONS-SYSTEM (PMC AUSWAHL & FARB-THEMES)
+    // ==============================================================
+    const factionData = {
+        'mithras': { color: '#7ca35a', name: 'Mithras Security', base: 'Nam Thaven (Alpha LZs)', lzId: 'lz_alpha' },
+        'crimson': { color: '#b33939', name: 'Crimson Shield', base: 'Kiu Vongsa (Charlie LZs)', lzId: 'lz_charlie' },
+        'lamang': { color: '#227093', name: 'Lamang Recovery', base: 'Pha Lang (Bravo LZs)', lzId: 'lz_bravo' }
+    };
+
+    let currentFaction = null;
+
+    // Wird beim Start aufgerufen
+    function initFactionSystem() {
+        const savedFaction = localStorage.getItem('gzw_faction');
+        if (savedFaction && factionData[savedFaction]) {
+            setFaction(savedFaction, true); // Stumm laden
+        } else {
+            openFactionModal(); // Wenn nichts gewählt, Pop-up zeigen
+        }
+    }
+
+    function openFactionModal() {
+        document.getElementById('factionModal').style.display = 'flex';
+    }
+
+    function setFaction(factionKey, isInitialLoad = false) {
+        currentFaction = factionKey;
+        const faction = factionData[factionKey];
+        
+        // Speichern für den nächsten Besuch
+        localStorage.setItem('gzw_faction', factionKey);
+        
+        // Farbe der gesamten Website ändern! (Magic!)
+        document.documentElement.style.setProperty('--accent', faction.color);
+        
+        // Pop-up schließen
+        document.getElementById('factionModal').style.display = 'none';
+
+        // Interface anpassen (Heli, LZs, Button)
+        updateFactionUI(faction);
+
+        if (!isInitialLoad) {
+            // Wenn man manuell ändert, kurzes visuelles Feedback geben
+            document.getElementById('changeFactionBtn').innerText = `✔️ ${faction.name} aktiv`;
+            setTimeout(() => {
+                document.getElementById('changeFactionBtn').innerText = `🛡️ ${faction.name}`;
+            }, 2000);
+        }
+    }
+
+    function updateFactionUI(faction) {
+        // 1. Button oben rechts anpassen
+        const changeBtn = document.getElementById('changeFactionBtn');
+        if (changeBtn) changeBtn.innerText = `🛡️ ${faction.name}`;
+
+        // 2. Heli-Lotsen: Das "Base Camp" umbenennen
+        const heliStart = document.getElementById('heliStart');
+        const heliEnd = document.getElementById('heliEnd');
+        if (heliStart && heliStart.options[0]) heliStart.options[0].text = `Base Camp (${faction.base})`;
+        if (heliEnd && endSelect.options[0]) heliEnd.options[0].text = `Base Camp (${faction.base})`;
+
+        // 3. Landezonen (LZ Tab): Direkt das Startgebiet der Fraktion auswählen
+        const lzSelect = document.getElementById('lzSelect');
+        if (lzSelect) {
+            lzSelect.value = faction.lzId;
+            if (typeof updateLZ === "function") updateLZ(); // Trigger die Info-Box Anzeige
+        }
+    }
 
     // ==========================================
     // TACTICAL TRADER RESTOCK TIMER
@@ -3716,6 +3857,7 @@ function goToHome() {
         fetchLatestNews(); 
         updateLiveTime();
         startTraderTimer();
+        initFactionSystem();
         setInterval(updateLiveTime, 1000);
     });
 
