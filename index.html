@@ -479,7 +479,7 @@
     <button class="sidebar-btn" onclick="openTab('tab-tasks', this)">📋 Tasks (in Rework)</button>
 
     <div class="sidebar-title">Arsenal</div>
-    <button class="sidebar-btn" onclick="openTab('tab-mods', this)">🔫 Waffen & Mods</button>
+    <button class="sidebar-btn" onclick="openTab('tab-weapons', this)">🔫 Waffen & Mods</button>
     <button class="sidebar-btn" onclick="openTab('tab-blueprints', this)">📜 Blueprints</button>
     <button class="sidebar-btn" onclick="openTab('tab-ballistics', this)">🎯 Ballistik Check</button>
     <button class="sidebar-btn" onclick="openTab('tab-ammo', this)">🔴 Ammo Matrix</button>
@@ -769,20 +769,20 @@
                     <div class="panel-box" style="margin-top: 15px;">
                         <h3 style="margin-top: 0; color: #ccc;">Aufsätze (Mods) montieren</h3>
                         
-                        <label class="gs-mod-label">Mündung / Schalldämpfer</label>
-                        <select id="gsModMuzzle" class="gs-select" onchange="updateGunsmithStats()"></select>
+                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Mündung / Schalldämpfer</label>
+                        <select id="gsModMuzzle" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
 
-                        <label class="gs-mod-label">Visier (Optic)</label>
-                        <select id="gsModOptic" class="gs-select" onchange="updateGunsmithStats()"></select>
+                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Visier (Optic)</label>
+                        <select id="gsModOptic" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
 
-                        <label class="gs-mod-label">Unterlauf (Foregrip)</label>
-                        <select id="gsModGrip" class="gs-select" onchange="updateGunsmithStats()"></select>
+                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Unterlauf (Foregrip)</label>
+                        <select id="gsModGrip" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
 
-                        <label class="gs-mod-label">Magazin</label>
-                        <select id="gsModMag" class="gs-select" onchange="updateGunsmithStats()"></select>
+                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Schaft (Stock / Pistol Grip)</label>
+                        <select id="gsModStock" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
 
-                        <label class="gs-mod-label">Schaft (Stock / Pistol Grip)</label>
-                        <select id="gsModStock" class="gs-select" onchange="updateGunsmithStats()"></select>
+                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Magazin</label>
+                        <select id="gsModMag" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold;" onchange="updateGunsmithStats()"></select>
                     </div>
                 </div>
 
@@ -792,9 +792,9 @@
                         </div>
                     
                     <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333;">
-                        <div class="stat-row"><div class="stat-label">Feuerrate (RPM):</div><div id="gsStatRpm" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">Schuss/Min</div></div>
-                        <div class="stat-row"><div class="stat-label">Mündungsgeschw.:</div><div id="gsStatVel" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">m/s</div></div>
-                        <div class="stat-row"><div class="stat-label">Nachladezeit:</div><div id="gsStatRel" style="color:white; font-weight:bold; font-size:1.1rem;">0.0</div><div style="color:#888; margin-left:5px;">Sekunden</div></div>
+                        <div class="stat-row" style="display: flex; margin-bottom: 8px;"><div class="stat-label" style="width: 150px; color: #ccc;">Feuerrate (RPM):</div><div id="gsStatRpm" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">Schuss/Min</div></div>
+                        <div class="stat-row" style="display: flex; margin-bottom: 8px;"><div class="stat-label" style="width: 150px; color: #ccc;">Mündungsgeschw.:</div><div id="gsStatVel" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">m/s</div></div>
+                        <div class="stat-row" style="display: flex;"><div class="stat-label" style="width: 150px; color: #ccc;">Nachladezeit:</div><div id="gsStatRel" style="color:white; font-weight:bold; font-size:1.1rem;">0.0</div><div style="color:#888; margin-left:5px;">Sekunden</div></div>
                     </div>
                     
                     <div style="margin-top: 20px; font-size: 0.85rem; color: #666; text-align: center; background: #111; padding: 10px; border-radius: 4px;">
@@ -802,58 +802,6 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
-
-            <div class="panel-box" style="margin-top: 20px;">
-                <h3>🔧 Attachments & Ergo (0.4 Meta Guide)</h3>
-                <p style="color: #ccc; font-size: 0.9rem;"><strong>WICHTIG:</strong> In Version 0.4 ist Ergonomie (Ergo) oft wichtiger als Recoil-Reduction! Klobige Waffen zielen extrem langsam und machen dich im PvP/PvE zu einem leichten Ziel.</p>
-                <select id="attachSelect" onchange="updateGeneric('attachSelect', 'attachInfo')" style="margin-top: 0;">
-                    <option value="">-- Wähle ein Attachment / Mod --</option>
-                    <optgroup label="Optiken & Visiere (0.4 Magnifier Meta)">
-                        <option value="EOTech EXPS3 + G33/G45 Magnifier: Die absolute 0.4 Meta. Erlaubt schnelles Umschalten zwischen 1x für Gebäude und 3x/5x Zoom für den Dschungel.">Holo + Magnifier (G33/G45) [0.4 META]</option>
-                        <option value="Vortex Razor HD 1-6x: Bestes LPVO im Spiel. Sehr klares Sichtfeld, extrem dünner Rand.">Vortex Razor HD 1-6x (LPVO)</option>
-                        <option value="EOTech Vudu 1-6x / 3-9x32: Hervorragend für ARs und die neue M14/M1A.">EOTech Vudu (LPVO)</option>
-                        <option value="Elcan SpecterDR 1x/4x: Umschaltbares Visier. Sehr robuster Allrounder für die neue KS-1.">Elcan SpecterDR 1x/4x</option>
-                        <option value="Aimpoint T-2 Micro / Trijicon RMR: Extrem kleine Leuchtpunkte. Verdecken nicht den Bildschirm, ideal als Backup-Visier.">Micro Red Dots (T-2 / RMR)</option>
-                        <option value="OKP-7 / Kobra / PSO-1: Russische Standard-Visiere. Günstig, blockieren wenig Sicht, PSO-1 ist der Standard für SVD/AKMN.">Russische Optiken (OKP-7 / PSO-1)</option>
-                        <option value="Nightforce ATACR 1-8x / 7-35x: Maximale Vergrößerung. Nur für reine Sniper (M700 / Mosin).">Nightforce ATACR (Sniper Scope)</option>
-                    </optgroup>
-                    <optgroup label="Vordergriffe (Ergo vs. Recoil)">
-                        <option value="Fortis Shift Grip: Sehr leichter Skeleton-Griff. Pusht die Ergonomie massiv nach oben! Ideal, um Waffenträgheit zu minimieren.">Fortis Shift Grip (High Ergo)</option>
-                        <option value="BCM Vertical Grip / TangoDown: Leicht, unauffällig und reduziert die Waffen-Trägheit (Inertia) bei Drehungen enorm.">BCM / TangoDown (Ergo Meta)</option>
-                        <option value="Zenit RK-0 / RK-4 / RK-6: Die kleinen russischen Griffe. Ein toller Kompromiss aus Ergo und Recoil.">Zenit RK-0 / RK-4 / RK-6 (AK Griffe)</option>
-                        <option value="Zenit RK-1 / RK-2: Die absolute Rückstoß-Bremse für AKs. ACHTUNG: Senkt die Ergonomie massiv, Waffe wird sehr träge!">Zenit RK-1 / RK-2 (Max Recoil)</option>
-                        <option value="Zenit B-25U + RK-1 (Schräg): Der beste Kompromiss zwischen Rückstoßkontrolle und Ergo für AK-Plattformen.">Zenit B-25U + RK-1 (Schräg)</option>
-                        <option value="Magpul RVG / AFG / M-LOK: Zuverlässige Allrounder der westlichen Fraktionen. AFG bringt mehr Ergo.">Magpul RVG / AFG</option>
-                    </optgroup>
-                    <optgroup label="Mündung (Schalldämpfer & Bremsen)">
-                        <option value="KAC NT4 / Surefire RC2 / AAC: Der Standard für 5.56 (M4/KS-1). Reduziert Schall und Mündungsfeuer zuverlässig.">Surefire RC2 / KAC / AAC (5.56mm)</option>
-                        <option value="PBS-1 / PBS-4 / Rotor 43: Essenziell für AK-Modelle, um im Dschungel nicht sofort von jeder Patrouille gehört zu werden.">PBS-1 / PBS-4 / Rotor (AK Suppressors)</option>
-                        <option value="Lantac Dragon / SRVV: Beste Kompensatoren. Reduzieren den Rückstoß massiv, sind aber extrem laut und locken AI an!">Lantac Dragon / SRVV (Brakes)</option>
-                        <option value="Hybrid 46 / SR-25 Suppressor: Schwere Schalldämpfer. Passen auf viele große Kaliber wie die neue M14 EBR oder M700.">Hybrid 46 / SR-25 (Sniper Suppressors)</option>
-                    </optgroup>
-                    <optgroup label="Handguards & Chassis (Montage-Systeme)">
-                        <option value="Daniel Defense RIS II / URX: Die besten Handguards für die M4 Plattform, um Laser und Griffe zu montieren.">DD RIS II / URX (M4)</option>
-                        <option value="Sureshot Mk3 Chassis: Tauscht das halbe AK-Gehäuse aus. Erlaubt die Montage modernster westlicher Optiken auf AKs.">Sureshot MK3 Chassis (AK)</option>
-                        <option value="Zenit B-10 / B-30 / B-33: Der russische Standard für Optiken (B-33 Dust Cover) und Handguards (B-10/B-30).">Zenitco B-10 / B-30 (AK)</option>
-                        <option value="Sage International EBR Chassis: Das schwere, taktische Gehäuse, das eine normale M14 in eine M14 EBR verwandelt.">EBR Chassis (M14)</option>
-                    </optgroup>
-                    <optgroup label="Pistolengriffe & Schäfte">
-                        <option value="Magpul MOE K2 / HK Battle Grip: Top-Ergonomie für westliche M4/AR-15 Plattformen. Pflicht-Upgrade für schnelleres Zielen!">Magpul MOE K2 / HK Grip (M4)</option>
-                        <option value="Zenit RK-3 Grip: Bester Pistolengriff für AK-Plattformen. Massiver Ergo-Boost.">Zenit RK-3 Grip (AK)</option>
-                        <option value="Zenit PT-3 / PT-1: Klappschäfte für AKs. Hohe Ergo, extrem gute Rückstoßdämpfung.">Zenit PT-3 / PT-1 Stock (AK)</option>
-                        <option value="Magpul PRS Gen3: Schwerer Präzisionsschaft für DMRs (M14/M700). Reduziert das Wackeln (Sway) durch Atmung massiv.">Magpul PRS Gen3 Stock (Sniper)</option>
-                        <option value="Magpul CTR / B5 Systems: Leichte, extrem zuverlässige Schäfte für schnelle Sturmgewehre.">Magpul CTR / B5 Stock (AR-15)</option>
-                    </optgroup>
-                    <optgroup label="Taktische Module (Laser & Licht)">
-                        <option value="AN/PEQ-15 / LA-5: Das Standard-Modul des Westens. Bietet Laser (Sichtbar/IR) und Taschenlampe. Verbessert Point-Fire Präzision massiv.">AN/PEQ-15 / LA-5 (Laser/Licht)</option>
-                        <option value="Steiner DBAL: Sehr helles Licht und präziser Laser. Hervorragend für Night Ops (Nachteinsätze).">Steiner DBAL (Laser/Licht)</option>
-                        <option value="Zenit Perst-3 / Klesch-2P: Russische Laser-Licht-Kombinationen. Extrem starker Laser, blendet Feinde.">Zenit Perst-3 / Klesch (AK)</option>
-                        <option value="Surefire X400 / X300: Kompakte Module für Pistolen, machen sich aber auch gut an SMGs (MP5/MP7).">Surefire X400 / X300 (Pistolen)</option>
-                    </optgroup>
-                </select>
-                <div id="attachInfo" class="info-box" style="margin-top: 15px; padding:15px; background:#111; border-left:4px solid var(--accent);">Wähle ein Attachment, um die 0.4 Meta-Vorteile zu sehen...</div>
             </div>
         </div>
 
@@ -1394,41 +1342,6 @@
     // ==============================================================
     // FUNKTIONEN
     // ==============================================================
-
-    function updateWeaponCombined() {
-        const select = document.getElementById('weaponSelect');
-        const val = select.value;
-        const infoDisplay = document.getElementById('weaponInfo');
-        const imgElement = document.getElementById('weaponImg'); 
-        const metaElement = document.getElementById('weaponMeta'); 
-        
-        if (val === "") {
-            imgElement.src = "https://via.placeholder.com/400x200?text=Waffe+auswählen";
-            metaElement.innerText = "";
-        } else if (typeof weaponImages !== 'undefined' && weaponImages[val]) {
-            imgElement.src = weaponImages[val];
-            imgElement.style.display = "block";
-            metaElement.innerText = "Quelle: GZW Official Wiki Intel";
-        } else {
-            imgElement.src = "https://via.placeholder.com/400x200?text=Vorschau+noch+nicht+verfügbar";
-            metaElement.innerText = "Bildpfad wird noch aktualisiert...";
-        }
-
-        if (typeof weapons !== 'undefined' && weapons[val]) {
-            const info = weapons[val];
-            infoDisplay.innerHTML = `Standard-Ammo: <span class="highlight">${info.ammo}</span><br>Penetration: <span class="highlight">${info.pen}</span><br>Tipp: ${info.tip}`;
-            populateAmmoDropdown(val); 
-        } else {
-            infoDisplay.innerHTML = "Wähle eine Waffe für Munitions-Details...";
-            const ammoSelect = document.getElementById('calcAmmoDisplay');
-            if (ammoSelect) ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
-            calculateBallistics(); 
-        }
-        
-        if (val === "m700" || val === "mosin" || val === "rem788") {
-            infoDisplay.innerHTML += `<br><span style="color:#ffa500; font-weight:bold;">⚠️ 0.4 MECHANIK:</span> Manuelles Repetieren (Bolting) aktiv!`;
-        }
-    }
 
     function populateAmmoDropdown(weaponKey) {
         const ammoSelect = document.getElementById('calcAmmoDisplay');
