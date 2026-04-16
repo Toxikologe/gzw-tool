@@ -3155,7 +3155,9 @@ async function sendFeedback() {
         }
     }
 
-    // --- LORE TOGGLE LOGIK ---
+    // ==============================================================
+    // LORE TOGGLE LOGIK
+    // ==============================================================
     function toggleLore() {
         const loreDiv = document.getElementById('full-lore');
         const btn = document.getElementById('loreBtn');
@@ -3187,6 +3189,40 @@ function goToHome() {
 
     // 3. Scroll den Content-Bereich ganz nach oben
     document.querySelector('.main-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
+}
+    // ==============================================================
+    // LOOT TABLE LOGIK
+    // ==============================================================
+    function renderLootTable() {
+    const tbody = document.getElementById('lootTableBody');
+    if (!tbody || typeof lootItemsDb === 'undefined') return;
+    
+    tbody.innerHTML = '';
+    
+    // Wir sortieren automatisch absteigend nach Preis (wertvollster Loot ganz oben!)
+    const sortedLoot = [...lootItemsDb].sort((a, b) => b.price - a.price);
+
+    sortedLoot.forEach(item => {
+        // Farbliche Hervorhebung für Task-Items und Müll
+        let infoColor = "#888";
+        if (item.info && item.info.includes("WICHTIG")) infoColor = "#ffcc00"; // Gelb für gute/wichtige Dinge
+        if (item.info && (item.info.includes("SCHROTT") || item.info.includes("Müll") || item.info.includes("Wertlos"))) infoColor = "#ff4c4c"; // Rot für Müll
+
+        tbody.innerHTML += `
+            <tr style="border-bottom: 1px solid #222;">
+                <td style="padding: 12px 8px;">
+                    <div style="color: #eee; font-weight: bold; margin-bottom: 3px;">${item.name}</div>
+                    <div style="font-size: 0.8rem; color: ${infoColor}; font-style: italic;">↳ ${item.info}</div>
+                    <div style="font-size: 0.75rem; color: #555; margin-top: 3px;">Bester Händler: <span style="color: var(--accent);">${item.trader}</span></div>
+                </td>
+                <td style="padding: 8px; text-align: center; color: #aaa; font-family: monospace;">${item.size}</td>
+                <td style="padding: 8px; text-align: center; color: #aaa;">${item.weight}</td>
+                <td style="padding: 8px; text-align: right; color: var(--accent); font-weight: bold; font-size: 1.1rem;">
+                    ${item.price > 0 ? '$' + item.price.toLocaleString() : 'QUEST'}
+                </td>
+            </tr>
+        `;
+    });
 }
 
     // ==============================================================
