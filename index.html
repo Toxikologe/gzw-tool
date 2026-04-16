@@ -3811,7 +3811,7 @@
         const metaBtn = document.getElementById('sortMetaBtn');
         if (alphaBtn && metaBtn) {
             if (sortMode === 'alpha') {
-                alphaBtn.style.background = 'rgba(124,163,90,0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
+                alphaBtn.style.background = 'rgba(var(--accent-rgb), 0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
                 metaBtn.style.background = '#222'; metaBtn.style.borderColor = '#444';
             } else {
                 metaBtn.style.background = 'rgba(255,204,0,0.2)'; metaBtn.style.borderColor = '#ffcc00';
@@ -3851,7 +3851,7 @@
             btn.className = 'universal-accordion';
             btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
 
-              const contentDiv = document.createElement('div');
+            const contentDiv = document.createElement('div');
             contentDiv.className = 'universal-content';
 
             let tableHTML = `
@@ -3886,18 +3886,18 @@
             contentDiv.innerHTML = tableHTML;
 
             btn.onclick = function() {
-                if (contentDiv.style.display === "none") {
+                if (contentDiv.style.display === "none" || contentDiv.style.display === "") {
                     contentDiv.style.display = "block";
-                    btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Freischaltungen) ▲</span>`;
+                    btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▲</span>`;
                     btn.style.borderBottomLeftRadius = "0";
                     btn.style.borderBottomRightRadius = "0";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                    btn.style.backgroundColor = "rgba(var(--accent-rgb), 0.3)";
                 } else {
                     contentDiv.style.display = "none";
-                    btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Freischaltungen) ▼</span>`;
+                    btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
                     btn.style.borderBottomLeftRadius = "4px";
                     btn.style.borderBottomRightRadius = "4px";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                    btn.style.backgroundColor = ""; // Nutzt wieder Hover-CSS
                 }
             };
 
@@ -3906,7 +3906,7 @@
             container.appendChild(groupDiv);
         });
     }
-
+    
     // ==============================================================
 // MAP LINK GENERATOR (FÜR KOORDINATEN)
 // ==============================================================
@@ -4216,7 +4216,6 @@ function goToHome() {
 
         container.innerHTML = '';
 
-        // 1. Gegenstände nach Kategorie gruppieren
         const groupedLoot = {};
         lootItemsDb.forEach(item => {
             if (!groupedLoot[item.category]) {
@@ -4225,20 +4224,17 @@ function goToHome() {
             groupedLoot[item.category].push(item);
         });
 
-        // 2. Für jede Kategorie einen "Blauen Kasten" erstellen
         for (const [category, items] of Object.entries(groupedLoot)) {
-            // Sortieren nach Preis absteigend innerhalb der Kategorie
             items.sort((a, b) => b.price - a.price);
 
             const groupDiv = document.createElement('div');
             groupDiv.style.marginBottom = "10px";
 
-            // Der blaue Akkordeon-Button
             const btn = document.createElement('button');
             btn.className = 'universal-accordion';
-            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
+            // BUGFIX: Zeigt jetzt Kategorie statt traderName
+            btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▼</span>`;
 
-            // Der versteckte Inhalt (die Tabelle)
             const contentDiv = document.createElement('div');
             contentDiv.className = 'universal-content';
 
@@ -4257,7 +4253,6 @@ function goToHome() {
             `;
 
             items.forEach(item => {
-                // Farbliche Hervorhebung für Task-Items und Müll
                 let infoColor = "#888";
                 if (item.info && item.info.includes("WICHTIG")) infoColor = "#ffcc00"; 
                 if (item.info && (item.info.includes("SCHROTT") || item.info.includes("Müll") || item.info.includes("Wertlos") || item.info.includes("liegen lassen"))) infoColor = "#ff4c4c"; 
@@ -4281,20 +4276,19 @@ function goToHome() {
             tableHTML += `</tbody></table></div>`;
             contentDiv.innerHTML = tableHTML;
 
-            // Die Klick-Funktion zum Auf- und Zuklappen
             btn.onclick = function() {
-                if (contentDiv.style.display === "none") {
+                if (contentDiv.style.display === "none" || contentDiv.style.display === "") {
                     contentDiv.style.display = "block";
-                    btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▲</span>`;
+                    btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▲</span>`;
                     btn.style.borderBottomLeftRadius = "0";
                     btn.style.borderBottomRightRadius = "0";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                    btn.style.backgroundColor = "rgba(var(--accent-rgb), 0.3)";
                 } else {
                     contentDiv.style.display = "none";
-                    btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+                    btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▼</span>`;
                     btn.style.borderBottomLeftRadius = "4px";
                     btn.style.borderBottomRightRadius = "4px";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                    btn.style.backgroundColor = "";
                 }
             };
 
@@ -4317,7 +4311,6 @@ function goToHome() {
             
             let hasVisibleRow = false;
 
-            // Zeilen filtern
             rows.forEach(row => {
                 const name = row.querySelector('.loot-name').innerText.toLowerCase();
                 if (name.includes(input)) {
@@ -4328,26 +4321,24 @@ function goToHome() {
                 }
             });
 
-            // Wenn gesucht wird und Treffer da sind: Automatisch aufklappen!
             if (input.length > 0) {
                 if (hasVisibleRow) {
                     groupDiv.style.display = "";
                     contentDiv.style.display = "block";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                    btn.style.backgroundColor = "rgba(var(--accent-rgb), 0.3)";
                     btn.innerHTML = btn.innerHTML.replace('▼', '▲');
                 } else {
                     groupDiv.style.display = "none";
                 }
             } else {
-                // Wenn die Suche leer ist: Alles wieder zuklappen
                 groupDiv.style.display = "";
                 contentDiv.style.display = "none";
-                btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                btn.style.backgroundColor = "";
                 btn.innerHTML = btn.innerHTML.replace('▲', '▼');
             }
         }
     }
-
+    
     // ==============================================================
     // STASH & CONTAINER RENDER-LOGIK (AKKORDEON & SORTIERUNG)
     // ==============================================================
@@ -4360,12 +4351,11 @@ function goToHome() {
 
         container.innerHTML = '';
 
-        // Button-Styling anpassen
         const alphaBtn = document.getElementById('sortStashAlphaBtn');
         const metaBtn = document.getElementById('sortStashMetaBtn');
         if (alphaBtn && metaBtn) {
             if (sortMode === 'alpha') {
-                alphaBtn.style.background = 'rgba(124,163,90,0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
+                alphaBtn.style.background = 'rgba(var(--accent-rgb), 0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
                 metaBtn.style.background = '#222'; metaBtn.style.borderColor = '#444';
             } else {
                 metaBtn.style.background = 'rgba(255,204,0,0.2)'; metaBtn.style.borderColor = '#ffcc00';
@@ -4373,14 +4363,12 @@ function goToHome() {
             }
         }
 
-        // Nach Kategorie gruppieren
         const groupedStash = {};
         containersDb.forEach(item => {
             if (!groupedStash[item.category]) groupedStash[item.category] = [];
             groupedStash[item.category].push(item);
         });
 
-        // Feste Reihenfolge der Stash-Kategorien
         const stashOrder = [
             "🔒 Secure Containers (Raid-Schutz)", 
             "📦 Stash Cases (Lagerkisten)", 
@@ -4392,7 +4380,6 @@ function goToHome() {
             const items = groupedStash[categoryName];
             if (!items) return;
 
-            // Sortierung anwenden
             if (sortMode === 'alpha') {
                 items.sort((a, b) => a.name.localeCompare(b.name, 'de'));
             } else if (sortMode === 'meta') {
@@ -4405,12 +4392,11 @@ function goToHome() {
             const groupDiv = document.createElement('div');
             groupDiv.style.marginBottom = "10px";
 
-            // Der blaue Akkordeon-Button
             const btn = document.createElement('button');
             btn.className = 'universal-accordion';
-            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
+            // BUGFIX: Kategorie-Name eingefügt!
+            btn.innerHTML = `📦 ${categoryName} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▼</span>`;
 
-            // Der Inhalt (Die Tabelle)
             const contentDiv = document.createElement('div');
             contentDiv.className = 'universal-content';
 
@@ -4446,20 +4432,19 @@ function goToHome() {
             tableHTML += `</tbody></table></div>`;
             contentDiv.innerHTML = tableHTML;
 
-            // Akkordeon Toggle-Logik
             btn.onclick = function() {
-                if (contentDiv.style.display === "none") {
+                if (contentDiv.style.display === "none" || contentDiv.style.display === "") {
                     contentDiv.style.display = "block";
-                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▲</span>`;
+                    btn.innerHTML = `📦 ${categoryName} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▲</span>`;
                     btn.style.borderBottomLeftRadius = "0";
                     btn.style.borderBottomRightRadius = "0";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                    btn.style.backgroundColor = "rgba(var(--accent-rgb), 0.3)";
                 } else {
                     contentDiv.style.display = "none";
-                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+                    btn.innerHTML = `📦 ${categoryName} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▼</span>`;
                     btn.style.borderBottomLeftRadius = "4px";
                     btn.style.borderBottomRightRadius = "4px";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                    btn.style.backgroundColor = "";
                 }
             };
 
@@ -4468,7 +4453,7 @@ function goToHome() {
             container.appendChild(groupDiv);
         });
     }
-
+    
     // ==============================================================
     // GEAR & RÜSTUNG RENDER-LOGIK (AKKORDEON & SORTIERUNG)
     // ==============================================================
@@ -4481,12 +4466,11 @@ function goToHome() {
 
         container.innerHTML = '';
 
-        // Button-Styling anpassen
         const alphaBtn = document.getElementById('sortGearAlphaBtn');
         const metaBtn = document.getElementById('sortGearMetaBtn');
         if (alphaBtn && metaBtn) {
             if (sortMode === 'alpha') {
-                alphaBtn.style.background = 'rgba(124,163,90,0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
+                alphaBtn.style.background = 'rgba(var(--accent-rgb), 0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
                 metaBtn.style.background = '#222'; metaBtn.style.borderColor = '#444';
             } else {
                 metaBtn.style.background = 'rgba(255,204,0,0.2)'; metaBtn.style.borderColor = '#ffcc00';
@@ -4494,14 +4478,12 @@ function goToHome() {
             }
         }
 
-        // Nach Kategorie gruppieren
         const groupedGear = {};
         gearDb.forEach(item => {
             if (!groupedGear[item.category]) groupedGear[item.category] = [];
             groupedGear[item.category].push(item);
         });
 
-        // Feste Reihenfolge der Gear-Kategorien
         const gearOrder = [
             "🛡️ Plate Carriers (NIJ III bis III++)",
             "🦺 Weichballistik & Westen (NIJ IIIA bis III)",
@@ -4517,7 +4499,6 @@ function goToHome() {
             const items = groupedGear[categoryName];
             if (!items) return;
 
-            // Sortierung anwenden
             if (sortMode === 'alpha') {
                 items.sort((a, b) => a.name.localeCompare(b.name, 'de'));
             } else if (sortMode === 'meta') {
@@ -4530,12 +4511,11 @@ function goToHome() {
             const groupDiv = document.createElement('div');
             groupDiv.style.marginBottom = "10px";
 
-            // Der blaue Akkordeon-Button
             const btn = document.createElement('button');
             btn.className = 'universal-accordion';
-            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
+            // BUGFIX: Zeigt jetzt den richtigen Gear-Kategorienamen!
+            btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▼</span>`;
 
-            // Der Inhalt (Die Tabelle)
             const contentDiv = document.createElement('div');
             contentDiv.className = 'universal-content';
 
@@ -4570,20 +4550,19 @@ function goToHome() {
             tableHTML += `</tbody></table></div>`;
             contentDiv.innerHTML = tableHTML;
 
-            // Akkordeon Toggle-Logik
             btn.onclick = function() {
-                if (contentDiv.style.display === "none") {
+                if (contentDiv.style.display === "none" || contentDiv.style.display === "") {
                     contentDiv.style.display = "block";
-                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▲</span>`;
+                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▲</span>`;
                     btn.style.borderBottomLeftRadius = "0";
                     btn.style.borderBottomRightRadius = "0";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                    btn.style.backgroundColor = "rgba(var(--accent-rgb), 0.3)";
                 } else {
                     contentDiv.style.display = "none";
-                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▼</span>`;
                     btn.style.borderBottomLeftRadius = "4px";
                     btn.style.borderBottomRightRadius = "4px";
-                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                    btn.style.backgroundColor = "";
                 }
             };
 
