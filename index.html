@@ -563,7 +563,7 @@
             </div>
         </div>
 
-        <div id="tab-traders" class="tab-content">
+        <div id="tab-vendors" class="tab-content">
             <h2>🛒 Händler-Freischaltungen (0.4 Spearhead)</h2>
             <div class="panel-box">
                 <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
@@ -2828,7 +2828,7 @@
 
         container.innerHTML = '';
 
-        // Button-Styling anpassen je nach aktivem Sortiermodus
+        // Button-Styling anpassen
         const alphaBtn = document.getElementById('sortAlphaBtn');
         const metaBtn = document.getElementById('sortMetaBtn');
         if (alphaBtn && metaBtn) {
@@ -2841,31 +2841,26 @@
             }
         }
 
-        // Nach Händler gruppieren
         const groupedTraders = {};
         tradersDb.forEach(item => {
             if (!groupedTraders[item.trader]) groupedTraders[item.trader] = [];
             groupedTraders[item.trader].push(item);
         });
 
-        // Feste Reihenfolge der Händler
         const traderOrder = ["Gunny", "Handshake", "Lab Rat", "Artisan", "Turncoat", "Banshee", "Vulture"];
 
         traderOrder.forEach(traderName => {
             const items = groupedTraders[traderName];
             if (!items) return;
 
-            // Sortierung anwenden
             if (sortMode === 'alpha') {
-                // Erst nach Level, dann Alphabetisch
                 items.sort((a, b) => {
                     if (a.level !== b.level) return a.level - b.level;
                     return a.name.localeCompare(b.name, 'de');
                 });
             } else if (sortMode === 'meta') {
-                // Erst nach Meta (Wichtigkeit), dann nach Level
                 items.sort((a, b) => {
-                    if (a.isMeta !== b.isMeta) return a.isMeta ? -1 : 1; // Meta nach oben
+                    if (a.isMeta !== b.isMeta) return a.isMeta ? -1 : 1; 
                     if (a.level !== b.level) return a.level - b.level;
                     return a.name.localeCompare(b.name, 'de');
                 });
@@ -2874,7 +2869,6 @@
             const groupDiv = document.createElement('div');
             groupDiv.style.marginBottom = "10px";
 
-            // Der blaue Akkordeon-Button
             const btn = document.createElement('button');
             btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Freischaltungen) ▼</span>`;
             btn.style.width = "100%";
@@ -2894,7 +2888,6 @@
                 if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
             };
 
-            // Der Inhalt (Die Tabelle)
             const contentDiv = document.createElement('div');
             contentDiv.style.display = "none";
             contentDiv.style.border = "1px solid #2980b9";
@@ -2919,8 +2912,6 @@
             items.forEach(item => {
                 const metaTag = item.isMeta ? `<span style="background: rgba(255, 204, 0, 0.15); color: #ffcc00; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; border: 1px solid #ffcc00; margin-left: 10px;">🔥 META</span>` : '';
                 const infoText = item.info ? `<div style="font-size: 0.8rem; color: #888; font-style: italic; margin-top: 4px;">↳ ${item.info}</div>` : '';
-                
-                // Hervorhebung der Reihe, falls es ein Meta-Item ist
                 const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
 
                 tableHTML += `
@@ -2937,7 +2928,6 @@
             tableHTML += `</tbody></table></div>`;
             contentDiv.innerHTML = tableHTML;
 
-            // Akkordeon Toggle-Logik
             btn.onclick = function() {
                 if (contentDiv.style.display === "none") {
                     contentDiv.style.display = "block";
