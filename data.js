@@ -1375,19 +1375,90 @@ const lzDb = {
 };
 
 // ==========================================
-// 25. MEDICAL CENTER DATENBANK (0.4 COMPLETE)
+// 25. MEDICAL CENTER DATENBANK (100% COMPLETE - WIKI SYNCED)
 // ==========================================
 const medicalDb = [
-    {
-        id: "bleed_light",
-        name: "Leichte Blutung",
-        icon: "🩸",
-        symptom: "Rote Blutflecken am Boden, HP sinkt langsam",
-        diag: "Oberflächliche Wunde",
-        desc: "Eine geringfügige Verletzung der Hautschichten. Verursacht stetigen, aber langsamen Blutverlust.",
-        vitals: [{ label: "Blutdruck", val: 85, color: "#7ca35a" }],
-        treat: ["Bandage", "Combat Gauze"],
-        tip: "Bandagen sind günstig, nutze sie zuerst für leichte Wunden."
+    // --- AUSDAUER & ERSCHÖPFUNG ---
+    { 
+        id: "encumbered", 
+        name: "Überlastet (Encumbered)", 
+        icon: "⚖️", 
+        symptom: "Kein Sprinten/Springen möglich. Verringerte ADS-Geschwindigkeit.", 
+        diag: "Zu viel Tragegewicht", 
+        desc: "Dein Charakter trägt 54kg oder mehr. Dies beeinflusst deine Mobilität massiv.", 
+        vitals: [{ label: "Mobilität", val: 40, color: "#ffa500" }], 
+        treat: ["Loot abwerfen", "Schweres Gear droppen"], 
+        tip: "Gewicht verringert auch die Bein-Ausdauer-Regeneration massiv." 
+    },
+    { 
+        id: "fatigued", 
+        name: "Ermüdet / Erschöpft (Fatigued)", 
+        icon: "📉", 
+        symptom: "Hörbares Atmen. Waffen-Wackeln. Kein Sprint/Klettern.", 
+        diag: "Physische Bein-Erschöpfung", 
+        desc: "Tritt auf, wenn die Bein-Ausdauer unter 40% (Ermüdet) oder auf 1% (Erschöpft) fällt.", 
+        vitals: [{ label: "Bein-Ausdauer", val: 10, color: "#ff4c4c" }], 
+        treat: ["Sofortige Pause", "Kaffee (Stamina Buff)", "Energy Drink"], 
+        tip: "Die Ausdauer regeneriert erst wieder, wenn du stehen bleibst." 
+    },
+    { 
+        id: "cramps", 
+        name: "Arm-Schmerz & Krämpfe", 
+        icon: "⚡", 
+        symptom: "Erhöhtes bis extremes Waffen-Wackeln. Keine Nahkampfangriffe möglich.", 
+        diag: "Muskelversagen (Arme)", 
+        desc: "Die Arm-Ausdauer (Arm Stamina) ist kritisch niedrig (unter 40% oder bei 1%).", 
+        vitals: [{ label: "Arm-Ausdauer", val: 5, color: "#ff4c4c" }], 
+        treat: ["Zielen (ADS) sofort abbrechen", "Waffe senken"], 
+        tip: "Schwere Waffen entziehen beim Zielen deutlich schneller Arm-Ausdauer." 
+    },
+    { 
+        id: "out_of_breath", 
+        name: "Außer Atem (Out of Breath)", 
+        icon: "😮‍💨", 
+        symptom: "Hörbares Atmen. Atem anhalten ist unmöglich.", 
+        diag: "Atemnot", 
+        desc: "Verursacht durch ständiges Sprinten, zu langes Luftanhalten oder einen akuten Lungenschaden.", 
+        vitals: [{ label: "Lungenkapazität", val: 10, color: "#ff4c4c" }], 
+        treat: ["Deckung suchen & Warten", "Bei Lungenschaden: Chirurgie-Set"], 
+        tip: "Ein unsichtbarer Breath-Meter reguliert dieses System im Hintergrund." 
+    },
+
+    // --- VERPFLEGUNG (NAHRUNG & WASSER) ---
+    { 
+        id: "thirsty", 
+        name: "Durstig / Dehydriert", 
+        icon: "🏜️", 
+        symptom: "Blut regeneriert nicht mehr. Später: Doppelte / Hazy Sicht.", 
+        diag: "Flüssigkeitsmangel", 
+        desc: "Hydration ist unter 50% (Durstig) oder bei 1% (Dehydriert).", 
+        vitals: [{ label: "Hydration", val: 15, color: "#ff4c4c" }], 
+        treat: ["Wasserflasche", "Militär-Feldflasche", "Fruchtsäfte"], 
+        tip: "Achtung: Schmerzmittel (Ibuprofen etc.) entziehen dir massiv Wasser!" 
+    },
+    { 
+        id: "hungry", 
+        name: "Hungrig / Verhungernd", 
+        icon: "💀", 
+        symptom: "Blut regeneriert nicht mehr. Später: Doppelte / Hazy Sicht.", 
+        diag: "Kaloriendefizit", 
+        desc: "Energie ist unter 50% (Hungrig) oder bei 1% (Starving).", 
+        vitals: [{ label: "Energie", val: 15, color: "#ff4c4c" }], 
+        treat: ["MREs", "Dosenfleisch", "Snacks"], 
+        tip: "Konserven stillen den Hunger hervorragend, machen aber extrem durstig." 
+    },
+
+    // --- BLUTUNGEN ---
+    { 
+        id: "bleed_light", 
+        name: "Leichte Blutung", 
+        icon: "🩸", 
+        symptom: "Blutige Sicht, langsamer Blutverlust.", 
+        diag: "Leichte Wunde", 
+        desc: "Oberflächliche Wunde, bei der Projektile von Rüstung gestoppt oder nur leicht eingedrungen sind. Heilt manchmal von selbst.", 
+        vitals: [{ label: "Blutvolumen", val: 80, color: "#ffa500" }], 
+        treat: ["Bandage", "Combat Gauze"], 
+        tip: "Nutze für leichte Blutungen günstige Bandagen und spar dir die Tourniquets." 
     },
     {
         id: "bleed_heavy",
@@ -1401,15 +1472,28 @@ const medicalDb = [
         tip: "CAT stoppt die Blutung sofort, danach musst du das Blutvolumen wieder auffüllen."
     },
     {
-        id: "fracture",
-        name: "Knochenbruch",
-        icon: "🦴",
-        symptom: "Humpeln, extremes Wackeln beim Zielen",
-        diag: "Fraktur der Gliedmaßen",
-        desc: "Ein gebrochener Knochen verhindert den aufrechten Gang oder das ruhige Halten der Waffe.",
-        vitals: [{ label: "Mobilität", val: 20, color: "#ffa500" }],
-        treat: ["Schiene (Holz / SAM)", "Chirurgisches Tape (Notbehelf)"],
-        tip: "Eine SAM-Schiene ist schneller angewendet als die hölzerne Version."
+        id: "bleed_med", 
+        name: "Mittlere bis Schwere Blutung", 
+        icon: "🩸🩸🩸", 
+        symptom: "Blutige Sicht, moderater bis immenser Blutverlust.", 
+        diag: "Arterielle Verletzung", 
+        desc: "Kritischer Zustand durch ungeschützte Treffer! Führt ohne Behandlung in Kürze über Desorientierung zum Koma.", 
+        vitals: [{ label: "Blutvolumen", val: 25, color: "#b33939" }], 
+        treat: ["Tourniquet (CAT) - SOFORT!", "Notfallbandage", "Combat Gauze"], 
+        tip: "Tourniquets stoppen die Blutung sofort, heilen aber die zugrunde liegende Wunde nicht!" 
+    },
+
+    // --- KNOCHEN & ORGANE ---
+    { 
+        id: "limping", 
+        name: "Humpeln (Limping)", 
+        icon: "🦴", 
+        symptom: "Kein Sprinten/Springen. Verringerte Bein-Ausdauer.", 
+        diag: "Beinknochen zerstört", 
+        desc: "Ein Sturz oder ein direkter Treffer hat die Beinknochen zertrümmert.", 
+        vitals: [{ label: "Knochenintegrität", val: 0, color: "#ff4c4c" }], 
+        treat: ["Schiene (Holz / SAM)"], 
+        tip: "SAM-Schienen sind im Gefecht deutlich schneller angelegt als Holzschienen." 
     },
     {
         id: "organ_damage",
@@ -1421,6 +1505,87 @@ const medicalDb = [
         vitals: [{ label: "Organfunktion", val: 35, color: "#ff4c4c" }],
         treat: ["Chirurgie-Set (SurvKit / CMS)", "Schmerzmittel"],
         tip: "Chirurgie dauert sehr lange (15-20 Sek). Suche dir unbedingt eine sichere Deckung!"
+    },
+    {
+        id: "tremors", 
+        name: "Zittern (Tremors)", 
+        icon: "🫨", 
+        symptom: "Sichtbares, starkes Waffen-Wackeln.", 
+        diag: "Trauma / Armknochen zerstört", 
+        desc: "Tritt auf bei zerstörten Armknochen, extremem Leiden (Suffering) oder Benommenheit.", 
+        vitals: [{ label: "Stabilität", val: 10, color: "#ff4c4c" }], 
+        treat: ["Schiene (für Arme)", "Schmerzmittel"], 
+        tip: "Zittern beeinträchtigt deine Präzision im Feuergefecht massiv." 
+    },
+    { 
+        id: "coughing", 
+        name: "Husten (Coughing)", 
+        icon: "🗣️", 
+        symptom: "Hörbares Husten. Kurzatmigkeit.", 
+        diag: "Lungenschaden", 
+        desc: "Ein Projektil hat die Lunge durchschlagen und das Organ zerstört.", 
+        vitals: [{ label: "Organfunktion", val: 0, color: "#ff4c4c" }], 
+        treat: ["Chirurgie-Set (SurvKit)"], 
+        tip: "Der Einsatz eines Chirurgie-Sets dauert sehr lange. Suche dir unbedingt eine sichere Deckung!" 
+    },
+    { 
+        id: "upset_stomach", 
+        name: "Magenverstimmung", 
+        icon: "🤮", 
+        symptom: "Hörbares, konstantes Stöhnen (Audible groaning).", 
+        diag: "Organschaden", 
+        desc: "Innere Organe wurden durch Schüsse schwer verletzt.", 
+        vitals: [{ label: "Organfunktion", val: 0, color: "#ff4c4c" }], 
+        treat: ["Chirurgie-Set (SurvKit)"], 
+        tip: "Operator-Faustregel: 'When in doubt, SurKit it out!' Das Kit löst fast alle Organ-Probleme." 
+    },
+
+    // --- NEUROLOGISCH & TOXISCH ---
+    { 
+        id: "nauseous", 
+        name: "Übelkeit (Nauseous)", 
+        icon: "🤢", 
+        symptom: "Verschwommene / doppelte Sicht.", 
+        diag: "Vergiftung / Leberschaden / Strahlung", 
+        desc: "Tritt auf durch Leberschäden, Intoxikation (zu viele Stims) oder Ground Zero Strahlung.", 
+        vitals: [{ label: "Toxizität", val: 80, color: "#ff4c4c" }], 
+        treat: ["Chirurgie (bei Leber)", "Anti-Rad Tabletten", "Warten"], 
+        tip: "Leberschäden sind die häufigste Ursache für Übelkeit nach einem Treffer in den Torso." 
+    },
+    { 
+        id: "dazed_confused", 
+        name: "Benommen / Desorientiert", 
+        icon: "🧠", 
+        symptom: "Verschwommene / doppelte (hazy) Sicht. Schwindel.", 
+        diag: "Gehirnschaden / Extremer Blutverlust", 
+        desc: "Benommen (Dazed) durch Gehirnschaden. Desorientiert/Verwirrt durch immensen Blutverlust.", 
+        vitals: [{ label: "Bewusstsein", val: 20, color: "#ff4c4c" }], 
+        treat: ["Chirurgie-Set (Gehirn)", "Blutbeutel (Blood Bags)"], 
+        tip: "Ein Kopftreffer ist oft tödlich, Streifschüsse am Helm verursachen jedoch Benommenheit." 
+    },
+    { 
+        id: "vision_blackout", 
+        name: "Vision Black-Out / Blind Spot", 
+        icon: "👁️‍🗨️", 
+        symptom: "Komplette Blindheit (2 Sek) oder Weiße Flecken (4 Sek).", 
+        diag: "Optische Überreizung (Blendung)", 
+        desc: "Direkter Blick in die Detonation einer Flashbang-Granate.", 
+        vitals: [{ label: "Sehkraft", val: 0, color: "#ff4c4c" }], 
+        treat: ["Deckung suchen", "Warten"], 
+        tip: "Ebenfalls kann ein Tinnitus (Pfeifen im Ohr durch Gehirnerschütterung) durch Explosionen auftreten." 
+    },
+
+    // --- SCHMERZEN & KOMA ---
+    { 
+        id: "hurt_pain", 
+        name: "Verletzt / Schmerzen / Leiden", 
+        icon: "🩹", 
+        symptom: "Hörbarer Herzschlag, Atmen, ständiges Stöhnen.", 
+        diag: "Trauma-Schock durch Wunden", 
+        desc: "Kombinierte Wunden, Organ- oder Knochenschäden. Eskaliert bei extremen Verletzungen zu 'Leiden' (Suffering).", 
+        vitals: [{ label: "Schmerzlevel", val: 85, color: "#ff4c4c" }], 
+        treat: ["Ursache heilen", "Ibuprofen", "Morphin-Injektor"], 
+        tip: "Prellungen (Bruises), die entstehen wenn Rüstung ein Projektil abwehrt, verursachen ebenfalls Schmerzen." 
     },
     {
         id: "pain",
@@ -1443,8 +1608,19 @@ const medicalDb = [
         vitals: [{ label: "Zellintegrität", val: 60, color: "#7ca35a" }],
         treat: ["Anti-Rad Tabletten", "Viel Wasser trinken", "Gebiet verlassen"],
         tip: "Strahlenkrankheit kann im Feld nicht vollständig geheilt werden, nur verzögert."
+    },    
+    {
+        id: "coma", 
+        name: "Koma (Coma)", 
+        icon: "⚰️", 
+        symptom: "Völliger Kontrollverlust, Zusammenbruch zum Boden. Schweres Röcheln.", 
+        diag: "Kritisches Organversagen / Blut-Leer", 
+        desc: "Du hast 2 Minuten (Bleed-out Zeit), bis dein Charakter stirbt. Passiert bei Zerstörung von Lunge/Leber/Gehirn oder massivem Blutverlust.", 
+        vitals: [{ label: "Lebenszeichen", val: 1, color: "#b33939" }], 
+        treat: ["Kumpel muss reanimieren (Blut/Chirurgie)"], 
+        tip: "Ohne Teammitglieder ist das Koma ein sofortiges Todesurteil ('Give up')." 
     }
-];    
+];
     
 // ==========================================
 // 13. HÄNDLER FREISCHALTUNGEN (0.4 SPEARHEAD - 100% COMPLETE)
