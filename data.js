@@ -349,84 +349,220 @@
     ];
 
     // ==========================================
-    // 2. WAFFEN-DATENBANK (0.4 SPEARHEAD - 100% COMPLETE)
+    // 2. GUNSMITH: WAFFEN & MODS DATENBANK (0.4 SPEARHEAD - 100% COMPLETE)
     // ==========================================
-const weapons = {
-    // --- STURMGEWEHRE (NATO) ---
-    "m4a1": { name: "M4A1 Sturmgewehr", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Die Standard-NATO-Waffe. Stark modifizierbar." },
-    "m16a1": { name: "M16A1 Sturmgewehr", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 NEU: 'The Black Rifle'. Retro-Look, extrem präzise." },
-    "m201c": { name: "Norinco M-201C", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 NEU: Kompakte chinesische M4-Alternative. Hoher Durability Burn!" },
-    "cqa1": { name: "CQ-A1", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Chinesischer M4-Klon. Günstig für den Start, später austauschen." },
-    "ddm4": { name: "Daniel Defense DDM4", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 S-TIER: Perfekte Ergonomie ab Werk. Erfordert Blueprint-Unlock." },
-    "ks1": { name: "KAC KS-1 (L403A1)", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "0.4 META: Bestes Rückstoßverhalten im Spiel." },
-    "sicmcx": { name: "SIG MCX", ammo: ".300 Blackout", pen: "Sehr hoch", tip: "Tödlich im Nahkampf. Munition ist extrem selten. Blueprint im Hotel." },
-    "mk18": { name: "MK18", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Kurzer Lauf, hohe Ergonomie. Perfekt für den Häuserkampf." },
 
-    // --- STURMGEWEHRE (OSTBLOCK) ---
-    "ak74": { name: "AK-74", ammo: "5.45x39mm", pen: "Gut", tip: "Das Original mit Holzschäftung." },
-    "ak74n": { name: "AK-74N", ammo: "5.45x39mm", pen: "Gut", tip: "Mit Schwalbenschwanz-Montage für russische Optiken." },
-    "ak74m": { name: "AK-74M", ammo: "5.45x39mm", pen: "Gut", tip: "Modernisierte Version mit Polymerschaft und Klappschaft." },
-    "aks74u": { name: "AKS-74U", ammo: "5.45x39mm", pen: "Mittel", tip: "Sehr kurz. Starker Rückstoß, nur für CQB." },
-    "aks74un": { name: "AKS-74UN", ammo: "5.45x39mm", pen: "Mittel", tip: "AKS-74U mit seitlicher Montage-Schiene." },
-    "akm": { name: "AKM", ammo: "7.62x39mm", pen: "Hoch", tip: "Hoher Rückstoß, massive Stoppwirkung." },
-    "akmn": { name: "AKMN", ammo: "7.62x39mm", pen: "Hoch", tip: "AKM mit Optik-Montage." },
-    "akms": { name: "AKMS", ammo: "7.62x39mm", pen: "Hoch", tip: "AKM mit nach unten klappendem Schaft." },
-    "akmsn": { name: "AKMSN", ammo: "7.62x39mm", pen: "Hoch", tip: "AKMS mit Optik-Montage." },
-    "ak101": { name: "AK-101", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Export-AK, die NATO-Munition verschießt." },
-    "ak102": { name: "AK-102", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Kurzversion der AK-101." },
-    "ak103": { name: "AK-103", ammo: "7.62x39mm", pen: "Hoch", tip: "Moderne Polymer-AK. Spürbar besserer Basis-Rückstoß als die AKM." },
-    "ak104": { name: "AK-104", ammo: "7.62x39mm", pen: "Hoch", tip: "Kurzversion der AK-103." },
-    "ak105": { name: "AK-105", ammo: "5.45x39mm", pen: "Gut", tip: "Kompakter Kompromiss der AK-74M." },
-    "ak12": { name: "AK-12", ammo: "5.45x39mm", pen: "Gut", tip: "Modernste russische Plattform. Sehr hohe Ergonomie." },
-    "ak15": { name: "AK-15", ammo: "7.62x39mm", pen: "Hoch", tip: "7.62 Variante der AK-12." },
-    "ak19": { name: "AK-19", ammo: "5.56x45mm NATO", pen: "Abhängig von Muni", tip: "Neueste AK-Variante für NATO-Munition." },
-    "ak308": { name: "AK-308", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 S-TIER: .308 Sniper-Muni im Vollauto-Modus. Jailbreak-Blueprint nötig!" },
-    "vz58": { name: "SA vz. 58", ammo: "7.62x39mm", pen: "Hoch", tip: "0.4 NEU: 'Moravian Buzzsaw'. Hohe Feuerrate, frisst aber Haltbarkeit." },
-    "vz58v": { name: "SA vz. 58 V", ammo: "7.62x39mm", pen: "Hoch", tip: "0.4 NEU: Variante mit Klappschaft." },
-    "typ56": { name: "Type 56", ammo: "7.62x39mm", pen: "Mittel", tip: "Die absolute Einsteiger-Waffe. Schnell ersetzen." },
-    "typ56_1": { name: "Type 56-1", ammo: "7.62x39mm", pen: "Mittel", tip: "Type 56 Variante mit Klappschaft." },
-    "typ56_2": { name: "Type 56-2", ammo: "7.62x39mm", pen: "Mittel", tip: "Type 56 Variante mit seitlichem Klappschaft." },
+    // --- MODS (Aufsätze & Bauteile) DATENBANK ---
+    // Werte: recoil (Rückstoßkontrolle %), ergo (Ergonomie/Handling %), noise (Geräuschreduktion %), moa (Präzision), vel (Mündungsgeschwindigkeit %), reload (Nachladezeit in Sek)
 
-    // --- DMR & SCHARFSCHÜTZEN ---
-    "m14": { name: "M14 Battle Rifle", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 NEU: S-Tier DMR. Sehr präzise auf Distanz." },
-    "m14ebr": { name: "M14 EBR", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 NEU: Modernisiertes Chassis der M14." },
-    "m1a": { name: "M1A", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "0.4 NEU: Zivile Semi-Auto Variante der M14." },
-    "m700": { name: "M700 Remington", ammo: "7.62x51mm NATO", pen: "Extrem", tip: "⚠️ 0.4 MECHANIK: Erfordert Manual Bolting! Tödlich auf Distanz." },
-    "rem788": { name: "Remington Model 788", ammo: "5.56x45mm / .308", pen: "Hoch", tip: "0.4 NEU: 'Baby's First Sniper'. Günstig für den Anfang. Manual Bolting!" },
-    "mosin": { name: "Mosin-Nagant", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "⚠️ 0.4 MECHANIK: Manual Bolting! Die SNB-Munition durchschlägt fast alles." },
-    "mosin_sniper": { name: "Mosin-Nagant (Sniper)", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "Mit gebogenem Kammerstängel, um Zielfernrohre zu montieren." },
-    "mosin_obrez": { name: "Mosin Obrez", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "Abgesägte Mosin. Furchtbarer Rückstoß, aber enormer Schaden auf kurze Distanz." },
-    "svd": { name: "SVD Dragunov", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "0.4 S-TIER: Semi-Auto Sniper. Blueprint in der Tiger Bay Mall." },
-    "svds": { name: "SVDS", ammo: "7.62x54mmR", pen: "Sehr Hoch", tip: "Klappschaft-Version der SVD." },
-    "sks": { name: "SKS", ammo: "7.62x39mm", pen: "Gut", tip: "Solides Einsteiger-DMR." },
-    "op_sks": { name: "OP-SKS", ammo: "7.62x39mm", pen: "Gut", tip: "SKS mit Montage für Optiken." },
+const gunsmithMods = {
+    // ------------------------------------------
+    // Mündungen & Schalldämpfer (Muzzle Devices & Suppressors)
+    // ------------------------------------------
+    "m_nt4": { name: "KAC QDSS-NT4 (Schalldämpfer)", recoil: +15, ergo: -8, noise: +60, moa: -0.1, vel: +10, reload: 0 },
+    "m_rc1": { name: "SureFire SOCOM556 RC1", recoil: +18, ergo: -6, noise: +62, moa: -0.2, vel: +12, reload: 0 },
+    "m_rc2": { name: "SureFire SOCOM556 RC2", recoil: +20, ergo: -6, noise: +65, moa: -0.2, vel: +15, reload: 0 },
+    "m_pbs1": { name: "PBS-01 (7.62 Schalldämpfer)", recoil: +12, ergo: -10, noise: +50, moa: -0.1, vel: +5, reload: 0 },
+    "m_pbs4": { name: "PBS-04 (5.45 Schalldämpfer)", recoil: +14, ergo: -9, noise: +55, moa: -0.1, vel: +8, reload: 0 },
+    "m_tgpv": { name: "TGP-V (SVD Schalldämpfer)", recoil: +25, ergo: -15, noise: +70, moa: -0.3, vel: +20, reload: 0 },
+    "m_banish": { name: "BANISH 45 (Schalldämpfer)", recoil: +10, ergo: -5, noise: +55, moa: 0, vel: +5, reload: 0 },
+    "m_srd762": { name: "SIG SRD762-QD / SLH762", recoil: +18, ergo: -8, noise: +60, moa: -0.1, vel: +12, reload: 0 },
+    "m_salvo": { name: "Salvo 12 (Shotgun)", recoil: +25, ergo: -20, noise: +45, moa: 0, vel: 0, reload: 0 },
+    "m_rotex": { name: "MP7 Rotex (Schalldämpfer)", recoil: +8, ergo: -3, noise: +50, moa: 0, vel: +8, reload: 0 },
+    "m_comp": { name: "Saker ASR (Kompensator)", recoil: +10, ergo: -2, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "m_dtk1": { name: "DTK-1 Muzzle Brake", recoil: +14, ergo: -3, noise: -10, moa: 0, vel: 0, reload: 0 },
+    "m_dtk2": { name: "DTK-2 Muzzle Brake", recoil: +16, ergo: -4, noise: -15, moa: 0, vel: 0, reload: 0 },
+    "m_hyper": { name: "Hypertap Muzzle Brake", recoil: +18, ergo: -5, noise: -20, moa: 0, vel: 0, reload: 0 },
 
-    // --- SMG & SHOTGUNS ---
-    "mp7a1": { name: "MP7A1", ammo: "4.6x30mm", pen: "Sehr Hoch (AP)", tip: "Hat einen fest verbauten Frontgriff." },
-    "mp7a2": { name: "MP7A2", ammo: "4.6x30mm", pen: "Sehr Hoch (AP)", tip: "Ohne festen Griff, erlaubt eigene Attachments. Blueprint im Shelter." },
-    "mp5a2": { name: "MP5A2", ammo: "9x19mm", pen: "Gering", tip: "Fester Schaft, extrem wenig Rückstoß." },
-    "mp5a3": { name: "MP5A3", ammo: "9x19mm", pen: "Gering", tip: "Ausziehbarer Schaft für mehr Mobilität." },
-    "mp5sd": { name: "MP5SD", ammo: "9x19mm", pen: "Gering", tip: "Integrierter Schalldämpfer. Sehr leise." },
-    "mp5k": { name: "MP5K", ammo: "9x19mm", pen: "Gering", tip: "Kurzversion, ideal als Backup-Waffe." },
-    "vityaz": { name: "PP-19-01 Vityaz", ammo: "9x19mm", pen: "Gering", tip: "Russische MP5-Alternative. Spielt sich wie eine kompakte AK." },
-    "vz61": { name: "VZ-61 Skorpion", ammo: ".32 ACP", pen: "Minimal", tip: "Eher ein Spielzeug. Munition prallt an Rüstungen ab." },
-    "m870": { name: "M870 Pump-Action", ammo: "12 Gauge", pen: "Gering", tip: "Standard-Shotgun. Unbedingt auf die Beine zielen!" },
-    "moss590": { name: "Mossberg 590", ammo: "12 Gauge", pen: "Gering", tip: "Bessere Shotgun-Alternative zur 870." },
-    "moss590a1": { name: "Mossberg 590A1", ammo: "12 Gauge", pen: "Gering", tip: "Schwere Militärversion der 590." },
-    "moss590_shock": { name: "Mossberg 590 Shockwave", ammo: "12 Gauge", pen: "Gering", tip: "Extrem kurz, ohne Schaft. Sehr hoher Rückstoß." },
+    // ------------------------------------------
+    // Visiere (Optics & Scopes)
+    // ------------------------------------------
+    "o_exps": { name: "EOTech EXPS2/3 (Holo)", recoil: 0, ergo: -2, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "o_t2": { name: "Aimpoint Micro T-1/T-2", recoil: 0, ergo: -1, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "o_kobra": { name: "Kobra EKP-8-18 / PK-01", recoil: 0, ergo: -1, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "o_specter": { name: "Elcan SpecterDR 1-4x", recoil: +2, ergo: -8, noise: 0, moa: -0.5, vel: 0, reload: 0 },
+    "o_vudu1": { name: "Vudu 1-6x24 FFP", recoil: +5, ergo: -8, noise: 0, moa: -1.0, vel: 0, reload: 0 },
+    "o_vudu3": { name: "Vudu 3.5-18x50 FFP", recoil: +8, ergo: -12, noise: 0, moa: -1.5, vel: 0, reload: 0 },
+    "o_razor": { name: "Vortex RAZOR 1-6x", recoil: +4, ergo: -8, noise: 0, moa: -0.9, vel: 0, reload: 0 },
+    "o_viper": { name: "Viper PST Gen II 5-25x50", recoil: +10, ergo: -12, noise: 0, moa: -1.8, vel: 0, reload: 0 },
+    "o_acog": { name: "ACOG TA01NSN 4x32", recoil: +3, ergo: -8, noise: 0, moa: -0.6, vel: 0, reload: 0 },
+    "o_pso1": { name: "PSO-1 4x24 / NPZ", recoil: +2, ergo: -6, noise: 0, moa: -0.5, vel: 0, reload: 0 },
+    "o_pu": { name: "Mosin PU 3.5x22 Scope", recoil: +1, ergo: -8, noise: 0, moa: -0.8, vel: 0, reload: 0 },
 
-    // --- PISTOLEN ---
-    "alien": { name: "Laugo Alien", ammo: "9x19mm", pen: "Mittel", tip: "0.4 NEU: 'Ein Sportwagen auf Schotterpisten'. Feuert so präzise wie ein Laser!" },
-    "glock17": { name: "Glock 17", ammo: "9x19mm", pen: "Gering", tip: "Beste Standard-Backup-Waffe. Lässt sich mit Red-Dots modifizieren." },
-    "glock19": { name: "Glock 19", ammo: "9x19mm", pen: "Gering", tip: "Kompakte Glock. Sehr zuverlässig." },
-    "m9a1": { name: "M9A1 Beretta", ammo: "9x19mm", pen: "Gering", tip: "Solide Pistole mit großer Magazinkapazität." },
-    "m9a3": { name: "M9A3 Beretta", ammo: "9x19mm", pen: "Gering", tip: "Modernisierte Beretta mit Gewindelauf für Schalldämpfer." },
-    "1911": { name: "Colt M1911A1", ammo: ".45 ACP", pen: "Mittel", tip: "Nur 7 Schuss, aber .45 ACP richtet enormen Fleischschaden an." },
-    "ccc": { name: "Colt Combat Commander", ammo: ".45 ACP", pen: "Mittel", tip: "Kompakte, kürzere Version der 1911." },
-    "makarov": { name: "Makarov PM", ammo: "9x18mm", pen: "Minimal", tip: "Absolute Notfall-Waffe. Schnell austauschen." },
-    "makarov_pb": { name: "Makarov PB", ammo: "9x18mm", pen: "Minimal", tip: "Makarov mit integriertem Schalldämpfer für Stealth-Kills." },
-    "typ51": { name: "Type-51 / TT", ammo: "7.62x25mm", pen: "Mittel", tip: "Hohe Penetration für eine Pistole, aber winziges Magazin." }
+    // ------------------------------------------
+    // Unterlauf-Griffe (Foregrips)
+    // ------------------------------------------
+    "g_rvg": { name: "Magpul RVG (Vertikal)", recoil: +8, ergo: +4, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "g_shift": { name: "Fortis Shift (Gewinkelt)", recoil: +5, ergo: +10, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "g_rk2": { name: "Zenit RK-2", recoil: +15, ergo: -4, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "g_bcm": { name: "BCM Gunfighter Grip", recoil: +6, ergo: +6, noise: 0, moa: 0, vel: 0, reload: 0 },
+
+    // ------------------------------------------
+    // Pistolen-Griffe (Pistol Grips)
+    // ------------------------------------------
+    "pg_rk3": { name: "Zenit RK-3 Pistol Grip", recoil: +10, ergo: +10, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "pg_rk9": { name: "Zenit RK-9 Pistol Grip", recoil: +8, ergo: +8, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "pg_moe": { name: "Magpul MOE Grip (AR/AK)", recoil: +4, ergo: +4, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "pg_dd": { name: "DD Enhanced Grip", recoil: +5, ergo: +3, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "pg_arch": { name: "Archangel AK Grip", recoil: +6, ergo: +6, noise: 0, moa: 0, vel: 0, reload: 0 },
+
+    // ------------------------------------------
+    // Schäfte (Stocks)
+    // ------------------------------------------
+    "s_pt1": { name: "AK PT-1 Stock", recoil: +15, ergo: +6, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_pt3": { name: "AK PT-3 Stock", recoil: +17, ergo: +6, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_zhukov": { name: "AK Zhukov Stock", recoil: +8, ergo: +8, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_moe": { name: "MOE Stock (Alle Farben)", recoil: +10, ergo: +6, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_dd": { name: "DD Adjustable Buttstock", recoil: +10, ergo: +4, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_sopmod": { name: "SOPMOD Stock", recoil: +6, ergo: +2, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_hunter": { name: "M700 Hunter Stock", recoil: +12, ergo: +6, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_modx": { name: "M700 MOD*X Stock", recoil: +9, ergo: +10, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_arch": { name: "Mosin Archangel Stock", recoil: +12, ergo: +4, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "s_sga": { name: "M870 / M590 SGA Stock", recoil: +6, ergo: +6, noise: 0, moa: 0, vel: 0, reload: 0 },
+
+    // ------------------------------------------
+    // Handguards & Barrels (Zusammengefasst für UI)
+    // ------------------------------------------
+    "h_dd12": { name: "DD RIS II 12 Handguard", recoil: +14, ergo: -8, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "h_x7m15": { name: "X7M-15 Handguard", recoil: +10, ergo: -6, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "h_mk16": { name: "Mk16 13.5 Handguard", recoil: +8, ergo: -4, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "b_ar20": { name: "AR-15 Barrel 20-Inch", recoil: +5, ergo: -10, noise: 0, moa: -1.0, vel: +20, reload: 0 },
+    "b_ar10": { name: "AR-15 Barrel 10.5-Inch", recoil: -5, ergo: +15, noise: 0, moa: +2.0, vel: -10, reload: 0 },
+    "b_m700_26": { name: "M700 Heavy Barrel 26-Inch", recoil: +10, ergo: -15, noise: 0, moa: -0.5, vel: +15, reload: 0 },
+
+    // ------------------------------------------
+    // Magazine (Mags)
+    // ------------------------------------------
+    "mag_30_ar": { name: "30-Schuss PMAG", recoil: 0, ergo: +2, noise: 0, moa: 0, vel: 0, reload: -0.2 },
+    "mag_60_ar": { name: "60-Schuss SureFire", recoil: -2, ergo: -10, noise: 0, moa: 0, vel: 0, reload: +1.5 },
+    "mag_30_ak": { name: "30-Schuss Bakelit", recoil: 0, ergo: 0, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "mag_60_ak": { name: "60-Schuss Trommel", recoil: -4, ergo: -12, noise: 0, moa: 0, vel: 0, reload: +2.0 },
+    "mag_10_svd": { name: "10-Schuss Standard", recoil: 0, ergo: 0, noise: 0, moa: 0, vel: 0, reload: 0 },
+    "mag_20_svd": { name: "20-Schuss Erweitert", recoil: 0, ergo: -5, noise: 0, moa: 0, vel: 0, reload: +0.8 },
+    "mag_ext_9mm": { name: "33-Schuss Glock Mag", recoil: 0, ergo: -3, noise: 0, moa: 0, vel: 0, reload: +0.5 }
 };
+
+// --- MOD-POOLS FÜR DIE WAFFEN (Kompatibilität) ---
+const p_ar = { 
+    muzzle: ["m_nt4", "m_rc1", "m_rc2", "m_hyper", "m_comp"], 
+    optic: ["o_exps", "o_t2", "o_specter", "o_vudu1", "o_razor", "o_acog"], 
+    grip: ["g_rvg", "g_shift", "g_bcm"], 
+    stock: ["s_moe", "s_dd", "s_sopmod"], 
+    mag: ["mag_30_ar", "mag_60_ar"] 
+};
+const p_ak7 = { 
+    muzzle: ["m_pbs1", "m_dtk1", "m_dtk2", "m_comp"], 
+    optic: ["o_kobra", "o_pso1", "o_specter"], 
+    grip: ["g_rk2", "g_shift", "g_bcm"], 
+    stock: ["s_pt1", "s_pt3", "s_zhukov", "s_moe"], 
+    mag: ["mag_30_ak", "mag_60_ak"] 
+};
+const p_ak5 = { 
+    muzzle: ["m_pbs4", "m_dtk1", "m_dtk2", "m_comp"], 
+    optic: ["o_kobra", "o_pso1", "o_specter"], 
+    grip: ["g_rk2", "g_shift"], 
+    stock: ["s_pt1", "s_pt3", "s_zhukov"], 
+    mag: ["mag_30_ak", "mag_60_ak"] 
+};
+const p_dmr = { 
+    muzzle: ["m_tgpv", "m_srd762", "m_comp"], 
+    optic: ["o_vudu1", "o_vudu3", "o_razor", "o_viper", "o_specter"], 
+    grip: ["g_shift"], 
+    stock: ["s_hunter", "s_modx"], 
+    mag: ["mag_10_svd", "mag_20_svd"] 
+};
+const p_smg = { 
+    muzzle: ["m_rotex", "m_banish"], 
+    optic: ["o_exps", "o_t2", "o_kobra"], 
+    grip: ["g_shift", "g_rvg"], 
+    stock: ["s_moe"], 
+    mag: ["mag_ext_9mm"] 
+};
+const p_shot = { 
+    muzzle: ["m_salvo", "m_comp"], 
+    optic: ["o_exps", "o_t2"], 
+    grip: ["g_rvg"], 
+    stock: ["s_sga"], 
+    mag: [] 
+};
+
+// --- DIE 100% WAFFEN-DATENBANK ---
+const gunsmithWeapons = [
+    // --- NATO STURMGEWEHRE ---
+    { id: "m4a1", name: "M4A1 Sturmgewehr", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Die Standard-NATO-Waffe. Stark modifizierbar.<br><b>Build-Tipp:</b> RC2 Schalldämpfer + Specter + SOPMOD Stock für perfekten Allround.", base: { moa: 2.0, rpm: 800, recoil: 55, ergo: 60, noise: 0, vel: 880, reload: 2.8 }, mods: p_ar },
+    { id: "m16a1", name: "M16A1 Sturmgewehr", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 NEU: 'The Black Rifle'. Retro-Look, extrem präzise.<br><b>Build-Tipp:</b> Auf Präzision lassen (20-Inch Lauf), weniger für CQB geeignet.", base: { moa: 1.5, rpm: 750, recoil: 65, ergo: 50, noise: 0, vel: 950, reload: 3.0 }, mods: p_ar },
+    { id: "m201c", name: "Norinco M-201C", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 NEU: Kompakte chinesische M4. Hoher Verschleiß!<br><b>Build-Tipp:</b> Gut für Tiger Bay Häuserkampf.", base: { moa: 2.5, rpm: 800, recoil: 45, ergo: 70, noise: 0, vel: 820, reload: 2.7 }, mods: p_ar },
+    { id: "cqa1", name: "CQ-A1", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Chinesischer M4-Klon. Günstig für den Start, später austauschen.", base: { moa: 2.2, rpm: 800, recoil: 50, ergo: 58, noise: 0, vel: 870, reload: 2.9 }, mods: p_ar },
+    { id: "ddm4", name: "Daniel Defense DDM4", isMeta: true, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 S-TIER: Perfekte Ergonomie ab Werk. Erfordert Blueprint.<br><b>Build-Tipp:</b> SpecterDR + Shift Griff + DD Stock = OP.", base: { moa: 1.2, rpm: 800, recoil: 65, ergo: 75, noise: 0, vel: 910, reload: 2.5 }, mods: p_ar },
+    { id: "ks1", name: "KAC KS-1 (L403A1)", isMeta: true, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 META: Bestes Rückstoßverhalten im Spiel.", base: { moa: 1.0, rpm: 800, recoil: 70, ergo: 72, noise: 0, vel: 920, reload: 2.4 }, mods: p_ar },
+    { id: "sicmcx", name: "SIG MCX", isMeta: true, ammo: ".300 Blackout", type: "Sturmgewehr", tip: "Tödlich im Nahkampf. Munition ist extrem selten. Blueprint im Hotel.", base: { moa: 1.8, rpm: 850, recoil: 60, ergo: 80, noise: 0, vel: 650, reload: 2.2 }, mods: p_ar },
+    { id: "mk18", name: "MK18", isMeta: true, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Kurzer Lauf, hohe Ergonomie. Perfekt für den Häuserkampf.", base: { moa: 2.3, rpm: 800, recoil: 52, ergo: 85, noise: 0, vel: 780, reload: 2.6 }, mods: p_ar },
+
+    // --- OSTBLOCK ARs ---
+    { id: "ak74", name: "AK-74", isMeta: false, ammo: "5.45x39mm", type: "Sturmgewehr", tip: "Das Original mit Holzschäftung.", base: { moa: 2.4, rpm: 650, recoil: 48, ergo: 55, noise: 0, vel: 880, reload: 3.2 }, mods: p_ak5 },
+    { id: "ak74n", name: "AK-74N", isMeta: false, ammo: "5.45x39mm", type: "Sturmgewehr", tip: "Mit Schwalbenschwanz-Montage für Optiken.", base: { moa: 2.4, rpm: 650, recoil: 48, ergo: 54, noise: 0, vel: 880, reload: 3.2 }, mods: p_ak5 },
+    { id: "ak74m", name: "AK-74M", isMeta: true, ammo: "5.45x39mm", type: "Sturmgewehr", tip: "Modernisiert mit Polymer. Guter Allrounder.", base: { moa: 2.1, rpm: 650, recoil: 52, ergo: 60, noise: 0, vel: 890, reload: 3.0 }, mods: p_ak5 },
+    { id: "aks74u", name: "AKS-74U", isMeta: false, ammo: "5.45x39mm", type: "MP / Kurz", tip: "Sehr kurz. Starker Rückstoß, nur für CQB.", base: { moa: 3.5, rpm: 700, recoil: 35, ergo: 80, noise: 0, vel: 730, reload: 2.8 }, mods: { muzzle: ["m_pbs4"], optic: ["o_kobra"], grip: ["g_rk3"], stock: ["s_pt1"], mag: ["mag_30_ak"] } },
+    { id: "aks74un", name: "AKS-74UN", isMeta: false, ammo: "5.45x39mm", type: "MP / Kurz", tip: "AKS-74U mit seitlicher Montage-Schiene.", base: { moa: 3.5, rpm: 700, recoil: 35, ergo: 80, noise: 0, vel: 730, reload: 2.8 }, mods: { muzzle: ["m_pbs4"], optic: ["o_kobra", "o_pso1"], grip: ["g_rk3"], stock: ["s_pt1"], mag: ["mag_30_ak"] } },
+    { id: "akm", name: "AKM", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "Hoher Rückstoß, massive Stoppwirkung.", base: { moa: 2.8, rpm: 600, recoil: 40, ergo: 50, noise: 0, vel: 715, reload: 3.4 }, mods: p_ak7 },
+    { id: "akmn", name: "AKMN", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "AKM mit Optik-Montage.", base: { moa: 2.8, rpm: 600, recoil: 40, ergo: 49, noise: 0, vel: 715, reload: 3.4 }, mods: p_ak7 },
+    { id: "akms", name: "AKMS", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "AKM mit nach unten klappendem Schaft.", base: { moa: 2.8, rpm: 600, recoil: 38, ergo: 52, noise: 0, vel: 715, reload: 3.4 }, mods: p_ak7 },
+    { id: "akmsn", name: "AKMSN", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "AKMS mit Optik-Montage.", base: { moa: 2.8, rpm: 600, recoil: 38, ergo: 51, noise: 0, vel: 715, reload: 3.4 }, mods: p_ak7 },
+    { id: "ak101", name: "AK-101", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Export-AK, die NATO-Munition verschießt.", base: { moa: 2.0, rpm: 600, recoil: 52, ergo: 62, noise: 0, vel: 900, reload: 3.0 }, mods: p_ak5 },
+    { id: "ak102", name: "AK-102", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Kurzversion der AK-101.", base: { moa: 2.4, rpm: 600, recoil: 48, ergo: 68, noise: 0, vel: 850, reload: 3.0 }, mods: p_ak5 },
+    { id: "ak103", name: "AK-103", isMeta: true, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "Moderne Polymer-AK. Spürbar besserer Rückstoß als die AKM.", base: { moa: 2.0, rpm: 600, recoil: 55, ergo: 65, noise: 0, vel: 730, reload: 3.0 }, mods: p_ak7 },
+    { id: "ak104", name: "AK-104", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "Kurzversion der AK-103.", base: { moa: 2.4, rpm: 600, recoil: 50, ergo: 70, noise: 0, vel: 680, reload: 3.0 }, mods: p_ak7 },
+    { id: "ak105", name: "AK-105", isMeta: false, ammo: "5.45x39mm", type: "Sturmgewehr", tip: "Kompakter Kompromiss der AK-74M.", base: { moa: 2.3, rpm: 650, recoil: 49, ergo: 66, noise: 0, vel: 840, reload: 3.0 }, mods: p_ak5 },
+    { id: "ak12", name: "AK-12", isMeta: true, ammo: "5.45x39mm", type: "Sturmgewehr", tip: "Modernste russische Plattform. Sehr hohe Ergonomie.", base: { moa: 1.8, rpm: 700, recoil: 62, ergo: 70, noise: 0, vel: 900, reload: 2.8 }, mods: p_ak5 },
+    { id: "ak15", name: "AK-15", isMeta: true, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "7.62 Variante der AK-12.", base: { moa: 1.9, rpm: 700, recoil: 58, ergo: 68, noise: 0, vel: 730, reload: 2.8 }, mods: p_ak7 },
+    { id: "ak19", name: "AK-19", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Neueste AK-Variante für NATO-Munition.", base: { moa: 1.7, rpm: 700, recoil: 64, ergo: 72, noise: 0, vel: 910, reload: 2.8 }, mods: p_ak5 },
+    { id: "ak308", name: "AK-308", isMeta: true, ammo: "7.62x51mm NATO", type: "Schweres AR", tip: "0.4 S-TIER: .308 Sniper-Muni im Vollauto-Modus! Jailbreak-Blueprint nötig.", base: { moa: 1.5, rpm: 600, recoil: 38, ergo: 55, noise: 0, vel: 850, reload: 3.5 }, mods: p_ak7 },
+    { id: "vz58", name: "SA vz. 58", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "0.4 NEU: 'Moravian Buzzsaw'. Hohe Feuerrate.", base: { moa: 2.6, rpm: 800, recoil: 42, ergo: 62, noise: 0, vel: 705, reload: 3.1 }, mods: { muzzle: ["m_pbs1"], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "vz58v", name: "SA vz. 58 V", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "0.4 NEU: Variante mit Klappschaft.", base: { moa: 2.6, rpm: 800, recoil: 40, ergo: 65, noise: 0, vel: 705, reload: 3.1 }, mods: { muzzle: ["m_pbs1"], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "typ56", name: "Type 56", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "Die absolute Einsteiger-Waffe. Schnell ersetzen.", base: { moa: 3.2, rpm: 600, recoil: 35, ergo: 48, noise: 0, vel: 710, reload: 3.6 }, mods: p_ak7 },
+    { id: "typ56_1", name: "Type 56-1", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "Type 56 Variante mit Klappschaft.", base: { moa: 3.2, rpm: 600, recoil: 32, ergo: 50, noise: 0, vel: 710, reload: 3.6 }, mods: p_ak7 },
+    { id: "typ56_2", name: "Type 56-2", isMeta: false, ammo: "7.62x39mm", type: "Sturmgewehr", tip: "Type 56 Variante mit seitlichem Klappschaft.", base: { moa: 3.1, rpm: 600, recoil: 33, ergo: 52, noise: 0, vel: 710, reload: 3.6 }, mods: p_ak7 },
+
+    // --- DMRs & SNIPER ---
+    { id: "m14", name: "M14 Battle Rifle", isMeta: true, ammo: "7.62x51mm NATO", type: "DMR", tip: "0.4 NEU: S-Tier DMR. Sehr präzise auf Distanz.", base: { moa: 1.1, rpm: 700, recoil: 30, ergo: 45, noise: 0, vel: 850, reload: 3.5 }, mods: p_dmr },
+    { id: "m14ebr", name: "M14 EBR", isMeta: true, ammo: "7.62x51mm NATO", type: "DMR", tip: "0.4 NEU: Modernisiertes Chassis der M14.", base: { moa: 0.9, rpm: 700, recoil: 35, ergo: 55, noise: 0, vel: 850, reload: 3.2 }, mods: p_dmr },
+    { id: "m1a", name: "M1A", isMeta: false, ammo: "7.62x51mm NATO", type: "DMR", tip: "0.4 NEU: Zivile Semi-Auto Variante der M14.", base: { moa: 1.2, rpm: 400, recoil: 32, ergo: 48, noise: 0, vel: 840, reload: 3.4 }, mods: p_dmr },
+    { id: "m700", name: "M700 Remington", isMeta: false, ammo: "7.62x51mm NATO", type: "Sniper", tip: "⚠️ 0.4 MECHANIK: Erfordert Manual Bolting! Tödlich auf Distanz.", base: { moa: 0.6, rpm: 40, recoil: 20, ergo: 35, noise: 0, vel: 890, reload: 4.5 }, mods: { muzzle: ["m_srd762"], optic: ["o_vudu1", "o_vudu3", "o_viper", "o_razor"], grip: [], stock: ["s_hunter", "s_modx"], mag: [] } },
+    { id: "rem788", name: "Remington Model 788", isMeta: false, ammo: "5.56 / .308", type: "Sniper", tip: "0.4 NEU: 'Baby's First Sniper'. Manual Bolting!", base: { moa: 1.5, rpm: 45, recoil: 22, ergo: 40, noise: 0, vel: 850, reload: 4.2 }, mods: { muzzle: ["m_nt4"], optic: ["o_vudu1", "o_razor"], grip: [], stock: [], mag: [] } },
+    { id: "mosin", name: "Mosin-Nagant", isMeta: false, ammo: "7.62x54mmR", type: "Sniper", tip: "⚠️ Manual Bolting! SNB-Munition durchschlägt fast alles.", base: { moa: 1.5, rpm: 30, recoil: 15, ergo: 25, noise: 0, vel: 830, reload: 5.0 }, mods: { muzzle: ["m_dtk1"], optic: [], grip: [], stock: ["s_arch"], mag: [] } },
+    { id: "mosin_sniper", name: "Mosin-Nagant (Sniper)", isMeta: false, ammo: "7.62x54mmR", type: "Sniper", tip: "Mit gebogenem Kammerstängel für Zielfernrohre.", base: { moa: 1.1, rpm: 30, recoil: 15, ergo: 24, noise: 0, vel: 830, reload: 5.0 }, mods: { muzzle: ["m_dtk1"], optic: ["o_pu"], grip: [], stock: ["s_arch"], mag: [] } },
+    { id: "mosin_obrez", name: "Mosin Obrez", isMeta: false, ammo: "7.62x54mmR", type: "Pistole/Kurz", tip: "Abgesägte Mosin. Furchtbarer Rückstoß, enormer Schaden.", base: { moa: 6.0, rpm: 30, recoil: 5, ergo: 70, noise: 0, vel: 600, reload: 4.5 }, mods: { muzzle: [], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "svd", name: "SVD Dragunov", isMeta: true, ammo: "7.62x54mmR", type: "Sniper", tip: "0.4 S-TIER: Semi-Auto Sniper. Blueprint in der Tiger Bay Mall.<br><b>Tipp:</b> TGP-V Schalldämpfer ist Pflicht!", base: { moa: 0.8, rpm: 150, recoil: 25, ergo: 30, noise: 0, vel: 830, reload: 3.8 }, mods: p_dmr },
+    { id: "svds", name: "SVDS", isMeta: false, ammo: "7.62x54mmR", type: "Sniper", tip: "Klappschaft-Version der SVD.", base: { moa: 0.9, rpm: 150, recoil: 24, ergo: 35, noise: 0, vel: 830, reload: 3.8 }, mods: p_dmr },
+    { id: "sks", name: "SKS", isMeta: false, ammo: "7.62x39mm", type: "DMR", tip: "Solides Einsteiger-DMR.", base: { moa: 2.0, rpm: 200, recoil: 45, ergo: 55, noise: 0, vel: 735, reload: 4.0 }, mods: { muzzle: ["m_pbs1"], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "op_sks", name: "OP-SKS", isMeta: false, ammo: "7.62x39mm", type: "DMR", tip: "SKS mit Montage für Optiken.", base: { moa: 1.9, rpm: 200, recoil: 45, ergo: 54, noise: 0, vel: 735, reload: 4.0 }, mods: { muzzle: ["m_pbs1"], optic: ["o_pso1", "o_kobra"], grip: [], stock: [], mag: [] } },
+
+    // --- SMGs & SHOTGUNS ---
+    { id: "mp7a1", name: "MP7A1", isMeta: true, ammo: "4.6x30mm", type: "SMG", tip: "Hat einen fest verbauten Frontgriff. Sehr hohe AP-Rate.", base: { moa: 3.0, rpm: 950, recoil: 70, ergo: 88, noise: 0, vel: 725, reload: 2.0 }, mods: { muzzle: ["m_rotex"], optic: ["o_t2", "o_exps"], grip: [], stock: [], mag: [] } },
+    { id: "mp7a2", name: "MP7A2", isMeta: true, ammo: "4.6x30mm", type: "SMG", tip: "Ohne festen Griff, erlaubt eigene Attachments. Blueprint im Shelter.", base: { moa: 3.0, rpm: 950, recoil: 75, ergo: 90, noise: 0, vel: 725, reload: 2.0 }, mods: p_smg },
+    { id: "mp5a2", name: "MP5A2", isMeta: false, ammo: "9x19mm", type: "SMG", tip: "Fester Schaft, extrem wenig Rückstoß.", base: { moa: 3.5, rpm: 800, recoil: 80, ergo: 85, noise: 0, vel: 400, reload: 2.5 }, mods: p_smg },
+    { id: "mp5a3", name: "MP5A3", isMeta: false, ammo: "9x19mm", type: "SMG", tip: "Ausziehbarer Schaft für mehr Mobilität.", base: { moa: 3.6, rpm: 800, recoil: 78, ergo: 88, noise: 0, vel: 400, reload: 2.5 }, mods: p_smg },
+    { id: "mp5sd", name: "MP5SD", isMeta: true, ammo: "9x19mm", type: "SMG", tip: "Integrierter Schalldämpfer. Sehr leise für Stealth-Runs.", base: { moa: 3.2, rpm: 800, recoil: 85, ergo: 80, noise: +50, vel: 285, reload: 2.4 }, mods: { muzzle: [], optic: ["o_exps", "o_t2"], grip: [], stock: [], mag: ["mag_ext_9mm"] } },
+    { id: "mp5k", name: "MP5K", isMeta: false, ammo: "9x19mm", type: "SMG", tip: "Kurzversion, ideal als Backup-Waffe.", base: { moa: 4.0, rpm: 900, recoil: 65, ergo: 95, noise: 0, vel: 350, reload: 2.2 }, mods: { muzzle: ["m_9mm"], optic: ["o_t2"], grip: [], stock: [], mag: ["mag_ext_9mm"] } },
+    { id: "vityaz", name: "PP-19-01 Vityaz", isMeta: false, ammo: "9x19mm", type: "SMG", tip: "Russische MP5-Alternative. Spielt sich wie eine kompakte AK.", base: { moa: 3.0, rpm: 750, recoil: 80, ergo: 82, noise: 0, vel: 380, reload: 2.5 }, mods: { muzzle: ["m_9mm"], optic: ["o_kobra", "o_exps"], grip: ["g_rk2", "g_shift"], stock: ["s_pt1"], mag: [] } },
+    { id: "vz61", name: "VZ-61 Skorpion", isMeta: false, ammo: ".32 ACP", type: "SMG", tip: "Eher ein Spielzeug. Munition prallt an Rüstungen ab.", base: { moa: 5.0, rpm: 850, recoil: 60, ergo: 98, noise: 0, vel: 320, reload: 2.0 }, mods: { muzzle: [], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "m870", name: "M870 Pump-Action", isMeta: false, ammo: "12 Gauge", type: "Shotgun", tip: "Standard-Shotgun. Unbedingt auf die Beine zielen!", base: { moa: 15.0, rpm: 80, recoil: 10, ergo: 40, noise: 0, vel: 400, reload: 6.0 }, mods: p_shot },
+    { id: "moss590", name: "Mossberg 590", isMeta: false, ammo: "12 Gauge", type: "Shotgun", tip: "Bessere Shotgun-Alternative zur 870.", base: { moa: 14.5, rpm: 85, recoil: 12, ergo: 42, noise: 0, vel: 410, reload: 5.8 }, mods: p_shot },
+    { id: "moss590a1", name: "Mossberg 590A1", isMeta: false, ammo: "12 Gauge", type: "Shotgun", tip: "Schwere Militärversion der 590.", base: { moa: 14.0, rpm: 85, recoil: 15, ergo: 38, noise: 0, vel: 415, reload: 6.0 }, mods: p_shot },
+    { id: "moss590_shock", name: "Mossberg 590 Shockwave", isMeta: false, ammo: "12 Gauge", type: "Shotgun", tip: "Extrem kurz, ohne Schaft. Sehr hoher Rückstoß.", base: { moa: 18.0, rpm: 90, recoil: 5, ergo: 70, noise: 0, vel: 380, reload: 5.5 }, mods: { muzzle: ["m_salvo"], optic: [], grip: [], stock: [], mag: [] } },
+
+    // --- PISTOLS ---
+    { id: "alien", name: "Laugo Alien", isMeta: true, ammo: "9x19mm", type: "Pistole", tip: "0.4 NEU: 'Ein Sportwagen auf Schotterpisten'. Feuert extrem präzise!", base: { moa: 2.5, rpm: 400, recoil: 95, ergo: 95, noise: 0, vel: 360, reload: 1.8 }, mods: { muzzle: ["m_9mm"], optic: ["o_t2"], grip: [], stock: [], mag: [] } },
+    { id: "glock17", name: "Glock 17", isMeta: false, ammo: "9x19mm", type: "Pistole", tip: "Beste Standard-Backup-Waffe. Lässt sich gut modifizieren.", base: { moa: 3.5, rpm: 400, recoil: 85, ergo: 90, noise: 0, vel: 375, reload: 1.9 }, mods: { muzzle: ["m_9mm"], optic: ["o_t2"], grip: [], stock: [], mag: ["mag_ext_9mm"] } },
+    { id: "glock19", name: "Glock 19", isMeta: false, ammo: "9x19mm", type: "Pistole", tip: "Kompakte Glock. Sehr zuverlässig.", base: { moa: 3.8, rpm: 400, recoil: 82, ergo: 92, noise: 0, vel: 360, reload: 1.8 }, mods: { muzzle: ["m_9mm"], optic: ["o_t2"], grip: [], stock: [], mag: [] } },
+    { id: "m9a1", name: "M9A1 Beretta", isMeta: false, ammo: "9x19mm", type: "Pistole", tip: "Solide Pistole mit großer Magazinkapazität.", base: { moa: 3.4, rpm: 350, recoil: 80, ergo: 88, noise: 0, vel: 380, reload: 2.1 }, mods: { muzzle: [], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "m9a3", name: "M9A3 Beretta", isMeta: false, ammo: "9x19mm", type: "Pistole", tip: "Modernisierte Beretta mit Gewindelauf.", base: { moa: 3.2, rpm: 350, recoil: 82, ergo: 89, noise: 0, vel: 380, reload: 2.0 }, mods: { muzzle: ["m_9mm"], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "1911", name: "Colt M1911A1", isMeta: false, ammo: ".45 ACP", type: "Pistole", tip: "Nur 7 Schuss, aber .45 ACP richtet enormen Fleischschaden an.", base: { moa: 3.0, rpm: 300, recoil: 70, ergo: 85, noise: 0, vel: 250, reload: 2.2 }, mods: { muzzle: ["m_banish"], optic: [], grip: ["pg_dd"], stock: [], mag: [] } },
+    { id: "ccc", name: "Colt Combat Commander", isMeta: false, ammo: ".45 ACP", type: "Pistole", tip: "Kompakte, kürzere Version der 1911.", base: { moa: 3.5, rpm: 300, recoil: 65, ergo: 88, noise: 0, vel: 240, reload: 2.1 }, mods: { muzzle: ["m_banish"], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "makarov", name: "Makarov PM", isMeta: false, ammo: "9x18mm", type: "Pistole", tip: "Absolute Notfall-Waffe. Schnell austauschen.", base: { moa: 4.5, rpm: 350, recoil: 85, ergo: 95, noise: 0, vel: 315, reload: 1.8 }, mods: { muzzle: [], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "makarov_pb", name: "Makarov PB", isMeta: false, ammo: "9x18mm", type: "Pistole", tip: "Integrierter Schalldämpfer für Stealth-Kills.", base: { moa: 4.5, rpm: 350, recoil: 88, ergo: 92, noise: +60, vel: 290, reload: 2.0 }, mods: { muzzle: [], optic: [], grip: [], stock: [], mag: [] } },
+    { id: "typ51", name: "Type-51 / TT", isMeta: false, ammo: "7.62x25mm", type: "Pistole", tip: "Hohe Penetration für eine Pistole, aber winziges Magazin.", base: { moa: 3.0, rpm: 350, recoil: 75, ergo: 86, noise: 0, vel: 450, reload: 2.1 }, mods: { muzzle: [], optic: [], grip: [], stock: [], mag: [] } }
+];
     
 // 3. WAFFEN BILDER DATENBANK
     const weaponImages = {
