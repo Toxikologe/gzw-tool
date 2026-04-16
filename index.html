@@ -903,112 +903,29 @@
         </div>
 
         <div id="tab-gear" class="tab-content">
-            <h2>Rüstung, Helme & Rucksäcke</h2>
-            <div class="grid">
-                <div class="panel-box">
-                    <label for="gearFullSelect" style="margin-top: 0;">Ausrüstungs-Datenbank (GZW)</label>
-                    <select id="gearFullSelect" onchange="updateGearInfo()" style="font-weight: bold; color: var(--accent);">
-                        <option value="">-- Wähle Ausrüstung --</option>
-                        
-                        <optgroup label="Plate Carriers (Plattenträger) - NIJ III bis III++">
-                            <option value="pc_defender">Defender-2 Schutzweste (Defender-2) [NIJ III++]</option>
-                            <option value="pc_rpc">Recon Plattenträger (Recon Plate Carrier) [NIJ III+]</option>
-                            <option value="pc_lancer">CZ 4M Lancer (CZ 4M Lancer) [NIJ III]</option>
-                            <option value="pc_sentry">LCS Sentry (LCS Sentry) [NIJ III]</option>
-                            <option value="pc_m2">M2 Plattenträger (M2 Plate Carrier) [NIJ III]</option>
-                            <option value="pc_6b13">6B13 Sturm-Panzerung (6B13 Assault Armor) [NIJ III]</option>
-                            <option value="pc_6b23">6B23-1 Panzerung (6B23-1 Armor) [NIJ III]</option>
-                        </optgroup>
-                        
-                        <optgroup label="Armor Vests (Weichballistik) - NIJ IIIA bis III">
-                            <option value="av_atbv">ATBV Schutzweste (ATBV Vest) [NIJ III]</option>
-                            <option value="av_paca">PACA Schutzweste (PACA Body Armor) [NIJ IIIA]</option>
-                            <option value="av_6b2">6B2 Schutzweste (6B2 Armor) [NIJ IIIA]</option>
-                            <option value="av_lri">LRI / CSI Standard-Weste (Faction Vest) [NIJ IIIA]</option>
-                            <option value="av_security">Security Weste (Security Vest) [NIJ IIA]</option>
-                        </optgroup>
-
-                        <optgroup label="Backpacks (Rucksäcke)">
-                            <option value="bp_wanderer">Wanderer Rucksack (Civilian Trekstars 70L Backpack) [42 Slots]</option>
-                            <option value="bp_delta">Delta Rucksack (Delta Backpack) [36 Slots]</option>
-                            <option value="bp_rush72">Rush 72 2.0 (Rush 72 Backpack) [30 Slots]</option>
-                            <option value="bp_ratnik">6Sh118 Ratnik V2 (6Sh118 Ratnik V2) [30 Slots]</option>
-                            <option value="bp_falang">Falang 28 (Falang 28 Backpack) [24 Slots]</option>
-                            <option value="bp_rush24">Rush 24 (Rush 24 Backpack) [24 Slots]</option>
-                            <option value="bp_3day">3-Tages-Sturmrucksack (3-Day Assault Pack) [24 Slots]</option>
-                            <option value="bp_amp12">AMP12 Rucksack (AMP12 Backpack) [20 Slots]</option>
-                            <option value="bp_patrol">Patrouillen-Rucksack (Patrol Backpack) [20 Slots]</option>
-                            <option value="bp_scorpion">Scorpion OCP (Scorpion OCP Pack) [16 Slots]</option>
-                            <option value="bp_daypack">Tagesrucksack (Daypack) [16 Slots]</option>
-                            <option value="bp_gunfigther">Gunfigther 14 (Gunfigther 14) [9 Slots]</option>
-                            <option value="bp_sport">Sport Rucksack (Sport Backpack) [9 Slots]</option>
-                            <option value="bp_tourist">Kleiner Touristenrucksack (Small Tourist Backpack) [6 Slots]</option>
-                            <option value="bp_drawstring">Turnbeutel / Sporttasche (Drawstring Bag) [8 Slots]</option>
-                        </optgroup>
-
-                        <optgroup label="Tactical Rigs (Tragesysteme)">
-                            <option value="rig_lbt">LBT-1961A Rig (LBT-1961A Chest Rig)</option>
-                            <option value="rig_recon">Recon Brust-Rig (Recon Chest Rig)</option>
-                            <option value="rig_tactec">TacTec Brust-Rig (TacTec Chest Rig)</option>
-                            <option value="rig_viper">Viper Rig (Viper Chest Rig)</option>
-                            <option value="rig_training">Training Mini Rig (Training Mini Rig)</option>
-                            <option value="rig_type81">Type 81 AK-Rig (Type 81 Rig)</option>
-                            <option value="rig_type56">Type 56 AK-Rig (Type 56 Rig)</option>
-                            <option value="rig_improvised">Improvisiertes Rig (Improvised Rig)</option>
-                        </optgroup>
-
-                        <optgroup label="Headwear (Helme & Kopfbedeckung)">
-                            <option value="hw_altyn">Altyn Helm (Altyn Helmet) [NIJ III]</option>
-                            <option value="hw_fastmt">FAST MT Helm (FAST MT Helmet) [NIJ IIIA]</option>
-                            <option value="hw_exfil">EXFIL Helm (Team Wendy EXFIL) [NIJ IIIA]</option>
-                            <option value="hw_mich2000">MICH TC-2000 (MICH TC-2000) [NIJ IIIA]</option>
-                            <option value="hw_mich2002">MICH TC-2002 (MICH TC-2002) [NIJ IIIA]</option>
-                            <option value="hw_lshz">LSHZ 1+ Helm (LSHZ 1+) [NIJ IIIA]</option>
-                            <option value="hw_6b47">6B47 Ratnik Helm (6B47 Ratnik) [NIJ IIIA]</option>
-                            <option value="hw_ssh">SSh-68 Stahlhelm (SSh-68) [NIJ IIA]</option>
-                            <option value="hw_skull">Skull Crusher (NVG Mount)</option>
-                            <option value="hw_boonie">Dschungelhut (Boonie Hat)</option>
-                            <option value="hw_cap">Baseballkappe / Beanie</option>
-                        </optgroup>
-
-                        <optgroup label="Headsets (Gehörschutz / Audio Meta)">
-                            <option value="hs_comtac4">ComTac 4 (ComTac 4 Headset) [META]</option>
-                            <option value="hs_sordin">Sordin Supreme (Sordin Supreme Pro-X)</option>
-                            <option value="hs_comtac2">ComTac 2 (ComTac 2 Headset)</option>
-                            <option value="hs_m32">Earmor M32 (M32 Headset)</option>
-                            <option value="hs_razor">Walker's Razor (Razor Headset)</option>
-                            <option value="hs_gssh">GSSh-01 (GSSh-01 Headset)</option>
-                        </optgroup>
-
-                        <optgroup label="Glasses & Face Cover (Brillen & Masken)">
-                            <option value="gl_tactical">Taktische Schutzbrille (Tactical Goggles)</option>
-                            <option value="gl_sports">Sportsonnenbrille (Sports Sunglasses)</option>
-                            <option value="gl_aviator">Fliegerbrille (Aviator Glasses)</option>
-                            <option value="fc_gasmask">Gasmaske (Gas Mask) [Gefahrenzonen]</option>
-                            <option value="fc_balaclava">Sturmhaube (Balaclava) [PvP META]</option>
-                            <option value="fc_shemagh">Shemagh (Shemagh)</option>
-                            <option value="fc_neck">Schlauchschal (Neck Gaiter)</option>
-                            <option value="fc_bandana">Bandana (Bandana)</option>
-                        </optgroup>
-
-                        <optgroup label="Belts (Taktische Gürtel)">
-                            <option value="belt_operator">Operator Gürtel (Operator Belt) [2x3 Slots]</option>
-                            <option value="belt_battle">Gefechtsgürtel (Battle Belt) [2x2 Slots]</option>
-                            <option value="belt_tactical">Taktischer Gürtel (Tactical Belt) [1x2 Slots]</option>
-                            <option value="belt_duty">Dienstgürtel (Duty Belt) [1x2 Slots]</option>
-                        </optgroup>
-                    </select>
-                    <div id="gearFullInfo" class="info-box" style="margin-top: 15px; padding: 15px; background: #111; border-left: 4px solid var(--accent);">Gear-Spezifikationen...</div>
+            <h2>🦺 Rüstung, Helme & Gear (0.4 Spearhead)</h2>
+            <div class="panel-box">
+                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
+                    Das richtige Gear entscheidet über Leben und Tod. Nutze die Kategorien, um die Eigenschaften der Rüstungen und Rucksäcke einzusehen.
+                    Absolute <span style="color: #ffcc00; font-weight: bold;">Game-Changer (Meta)</span> sind mit einem 🔥 markiert!
+                </p>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="sortGearAlphaBtn" onclick="renderGearAccordions('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔤 Alphabetisch sortieren</button>
+                    <button id="sortGearMetaBtn" onclick="renderGearAccordions('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔥 Nach Meta-Wichtigkeit sortieren</button>
                 </div>
                 
-                <div class="panel-box">
-                    <h3 style="margin-top: 0; color: var(--accent);">🎒 Armor Tipps (GZW Meta)</h3>
-                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
-                        <li><strong>NIJ Klassen:</strong> Gray Zone Warfare nutzt das reale NIJ-System. NIJ IIIA stoppt Pistolen, NIJ III stoppt Standard-Gewehre, NIJ III+ stoppt leichte AP-Muni.</li>
-                        <li><strong>Inertia (Trägheit):</strong> Schwere Plate Carriers wie der Lancer reduzieren deinen Sprint. Leichtere Westen (LCS Sentry) erhöhen deine Überlebenschancen im Häuserkampf.</li>
-                        <li><strong>Kombinationen:</strong> Du kannst Tactical Rigs über Armor Vests (ATBV) tragen, aber Plate Carriers (RPC) haben bereits eingebaute Magazintaschen!</li>
-                    </ul>
-                </div>
+                <div id="gearAccordionsContainer">
+                    </div>
+            </div>
+
+            <div class="panel-box">
+                <h3 style="margin-top: 0; color: var(--accent);">🎒 Armor Tipps (GZW Meta)</h3>
+                <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
+                    <li><strong>NIJ Klassen:</strong> Gray Zone Warfare nutzt das reale NIJ-System. NIJ IIIA stoppt Pistolen, NIJ III stoppt Standard-Gewehre, NIJ III++ stoppt extrem gefährliche AP-Muni.</li>
+                    <li><strong>Inertia (Trägheit):</strong> Schwere Rüstungen (wie die Lancer) und volle Rucksäcke (Wanderer) reduzieren deine Ausdauer und deinen Sprint massiv. Bleib leicht, wenn du kämpfen willst!</li>
+                    <li><strong>Kombinationen:</strong> Du kannst Tactical Rigs über Armor Vests (Weichballistik) tragen, aber Plate Carriers (wie der Recon) haben bereits eingebaute Magazintaschen!</li>
+                </ul>
             </div>
         </div>
 
@@ -3524,6 +3441,151 @@ function goToHome() {
     }
 
     // ==============================================================
+    // GEAR & RÜSTUNG RENDER-LOGIK (AKKORDEON & SORTIERUNG)
+    // ==============================================================
+    let currentGearSort = 'alpha';
+
+    function renderGearAccordions(sortMode = currentGearSort) {
+        currentGearSort = sortMode;
+        const container = document.getElementById('gearAccordionsContainer');
+        if (!container || typeof gearDb === 'undefined') return;
+
+        container.innerHTML = '';
+
+        // Button-Styling anpassen
+        const alphaBtn = document.getElementById('sortGearAlphaBtn');
+        const metaBtn = document.getElementById('sortGearMetaBtn');
+        if (alphaBtn && metaBtn) {
+            if (sortMode === 'alpha') {
+                alphaBtn.style.background = 'rgba(124,163,90,0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
+                metaBtn.style.background = '#222'; metaBtn.style.borderColor = '#444';
+            } else {
+                metaBtn.style.background = 'rgba(255,204,0,0.2)'; metaBtn.style.borderColor = '#ffcc00';
+                alphaBtn.style.background = '#222'; alphaBtn.style.borderColor = '#444';
+            }
+        }
+
+        // Nach Kategorie gruppieren
+        const groupedGear = {};
+        gearDb.forEach(item => {
+            if (!groupedGear[item.category]) groupedGear[item.category] = [];
+            groupedGear[item.category].push(item);
+        });
+
+        // Feste Reihenfolge der Gear-Kategorien
+        const gearOrder = [
+            "🛡️ Plate Carriers (NIJ III bis III++)",
+            "🦺 Weichballistik & Westen (NIJ IIIA bis III)",
+            "🪖 Helme & Kopfbedeckung",
+            "🎧 Headsets (Gehörschutz)",
+            "🎒 Rucksäcke (Backpacks)",
+            "🎽 Taktische Rigs (Tragesysteme)",
+            "🪢 Taktische Gürtel (Belts)",
+            "🕶️ Masken & Brillen (Face Cover)"
+        ];
+
+        gearOrder.forEach(categoryName => {
+            const items = groupedGear[categoryName];
+            if (!items) return;
+
+            // Sortierung anwenden
+            if (sortMode === 'alpha') {
+                items.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+            } else if (sortMode === 'meta') {
+                items.sort((a, b) => {
+                    if (a.isMeta !== b.isMeta) return a.isMeta ? -1 : 1; 
+                    return a.name.localeCompare(b.name, 'de');
+                });
+            }
+
+            const groupDiv = document.createElement('div');
+            groupDiv.style.marginBottom = "10px";
+
+            // Der blaue Akkordeon-Button
+            const btn = document.createElement('button');
+            btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+            btn.style.width = "100%";
+            btn.style.textAlign = "left";
+            btn.style.padding = "12px 15px";
+            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+            btn.style.color = "#5dade2";
+            btn.style.border = "1px solid #2980b9";
+            btn.style.borderRadius = "4px";
+            btn.style.cursor = "pointer";
+            btn.style.fontWeight = "bold";
+            btn.style.fontSize = "1.05rem";
+            btn.style.transition = "0.2s";
+
+            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+            btn.onmouseout = () => {
+                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+            };
+
+            // Der Inhalt (Die Tabelle)
+            const contentDiv = document.createElement('div');
+            contentDiv.style.display = "none";
+            contentDiv.style.border = "1px solid #2980b9";
+            contentDiv.style.borderTop = "none";
+            contentDiv.style.padding = "10px";
+            contentDiv.style.backgroundColor = "#0a0a0a";
+            contentDiv.style.borderBottomLeftRadius = "4px";
+            contentDiv.style.borderBottomRightRadius = "4px";
+
+            let tableHTML = `
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead style="background: #151515; color: var(--accent);">
+                            <tr>
+                                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #333;">Ausrüstung & Info</th>
+                                <th style="padding: 10px; text-align: center; border-bottom: 1px solid #333; width: 180px;">Spezifikation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            items.forEach(item => {
+                const metaTag = item.isMeta ? `<span style="background: rgba(255, 204, 0, 0.15); color: #ffcc00; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; border: 1px solid #ffcc00; margin-left: 10px;">🔥 META</span>` : '';
+                const infoText = item.info ? `<div style="font-size: 0.85rem; color: #aaa; font-style: italic; margin-top: 6px; line-height: 1.4;">↳ ${item.info}</div>` : '';
+                const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
+
+                tableHTML += `
+                    <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
+                        <td style="padding: 12px 8px;">
+                            <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
+                            ${infoText}
+                        </td>
+                        <td style="padding: 12px 8px; text-align: center; color: #85c1e9; font-weight: bold;">${item.stats}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `</tbody></table></div>`;
+            contentDiv.innerHTML = tableHTML;
+
+            // Akkordeon Toggle-Logik
+            btn.onclick = function() {
+                if (contentDiv.style.display === "none") {
+                    contentDiv.style.display = "block";
+                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▲</span>`;
+                    btn.style.borderBottomLeftRadius = "0";
+                    btn.style.borderBottomRightRadius = "0";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                } else {
+                    contentDiv.style.display = "none";
+                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+                    btn.style.borderBottomLeftRadius = "4px";
+                    btn.style.borderBottomRightRadius = "4px";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                }
+            };
+
+            groupDiv.appendChild(btn);
+            groupDiv.appendChild(contentDiv);
+            container.appendChild(groupDiv);
+        });
+    }
+
+    // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
@@ -3540,6 +3602,7 @@ function goToHome() {
         renderLootAccordions();
         renderTraderAccordions();
         renderStashAccordions();
+        renderGearAccordions();
         buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
