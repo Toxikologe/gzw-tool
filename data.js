@@ -459,89 +459,106 @@ const weapons = {
     };
 
 // ==========================================
-// 4. AUSRÜSTUNG & GEAR (0.4 SPEARHEAD - 100% COMPLETE)
+// 4. RÜSTUNG, HELME & GEAR DATENBANK (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
-const gearDb = {
-    // --- PLATE CARRIERS (Plattenträger) ---
-    "pc_defender": { name: "Defender-2 Schutzweste (Defender-2)", class: "NIJ III++", info: "<b>Warum er der Beste für Panzerung ist:</b> Die höchste Rüstungsklasse im Spiel (III++). Stoppt selbst AP-Snipermunition fast vollständig. <b>Nachteil:</b> Extrem schwer, macht dich zu einem langsamen Juggernaut." },
-    "pc_rpc": { name: "Recon Plattenträger (Recon Plate Carrier)", class: "NIJ III+", info: "<b>Warum er der Beste für Mobility ist:</b> Die Endgame-Meta! Bietet extrem starken ballistischen Schutz (III+), ist aber leicht genug, um deine Ausdauer (Stamina) und Waffenträgheit im PvP kaum zu beeinträchtigen." },
-    "pc_lancer": { name: "CZ 4M Lancer (CZ 4M Lancer)", class: "NIJ III", info: "<b>Warum er gut ist:</b> Hervorragender Mid-Game Carrier. Sehr gut ausbalanciert. Blockt Standard-Gewehrmunition extrem zuverlässig." },
-    "pc_sentry": { name: "LCS Sentry (LCS Sentry Plate Carrier)", class: "NIJ III", info: "<b>Warum er gut ist:</b> Schlanker als der Lancer. Perfekt für schnelle Flankenmanöver im Dschungel." },
-    "pc_m2": { name: "M2 Plattenträger (M2 Plate Carrier)", class: "NIJ III", info: "<b>Warum er gut ist:</b> Solider Standard-Carrier. Oft bei Elite-KI zu finden. Guter Schutz, aber recht klobig beim Zielen." },
-    "pc_6b13": { name: "6B13 Sturm-Panzerung (6B13 Assault Armor)", class: "NIJ III", info: "<b>Warum sie gut ist:</b> Klassische Ostblock-Rüstung. Hält viele Treffer aus, aber das extrem hohe Gewicht senkt deine Ergonomie massiv." },
-    "pc_6b23": { name: "6B23-1 Panzerung (6B23-1 Armor)", class: "NIJ III", info: "<b>Warum sie gut ist:</b> Guter Einstieg in die Klasse III. Wird oft von Rebellen getragen. Sollte aber früh gegen leichtere Modelle getauscht werden." },
+// isMeta: true markiert absolute Game-Changer Items!
 
-    // --- ARMOR VESTS (Schutzwesten & Soft Armor) ---
-    "av_atbv": { name: "ATBV Schutzweste (ATBV Vest)", class: "NIJ III", info: "<b>Warum sie gut ist:</b> Reine Weste (ohne Magazintaschen) mit Level III Schutz. Du MUSST ein Tactical Rig darüber tragen, um Magazine zu verstauen!" },
-    "av_paca": { name: "PACA Schutzweste (PACA Body Armor)", class: "NIJ IIIA", info: "<b>Warum sie gut ist:</b> Stoppt Pistolen und Schrotflinten. <b>Wichtig:</b> Bietet absolut KEINEN Schutz gegen Sturmgewehre! Nur für Start-Zonen." },
-    "av_6b2": { name: "6B2 Schutzweste (6B2 Armor)", class: "NIJ IIIA", info: "<b>Warum sie gut ist:</b> Russische Einsteiger-Weste. Schützt vor Scavs mit Pistolen, aber nutzlos gegen Militär-KI." },
-    "av_lri": { name: "LRI / CSI Standard-Weste (Faction Vest)", class: "NIJ IIIA", info: "<b>Warum sie gut ist:</b> Die Standard-Fraktionsweste. Bietet ordentlichen Schutz für die ersten Missionen in der Startstadt." },
-    "av_security": { name: "Security Weste (Security Vest)", class: "NIJ IIA", info: "<b>Warum sie nützlich ist:</b> Das absolute Minimum an Schutz. Blockt höchstens Querschläger oder extrem kleine Kaliber." },
+const gearDb = [
+    // ==========================================
+    // --- PLATE CARRIERS (Schwere Panzerung) ---
+    // ==========================================
+    { category: "🛡️ Plate Carriers (NIJ III bis III++)", name: "Defender-2 Schutzweste", stats: "NIJ III++", isMeta: true, info: "<b>Warum sie Meta ist:</b> Die stärkste Rüstung im Spiel! Stoppt selbst extrem starke AP-Munition mehrmals. Macht dich aber schwerfällig (hohe Inertia)." },
+    { category: "🛡️ Plate Carriers (NIJ III bis III++)", name: "Recon Plattenträger (RPC)", stats: "NIJ III+", isMeta: true, info: "<b>Warum er Meta ist:</b> Das absolute Meta-Rig! Bietet hervorragenden Schutz (stoppt Standard-Rifle-Ammo), hat massig Platz für Magazine und ein perfektes Gewichtsverhältnis." },
+    { category: "🛡️ Plate Carriers (NIJ III bis III++)", name: "M2 Plate Carrier", stats: "NIJ III", isMeta: true, info: "<b>Warum er gut ist:</b> Der beste Mid-Game Carrier. Schützt zuverlässig vor Scav-AKs (PS Munition) und hat gute Magazin-Taschen." },
+    { category: "🛡️ Plate Carriers (NIJ III bis III++)", name: "CZ 4M Lancer", stats: "NIJ III", isMeta: false, info: "<b>Info:</b> Guter Schutz, aber sehr klobig und schwer. Verringert deine Ausdauer spürbar." },
+    { category: "🛡️ Plate Carriers (NIJ III bis III++)", name: "LCS Sentry", stats: "NIJ III", isMeta: false, info: "<b>Info:</b> Leichter Plattenträger. Bietet guten Schutz mit hoher Mobilität, hat aber wenig Platz für große Loot-Touren." },
+    { category: "🛡️ Plate Carriers (NIJ III bis III++)", name: "6B13 Sturm-Panzerung", stats: "NIJ III", isMeta: false, info: "<b>Info:</b> Russische Standard-Panzerung. Solide, aber meist schwerer als westliche Alternativen." },
+    { category: "🛡️ Plate Carriers (NIJ III bis III++)", name: "6B23-1 Panzerung", stats: "NIJ III", isMeta: false, info: "<b>Info:</b> Vergleichbar mit der 6B13, oft bei Militär-KIs in Fort Narith zu finden." },
 
+    // ==========================================
+    // --- ARMOR VESTS (Weichballistik) ---
+    // ==========================================
+    { category: "🦺 Weichballistik & Westen (NIJ IIIA bis III)", name: "ATBV Schutzweste", stats: "NIJ III", isMeta: false, info: "<b>Info:</b> Seltene Weichballistik, die auch Gewehrkugeln stoppt. Du musst aber zwingend ein taktisches Rig darüber anziehen für Magazine." },
+    { category: "🦺 Weichballistik & Westen (NIJ IIIA bis III)", name: "PACA Schutzweste", stats: "NIJ IIIA", isMeta: false, info: "<b>Info:</b> ACHTUNG: Stoppt NUR Pistolen und Schrot! Gegen Sturmgewehre komplett nutzlos." },
+    { category: "🦺 Weichballistik & Westen (NIJ IIIA bis III)", name: "6B2 Schutzweste", stats: "NIJ IIIA", isMeta: false, info: "<b>Info:</b> Alte russische Weste. Stoppt keine Gewehrkugeln." },
+    { category: "🦺 Weichballistik & Westen (NIJ IIIA bis III)", name: "Fraktions-Weste (LRI/MSS/CSI)", stats: "NIJ IIIA", isMeta: false, info: "<b>Info:</b> Deine Startweste. Tausche sie so schnell wie möglich gegen einen echten Plate Carrier aus!" },
+    { category: "🦺 Weichballistik & Westen (NIJ IIIA bis III)", name: "Security Weste", stats: "NIJ IIA", isMeta: false, info: "<b>Info:</b> Absoluter Müll. Schützt bestenfalls vor kleinen Splittern." },
+
+    // ==========================================
     // --- BACKPACKS (Rucksäcke) ---
-    "bp_wanderer": { name: "Wanderer Rucksack (Civilian Trekstars 70L Backpack)", class: "42 Slots (6x7)", info: "<b>Warum er extrem beliebt ist:</b> Der absolute Favorit der Community für Loot-Touren!" },
-    "bp_delta": { name: "Delta Rucksack (Delta Backpack)", class: "36 Slots (6x6)", info: "<b>Warum er der Beste ist:</b> Der absolut größte Rucksack im Spiel. Unverzichtbar für ausgedehnte Loot-Runs in den Endgame-Zonen (Tiger Bay), um massiv Beute mitzunehmen." },
-    "bp_rush72": { name: "Rush 72 2.0 (Rush 72 Backpack)", class: "30 Slots (5x6)", info: "<b>Warum er gut ist:</b> Hervorragender, robuster Militär-Rucksack für lange Tasks. Bietet Platz für 2-3 zerlegte Waffen." },
-    "bp_ratnik": { name: "6Sh118 Ratnik V2 (6Sh118 Ratnik V2)", class: "30 Slots (5x6)", info: "<b>Warum er gut ist:</b> kam Neu mit den Speahead Update. ähnlich wie der Rush Rucksack nur etwas schwerer." },
-    "bp_falang": { name: "Falang 28 (Falang 28)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Ziviler Rucksack. Toller Kompromiss aus Stauraum und unauffälligem Profil." },
-    "bp_rush24": { name: "Rush 24 (Rush 24 Backpack)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Die kompaktere Version des Rush 72. Perfekter Allrounder." },
-    "bp_3day": { name: "3-Tages-Sturmrucksack (3-Day Assault Pack)", class: "24 Slots (4x6)", info: "<b>Warum er gut ist:</b> Der militärische Standard von Gunny. Sehr verlässliches Platzangebot." },
-    "bp_amp12": { name: "AMP12 Rucksack (AMP12 Backpack)", class: "20 Slots (4x5)", info: "<b>Warum er gut ist:</b> Beliebte Quest-Belohnung (Gunny). Perfekte Größe für Mid-Game Missionen, wo Geschwindigkeit wichtig ist." },
-    "bp_patrol": { name: "Patrouillen-Rucksack (Patrol Backpack)", class: "20 Slots (4x5)", info: "<b>Warum er nützlich ist:</b> Reiner Anfänger-Rucksack für die ersten Stunden." },
-    "bp_scorpion": { name: "Scorpion OCP (Scorpion OCP Pack)", class: "16 Slots (4x4)", info: "<b>Warum er gut ist:</b> Bester Rucksack für das Early-Game. Reicht genau für ein OP-Kit, Wasser und ein bisschen Loot." },
-    "bp_daypack": { name: "Tagesrucksack (Daypack)", class: "16 Slots (4x4)", info: "<b>Warum er gut ist:</b> Ziviles Äquivalent zum Scorpion OCP. Liegt oft in Häusern herum." },
-    "bp_gunfigther": { name: "Gunfigther 14 (Gunfigther 14)", class: "9 Slots (3x3)", info: "<b>Warum er nützlich ist:</b> Kompakter Taktischer Rucksack gerade am Anfang sehr beliebt." },
-    "bp_sport": { name: "Sport Rucksack (Sport Backpack)", class: "9 Slots (3x3)", info: "<b>Warum er nützlich ist:</b> Ähnlich wie der Touristenrucksack, kann man sehr oft finden, wenn du keinen hast ist er besser als nichts" },
-    "bp_tourist": { name: "Kleiner Touristenrucksack (Small Tourist Backpack)", class: "6 Slots (2x3)", info: "<b>Warum er nützlich ist:</b> Kann man sehr oft finden, wenn du keinen hast ist er besser als nichts" },
-    "bp_drawstring": { name: "Turnbeutel / Sporttasche (Drawstring Bag)", class: "8 Slots (2x4)", info: "<b>Warum er nützlich ist:</b> Wenn du absolut pleite bist. Besser als nichts, aber mehr als ein Med-Kit passt nicht rein." },
+    // ==========================================
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Wanderer Rucksack (Civilian Trekstars 70L Backpack)", stats: "42 Slots (6x7)", isMeta: true, info: "<b>Warum er extrem beliebt ist:</b> Der absolute Favorit der Community für Loot-Touren!" },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Delta Rucksack (Delta Backpack)", stats: "36 Slots (6x6)", isMeta: true, info: "<b>Warum er der Beste ist:</b> Der absolut größte militärische Rucksack im Spiel. Unverzichtbar für ausgedehnte Loot-Runs in den Endgame-Zonen (Tiger Bay), um massiv Beute mitzunehmen." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Rush 72 2.0 (Rush 72 Backpack)", stats: "30 Slots (5x6)", isMeta: true, info: "<b>Warum er gut ist:</b> Hervorragender, robuster Militär-Rucksack für lange Tasks. Bietet Platz für 2-3 zerlegte Waffen." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "6Sh118 Ratnik V2", stats: "30 Slots (5x6)", isMeta: false, info: "<b>Warum er gut ist:</b> Kam Neu mit dem Spearhead Update. Ähnlich wie der Rush Rucksack, nur etwas schwerer." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Falang 28", stats: "24 Slots (4x6)", isMeta: false, info: "<b>Warum er gut ist:</b> Ziviler Rucksack. Toller Kompromiss aus Stauraum und unauffälligem Profil." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Rush 24 (Rush 24 Backpack)", stats: "24 Slots (4x6)", isMeta: false, info: "<b>Warum er gut ist:</b> Die kompaktere Version des Rush 72. Perfekter Allrounder." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "3-Tages-Sturmrucksack (3-Day Assault Pack)", stats: "24 Slots (4x6)", isMeta: false, info: "<b>Warum er gut ist:</b> Der militärische Standard von Gunny. Sehr verlässliches Platzangebot." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "AMP12 Rucksack (AMP12 Backpack)", stats: "20 Slots (4x5)", isMeta: false, info: "<b>Warum er gut ist:</b> Beliebte Quest-Belohnung (Gunny). Perfekte Größe für Mid-Game Missionen, wo Geschwindigkeit wichtig ist." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Patrouillen-Rucksack (Patrol Backpack)", stats: "20 Slots (4x5)", isMeta: false, info: "<b>Warum er nützlich ist:</b> Reiner Anfänger-Rucksack für die ersten Stunden." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Scorpion OCP (Scorpion OCP Pack)", stats: "16 Slots (4x4)", isMeta: false, info: "<b>Warum er gut ist:</b> Bester Rucksack für das Early-Game. Reicht genau für ein OP-Kit, Wasser und ein bisschen Loot." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Tagesrucksack (Daypack)", stats: "16 Slots (4x4)", isMeta: false, info: "<b>Warum er gut ist:</b> Ziviles Äquivalent zum Scorpion OCP. Liegt oft in Häusern herum." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Gunfighter 14", stats: "9 Slots (3x3)", isMeta: false, info: "<b>Warum er nützlich ist:</b> Kompakter Taktischer Rucksack, gerade am Anfang sehr beliebt." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Sport Rucksack (Sport Backpack)", stats: "9 Slots (3x3)", isMeta: false, info: "<b>Warum er nützlich ist:</b> Ähnlich wie der Touristenrucksack, kann man sehr oft finden. Wenn du keinen hast, ist er besser als nichts." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Turnbeutel / Sporttasche (Drawstring Bag)", stats: "8 Slots (2x4)", isMeta: false, info: "<b>Warum er nützlich ist:</b> Wenn du absolut pleite bist. Besser als nichts, aber mehr als ein Med-Kit passt nicht rein." },
+    { category: "🎒 Rucksäcke (Backpacks)", name: "Kleiner Touristenrucksack (Small Tourist Backpack)", stats: "6 Slots (2x3)", isMeta: false, info: "<b>Warum er nützlich ist:</b> Kann man sehr oft finden, wenn du keinen hast, ist er besser als nichts." },
 
+    // ==========================================
     // --- TACTICAL RIGS (Tragesysteme) ---
-    "rig_lbt": { name: "LBT-1961A Rig (LBT-1961A Chest Rig)", class: "High Capacity", info: "<b>Warum es das Beste ist:</b> Bietet absurd viel Platz für Magazine und OP-Kits. Perfekt in Kombination mit der ungepanzerten ATBV-Weste!" },
-    "rig_recon": { name: "Recon Brust-Rig (Recon Chest Rig)", class: "Medium Capacity", info: "<b>Warum es gut ist:</b> Sehr leicht. Erhöht die Ergonomie beim schnellen Zielen (ADS). Platz für 4 Magazine." },
-    "rig_tactec": { name: "TacTec Brust-Rig (TacTec Chest Rig)", class: "Medium Capacity", info: "<b>Warum es gut ist:</b> Beliebter Allrounder. Hält Magazine griffbereit und behindert nicht beim Sprinten." },
-    "rig_viper": { name: "Viper Rig (Viper Chest Rig)", class: "Medium Capacity", info: "<b>Warum es gut ist:</b> Leichtes, modulares Rig. Oft beim Boss 'Viper' zu finden." },
-    "rig_training": { name: "Training Mini Rig (Training Mini Rig)", class: "Low Capacity", info: "<b>Warum es gut ist:</b> Minimalistisch. Maximale Mobilität für Pistolen- oder leichte SMG-Runs." },
-    "rig_type81": { name: "Type 81 AK-Rig (Type 81 Rig)", class: "Low Capacity", info: "<b>Warum es gut ist:</b> Die großen Taschen sind perfekt, um lange 40-Schuss AK-Magazine zu verstauen." },
-    "rig_type56": { name: "Type 56 AK-Rig (Type 56 Rig)", class: "Low Capacity", info: "<b>Warum es gut ist:</b> Sehr billig, perfekt für Low-Budget Runs mit der AKM (Chicom-Design)." },
-    "rig_improvised": { name: "Improvisiertes Rig (Improvised Rig)", class: "Minimal", info: "<b>Warum es nützlich ist:</b> Das absolute Minimum. Platz für genau zwei Ersatzmagazine." },
+    // ==========================================
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "LBT-1961A Chest Rig", stats: "High Capacity", isMeta: true, info: "<b>Warum es Meta ist:</b> Das beste Rig im Spiel! Fasst extrem viele Magazine und Granaten. Wird direkt über Weichballistik getragen." },
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "TacTec Brust-Rig", stats: "Medium Capacity", isMeta: false, info: "<b>Info:</b> Solides, zuverlässiges Rig für mittlere Einsätze." },
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "Recon Chest Rig", stats: "Medium Capacity", isMeta: false, info: "<b>Info:</b> Leichtes Rig, ideal für schnelle Flankierungs-Manöver." },
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "Viper Chest Rig", stats: "Medium Capacity", isMeta: false, info: "<b>Info:</b> Droppt oft vom Boss 'Viper' im Dschungel. Sieht cool aus und bietet vernünftigen Platz." },
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "Training Mini Rig", stats: "Low Capacity", isMeta: false, info: "<b>Info:</b> Reicht für 2 Magazine und 2 Bandagen. Sehr unauffällig." },
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "Type 81 AK-Rig", stats: "Low Capacity", isMeta: false, info: "<b>Info:</b> Start-Ausrüstung für AK-Spieler." },
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "Type 56 AK-Rig", stats: "Low Capacity", isMeta: false, info: "<b>Info:</b> Günstiges, weit verbreitetes Tragesystem bei KIs." },
+    { category: "🎽 Taktische Rigs (Tragesysteme)", name: "Improvisiertes Rig", stats: "Minimal Capacity", isMeta: false, info: "<b>Info:</b> Besser als die Taschen deiner Hose, aber ansonsten Müll." },
 
+    // ==========================================
     // --- HEADWEAR (Helme & Kopfbedeckung) ---
-    "hw_altyn": { name: "Altyn Helm (Altyn Helmet)", class: "NIJ III (Gesichtsschutz)", info: "<b>Warum er gut ist:</b> Einer der wenigen Helme mit Level III Visier! Schützt das Gesicht vor Sturmgewehren. <b>Nachteil:</b> Du bist fast taub, da keine Headsets darunter passen." },
-    "hw_fastmt": { name: "FAST MT Helm (FAST MT Helmet)", class: "NIJ IIIA (Modular)", info: "<b>Warum er der Beste ist:</b> Federleicht, schützt vor Pistolenschüssen und erlaubt die Nutzung von High-End Headsets und Panoramanachtsicht (GPNVG-18)." },
-    "hw_exfil": { name: "EXFIL Helm (Team Wendy EXFIL)", class: "NIJ IIIA (Modular)", info: "<b>Warum er gut ist:</b> Fantastische Passform. Die Ohren bleiben frei, wodurch Headsets ihr volles Audio-Potenzial entfalten können." },
-    "hw_mich2000": { name: "MICH TC-2000 (MICH TC-2000)", class: "NIJ IIIA", info: "<b>Warum er gut ist:</b> Standard-Militärhelm. Sehr solider Schutz zum absolut fairen Preis." },
-    "hw_mich2002": { name: "MICH TC-2002 (MICH TC-2002)", class: "NIJ IIIA", info: "<b>Warum er gut ist:</b> Höher geschnitten als der 2000er, wodurch ComTacs bequemer darunter passen." },
-    "hw_lshz": { name: "LSHZ 1+ Helm (LSHZ 1+)", class: "NIJ IIIA", info: "<b>Warum er gut ist:</b> Sehr robuster russischer Kommandeurs-Helm." },
-    "hw_6b47": { name: "6B47 Ratnik Helm (6B47 Ratnik)", class: "NIJ IIIA", info: "<b>Warum er gut ist:</b> Der Standard der Feind-KI. Leicht, günstig und rettet dich vor unglücklichen Querschlägern." },
-    "hw_ssh": { name: "SSh-68 Stahlhelm (SSh-68)", class: "NIJ IIA", info: "<b>Warum er nützlich ist:</b> Nur Splitterschutz. Schwer und klobig, schützt maximal vor Makarow-Pistolen." },
-    "hw_skull": { name: "Skull Crusher (NVG Mount)", class: "Kein Schutz", info: "<b>Warum er gut ist:</b> Bietet null Rüstung, ist aber die leichteste Methode im Spiel, um ein Nachtsichtgerät (NVG) zu tragen." },
-    "hw_boonie": { name: "Dschungelhut (Boonie Hat)", class: "Tarnung", info: "<b>Warum er der Beste ist (PvP):</b> Bricht deine Kopfsilhouette im Dschungel extrem gut auf. Feinde erkennen dich im Gebüsch deutlich schwerer als mit einem runden Helm." },
-    "hw_cap": { name: "Baseballkappe / Beanie", class: "Kosmetisch", info: "<b>Warum sie gut ist:</b> Reiner Style-Faktor für Basecamp-Runs." },
+    // ==========================================
+    { category: "🪖 Helme & Kopfbedeckung", name: "FAST MT Helm", stats: "NIJ IIIA", isMeta: true, info: "<b>Warum er Meta ist:</b> Der beste Allround-Helm! Erlaubt Headsets, Nachtsichtgeräte (NVGs) und hat das beste Gewicht-Schutz-Verhältnis." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "Altyn Helm", stats: "NIJ III", isMeta: true, info: "<b>Warum er Meta ist:</b> Ein Panzer für den Kopf! Stoppt Gewehrkugeln. ACHTUNG: Du kannst kein Headset tragen und das Sichtfeld ist massiv eingeschränkt!" },
+    { category: "🪖 Helme & Kopfbedeckung", name: "EXFIL Helm (Team Wendy)", stats: "NIJ IIIA", isMeta: true, info: "<b>Warum er Meta ist:</b> Top-Ergonomie, unterstützt volle Kopf-Modifikationen wie NVGs." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "MICH TC-2000", stats: "NIJ IIIA", isMeta: false, info: "<b>Info:</b> Guter Mid-Game Helm. Schützt vor Pistolen und Granatsplittern." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "MICH TC-2002", stats: "NIJ IIIA", isMeta: false, info: "<b>Info:</b> Etwas höher geschnitten als der TC-2000, um größere Headsets besser zuzulassen." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "LSHZ 1+", stats: "NIJ IIIA", isMeta: false, info: "<b>Info:</b> Russischer Standardhelm. Sehr oft in Kisten und bei KIs zu finden." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "6B47 Ratnik", stats: "NIJ IIIA", isMeta: false, info: "<b>Info:</b> Robustes russisches Design. Unterstützt Nachtsichtgeräte." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "SSh-68 Stahlhelm", stats: "NIJ IIA", isMeta: false, info: "<b>Info:</b> Klassischer Blechhelm. Schützt fast vor gar nichts." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "Skull Crusher (NVG Mount)", stats: "Kein Schutz", isMeta: false, info: "<b>Info:</b> Reines Tragesystem für Nachtsichtgeräte, wenn man extrem leicht (ohne Helm) unterwegs sein will." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "Dschungelhut (Boonie Hat)", stats: "Tarnung", isMeta: false, info: "<b>Info:</b> Bricht die menschliche Silhouette im dichten Dschungel auf." },
+    { category: "🪖 Helme & Kopfbedeckung", name: "Baseballkappe / Beanie", stats: "Kosmetisch", isMeta: false, info: "<b>Info:</b> Reiner Drip für Operator." },
 
-    // --- HEADSETS (Gehörschutz / Audio Meta) ---
-    "hs_comtac4": { name: "ComTac 4 (ComTac 4 Headset)", class: "Audio: Extrem Hoch", info: "<b>Warum es das Beste ist:</b> Die absolute PvP-Meta! Filtert Umgebungsrauschen (Wind/Regen) fast komplett heraus und verstärkt feindliche Schritte extrem präzise. Ein Lebensretter." },
-    "hs_sordin": { name: "Sordin Supreme (Sordin Supreme Pro-X)", class: "Audio: Hoch", info: "<b>Warum es gut ist:</b> Sehr basslastig. Eigene Schüsse klingen angenehm gedämpft, Schritte auf hartem Untergrund (Holz/Stein) treten überdeutlich hervor." },
-    "hs_comtac2": { name: "ComTac 2 (ComTac 2 Headset)", class: "Audio: Mittel", info: "<b>Warum es gut ist:</b> Solider Standard-Gehörschutz. Wertet dein Gehör drastisch auf, hat aber ein leichtes, konstantes Grundrauschen." },
-    "hs_m32": { name: "Earmor M32 (M32 Headset)", class: "Audio: Mittel", info: "<b>Warum es gut ist:</b> Die günstige Alternative zum ComTac. Erfüllt seinen Zweck sehr gut." },
-    "hs_razor": { name: "Walker's Razor (Razor Headset)", class: "Audio: Mittel", info: "<b>Warum es gut ist:</b> Sehr flaches Profil, passt unter fast jeden Helm. Die Richtungsortung ist in Ordnung." },
-    "hs_gssh": { name: "GSSh-01 (GSSh-01 Headset)", class: "Audio: Gering", info: "<b>Warum es nützlich ist:</b> Immer noch besser als nichts! <b>Nachteil:</b> Extrem lautes 'Crunchy' Eigengeräusch. Deine eigenen Schritte klingen sehr scharf." },
+    // ==========================================
+    // --- HEADSETS (Gehörschutz) ---
+    // ==========================================
+    { category: "🎧 Headsets (Gehörschutz)", name: "ComTac 4 Headset", stats: "Audio Meta", isMeta: true, info: "<b>Warum es Meta ist:</b> Das beste Headset im Spiel! Filtert laute Geräusche (eigene Schüsse, Wind) perfekt heraus und verstärkt feindliche Schritte massiv." },
+    { category: "🎧 Headsets (Gehörschutz)", name: "Sordin Supreme Pro-X", stats: "Audio High", isMeta: true, info: "<b>Warum es Meta ist:</b> Sehr basslastiges Profil. Schritte auf Holz und Stein sind extrem gut und früh hörbar." },
+    { category: "🎧 Headsets (Gehörschutz)", name: "ComTac 2", stats: "Audio Mid", isMeta: false, info: "<b>Info:</b> Gutes Mid-Tier Headset. Deutliches Upgrade zum Spielen ohne Gehörschutz." },
+    { category: "🎧 Headsets (Gehörschutz)", name: "Earmor M32", stats: "Audio Mid", isMeta: false, info: "<b>Info:</b> Oft getragen von Söldnern. Solide Geräuschunterdrückung." },
+    { category: "🎧 Headsets (Gehörschutz)", name: "Walker's Razor", stats: "Audio Mid", isMeta: false, info: "<b>Info:</b> Solides Einsteiger-Headset, manchmal etwas aggressiv bei Umgebungsgeräuschen." },
+    { category: "🎧 Headsets (Gehörschutz)", name: "GSSh-01 Headset", stats: "Audio Low", isMeta: false, info: "<b>Info:</b> Das 'Rausche-Headset'. Verstärkt Schritte, aber deine eigenen Schüsse sprengen dir fast die Ohren weg. Nur im äußersten Notfall." },
 
-    // --- GLASSES & FACE COVER (Brillen & Masken) ---
-    "gl_tactical": { name: "Taktische Schutzbrille (Tactical Goggles)", class: "Augenschutz", info: "<b>Warum sie die Beste ist:</b> Reduziert den Blendeffekt (Sun Glare), wenn du in die Sonne blickst. Ein absolutes Muss für Scharfschützen!" },
-    "gl_sports": { name: "Sportsonnenbrille (Sports Sunglasses)", class: "Augenschutz", info: "<b>Warum sie gut ist:</b> Dunkelt das Bild ab. Sehr hilfreich, wenn man aus dem dunklen Dschungel in helle Gebiete schaut." },
-    "gl_aviator": { name: "Fliegerbrille (Aviator Glasses)", class: "Kosmetisch", info: "<b>Warum sie gut ist:</b> Purer Style-Faktor für den Helikopter-Flug." },
-    "fc_gasmask": { name: "Gasmaske (Gas Mask)", class: "Umweltschutz", info: "<b>Warum sie gut ist:</b> 0.4 Update Relevanz! Schützt deine Atemwege in den kontaminierten Bereichen (z.B. Ground Zero Sumpf) vor Toxinen." },
-    "fc_balaclava": { name: "Sturmhaube (Balaclava)", class: "PvP Tarnung", info: "<b>Warum sie die Beste ist:</b> Verdeckt deine helle Gesichtshaut. Ein leuchtendes Gesicht im Schatten des Dschungels verrät dich an Sniper sofort. Pflicht für jeden Raid!" },
-    "fc_shemagh": { name: "Shemagh / Palästinensertuch (Shemagh)", class: "Tarnung", info: "<b>Warum es gut ist:</b> Bricht die Hals- und Gesichtslinie auf. Exzellente Tarnung in schlammigen Gebieten." },
-    "fc_neck": { name: "Schlauchschal (Neck Gaiter)", class: "Tarnung", info: "<b>Warum er gut ist:</b> Leichte Alternative zur Balaclava. Verdeckt Mund und Hals." },
-    "fc_bandana": { name: "Bandana (Bandana)", class: "Kosmetisch", info: "<b>Warum es gut ist:</b> Kosmetischer Look, oft bei Rebellen-KI zu finden." },
+    // ==========================================
+    // --- FACE COVER & GLASSES ---
+    // ==========================================
+    { category: "🕶️ Masken & Brillen (Face Cover)", name: "Gasmaske (Gas Mask)", stats: "Strahlenschutz", isMeta: true, info: "<b>WICHTIG (0.4 UPDATE):</b> Absolut zwingend erforderlich, um Ground Zero zu betreten (in Kombination mit Rad-X Pillen)!" },
+    { category: "🕶️ Masken & Brillen (Face Cover)", name: "Sturmhaube (Balaclava)", stats: "Tarnung", isMeta: true, info: "<b>Warum sie Meta ist:</b> Verdeckt dein helles Gesicht im Dschungel. Ein absolutes Muss für PvP-Spieler, um nicht sofort gesehen zu werden!" },
+    { category: "🕶️ Masken & Brillen (Face Cover)", name: "Shemagh", stats: "Tarnung", isMeta: false, info: "<b>Info:</b> Klassisches Wüstentuch. Gute Alternative zur Balaclava." },
+    { category: "🕶️ Masken & Brillen (Face Cover)", name: "Schlauchschal (Neck Gaiter)", stats: "Tarnung", isMeta: false, info: "<b>Info:</b> Deckt den unteren Teil des Gesichts ab." },
+    { category: "🕶️ Masken & Brillen (Face Cover)", name: "Bandana", stats: "Tarnung", isMeta: false, info: "<b>Info:</b> Banditen-Style für den leichten Look." },
+    { category: "🕶️ Masken & Brillen (Face Cover)", name: "Taktische Schutzbrille", stats: "Kosmetisch", isMeta: false, info: "<b>Info:</b> Verhindert Glare (Blendung) in manchen Lichtsituationen." },
+    { category: "🕶️ Masken & Brillen (Face Cover)", name: "Sportsonnenbrille / Aviators", stats: "Kosmetisch", isMeta: false, info: "<b>Info:</b> Aktuell rein optische Anpassungen für deinen Operator." },
 
-    // --- BELTS (Gürtel) ---
-    "belt_operator": { name: "Operator Gürtel (Operator Belt)", class: "Inventar: 6 Slots (2x3)", info: "<b>Warum er der Beste ist:</b> Der größte Gürtel im Spiel. Du kannst riesige OP-Kits oder 6 Magazine direkt am Gürtel tragen. Perfekt für Heavy Loadouts!" },
-    "belt_battle": { name: "Gefechtsgürtel (Battle Belt)", class: "Inventar: 4 Slots (2x2)", info: "<b>Warum er gut ist:</b> Der Standard-Gürtel. Ideal, um Tourniquets und Bandagen auf Kurzwahltasten zu legen, ohne Platz im Rig zu verschwenden." },
-    "belt_tactical": { name: "Taktischer Gürtel (Tactical Belt)", class: "Inventar: 2 Slots (1x2)", info: "<b>Warum er gut ist:</b> Bietet Platz für zwei Kurzwahl-Items, wie eine Bandage und einen Schokoriegel." },
-    "belt_duty": { name: "Dienstgürtel (Duty Belt)", class: "Inventar: 2 Slots (1x2)", info: "<b>Warum er nützlich ist:</b> Günstigster Gürtel. Perfekt für 2 Reserve-Pistolenmagazine." }
-};
+    // ==========================================
+    // --- BELTS (Taktische Gürtel) ---
+    // ==========================================
+    { category: "🪢 Taktische Gürtel (Belts)", name: "Operator Gürtel (Operator Belt)", stats: "2x3 Slots", isMeta: true, info: "<b>Warum er Meta ist:</b> Der größte Gürtel im Spiel! Erlaubt dir, 60-Schuss-Magazine, Meds und mehrere Granaten im absoluten Schnellzugriff zu haben." },
+    { category: "🪢 Taktische Gürtel (Belts)", name: "Gefechtsgürtel (Battle Belt)", stats: "2x2 Slots", isMeta: true, info: "<b>Warum er gut ist:</b> Sehr guter Mid-Game Gürtel. Bietet Platz für Erste-Hilfe (SurKit) und Ersatzmagazine." },
+    { category: "🪢 Taktische Gürtel (Belts)", name: "Taktischer Gürtel (Tactical Belt)", stats: "1x2 Slots", isMeta: false, info: "<b>Info:</b> Besser als der Standard-Dienstgürtel." },
+    { category: "🪢 Taktische Gürtel (Belts)", name: "Dienstgürtel (Duty Belt)", stats: "1x2 Slots", isMeta: false, info: "<b>Info:</b> Start-Ausrüstung. Reicht gerade mal für eine Bandage und ein kleines Magazin." }
+];
     
 // ==========================================
 // 5. BOSS DATENBANK & INTEL (0.4 SPEARHEAD - 100% COMPLETE)
