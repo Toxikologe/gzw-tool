@@ -988,9 +988,42 @@
         .boss-kill-btn, .boss-cancel-btn { background: #b33939; color: white; border: none; border-radius: 3px; padding: 2px 6px; font-size: 0.7rem; cursor: pointer; }
         .boss-kill-btn.ready-btn { background: #2a4a2a; color: #7ca35a; border: 1px solid #7ca35a; }
 
-        /* GLOBALE FARB-VARIABLE */
-        :root { --accent: #7ca35a; }
+        /* GLOBALE FARB-VARIABLE & AKKORDEON STYLES (NEU) */
+        :root { 
+            --accent: #7ca35a; 
+            --accent-rgb: 124, 163, 144; /* Wird für transparente Hintergründe genutzt */
+        }
 
+        /* UNIVERSAL ACCORDION STYLING (Händler, Loot, Gear, Stash) */
+        .universal-accordion {
+            width: 100%;
+            text-align: left;
+            padding: 12px 15px;
+            background-color: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.05rem;
+            transition: 0.2s;
+            margin-bottom: 5px;
+        }
+        .universal-accordion:hover {
+            background-color: rgba(var(--accent-rgb), 0.2);
+        }
+        .universal-content {
+            display: none;
+            border: 1px solid var(--accent);
+            border-top: none;
+            padding: 10px;
+            background-color: #0a0a0a;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        /* GLOBALE LAYOUT STYLES (NICHT LÖSCHEN!) */
         h2 { color: var(--accent); margin-top: 10px; font-size: 1.3rem; border-bottom: 1px solid #444; padding-bottom: 5px; }
         .highlight { color: var(--accent); font-weight: bold; }
 
@@ -2101,28 +2134,35 @@
         document.getElementById('factionModal').style.display = 'flex';
     }
 
+    function hexToRgb(hex) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `${r}, ${g}, ${b}`;
+    }
+
     function setFaction(factionKey, isInitialLoad = false) {
         currentFaction = factionKey;
         const faction = factionData[factionKey];
         
-        // Speichern für den nächsten Besuch
         localStorage.setItem('gzw_faction', factionKey);
         
-        // Farbe der gesamten Website ändern! (Magic!)
+        // Beide CSS Variablen setzen (Hex und RGB)
         document.documentElement.style.setProperty('--accent', faction.color);
+        document.documentElement.style.setProperty('--accent-rgb', hexToRgb(faction.color));
         
-        // Pop-up schließen
         document.getElementById('factionModal').style.display = 'none';
-
-        // Interface anpassen (Heli, LZs, Button)
         updateFactionUI(faction);
 
+        // NEU: Alle dynamischen Sektionen sofort neu zeichnen, um Farbe zu übernehmen
         if (!isInitialLoad) {
-            // Wenn man manuell ändert, kurzes visuelles Feedback geben
-            document.getElementById('changeFactionBtn').innerText = `✔️ ${faction.name} aktiv`;
-            setTimeout(() => {
-                document.getElementById('changeFactionBtn').innerText = `🛡️ ${faction.name}`;
-            }, 2000);
+            renderTraderAccordions();
+            renderLootAccordions();
+            renderStashAccordions();
+            renderGearAccordions();
+            buildAmmoMatrix();
+            initKeyCabinet();
+            initTaskTablet();
         }
     }
 
@@ -3808,32 +3848,11 @@
             groupDiv.style.marginBottom = "10px";
 
             const btn = document.createElement('button');
-            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Freischaltungen) ▼</span>`;
-            btn.style.width = "100%";
-            btn.style.textAlign = "left";
-            btn.style.padding = "12px 15px";
-            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
-            btn.style.color = "#5dade2";
-            btn.style.border = "1px solid #2980b9";
-            btn.style.borderRadius = "4px";
-            btn.style.cursor = "pointer";
-            btn.style.fontWeight = "bold";
-            btn.style.fontSize = "1.05rem";
-            btn.style.transition = "0.2s";
+            btn.className = 'universal-accordion';
+            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
 
-            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
-            btn.onmouseout = () => {
-                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
-            };
-
-            const contentDiv = document.createElement('div');
-            contentDiv.style.display = "none";
-            contentDiv.style.border = "1px solid #2980b9";
-            contentDiv.style.borderTop = "none";
-            contentDiv.style.padding = "10px";
-            contentDiv.style.backgroundColor = "#0a0a0a";
-            contentDiv.style.borderBottomLeftRadius = "4px";
-            contentDiv.style.borderBottomRightRadius = "4px";
+              const contentDiv = document.createElement('div');
+            contentDiv.className = 'universal-content';
 
             let tableHTML = `
                 <div style="overflow-x: auto;">
@@ -4065,7 +4084,7 @@ async function sendFeedback() {
                 sepRow.setAttribute('onclick', `toggleAmmoGroup('ammo-group-${currentCalGroup}', this)`);
                 
                 sepRow.innerHTML = `
-                    <td colspan="6" style="background:#1a1a2e; color:var(--accent); font-weight:bold; font-size:0.9rem; padding:10px 12px; border:1px solid #333; letter-spacing:1px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); user-select: none;">
+                        <td colspan="6" style="background: rgba(var(--accent-rgb), 0.15); color: var(--accent); font-weight: bold; font-size: 0.9rem; padding: 10px 12px; border: 1px solid #333; letter-spacing: 1px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); user-select: none;">
                         <span class="ammo-toggle-icon" style="display:inline-block; transition:transform 0.2s; margin-right:8px; font-size: 0.8rem; transform: rotate(-90deg);">▼</span>
                         ⚡ Kaliber: ${ammo.cal}
                     </td>`;
@@ -4216,34 +4235,12 @@ function goToHome() {
 
             // Der blaue Akkordeon-Button
             const btn = document.createElement('button');
-            btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
-            btn.style.width = "100%";
-            btn.style.textAlign = "left";
-            btn.style.padding = "12px 15px";
-            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)"; // Taktisches Blau
-            btn.style.color = "#5dade2"; // Blaue Schrift
-            btn.style.border = "1px solid #2980b9";
-            btn.style.borderRadius = "4px";
-            btn.style.cursor = "pointer";
-            btn.style.fontWeight = "bold";
-            btn.style.fontSize = "1.05rem";
-            btn.style.transition = "0.2s";
-
-            // Hover-Effekt für den Button
-            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
-            btn.onmouseout = () => {
-                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
-            };
+            btn.className = 'universal-accordion';
+            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
 
             // Der versteckte Inhalt (die Tabelle)
             const contentDiv = document.createElement('div');
-            contentDiv.style.display = "none";
-            contentDiv.style.border = "1px solid #2980b9";
-            contentDiv.style.borderTop = "none";
-            contentDiv.style.padding = "10px";
-            contentDiv.style.backgroundColor = "#0a0a0a";
-            contentDiv.style.borderBottomLeftRadius = "4px";
-            contentDiv.style.borderBottomRightRadius = "4px";
+            contentDiv.className = 'universal-content';
 
             let tableHTML = `
                 <div style="overflow-x: auto;">
@@ -4410,33 +4407,12 @@ function goToHome() {
 
             // Der blaue Akkordeon-Button
             const btn = document.createElement('button');
-            btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
-            btn.style.width = "100%";
-            btn.style.textAlign = "left";
-            btn.style.padding = "12px 15px";
-            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
-            btn.style.color = "#5dade2";
-            btn.style.border = "1px solid #2980b9";
-            btn.style.borderRadius = "4px";
-            btn.style.cursor = "pointer";
-            btn.style.fontWeight = "bold";
-            btn.style.fontSize = "1.05rem";
-            btn.style.transition = "0.2s";
-
-            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
-            btn.onmouseout = () => {
-                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
-            };
+            btn.className = 'universal-accordion';
+            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
 
             // Der Inhalt (Die Tabelle)
             const contentDiv = document.createElement('div');
-            contentDiv.style.display = "none";
-            contentDiv.style.border = "1px solid #2980b9";
-            contentDiv.style.borderTop = "none";
-            contentDiv.style.padding = "10px";
-            contentDiv.style.backgroundColor = "#0a0a0a";
-            contentDiv.style.borderBottomLeftRadius = "4px";
-            contentDiv.style.borderBottomRightRadius = "4px";
+            contentDiv.className = 'universal-content';
 
             let tableHTML = `
                 <div style="overflow-x: auto;">
@@ -4556,33 +4532,12 @@ function goToHome() {
 
             // Der blaue Akkordeon-Button
             const btn = document.createElement('button');
-            btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
-            btn.style.width = "100%";
-            btn.style.textAlign = "left";
-            btn.style.padding = "12px 15px";
-            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
-            btn.style.color = "#5dade2";
-            btn.style.border = "1px solid #2980b9";
-            btn.style.borderRadius = "4px";
-            btn.style.cursor = "pointer";
-            btn.style.fontWeight = "bold";
-            btn.style.fontSize = "1.05rem";
-            btn.style.transition = "0.2s";
-
-            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
-            btn.onmouseout = () => {
-                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
-            };
+            btn.className = 'universal-accordion';
+            btn.innerHTML = `🤝 ${traderName} <span style="float:right; font-size:0.85rem;">(${items.length} Freischaltungen) ▼</span>`;
 
             // Der Inhalt (Die Tabelle)
             const contentDiv = document.createElement('div');
-            contentDiv.style.display = "none";
-            contentDiv.style.border = "1px solid #2980b9";
-            contentDiv.style.borderTop = "none";
-            contentDiv.style.padding = "10px";
-            contentDiv.style.backgroundColor = "#0a0a0a";
-            contentDiv.style.borderBottomLeftRadius = "4px";
-            contentDiv.style.borderBottomRightRadius = "4px";
+            contentDiv.className = 'universal-content';
 
             let tableHTML = `
                 <div style="overflow-x: auto;">
