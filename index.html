@@ -586,12 +586,12 @@
             <div class="panel-box">
                 <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
                     Der Platz in deiner Basis ist begrenzt. Kisten (Cases) und sichere Container sind der einzige Weg, um Platz für deinen Loot zu schaffen.
-                    Absolute <span style="color: #ffcc00; font-weight: bold;">Game-Changer</span> sind mit einem 🔥 markiert!
+                    Absolute <span style="color: #ffcc00; font-weight: bold;">Pflichtkäufe</span> sind mit einem 🔥 markiert!
                 </p>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 20px;">
                     <button id="sortStashAlphaBtn" onclick="renderStashAccordions('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔤 Alphabetisch sortieren</button>
-                    <button id="sortStashMetaBtn" onclick="renderStashAccordions('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔥 Nach Wichtigkeit (Meta) sortieren</button>
+                    <button id="sortStashMetaBtn" onclick="renderStashAccordions('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔥 Nach Pflichtkauf (Meta) sortieren</button>
                 </div>
                 
                 <div id="stashAccordionsContainer">
@@ -3416,9 +3416,9 @@ function goToHome() {
         // Feste Reihenfolge der Stash-Kategorien
         const stashOrder = [
             "🔒 Secure Containers (Raid-Schutz)", 
-            "🏗️ Locker Upgrades (Stash-Erweiterung)", 
             "📦 Stash Cases (Lagerkisten)", 
-            "👝 Micro-Container & Pouches (Inventar)"
+            "👝 Micro-Container & Pouches (Inventar)",
+            "🏗️ Locker Upgrades (Stash-Erweiterung)"
         ];
 
         stashOrder.forEach(categoryName => {
@@ -3483,14 +3483,13 @@ function goToHome() {
 
             items.forEach(item => {
                 const metaTag = item.isMeta ? `<span style="background: rgba(255, 204, 0, 0.15); color: #ffcc00; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; border: 1px solid #ffcc00; margin-left: 10px;">🔥 META</span>` : '';
-                const infoText = item.info ? `<div style="font-size: 0.8rem; color: #888; font-style: italic; margin-top: 4px;">↳ ${item.info}</div>` : '';
                 const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
 
                 tableHTML += `
                     <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
                         <td style="padding: 12px 8px;">
                             <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
-                            ${infoText}
+                            <div style="font-size: 0.9rem; color: #ccc; margin-top: 6px; line-height: 1.5;">${item.info}</div>
                         </td>
                         <td style="padding: 12px 8px; text-align: center; color: #aaa; font-family: monospace;">${item.size}</td>
                         <td style="padding: 12px 8px; text-align: center; color: #85c1e9;">${item.source}</td>
