@@ -8,6 +8,83 @@
     <style>
 
 /* ============================================================== */
+        /* STARTSEITE: JUNGLE COMMAND CENTER & INTEL MODALS */
+        /* ============================================================== */
+        .home-dashboard {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 15px;
+        }
+
+        .hero-banner {
+            grid-column: 1 / -1;
+            background: linear-gradient(rgba(10, 15, 10, 0.85), rgba(15, 20, 15, 0.95)), 
+                        repeating-linear-gradient(45deg, rgba(124, 163, 90, 0.03) 0px, rgba(124, 163, 90, 0.03) 2px, transparent 2px, transparent 8px);
+            border: 2px solid #1a2b1c; border-radius: 8px; padding: 40px;
+            position: relative; overflow: hidden; box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+        .hero-banner::after {
+            content: ""; position: absolute; right: -100px; bottom: -100px;
+            width: 300px; height: 300px; background: radial-gradient(circle, rgba(124,163,90,0.15) 0%, transparent 70%);
+        }
+        .hero-title { 
+            font-size: 2.8rem; color: #fff; text-transform: uppercase; margin: 0 0 10px 0; 
+            letter-spacing: 2px; text-shadow: 0 0 20px rgba(124,163,90,0.4); 
+        }
+        .hero-subtitle { color: var(--accent); font-family: monospace; font-size: 1.1rem; border-bottom: 1px solid rgba(124,163,90,0.3); padding-bottom: 10px; display: inline-block; }
+
+        .intel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .intel-folder {
+            background: #0b120c; border: 1px solid #1a2b1c; border-top: 4px solid var(--accent);
+            padding: 20px; border-radius: 6px; cursor: pointer; transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: space-between; position: relative;
+            overflow: hidden;
+        }
+        .intel-folder::before {
+            content: "TOP SECRET"; position: absolute; top: 15px; right: -25px; transform: rotate(45deg);
+            background: #b33939; color: white; font-size: 0.6rem; font-weight: bold; padding: 2px 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .intel-folder:hover { transform: translateY(-5px); border-color: var(--accent); background: #131f15; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .intel-icon { font-size: 2.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+        .intel-title { color: #eee; font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase; }
+        .intel-desc { color: #888; font-size: 0.85rem; line-height: 1.5; }
+
+        .comms-panel {
+            background: #05070a; border: 1px solid #1a2230; border-radius: 6px; padding: 20px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .comms-btn {
+            background: #111622; border: 1px solid #222c3f; color: #ccc; padding: 15px;
+            border-radius: 4px; cursor: pointer; font-weight: bold; text-align: left;
+            display: flex; align-items: center; justify-content: space-between; transition: 0.2s;
+        }
+        .comms-btn:hover { background: #1a2230; border-color: var(--accent); color: #fff; box-shadow: inset 4px 0 0 var(--accent); }
+        @keyframes statusPulse { 0% { box-shadow: 0 0 0 0 rgba(255,76,76,0.7); } 70% { box-shadow: 0 0 0 6px rgba(255,76,76,0); } 100% { box-shadow: 0 0 0 0 rgba(255,76,76,0); } }
+        .live-dot { display: inline-block; width: 10px; height: 10px; background: #ff4c4c; border-radius: 50%; margin-right: 10px; animation: statusPulse 2s infinite; }
+
+        .tac-tip-box {
+            grid-column: 1 / -1; background: rgba(255,204,0,0.05); border-left: 4px solid #ffcc00;
+            padding: 15px 20px; border-radius: 0 6px 6px 0; display: flex; align-items: center; gap: 20px;
+            border-top: 1px solid rgba(255,204,0,0.1); border-right: 1px solid rgba(255,204,0,0.1); border-bottom: 1px solid rgba(255,204,0,0.1);
+        }
+
+        /* Styling für die Pop-Up Akten */
+        .intel-modal-bg {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85); z-index: 100000; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .intel-modal-content {
+            background: #0d0d0d; border: 2px solid #333; border-top: 4px solid var(--accent);
+            border-radius: 8px; padding: 30px; width: 90%; max-width: 800px; max-height: 85vh;
+            overflow-y: auto; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s ease-out;
+        }
+        .intel-modal-close {
+            position: absolute; top: 20px; right: 20px; background: #b33939; color: white;
+            border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s;
+        }
+        .intel-modal-close:hover { background: #ff4c4c; }
+
+/* ============================================================== */
 /* TAC-PAD: MILITARY TABLET DESIGN (TASKS & BRIEFINGS) */
 /* ============================================================== */
 .tac-pad-frame {
@@ -1082,78 +1159,152 @@
             </div>
         </div>
 
-        <div id="tab-home" class="tab-content active">
-    <div class="panel-box" style="border-top-color: var(--accent); background: rgba(124, 163, 90, 0.05); margin-bottom: 20px;">
-    <div style="display: flex; align-items: center; justify-content: flex-start; gap: 20px; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="font-size: 1.5rem;">💬</div>
-            <h3 style="color: var(--accent); margin: 0; border: none; padding: 0; white-space: nowrap;">Feedback & Ergänzungen:</h3>
-        </div>
-        
-        <p style="color: #ccc; margin: 0; line-height: 1.4; flex: 1; min-width: 300px;">
-            Bei Fehlern oder wenn ihr Ergänzungen habt, gerne den Feedback Button unten Rechts nutzen oder den Discord Join. 
-            <span style="color: var(--accent); font-weight: bold; margin-left: 10px;"> <- Discord & Feedback -> !!!</span>
-        </p>
-    </div>
-</div>
-            <div class="news-alert" id="dynamic-news-alert">
-                <h3 style="color: #ff4c4c; margin-top: 0;">🚨 EINGEHENDE TRANSMISSION...</h3>
-                <p style="color: #ccc;">Verbinde mit dem MADFINGER-Zentralserver und suche nach den neuesten Intel-Daten...</p>
-            </div>
-            <h2 style="margin-top: 0;">Willkommen auf Lamang Island (Sperrzone)</h2>
-            <div class="grid">
-                <div class="panel-box">
-                    <h3>📖 Über Gray Zone Warfare</h3>
-                    <p style="line-height: 1.6; color: #ccc; margin-bottom: 0;">
-                        Gray Zone Warfare ist ein intensiver, taktischer First-Person-Shooter mit starkem Fokus auf Realismus. Das Spiel findet auf der fiktiven südostasiatischen Insel Lamang statt. Nach einem mysteriösen Vorkommnis, das nur als das "Ereignis" (The Event) bekannt ist, wurde die gesamte Insel unter strikte internationale Quarantäne gestellt.
+       <div id="tab-home" class="tab-content active">
+            
+            <div class="panel-box" style="border-top-color: var(--accent); background: rgba(124, 163, 90, 0.05); margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 20px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="font-size: 1.5rem;">💬</div>
+                        <h3 style="color: var(--accent); margin: 0; border: none; padding: 0; white-space: nowrap;">Feedback & Ergänzungen:</h3>
+                    </div>
+                    <p style="color: #ccc; margin: 0; line-height: 1.4; flex: 1; min-width: 300px;">
+                        Bei Fehlern oder wenn ihr Ergänzungen habt, gerne den Feedback Button unten Rechts nutzen oder den Discord Join. 
+                        <span style="color: var(--accent); font-weight: bold; margin-left: 10px;"> <- Discord & Feedback -> !!!</span>
                     </p>
                 </div>
-                <div class="panel-box">
-                    <h3>⚔️ Die PMC Fraktionen</h3>
-                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px; margin-bottom: 0; margin-top: 0;">
+            </div>
+
+            <div class="home-dashboard">
+                
+                <div class="hero-banner">
+                    <h1 class="hero-title">Lamang Island Command Center</h1>
+                    <div class="hero-subtitle">SYS_OS: GZW_TACTICAL_TOOL // CONNECTION: SECURE</div>
+                    <p style="color: #aaa; max-width: 650px; margin-top: 15px; line-height: 1.6; font-size: 1.05rem;">
+                        Willkommen in der Einsatzzentrale. Dies ist dein primäres Interface für Operationen in der Ground Zone. Analysiere Feindbewegungen, berechne Loadouts und studiere die Geheimdienstakten, bevor du den Helikopter betrittst.
+                    </p>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <h3 style="color: #fff; margin: 0; text-transform: uppercase; font-size: 1.1rem; border-bottom: 1px solid #333; padding-bottom: 10px; letter-spacing: 1px;">
+                        📂 Classified Intel (Datenbanken)
+                    </h3>
+                    
+                    <div class="intel-grid">
+                        <div class="intel-folder" onclick="document.getElementById('modal-about').style.display='flex'">
+                            <div>
+                                <div class="intel-icon">📖</div>
+                                <div class="intel-title">Über GZW</div>
+                                <div class="intel-desc">Grundlagen, Vision und die knallharten Hardcore-Mechaniken des Spiels.</div>
+                            </div>
+                            <div style="margin-top: 20px; font-size: 0.75rem; color: var(--accent); font-weight: bold;">AKTE ÖFFNEN ></div>
+                        </div>
+                        
+                        <div class="intel-folder" onclick="openFactionModal()">
+                            <div>
+                                <div class="intel-icon">🛡️</div>
+                                <div class="intel-title">PMC Fraktionen</div>
+                                <div class="intel-desc">Hintergründe zu Mithras, Crimson Shield und der Lamang Initiative.</div>
+                            </div>
+                            <div style="margin-top: 20px; font-size: 0.75rem; color: var(--accent); font-weight: bold;">AKTE ÖFFNEN ></div>
+                        </div>
+                        
+                        <div class="intel-folder" onclick="document.getElementById('modal-lore').style.display='flex'">
+                            <div>
+                                <div class="intel-icon">☢️</div>
+                                <div class="intel-title">Das "Ereignis"</div>
+                                <div class="intel-desc">Die streng geheime Geschichte hinter der plötzlichen Quarantäne von Ground Zero.</div>
+                            </div>
+                            <div style="margin-top: 20px; font-size: 0.75rem; color: var(--accent); font-weight: bold;">AKTE ÖFFNEN ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comms-panel">
+                    <h3 style="color: #fff; margin: 0; text-transform: uppercase; font-size: 1.1rem; border-bottom: 1px solid #1a2230; padding-bottom: 10px; letter-spacing: 1px;">
+                        📡 Uplink & Comms
+                    </h3>
+                    
+                    <button class="comms-btn" onclick="document.getElementById('modal-news').style.display='flex'">
+                        <span><span class="live-dot"></span> Live Update Info</span>
+                        <span style="color: #6688cc;">↻</span>
+                    </button>
+                    
+                    <button class="comms-btn" onclick="toggleFeedbackModal()">
+                        <span>✉️ Feedback & Support</span>
+                        <span style="color: #6688cc;">></span>
+                    </button>
+
+                    <div style="margin-top: auto; padding-top: 20px; border-top: 1px dashed #1a2230; font-size: 0.8rem; color: #666; font-family: monospace; line-height: 1.6;">
+                        <strong>SERVER DIAGNOSTICS:</strong><br>
+                        REGION: <span style="color: #eee;">EU_WEST / US_EAST</span><br>
+                        DEFCON THREAT: <span style="color: #ff4c4c; font-weight: bold;">ELEVATED</span><br>
+                        TOOL VERSION: <span style="color: var(--accent);">V. 0.4 SPEARHEAD</span>
+                    </div>
+                </div>
+
+                <div class="tac-tip-box">
+                    <div style="font-size: 2.5rem; filter: drop-shadow(0 0 5px rgba(255,204,0,0.5));">💡</div>
+                    <div>
+                        <strong style="color: #ffcc00; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;">Operator-Tipp des Tages:</strong><br>
+                        <span id="dailyTacTip" style="color: #ddd; font-size: 1rem; line-height: 1.5; display: inline-block; margin-top: 5px;">Lade Intel aus der Kommandozentrale...</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="modal-about" class="intel-modal-bg">
+                <div class="intel-modal-content">
+                    <button class="intel-modal-close" onclick="document.getElementById('modal-about').style.display='none'">X SCHLIESSEN</button>
+                    <h2 style="margin-top: 0; color: var(--accent);">📖 Über Gray Zone Warfare</h2>
+                    <p style="line-height: 1.6; color: #ccc; margin-bottom: 20px; font-size: 1.05rem;">
+                        Gray Zone Warfare ist ein intensiver, taktischer First-Person-Shooter mit starkem Fokus auf Realismus. Das Spiel findet auf der fiktiven südostasiatischen Insel Lamang statt. Nach einem mysteriösen Vorkommnis, das nur als das "Ereignis" (The Event) bekannt ist, wurde die gesamte Insel unter strikte internationale Quarantäne gestellt.
+                    </p>
+                    <h3 style="color: var(--accent); margin-bottom: 10px;">⚔️ Die PMC Fraktionen</h3>
+                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px; margin-bottom: 0;">
                         <li><strong style="color: #7ca35a;">Mithras Security Systems (MSS):</strong> Von Soldaten für Soldaten.</li>
                         <li><strong style="color: #b33939;">Crimson Shield Int. (CSI):</strong> Skrupellos, extrem gut finanziert.</li>
                         <li><strong style="color: #227093;">Lamang Recovery Initiative (LRI):</strong> Fokus auf Philanthropie und Protokolle.</li>
                     </ul>
                 </div>
             </div>
-            <div class="panel-box" style="margin-top: 20px;">
-                <h3>📜 Die Geschichte & Das "Ereignis"</h3>
-                <p style="line-height: 1.6; color: #ccc; margin-bottom: 15px;">
-                    Lamang trägt noch immer die tiefen Narben jahrzehntelanger Konflikte. Doch das, was die Insel in den heutigen Abgrund stürzte, war unerwartet. Ein plötzliches Phänomen am Ground Zero verwandelte die Region über Nacht in eine Sperrzone. War es ein Waffentest? Ein Asteroideneinschlag? 
-                    <br><br>
-                    Nun streifen zurückgelassene Milizen der LAF, Kriminelle, fanatische Kultisten und rivalisierende Elite-Söldner durch den Dschungel. Dein Auftrag: Erfülle Befehle für deine Händler, stärke deine Fraktion und erreiche das Epizentrum der Katastrophe.
-                </p>
-                
-                <button class="tool-btn" onclick="toggleLore()" id="loreBtn" style="background-color: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.95rem; transition: 0.2s;" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter='brightness(1)'">📖 Komplette Lore lesen</button>
 
-                <div id="full-lore" style="display: none; margin-top: 25px; padding-top: 20px; border-top: 1px dashed #444; animation: fadeIn 0.4s;">
+            <div id="modal-lore" class="intel-modal-bg">
+                <div class="intel-modal-content">
+                    <button class="intel-modal-close" onclick="document.getElementById('modal-lore').style.display='none'">X SCHLIESSEN</button>
+                    <h2 style="margin-top: 0; color: var(--accent);">📜 Die Geschichte & Das "Ereignis"</h2>
+                    <p style="line-height: 1.6; color: #ccc; margin-bottom: 20px; font-size: 1.05rem;">
+                        Lamang trägt noch immer die tiefen Narben jahrzehntelanger Konflikte. Doch das, was die Insel in den heutigen Abgrund stürzte, war unerwartet. Ein plötzliches Phänomen am Ground Zero verwandelte die Region über Nacht in eine Sperrzone. War es ein Waffentest? Ein Asteroideneinschlag? 
+                        <br><br>
+                        Nun streifen zurückgelassene Milizen der LAF, Kriminelle, fanatische Kultisten und rivalisierende Elite-Söldner durch den Dschungel. Dein Auftrag: Erfülle Befehle für deine Händler, stärke deine Fraktion und erreiche das Epizentrum der Katastrophe.
+                    </p>
                     
                     <h4 style="color: var(--accent); margin-bottom: 5px; font-size: 1.1rem;">🌍 Der Fall von Lamang (Die Vorgeschichte)</h4>
                     <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-                        Die fiktive südostasiatische Insel Lamang war einst eine britische Kolonie. Nur zwei Jahrzehnte nach ihrer hart erkämpften Unabhängigkeit wurde sie von einem brutalen Bürgerkrieg zerrissen. Die anti-britische Widerstandsgruppe "Sons of Lamang" (SOL) war mit der neuen Regierung unzufrieden und stürzte diese innerhalb weniger Monate, da die offizielle Armee katastrophal ausgerüstet war. Der SOL-Kommandant Raksmei Sayavong ernannte sich selbst zum Präsidenten und Diktator. Dies hinterließ eine Region, die bereits vor der eigentlichen Katastrophe stark von politischer Unruhe und Armut geplagt war.
+                        Die fiktive südostasiatische Insel Lamang war einst eine britische Kolonie. Nur zwei Jahrzehnte nach ihrer hart erkämpften Unabhängigkeit wurde sie von einem brutalen Bürgerkrieg zerrissen. Die anti-britische Widerstandsgruppe "Sons of Lamang" (SOL) war mit der neuen Regierung unzufrieden und stürzte diese innerhalb weniger Monate.
                     </p>
 
                     <h4 style="color: var(--accent); margin-bottom: 5px; font-size: 1.1rem;">☢️ Das mysteriöse "Ereignis" (The Event)</h4>
                     <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 10px;">
-                        Die wahre Apokalypse geschah völlig unerwartet: Ein gigantischer Lichtblitz und eine massive Explosion erschütterten das Gebiet, das heute als <em>Ground Zero</em> bekannt ist. Seltsamerweise gab es keine der typischen massiven Zerstörungen einer Atombombe, jedoch entstanden extrem tödliche radioaktive Zonen. Einige entdeckte Leichen im Epizentrum sind regelrecht geschmolzen und strahlen so stark, dass pure Nähe tödlich ist. 
+                        Die wahre Apokalypse geschah völlig unerwartet: Ein gigantischer Lichtblitz und eine massive Explosion erschütterten das Gebiet, das heute als <em>Ground Zero</em> bekannt ist. Es entstanden extrem tödliche radioaktive Zonen. 
                     </p>
                     <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-                        Nachdem Massenpanik ausbrach, startete die UNLRA (eine UN-Hilfsorganisation) eine hastige Evakuierungsmission, gab die Insel aber kurz darauf komplett auf. Lamang wurde international unter strikte Quarantäne gestellt. Seither kursieren düstere Theorien: Von schiefgelaufenen nuklearen Experimenten bis hin zu Alien-Kontakt, da wissenschaftliche Messgeräte der ominösen "Fifth Dimension Industries" und Aufzeichnungen über Signale aus dem Weltall gefunden wurden. Operator berichten von Flüstern im Dschungel, okkulten Opferaltären nahe Ban Pa und Leichen, die auf unerklärliche Weise mutiert sind.
+                        Lamang wurde international unter strikte Quarantäne gestellt. Seither kursieren düstere Theorien: Von schiefgelaufenen nuklearen Experimenten bis hin zu Alien-Kontakt. Operator berichten von Flüstern im Dschungel und okkulten Opferaltären nahe Ban Pa.
                     </p>
-
-                    <h4 style="color: var(--accent); margin-bottom: 5px; font-size: 1.1rem;">⚔️ Die 3 Fraktionen (PMCs)</h4>
-                    <p style="color: #ccc; line-height: 1.6; margin-top: 0; margin-bottom: 10px;">
-                        Als das Gebiet verlassen wurde, übernahmen Kartelle, die verbliebenen Lamang Armed Forces (LAF) und fanatische Sekten die Kontrolle. Kurz darauf trafen drei Private Military Companies (PMCs) im Auftrag geheimer Elite-Klienten ein, um die Sperrzone zu sichern und wertvolle Proben zu bergen:
-                    </p>
-                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px; margin-bottom: 0;">
-                        <li style="margin-bottom: 10px;"><strong style="color: #227093;">Lamang Recovery Initiative (LRI):</strong> Finanziert von einem Tech-Milliardär, präsentiert sich LRI der Öffentlichkeit als philanthropische Hilfsorganisation. Ihre hochprofessionellen, bewaffneten Operator sollen offiziell Evakuierungs- und Aufräumarbeiten beschützen.</li>
-                        <li style="margin-bottom: 10px;"><strong style="color: #7ca35a;">Mithras Security Systems (MSS):</strong> Eine ehrliche Söldner-Truppe, die von kampferprobten Veteranen für Soldaten geführt wird. Sie operieren nach einer an die römischen Legionen angelehnten Philosophie, bei der die wertvolle Kriegsbeute und Bezahlung strikt nach Leistung im Feld aufgeteilt wird.</li>
-                        <li><strong style="color: #b33939;">Crimson Shield International (CSI):</strong> Eine skrupellose PMC, die während des syrischen Bürgerkriegs zu trauriger Berühmtheit gelangte. Sie brüsten sich mit einer 95%igen Erfolgsquote, sind aber für ihre extrem brutalen Methoden und schweren zivilen Kollateralschäden berüchtigt.</li>
-                    </ul>
                 </div>
             </div>
-        </div>
+
+            <div id="modal-news" class="intel-modal-bg">
+                <div class="intel-modal-content" style="border-top-color: #ff4c4c;">
+                    <button class="intel-modal-close" onclick="document.getElementById('modal-news').style.display='none'">X SCHLIESSEN</button>
+                    <h2 style="margin-top: 0; color: #ff4c4c;">📡 Live Update Server</h2>
+                    <div class="news-alert" id="dynamic-news-alert" style="margin: 0; border: none; padding: 0; background: transparent;">
+                        <h3 style="color: #ff4c4c; margin-top: 0;">🚨 EINGEHENDE TRANSMISSION...</h3>
+                        <p style="color: #ccc;">Verbinde mit dem MADFINGER-Zentralserver und suche nach den neuesten Intel-Daten...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div> 
 
         <div id="tab-patchnotes" class="tab-content">
             <h2>Aktuelle Patch Notes (Changelog)</h2>
@@ -4517,6 +4668,28 @@ function goToHome() {
     }
 
     // ==============================================================
+    // STARTSEITE: DAILY TACTICAL TIP ENGINE
+    // ==============================================================
+    const tacticalTips = [
+        "Schmerzmittel wie Ibuprofen entziehen dir massiv Wasser. Habe immer genug zu Trinken dabei, bevor du sie einnimmst!",
+        "Wenn du im Dschungel unter Beschuss gerätst, wirf dich sofort ins hohe Gras (Prone) und suche den Waldrand nach Mündungsfeuer ab.",
+        "Helikopter-Flugrouten sind berechenbar. Nutze die Lautstärke anfliegender Helis, um feindliche Squads unbemerkt zu flankieren.",
+        "Zerstörte Lungen oder Lebern können nur mit einem Chirurgie-Set (SurvKit) behandelt werden. Normale Bandagen sind hier nutzlos.",
+        "Die neuen 'Stamina Booster' aus der Verpflegung (z.B. TamTam DoubleChoc) helfen extrem beim ruhigen Zielen über lange Distanzen.",
+        "Wenn du einen Bunker säuberst (z.B. YBL-1), schieße vorher die Lichter aus und nutze Nachtsicht. Die KI ist im Dunkeln im Nachteil.",
+        "Splittergranaten haben einen massiven Tötungsradius. Wirf sie durch Fenster, bevor du den Raum pushst, um feindliche Wachen zu töten.",
+        "Gewicht ist entscheidend! Ein Rucksack über 54kg macht dich zur Zielscheibe, da du nicht mehr rennen oder springen kannst."
+    ];
+
+    function initDailyTip() {
+        const tipElement = document.getElementById('dailyTacTip');
+        if (tipElement) {
+            const randomTip = tacticalTips[Math.floor(Math.random() * tacticalTips.length)];
+            tipElement.innerText = `"${randomTip}"`;
+        }
+    }
+
+    // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
@@ -4547,6 +4720,7 @@ function goToHome() {
         updateLiveTime();
         startTraderTimer();
         initFactionSystem();
+        initDailyTip();
         setInterval(updateLiveTime, 1000);
     });
 
