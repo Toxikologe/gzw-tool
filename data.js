@@ -938,85 +938,181 @@ const allKeys = [
     { group: "🆕 Update 0.4 (Spearhead)", name: "Entlegenes Lager Schlüssel (Remote Campsite Key)", loc: "Südlich YBL-1 (149, 111)", effect: "Öffnet die verschlossene Kiste am Flusslager.", loot: "Mossberg 590 Blueprint" }
 ];
     
-// ==============================================================
-// 8. LOOT DATENBANK (UPDATE 0.4 SPEARHEAD - INKL. QUEST ITEMS)
-// TIPP: ⚠️ Markiert Items, die zwingend für Quests oder Verträge gesammelt werden müssen!
-// ==============================================================
-const valuables = {
+// ==========================================
+// 8. LOOT-DATENBANK (100% COMPLETE INKL. INFOS & TASKS)
+// ==========================================
+// HÄNDLER-PROFIT-TIPPS:
+// - Genussmittel (Vices) -> Gunny
+// - Schmuck (Jewellery) -> Turncoat
+// - Elektronik (Electronics) -> Lab Rat
+// - Finanzen (Funds) -> Artisan
+// - Beweise & Militär (Evidence/Mil) -> Handshake
+
+const lootItemsDb = [
     // ==========================================
-    // --- 💎 HIGH-END & JACKPOTS ---
+    // --- GENUSSMITTEL (Vices) ---
     // ==========================================
-    "ltsd_laser_designator": { price: "~ $60.000", slots: "2", info: "Das wertvollste Item im Spiel! Gefunden u.a. in Tiger Bay oder auf dem Hoteldach." },
-    "moutai_alcohol": { price: "~ $15.000", slots: "1", info: "Extrem wertvoller Alkohol. Ein absoluter Jackpot-Fund für nur einen Slot!" },
-    "pearl_earrings": { price: "~ $3.500", slots: "1", info: "Sehr lukrativer 1-Slot Gegenstand. Perfekt für den Secure Container." },
-    
-    // ==========================================
-    // --- 💍 SCHMUCK & WERTSACHEN ---
-    // ==========================================
-    "gold_phone": { price: "~ $800", slots: "1", info: "Sehr seltener Fund. Eines der besten Items im Spiel für 1 Slot." },
-    "diamond_ring": { price: "~ $600 - $800", slots: "1", info: "Spawnt häufig in Tresoren und Schmuckkästchen. Turncoat zahlt gut!" },
-    "gold_watch": { price: "~ $500", slots: "1", info: "Sehr lukrativ. Unbedingt im Secure Container sichern!" },
-    "gold_coin": { price: "~ $350", slots: "1", info: "Ein perfekter Lückenfüller für deinen Rucksack." },
-    "gold_chain": { price: "~ $150", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Für Banshee und die Vulture-Boss-Freischaltung sammeln!). Ansonsten an Turncoat." },
-    "silver_coin": { price: "~ $150", slots: "1", info: "Immer mitnehmen, solange Platz ist." },
-    "pocket_watch": { price: "~ $120", slots: "1", info: "Häufig bei toten Scavs zu finden." },
-    "silver_chain": { price: "~ $100", slots: "1", info: "Gut, um einzelne leere Slots im Rucksack aufzufüllen." },
+    { name: "Moutai - 50 Jahre (Moutai - 50y)", price: 15000, size: "1x2", weight: "1.500 kg", category: "Genussmittel", trader: "Gunny", info: "Einer der wertvollsten Funde im Spiel. Bringt 7.500$ pro belegtem Slot." },
+    { name: "Allanach Single Malt Scotch - 40J", price: 5451, size: "1x2", weight: "2.100 kg", category: "Genussmittel", trader: "Gunny", info: "Sehr hoher Wert, unbedingt mitnehmen." },
+    { name: "Breda Rum - 30 Jahre (Breda Rum - 30y)", price: 3802, size: "1x2", weight: "1.700 kg", category: "Genussmittel", trader: "Gunny", info: "Hoher Wert, guter Loot für den Rucksack." },
+    { name: "Tequila Tzintzimitl - 25J", price: 2020, size: "1x2", weight: "1.800 kg", category: "Genussmittel", trader: "Gunny", info: "Lohnt sich, bringt ca. 1.000$ pro Slot." },
+    { name: "Goodlad Whiskey - 20 Jahre", price: 450, size: "1x2", weight: "1.600 kg", category: "Genussmittel", trader: "Gunny", info: "Geringer Wert. Nur einpacken, wenn extrem viel Platz ist." },
+    { name: "Schlangenwein (Snake Wine)", price: 399, size: "1x2", weight: "1.400 kg", category: "Genussmittel", trader: "Gunny", info: "Kaum wertvoll, oft in Ban Pa zu finden. Wegwerfen, wenn Platz fehlt." },
+    { name: "Parfüm 'Himmlisch' (Heavenly Perfume)", price: 335, size: "1x2", weight: "0.350 kg", category: "Genussmittel", trader: "Gunny", info: "Recht leicht, aber bringt nicht viel ein." },
+    { name: "Lambert Zigarren (Lambert Cigars)", price: 282, size: "1x2", weight: "0.600 kg", category: "Genussmittel", trader: "Gunny", info: "Manchmal als Tausch-Objekt in kleinen Tasks gefragt, sonst wenig wert." },
+    { name: "Parfüm 'Zart' (Delicate Perfume Bottle)", price: 150, size: "1x1", weight: "0.300 kg", category: "Genussmittel", trader: "Gunny", info: "Nimmt nur 1 Slot weg, aber bringt kaum Profit." },
+    { name: "Hyperborea Zigaretten (Hyperborea Cigarettes)", price: 139, size: "1x1", weight: "0.020 kg", category: "Genussmittel", trader: "Gunny", info: "Extrem leicht, gut um leere 1x1 Lücken zu füllen." },
+    { name: "Parfüm 'Duftend' (Fragrant Perfume Bottle)", price: 75, size: "1x2", weight: "0.250 kg", category: "Genussmittel", trader: "Gunny", info: "Verschwendet 2 Slots für nur 75$. Liegen lassen!" },
 
     // ==========================================
-    // --- 💻 ELEKTRONIK & TECHNIK ---
+    // --- SCHMUCK (Jewellery) ---
     // ==========================================
-    "military_radio": { price: "~ $800", slots: "2", info: "Gute Ausbeute. Findet man oft in Militärgebieten oder Garagen (z.B. Fort Narith)." },
-    "rt97s": { price: "~ $675", slots: "6", info: "Achtung: Nimmt 6 Slots ein! Sehr ineffizient für den reinen Slot-Wert, am besten liegen lassen." },
-    "gpu": { price: "~ $450", slots: "4 (2x2)", info: "Hoher Wert, frisst aber massiv Platz. Lab Rat zahlt hier am besten." },
-    "laptop": { price: "~ $400", slots: "4 (2x2)", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Du brauchst mind. 2 Stück für Mid-Game Quests). Ansonsten an Lab Rat." },
-    "tablet": { price: "~ $300", slots: "2", info: "Guter Elektronik-Wert. Oft in Büros und dem Hotel auf Tischen zu finden." },
-    "slr_camera": { price: "~ $200", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Banshee verlangt 2 Stück). Viel wertvoller als die digitalen!" },
-    "smartphone": { price: "~ $150", slots: "1", info: "Guter Standard-Loot, oft auf Schreibtischen." },
-    "digital_camera": { price: "~ $120", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Banshee verlangt 2 blaue und 2 schwarze Modelle für Aufklärung). Nicht sofort verkaufen!" },
-    "hdd": { price: "~ $100", slots: "2", info: "Lohnt sich auf Dauer, da sie sehr häufig an PCs spawnen." },
-    "voice_recorder": { price: "~ $110", slots: "1", info: "Solider Elektronik-Wert für nur einen Slot." },
+    { name: "Platinring (Platinum Ring)", price: 10000, size: "1x1", weight: "0.010 kg", category: "Schmuck", trader: "Turncoat", info: "WICHTIG: Eines der besten Items im Spiel! Unglaubliche 10.000$ für 1 Slot. Direkt in den Safe-Container!" },
+    { name: "Majestätische Titanuhr (Majestic Titanium Watch)", price: 8000, size: "1x1", weight: "0.100 kg", category: "Schmuck", trader: "Turncoat", info: "Absoluter Top-Loot. Immer in den Safe-Container packen." },
+    { name: "Diamantring (Diamond Ring)", price: 7700, size: "1x1", weight: "0.010 kg", category: "Schmuck", trader: "Turncoat", info: "Extrem wertvoll und wiegt quasi nichts." },
+    { name: "Diamantohrringe (Diamond Earrings)", price: 5700, size: "1x1", weight: "0.020 kg", category: "Schmuck", trader: "Turncoat", info: "Sehr wertvoll. Ideal für den 1x1 Platz." },
+    { name: "Smaragdhalskette (Emerald Necklace)", price: 5300, size: "1x1", weight: "0.050 kg", category: "Schmuck", trader: "Turncoat", info: "Hervorragender Wert." },
+    { name: "Diamant-Korallen-Ring (Diamond-Coral Ring)", price: 5250, size: "1x1", weight: "0.020 kg", category: "Schmuck", trader: "Turncoat", info: "Hervorragender Wert pro Slot." },
+    { name: "Perfekte Perlenohrringe (Perfect Pearl Earrings)", price: 5000, size: "1x1", weight: "0.010 kg", category: "Schmuck", trader: "Turncoat", info: "Top-Tier Loot, wiegt fast nichts." },
+    { name: "Prunkvoller Ring (Elaborate Ring)", price: 4400, size: "1x1", weight: "0.020 kg", category: "Schmuck", trader: "Turncoat", info: "Sehr solider Fund, immer einstecken." },
+    { name: "Saphir-Anhänger (Sapphire Pendant)", price: 3600, size: "1x1", weight: "0.010 kg", category: "Schmuck", trader: "Turncoat", info: "Bringt sehr gutes Geld für die Größe." },
+    { name: "Elegante Luxusuhr (Sleek Luxury Watch)", price: 1700, size: "1x1", weight: "0.130 kg", category: "Schmuck", trader: "Turncoat", info: "Guter Mid-Tier Schmuck." },
+    { name: "Master Carbon SEAL Automatikuhr", price: 1450, size: "1x1", weight: "0.170 kg", category: "Schmuck", trader: "Turncoat", info: "Immer noch lohnenswert für 1 Slot." },
+    { name: "Dunkle Perlenkette (Dark Pearl Necklace)", price: 1350, size: "1x1", weight: "0.050 kg", category: "Schmuck", trader: "Turncoat", info: "Guter Wert, ideal zum Lücken füllen." },
+    { name: "Edelsteinring (Gemstone Ring)", price: 820, size: "1x1", weight: "0.010 kg", category: "Schmuck", trader: "Turncoat", info: "Solider 1x1 Fund." },
+    { name: "Luxus-Smartwatch (Luxury Smartwatch)", price: 600, size: "1x1", weight: "0.150 kg", category: "Schmuck", trader: "Turncoat", info: "Mid-Tier Loot, wird für höherwertige Ringe oft ausgetauscht." },
+    { name: "Goldhalskette (Gold Necklace)", price: 180, size: "1x1", weight: "0.020 kg", category: "Schmuck", trader: "Turncoat", info: "Kaum was wert. Eher liegen lassen." },
+    { name: "Goldring (Gold Ring)", price: 150, size: "1x1", weight: "0.020 kg", category: "Schmuck", trader: "Turncoat", info: "Geringer Wert für Schmuck." },
+    { name: "Moderne Uhr (Modern Watch)", price: 150, size: "1x1", weight: "0.120 kg", category: "Schmuck", trader: "Turncoat", info: "Bringt weniger Geld als eine gute Packung Munition." },
 
     // ==========================================
-    // --- 📁 DOKUMENTE & INTEL ---
+    // --- FINANZEN (Funds) ---
     // ==========================================
-    "weapon_blueprint": { price: "Unbezahlbar", slots: "1-2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Schaltet 0.4 Waffen dauerhaft beim Händler frei. Niemals verkaufen!" },
-    "class_docs": { price: "~ $500", slots: "2 (Horizontal)", info: "Wichtige Geheimdokumente, bringen sehr gutes Geld (Handshake zahlt Premium)." },
-    "usb_drive": { price: "~ $450", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Oft für Handshake-Intel-Missionen gesammelt." },
-    "intel_folder": { price: "~ $300", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Oft in feindlichen Basen und HQs zu finden." },
-    "passport": { price: "~ $120", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Banshee braucht 2 Stück für seine Schmuggel-Tasks). Schwer zu finden!" },
-    "credit_card": { price: "~ $150", slots: "1", info: "Artisan zahlt Bestpreise für Kreditkarten. Passt perfekt in dein Wallet." },
-    "gold_credit_card": { price: "~ $900", slots: "1", info: "Artisan zahlt Bestpreise für Kreditkarten. Passt perfekt in dein Wallet." },
-    "platin_credit_card": { price: "~ $1500", slots: "1", info: "Artisan zahlt Bestpreise für Kreditkarten. Passt perfekt in dein Wallet." },
-    "wallet": { price: "~ $50 - $200", slots: "1", info: "0.4 MECHANIK: Packe es in deinen Secure Container! Es hält 4 kleine Slots (Karten, Geld, Pässe)." },
+    { name: "Schwarze Kreditkarte (Black Credit Card)", price: 15000, size: "1x1", weight: "0.010 kg", category: "Finanzen", trader: "Artisan", info: "JACKPOT! 15.000$ für 1 Slot! Sofort in die Secure Lockbox!" },
+    { name: "Platin-Kreditkarte (Platinum Credit Card)", price: 6000, size: "1x1", weight: "0.005 kg", category: "Finanzen", trader: "Artisan", info: "Exzellenter Wert, wiegt absolut nichts." },
+    { name: "Goldene Kreditkarte (Gold Credit Card)", price: 2200, size: "1x1", weight: "0.005 kg", category: "Finanzen", trader: "Artisan", info: "Solider 1x1 Loot, immer einstecken." },
+    { name: "Standard-Kreditkarte (Common Credit Card)", price: 600, size: "1x1", weight: "0.005 kg", category: "Finanzen", trader: "Artisan", info: "Guter Platzfüller, besonders am Anfang." },
 
     // ==========================================
-    // --- 🔧 WERKZEUGE, MATERIAL & VERBRAUCHSGÜTER ---
+    // --- MILITÄRAUSRÜSTUNG (Military Equipment) ---
     // ==========================================
-    "acetylene_cylinder": { price: "~ $150", slots: "4", info: "⚠️ WIRD FÜR TASKS BENÖTIGT. Achtung: Wiegt massive 15kg! Extrem selten, sofort sichern wenn gefunden." },
-    "lithium_grease": { price: "~ $80", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Wird u.a. an Baustellen wie bei Tiger Bay verlangt)." },
-    "low_grade_gunpowder": { price: "~ $60", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Gunny verlangt oft 2 Stück davon)." },
-    "weapon_parts": { price: "~ $50", slots: "1-2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Defekte Waffenteile unter 50% für Artisan Maintenance Contracts sammeln)." },
-    "mre_ration": { price: "~ $30", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Handshake Daily Contracts verlangen oft 3 MRE Rationen)." },
+    { name: "LTSD-4-3 Laser-Designator", price: 60000, size: "3x3", weight: "14.000 kg", category: "Militärausrüstung", trader: "Handshake", info: "ACHTUNG RIESIG: Das teuerste Item im Spiel (oft in Midnight Sapphire), belegt aber riesige 9 Slots und wiegt 14 Kilo! Plan deine Extraktion." },
+    { name: "R-438 Barrier-T Funkstation", price: 45000, size: "2x2", weight: "16.000 kg", category: "Militärausrüstung", trader: "Handshake", info: "Extrem schwer (16kg). Bringt ein Vermögen, frisst aber massiv Stamina." },
+    { name: "PBG-01+ Drohnensteuerung", price: 6400, size: "2x2", weight: "14.200 kg", category: "Militärausrüstung", trader: "Handshake", info: "Sehr schwer für 6.400$. Oft lohnt sich der Gewichts-Stamina-Nachteil nicht." },
+    { name: "ATM Hacking-Tool (ATM Hacking Tool)", price: 5000, size: "1x1", weight: "0.150 kg", category: "Militärausrüstung", trader: "Handshake", info: "Hervorragend! 5.000$ für 1x1 Platz. Oft in Tiger Bay zu finden." },
+    { name: "C2 Militär-Laptop (C2 Military Laptop)", price: 4900, size: "2x2", weight: "5.000 kg", category: "Militärausrüstung", trader: "Handshake", info: "Vorsicht: Belegt 4 Slots und wiegt 5kg. Nur bei viel Platz mitnehmen." },
+    { name: "Operation Data Encrypted Hard Disk", price: 4875, size: "1x1", weight: "0.180 kg", category: "Militärausrüstung", trader: "Handshake", info: "S-Tier Loot! Enormer Wert für nur 1 Slot." },
+    { name: "STRELETS-M Tablet", price: 4700, size: "1x1", weight: "0.400 kg", category: "Militärausrüstung", trader: "Handshake", info: "Top-Item für die Hosentasche." },
+    { name: "AN/PYQ-10 Gerät (AN-PYQ-10)", price: 3150, size: "1x2", weight: "0.970 kg", category: "Militärausrüstung", trader: "Handshake", info: "Guter, leichter Military-Loot." },
+    { name: "KIK-11 Taktischer Keyloader (KIK-11)", price: 2900, size: "1x1", weight: "0.450 kg", category: "Militärausrüstung", trader: "Handshake", info: "Hoher Wert für nur 1 Slot." },
+    { name: "One-Time Pad Key Sheets", price: 2400, size: "1x1", weight: "0.100 kg", category: "Militärausrüstung", trader: "Handshake", info: "Sehr lukrativ, immer einstecken." },
+    { name: "HGCS-30 UAV Drohnensteuerung", price: 2000, size: "2x2", weight: "3.000 kg", category: "Militärausrüstung", trader: "Handshake", info: "Belegt 4 Slots für 2.000$. Eher schlechter Wert pro Slot (500$)." },
+    { name: "Biometrische Zugangskarte", price: 1950, size: "1x1", weight: "0.008 kg", category: "Militärausrüstung", trader: "Handshake", info: "Gutes Geld, wiegt weniger als eine Patrone." },
+    { name: "Biometrischer USB-Stick", price: 1875, size: "1x1", weight: "0.004 kg", category: "Militärausrüstung", trader: "Handshake", info: "Winzig, leicht, wertvoll." },
+    { name: "Robustes Militär-Tablet", price: 1200, size: "2x2", weight: "2.000 kg", category: "Militärausrüstung", trader: "Handshake", info: "Zu groß (2x2) für den geringen Preis." },
+    { name: "NPI-2 Navigations-Empfänger", price: 1100, size: "1x1", weight: "0.300 kg", category: "Militärausrüstung", trader: "Handshake", info: "Guter Füller für 1 Slot." },
+    { name: "GLONASS Grot-M", price: 937, size: "1x2", weight: "0.800 kg", category: "Militärausrüstung", trader: "Handshake", info: "Unter 500$ pro Slot. Eher mäßig." },
+    { name: "AZART P1 Funkgerät", price: 825, size: "1x2", weight: "0.720 kg", category: "Militärausrüstung", trader: "Handshake", info: "Standard-Mil-Loot." },
+    { name: "Handheld ECM Störsender", price: 712, size: "1x2", weight: "2.000 kg", category: "Militärausrüstung", trader: "Handshake", info: "Viel zu schwer (2kg) für 712$." },
+    { name: "Signal-Repeater RT97S", price: 675, size: "3x2", weight: "1.660 kg", category: "Militärausrüstung", trader: "Handshake", info: "RIESIG (6 Slots) für nur 675$. Sofort liegen lassen!" },
 
     // ==========================================
-    // --- 🧪 CHEMIKALIEN & MEDIZIN ---
+    // --- ELEKTRONIK (Electronics) ---
     // ==========================================
-    "sulfuric_acid": { price: "~ $120", slots: "2", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Säureflaschen für Lab Rat! Spawnen oft bei Gegnern nahe Villa Vongphet & Sabai Lake)." },
-    "water_samples": { price: "~ $100", slots: "1", info: "⚠️ WIRD FÜR TASKS BENÖTIGT (Lab Rat Biohazard Contracts aus den neuen 0.4 Sumpfgebieten)." },
-    
+    { name: "Schwarzes Luxus-Telefon (Black Luxury Phone)", price: 1500, size: "1x1", weight: "0.100 kg", category: "Elektronik", trader: "Lab Rat", info: "Top-Tier Elektronik. Wird oft in Safes gefunden." },
+    { name: "Luxus-Smartphone (Luxury Smartphone)", price: 1000, size: "1x1", weight: "0.100 kg", category: "Elektronik", trader: "Lab Rat", info: "Wertvoller Platzfüller." },
+    { name: "Teures Smartphone (Expensive Smartphone)", price: 350, size: "1x1", weight: "0.100 kg", category: "Elektronik", trader: "Lab Rat", info: "Solide, falls noch Platz ist." },
+    { name: "Standard Smartphone", price: 250, size: "1x1", weight: "0.100 kg", category: "Elektronik", trader: "Lab Rat", info: "Eher geringer Wert, kann bei Platzmangel weggeworfen werden." },
+
     // ==========================================
-    // --- 🗑️ SONSTIGES & TRASH (Low Value) ---
+    // --- BEWEISE & INTEL (Evidence) ---
     // ==========================================
-    "vintage_alcohol": { price: "~ $250", slots: "2", info: "Gunny kauft Vintage-Alkohol zu Top-Preisen." },
-    "antique_vase": { price: "~ $200", slots: "4 (2x2)", info: "Sieht wertvoll aus, nimmt aber viel zu viel Platz weg. Eher ineffizient." },
-    "wood_statue": { price: "~ $150", slots: "2", info: "Häufig in Ban Pa oder Blue Lagoon." },
-    "fancy_cigarettes": { price: "~ $85", slots: "1", info: "Viel besser als normale Zigaretten. Gunny liebt sie." },
-    "sunglasses": { price: "~ $60", slots: "1", info: "Netter Lückenfüller für 1 Slot. Oft auf Tischen oder in Cafés zu finden." },
-    "zippo_lighter": { price: "~ $27", slots: "1", info: "Das Minimum, was du mitnehmen solltest." },
-    "hand_mirror": { price: "~ $10", slots: "1", info: "Absoluter Müll, bricht einem das Herz. Lohnt sich überhaupt nicht zum Mitnehmen." },
-    "toilet_paper": { price: "~ $10", slots: "4 (2x2)", info: "Der schlechteste Slot-Wert im Spiel. Liegen lassen!" },
-    "matches": { price: "~ $5", slots: "1", info: "Niemals looten!" }
-};
+    { name: "VIP Reisepass (VIP Passport)", price: 6800, size: "1x1", weight: "0.050 kg", category: "Beweise", trader: "Handshake", info: "Ein extrem wertvoller Fund (6.800$ für 1x1)! Oft in Hotel-Zimmern." },
+    { name: "Verschlüsselte Festplatte (Encrypted HDD)", price: 3450, size: "1x1", weight: "0.180 kg", category: "Beweise", trader: "Handshake", info: "Top-Tier Loot, sofort in den Secure Container." },
+    { name: "Touristen-Pass (Tourist Passport)", price: 2625, size: "1x1", weight: "0.050 kg", category: "Beweise", trader: "Handshake", info: "Sehr profitabel für seine Größe." },
+    { name: "Verstärkter Militär-Laptop", price: 2304, size: "2x2", weight: "2.500 kg", category: "Beweise", trader: "Handshake", info: "Achtung: Belegt 4 Slots und ist schwer. Nur mitnehmen wenn viel Platz ist." },
+    { name: "Armee-Geheimdienstinfos (Army Intel)", price: 1280, size: "1x2", weight: "0.100 kg", category: "Beweise", trader: "Handshake", info: "Gutes Intel für den Rucksack." },
+    { name: "Spiegelreflexkamera (Reflex Camera)", price: 960, size: "2x1", weight: "0.400 kg", category: "Beweise", trader: "Handshake", info: "Ca. 480$ pro Slot. Okay fürs Mid-Game." },
+    { name: "Geschäftsmann ID (Businessman ID Card)", price: 937, size: "1x1", weight: "0.050 kg", category: "Beweise", trader: "Handshake", info: "Hervorragend als Lückenfüller." },
+    { name: "Standard Laptop", price: 750, size: "2x2", weight: "1.500 kg", category: "Beweise", trader: "Handshake", info: "Viel zu groß (4 Slots) für läppische 750$. Müll!" },
+    { name: "Führerschein (Driver's License)", price: 262, size: "1x1", weight: "0.050 kg", category: "Beweise", trader: "Handshake", info: "Bringt weniger als Basis-Ringe." },
+    { name: "Einheimischen ID (Local ID Card)", price: 187, size: "1x1", weight: "0.050 kg", category: "Beweise", trader: "Handshake", info: "Geringer Wert." },
+    { name: "Kriminal-Akte (Crime-related Intel)", price: 140, size: "1x2", weight: "0.100 kg", category: "Beweise", trader: "Handshake", info: "Wertlos. Verstopft 2 Slots." },
+    { name: "Touristen ID (Tourist ID Card)", price: 112, size: "1x1", weight: "0.050 kg", category: "Beweise", trader: "Handshake", info: "Wertlos." },
+    { name: "Digitalkamera (Digital Camera)", price: 112, size: "1x1", weight: "0.250 kg", category: "Beweise", trader: "Handshake", info: "Verschwendeter Platz." },
+
+    // ==========================================
+    // --- LABORBEDARF (Laboratory Supplies) ---
+    // ==========================================
+    { name: "Antigen-Fläschchen (Vial of Antigens)", price: 947, size: "1x1", weight: "0.030 kg", category: "Laborbedarf", trader: "Lab Rat", info: "Der einzige wirklich wertvolle Labor-Loot. Top!" },
+    { name: "Desinfektionsmittel (Disinfectant)", price: 199, size: "1x1", weight: "1.000 kg", category: "Laborbedarf", trader: "Lab Rat", info: "Viel zu schwer (1kg) für 199$." },
+    { name: "Schwefelsäure (Sulfuric Acid)", price: 99, size: "2x2", weight: "5.030 kg", category: "Laborbedarf", trader: "Lab Rat", info: "SCHROTT: Wiegt massige 5 Kilo für lächerliche 99$! Bloß nicht einpacken!" },
+    { name: "Industrie-Lösungsmittel", price: 29, size: "2x2", weight: "3.800 kg", category: "Laborbedarf", trader: "Lab Rat", info: "Schrott." },
+    { name: "Wasserreinigungstabletten", price: 27, size: "1x1", weight: "0.125 kg", category: "Laborbedarf", trader: "Lab Rat", info: "Manchmal als Task-Item gebraucht, sonst wertlos." },
+    { name: "Acetylen-Zylinder (Acetylene Cylinder)", price: 20, size: "1x1", weight: "1.000 kg", category: "Laborbedarf", trader: "Lab Rat", info: "Viel zu schwer." },
+    { name: "Rohrreiniger (Drain Cleaner)", price: 15, size: "1x2", weight: "5.000 kg", category: "Laborbedarf", trader: "Lab Rat", info: "SCHROTT: 5 Kilo schwer für 15$. Niemals looten." },
+    { name: "UN Medizinische Werkzeuge", price: 15, size: "2x1", weight: "0.500 kg", category: "Laborbedarf", trader: "Lab Rat", info: "Wird teils für Quests benötigt, zum Verkaufen wertlos." },
+    { name: "Rettungsdecke (Thermal Blanket)", price: 1, size: "1x1", weight: "0.057 kg", category: "Laborbedarf", trader: "Lab Rat", info: "Bringt exakt 1$. Nur für das Gewissen." },
+
+    // ==========================================
+    // --- WERKSTATT (Workshop Supplies) ---
+    // ==========================================
+    { name: "Weißes Lithiumfett (White Lithium Grease)", price: 150, size: "2x3", weight: "15.880 kg", category: "Werkstatt", trader: "Artisan", info: "ACHTUNG SCHROTT: Zerstört deine Stamina! Belegt 6 Slots und wiegt fast 16 Kilo für 150$." },
+    { name: "Werkzeugkasten (Toolset)", price: 142, size: "2x2", weight: "1.000 kg", category: "Werkstatt", trader: "Artisan", info: "TASK ITEM WICHTIG! Wird für unzählige Handshake/Artisan Quests (z.B. Tooling Up, Handyman) zwingend benötigt. Vorrangig behalten!" },
+    { name: "Defekte Nagelpistole", price: 75, size: "2x2", weight: "2.500 kg", category: "Werkstatt", trader: "Artisan", info: "Guter Schrott für Platzfüller am Anfang." },
+    { name: "Defekter Winkelschleifer", price: 56, size: "2x2", weight: "2.499 kg", category: "Werkstatt", trader: "Artisan", info: "Nur für 'Artisan's List' relevant." },
+    { name: "Defekte Stichsäge", price: 55, size: "2x2", weight: "2.000 kg", category: "Werkstatt", trader: "Artisan", info: "Task-Material (Scrap)." },
+    { name: "Multitool", price: 54, size: "1x1", weight: "0.120 kg", category: "Werkstatt", trader: "Artisan", info: "Nützlich für frühe Gunny/Artisan Tasks." },
+    { name: "Gummi-Erneuerer (Rubber Renue)", price: 51, size: "1x2", weight: "1.000 kg", category: "Werkstatt", trader: "Artisan", info: "Schrott." },
+    { name: "Starthilfekabel (Jumper Cables)", price: 30, size: "2x2", weight: "2.340 kg", category: "Werkstatt", trader: "Artisan", info: "Wird für 'Artisan's List II' benötigt." },
+    { name: "Defekte Handsäge", price: 24, size: "2x2", weight: "0.680 kg", category: "Werkstatt", trader: "Artisan", info: "Schrott." },
+    { name: "Bremsflüssigkeit (Brake Fluid)", price: 21, size: "2x2", weight: "3.800 kg", category: "Werkstatt", trader: "Artisan", info: "Wertlos." },
+    { name: "Benzinkanister (Fuel Canister)", price: 21, size: "2x2", weight: "5.000 kg", category: "Werkstatt", trader: "Artisan", info: "TASK ITEM WICHTIG! Wird mehrfach für 'Fuel Run' (Artisan) benötigt. 2 Stück sammeln!" },
+    { name: "Motoröl (Motor Oil)", price: 15, size: "2x2", weight: "4.300 kg", category: "Werkstatt", trader: "Artisan", info: "Schrott." },
+    { name: "Defekter Zimmermannshammer", price: 6, size: "1x2", weight: "0.312 kg", category: "Werkstatt", trader: "Artisan", info: "Schrott." },
+    { name: "Defekter Schraubendreher", price: 6, size: "1x1", weight: "0.120 kg", category: "Werkstatt", trader: "Artisan", info: "Schrott." },
+
+    // ==========================================
+    // --- TECHNIK & MATERIAL (Tech & Military Material) ---
+    // ==========================================
+    { name: "Autobatterie (Car Battery)", price: 56, size: "2x2", weight: "12.660 kg", category: "Technik", trader: "Artisan", info: "TASK ITEM: Extrem schwer (12.6kg)! Wird für 'Parts Needed' (Artisan) 2x benötigt. Nicht zum Verkauf looten!" },
+    { name: "Motorradbatterie (Motorbike Battery)", price: 36, size: "2x1", weight: "2.000 kg", category: "Technik", trader: "Artisan", info: "TASK ITEM: Wird 2x für 'Mechanic's Trouble' (Artisan) benötigt." },
+    { name: "Aramid-Stoff (Aramid Cloth)", price: 42, size: "2x1", weight: "0.061 kg", category: "Material", trader: "Gunny", info: "Müll." },
+    { name: "Schwarzpulver (Low-Grade Gunpowder)", price: 23, size: "1x2", weight: "0.450 kg", category: "Material", trader: "Gunny", info: "Müll." },
+    { name: "Tarnstoff (Camouflage Fabric)", price: 10, size: "2x1", weight: "0.480 kg", category: "Material", trader: "Gunny", info: "Müll." },
+    { name: "Paracord", price: 9, size: "2x1", weight: "0.100 kg", category: "Material", trader: "Gunny", info: "Müll." },
+    { name: "Waffenöl (Weapon Oil)", price: 9, size: "1x2", weight: "0.272 kg", category: "Material", trader: "Gunny", info: "Müll." },
+
+    // ==========================================
+    // --- HAUSHALTSWAREN (Household Items) ---
+    // ==========================================
+    { name: "Nachfüllbares Feuerzeug (Refillable Lighter)", price: 37, size: "1x1", weight: "0.080 kg", category: "Haushalt", trader: "Lab Rat", info: "Minimaler Wert." },
+    { name: "Propanflasche (Propane Bottle)", price: 31, size: "1x2", weight: "0.453 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Stange Tahirs Zigaretten (Carton of Tahirs)", price: 27, size: "3x1", weight: "0.250 kg", category: "Haushalt", trader: "Gunny", info: "Lohnt den Platz nicht." },
+    { name: "Packung Premium-Kaffee", price: 27, size: "1x2", weight: "0.600 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Bleichmittel (Bleach)", price: 19, size: "1x1", weight: "3.570 kg", category: "Haushalt", trader: "Lab Rat", info: "Fast 4 Kilo schwer für 19$! Ignorieren." },
+    { name: "Naosaoad 100% Clean", price: 18, size: "1x2", weight: "0.500 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Handspiegel (Hand Mirror)", price: 9, size: "1x2", weight: "0.400 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Vaseline (Petrolatum)", price: 9, size: "1x1", weight: "0.370 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Handy-Ladegerät (Phone Charger)", price: 9, size: "1x1", weight: "0.075 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Packung AA-Batterien (AA Batteries)", price: 7, size: "1x1", weight: "0.024 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Insektenspray (Insect Repellant Spray)", price: 6, size: "1x1", weight: "0.258 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Tahirs Zigaretten (Tahirs Cigarettes)", price: 5, size: "1x1", weight: "0.013 kg", category: "Haushalt", trader: "Gunny", info: "Müll." },
+    { name: "Kartenspiel (Deck of Cards)", price: 3, size: "1x1", weight: "0.088 kg", category: "Haushalt", trader: "Turncoat", info: "Müll." },
+    { name: "Angelschnur (Fishing Line)", price: 3, size: "1x1", weight: "0.130 kg", category: "Haushalt", trader: "Artisan", info: "Müll." },
+    { name: "Lampenöl (Lamp Oil)", price: 3, size: "1x2", weight: "1.000 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Nähset (Sewing Set)", price: 1, size: "1x1", weight: "0.146 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+    { name: "Feuerzeug (Lighter)", price: 1, size: "1x1", weight: "0.040 kg", category: "Haushalt", trader: "Lab Rat", info: "Müll." },
+
+    // ==========================================
+    // --- QUEST ITEMS / TOOLS (Nicht verkäuflich) ---
+    // ==========================================
+    { name: "Pro Multitool", price: 0, size: "1x1", weight: "0.120 kg", category: "Quest Item", trader: "Handshake", info: "Reines Quest-Item. Muss gekauft werden." },
+    { name: "Kamera-Wanze (Camera Wiretap)", price: 0, size: "1x1", weight: "0.010 kg", category: "Quest Item", trader: "Handshake", info: "Reines Quest-Item für Sabotage-Missionen." },
+    { name: "GPS-Tracker", price: 0, size: "1x1", weight: "0.050 kg", category: "Quest Item", trader: "Gunny", info: "Wird oft zum Markieren von Trucks, Helis & Flaks benötigt." },
+    { name: "Probenentnahme-Kit (Sample Collection Kit)", price: 0, size: "1x1", weight: "0.100 kg", category: "Quest Item", trader: "Lab Rat", info: "Zum Entnehmen von Blut- oder Sumpfproben." },
+    { name: "Vorrätekiste (Box of Supplies)", price: 0, size: "2x2", weight: "2.000 kg", category: "Quest Item", trader: "Diverse", info: "Wird für Logistik-Missionen genutzt." }
+];
     
 // ==========================================
 // 9. STASH & CONTAINER DATENBANK (0.4 SPEARHEAD)
