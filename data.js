@@ -1815,54 +1815,54 @@ const blueprintDb = {
         loc: "Remote Campsite (Südlich von Lima 2 / Mike 3)",
         desc: "Schaltet die Mossberg 590 Schrotflinte (Range/Rifle Magazin) frei.",
         tip: "Gehe von Lima 2 nach Süden zum Fluss. Überquere die kleine Brücke am Flussbogen. Die Blaupause liegt dort in einer kleinen Hütte.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/maps/lamang?x=5229.34844&y=1631.5017&z=16.5" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "DDM4 (Camo)": {
         loc: "Fort Narith - Zweite Kaserne (Top Floor)",
         desc: "Schaltet die DDM4 (Camo-Version) mit 60-Schuss-Magazin frei.",
         tip: "Nähere dich über das Old Service Gate. Es ist das zweite Kasernengebäude. Geh die Treppen ganz nach oben und dann am Ende des Flurs auf der linken Seite.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@4172.7,3175.36" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "AK-308": {
         loc: "Fort Narith - Das neue Gefängnis (Jail)",
         desc: "Schaltet das mächtige AK-308 Sturmgewehr frei.",
         tip: "Das neue Gefängnis-Gebäude liegt exakt zwischen der Krankenstation (Infirmary) und der Kantine. Geh rein und nimm direkt den linken Raum.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@4252.48,3050.93" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "M14 Rifle": {
         loc: "Hunter's Paradise (Nahe Waffenlager)",
         desc: "Schaltet das M14 DMR frei.",
         tip: "Lande am besten bei Foxtrot 1. Die Blaupause liegt in einem Gebäude direkt neben / außerhalb des Haupt-Waffenlagers (Weapon Storage).",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@5942.34,6853.4" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "SIG MCX": {
         loc: "Midnight Sapphire - Hotel Lobby (Erdgeschoss)",
         desc: "Schaltet die SIG MCX (.300 Blackout) frei.",
         tip: "Gehe durch den Haupteingang in die Rezeption. Dreh dich direkt neben der großen Haupttreppe nach rechts. Liegt dort auf einem Tisch.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@7194.34,6673.92" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "M700 Sniper": {
         loc: "Midnight Sapphire - Hotel Dach (Roof)",
         desc: "Schaltet das M700 Scharfschützengewehr frei.",
         tip: "Geh ganz nach oben aufs Dach zum Helipad (Vorsicht vor Snipern/Boss!). Lauf ganz nach hinten zu den Satellitenschüsseln. Liegt auf einem kleinen Ecktisch.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@7198.73,6672.31" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "AKMN": {
         loc: "Occupied Cottage (Nahe Oscar 2)",
         desc: "Schaltet die AKMN (mit Optik-Montage) frei.",
         tip: "TÖDLICHE GEFAHR: Wenn du von Oscar 2 kommst und die kleine Brücke zum Cottage überquerst, pass auf den Stolperdraht (Tripwire) auf! Die Blueprint liegt direkt im Haus.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@9517.26,5349.74" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "MP7A2": {
         loc: "Ransacked Tourist Shelter (Juliet 4)",
         desc: "Schaltet die MP7A2 (ohne festen Griff) frei.",
         tip: "Lande bei Juliet 4. Das Shelter befindet sich direkt neben der Gladius-Markierung auf der Map. Einfach reinlaufen und einsammeln.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@8856.78,3103.19" // DEIN LEERFELD FÜR DEN MAP-LINK
     },
     "SVD Dragunov": {
         loc: "Tiger Bay Mall - 'Cake Time' Shop",
         desc: "Schaltet das SVD DMR permanent frei.",
         tip: "Geh ins Erdgeschoss der großen Mall. Suche den Laden 'Cake Time' (direkt neben dem Galaxy Store). Die Blaupause liegt im hinteren Büro auf dem Schreibtisch.",
-        mapUrl: "" // DEIN LEERFELD FÜR DEN MAP-LINK
+        mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@9873.92,2932.91" // DEIN LEERFELD FÜR DEN MAP-LINK
     }
 };
