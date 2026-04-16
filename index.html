@@ -8,6 +8,51 @@
     <style>
 
         /* ============================================================== */
+/* LZ DISPATCHER (AVIATION DESIGN) */
+/* ============================================================== */
+.lz-dispatcher {
+    display: flex; gap: 20px; min-height: 600px; margin-top: 15px;
+}
+.lz-poi-list {
+    width: 300px; display: flex; flex-direction: column; gap: 8px;
+    background: #0a0a0a; padding: 15px; border-radius: 6px; border: 1px solid #333;
+    overflow-y: auto; max-height: 750px;
+}
+.lz-poi-card {
+    background: #1a1a1a; border: 1px solid #444; padding: 12px; border-radius: 4px;
+    cursor: pointer; transition: 0.2s; border-left: 4px solid #444;
+}
+.lz-poi-card:hover { background: #252525; border-color: var(--accent); }
+.lz-poi-card.active { 
+    background: rgba(124,163,90,0.1); border-left-color: var(--accent); border-color: var(--accent);
+}
+.lz-poi-name { font-weight: bold; color: #fff; display: block; font-size: 0.95rem; }
+.lz-poi-group { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Rechter Bereich: Die Einsatzakte */
+.lz-briefing {
+    flex: 1; background: #0d0d0d; border: 2px solid #333; border-radius: 8px;
+    padding: 30px; position: relative; overflow: hidden;
+    background-image: linear-gradient(rgba(124, 163, 90, 0.03) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(124, 163, 90, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.lz-header { border-bottom: 2px solid var(--accent); padding-bottom: 15px; margin-bottom: 25px; }
+.lz-title { font-size: 2rem; color: #fff; margin: 0; text-transform: uppercase; font-family: 'Courier New', monospace; }
+
+.lz-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+.lz-stat-box { background: rgba(0,0,0,0.4); padding: 15px; border: 1px solid #222; border-radius: 4px; }
+.lz-label { color: var(--accent); font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; display: block; }
+.lz-value { color: #eee; font-size: 1.1rem; font-weight: bold; }
+
+/* Danger Indicator */
+.danger-meter { height: 8px; background: #222; border-radius: 4px; margin-top: 10px; overflow: hidden; position: relative; }
+.danger-fill { height: 100%; transition: width 0.5s ease; }
+
+.lz-tag-container { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.lz-tag { background: #333; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; border: 1px solid #444; }
+
+        /* ============================================================== */
 /* TACTICAL HVT DOSSIER DESIGN */
 /* ============================================================== */
 .hvt-terminal {
@@ -1260,50 +1305,57 @@
         </div>
 
         <div id="tab-lz" class="tab-content">
-            <h2>🚁 Landezonen & Navigation (LZ)</h2>
-            <div class="grid">
-                <div class="panel-box">
-                    <label for="lzSelect" style="margin-top: 0;">Einsatzgebiet auswählen (POI)</label>
-                    <select id="lzSelect" onchange="updateLZ()" style="font-weight: bold; color: var(--accent); padding: 10px; border-radius: 6px; background: #222; border: 1px solid #444;">
-                        <option value="">-- Wähle ein Zielgebiet --</option>
-                        
-                        <optgroup label="🔰 Fraktions-Startgebiete (Safe Zones)">
-                            <option value="lz_alpha">Mithras (Nam Thaven) - Alpha LZs</option>
-                            <option value="lz_bravo">Lamang LRI (Pha Lang) - Bravo LZs</option>
-                            <option value="lz_charlie">Crimson (Kiu Vongsa) - Charlie LZs</option>
-                        </optgroup>
-                        
-                        <optgroup label="🌲 Mid-Game Zonen (Dschungel & Dörfer)">
-                            <option value="lz_echo">Sägewerk (Lumber Yard) - Echo LZs</option>
-                            <option value="lz_foxtrot">Hunter's Paradise - Foxtrot LZs</option>
-                            <option value="lz_india">Fischerdorf (Ban Pa) - India LZs</option>
-                            <option value="lz_kilo">Blaue Lagune (Blue Lagoon) - Kilo LZs</option>
-                        </optgroup>
-                        
-                        <optgroup label="☠️ End-Game POIs (Hochrisiko-Gebiete)">
-                            <option value="lz_juliet">YBL-1 Bunker - Juliet LZs</option>
-                            <option value="lz_delta">Fort Narith (Militärbasis) - Delta LZs</option>
-                            <option value="lz_hotel">Midnight Sapphire (Hotel) - Hotel LZs</option>
-                            <option value="lz_lima">Tiger Bay (Großstadt) - Lima LZs</option>
-                        </optgroup>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>🚁 Landezonen-Leitstand (LZ Dispatcher)</h2>
+                <div style="font-size: 0.8rem; color: #666; font-family: monospace;">SYSTEM: LZ_DISPATCH_V4 // STATUS: ONLINE</div>
+            </div>
+            
+            <p style="color: #ccc; margin-bottom: 20px;">
+                Wähle ein Einsatzgebiet aus der Liste, um die verfügbaren Landezonen und taktischen Anweisungen zu laden.
+            </p>
 
-                        <optgroup label="☢️ Sperrzone">
-                            <option value="lz_golf">Ground Zero (Epizentrum) - Golf LZs</option>
-                        </optgroup>
-                    </select>
-                    
-                    <div id="lzInfo" class="info-box" style="margin-top: 20px; padding: 20px; background: #111; border-left: 4px solid var(--accent); box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
-                        Wähle ein Zielgebiet für LZ-Tipps, Gefahrenstufen und taktische Navigation...
+            <div class="lz-dispatcher">
+                <div id="lzPoiList" class="lz-poi-list">
                     </div>
-                </div>
 
-                <div class="panel-box">
-                    <h3 style="margin-top: 0; color: var(--accent);">🚁 Heli-Protokolle (0.4 Meta)</h3>
-                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
-                        <li><strong>LZ-Camping:</strong> In PvP-Zonen (wie Hunter's Paradise) lauern feindliche Operator oft im Gebüsch an den Landezonen. Lade deine Waffe bereits im Hubschrauber durch!</li>
-                        <li><strong>Mörser & Artillerie:</strong> Das 0.4 Update hat dynamische Mörserschläge bei <em>Fort Narith</em> eingeführt. Wenn du das Pfeifen hörst, sprinte sofort in Gebäude!</li>
-                        <li><strong>Der Rückweg:</strong> Helikopter können an denselben LZs auch zur Extraktion gerufen werden. Achte darauf, dass du das Gebiet 3 Minuten vorher sicherst.</li>
-                    </ul>
+                <div class="lz-briefing" id="lzMainBriefing">
+                    <div class="lz-header">
+                        <h3 id="lzDispTitle" class="lz-title">ZIELGEBIET WÄHLEN</h3>
+                        <div id="lzDispGroup" class="lz-poi-group" style="margin-top: 5px;">Awaiting Selection...</div>
+                    </div>
+
+                    <div class="lz-stat-grid">
+                        <div class="lz-stat-box">
+                            <span class="lz-label">📍 Verfügbare LZs:</span>
+                            <div id="lzDispTags" class="lz-tag-container">
+                                </div>
+                        </div>
+                        <div class="lz-stat-box">
+                            <span class="lz-label">⚠️ Gefahrenstufe:</span>
+                            <div id="lzDispDangerText" class="lz-value">-</div>
+                            <div class="danger-meter">
+                                <div id="lzDispDangerBar" class="danger-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lz-stat-box" style="margin-bottom: 25px;">
+                        <span class="lz-label">💡 Taktisches Briefing:</span>
+                        <div id="lzDispTip" style="color: #ccc; line-height: 1.6; font-style: italic;">-</div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; border-top: 1px solid #333; padding-top: 20px;">
+                        <button id="lzLoadHeliBtn" onclick="loadRouteToHeli()" style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;">
+                            🚀 Route in Heli-Lotsen laden
+                        </button>
+                        <button onclick="document.getElementById('tab-map').scrollIntoView()" style="background: #222; color: #aaa; border: 1px solid #444; padding: 12px 20px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                            🌍 Map öffnen
+                        </button>
+                    </div>
+                    
+                    <div style="position: absolute; bottom: -20px; right: -20px; opacity: 0.05; pointer-events: none;">
+                        <svg width="250" height="250" viewBox="0 0 24 24" fill="var(--accent)"><path d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5Z"/></svg>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1860,11 +1912,120 @@
     }
 
     function updateGeneric(sId, iId) { document.getElementById(iId).innerHTML = document.getElementById(sId).value || "Details..."; }
-    function updateLZ() { const l = typeof lzDb !== 'undefined' ? lzDb[document.getElementById('lzSelect').value] : null; document.getElementById('lzInfo').innerHTML = l ? `Beste LZs: <span class="highlight">${l.lzs}</span><br>Gefahr: <span style="color: #ff4c4c; font-weight: bold;">${l.danger}</span><br><br><small><b>Operator-Tipp:</b> ${l.tip}</small>` : "Wähle ein Zielgebiet für LZ-Tipps..."; }
     function updateSymptom() { const s = typeof symptomDb !== 'undefined' ? symptomDb[document.getElementById('symptomSelect').value] : null; document.getElementById('symptomInfo').innerHTML = s ? `Diagnose: <span style="color: #ff4c4c; font-weight: bold;">${s.diag}</span><br>Behandlung: <span class="highlight">${s.treat}</span><br><br><small><b>Medic-Tipp:</b> ${s.info}</small>` : "Wähle ein Symptom für Diagnose & Behandlung..."; }
     function updateContainer() { const c = typeof containers !== 'undefined' ? containers[document.getElementById('containerSelect').value] : null; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = typeof valuables !== 'undefined' ? valuables[document.getElementById('valSelect').value] : null; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
 
+    // ==============================================================
+    // LZ DISPATCHER LOGIK (AVIATION SYSTEM)
+    // ==============================================================
+    let currentSelectedLZId = null;
+
+    function initLZDispatcher() {
+        const list = document.getElementById('lzPoiList');
+        if (!list || typeof lzDb === 'undefined') return;
+
+        list.innerHTML = '';
+        
+        // Wir gehen alle Einträge in der lzDb durch
+        Object.keys(lzDb).forEach(id => {
+            const l = lzDb[id];
+            const card = document.createElement('div');
+            card.className = 'lz-poi-card';
+            card.id = `lz-card-${id}`;
+            
+            // Namen säubern (z.B. "Mithras (Nam Thaven) - Alpha LZs" -> "Nam Thaven")
+            let displayName = l.name || id.replace('lz_', '').toUpperCase();
+            
+            card.innerHTML = `
+                <span class="lz-poi-group">REGION: ${id.split('_')[1].toUpperCase()}</span>
+                <span class="lz-poi-name">${displayName}</span>
+            `;
+            card.onclick = () => selectLZPOI(id);
+            list.appendChild(card);
+        });
+
+        // Automatisch passend zur Fraktion vorselektieren
+        const startId = currentFaction ? `lz_${currentFaction === 'mithras' ? 'alpha' : (currentFaction === 'crimson' ? 'charlie' : 'bravo')}` : Object.keys(lzDb)[0];
+        if (startId) selectLZPOI(startId);
+    }
+
+    function selectLZPOI(id) {
+        const l = lzDb[id];
+        if (!l) return;
+
+        currentSelectedLZId = id;
+
+        // Visuelle Markierung in der Liste
+        document.querySelectorAll('.lz-poi-card').forEach(c => c.classList.remove('active'));
+        const activeCard = document.getElementById(`lz-card-${id}`);
+        if (activeCard) activeCard.classList.add('active');
+
+        // Briefing füllen
+        document.getElementById('lzDispTitle').innerText = (l.name || id).toUpperCase();
+        document.getElementById('lzDispGroup').innerText = `Dispatcher ID: ${id.toUpperCase()} // POI AREA`;
+        document.getElementById('lzDispTip').innerHTML = l.tip;
+        document.getElementById('lzDispDangerText').innerText = l.danger;
+
+        // Gefahr-Balken berechnen
+        const bar = document.getElementById('lzDispDangerBar');
+        const danger = l.danger.toLowerCase();
+        let color = "#7ca35a"; let width = "20%";
+        if (danger.includes("mittel") || danger.includes("medium")) { color = "#ffa500"; width = "50%"; }
+        if (danger.includes("hoch") || danger.includes("high") || danger.includes("extrem")) { color = "#ff4c4c"; width = "100%"; }
+        bar.style.backgroundColor = color;
+        bar.style.width = width;
+
+        // LZ Tags generieren
+        const tagContainer = document.getElementById('lzDispTags');
+        tagContainer.innerHTML = '';
+        const tags = l.lzs.split(',').map(s => s.trim());
+        tags.forEach(t => {
+            const span = document.createElement('span');
+            span.className = 'lz-tag';
+            span.innerText = t;
+            tagContainer.appendChild(span);
+        });
+    }
+
+    // --- INTEGRATION: Route an Heli-Widget übergeben ---
+    function loadRouteToHeli() {
+        if (!currentSelectedLZId) return;
+        
+        const lzData = lzDb[currentSelectedLZId];
+        const heliEnd = document.getElementById('heliEnd');
+        const widget = document.getElementById('heliWidget');
+
+        if (heliEnd && widget) {
+            // Wir suchen die passende Option im Heli-Dropdown
+            // Wir mappen unsere LZ-IDs auf die Heli-Werte
+            const map = {
+                'lz_echo': '90', 'lz_foxtrot': '120', 'lz_india': '135',
+                'lz_kilo': '165', 'lz_juliet': '105', 'lz_delta': '210',
+                'lz_hotel': '180', 'lz_lima': '195', 'lz_golf': '225'
+            };
+
+            const targetVal = map[currentSelectedLZId];
+            if (targetVal) {
+                heliEnd.value = targetVal;
+                // Widget aufklappen, falls zu
+                widget.classList.remove('collapsed');
+                widget.style.display = 'block';
+                
+                // Zeit berechnen
+                if (typeof calcHeliTime === "function") calcHeliTime();
+                
+                // Feedback geben
+                const btn = document.getElementById('lzLoadHeliBtn');
+                const oldText = btn.innerHTML;
+                btn.innerHTML = "✔️ Route geladen!";
+                setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+            } else {
+                alert("Dieses Gebiet (Base Camp) kann nicht als Ziel gewählt werden.");
+            }
+        }
+    }
+    
     // ==============================================================
     // TACTICAL HVT SYSTEM (BOSS DB)
     // ==============================================================
@@ -4137,6 +4298,7 @@ function goToHome() {
         makeDraggable('heliWidget');
         initNotepad();
         initKeyCabinet();
+        initLZDispatcher();
         initBossHVT();
         renderCompletedTasks();
     	updateTaskDropdown();
