@@ -754,7 +754,7 @@
                 </select>
             </div>
 
-            <div id="gunsmithTerminal" style="display: none; gap: 20px;" class="grid">
+            <div id="gunsmithTerminal" style="display: none; gap: 30px; max-width: 1200px; margin: 0 auto;" class="grid">
                 
                 <div>
                     <div class="panel-box" style="border-left: 4px solid var(--accent); background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);">
@@ -3568,7 +3568,7 @@ function goToHome() {
         }
 
         currentGunsmithWeapon = gunsmithWeapons.find(w => w.id === wId);
-        terminal.style.display = 'flex';
+        terminal.style.display = 'grid';
 
         // Briefing füllen
         document.getElementById('gsWeaponName').innerHTML = currentGunsmithWeapon.name + (currentGunsmithWeapon.isMeta ? ' <span style="background: rgba(255, 204, 0, 0.15); color: #ffcc00; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid #ffcc00; margin-left: 10px; vertical-align: middle;">🔥 META</span>' : '');
