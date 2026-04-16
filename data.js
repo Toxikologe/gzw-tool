@@ -1515,8 +1515,8 @@ const tradersDb = [
     // ==========================================
     // --- GUNNY (Westliche Waffen & Munition) ---
     // ==========================================
-    { trader: "Gunny", level: 1, name: "M4A1 & CQ-A1 (5.56x45)", isMeta: false, info: "Basis-Sturmgewehre. Die CQ-A1 ist eine günstige chinesische Alternative zur M4." },
-    { trader: "Gunny", level: 1, name: "Glock 19 & Remington 870", isMeta: false, info: "Verlässliche Nebenwaffen und Schrotflinten für den Start." },
+    { trader: "Gunny", level: 1, name: "CQ-A1 (5.56x45)", isMeta: false, info: "Basis-Sturmgewehre. Die CQ-A1 ist eine günstige chinesische Alternative zur M4." },
+    { trader: "Gunny", level: 1, name: "Remington 870", isMeta: false, info: "Verlässliche Schrotflinten für den Start." },
     { trader: "Gunny", level: 1, name: "M193 Munition (5.56x45)", isMeta: false, info: "Zivile Munition. Kaum Rüstungsdurchschlag." },
     { trader: "Gunny", level: 1, name: "Aimpoint T-1 Rotpunktvisier", isMeta: false, info: "Gutes, klares Visier für die ersten Missionen." },
     
@@ -1541,43 +1541,44 @@ const tradersDb = [
     // ==========================================
     // --- HANDSHAKE (Rüstungen, Rucksäcke & Helme) ---
     // ==========================================
-    { trader: "Handshake", level: 1, name: "Patrol Rucksack (16 Slots)", isMeta: false, info: "Besser als nichts für die ersten Loot-Runs." },
-    { trader: "Handshake", level: 1, name: "6B2 Schutzweste (NIJ IIIA)", isMeta: false, info: "Schützt nur vor Pistolen und Schrot. Gegen Sturmgewehre der KIs komplett nutzlos." },
-    { trader: "Handshake", level: 1, name: "PASGT Helm", isMeta: false, info: "Basis-Kopfschutz." },
+    { trader: "Handshake", level: 1, name: "Scorpion OCP Convoy Pack (16 Slots)", isMeta: false, info: "Besser als nichts für die ersten Loot-Runs." },
+    { trader: "Handshake", level: 1, name: "Commander (Navy) (NIJ IIIA)", isMeta: false, info: "Schützt nur vor Pistolen und Schrot. Gegen Sturmgewehre der KIs komplett nutzlos." },
+    { trader: "Handshake", level: 1, name: "Gunfighter 14 (9 Slots)", isMeta: true, info: "Der erste kleine Rucksack. Besser als garnichts!" },
+    { trader: "Handshake", level: 1, name: "Skull Crusher", isMeta: false, info: "Basis-Kopfschutz." },
 
-    { trader: "Handshake", level: 2, name: "Delta Backpack (24 Slots)", isMeta: true, info: "Der erste richtig große Rucksack. Erhöht deinen Loot-Profit massiv!" },
-    { trader: "Handshake", level: 2, name: "M2 Plate Carrier (NIJ III)", isMeta: true, info: "Die erste brauchbare Panzerung. Stoppt Standard-Sturmgewehrkugeln (z.B. PS-Munition)." },
-    { trader: "Handshake", level: 2, name: "GSSH-01 Headset", isMeta: false, info: "Verstärkt feindliche Schritte, macht aber eigenen Beschuss unangenehm laut." },
+    { trader: "Handshake", level: 2, name: "C2 Bag Combat Compact Backpack (12 Slots)", isMeta: true, info: "Der erste vernünftige Rucksack. Erhöht deinen Loot-Profit massiv!" },
+    { trader: "Handshake", level: 2, name: "Modular Operator Carrier Gen II (NIJ IIIA)", isMeta: true, info: "Die erste brauchbare Panzerung. Stoppt Standard-Sturmgewehrkugeln (z.B. PS-Munition)." },
+    { trader: "Handshake", level: 2, name: "Desert Locust (klar)", isMeta: false, info: "Klare Sicht, 50% Regenschutz" },
     { trader: "Handshake", level: 2, name: "MICH Helm", isMeta: false, info: "Solider NIJ IIIA Helm mit Platz für Headsets." },
 
-    { trader: "Handshake", level: 3, name: "Recon Plate Carrier (NIJ III+)", isMeta: true, info: "Die Meta-Rüstung! Perfekte Balance aus Gewicht, Stauraum und Schutz vor harten Treffern." },
-    { trader: "Handshake", level: 3, name: "3-Day Assault Backpack", isMeta: false, info: "Sehr großer Rucksack, macht dich aber schwerfälliger und senkt die Ausdauer." },
-    { trader: "Handshake", level: 3, name: "AMP Headset", isMeta: true, info: "Das beste Headset. Filtert laute Schüsse perfekt heraus und verstärkt nur Schritte." },
+    { trader: "Handshake", level: 3, name: "CZ 4M Lancer (NIJ III)", isMeta: true, info: "Perfekte Balance aus Gewicht, Stauraum und Schutz vor harten Treffern." },
+    { trader: "Handshake", level: 3, name: "AMP12 (20 Slots)", isMeta: false, info: "Sehr großer Rucksack, macht dich aber schwerfälliger und senkt die Ausdauer." },
+    { trader: "Handshake", level: 3, name: "MC50 Laser Edition", isMeta: true, info: "Ein Guter Gürtel mit etwas mehr Platz (3 Slots)" },
 
-    { trader: "Handshake", level: 4, name: "Defender-2 Weste (NIJ III++)", isMeta: true, info: "Die stärkste Rüstung im Spiel! Macht dich fast unbesiegbar gegen Standard-Kugeln." },
+    { trader: "Handshake", level: 4, name: "Recon Plate Carrier (NIJ III+)", isMeta: true, info: "Die stärkste Kaufbare Rüstung im Spiel! Macht dich fast unbesiegbar gegen Standard-Kugeln." },
     { trader: "Handshake", level: 4, name: "FAST MT Helm", isMeta: true, info: "Kombinierbar mit Nachtsichtgeräten (NVG) und ballistischem Gesichtsschutz." },
-    { trader: "Handshake", level: 4, name: "Rush Backpack", isMeta: true, info: "Der beste Rucksack im Endgame. Riesig, aber mit moderaten Speed-Penalties." },
-    { trader: "Handshake", level: 4, name: "Ausrüstungskoffer (Gear Case)", isMeta: true, info: "Spart massiv Platz in deiner Stash, indem du Helme und Westen stapelst." },
 
     // ==========================================
     // --- LAB RAT (Medizin & Vorräte) ---
     // ==========================================
     { trader: "Lab Rat", level: 1, name: "Bandagen & Tourniquets", isMeta: false, info: "Stoppt leichte (Bandage) und schwere (Tourniquet) Blutungen." },
-    { trader: "Lab Rat", level: 1, name: "Kleine Blutkonserve (Blood Bag)", isMeta: false, info: "Füllt dein Blutlevel nach schweren Treffern langsam wieder auf." },
     { trader: "Lab Rat", level: 1, name: "Splint (Schiene)", isMeta: false, info: "Heilt gebrochene Knochen, um wieder rennen zu können." },
-
+    
+    { trader: "Lab Rat", level: 2, name: "Kleine Blutkonserve (Blood Bag)", isMeta: false, info: "Füllt dein Blutlevel nach schweren Treffern langsam wieder auf." },
     { trader: "Lab Rat", level: 2, name: "SurKit (Chirurgisches Set)", isMeta: true, info: "Lebensretter! Heilt zerstörte Organe (Lunge, Leber) im Feld, sonst verblutest du unweigerlich." },
-    { trader: "Lab Rat", level: 2, name: "Große Blutkonserve", isMeta: true, info: "Stellt dein gesamtes Blutvolumen auf einmal wieder her. Sehr wichtig nach Coma-Phasen." },
     { trader: "Lab Rat", level: 2, name: "IFAK (Erste-Hilfe-Set)", isMeta: false, info: "Kombiniert Blutungskontrolle und leichte Heilung auf wenig Platz." },
     { trader: "Lab Rat", level: 2, name: "Ibuprofen", isMeta: false, info: "Günstige, langanhaltende Schmerzlinderung." },
 
     { trader: "Lab Rat", level: 3, name: "Adrenalin-Injektor", isMeta: true, info: "Regeneriert sofort massiv Ausdauer. Überlebenswichtig für die Flucht aus Hotzones!" },
     { trader: "Lab Rat", level: 3, name: "Morphin-Injektor", isMeta: true, info: "Unterdrückt sofort alle Schmerz-Effekte und unscharfe Sicht, selbst bei gebrochenen Beinen." },
+    { trader: "Lab Rat", level: 3, name: "Kleine Blutstillende Spritze", isMeta: false, info: "Sofortige Stoppung der Blutung. Extrem Gut, einfach ein Must Have!" },
+    { trader: "Lab Rat", level: 3, name: "Mittlere Blutkonserve", isMeta: true, info: "Stellt viel deines Blutvolumen auf einmal wieder her. Sehr wichtig nach Coma-Phasen." },
     { trader: "Lab Rat", level: 3, name: "4-Slot Medkits", isMeta: false, info: "Heilt Wunden extrem schnell, belegt aber viel Platz." },
 
     { trader: "Lab Rat", level: 4, name: "Anti-Strahlen Pillen (Rad-X)", isMeta: true, info: "0.4 Feature: Ohne diese Pillen und eine Gasmaske überlebst du das Ground Zero Epizentrum nicht!" },
     { trader: "Lab Rat", level: 4, name: "Regenerations-Stims", isMeta: true, info: "Heilt dich langsam passiv über Zeit hoch. Sehr teuer, aber das absolute Meta für Tiger Bay." },
     { trader: "Lab Rat", level: 4, name: "Medizin-Koffer (Medical Case)", isMeta: true, info: "Riesige Box für deine Stash, um all deine SurKits und Stims sauber zu lagern." },
+    { trader: "Lab Rat", level: 4, name: "Große Blutkonserve", isMeta: true, info: "Stellt sehr viel deines Blutvolumen auf einmal wieder her. Sehr wichtig nach Coma-Phasen." },
 
     // ==========================================
     // --- ARTISAN (Östliche Waffen, AKs & Mods) ---
@@ -1617,6 +1618,7 @@ const tradersDb = [
     { trader: "Turncoat", level: 4, name: "7.62x54R SNB AP Munition", isMeta: true, info: "Durchschlägt absolut jede Deckung und jeden Helm. Die stärkste Kugel des Spiels." },
     { trader: "Turncoat", level: 4, name: "SVT-40", isMeta: true, info: "0.4 Neuzugang! Historisch, aber verheerende Stoppwirkung." },
     { trader: "Turncoat", level: 4, name: "Munitions-Koffer (Ammo Case)", isMeta: true, info: "Endlich ein Ort, um deine gesammelte AP-Munition platzsparend zu lagern!" },
+    { trader: "Turncoat", level: 4, name: "Delta Backpack (24 Slots)", isMeta: true, info: "Ein richtig große Rucksack. Erhöht deinen Loot-Profit massiv!" },
 
     // ==========================================
     // --- BANSHEE (High-End NATO, Sniper & Night Ops) ---
