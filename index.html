@@ -569,6 +569,88 @@
     width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold;
 }
 
+/* ============================================================== */
+        /* GUNSMITH WORKBENCH DESIGN (ARMORY) */
+        /* ============================================================== */
+        .gs-workbench {
+            background: #090a0c;
+            border: 2px solid #1a2230;
+            border-radius: 8px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 100% 0%, rgba(124, 163, 90, 0.05) 0%, transparent 50%),
+                linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+        }
+        .gs-top-bar {
+            display: flex; gap: 15px; margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px dashed #1a2230; align-items: center;
+        }
+        .gs-layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+        
+        /* Die Waffendaten */
+        .gs-weapon-header {
+            background: linear-gradient(90deg, #111622 0%, #05070a 100%);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .gs-weapon-title { font-family: 'Courier New', monospace; font-size: 1.8rem; color: #fff; margin: 0 0 10px 0; text-transform: uppercase; }
+        .gs-weapon-tags { display: flex; gap: 15px; font-size: 0.85rem; font-weight: bold; }
+        
+        /* Die Taktischen Slots für Aufsätze */
+        .gs-attachment-rack { display: flex; flex-direction: column; gap: 12px; }
+        .gs-slot {
+            background: #0a0d14; border: 1px solid #1a2230; border-radius: 6px;
+            display: flex; align-items: center; padding: 8px 12px; transition: 0.2s;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .gs-slot:hover { border-color: #33415c; background: #111622; }
+        .gs-slot-icon {
+            width: 45px; height: 45px; background: #151a25; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+            margin-right: 15px; color: #6688cc; border: 1px solid #1a2230;
+        }
+        .gs-slot-content { flex: 1; }
+        .gs-slot-label { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; font-weight: bold; }
+        
+        /* Spezielles Select-Design für die Slots */
+        .gs-select-modern {
+            width: 100%; background: transparent; border: none; color: #fff; font-weight: bold;
+            font-size: 0.95rem; outline: none; cursor: pointer; padding: 0; margin: 0;
+            appearance: none; /* Entfernt den Standard-Pfeil im Browser */
+        }
+        .gs-select-modern option { background: #111; color: #fff; padding: 10px; }
+
+        /* Das Telemetrie-Panel (Rechts) */
+        .gs-telemetry {
+            background: #05070a; border: 2px solid #1a2230; border-radius: 8px; padding: 30px;
+            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .gs-telemetry::before {
+            content: "LIVE TELEMETRY"; position: absolute; top: -12px; left: 25px;
+            background: var(--accent); color: #000; font-size: 0.75rem; font-weight: bold;
+            padding: 4px 15px; border-radius: 3px; letter-spacing: 2px;
+        }
+        .gs-numeric-stats {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px;
+            padding-top: 25px; border-top: 1px dashed #1a2230;
+        }
+        .gs-num-box { text-align: center; background: #0a0d14; border: 1px solid #1a2230; padding: 15px 5px; border-radius: 6px; }
+        .gs-num-val { font-size: 1.6rem; font-family: 'Courier New', monospace; font-weight: bold; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        .gs-num-label { font-size: 0.7rem; color: #6688cc; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+        /* Responsives Layout */
+        @media (max-width: 900px) {
+            .gs-layout { grid-template-columns: 1fr; }
+            .gs-top-bar { flex-direction: column; align-items: stretch; }
+        }        
+
         /* ============================================================== */
         /* BLUEPRINT TERMINAL DESIGN (CAD STYLE) */
         /* ============================================================== */
@@ -1436,66 +1518,118 @@
         </div>
 
         <div id="tab-weapons" class="tab-content">
-            <h2>🛠️ Gunsmith Terminal (0.4 Spearhead)</h2>
-            
-            <div class="panel-box" style="margin-bottom: 15px;">
-                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <button onclick="sortGunsmith('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer;">🔤 Alphabetisch sortieren</button>
-                    <button onclick="sortGunsmith('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ffcc00; background: rgba(255,204,0,0.1); color: #ffcc00; font-weight: bold; cursor: pointer;">🔥 Nach Meta sortieren</button>
-                </div>
-                <select id="gsWeaponSelect" onchange="loadGunsmithWeapon()" style="width: 100%; padding: 12px; font-size: 1.1rem; font-weight: bold; background: #111; color: var(--accent); border: 1px solid #444; border-radius: 5px;">
-                    <option value="">-- Wähle eine Waffe zum Modifizieren aus --</option>
-                </select>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>🛠️ Tactical Gunsmith (Waffen-Werkbank)</h2>
+                <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">ARMORY_SYS_ACTIVE // CALIBRATING...</div>
             </div>
+            
+            <p style="color: #ccc; margin-bottom: 20px;">
+                Modifiziere deine Waffenplattform mit Aufsätzen. Das Telemetrie-System berechnet sofort die Auswirkungen auf Rückstoß, Ergonomie und Präzision in Echtzeit.
+            </p>
 
-            <div id="gunsmithTerminal" style="display: none; gap: 30px; max-width: 1200px; margin: 0 auto;" class="grid">
+            <div class="gs-workbench">
                 
-                <div>
-                    <div class="panel-box" style="border-left: 4px solid var(--accent); background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);">
-                        <h3 id="gsWeaponName" style="margin-top: 0; font-size: 1.4rem; color: white;">Waffenname</h3>
-                        <div style="display: flex; gap: 15px; font-size: 0.9rem; margin-bottom: 15px;">
-                            <div><span style="color:#888;">Kaliber:</span> <span id="gsAmmoType" style="color:var(--accent); font-weight:bold;">-</span></div>
-                            <div><span style="color:#888;">Klasse:</span> <span id="gsWeaponType" style="color:white; font-weight:bold;">-</span></div>
-                        </div>
-                        <div id="gsTips" style="font-size: 0.95rem; color: #ccc; line-height: 1.6; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border: 1px solid #333;">Tipps...</div>
+                <div class="gs-top-bar">
+                    <div style="display: flex; gap: 10px; flex-shrink: 0;">
+                        <button onclick="sortGunsmith('alpha')" style="padding: 12px 15px; border-radius: 4px; border: 1px solid var(--accent); background: rgba(124,163,90,0.1); color: white; font-weight: bold; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='rgba(124,163,90,0.3)'" onmouseout="this.style.background='rgba(124,163,90,0.1)'">🔤 A-Z</button>
+                        <button onclick="sortGunsmith('meta')" style="padding: 12px 15px; border-radius: 4px; border: 1px solid #ffcc00; background: rgba(255,204,0,0.1); color: #ffcc00; font-weight: bold; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='rgba(255,204,0,0.2)'" onmouseout="this.style.background='rgba(255,204,0,0.1)'">🔥 META</button>
                     </div>
+                    <select id="gsWeaponSelect" onchange="loadGunsmithWeapon()" style="flex: 1; padding: 12px 15px; font-size: 1.1rem; font-weight: bold; background: #111622; color: var(--accent); border: 1px solid #1a2230; border-radius: 4px; outline: none;">
+                        <option value="">-- Wähle eine Waffe zum Modifizieren aus --</option>
+                    </select>
+                </div>
 
-                    <div class="panel-box" style="margin-top: 15px;">
-                        <h3 style="margin-top: 0; color: #ccc;">Aufsätze (Mods) montieren</h3>
+                <div id="gunsmithTerminal" class="gs-layout" style="display: none;">
+                    
+                    <div>
+                        <div class="gs-weapon-header">
+                            <h3 id="gsWeaponName" class="gs-weapon-title">Waffenname</h3>
+                            <div class="gs-weapon-tags">
+                                <div><span style="color:#888;">KALIBER:</span> <span id="gsAmmoType" style="color:var(--accent);">...</span></div>
+                                <div><span style="color:#888;">KLASSE:</span> <span id="gsWeaponType" style="color:#eee;">...</span></div>
+                            </div>
+                            <div id="gsTips" style="margin-top: 15px; font-size: 0.9rem; color: #aaa; line-height: 1.5; border-top: 1px dashed #1a2230; padding-top: 15px;">
+                                Tipps...
+                            </div>
+                        </div>
+
+                        <h4 style="color: #ccc; margin-top: 0; margin-bottom: 10px; font-size: 1rem; border-bottom: 1px solid #1a2230; padding-bottom: 5px;">Taktische Hardware-Slots</h4>
                         
-                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Mündung / Schalldämpfer</label>
-                        <select id="gsModMuzzle" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
+                        <div class="gs-attachment-rack">
+                            <div class="gs-slot">
+                                <div class="gs-slot-icon">🔇</div>
+                                <div class="gs-slot-content">
+                                    <div class="gs-slot-label">Mündung / Schalldämpfer</div>
+                                    <select id="gsModMuzzle" class="gs-select-modern" onchange="updateGunsmithStats()"></select>
+                                </div>
+                                <div style="color: #33415c; font-size: 0.8rem;">▼</div>
+                            </div>
 
-                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Visier (Optic)</label>
-                        <select id="gsModOptic" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
+                            <div class="gs-slot">
+                                <div class="gs-slot-icon">🔭</div>
+                                <div class="gs-slot-content">
+                                    <div class="gs-slot-label">Visier (Optic)</div>
+                                    <select id="gsModOptic" class="gs-select-modern" onchange="updateGunsmithStats()"></select>
+                                </div>
+                                <div style="color: #33415c; font-size: 0.8rem;">▼</div>
+                            </div>
 
-                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Unterlauf (Foregrip)</label>
-                        <select id="gsModGrip" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
+                            <div class="gs-slot">
+                                <div class="gs-slot-icon">📐</div>
+                                <div class="gs-slot-content">
+                                    <div class="gs-slot-label">Unterlauf (Foregrip)</div>
+                                    <select id="gsModGrip" class="gs-select-modern" onchange="updateGunsmithStats()"></select>
+                                </div>
+                                <div style="color: #33415c; font-size: 0.8rem;">▼</div>
+                            </div>
 
-                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Schaft (Stock / Pistol Grip)</label>
-                        <select id="gsModStock" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold; margin-bottom: 10px;" onchange="updateGunsmithStats()"></select>
+                            <div class="gs-slot">
+                                <div class="gs-slot-icon">🦾</div>
+                                <div class="gs-slot-content">
+                                    <div class="gs-slot-label">Schaft (Stock / Pistol Grip)</div>
+                                    <select id="gsModStock" class="gs-select-modern" onchange="updateGunsmithStats()"></select>
+                                </div>
+                                <div style="color: #33415c; font-size: 0.8rem;">▼</div>
+                            </div>
 
-                        <label class="gs-mod-label" style="font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px;">Magazin</label>
-                        <select id="gsModMag" class="gs-select" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold;" onchange="updateGunsmithStats()"></select>
-                    </div>
-                </div>
-
-                <div class="panel-box">
-                    <h3 style="margin-top: 0; color: var(--accent);">📊 Live-Ballistik & Performance</h3>
-                    <div id="gsStatsContainer" style="margin-top: 20px;">
+                            <div class="gs-slot">
+                                <div class="gs-slot-icon">🔋</div>
+                                <div class="gs-slot-content">
+                                    <div class="gs-slot-label">Magazin (Kapazität)</div>
+                                    <select id="gsModMag" class="gs-select-modern" onchange="updateGunsmithStats()"></select>
+                                </div>
+                                <div style="color: #33415c; font-size: 0.8rem;">▼</div>
+                            </div>
                         </div>
-                    
-                    <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333;">
-                        <div class="stat-row" style="display: flex; margin-bottom: 8px;"><div class="stat-label" style="width: 150px; color: #ccc;">Feuerrate (RPM):</div><div id="gsStatRpm" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">Schuss/Min</div></div>
-                        <div class="stat-row" style="display: flex; margin-bottom: 8px;"><div class="stat-label" style="width: 150px; color: #ccc;">Mündungsgeschw.:</div><div id="gsStatVel" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">m/s</div></div>
-                        <div class="stat-row" style="display: flex;"><div class="stat-label" style="width: 150px; color: #ccc;">Nachladezeit:</div><div id="gsStatRel" style="color:white; font-weight:bold; font-size:1.1rem;">0.0</div><div style="color:#888; margin-left:5px;">Sekunden</div></div>
                     </div>
-                    
-                    <div style="margin-top: 20px; font-size: 0.85rem; color: #666; text-align: center; background: #111; padding: 10px; border-radius: 4px;">
-                        <span style="color:#7ca35a; font-weight:bold;">Grün</span> = Verbesserung durch Mods | <span style="color:#ff4c4c; font-weight:bold;">Rot</span> = Verschlechterung
-                    </div>
-                </div>
 
+                    <div>
+                        <div class="gs-telemetry">
+                            
+                            <div id="gsStatsContainer" style="min-height: 180px;"></div>
+                            
+                            <div class="gs-numeric-stats">
+                                <div class="gs-num-box">
+                                    <div id="gsStatRpm" class="gs-num-val">0</div>
+                                    <div class="gs-num-label">FEUERRATE (RPM)</div>
+                                </div>
+                                <div class="gs-num-box">
+                                    <div id="gsStatVel" class="gs-num-val" style="color: #ffcc00;">0</div>
+                                    <div class="gs-num-label">M/S VELOCITY</div>
+                                </div>
+                                <div class="gs-num-box">
+                                    <div id="gsStatRel" class="gs-num-val" style="color: #7ca35a;">0.0</div>
+                                    <div class="gs-num-label">RELOAD (SEK)</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 25px; font-size: 0.75rem; color: #555; text-align: center; font-family: monospace;">
+                                <span style="color:#7ca35a;">GRÜN</span> = PERFORMANCE UP | <span style="color:#ff4c4c;">ROT</span> = PERFORMANCE DOWN
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
