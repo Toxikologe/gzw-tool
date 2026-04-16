@@ -8,6 +8,75 @@
     <style>
 
         /* ============================================================== */
+        /* DECRYPTION TERMINAL (CODES & PASSWORDS) */
+        /* ============================================================== */
+        .codes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .code-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .code-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+        }
+        .code-card.static { border-top: 4px solid #7ca35a; }
+        .code-card.dynamic { border-top: 4px solid #ffa500; }
+        
+        .code-value {
+            font-family: 'Courier New', monospace;
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+        .code-card.static .code-value { color: #7ca35a; }
+        .code-card.dynamic .code-value { color: #ffa500; }
+        
+        .code-title {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .code-loc {
+            color: #85c1e9;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .code-info {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-top: 1px dashed #333;
+            padding-top: 15px;
+        }
+        .code-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .code-card.static .code-badge { background: rgba(124,163,90,0.15); color: #7ca35a; border: 1px solid #7ca35a; }
+        .code-card.dynamic .code-badge { background: rgba(255,165,0,0.15); color: #ffa500; border: 1px solid #ffa500; }
+
+        /* ============================================================== */
         /* BALLISTIC RADAR DESIGN */
         /* ============================================================== */
         .armor-btn {
@@ -1227,23 +1296,16 @@
         </div>
 
         <div id="tab-codes" class="tab-content">
-            <h2>🔢 Codes & Passwörter (Locks & Keypads)</h2>
+            <h2>🔢 Decryption Terminal (Codes & Passwörter)</h2>
             <div class="panel-box">
                 <p style="color: #ccc; font-size: 0.95rem; margin-top: 0; margin-bottom: 20px;">
-                    Viele Codes in GZW ändern sich bei jedem Server-Neustart (Dynamisch). Hier erfährst du, wo die Notizzettel mit den Codes für die jeweiligen Türen versteckt sind!
+                    Greife auf die geheime Intel-Datenbank zu. <strong style="color: #7ca35a;">Statische Codes</strong> bleiben immer gleich. <strong style="color: #ffa500;">Dynamische Codes</strong> (aus dem 0.4 Update) generieren sich auf jedem Server neu und müssen im Raid gesucht werden!
                 </p>
-                <label for="codeDropdown" style="margin-top: 0;">Schloss / Tresor aus Liste wählen:</label>
-                <select id="codeDropdown" onchange="selectCodeFromDropdown()" style="margin-bottom: 15px;">
-                    <option value="">-- Wähle ein Schloss / Code --</option>
-                </select>
-                <label for="codeSearch" style="margin-top: 0;">Oder manuell suchen:</label>
-                <input type="text" id="codeSearch" placeholder="z.B. Ban Suk, Farm, Nakasa, Tresor, 9135..." onkeyup="searchCodes()">
                 
-                <div id="codeList" style="margin-top: 20px;">
-                    <div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">
-                        Wähle ein Schloss oder tippe einen Ort ein...
+                <input type="text" id="codeSearchInput" placeholder="Datenbank durchsuchen (Ort, Name oder Code eingeben)..." onkeyup="renderDecryptionTerminal()" style="width: 100%; padding: 15px; border-radius: 6px; border: 1px solid var(--accent); background: #1a1a1a; color: white; font-size: 1.1rem; margin-bottom: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
+                
+                <div id="decryptionGrid" class="codes-grid">
                     </div>
-                </div>
             </div>
         </div>
 
@@ -2114,82 +2176,50 @@
     }
 
     // ==============================================================
-    // CODES & PASSWÖRTER LOGIK
+    // DECRYPTION TERMINAL LOGIK (CODES & PASSWÖRTER)
     // ==============================================================
-    function buildCodeDropdown() {
-        const dropdown = document.getElementById('codeDropdown');
-        if (!dropdown || typeof codesDb === 'undefined') return;
-        dropdown.innerHTML = '<option value="">-- Wähle ein Schloss / Code --</option>'; 
+    function renderDecryptionTerminal() {
+        const container = document.getElementById('decryptionGrid');
+        const input = document.getElementById('codeSearchInput');
         
-        const sortedCodes = [...codesDb].sort((a, b) => a.name.localeCompare(b.name, 'de'));
-        sortedCodes.forEach(item => {
-            const opt = document.createElement('option');
-            opt.value = item.name;
-            opt.text = item.name;
-            dropdown.appendChild(opt);
-        });
-    }
-
-    function selectCodeFromDropdown() {
-        const dropdownValue = document.getElementById('codeDropdown').value;
-        const searchInput = document.getElementById('codeSearch');
-        if (dropdownValue) {
-            searchInput.value = dropdownValue; 
-            searchCodes(); 
-        } else {
-            searchInput.value = "";
-            document.getElementById('codeList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Wähle ein Schloss oder tippe einen Ort ein...</div>';
-        }
-    }
-
-    function searchCodes() {
-        if (typeof codesDb === 'undefined') return;
-        const input = document.getElementById('codeSearch').value.toLowerCase();
-        const list = document.getElementById('codeList');
-        list.innerHTML = '';
+        if (!container || typeof codesDb === 'undefined') return;
         
-        if (input.length < 2) {
-            list.innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Tippe mindestens 2 Buchstaben ein...</div>';
+        const searchTerm = input ? input.value.toLowerCase() : '';
+        container.innerHTML = '';
+
+        // Filtern nach Suchbegriff
+        const filteredCodes = codesDb.filter(c => 
+            c.name.toLowerCase().includes(searchTerm) || 
+            c.loc.toLowerCase().includes(searchTerm) ||
+            c.code.toLowerCase().includes(searchTerm)
+        );
+
+        if (filteredCodes.length === 0) {
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; background: rgba(179, 57, 57, 0.1); border: 1px solid #ff4c4c; padding: 20px; text-align: center; border-radius: 6px; color: #ff4c4c;">
+                    <strong>❌ KEIN EINTRAG GEFUNDEN</strong><br>
+                    <span style="color: #ccc; font-size: 0.9rem;">Die Suche nach "${searchTerm}" ergab keine Treffer in der Datenbank.</span>
+                </div>
+            `;
             return;
         }
 
-        const filtered = codesDb.filter(i => 
-            i.name.toLowerCase().includes(input) || 
-            i.loc.toLowerCase().includes(input) ||
-            i.code.toLowerCase().includes(input)
-        );
+        // Karten generieren
+        filteredCodes.forEach(item => {
+            const isDynamic = item.type === "dynamic";
+            const cardClass = isDynamic ? "dynamic" : "static";
+            const badgeText = isDynamic ? "Dynamisch" : "Statisch";
 
-        if (filtered.length > 0) {
-            filtered.forEach(item => {
-                const box = document.createElement('div');
-                box.className = 'panel-box';
-                box.style.marginBottom = '10px';
-                box.style.borderTopColor = 'var(--accent)'; 
-                
-                // Optische Unterscheidung, ob es ein dynamischer oder fester Code ist
-                const codeColor = item.code.includes('Dynamisch') ? '#ffa500' : '#7ca35a';
-                
-                box.innerHTML = `
-                    <h3 style="color: ${codeColor}; margin-top: 0; font-size: 1.3rem; letter-spacing: 1px;">🔢 ${item.code}</h3>
-                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; color: #fff;">${item.name}</div>
-                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                        <strong>📍 Ort:</strong> <span style="color: #fff;">${item.loc}</span><br>
-                        <strong>📖 Info / Fundort:</strong> ${item.info}
-                    </div>
-                `;
-                list.appendChild(box);
-            });
-        } else {
-            list.innerHTML = `
-                <div class="panel-box" style="border-top: 4px solid #b33939;">
-                    <h3 style="color: #b33939; margin-top: 0; font-size: 1.2rem;">❌ NICHT GEFUNDEN</h3>
-                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                        Es gibt keinen bekannten Code für <strong>"${document.getElementById('codeSearch').value}"</strong>. 
-                        Manche Türen in GZW sind rein kosmetisch oder öffnen sich nur durch physische Schlüssel, nicht durch Keypads.
-                    </div>
+            container.innerHTML += `
+                <div class="code-card ${cardClass}">
+                    <div class="code-badge">${badgeText}</div>
+                    <div class="code-loc">📍 ${item.loc}</div>
+                    <div class="code-title">${item.name}</div>
+                    <div class="code-value">${item.code}</div>
+                    <div class="code-info"><strong>Intel:</strong> ${item.info}</div>
                 </div>
             `;
-        }
+        });
     }
 
     // ==============================================================
@@ -3969,7 +3999,7 @@ function goToHome() {
         renderKeyRing();
         renderCompletedTasks();
     	updateTaskDropdown();
-        buildCodeDropdown();
+        renderDecryptionTerminal();
         renderLootRoutes();
         renderLootAccordions();
         renderTraderAccordions();
