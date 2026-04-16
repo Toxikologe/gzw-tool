@@ -583,60 +583,28 @@
 
         <div id="tab-stash" class="tab-content">
             <h2>📦 Stash & Secure Containers (0.4 Spearhead)</h2>
-            <div class="grid">
-                <div>
-                    <label for="containerSelect">Sicherheits-Container, Kisten & Stash</label>
-                    <select id="containerSelect" onchange="updateContainer()">
-    <option value="">-- Wähle einen Container --</option>
-    <optgroup label="Secure Containers (Überleben den Tod)">
-        <option value="secure_2x2">Safe Lock Box (2x2) (Safe Lock Box)</option>
-        <option value="admin_pouch">Admin Tasche (2x3) (Admin Pouch)</option>
-        <option value="secure_3x3">TAS Schließfach (3x3) (TAS Lockbox)</option>
-    </optgroup>
-    <optgroup label="Stash Cases (Lagerkisten)">
-        <option value="muxxum_rifle">Muxxum Waffenkoffer (Muxxum Rifle Case)</option>
-        <option value="harde_case">HARDE-Kiste (Harde Case)</option>
-        <option value="parts_case">Waffenteilkiste (Weapon Parts Case)</option>
-        <option value="ammo_box">Metal-Munitionskiste (Metal Ammo Box)</option>
-        <option value="mmammo_box">MM-Munitionskiste (MM Ammo Box)</option>
-        <option value="grenade_box">Handgranatenkoffer (Hand Grenade Storage Box)</option>
-        <option value="mag_crate">Magazinkiste (Magazine Crate)</option>
-        <option value="truncase">IV-Schutzkoffer (IV Truncase)</option>
-        <option value="first_aid_case">Erste-Hilfe-Koffer (First Aid Case)</option>
-        <option value="cooler_case">Kühlbox / Proviantkiste (Personal Cooler)</option>
-        <option value="huge_key_case">Großer Schlüsselkoffer (Huge Key Case)</option>
-        <option value="mortar_case">Mörser-Kiste (Mortar Round Case)</option>
-        <option value="small_safe">Kleiner Tresor (Small Safe)</option>
-        <option value="large_safe">Großer Tresor (Large Safe)</option>
-        <option value="desk">Verwaltungstisch (Administrative desk)</option>
-    </optgroup>
-    <optgroup label="Micro-Container & Pouches (Raid-Inventar)">
-        <option value="wallet">Geldbörse (Tactical Wallet)</option>
-        <option value="key_holder">Lederschlüsselhalter (Key Holder / Leather Key)</option>
-        <option value="key_case">Schlüsseltasche (Key Case)</option>
-        <option value="injector_case">Injektoren-Etui (Injector Case)</option>
-        <option value="admin_bag">Verwaltungstasche (Administration Bag)</option>
-        <option value="kombat_folder">Kombat-Ordner (Kombat Folder)</option>
-        <option value="hfak">Hartschalen-Erste-Hilfe-Set (Hard Case First Aid Kit)</option>
-        <option value="mfak">Mini-Erste-Hilfe-Set (Mini First Aid Kit)</option>
-        <option value="qfak">Schnellverschluss-Erste-Hilfe-Set (Quick Release First Aid Kit)</option>
-        <option value="emt">EMT (RIP-AWAY EMT POUCH)</option>
-    </optgroup>
-    <optgroup label="Stash-Erweiterung (Locker)">
-        <option value="locker_upgrades">Locker-Erweiterungen (Locker Expansions)</option>
-    </optgroup>
-</select>
-                    <div id="containerInfoDisplay" class="info-box" style="margin-top: 15px; background: #1a1a1a; padding: 15px; border-left: 4px solid var(--accent);">Wähle einen Container für Details zum Fundort...</div>
+            <div class="panel-box">
+                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
+                    Der Platz in deiner Basis ist begrenzt. Kisten (Cases) und sichere Container sind der einzige Weg, um Platz für deinen Loot zu schaffen.
+                    Absolute <span style="color: #ffcc00; font-weight: bold;">Game-Changer</span> sind mit einem 🔥 markiert!
+                </p>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="sortStashAlphaBtn" onclick="renderStashAccordions('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔤 Alphabetisch sortieren</button>
+                    <button id="sortStashMetaBtn" onclick="renderStashAccordions('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔥 Nach Wichtigkeit (Meta) sortieren</button>
                 </div>
                 
-                <div class="panel-box">
-                    <h3>Locker Upgrades & Container Infos</h3>
-                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
-                        <li><strong>Locker Upgrade 1 (+20 Reihen):</strong> Belohnung für die Quest <em>"Lagererweiterung"</em> von Handshake (Level 2).</li>
-                        <li><strong>Locker Upgrade 2 (+20 Reihen):</strong> Belohnung für die Quest <em>"Logistik-Meister"</em> von Turncoat (Level 3).</li>
-                        <li><strong>Secure Container (Neu in 0.4):</strong> Können nun bei <strong>Artisan</strong> im Level-Verlauf (Level 1, 2 und 4) permanent erspielt werden!</li>
-                    </ul>
-                </div>
+                <div id="stashAccordionsContainer">
+                    </div>
+            </div>
+            
+            <div class="panel-box">
+                <h3 style="margin-top: 0; color: var(--accent);">💡 Stash & Container Tipps (0.4 Update)</h3>
+                <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
+                    <li><strong>Secure Containers ohne Pay2Win:</strong> Das 0.4 Update erlaubt es allen Spielern, die Container (bis zum riesigen 3x3 TAS Schließfach) permanent über Quests bei <em>Artisan</em> und <em>Vulture</em> freizuspielen!</li>
+                    <li><strong>Kisten in Kisten:</strong> In Gray Zone Warfare kannst du (bisher) keine Kisten ineinander stapeln (Inception-Style). Lagere Cases immer flach in deiner Basis.</li>
+                    <li><strong>Rucksack-Trick:</strong> Du kannst kleine Rucksäcke in größere Rucksäcke packen, um Platz im Stash zu sparen, bis du dir die großen Locker-Upgrades leisten kannst.</li>
+                </ul>
             </div>
         </div>
 
@@ -3414,6 +3382,149 @@ function goToHome() {
     }
 
     // ==============================================================
+    // STASH & CONTAINER RENDER-LOGIK (AKKORDEON & SORTIERUNG)
+    // ==============================================================
+    let currentStashSort = 'alpha';
+
+    function renderStashAccordions(sortMode = currentStashSort) {
+        currentStashSort = sortMode;
+        const container = document.getElementById('stashAccordionsContainer');
+        if (!container || typeof containersDb === 'undefined') return;
+
+        container.innerHTML = '';
+
+        // Button-Styling anpassen
+        const alphaBtn = document.getElementById('sortStashAlphaBtn');
+        const metaBtn = document.getElementById('sortStashMetaBtn');
+        if (alphaBtn && metaBtn) {
+            if (sortMode === 'alpha') {
+                alphaBtn.style.background = 'rgba(124,163,90,0.3)'; alphaBtn.style.borderColor = 'var(--accent)';
+                metaBtn.style.background = '#222'; metaBtn.style.borderColor = '#444';
+            } else {
+                metaBtn.style.background = 'rgba(255,204,0,0.2)'; metaBtn.style.borderColor = '#ffcc00';
+                alphaBtn.style.background = '#222'; alphaBtn.style.borderColor = '#444';
+            }
+        }
+
+        // Nach Kategorie gruppieren
+        const groupedStash = {};
+        containersDb.forEach(item => {
+            if (!groupedStash[item.category]) groupedStash[item.category] = [];
+            groupedStash[item.category].push(item);
+        });
+
+        // Feste Reihenfolge der Stash-Kategorien
+        const stashOrder = [
+            "🔒 Secure Containers (Raid-Schutz)", 
+            "🏗️ Locker Upgrades (Stash-Erweiterung)", 
+            "📦 Stash Cases (Lagerkisten)", 
+            "👝 Micro-Container & Pouches (Inventar)"
+        ];
+
+        stashOrder.forEach(categoryName => {
+            const items = groupedStash[categoryName];
+            if (!items) return;
+
+            // Sortierung anwenden
+            if (sortMode === 'alpha') {
+                items.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+            } else if (sortMode === 'meta') {
+                items.sort((a, b) => {
+                    if (a.isMeta !== b.isMeta) return a.isMeta ? -1 : 1; 
+                    return a.name.localeCompare(b.name, 'de');
+                });
+            }
+
+            const groupDiv = document.createElement('div');
+            groupDiv.style.marginBottom = "10px";
+
+            // Der blaue Akkordeon-Button
+            const btn = document.createElement('button');
+            btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+            btn.style.width = "100%";
+            btn.style.textAlign = "left";
+            btn.style.padding = "12px 15px";
+            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+            btn.style.color = "#5dade2";
+            btn.style.border = "1px solid #2980b9";
+            btn.style.borderRadius = "4px";
+            btn.style.cursor = "pointer";
+            btn.style.fontWeight = "bold";
+            btn.style.fontSize = "1.05rem";
+            btn.style.transition = "0.2s";
+
+            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+            btn.onmouseout = () => {
+                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+            };
+
+            // Der Inhalt (Die Tabelle)
+            const contentDiv = document.createElement('div');
+            contentDiv.style.display = "none";
+            contentDiv.style.border = "1px solid #2980b9";
+            contentDiv.style.borderTop = "none";
+            contentDiv.style.padding = "10px";
+            contentDiv.style.backgroundColor = "#0a0a0a";
+            contentDiv.style.borderBottomLeftRadius = "4px";
+            contentDiv.style.borderBottomRightRadius = "4px";
+
+            let tableHTML = `
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead style="background: #151515; color: var(--accent);">
+                            <tr>
+                                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #333;">Bezeichnung & Info</th>
+                                <th style="padding: 10px; text-align: center; border-bottom: 1px solid #333; width: 150px;">Kapazität / Größe</th>
+                                <th style="padding: 10px; text-align: center; border-bottom: 1px solid #333; width: 180px;">Herkunft</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            items.forEach(item => {
+                const metaTag = item.isMeta ? `<span style="background: rgba(255, 204, 0, 0.15); color: #ffcc00; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; border: 1px solid #ffcc00; margin-left: 10px;">🔥 META</span>` : '';
+                const infoText = item.info ? `<div style="font-size: 0.8rem; color: #888; font-style: italic; margin-top: 4px;">↳ ${item.info}</div>` : '';
+                const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
+
+                tableHTML += `
+                    <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
+                        <td style="padding: 12px 8px;">
+                            <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
+                            ${infoText}
+                        </td>
+                        <td style="padding: 12px 8px; text-align: center; color: #aaa; font-family: monospace;">${item.size}</td>
+                        <td style="padding: 12px 8px; text-align: center; color: #85c1e9;">${item.source}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `</tbody></table></div>`;
+            contentDiv.innerHTML = tableHTML;
+
+            // Akkordeon Toggle-Logik
+            btn.onclick = function() {
+                if (contentDiv.style.display === "none") {
+                    contentDiv.style.display = "block";
+                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▲</span>`;
+                    btn.style.borderBottomLeftRadius = "0";
+                    btn.style.borderBottomRightRadius = "0";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                } else {
+                    contentDiv.style.display = "none";
+                    btn.innerHTML = `${categoryName} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+                    btn.style.borderBottomLeftRadius = "4px";
+                    btn.style.borderBottomRightRadius = "4px";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                }
+            };
+
+            groupDiv.appendChild(btn);
+            groupDiv.appendChild(contentDiv);
+            container.appendChild(groupDiv);
+        });
+    }
+
+    // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
@@ -3429,6 +3540,7 @@ function goToHome() {
         renderLootRoutes();
         renderLootAccordions();
         renderTraderAccordions();
+        renderStashAccordions();
         buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
