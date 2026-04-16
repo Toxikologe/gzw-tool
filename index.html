@@ -8,6 +8,57 @@
     <style>
 
         /* ============================================================== */
+/* TACTICAL HVT DOSSIER DESIGN */
+/* ============================================================== */
+.hvt-terminal {
+    display: flex; gap: 20px; min-height: 700px; margin-top: 15px;
+}
+.hvt-list {
+    width: 320px; display: flex; flex-direction: column; gap: 10px;
+    background: #0a0a0a; padding: 15px; border-radius: 6px; border: 1px solid #333;
+    overflow-y: auto; max-height: 800px;
+}
+.hvt-card {
+    background: #151515; border: 1px solid #333; border-left: 5px solid #666;
+    padding: 12px; border-radius: 4px; cursor: pointer; transition: 0.2s;
+}
+.hvt-card:hover { background: #222; transform: scale(1.02); }
+.hvt-card.active { background: rgba(255, 76, 76, 0.1); border-color: #ff4c4c; }
+
+/* Gefahrenstufen Farben */
+.hvt-card.threat-low { border-left-color: #7ca35a; }
+.hvt-card.threat-med { border-left-color: #ffa500; }
+.hvt-card.threat-high { border-left-color: #ff4c4c; }
+.hvt-card.threat-extreme { border-left-color: #b33939; box-shadow: 0 0 10px rgba(179, 57, 57, 0.3); }
+
+.hvt-name { font-weight: bold; color: #eee; display: block; margin-bottom: 3px; }
+.hvt-region { font-size: 0.75rem; color: #888; text-transform: uppercase; }
+
+/* Das Dossier */
+.dossier-main {
+    flex: 1; background: #0d0d0d; border: 2px solid #333; border-radius: 8px;
+    padding: 40px; position: relative; overflow: hidden;
+    background-image: radial-gradient(circle at top right, rgba(255, 76, 76, 0.05) 0%, transparent 40%);
+}
+.dossier-header { border-bottom: 2px solid #ff4c4c; padding-bottom: 15px; margin-bottom: 30px; position: relative; }
+.dossier-id { font-family: 'Courier New', monospace; color: #ff4c4c; font-weight: bold; font-size: 0.9rem; }
+.dossier-title { font-size: 2.2rem; color: #fff; margin: 5px 0; text-transform: uppercase; letter-spacing: 2px; }
+
+/* Der Neutralisiert-Stempel */
+.status-stamp {
+    position: absolute; top: 20px; right: 20px; border: 4px solid #ff4c4c; color: #ff4c4c;
+    padding: 10px 20px; font-size: 1.5rem; font-weight: 900; text-transform: uppercase;
+    transform: rotate(15deg); opacity: 0; transition: opacity 0.3s;
+    user-select: none; pointer-events: none; border-radius: 6px;
+}
+.status-stamp.visible { opacity: 0.7; animation: stampEffect 0.3s ease-out; }
+@keyframes stampEffect { 0% { transform: rotate(15deg) scale(2); opacity: 0; } 100% { transform: rotate(15deg) scale(1); opacity: 0.7; } }
+
+.dossier-field { margin-bottom: 20px; }
+.dossier-label { color: #ff4c4c; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; display: block; }
+.dossier-value { color: #ccc; font-size: 1.05rem; line-height: 1.6; }
+
+        /* ============================================================== */
 /* TACTICAL KEY CABINET DESIGN */
 /* ============================================================== */
 .key-cabinet {
@@ -1258,44 +1309,56 @@
         </div>
 
         <div id="tab-bosses" class="tab-content">
-            <h2>💀 Boss Datenbank & Intel (0.4 Spearhead)</h2>
-            <div class="grid">
-                <div class="panel-box">
-                    <label for="bossSelect" style="margin-top: 0;">Zielperson auswählen (HVT)</label>
-                    <select id="bossSelect" onchange="updateBoss()" style="font-weight: bold; color: #ff4c4c; padding: 10px; border-radius: 6px; background: #222; border: 1px solid #444;">
-                        <option value="">-- Wähle einen Boss --</option>
-                        
-                        <optgroup label="🔰 Startregionen & Wälder">
-                            <option value="market_leader">Krimineller Anführer (Criminal Leader)</option>
-                            <option value="lumber_boss">Sägewerk-Vorarbeiter (Lumber Yard Foreman)</option>
-                            <option value="rebel_ybl">Rebellen-Anführer (Rebel Leader)</option>
-                        </optgroup>
-                        
-                        <optgroup label="⚔️ Mid-Game POIs">
-                            <option value="hunter_commander">Feindlicher Kommandant (Hostile Commander)</option>
-                            <option value="malo_blue">Grin / Malo Luangrath (Blue Lagoon Boss)</option>
-                            <option value="banpa_leader">Naga / Ältester (Elder Leader)</option>
-                        </optgroup>
-                        
-                        <optgroup label="☠️ End-Game & High Danger">
-                            <option value="fort_commander">General Pa (Fort Commander)</option>
-                            <option value="midnight_laf">LAF Kommandant (LAF Commander)</option>
-                            <option value="tiger_bay_unlra">UNLRA Offizier (UNLRA Officer)</option>
-                            <option value="tiger_bay_pier">Pier Boss (Tiger Bay)</option>
-                            <option value="airfield_boss">Airfield Commander (Ground Zero)</option>
-                        </optgroup>
-                        
-                        <optgroup label="👻 Roaming Bosses (Wechselnde Spawns)">
-                            <option value="viper">Viper (Jungle Camps)</option>
-                            <option value="bloodhound">Bloodhound (Military Checkpoints)</option>
-                            <option value="golden_boy">Golden Boy (Midnight Sapphire)</option>
-                        </optgroup>
-                    </select>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>💀 HVT Intelligence Dashboard (High Value Targets)</h2>
+                <div style="font-size: 0.8rem; color: #666; font-family: monospace;">ACCESS: RESTRICTED // CLEARANCE: LEVEL 4</div>
+            </div>
+            
+            <p style="color: #ccc; margin-bottom: 20px;">
+                Analysiere die Profile der meistgesuchten Zielpersonen auf Lamang Island. Die Akten enthalten Informationen über Standorte, Leibwachen und kritische Einsatz-Tipps.
+            </p>
+
+            <div class="hvt-terminal">
+                <div id="hvtList" class="hvt-list">
+                    </div>
+
+                <div class="dossier-main" id="bossDossier">
+                    <div id="bossStatusStamp" class="status-stamp">NEUTRALISIERT</div>
                     
-                    <div id="bossInfo" class="info-box" style="margin-top: 20px; padding: 20px; background: #111; border-left: 4px solid #ff4c4c; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
-                        Wähle ein Ziel für Dossier, Fundort und Loot-Informationen...
+                    <div class="dossier-header">
+                        <div class="dossier-id">TARGET ID: <span id="dbID">--</span></div>
+                        <h3 id="dbName" class="dossier-title">ZIEL AUSWÄHLEN</h3>
+                        <div style="display: flex; gap: 20px; font-size: 0.85rem; color: #888;">
+                            <span>STATUS: <strong id="dbStatusText" style="color:#7ca35a;">AKTIV</strong></span>
+                            <span>BEDROHUNG: <strong id="dbThreat" style="color:#ff4c4c;">UNBEKANNT</strong></span>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                        <div>
+                            <div class="dossier-field">
+                                <span class="dossier-label">Letzter bekannter Aufenthaltsort</span>
+                                <div id="dbLoc" class="dossier-value">-</div>
+                            </div>
+                            <div class="dossier-field">
+                                <span class="dossier-label">Erwartete Bewaffnung & Loot</span>
+                                <div id="dbLoot" class="dossier-value">-</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dossier-field">
+                                <span class="dossier-label">Taktisches Einsatz-Briefing</span>
+                                <div id="dbTip" class="dossier-value" style="font-style: italic; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 4px; border-left: 2px solid #444;">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 40px; text-align: center; border: 1px dashed #333; height: 180px; display: flex; align-items: center; justify-content: center; color: #333;">
+                        <span id="dbImgPlaceholder">FOTO_NICHT_VERFÜGBAR.PNG</span>
                     </div>
                 </div>
+            </div>
+        </div>
 
                 <div class="panel-box">
                     <h3 style="margin-top: 0; color: #ff4c4c;">📋 HVT Takedown Protokolle (0.4 Meta)</h3>
@@ -1802,22 +1865,71 @@
     function updateContainer() { const c = typeof containers !== 'undefined' ? containers[document.getElementById('containerSelect').value] : null; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
     function updateValuable() { const v = typeof valuables !== 'undefined' ? valuables[document.getElementById('valSelect').value] : null; document.getElementById('valInfoDisplay').innerHTML = v ? `Preis: <span class="highlight">${v.price}</span><br>Platzbedarf: <span class="highlight">${v.slots} Slot(s)</span><br>Tipp: ${v.info}` : "Wähle ein Item für Preis & Details..."; }
 
-    function updateBoss() { 
-        const b = typeof bosses !== 'undefined' ? bosses[document.getElementById('bossSelect').value] : null; 
-        const infoBox = document.getElementById('bossInfo');
-        
-        if (b) {
-            infoBox.innerHTML = `
-                <h3 style="color: #ff4c4c; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem;">${b.name}</h3>
-                <div style="margin-bottom: 8px; color: #ccc;"><strong>📍 Zuletzt gesichtet:</strong> <span style="color: #fff;">${b.loc}</span></div>
-                <div style="margin-bottom: 15px; color: #ccc;"><strong>🎒 Erwarteter Loot:</strong> <span style="color: #ffcc00; font-weight: bold;">${b.loot}</span></div>
-                <div style="padding: 10px; background: rgba(255, 76, 76, 0.1); border-left: 3px solid #ff4c4c; border-radius: 4px; font-size: 0.9rem; color: #ddd;">
-                    <strong>💡 Tactical Intel:</strong> ${b.tip}
-                </div>
+    // ==============================================================
+    // TACTICAL HVT SYSTEM (BOSS DB)
+    // ==============================================================
+    function initBossHVT() {
+        const list = document.getElementById('hvtList');
+        if (!list || typeof bosses === 'undefined') return;
+        list.innerHTML = '';
+
+        Object.keys(bosses).forEach(id => {
+            const b = bosses[id];
+            const card = document.createElement('div');
+            card.className = `hvt-card threat-${b.threat}`;
+            card.id = `hvt-card-${id}`;
+            card.innerHTML = `
+                <span class="hvt-name">${b.name}</span>
+                <span class="hvt-region">${b.loc.split('(')[0]}</span>
             `;
+            card.onclick = () => selectHVT(id);
+            list.appendChild(card);
+        });
+
+        // Automatisch den ersten laden
+        const firstId = Object.keys(bosses)[0];
+        if (firstId) selectHVT(firstId);
+    }
+
+    function selectHVT(id) {
+        const b = bosses[id];
+        if (!b) return;
+
+        // Visuelles Feedback
+        document.querySelectorAll('.hvt-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`hvt-card-${id}`).classList.add('active');
+
+        // Dossier füllen
+        document.getElementById('dbName').innerText = b.name;
+        document.getElementById('dbID').innerText = id.toUpperCase();
+        document.getElementById('dbThreat').innerText = b.threat.toUpperCase();
+        document.getElementById('dbThreat').style.color = getThreatColor(b.threat);
+        document.getElementById('dbLoc').innerHTML = getMapLinkHTML(b.loc);
+        document.getElementById('dbLoot').innerText = b.loot;
+        document.getElementById('dbTip').innerText = b.tip;
+
+        // Check gegen Timer Widget (Status-Sync)
+        // Wir suchen im bossTimers Objekt (das wir früher für das Widget gebaut haben)
+        const isDead = typeof bossTimers !== 'undefined' && bossTimers[id.split('_')[0]]; 
+        const stamp = document.getElementById('bossStatusStamp');
+        const statusText = document.getElementById('dbStatusText');
+
+        if (isDead) {
+            stamp.classList.add('visible');
+            statusText.innerText = "NEUTRALISIERT (Respawn läuft)";
+            statusText.style.color = "#ff4c4c";
         } else {
-            infoBox.innerHTML = "Wähle ein Ziel für Dossier, Fundort und Loot-Informationen...";
+            stamp.classList.remove('visible');
+            statusText.innerText = "AKTIV / GESUCHT";
+            statusText.style.color = "#7ca35a";
         }
+    }
+
+    function getThreatColor(threat) {
+        if (threat === "low") return "#7ca35a";
+        if (threat === "med") return "#ffa500";
+        if (threat === "high") return "#ff4c4c";
+        return "#b33939";
     }
     
     function updateGearInfo() {
@@ -4025,6 +4137,7 @@ function goToHome() {
         makeDraggable('heliWidget');
         initNotepad();
         initKeyCabinet();
+        initBossHVT();
         renderCompletedTasks();
     	updateTaskDropdown();
         renderDecryptionTerminal();
