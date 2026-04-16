@@ -8,6 +8,54 @@
     <style>
 
         /* ============================================================== */
+/* TACTICAL KEY CABINET DESIGN */
+/* ============================================================== */
+.key-cabinet {
+    display: flex; gap: 20px; min-height: 600px; margin-top: 15px;
+}
+.key-regions {
+    width: 280px; display: flex; flex-direction: column; gap: 8px;
+    background: #111; padding: 15px; border-radius: 6px; border: 1px solid #333;
+}
+.region-btn {
+    background: #1a1a1a; color: #aaa; border: 1px solid #444; padding: 12px;
+    text-align: left; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s;
+}
+.region-btn:hover { background: #252525; color: #fff; }
+.region-btn.active { 
+    border-left: 4px solid var(--accent); background: rgba(124,163,90,0.1); color: var(--accent); 
+}
+
+.key-grid-container {
+    flex: 1; display: flex; flex-direction: column; gap: 20px;
+}
+.key-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;
+}
+.key-card {
+    background: #151515; border: 1px solid #333; padding: 15px; border-radius: 6px;
+    text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.key-card:hover { transform: translateY(-3px); border-color: #666; }
+.key-card.owned { border-color: var(--accent); box-shadow: inset 0 0 10px rgba(124,163,90,0.1); }
+.key-card.owned i { color: var(--accent); }
+.key-card .key-icon { font-size: 1.8rem; margin-bottom: 8px; color: #444; }
+.key-card.owned .key-icon { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+.key-card .key-label { font-size: 0.75rem; font-weight: bold; color: #888; overflow: hidden; text-overflow: ellipsis; }
+.key-card.owned .key-label { color: #eee; }
+
+/* Das Key Dossier (Detail Ansicht) */
+.key-dossier {
+    background: #0d0d0d; border: 2px solid #333; border-top: 4px solid var(--accent);
+    padding: 25px; border-radius: 8px; display: none; position: relative;
+}
+.loot-badge {
+    position: absolute; top: 20px; right: 20px; padding: 5px 12px; border-radius: 4px;
+    font-size: 0.75rem; font-weight: bold; text-transform: uppercase;
+}
+
+        /* ============================================================== */
         /* DECRYPTION TERMINAL (CODES & PASSWORDS) */
         /* ============================================================== */
         .codes-grid {
@@ -1261,36 +1309,55 @@
         </div>
 
         <div id="tab-keys" class="tab-content">
-            <h2>🔑 Schlüsselbund & Raumzugänge</h2>
-            <div class="grid">
-                <div>
-                    <label for="keyDropdown" style="margin-top: 0;">Schlüssel auswählen (Alphabetisch)</label>
-                    <select id="keyDropdown" onchange="selectKeyFromDropdown()">
-                        <option value="">-- Schlüssel wählen --</option>
-                    </select>
+            <h2>🔑 Schlüssel-Zentralkartei (Key Cabinet)</h2>
+            <p style="color: #ccc; margin-bottom: 20px;">
+                Verwalte deine gesammelten Schlüssel und identifiziere Zugangspunkte. 
+                Klicke auf einen Schlüssel, um das <strong>Einsatz-Dossier</strong> mit Fundort und Beute-Rating zu öffnen.
+            </p>
 
-                    <label for="keySearch" style="margin-top: 15px;">Oder manuell suchen</label>
-                    <input type="text" id="keySearch" placeholder="z.B. YBL-1, Tiger Bay, Warehouse..." onkeyup="searchKeys()">
-                    <div id="keyList"></div>
-
-                    <div id="keyContainer" class="info-box" style="margin-top: 15px; position: relative; background: #111; border-left: 4px solid var(--accent);">
-                        <div id="keyRingWrapper" style="display:none; position: absolute; top: 12px; right: 12px;">
-                            <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; font-size: 0.9rem; margin-top: 0;">
-                                <input type="checkbox" id="keyOwnedCheckbox" style="width: 18px; height: 18px; margin-right: 6px; margin-top: 0; cursor: pointer;">
-                                🗝️ Besitze ich
-                            </label>
-                        </div>
-                        <div id="keyTitle" class="highlight" style="font-weight:bold; font-size:1.1rem; margin-bottom:5px; padding-right: 140px;">Schlüssel-Info...</div>
-                        <div id="keyLocation" style="margin-bottom:5px; color: #ccc;">Fundort wird hier angezeigt.</div>
-                        <div id="keyEffect" style="margin-bottom: 10px; color: #ccc;">Welche Tür öffnet dieser Schlüssel?</div>
-                        <div id="keyMissionHint" style="display:none; margin-top: 8px; padding: 8px 12px; border-radius: 4px; font-size: 0.9rem;"></div>
+            <div class="key-cabinet">
+                <div id="keyRegionList" class="key-regions">
                     </div>
-                </div>
 
-                <div class="panel-box">
-                    <h3 style="margin-bottom: 15px;">🗝️ Mein Schlüsselbund (<span id="keyRingCount">0</span>)</h3>
-                    <div id="keyRingDisplay" style="color: #ccc; font-size: 0.95rem; line-height: 2;">Noch keine Schlüssel markiert.</div>
-                    <button onclick="clearKeyRing()" style="margin-top: 20px; background: #b33939; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s;" onmouseover="this.style.background='#e05c2a'" onmouseout="this.style.background='#b33939'">🗑️ Schlüsselbund leeren</button>
+                <div class="key-grid-container">
+                    
+                    <input type="text" id="keyQuickSearch" placeholder="Schnellsuche (z.B. YBL-1, Office, Warehouse)..." 
+                           onkeyup="searchKeysModern()" style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #444; background: #111;">
+
+                    <div id="keyGrid" class="key-grid">
+                        </div>
+
+                    <div id="keyDossier" class="key-dossier">
+                        <div id="keyLootBadge" class="loot-badge"></div>
+                        <h3 id="kdTitle" style="margin: 0 0 15px 0; font-size: 1.6rem; color: #fff;">-</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div>
+                                <div style="color:var(--accent); font-size: 0.8rem; text-transform: uppercase; font-weight: bold;">📍 Einsatzort:</div>
+                                <div id="kdLoc" style="color: #eee; margin-bottom: 15px; font-size: 1.1rem;">-</div>
+                                
+                                <div style="color:var(--accent); font-size: 0.8rem; text-transform: uppercase; font-weight: bold;">🔓 Tür / Effekt:</div>
+                                <div id="kdEffect" style="color: #ccc; line-height: 1.4;">-</div>
+                            </div>
+                            <div>
+                                <div style="color:var(--accent); font-size: 0.8rem; text-transform: uppercase; font-weight: bold;">💰 Erwartete Beute:</div>
+                                <div id="kdLoot" style="color: #ffcc00; font-weight: bold; margin-bottom: 15px;">-</div>
+                                
+                                <div id="kdMissionWrapper" style="display:none; padding: 10px; background: rgba(255,165,0,0.1); border-left: 3px solid #ffa500; border-radius: 4px;">
+                                    <strong style="color:#ffa500; font-size: 0.8rem;">⚠️ MISSION RELEVANT:</strong><br>
+                                    <span id="kdMission" style="font-size: 0.85rem; color: #ddd;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #333; padding-top: 15px;">
+                            <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin: 0;">
+                                <input type="checkbox" id="kdOwnedCheck" style="width: 22px; height: 22px; margin-right: 10px; cursor: pointer;">
+                                SCHLÜSSEL IM BESITZ
+                            </label>
+                            <button onclick="document.getElementById('keyDossier').style.display='none'" style="background:none; border: 1px solid #444; color: #888; padding: 5px 12px; border-radius: 4px; cursor: pointer;">Schließen</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1882,193 +1949,118 @@
     }
 
    // ==============================================================
-    // SCHLÜSSEL DROPDOWN + SCHLÜSSELBUND (KEYRING MANAGER)
+    // MODERN KEY CABINET SYSTEM
     // ==============================================================
-    let myKeyRing = [];
-    try {
-        const savedKeys = localStorage.getItem('gzw_keyring');
-        if (savedKeys) myKeyRing = JSON.parse(savedKeys);
-        if (!Array.isArray(myKeyRing)) myKeyRing = [];
-    } catch(e) { myKeyRing = []; }
+    let activeKeyRegion = "🔰 Startregionen (Mithras)";
+    let selectedKeyForDossier = null;
 
-    let currentKeyName = "";
+    function initKeyCabinet() {
+        const regionList = document.getElementById('keyRegionList');
+        if (!regionList || typeof allKeys === 'undefined') return;
 
-    // Das NEUE Dropdown (mit Kategorien & Emojis)
-    function buildKeyDropdown() {
-        const dropdown = document.getElementById('keyDropdown');
-        if (!dropdown || typeof allKeys === 'undefined') return;
-
-        // Reset
-        dropdown.innerHTML = '<option value="">-- Schlüssel nach Region wählen --</option>';
-
-        // Schlüssel nach 'group' organisieren
-        const groupedKeys = {};
-        allKeys.forEach(k => {
-            if (!groupedKeys[k.group]) groupedKeys[k.group] = [];
-            groupedKeys[k.group].push(k);
+        // 1. POI Liste generieren
+        const regions = [...new Set(allKeys.map(k => k.group))];
+        regionList.innerHTML = '';
+        regions.forEach(reg => {
+            const btn = document.createElement('button');
+            btn.className = `region-btn ${reg === activeKeyRegion ? 'active' : ''}`;
+            btn.innerText = reg;
+            btn.onclick = () => {
+                activeKeyRegion = reg;
+                renderKeyGrid();
+                // CSS Klassen updaten
+                document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            };
+            regionList.appendChild(btn);
         });
 
-        // Definierte Reihenfolge der Gruppen
-        const groupOrder = [
-            "🔰 Startregionen (Mithras)",
-            "🔰 Startregionen (Crimson)",
-            "🔰 Startregionen (Lamang LRI)",
-            "🌲 Sägewerk (Lumber Yard)",
-            "🎯 Hunter's Paradise",
-            "🎣 Ban Pa (Fischerdorf)",
-            "🌊 Blaue Lagune (Blue Lagoon)",
-            "☢️ YBL-1 Bunker",
-            "🪖 Fort Narith (Basis)",
-            "💎 Midnight Sapphire (Hotel)",
-            "🏙️ Tiger Bay (Großstadt)",
-            "✈️ Ground Zero & Airfield",
-            "🗺️ Lamang Island (Dörfer & POIs)",
-            "🆕 Update 0.4 (Spearhead)"
-        ];
+        renderKeyGrid();
+    }
 
-        groupOrder.forEach(gName => {
-            if (groupedKeys[gName]) {
-                const optgroup = document.createElement('optgroup');
-                optgroup.label = gName;
-                
-                groupedKeys[gName].sort((a, b) => a.name.localeCompare(b.name, 'de')).forEach(k => {
-                    const opt = document.createElement('option');
-                    opt.value = k.name;
-                    const owned = myKeyRing.includes(k.name);
-                    opt.text = owned ? `🗝️ ${k.name}` : k.name;
-                    optgroup.appendChild(opt);
-                });
-                
-                dropdown.appendChild(optgroup);
-            }
+    function renderKeyGrid(filterTerm = "") {
+        const grid = document.getElementById('keyGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        const keysToRender = allKeys.filter(k => {
+            const matchesRegion = k.group === activeKeyRegion;
+            const matchesSearch = k.name.toLowerCase().includes(filterTerm.toLowerCase()) || k.loc.toLowerCase().includes(filterTerm.toLowerCase());
+            return filterTerm ? matchesSearch : matchesRegion;
+        });
+
+        keysToRender.forEach(key => {
+            const isOwned = myKeyRing.includes(key.name);
+            const card = document.createElement('div');
+            card.className = `key-card ${isOwned ? 'owned' : ''}`;
+            card.innerHTML = `
+                <div class="key-icon">🔑</div>
+                <div class="key-label">${key.name}</div>
+            `;
+            card.onclick = () => openKeyDossier(key);
+            grid.appendChild(card);
         });
     }
 
-    function selectKeyFromDropdown() {
-        const name = document.getElementById('keyDropdown').value;
-        if (!name) return;
-        showKeyData(name);
-    }
+    function openKeyDossier(key) {
+        selectedKeyForDossier = key;
+        const dossier = document.getElementById('keyDossier');
+        dossier.style.display = 'block';
+        dossier.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-    // Deine Logik für das Anzeigen der Schlüssel-Infos
-    function showKeyData(name) {
-        if (typeof allKeys === 'undefined') return;
-        const key = allKeys.find(k => k.name === name);
-        if (!key) return;
+        document.getElementById('kdTitle').innerText = key.name;
+        document.getElementById('kdLoc').innerHTML = getMapLinkHTML(key.loc);
+        document.getElementById('kdEffect').innerText = key.effect;
+        document.getElementById('kdLoot').innerText = key.loot || "Unbekannt";
 
-        currentKeyName = key.name;
-
-        document.getElementById('keyTitle').innerText = key.name;
-        document.getElementById('keyLocation').innerHTML = `Ort: <span class="highlight">${key.loc}</span>`;
-        document.getElementById('keyEffect').innerHTML = `Nutzen: ${key.effect}<br>Erwarteter Loot: <span class="highlight">${key.loot}</span>`;
-
-        const wrapper = document.getElementById('keyRingWrapper');
-        const checkbox = document.getElementById('keyOwnedCheckbox');
-        if (wrapper) wrapper.style.display = 'block';
-        if (checkbox) {
-            checkbox.checked = myKeyRing.includes(key.name);
-            checkbox.onclick = toggleKeyOwnership;
+        // Loot Badge Logik
+        const badge = document.getElementById('keyLootBadge');
+        const lootText = (key.loot || "").toLowerCase();
+        if (lootText.includes("waffe") || lootText.includes("safe") || lootText.includes("gold")) {
+            badge.innerText = "High Tier Loot";
+            badge.style.background = "#ffcc00"; badge.style.color = "#000";
+        } else if (lootText.includes("medizin") || lootText.includes("ausrüstung")) {
+            badge.innerText = "Med Tier Loot";
+            badge.style.background = "#5dade2"; badge.style.color = "#fff";
+        } else {
+            badge.innerText = "Common Loot";
+            badge.style.background = "#444"; badge.style.color = "#aaa";
         }
 
-        checkKeyMissionHint(key.name);
-    }
+        // Checkbox Status
+        const check = document.getElementById('kdOwnedCheck');
+        check.checked = myKeyRing.includes(key.name);
+        check.onchange = (e) => toggleKeyCabinetOwnership(key.name, e.target.checked);
 
-    function checkKeyMissionHint(keyName) {
-        const hintBox = document.getElementById('keyMissionHint');
-        if (typeof allTasks === 'undefined') return;
-
-        const shortName = keyName.replace(' Key', '').replace(' Card', '').toLowerCase();
-        const relatedTasks = allTasks.filter(t => 
-            t.sol.toLowerCase().includes(shortName) || 
-            t.desc.toLowerCase().includes(shortName)
-        );
-
-        const owned = myKeyRing.includes(keyName);
+        // Mission Hint (bereits existierende Logik nutzen)
+        const mWrap = document.getElementById('kdMissionWrapper');
+        const mText = document.getElementById('kdMission');
+        const shortName = key.name.replace(' Key', '').replace(' Card', '').toLowerCase();
+        const relatedTasks = typeof allTasks !== 'undefined' ? allTasks.filter(t => t.sol.toLowerCase().includes(shortName) || t.desc.toLowerCase().includes(shortName)) : [];
 
         if (relatedTasks.length > 0) {
-            const taskNames = relatedTasks.map(t => `<strong>${t.de}</strong> (${t.v})`).join(', ');
-            if (owned) {
-                hintBox.style.display = 'block';
-                hintBox.innerHTML = `✅ Du hast diesen Schlüssel! Relevant für: ${taskNames}`;
-                hintBox.style.borderLeftColor = 'var(--accent)';
-                hintBox.style.background = 'rgba(124,163,90,0.15)';
-            } else {
-                hintBox.style.display = 'block';
-                hintBox.innerHTML = `🔒 Tür verschlossen – du hast den Schlüssel noch nicht. Relevant für: ${taskNames}`;
-                hintBox.style.borderLeftColor = '#ffa500';
-                hintBox.style.background = 'rgba(255,165,0,0.1)';
-            }
+            mWrap.style.display = 'block';
+            mText.innerHTML = relatedTasks.map(t => `• ${t.de}`).join('<br>');
         } else {
-            hintBox.style.display = 'none';
+            mWrap.style.display = 'none';
         }
     }
 
-    function toggleKeyOwnership() {
-        if (!currentKeyName) return;
-
-        const checkbox = document.getElementById('keyOwnedCheckbox');
-        const isOwned = checkbox.checked;
-
-        if (isOwned) {
-            if (!myKeyRing.includes(currentKeyName)) {
-                myKeyRing.push(currentKeyName);
-            }
+    function toggleKeyCabinetOwnership(keyName, isChecked) {
+        if (isChecked) {
+            if (!myKeyRing.includes(keyName)) myKeyRing.push(keyName);
         } else {
-            myKeyRing = myKeyRing.filter(k => k !== currentKeyName);
+            myKeyRing = myKeyRing.filter(k => k !== keyName);
         }
-
-        try { localStorage.setItem('gzw_keyring', JSON.stringify(myKeyRing)); } catch(e) {}
-
-        updateKeyDropdownEntry(currentKeyName, isOwned);
-        renderKeyRing();
-        checkKeyMissionHint(currentKeyName);
+        localStorage.setItem('gzw_keyring', JSON.stringify(myKeyRing));
+        renderKeyGrid(document.getElementById('keyQuickSearch').value);
+        document.getElementById('keyRingCount').innerText = myKeyRing.length;
     }
 
-    function updateKeyDropdownEntry(keyName, isOwned) {
-        const dropdown = document.getElementById('keyDropdown');
-        Array.from(dropdown.options).forEach(opt => {
-            if (opt.value === keyName) {
-                opt.text = isOwned ? `🗝️ ${keyName}` : keyName;
-            }
-        });
+    function searchKeysModern() {
+        const term = document.getElementById('keyQuickSearch').value;
+        renderKeyGrid(term);
     }
-
-    function renderKeyRing() {
-        const display = document.getElementById('keyRingDisplay');
-        const count = document.getElementById('keyRingCount');
-        
-        count.textContent = myKeyRing.length;
-
-        if (myKeyRing.length === 0) {
-            display.innerHTML = '<span style="color: #888;">Noch keine Schlüssel markiert.</span>';
-            return;
-        }
-
-        const sorted = [...myKeyRing].sort((a, b) => a.localeCompare(b, 'de'));
-        display.innerHTML = sorted.map(k => 
-            `<span style="display:inline-block; background:#2a2a2a; border:1px solid #444; border-radius:4px; padding:3px 8px; margin:3px; font-size:0.85rem; cursor:pointer;" 
-             onclick="showKeyData('${k.replace(/'/g, "\\'")}'); document.getElementById('keyDropdown').value='${k.replace(/'/g, "\\'")}'"
-             title="Klicken für Details">🗝️ ${k}</span>`
-        ).join('');
-    }
-
-    function clearKeyRing() {
-        if (!confirm("Wirklich alle Schlüssel aus dem Schlüsselbund entfernen?")) return;
-        myKeyRing = [];
-        try { localStorage.removeItem('gzw_keyring'); } catch(e) {}
-
-        const dropdown = document.getElementById('keyDropdown');
-        Array.from(dropdown.options).forEach(opt => {
-            if (opt.value) opt.text = opt.value;
-        });
-
-        const checkbox = document.getElementById('keyOwnedCheckbox');
-        if (checkbox) checkbox.checked = false;
-
-        renderKeyRing();
-        if (currentKeyName) checkKeyMissionHint(currentKeyName);
-    }
-
     // ==============================================================
     // QUEST ITEM DATENBANK (KEEP OR SELL) - 100% COMPLETE 0.4
     // ==========================================
@@ -4025,7 +4017,7 @@ function goToHome() {
         makeDraggable('raidNotepad');
         makeDraggable('heliWidget');
         initNotepad();
-        buildKeyDropdown();
+        initKeyCabinet();
         renderKeyRing();
         renderCompletedTasks();
     	updateTaskDropdown();
