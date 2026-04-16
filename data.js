@@ -1678,81 +1678,44 @@ const tradersDb = [
     };
 
 // ==========================================
-// 15. CODES & PASSWÖRTER DATENBANK (0.4 SPEARHEAD COMPLETE)
+// 15. CODES & PASSWÖRTER DATENBANK (0.4 SPEARHEAD - FINAL COMPLETE)
 // ==========================================
-// type: "static" = Fester Code | type: "dynamic" = Ändert sich je nach Server!
+// type: "static" = Fester Code | type: "dynamic" = Wechselt pro Server-Neustart!
 
 const codesDb = [
-    { 
-        name: "Rathaus Tresor (Town Hall Safe)", 
-        loc: "Startgebiet (z.B. Nam Thaven)", 
-        code: "2218", 
-        type: "static", 
-        info: "Lies das schwarze Buch auf dem Schreibtisch im mittleren Büro im 2. Stock, um den Code zu erhalten." 
-    },
-    { 
-        name: "Server-Raum (The Last Broadcast)", 
-        loc: "Radio Station", 
-        code: "1506", 
-        type: "static", 
-        info: "Wird für die Quest 'The Last Broadcast' benötigt. Der Code steht auf einem Post-It im Büro im oberen Stockwerk des größeren Hauptgebäudes." 
-    },
-    { 
-        name: "Geheimer Koffer / Farm", 
-        loc: "Na Xieng Farms", 
-        code: "9135", 
-        type: "static", 
-        info: "Wird für eine Blueprint-Questreihe benötigt, um den Koffer von der Farm zu holen. Der Code findet sich oft auf Notizen bei den beiden versteckten Mohnfeldern (Poppy Fields)." 
-    },
-    { 
-        name: "Verschlossene Hütte", 
-        loc: "Ban Suk", 
-        code: "8777", 
-        type: "static", 
-        info: "Der Code steht in einem kleinen roten Buch auf einem Boot am östlichen Rand der Halbinsel. Alternative Taktik: Du kannst auch über die Regale klettern und dir den Code sparen!" 
-    },
-    { 
-        name: "Gefängniszelle (Padlock)", 
-        loc: "YBL-1 Bunker", 
-        code: "6482", 
-        type: "static", 
-        info: "Die Notiz mit dem Code liegt im äußeren Büro / Hinterzimmer an der Oberfläche des Bunkers." 
-    },
-    { 
-        name: "Bunker-Lagerraum (Keypad)", 
-        loc: "YBL-1 Bunker", 
-        code: "5544", 
-        type: "static", 
-        info: "Der Code steht auf einem Intel-Ordner, der auf einem Tisch in der Kantine/Küche liegt." 
-    },
-    { 
-        name: "Versteckter Waffen-Bunker", 
-        loc: "Fort Narith (Barracks)", 
-        code: "5756", 
-        type: "static", 
-        info: "Ein versteckter Bunker mit elektronischem Schloss in den Baracken. Der Code ist in einem In-Game Buch versteckt." 
-    },
-    { 
-        name: "Villa Garagen-Tresor (Criminal Hideout)", 
-        loc: "Startgebiet (Villa auf dem Hügel)", 
-        code: "DYNAMISCH", 
-        type: "dynamic", 
-        info: "Der Code für den Safe in der Garage liegt auf einem Notizzettel / Buch auf dem Nachttisch im Schlafzimmer im Obergeschoss der Villa." 
-    },
-    { 
-        name: "Windturbinen Keypad (Quest)", 
-        loc: "Sägewerk (Lumber Yard)", 
-        code: "DYNAMISCH", 
-        type: "dynamic", 
-        info: "Quest 'Unlisted Flight' (0.4): Der Code klebt auf einem Post-It am Beifahrerfenster des roten SUVs in der Nähe. Achtung: Du musst erst den Generator am Trailer starten und hast dann nur wenig Zeit, den Code einzutippen!" 
-    },
-    { 
-        name: "Black Box Schuppen (Quest)", 
-        loc: "Sägewerk (Lumber Yard)", 
-        code: "DYNAMISCH", 
-        type: "dynamic", 
-        info: "Quest 'Unlisted Flight' (0.4): Der Code für das Vorhängeschloss liegt im östlichen Bürogebäude (Zimmer zur Flussseite) auf einem Schreibtisch neben dem Telefon." 
-    }
+    // --- NAKASA VILLAGE & FORT NARITH (Das 5-Code-Rätsel) ---
+    // Intel: Im blauen Haus in Nakasa (140, 134) liegen 5 Haftnotizen in der Küche.
+    { name: "Nakasa Obergeschoss Tür", loc: "Nakasa Village (Blaues Haus)", code: "DYNAMISCH", type: "dynamic", info: "Einer der 5 Codes von der Küchentheke im Erdgeschoss öffnet diese Tür im 1. Stock." },
+    { name: "Nakasa Munitionskiste", loc: "Nakasa Village (Holzhütte)", code: "DYNAMISCH", type: "dynamic", info: "Steht in der Hütte mit Veranda neben dem blauen Haus. Code ist Teil des Nakasa-5er-Sets." },
+    { name: "FN Schrottplatz-Kiste", loc: "Fort Narith (Dumping Ground)", code: "DYNAMISCH", type: "dynamic", info: "Militärkiste auf dem Müllplatz nördlich der Basis. Code stammt aus der Nakasa-Küche." },
+    { name: "FN Garagen-Kiste", loc: "Büro gegenüber FN-Haupttor", code: "DYNAMISCH", type: "dynamic", info: "Kiste im unteren Regal der Garage nördlich vom Motel. Code stammt aus der Nakasa-Küche." },
+    { name: "Squad Mission Tür", loc: "Nakasa Village", code: "DYNAMISCH", type: "dynamic", info: "Öffnet eine gesicherte Tür für spezielle Waffenkisten-Missionen. Code stammt aus der Nakasa-Küche." },
+    { name: "Static Echoes Tür", loc: "Nakasa Village (1. Stock)", code: "DYNAMISCH", type: "dynamic", info: "Nach der ersten Tür im OG findest du drinnen ein Buch mit dem Code für diese zweite Tür (oft 2063)." },
+
+    // --- FORT NARITH & AIRFIELD ---
+    { name: "Flugkontrollturm (ATC)", loc: "Fort Narith (Airfield)", code: "9198", type: "static", info: "<b>Fester Code!</b> Den Hinweis findest du auf einem Zettel im Serverraum A204 der Baracken." },
+    { name: "Versteckter Waffen-Bunker", loc: "Fort Narith (Barracks)", code: "5756", type: "static", info: "Elektronisches Schloss in den Baracken. Code versteckt in einem Buch. Enthält Top-Aufsätze." },
+    { name: "Bunker am Schießstand", loc: "Fort Narith (Shooting Range)", code: "DYNAMISCH", type: "dynamic", info: "Der Code liegt in einem Zelt direkt hinter dem Schießstand auf dem Hügel." },
+    
+    // --- KONG THAB & NA XIENG ---
+    { name: "Kong Thab Depot Bunker", loc: "Kong Thab Depot", code: "DYNAMISCH", type: "dynamic", info: "Wichtig für Quest 'Plan B'. Code liegt auf Notizzetteln im Umkreis (z.B. 6867 / 3412)." },
+    { name: "Na Xieng Farm (Padlock)", loc: "Na Xieng (Mohnfelder)", code: "9135", type: "static", info: "<b>Fester Code!</b> Wichtig für Vulture-Quest 'The New Contact'. Hinweise bei 192,154 und 178,153." },
+    
+    // --- HUNTER'S PARADISE & SAWMILL ---
+    { name: "Alter Bunker (Padlock)", loc: "Hunter's Paradise", code: "DYNAMISCH", type: "dynamic", info: "Zettel klebt im Büro hinter der Waffenkammer rechts an der Wand neben der Leiche." },
+    { name: "Sägewerk Schuppen/Lager", loc: "Lumber Yard (Sawmill)", code: "DYNAMISCH", type: "dynamic", info: "Codes für Schuppen, Toilette und Lagerhaus liegen als Zettel in der direkten Umgebung." },
+    { name: "Windturbinen Keypad", loc: "Sägewerk (Lumber Yard)", code: "DYNAMISCH", type: "dynamic", info: "Quest 'Unlisted Flight'. Code klebt am Beifahrerfenster des roten SUVs. Achtung: 30-Sek-Zeitlimit!" },
+    { name: "Black Box Schuppen", loc: "Sägewerk (Lumber Yard)", code: "DYNAMISCH", type: "dynamic", info: "Quest 'Unlisted Flight'. Zettel im östlichen Bürogebäude (Flussseite) auf dem Schreibtisch." },
+
+    // --- YBL-1 BUNKER & TIGER BAY ---
+    { name: "Gefängniszelle & Lager", loc: "YBL-1 Bunker", code: "DYNAMISCH", type: "dynamic", info: "Codes für Zelle und Padlock-Lager liegen auf Tischen in den benachbarten Räumen." },
+    { name: "UNLRA HQ Keypad", loc: "Tiger Bay", code: "DYNAMISCH", type: "dynamic", info: "Der Code spawnt zufällig auf Schreibtischen innerhalb oder direkt am UNLRA-Gebäude." },
+    { name: "Server-Raum", loc: "Radio Station", code: "1506", type: "static", info: "Quest 'The Last Broadcast'. Code steht auf einem Post-It im Büro (oberer Stock des Hauptgebäudes)." },
+
+    // --- STARTGEBIETE & DÖRFER ---
+    { name: "Villa Elena Tresor", loc: "Startstadt (Villa)", code: "DYNAMISCH", type: "dynamic", info: "Code liegt auf einem Notizblock auf dem Nachttisch im Schlafzimmer (Obergeschoss)." },
+    { name: "Rathaus Tresor", loc: "Startstadt (Town Hall)", code: "DYNAMISCH", type: "dynamic", info: "Der Code liegt auf einem Zettel neben dem Schalter für das stadtweite Übertragungsradio." },
+    { name: "Ban Suk Hütte", loc: "Ban Suk (Halbinsel)", code: "8777", type: "static", info: "<b>Fester Code!</b> Im roten Buch auf dem Boot. <b>Tipp:</b> Klettere über das Regal neben der Tür!" }
 ];
 
 // ==========================================
