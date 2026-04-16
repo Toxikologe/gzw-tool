@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
-        /* ============================================================== */
+/* ============================================================== */
 /* GUNSMITH LIVE-STATS BAR DESIGN */
 /* ============================================================== */
 .stat-row {
@@ -67,6 +67,56 @@
 .gs-select {
     width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold;
 }
+
+        /* ============================================================== */
+        /* BLUEPRINT TERMINAL DESIGN (CAD STYLE) */
+        /* ============================================================== */
+        .bp-terminal { 
+            display: flex; gap: 20px; height: 450px; margin-top: 15px; 
+        }
+        .bp-list { 
+            width: 320px; background: #111; border: 1px solid #333; border-radius: 6px; 
+            overflow-y: auto; display: flex; flex-direction: column; padding: 10px; gap: 8px; 
+        }
+        .bp-btn { 
+            background: #1a1a1a; color: #ccc; border: 1px solid #444; padding: 15px; 
+            text-align: left; border-radius: 4px; cursor: pointer; font-weight: bold; 
+            transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
+        }
+        .bp-btn:hover { background: #2a2a2a; color: #fff; border-color: #666; }
+        .bp-btn.active { 
+            background: rgba(100, 255, 218, 0.1); border-color: #64ffda; color: #64ffda; 
+            box-shadow: inset 4px 0 0 #64ffda; 
+        }
+        
+        /* Das gerasterte Blaupausen-Feld */
+        .bp-canvas { 
+            flex: 1; background-color: #0a192f; border: 2px solid #172a45; border-radius: 6px; 
+            position: relative; padding: 30px; overflow: hidden; 
+            /* Karomuster für Blueprint-Look */
+            background-image: 
+                linear-gradient(rgba(100, 255, 218, 0.05) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(100, 255, 218, 0.05) 1px, transparent 1px); 
+            background-size: 25px 25px; 
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8); 
+            display: flex; flex-direction: column;
+        }
+        .bp-title { 
+            font-family: 'Courier New', monospace; font-size: 2.2rem; color: #64ffda; 
+            margin-top: 0; margin-bottom: 20px; border-bottom: 2px dashed #172a45; 
+            padding-bottom: 10px; text-transform: uppercase; text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+        .bp-info-row { 
+            margin-bottom: 20px; font-family: 'Courier New', monospace; color: #a8b2d1; 
+            font-size: 1.15rem; line-height: 1.6; z-index: 2;
+        }
+        .bp-info-label { color: #64ffda; font-weight: bold; margin-right: 10px; }
+        
+        .bp-watermark { 
+            position: absolute; bottom: -30px; right: -20px; font-size: 12rem; 
+            color: rgba(100, 255, 218, 0.03); transform: rotate(-10deg); 
+            user-select: none; pointer-events: none; font-family: 'Courier New', monospace; font-weight: bold; 
+        }
 
         /* ============================================================== */
         /* FACTION SELECTION MODAL */
@@ -881,18 +931,33 @@
 
         <div id="tab-blueprints" class="tab-content">
             <h2>📜 Waffen-Blueprints (0.4 Unlocks)</h2>
-            <p style="color:#aaa; margin-bottom: 20px;">Wähle eine Waffe, um den exakten Fundort des Blueprints für die permanente Händler-Freischaltung zu sehen.</p>
-            <div class="panel-box">
-                <label for="blueprintSelect">Waffensystem auswählen:</label>
-                <select id="blueprintSelect" onchange="updateBlueprintInfo()" style="font-weight: bold; color: var(--accent);">
-                    <option value="">-- Wähle eine Waffe --</option>
-                </select>
-                <div id="blueprintDisplay" class="info-box" style="margin-top: 20px; display: none; border-left: 4px solid var(--accent); background: #1a1a1a; padding: 15px;">
-                    <h3 id="bpName" style="color: var(--accent); border: none; margin: 0; font-size: 1.4rem; padding-bottom: 10px;"></h3>
-                    <div style="margin: 10px 0; color: #ccc;"><strong>📍 Fundort:</strong> <span id="bpLoc" class="highlight"></span></div>
-                    <div style="margin: 10px 0; color: #ccc;"><strong>📖 Beschreibung:</strong> <span id="bpDesc"></span></div>
-                    <div style="margin-top: 15px; padding: 10px; background: rgba(255,165,0,0.1); border-radius: 4px; font-size: 0.85rem; color: #ddd; border-left: 3px solid #ffa500;">
-                        <strong>💡 Profi-Tipp:</strong> <span id="bpTip"></span>
+            <p style="color:#aaa; margin-bottom: 20px;">
+                Wähle einen Bauplan aus der linken Liste, um das geheime Dossier auf dem CAD-Terminal zu öffnen. 
+                Die Links navigieren dich direkt zum exakten Fundort auf der Karte.
+            </p>
+            
+            <div class="bp-terminal">
+                <div id="bpListContainer" class="bp-list">
+                    </div>
+
+                <div class="bp-canvas">
+                    <div class="bp-watermark">CAD</div>
+                    
+                    <h3 id="bpCanvasTitle" class="bp-title">WAFFE AUSWÄHLEN</h3>
+                    
+                    <div class="bp-info-row">
+                        <span class="bp-info-label">COORDINATES:</span><br>
+                        <span id="bpCanvasLoc" style="color: #fff;">-</span>
+                    </div>
+                    
+                    <div class="bp-info-row">
+                        <span class="bp-info-label">UNLOCK_SPECS:</span><br>
+                        <span id="bpCanvasDesc">-</span>
+                    </div>
+                    
+                    <div class="bp-info-row" style="margin-top: auto; padding: 15px; background: rgba(255,204,0,0.05); border-left: 4px solid #ffcc00;">
+                        <span style="color:#ffcc00; font-weight:bold; font-size: 1rem; display:block; margin-bottom: 5px;">⚠️ TACTICAL INTEL:</span>
+                        <span id="bpCanvasTip" style="font-family: Arial, sans-serif; font-size: 0.95rem; color: #ccc;">-</span>
                     </div>
                 </div>
             </div>
@@ -2753,41 +2818,72 @@
     }
 
     // ==============================================================
-    // BLUEPRINTS LOGIK
+    // BLUEPRINT TERMINAL LOGIK (CAD STYLE)
     // ==============================================================
-    
     function initBlueprints() {
-        const bpSelect = document.getElementById('blueprintSelect');
-        if (bpSelect && typeof blueprintDb !== 'undefined') {
-            const sortedBPs = Object.keys(blueprintDb).sort();
-            sortedBPs.forEach(name => {
-                const opt = document.createElement('option');
-                opt.value = name;
-                opt.text = name;
-                bpSelect.appendChild(opt);
-            });
+        const list = document.getElementById('bpListContainer');
+        if (!list || typeof blueprintDb === 'undefined') return;
+        
+        list.innerHTML = '';
+        
+        // Waffen alphabetisch sortieren
+        const sortedBPs = Object.keys(blueprintDb).sort();
+        
+        sortedBPs.forEach((name, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'bp-btn';
+            btn.id = 'bp-btn-' + index;
+            btn.innerHTML = `<span>📐 ${name}</span> <span style="color:#444; font-size:0.8rem;">▶</span>`;
+            
+            btn.onclick = () => selectBlueprint(name, btn);
+            list.appendChild(btn);
+        });
+
+        // Automatisch den ersten Eintrag laden, damit das Terminal nicht leer ist
+        if (sortedBPs.length > 0) {
+            selectBlueprint(sortedBPs[0], list.firstChild);
         }
     }
 
-    function updateBlueprintInfo() {
-    const val = document.getElementById('blueprintSelect').value;
-    const display = document.getElementById('blueprintDisplay');
-    
-    if (!val || typeof blueprintDb === 'undefined' || !blueprintDb[val]) {
-        display.style.display = 'none';
-        return;
+    function selectBlueprint(name, btnElement) {
+        // 1. Visuelles Button-Highlighting setzen
+        document.querySelectorAll('.bp-btn').forEach(b => {
+            b.classList.remove('active');
+            b.querySelector('span:last-child').style.color = '#444'; // Pfeil ausgrauen
+        });
+        
+        if (btnElement) {
+            btnElement.classList.add('active');
+            btnElement.querySelector('span:last-child').style.color = '#64ffda'; // Pfeil leuchten lassen
+        }
+
+        // 2. Daten aus der DB holen
+        const bp = blueprintDb[name];
+        if (!bp) return;
+
+        // 3. Canvas (Rechte Seite) befüllen
+        document.getElementById('bpCanvasTitle').innerText = name;
+        
+        const locElement = document.getElementById('bpCanvasLoc');
+        
+        // Prüfen, ob du einen MapGenie Link eingetragen hast
+        if (bp.mapUrl && bp.mapUrl.trim() !== "") {
+            locElement.innerHTML = `
+                <a href="${bp.mapUrl}" target="_blank" rel="noopener noreferrer" 
+                   style="color: #64ffda; text-decoration: none; border-bottom: 1px dashed #64ffda; transition: 0.2s;" 
+                   onmouseover="this.style.color='#fff'; this.style.borderBottom='1px solid #fff';" 
+                   onmouseout="this.style.color='#64ffda'; this.style.borderBottom='1px dashed #64ffda';" 
+                   title="Auf der interaktiven Karte anzeigen">
+                   ${bp.loc} 🔗
+                </a>`;
+        } else {
+            // Wenn das Feld leer ist, nur Text anzeigen
+            locElement.innerText = bp.loc;
+        }
+        
+        document.getElementById('bpCanvasDesc').innerText = bp.desc;
+        document.getElementById('bpCanvasTip').innerText = bp.tip;
     }
-    
-    const bp = blueprintDb[val];
-    document.getElementById('bpName').innerText = val;
-    
-    // NEU: Nutzt unsere Map-Link Funktion, um aus dem Text einen Hyperlink zu machen
-    document.getElementById('bpLoc').innerHTML = getMapLinkHTML(bp.loc);
-    
-    document.getElementById('bpDesc').innerText = bp.desc;
-    document.getElementById('bpTip').innerText = bp.tip;
-    display.style.display = 'block';
-}
 
     // ==============================================================
     // HÄNDLER-DATENBANK RENDER-LOGIK (AKKORDEON & SORTIERUNG)
