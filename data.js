@@ -684,99 +684,111 @@ const gearDb = [
 ];
     
 // ==========================================
-// 5. BOSS DATENBANK & INTEL (0.4 SPEARHEAD - 100% COMPLETE)
+// 10. BOSS DATENBANK (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 const bosses = {
-    // --- STARTREGIONEN & WÄLDER ---
+    // --- Startregionen & Mid-Game ---
     "market_leader": { 
-        name: "Krimineller Anführer (Criminal Leader)", 
-        loc: "Startstadt (Marktplatz)", 
-        loot: "Basis-Waffen, Munition, Start-Schlüssel", 
-        tip: "Trägt meist eine Schrotflinte oder eine einfache AK. Er ist sehr aggressiv auf kurze Distanz, lässt sich aber leicht flankieren." 
+        name: "Criminal Leader", 
+        threat: "low", 
+        loc: "Nam Thaven / Kiu Vongsa / Pha Lang (Marktplatz)", 
+        loot: "AK-74 (Modernisiert), Fraktions-Schlüssel", 
+        tip: "Oft in Gebäuden mit zwei Ausgängen verschanzt. Nutze Splittergranaten, bevor du den Raum betrittst, um seine Wachen auszuschalten." 
     },
     "lumber_boss": { 
-        name: "Sägewerk-Vorarbeiter (Lumber Yard Foreman)", 
-        loc: "Lumber Yard (Hauptgebäude / Echo)", 
-        loot: "SKS, AKM, Holzfäller-Schlüssel", 
-        tip: "Versteckt sich oft im Sägewerk-Hauptgebäude oder bei den Holzstapeln. Hat meist 2-3 stark gepanzerte Wachen bei sich." 
+        name: "Foreman (Red Stone Brigade)", 
+        threat: "med", 
+        loc: "Sägewerk (Sawmill)", 
+        loot: "Schrotflinte, Sägewerk-Schlüssel, AK-74M mit ACOG", 
+        tip: "Gehört zur Red Stone Brigade. Sie sind hochkoordiniert und sollten nicht als unorganisierte Miliz unterschätzt werden. Halte Distanz vom Waldrand aus." 
     },
     "rebel_ybl": { 
-        name: "Rebellen-Anführer (Rebel Leader)", 
-        loc: "YBL-1 Bunker (Haupteingang oder Untergeschoss)", 
-        loot: "AK-Plattformen, Level IIIA Rüstung, Bunker Keys", 
-        tip: "Trägt oft ein rotes Barett. Nutze Granaten (Flashbangs/Frags), um ihn und seine Wachen aus den extrem engen Gängen des Bunkers zu treiben." 
+        name: "Rebel Leader (LLA)", 
+        threat: "high", 
+        loc: "YBL-1 Bunker (Büro-Ebene)", 
+        loot: "AK-Plattform, Blaues Bandana (Einzigartig), Bunker-Schlüssel", 
+        tip: "Extreme Nahkampfgefahr! Die engen Korridore bevorteilen CQB-Waffen. Er nutzt oft dunkle Ecken und Räume, um tödliche Hinterhalte zu legen." 
     },
-
-    // --- MID-GAME POIs ---
     "hunter_commander": { 
-        name: "Feindlicher Kommandant (Hostile Commander)", 
-        loc: "Hunter's Paradise (Schießstand oder Bar)", 
-        loot: "M4A1, M855 Munition, Level III Rüstung", 
-        tip: "Achtung: Er und seine Wachen nutzen oft westliche (amerikanische) Waffen. Er droppt sehr oft wertvolle Schlüssel für die angrenzende Waffenkammer." 
+        name: "Hostile Commander (Lotus Circle)", 
+        threat: "high", 
+        loc: "Hunter's Paradise (Waffenlager)", 
+        loot: "Modifizierte M4A1, Mossberg 590, Schalldämpfer", 
+        tip: "Trägt meist einen NIJ III Helm. Kopfschüsse sind hier nur mit panzerbrechender (AP) Munition effektiv. Sichere erst die Außenbereiche." 
     },
     "malo_blue": { 
-        name: "Grin / Malo Luangrath (Blue Lagoon Boss)", 
-        loc: "Blue Lagoon (Resort, Kahok Werkstatt oder kleine Insel)", 
-        loot: "Level III+ Rüstung, 1911 C Pistole (Quest-Item)", 
-        tip: "<b>0.4 ROTATION:</b> Spawnt jetzt an 3 verschiedenen Orten! Nutze AP-Munition für seine Level III+ Rüstung. <b>Wichtig:</b> Vergiss nicht, seine '1911 C Pistole' manuell aus seinem Holster zu looten (Wichtig für die Quest 'Like a Boss')!" 
+        name: "Malo 'Grin' Luangrath", 
+        threat: "extreme", 
+        loc: "Blaue Lagune (Restaurant)", 
+        loot: "Goldene Uhr, 1911 C Pistole (im Halster versteckt), AK-74M", 
+        tip: "Die gefährlichste KI im Mid-Game. Er hat eine extrem hohe Reaktionszeit und patrouilliert oft verdeckt mit dem brutalen Sifa Syndicate." 
     },
     "banpa_leader": { 
-        name: "Naga / Ältester (Elder Leader)", 
-        loc: "Ban Pa (Ältestenhaus oder verstecktes Dock)", 
-        loot: "Type 51 Pistole, AK-Varianten, Holzstatuen", 
-        tip: "Trägt ein auffälliges orangefarbenes Hemd. Du brauchst ihn für die 'Warm Welcome' Quest. Er patrouilliert meist beim großen Ältestenhaus auf den Holzstelzen oder unten am geheimen Dock." 
+        name: "Naga (Elder)", 
+        threat: "med", 
+        loc: "Ban Pa (Häuser auf Stelzen)", 
+        loot: "SKS, Quest-Dokumente, Elder Key", 
+        tip: "Bleibt oft in den runden Holzhütten am Wasser. Vorsicht vor den Naga-Scharfschützen, die sich in den Bäumen und im dichten Blattwerk der Küste verstecken." 
     },
-
-    // --- END-GAME & HIGH DANGER ---
+    
+    // --- End-Game & High Danger ---
     "fort_commander": { 
-        name: "General Pa (Fort Commander)", 
-        loc: "Fort Narith (Hauptquartier)", 
-        loot: "Level III++ Rüstung (Defender-2), High-End Sturmgewehre, AP-Munition", 
-        tip: "Einer der am schwersten gepanzerten Gegner im gesamten Spiel. Ziele unbedingt auf den Kopf (Gesicht) oder die Beine, wenn du keine reine AP-Munition (wie M995) geladen hast!" 
+        name: "General Pa (LAF)", 
+        threat: "extreme", 
+        loc: "Fort Narith (HQ - Obergeschoss)", 
+        loot: "Militär-Ausrüstung, HQ Schlüssel, Gravierte AK-74M", 
+        tip: "Absolutes Endgame-Ziel, extrem schwer bewacht durch elitäre LAF Truppen. Nimm ein komplettes Squad mit und achte auf die dynamischen Mörserschläge im Außengebiet." 
     },
     "midnight_laf": { 
-        name: "LAF Kommandant (LAF Commander)", 
-        loc: "Midnight Sapphire (Dach oder obere Stockwerke)", 
-        loot: "Signatur-Waffe, Level III+ Rüstung, Hotel Office Key", 
-        tip: "Extrem schwer bewacht! Wenn du ihn das erste Mal tötest, erhältst du Zugang zur 'M700 Side Task'. Sein Schlüssel öffnet den wertvollen Loot-Raum auf der 2. Etage des Hotels." 
+        name: "LAF Commander", 
+        threat: "extreme", 
+        loc: "Midnight Sapphire (Hotel Dach)", 
+        loot: "DMR-Gewehre (M700), Hotel-Keys", 
+        tip: "Tödliche Gefahr durch Sniper auf dem Dach und auf dem Helipad. Räume das Hotel systematisch von unten nach oben über das Haupttreppenhaus." 
     },
     "tiger_bay_unlra": { 
-        name: "UNLRA Offizier (UNLRA Officer)", 
-        loc: "Tiger Bay (Flüchtlingslager / UNLRA HQ)", 
-        loot: "High-Tier Meds, seltene Intel-Dokumente", 
-        tip: "Das UNLRA-Lager ist eine absolute Todeszone. Räume erst die Umgebung per Scharfschütze, bevor du ihn pushst. Droppt den blauen UNLRA-Ordner für Handshake." 
+        name: "UNLRA Officer", 
+        threat: "extreme", 
+        loc: "Tiger Bay (UNLRA HQ / Zeltlager)", 
+        loot: "SVD Sniper, UNLRA-Intel (Blaue Mappe), Level 4 Armor", 
+        tip: "Verschanzt sich im Zeltlager nahe dem HQ. Das Gebiet ist ein absoluter Fleischwolf. Achtung vor endlosen KI-Patrouillen und feindlichen Snipern in den Büschen auf dem Weg dorthin." 
     },
     "tiger_bay_pier": { 
-        name: "Pier Boss (Tiger Bay)", 
-        loc: "Tiger Bay (Am Ende des Piers)", 
-        loot: "Sniper-Gewehre, Zielfernrohre, Schmuck", 
-        tip: "Der extrem lange Weg über den Holzpier bietet null Deckung. Nutze Scharfschützengewehre, um ihn und seine Wachen aus sicherer Distanz vom Ufer aus auszuschalten." 
+        name: "Pier Boss", 
+        threat: "extreme", 
+        loc: "Tiger Bay (Pier / Hafenanlagen)", 
+        loot: "CQB-Waffen, Pier-Schlüssel, Wertsachen", 
+        tip: "Das Pier-Gebiet ist ein unübersichtliches Labyrinth aus Containern. Nutze das Wasser als Flanke, aber pass auf Scharfschützen an der Küstenlinie auf." 
     },
     "airfield_boss": { 
-        name: "Airfield Commander (Ground Zero)", 
-        loc: "Pha Lang Airfield (Hangar, Marktplatz oder Zentralgebäude)", 
-        loot: "High-End Gear, Spezial-Schlüssel", 
-        tip: "<b>0.4 ROTATION:</b> Hat jetzt 3 verschiedene Spawn-Punkte (Haupt-Hangar, Marktplatz oder Zentralgebäude)! Extrem wichtig für die 'Departure' Mission. Er wird von 2 schwer gepanzerten Elitesoldaten eskortiert." 
+        name: "Airfield Commander (Viper Tactical)", 
+        threat: "extreme", 
+        loc: "Pha Lang Airfield / Hangars", 
+        loot: "CQA1 Rifle (Einzigartig), Airfield-Keys, High-Tier Gear (Nachtsicht)", 
+        tip: "Die Viper Tactical Services nutzen professionelle Flankierung und ständiges Unterdrückungsfeuer. Ziehe die KIs einzeln aus der Distanz auf das offene Rollfeld (Runway)." 
     },
 
-    // --- ROAMING BOSSES (Wechselnde Spawns) ---
+    // --- Roaming Bosses (Wechselnde Spawns) ---
     "viper": { 
-        name: "Viper (Jungle Camps)", 
-        loc: "Dschungel (Wechselnde kleine Camps)", 
-        loot: "Viper Chest Rig, modifizierte SMGs", 
-        tip: "Ein extrem mobiler Boss, der sich oft in den dicht bewachsenen und schwer einsehbaren Dschungel-Camps versteckt. Nahkampf-Waffen (Shotguns/SMGs) sind hier Pflicht." 
+        name: "Viper (Roaming)", 
+        threat: "high", 
+        loc: "Dschungel-Camps (Zufällige Spawns)", 
+        loot: "Viper Chest Rig (Einzigartig)", 
+        tip: "Spawnt völlig zufällig in den dichten Wäldern zwischen den POIs. Er ist in der Vegetation perfekt getarnt und greift oft ohne Vorwarnung aus dem Gebüsch an." 
     },
     "bloodhound": { 
-        name: "Bloodhound (Military Checkpoints)", 
-        loc: "Militär-Checkpoints (z.B. nördlich von YBL-1)", 
-        loot: "Taktische Rucksäcke, schwere Schutzwesten", 
-        tip: "Bewacht oft die Übergänge zwischen den Sektoren. Agiert extrem taktisch und nutzt oft weitreichende Flankierungsmanöver mit seinen Wachen. Niemals still stehen bleiben!" 
+        name: "Bloodhound", 
+        threat: "high", 
+        loc: "Military Checkpoints (Zufällige Spawns)", 
+        loot: "Spezial-Ausrüstung, Checkpoint-Keys", 
+        tip: "Patrouilliert zufällig zwischen den abgeriegelten militärischen Straßensperren. Er und seine Wachen nutzen oft Schalldämpfer, achte also genau auf das Mündungsfeuer im Wald!" 
     },
     "golden_boy": { 
-        name: "Golden Boy (Midnight Sapphire)", 
-        loc: "Midnight Sapphire (Villen-Viertel)", 
-        loot: "Goldene Waffen, extrem viel Bargeld, Diamanten", 
-        tip: "Der Name ist Programm: Er droppt den teuersten Loot im Spiel. Wird jedoch von den gefährlichsten Elite-Söldnern verteidigt. Perfekt für den 'Millionärs-Run'." 
+        name: "Golden Boy", 
+        threat: "high", 
+        loc: "Midnight Sapphire (Luxus-Villa)", 
+        loot: "Wertsachen, Goldene Items, Safe-Codes", 
+        tip: "Hält sich fast ausschließlich in den geschlossenen Räumen der Villa auf. Schieße die Lichter aus, schalte den Stromkasten ab, nutze Nachtsicht und stürme mit CQB-Waffen." 
     }
 };
     
