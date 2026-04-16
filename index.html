@@ -1299,10 +1299,16 @@
             <h2>🔢 Decryption Terminal (Codes & Passwörter)</h2>
             <div class="panel-box">
                 <p style="color: #ccc; font-size: 0.95rem; margin-top: 0; margin-bottom: 20px;">
-                    Greife auf die geheime Intel-Datenbank zu. <strong style="color: #7ca35a;">Statische Codes</strong> bleiben immer gleich. <strong style="color: #ffa500;">Dynamische Codes</strong> (aus dem 0.4 Update) generieren sich auf jedem Server neu und müssen im Raid gesucht werden!
+                    Greife auf die geheime Intel-Datenbank zu. <strong style="color: #7ca35a;">Statische Codes</strong> bleiben immer gleich. <strong style="color: #ffa500;">Dynamische Codes</strong> generieren sich auf jedem Server neu!
                 </p>
                 
-                <input type="text" id="codeSearchInput" placeholder="Datenbank durchsuchen (Ort, Name oder Code eingeben)..." onkeyup="renderDecryptionTerminal()" style="width: 100%; padding: 15px; border-radius: 6px; border: 1px solid var(--accent); background: #1a1a1a; color: white; font-size: 1.1rem; margin-bottom: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <button class="filter-btn active" onclick="setCodeFilter('all', this)" style="flex: 1; padding: 10px; border-radius: 4px; border: 1px solid var(--accent); background: rgba(124,163,90,0.1); color: white; cursor: pointer; font-weight: bold;">Alle Codes</button>
+                    <button class="filter-btn" onclick="setCodeFilter('static', this)" style="flex: 1; padding: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: #888; cursor: pointer; font-weight: bold;">Feste Codes</button>
+                    <button class="filter-btn" onclick="setCodeFilter('dynamic', this)" style="flex: 1; padding: 10px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: #888; cursor: pointer; font-weight: bold;">Dynamische Codes</button>
+                </div>
+
+                <input type="text" id="codeSearchInput" placeholder="Suchen nach Ort oder Name..." onkeyup="renderDecryptionTerminal()" style="width: 100%; padding: 15px; border-radius: 6px; border: 1px solid var(--accent); background: #1a1a1a; color: white; font-size: 1.1rem; margin-bottom: 10px;">
                 
                 <div id="decryptionGrid" class="codes-grid">
                     </div>
@@ -2178,6 +2184,25 @@
     // ==============================================================
     // DECRYPTION TERMINAL LOGIK (CODES & PASSWÖRTER)
     // ==============================================================
+    let activeCodeTypeFilter = 'all';
+
+    function setCodeFilter(type, btn) {
+        activeCodeTypeFilter = type;
+        
+        // Buttons optisch aktualisieren
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.style.borderColor = '#333';
+            b.style.background = '#1a1a1a';
+            b.style.color = '#888';
+        });
+        
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.background = 'rgba(124,163,90,0.1)';
+        btn.style.color = 'white';
+        
+        renderDecryptionTerminal();
+    }
+
     function renderDecryptionTerminal() {
         const container = document.getElementById('decryptionGrid');
         const input = document.getElementById('codeSearchInput');
@@ -2187,24 +2212,29 @@
         const searchTerm = input ? input.value.toLowerCase() : '';
         container.innerHTML = '';
 
-        // Filtern nach Suchbegriff
-        const filteredCodes = codesDb.filter(c => 
-            c.name.toLowerCase().includes(searchTerm) || 
-            c.loc.toLowerCase().includes(searchTerm) ||
-            c.code.toLowerCase().includes(searchTerm)
-        );
+        // Filtern nach Typ UND Suchbegriff
+        const filteredCodes = codesDb.filter(c => {
+            const matchesType = (activeCodeTypeFilter === 'all' || c.type === activeCodeTypeFilter);
+            
+            const name = (c.name || "").toLowerCase();
+            const loc = (c.loc || "").toLowerCase();
+            const codeVal = String(c.code || "").toLowerCase();
+            const matchesSearch = name.includes(searchTerm) || loc.includes(searchTerm) || codeVal.includes(searchTerm);
+            
+            return matchesType && matchesSearch;
+        });
 
         if (filteredCodes.length === 0) {
             container.innerHTML = `
                 <div style="grid-column: 1 / -1; background: rgba(179, 57, 57, 0.1); border: 1px solid #ff4c4c; padding: 20px; text-align: center; border-radius: 6px; color: #ff4c4c;">
                     <strong>❌ KEIN EINTRAG GEFUNDEN</strong><br>
-                    <span style="color: #ccc; font-size: 0.9rem;">Die Suche nach "${searchTerm}" ergab keine Treffer in der Datenbank.</span>
+                    <span style="color: #ccc; font-size: 0.9rem;">Keine Ergebnisse für diesen Filter oder Suchbegriff.</span>
                 </div>
             `;
             return;
         }
 
-        // Karten generieren
+        // Generierung der Karten
         filteredCodes.forEach(item => {
             const isDynamic = item.type === "dynamic";
             const cardClass = isDynamic ? "dynamic" : "static";
