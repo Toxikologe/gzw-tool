@@ -1374,149 +1374,77 @@ const lzDb = {
     }
 };
 
-    // 11. SYMPTOME DATENBANK
-    const symptomDb = {
-        "gray_vision": { diag: "Kritischer Blutverlust", treat: "Blutbeutel", info: "Fülle dein Blut SOFORT auf!" },
-        "blurry_vision": { diag: "Schock / Akuter Schmerz", treat: "Schmerzmittel", info: "Nimm Ibuprofen oder Morphin." },
-        "tunnel_vision": { diag: "Koma steht bevor", treat: "Tourniquet + Blut", info: "Stoppe die Blutung sofort!" },
-        "limping": { diag: "Knochenbruch (Bein)", treat: "Schiene", info: "Schiene anlegen, sonst kannst du nicht sprinten." },
-        "weapon_sway": { diag: "Knochenbruch (Arm)", treat: "Schiene + Painkillers", info: "Stoppt das Wackeln beim Zielen." },
-        "stamina_drain": { diag: "Organschaden oder Erschöpfung", treat: "Surkit oder Essen", info: "Heile deine Lunge oder iss etwas." },
-        "coughing": { diag: "Organschaden (Lunge/Magen)", treat: "Surkit", info: "Such dir sichere Deckung für die OP." },
-        "heartbeat": { diag: "Adrenalinabfall", treat: "Morphin", info: "Beruhigt den Puls." },
-        "stomach": { diag: "Nahrungsmangel", treat: "Essen", info: "Iss, bevor die Ausdauer-Strafen greifen." }
-    };
-
-    // 12. STATUS EFFECT DATENBANK
-    const statusEffectsDb = {
-        "out_of_breath": { 
-            de: "Außer Atem", en: "Out of Breath", 
-            desc: "Erschöpfung der Beinkraft. Atemstillstand. Lungenschädigung.",
-            effect: "Hörbarer Herzschlag/Atemgeräusche. Verhindert Atemstillstand.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/bd/OutOfBreathIcon.png"
-        },
-        "cramps": { 
-            de: "Krämpfe", en: "Cramps", 
-            desc: "Arm-Ausdauer liegt unter 1%",
-            effect: "Erhöht das Waffenschwanken & Verhindert Nahkampfangriffe.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/2/27/CrampsIcon.png"
-        },
-        "sore_arms": { 
-            de: "Schmerzende Arme", en: "Sore Arms", 
-            desc: "Arm-Ausdauer liegt unter 40%",
-            effect: "Erhöht das Waffenschwanken",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/50/SoreArmsIcon.png"
-        },
-        "fatigued": { 
-            de: "Erschöpft (Gelb)", en: "Fatigued", 
-            desc: "Bein-Ausdauer liegt unter 40%",
-            effect: "Hörbarer Herzschlag/Atemgeräusche. Unterbricht vorübergehend die Regeneration der Ausdauer.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/34/FatiguedIcon.png"
-        },
-        "exhausted": { 
-            de: "Erschöpft (Rot)", en: "Exhausted", 
-            desc: "Bein-Ausdauer liegt unter 1%",
-            effect: "Hörbarer Herzschlag/Atemgeräusche. Sichtbares Waffenzittern. Verhindert Sprinten und Springen. Verhindert Überwinden von Hindernissen/Klettern. Unterbricht vorübergehend die Regeneration der Beinkraft.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/6/66/ExhaustedIcon.png"
-        },
-        "encumbered": { 
-            de: "Überlastet", en: "Encumbered", 
-            desc: "Bis das Gewicht unter 54 kg sinkt",
-            effect: "Verhindert Sprinten und Springen. Verringert die Regeneration der Beinkraft. Verringert die Zielgeschwindigkeit.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/92/EncumberedIcon.png"
-        },
-        "dazed": { 
-            de: "Benommenheit", en: "Dazed", 
-            desc: "Tritt auf bei Kopftreffern (wenn der Helm das Projektil abfängt) oder durch sehr nahe Explosionen.",
-            effect: "Verschwommene Sicht und stark gedämpftes Gehör. Du verlierst kurzzeitig die akustische Orientierung im Raum.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/7/75/OrangeBrainIcon.png"
-        },
-        "bleed_light": { 
-            de: "Blutung: Leicht", en: "Light Bleeding", 
-            desc: "Wird durch Streifschüsse, kleine Kaliber oder Umgebungs-Schaden (Stacheldraht) verursacht.",
-            effect: "Langsamer Blutverlust (rotes Tropfen-Icon). Heilt im Gegensatz zu schweren Wunden über Zeit von selbst, kann aber mit einer Bandage sofort gestoppt werden.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/7/7b/LightBleedIcon.png"
-        },
-        "bleed_med": { 
-            de: "Blutung: Mittel", en: "Medium Bleeding", 
-            desc: "Klassische Schusswunde, typischerweise durch Sturmgewehre verursacht.",
-            effect: "Moderater Blutverlust. Heilt NICHT von selbst. Muss zwingend mit Bandage, Combat Gauze oder Tourniquet behandelt werden.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/6/6f/MediumBleedingIcon.png"
-        },
-        "bleed_heavy": { 
-            de: "Blutung: Schwer", en: "Severe Bleeding", 
-            desc: "Arterielle Blutung. Meist durch schwere Kaliber (Sniper) oder Volltreffer auf ungeschützte Gliedmaßen.",
-            effect: "Extrem schneller Blutverlust! Führt in kürzester Zeit zum Koma. Das Tourniquet (CAT) ist die einzig verlässliche und schnellste Sofortmaßnahme.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e7/SevereBleedingIcon.png"
-        },
-        "fatigued": { 
-            de: "Ermüdung", en: "Fatigued", 
-            desc: "Verursacht durch permanentes Sprinten oder beginnenden Mangel an Hydration/Energie.",
-            effect: "Hörbarer Herzschlag und schweres Atmen. Stoppt vorübergehend die Regeneration der Bein-Ausdauer (Leg Stamina).",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/34/FatiguedIcon.png"
-        },
-        "exhausted": { 
-            de: "Erschöpfung", en: "Exhausted", 
-            desc: "Kritischer Mangel an Hydration/Energie oder extreme Gewichts-Überbelastung.",
-            effect: "Sichtbares Waffenwackeln (Sway). Verhindert Sprinten, Springen und Klettern. Regeneration der Ausdauer ist komplett gestoppt. Sofort essen/trinken!",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/6/66/ExhaustedIcon.png"
-        },
-        "coma": { 
-            de: "Koma", en: "Coma", 
-            desc: "Tritt auf, wenn dein Blutvolumen auf Null sinkt oder lebenswichtige Organe (Herz, Gehirn) zerstört werden.",
-            effect: "Vollständiger Kontrollverlust, der Charakter kollabiert. Du hast ein kurzes Zeitfenster, in dem dich Teammitglieder retten können (Blutbeutel, Epi-Pen).",
-            img: "https://via.placeholder.com/150x150/222222/444444?text=Coma"
-        },
-        "suffering": { 
-            de: "Leiden", en: "Suffering", 
-            desc: "Begleiterscheinung von zerstörten Knochen (Arme/Beine) oder massiven Organschäden.",
-            effect: "Der Charakter stöhnt unkontrolliert vor Schmerzen (Gegner können dich dadurch orten!). Führt zu Schwindel und verzieht das Aiming.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/6/69/SufferingIcon.png"
-        },
-        "pain": { 
-            de: "Schmerz", en: "Pain", 
-            desc: "Entsteht durch Wunden oder 'Blunt Force Trauma' (Rüstung stoppt das Projektil, aber die Aufprallenergie schlägt durch).",
-            effect: "Verschwommene Ränder im Sichtfeld und leichtes Pulsieren. Heilt bei Prellungen (Bruises) oft von selbst, ansonsten Schmerzmittel nutzen.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/9/9b/PainIcon.png"
-        },
-        "nausea": { 
-            de: "Übelkeit", en: "Nausea", 
-            desc: "Entsteht primär durch Leberschäden, starke radioaktive Verstrahlung oder Intoxikation.",
-            effect: "Verzerrte Sicht und Unwohlsein. Nutze zwingend ein Surgery Kit (falls Leber beschädigt) oder verlasse das radioaktive Gebiet.",
-            img: "https://static.wikia.nocookie.net/gray-zone-warfare/images/7/7a/NauseousIcon.png"
-        },
-        "intoxication": { 
-            de: "Vergiftung", en: "Intoxication", 
-            desc: "Akkumuliert sich durch den übermäßigen Einsatz von Stimulanzien (wie Painkillern) oder unsauberem Sumpf-Wasser.",
-            effect: "Baut sich langsam auf und führt zu schwerer Übelkeit. Sinkt über Zeit langsam ab oder erfordert spezifische Gegenmittel.",
-            img: "https://via.placeholder.com/150x150/222222/a35a7c?text=Toxic"
-        },
-        "radiation": { 
-            de: "Verstrahlung", en: "Radiation", 
-            desc: "Entsteht in hochgradig verstrahlten Gebieten (wie dem Ground Zero Krater am Airfield).",
-            effect: "Akkumuliert im Körper. Führt unbehandelt zu Gewebeschäden, Übelkeit und letztendlich zum Tod. Erfordert Schutzanzug/Gasmaske.",
-            img: "https://via.placeholder.com/150x150/222222/aaff00?text=Radiation"
-        }
-    };
-
-    function updateStatusEffect() {
-        const val = document.getElementById('statusSelect').value;
-        const infoDisplay = document.getElementById('statusInfo');
-        const imgElement = document.getElementById('statusImg');
-        
-        if (val === "") {
-            infoDisplay.innerHTML = "Wähle einen Effekt für Ursachen und Auswirkungen...";
-            imgElement.src = "https://via.placeholder.com/150x150/222222/7ca35a?text=Status+Wählen";
-        } else {
-            const info = statusEffectsDb[val];
-            infoDisplay.innerHTML = `
-                <div style="margin-bottom: 8px;"><strong>Ursache:</strong> ${info.desc}</div>
-                <div style="color: #ff4c4c; font-weight: bold; margin-bottom: 4px;">Auswirkung:</div>
-                <div style="line-height: 1.4;">${info.effect}</div>
-            `;
-            imgElement.src = info.img;
-        }
+// ==========================================
+// 25. MEDICAL CENTER DATENBANK (0.4 COMPLETE)
+// ==========================================
+const medicalDb = [
+    {
+        id: "bleed_light",
+        name: "Leichte Blutung",
+        icon: "🩸",
+        symptom: "Rote Blutflecken am Boden, HP sinkt langsam",
+        diag: "Oberflächliche Wunde",
+        desc: "Eine geringfügige Verletzung der Hautschichten. Verursacht stetigen, aber langsamen Blutverlust.",
+        vitals: [{ label: "Blutdruck", val: 85, color: "#7ca35a" }],
+        treat: ["Bandage", "Combat Gauze"],
+        tip: "Bandagen sind günstig, nutze sie zuerst für leichte Wunden."
+    },
+    {
+        id: "bleed_heavy",
+        name: "Schwere Blutung",
+        icon: "🩸🩸",
+        symptom: "Massiver Blutverlust, Sicht wird schnell grau",
+        diag: "Arterielle Verletzung",
+        desc: "Kritischer Zustand! Ohne Behandlung tritt innerhalb von 60-90 Sekunden das Koma ein.",
+        vitals: [{ label: "Blutvolumen", val: 40, color: "#ff4c4c" }],
+        treat: ["Tourniquet (CAT) - SOFORT!", "Blutbeutel (1000ml)", "Israeli Bandage"],
+        tip: "CAT stoppt die Blutung sofort, danach musst du das Blutvolumen wieder auffüllen."
+    },
+    {
+        id: "fracture",
+        name: "Knochenbruch",
+        icon: "🦴",
+        symptom: "Humpeln, extremes Wackeln beim Zielen",
+        diag: "Fraktur der Gliedmaßen",
+        desc: "Ein gebrochener Knochen verhindert den aufrechten Gang oder das ruhige Halten der Waffe.",
+        vitals: [{ label: "Mobilität", val: 20, color: "#ffa500" }],
+        treat: ["Schiene (Holz / SAM)", "Chirurgisches Tape (Notbehelf)"],
+        tip: "Eine SAM-Schiene ist schneller angewendet als die hölzerne Version."
+    },
+    {
+        id: "organ_damage",
+        name: "Organschaden",
+        icon: "🫁",
+        symptom: "Charakter hustet Blut, ständiges Stöhnen",
+        diag: "Thorax / Abdomen Penetration",
+        desc: "Innere Organe (Lunge, Magen, Leber) wurden verletzt. Verursacht Schmerz und dauerhaften HP-Verlust.",
+        vitals: [{ label: "Organfunktion", val: 35, color: "#ff4c4c" }],
+        treat: ["Chirurgie-Set (SurvKit / CMS)", "Schmerzmittel"],
+        tip: "Chirurgie dauert sehr lange (15-20 Sek). Suche dir unbedingt eine sichere Deckung!"
+    },
+    {
+        id: "pain",
+        name: "Starker Schmerz",
+        icon: "⚡",
+        symptom: "Verschwommene Sicht am Bildschirmrand",
+        diag: "Trauma-Reaktion",
+        desc: "Der Körper steht unter Schock. Die Sichttrübung erschwert die Identifizierung von Zielen.",
+        vitals: [{ label: "Konzentration", val: 50, color: "#ffa500" }],
+        treat: ["Ibuprofen", "Meloxicam", "Morphin (Kritisch)"],
+        tip: "Vorsicht: Starke Schmerzmittel entziehen dir massiv Hydration (Wasser)!"
+    },
+    {
+        id: "radiation",
+        name: "Strahlenkrankheit",
+        icon: "☢️",
+        symptom: "Nausea (Übelkeit), plötzlicher Schwindel",
+        diag: "Radioaktive Belastung (Ground Zero)",
+        desc: "Zellen wurden durch Gammastrahlung geschädigt. Das Immunsystem bricht zusammen.",
+        vitals: [{ label: "Zellintegrität", val: 60, color: "#7ca35a" }],
+        treat: ["Anti-Rad Tabletten", "Viel Wasser trinken", "Gebiet verlassen"],
+        tip: "Strahlenkrankheit kann im Feld nicht vollständig geheilt werden, nur verzögert."
     }
+];    
     
 // ==========================================
 // 13. HÄNDLER FREISCHALTUNGEN (0.4 SPEARHEAD - 100% COMPLETE)
