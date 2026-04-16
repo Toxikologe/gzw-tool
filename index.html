@@ -1254,92 +1254,15 @@
         </div>
 
         <div id="tab-loot" class="tab-content">
-            <h2>💰 Loot & Verkaufspreise (0.4 Meta)</h2>
-            <div class="grid">
-                <div class="panel-box">
-                    <label for="valSelect" style="margin-top: 0;">Loot-Datenbank (Deutscher Name / Englisch)</label>
-                    <select id="valSelect" onchange="updateValuable()" style="font-weight: bold; color: var(--accent);">
-                        <option value="">-- Wähle ein Item --</option>
-                        
-                        <optgroup label="💎 High-End & Jackpots">
-                            <option value="ltsd_laser_designator">LTSD-4-3 Zielmarkierer (Laser Designator)</option>
-                            <option value="moutai_alcohol">Moutai Alkohol (Moutai)</option>
-                            <option value="pearl_earrings">Perlenohrringe (Pearl Earrings)</option>
-                        </optgroup>
-                        
-                        <optgroup label="💍 Schmuck & Wertsachen">
-                            <option value="gold_phone">Goldenes Smartphone (Gold Phone)</option>
-                            <option value="diamond_ring">Diamantring (Diamond Ring)</option>
-                            <option value="gold_watch">Goldene Uhr / Rolex (Gold Watch)</option>
-                            <option value="gold_coin">Goldmünze (Gold Coin)</option>
-                            <option value="gold_chain">Goldkette (Gold Chain)</option>
-                            <option value="silver_coin">Silbermünze (Silver Coin)</option>
-                            <option value="pocket_watch">Taschenuhr (Pocket Watch)</option>
-                            <option value="silver_chain">Silberkette (Silver Chain)</option>
-                        </optgroup>
-
-                        <optgroup label="💻 Elektronik & Technik">
-                            <option value="military_radio">Militärfunkgerät (Military Radio)</option>
-                            <option value="rt97s">RT97S Funkgerät (RT97S)</option>
-                            <option value="gpu">Grafikkarte (GPU)</option>
-                            <option value="laptop">Laptop / Notebook (Laptop)</option>
-                            <option value="tablet">Tablet (Tablet)</option>
-                            <option value="slr_camera">Spiegelreflexkamera (SLR Camera)</option>
-                            <option value="smartphone">Smartphone (Smartphone)</option>
-                            <option value="digital_camera">Digitalkamera (Digital Camera)</option>
-                            <option value="hdd">Festplatte (HDD)</option>
-                            <option value="voice_recorder">Diktiergerät (Voice Recorder)</option>
-                        </optgroup>
-
-                        <optgroup label="📁 Dokumente & Intel">
-                            <option value="weapon_blueprint">Waffen-Blueprint (Weapon Blueprint)</option>
-                            <option value="class_docs">Geheime Dokumente (Classified Docs)</option>
-                            <option value="usb_drive">Verschlüsseltes USB-Laufwerk (Secure USB Drive)</option>
-                            <option value="intel_folder">Intel Ordner (Intel Folder)</option>
-                            <option value="passport">Reisepass (Passport)</option>
-                            <option value="credit_card">Kreditkarte (Credit Card)</option>
-                            <option value="wallet">Geldbörse (Wallet)</option>
-                        </optgroup>
-
-                        <optgroup label="🔧 Werkzeuge & Quest-Material">
-                            <option value="acetylene_cylinder">Acetylen-Flasche (Acetylene Cylinder)</option>
-                            <option value="lithium_grease">Lithiumfett (Lithium Grease)</option>
-                            <option value="low_grade_gunpowder">Schießpulver (Low Grade Gunpowder)</option>
-                            <option value="weapon_parts">Waffenteile (Weapon Parts)</option>
-                            <option value="mre_ration">Kampfration (MRE Ration)</option>
-                        </optgroup>
-
-                        <optgroup label="🧪 Chemikalien & Medizin">
-                            <option value="sulfuric_acid">Schwefelsäure (Sulfuric Acid)</option>
-                            <option value="water_samples">Wasserproben (Water Samples)</option>
-                        </optgroup>
-
-                        <optgroup label="🗑️ Sonstiges & Trash (Low Value)">
-                            <option value="vintage_alcohol">Vintage Alkohol (Vintage Alcohol)</option>
-                            <option value="antique_vase">Antike Vase (Antique Vase)</option>
-                            <option value="wood_statue">Holzstatue (Wood Statue)</option>
-                            <option value="fancy_cigarettes">Teure Zigaretten (Fancy Cigarettes)</option>
-                            <option value="sunglasses">Sonnenbrille (Sunglasses)</option>
-                            <option value="zippo_lighter">Zippo Feuerzeug (Zippo Lighter)</option>
-                            <option value="hand_mirror">Handspiegel (Hand Mirror)</option>
-                            <option value="toilet_paper">Toilettenpapier (Toilet Paper)</option>
-                            <option value="matches">Streichhölzer (Matches)</option>
-                        </optgroup>
-                    </select>
-                    
-                    <div id="valInfoDisplay" class="info-box" style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-left: 4px solid var(--accent);">Wähle ein Item für Preis & Details...</div>
-                </div>
-
-                <div class="panel-box">
-                    <h3 style="margin-top: 0; color: var(--accent);">💡 Vendor-Preise (125% System)</h3>
-                    <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
-                        <li><strong>Lab Rat:</strong> Zahlt den besten Preis (125%) für <b>Elektronik</b> und Technik (Smartphones, GPUs).</li>
-                        <li><strong>Turncoat:</strong> Zahlt den besten Preis (125%) für <b>Schmuck</b> und Wertsachen (Gold, Ringe).</li>
-                        <li><strong>Handshake & Artisan:</strong> Zahlen Premium für <b>Dokumente & Intel</b> (Ordner, Pässe, Kreditkarten).</li>
-                        <li><strong>Gunny:</strong> Zahlt am meisten für <b>Genussmittel</b> (Teure Zigaretten, Alkohol).</li>
-                        <li><strong>Vulture:</strong> Zahlt für alles nur <b>75%</b>, aber der Verkauf an ihn ist der beste Weg, sein Händler-Level zu steigern!</li>
-                    </ul>
-                </div>
+            <h2>💰 Loot-Verzeichnis & Preise (0.4 Spearhead)</h2>
+            <div class="panel-box">
+                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
+                    Klicke auf die blauen Kategorien, um die Gegenstände einzusehen. Nutze das Suchfeld, um gezielt nach Loot zu filtern!
+                </p>
+                <input type="text" id="lootSearch" placeholder="Gegenstand suchen..." onkeyup="filterLootAccordions()" style="margin-bottom: 15px; width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-size: 1rem;">
+                
+                <div id="lootAccordionsContainer">
+                    </div>
             </div>
         </div>
 
@@ -3226,6 +3149,169 @@ function goToHome() {
 }
 
     // ==============================================================
+    // LOOT-DATENBANK RENDER-LOGIK (AKKORDEON / BLAUE KÄSTEN)
+    // ==============================================================
+    function renderLootAccordions() {
+        const container = document.getElementById('lootAccordionsContainer');
+        if (!container || typeof lootItemsDb === 'undefined') return;
+
+        container.innerHTML = '';
+
+        // 1. Gegenstände nach Kategorie gruppieren
+        const groupedLoot = {};
+        lootItemsDb.forEach(item => {
+            if (!groupedLoot[item.category]) {
+                groupedLoot[item.category] = [];
+            }
+            groupedLoot[item.category].push(item);
+        });
+
+        // 2. Für jede Kategorie einen "Blauen Kasten" erstellen
+        for (const [category, items] of Object.entries(groupedLoot)) {
+            // Sortieren nach Preis absteigend innerhalb der Kategorie
+            items.sort((a, b) => b.price - a.price);
+
+            const groupDiv = document.createElement('div');
+            groupDiv.style.marginBottom = "10px";
+
+            // Der blaue Akkordeon-Button
+            const btn = document.createElement('button');
+            btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+            btn.style.width = "100%";
+            btn.style.textAlign = "left";
+            btn.style.padding = "12px 15px";
+            btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)"; // Taktisches Blau
+            btn.style.color = "#5dade2"; // Blaue Schrift
+            btn.style.border = "1px solid #2980b9";
+            btn.style.borderRadius = "4px";
+            btn.style.cursor = "pointer";
+            btn.style.fontWeight = "bold";
+            btn.style.fontSize = "1.05rem";
+            btn.style.transition = "0.2s";
+
+            // Hover-Effekt für den Button
+            btn.onmouseover = () => btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+            btn.onmouseout = () => {
+                if (contentDiv.style.display === "none") btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+            };
+
+            // Der versteckte Inhalt (die Tabelle)
+            const contentDiv = document.createElement('div');
+            contentDiv.style.display = "none";
+            contentDiv.style.border = "1px solid #2980b9";
+            contentDiv.style.borderTop = "none";
+            contentDiv.style.padding = "10px";
+            contentDiv.style.backgroundColor = "#0a0a0a";
+            contentDiv.style.borderBottomLeftRadius = "4px";
+            contentDiv.style.borderBottomRightRadius = "4px";
+
+            let tableHTML = `
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead style="background: #151515; color: var(--accent);">
+                            <tr>
+                                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #333;">Name & Info</th>
+                                <th style="padding: 10px; text-align: center; border-bottom: 1px solid #333;">Größe</th>
+                                <th style="padding: 10px; text-align: center; border-bottom: 1px solid #333;">Gewicht</th>
+                                <th style="padding: 10px; text-align: right; border-bottom: 1px solid #333;">Preis ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            items.forEach(item => {
+                // Farbliche Hervorhebung für Task-Items und Müll
+                let infoColor = "#888";
+                if (item.info && item.info.includes("WICHTIG")) infoColor = "#ffcc00"; 
+                if (item.info && (item.info.includes("SCHROTT") || item.info.includes("Müll") || item.info.includes("Wertlos") || item.info.includes("liegen lassen"))) infoColor = "#ff4c4c"; 
+
+                tableHTML += `
+                    <tr class="loot-row" style="border-bottom: 1px solid #1a1a1a;">
+                        <td style="padding: 12px 8px;">
+                            <div class="loot-name" style="color: #eee; font-weight: bold; margin-bottom: 3px;">${item.name}</div>
+                            <div style="font-size: 0.8rem; color: ${infoColor}; font-style: italic;">↳ ${item.info || ''}</div>
+                            <div style="font-size: 0.75rem; color: #555; margin-top: 3px;">Händler: <span style="color: #5dade2;">${item.trader || 'Unbekannt'}</span></div>
+                        </td>
+                        <td style="padding: 8px; text-align: center; color: #aaa; font-family: monospace;">${item.size}</td>
+                        <td style="padding: 8px; text-align: center; color: #aaa;">${item.weight}</td>
+                        <td style="padding: 8px; text-align: right; color: var(--accent); font-weight: bold; font-size: 1.1rem;">
+                            ${item.price > 0 ? '$' + item.price.toLocaleString() : 'QUEST'}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `</tbody></table></div>`;
+            contentDiv.innerHTML = tableHTML;
+
+            // Die Klick-Funktion zum Auf- und Zuklappen
+            btn.onclick = function() {
+                if (contentDiv.style.display === "none") {
+                    contentDiv.style.display = "block";
+                    btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▲</span>`;
+                    btn.style.borderBottomLeftRadius = "0";
+                    btn.style.borderBottomRightRadius = "0";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                } else {
+                    contentDiv.style.display = "none";
+                    btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem; color:#85c1e9;">(${items.length} Items) ▼</span>`;
+                    btn.style.borderBottomLeftRadius = "4px";
+                    btn.style.borderBottomRightRadius = "4px";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                }
+            };
+
+            groupDiv.appendChild(btn);
+            groupDiv.appendChild(contentDiv);
+            container.appendChild(groupDiv);
+        }
+    }
+
+    // Die clevere Suchleiste für die Akkordeons
+    function filterLootAccordions() {
+        const input = document.getElementById('lootSearch').value.toLowerCase();
+        const accordions = document.getElementById('lootAccordionsContainer').children;
+
+        for (let i = 0; i < accordions.length; i++) {
+            const groupDiv = accordions[i];
+            const btn = groupDiv.querySelector('button');
+            const contentDiv = groupDiv.querySelector('div');
+            const rows = contentDiv.querySelectorAll('.loot-row');
+            
+            let hasVisibleRow = false;
+
+            // Zeilen filtern
+            rows.forEach(row => {
+                const name = row.querySelector('.loot-name').innerText.toLowerCase();
+                if (name.includes(input)) {
+                    row.style.display = "";
+                    hasVisibleRow = true;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Wenn gesucht wird und Treffer da sind: Automatisch aufklappen!
+            if (input.length > 0) {
+                if (hasVisibleRow) {
+                    groupDiv.style.display = "";
+                    contentDiv.style.display = "block";
+                    btn.style.backgroundColor = "rgba(41, 128, 185, 0.3)";
+                    btn.innerHTML = btn.innerHTML.replace('▼', '▲');
+                } else {
+                    groupDiv.style.display = "none";
+                }
+            } else {
+                // Wenn die Suche leer ist: Alles wieder zuklappen
+                groupDiv.style.display = "";
+                contentDiv.style.display = "none";
+                btn.style.backgroundColor = "rgba(41, 128, 185, 0.15)";
+                btn.innerHTML = btn.innerHTML.replace('▲', '▼');
+            }
+        }
+    }
+
+    // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
@@ -3239,6 +3325,7 @@ function goToHome() {
     	updateTaskDropdown();
         buildCodeDropdown();
         renderLootRoutes();
+        renderLootAccordions();
         buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
