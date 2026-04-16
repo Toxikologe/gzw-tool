@@ -6,6 +6,68 @@
     <title>Gray Zone Warfare - Tactical Tool</title>
     <link rel="stylesheet" href="style.css">
     <style>
+
+        /* ============================================================== */
+/* GUNSMITH LIVE-STATS BAR DESIGN */
+/* ============================================================== */
+.stat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+.stat-label {
+    width: 150px;
+    color: #ccc;
+    font-weight: bold;
+}
+.stat-bar-bg {
+    flex: 1;
+    height: 12px;
+    background: #222;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+.stat-bar-base {
+    position: absolute;
+    top: 0; left: 0; height: 100%;
+    background: #555;
+    transition: width 0.3s ease;
+}
+.stat-bar-bonus {
+    position: absolute;
+    top: 0; height: 100%;
+    background: #7ca35a; /* Grün für Verbesserung */
+    transition: width 0.3s ease, left 0.3s ease;
+}
+.stat-bar-penalty {
+    position: absolute;
+    top: 0; height: 100%;
+    background: #ff4c4c; /* Rot für Verschlechterung */
+    transition: width 0.3s ease, right 0.3s ease;
+}
+.stat-value {
+    width: 50px;
+    text-align: right;
+    font-weight: bold;
+    color: var(--accent);
+    margin-left: 10px;
+}
+.stat-diff {
+    font-size: 0.8rem;
+    margin-left: 10px;
+    width: 45px;
+    text-align: right;
+}
+.gs-mod-label {
+    font-size: 0.85rem; color: #888; display: block; margin-bottom: 5px; margin-top: 15px;
+}
+.gs-select {
+    width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 4px; font-weight: bold;
+}
+        
         /* ============================================================== */
         /* --- TACTICAL SIDEBAR DASHBOARD LAYOUT (NEU) --- */
         /* ============================================================== */
@@ -679,97 +741,69 @@
             </div>
         </div>
 
-        <div id="tab-mods" class="tab-content">
-            <h2>Waffen-Modifikationen & Ergonomie (0.4 Meta)</h2>
-            <div class="grid">
+        <div id="tab-weapons" class="tab-content">
+            <h2>🛠️ Gunsmith Terminal (0.4 Spearhead)</h2>
+            
+            <div class="panel-box" style="margin-bottom: 15px;">
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <button onclick="sortGunsmith('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer;">🔤 Alphabetisch sortieren</button>
+                    <button onclick="sortGunsmith('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ffcc00; background: rgba(255,204,0,0.1); color: #ffcc00; font-weight: bold; cursor: pointer;">🔥 Nach Meta sortieren</button>
+                </div>
+                <select id="gsWeaponSelect" onchange="loadGunsmithWeapon()" style="width: 100%; padding: 12px; font-size: 1.1rem; font-weight: bold; background: #111; color: var(--accent); border: 1px solid #444; border-radius: 5px;">
+                    <option value="">-- Wähle eine Waffe zum Modifizieren aus --</option>
+                </select>
+            </div>
+
+            <div id="gunsmithTerminal" style="display: none; gap: 20px;" class="grid">
+                
                 <div>
-                    <label for="weaponSelect" style="margin-top: 0;">Waffen-Auswahl (Deutscher Name / Englisch)</label>
-                    <select id="weaponSelect" onchange="updateWeaponCombined()">
-                        <option value="">-- Wähle eine Waffe --</option>
-                        <optgroup label="Sturmgewehre (NATO)">
-                            <option value="m4a1">M4A1 Sturmgewehr (M4A1)</option>
-                            <option value="m16a1">M16A1 Sturmgewehr (M16A1) [0.4 NEU]</option>
-                            <option value="m201c">Norinco M-201C (M-201C) [0.4 NEU]</option>
-                            <option value="cqa1">CQ-A1 (CQ-A1)</option>
-                            <option value="ddm4">Daniel Defense DDM4 (DDM4)</option>
-                            <option value="ks1">KAC KS-1 L403A1 (KS-1) [0.4 NEU]</option>
-                            <option value="sicmcx">SIG MCX (SIG MCX)</option>
-                            <option value="mk18">MK18 (MK18)</option>
-                        </optgroup>
-                        <optgroup label="Sturmgewehre (Ostblock)">
-                            <option value="ak74">AK-74 (AK-74)</option>
-                            <option value="ak74n">AK-74N (AK-74N)</option>
-                            <option value="ak74m">AK-74M (AK-74M)</option>
-                            <option value="aks74u">AKS-74U (AKS-74U)</option>
-                            <option value="aks74un">AKS-74UN (AKS-74UN)</option>
-                            <option value="akm">AKM (AKM)</option>
-                            <option value="akmn">AKMN (AKMN)</option>
-                            <option value="akms">AKMS (AKMS)</option>
-                            <option value="akmsn">AKMSN (AKMSN)</option>
-                            <option value="ak101">AK-101 (AK-101)</option>
-                            <option value="ak102">AK-102 (AK-102)</option>
-                            <option value="ak103">AK-103 (AK-103)</option>
-                            <option value="ak104">AK-104 (AK-104)</option>
-                            <option value="ak105">AK-105 (AK-105)</option>
-                            <option value="ak12">AK-12 (AK-12)</option>
-                            <option value="ak15">AK-15 (AK-15)</option>
-                            <option value="ak19">AK-19 (AK-19)</option>
-                            <option value="ak308">AK-308 (AK-308)</option>
-                            <option value="vz58">SA vz. 58 (SA vz. 58) [0.4 NEU]</option>
-                            <option value="vz58v">SA vz. 58 V (SA vz. 58 V) [0.4 NEU]</option>
-                            <option value="typ56">Type 56 (Type 56)</option>
-                            <option value="typ56_1">Type 56-1 (Type 56-1)</option>
-                            <option value="typ56_2">Type 56-2 (Type 56-2)</option>
-                        </optgroup>
-                        <optgroup label="DMR & Scharfschützen (Snipers)">
-                            <option value="m14">M14 Battle Rifle (M14) [0.4 NEU]</option>
-                            <option value="m14ebr">M14 EBR (M14 EBR) [0.4 NEU]</option>
-                            <option value="m1a">M1A (M1A) [0.4 NEU]</option>
-                            <option value="m700">M700 Remington (M700)</option>
-                            <option value="rem788">Remington 788 (Model 788) [0.4 NEU]</option>
-                            <option value="mosin">Mosin-Nagant (Mosin)</option>
-                            <option value="mosin_sniper">Mosin-Nagant Sniper (Mosin Sniper)</option>
-                            <option value="mosin_obrez">Mosin Obrez (Mosin Obrez)</option>
-                            <option value="svd">SVD Dragunov (SVD)</option>
-                            <option value="svds">SVDS (SVDS)</option>
-                            <option value="sks">SKS (SKS)</option>
-                            <option value="op_sks">OP-SKS (OP-SKS)</option>
-                        </optgroup>
-                        <optgroup label="SMGs & Shotguns">
-                            <option value="mp7a1">MP7A1 (MP7A1)</option>
-                            <option value="mp7a2">MP7A2 (MP7A2)</option>
-                            <option value="mp5a2">MP5A2 (MP5A2)</option>
-                            <option value="mp5a3">MP5A3 (MP5A3)</option>
-                            <option value="mp5sd">MP5SD (MP5SD)</option>
-                            <option value="mp5k">MP5K (MP5K)</option>
-                            <option value="vityaz">PP-19-01 Vityaz (Vityaz)</option>
-                            <option value="vz61">VZ-61 Skorpion (Skorpion)</option>
-                            <option value="m870">M870 Pump-Action (M870)</option>
-                            <option value="moss590">Mossberg 590 (Mossberg 590)</option>
-                            <option value="moss590a1">Mossberg 590A1 (Mossberg 590A1)</option>
-                            <option value="moss590_shock">Mossberg 590 Shockwave</option>
-                        </optgroup>
-                        <optgroup label="Pistolen (Handguns)">
-                            <option value="alien">Laugo Alien (Alien) [0.4 NEU]</option>
-                            <option value="glock17">Glock 17 (Glock 17)</option>
-                            <option value="glock19">Glock 19 (Glock 19)</option>
-                            <option value="m9a1">M9A1 Beretta (M9A1)</option>
-                            <option value="m9a3">M9A3 Beretta (M9A3)</option>
-                            <option value="1911">Colt M1911A1 (1911)</option>
-                            <option value="ccc">Colt Combat Commander (CCC)</option>
-                            <option value="makarov">Makarov PM (Makarov)</option>
-                            <option value="makarov_pb">Makarov PB (Makarov PB)</option>
-                            <option value="typ51">Type-51 / TT (Type-51)</option>
-                        </optgroup>
-                    </select>
-                    <div id="weaponInfo" class="info-box" style="margin-top:15px; padding:15px; background:#111; border-left:4px solid var(--accent);">Wähle eine Waffe für Munitions-Details...</div>
+                    <div class="panel-box" style="border-left: 4px solid var(--accent); background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);">
+                        <h3 id="gsWeaponName" style="margin-top: 0; font-size: 1.4rem; color: white;">Waffenname</h3>
+                        <div style="display: flex; gap: 15px; font-size: 0.9rem; margin-bottom: 15px;">
+                            <div><span style="color:#888;">Kaliber:</span> <span id="gsAmmoType" style="color:var(--accent); font-weight:bold;">-</span></div>
+                            <div><span style="color:#888;">Klasse:</span> <span id="gsWeaponType" style="color:white; font-weight:bold;">-</span></div>
+                        </div>
+                        <div id="gsTips" style="font-size: 0.95rem; color: #ccc; line-height: 1.6; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border: 1px solid #333;">Tipps...</div>
+                    </div>
+
+                    <div class="panel-box" style="margin-top: 15px;">
+                        <h3 style="margin-top: 0; color: #ccc;">Aufsätze (Mods) montieren</h3>
+                        
+                        <label class="gs-mod-label">Mündung / Schalldämpfer</label>
+                        <select id="gsModMuzzle" class="gs-select" onchange="updateGunsmithStats()"></select>
+
+                        <label class="gs-mod-label">Visier (Optic)</label>
+                        <select id="gsModOptic" class="gs-select" onchange="updateGunsmithStats()"></select>
+
+                        <label class="gs-mod-label">Unterlauf (Foregrip)</label>
+                        <select id="gsModGrip" class="gs-select" onchange="updateGunsmithStats()"></select>
+
+                        <label class="gs-mod-label">Magazin</label>
+                        <select id="gsModMag" class="gs-select" onchange="updateGunsmithStats()"></select>
+
+                        <label class="gs-mod-label">Schaft (Stock / Pistol Grip)</label>
+                        <select id="gsModStock" class="gs-select" onchange="updateGunsmithStats()"></select>
+                    </div>
                 </div>
 
-                <div id="weaponPreviewContainer" class="panel-box" style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%;">
-                    <img id="weaponImg" src="https://via.placeholder.com/400x200?text=Waffe+auswählen" alt="Waffenvorschau" style="max-width: 100%; max-height: 180px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(124,163,90,0.2)); margin: 0 auto;">
-                    <div id="weaponMeta" style="margin-top: 10px; color: #aaa; font-size: 0.9em; font-style: italic;"></div>
+                <div class="panel-box">
+                    <h3 style="margin-top: 0; color: var(--accent);">📊 Live-Ballistik & Performance</h3>
+                    <div id="gsStatsContainer" style="margin-top: 20px;">
+                        </div>
+                    
+                    <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333;">
+                        <div class="stat-row"><div class="stat-label">Feuerrate (RPM):</div><div id="gsStatRpm" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">Schuss/Min</div></div>
+                        <div class="stat-row"><div class="stat-label">Mündungsgeschw.:</div><div id="gsStatVel" style="color:white; font-weight:bold; font-size:1.1rem;">0</div><div style="color:#888; margin-left:5px;">m/s</div></div>
+                        <div class="stat-row"><div class="stat-label">Nachladezeit:</div><div id="gsStatRel" style="color:white; font-weight:bold; font-size:1.1rem;">0.0</div><div style="color:#888; margin-left:5px;">Sekunden</div></div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; font-size: 0.85rem; color: #666; text-align: center; background: #111; padding: 10px; border-radius: 4px;">
+                        <span style="color:#7ca35a; font-weight:bold;">Grün</span> = Verbesserung durch Mods | <span style="color:#ff4c4c; font-weight:bold;">Rot</span> = Verschlechterung
+                    </div>
                 </div>
+
             </div>
+        </div>
 
             <div class="panel-box" style="margin-top: 20px;">
                 <h3>🔧 Attachments & Ergo (0.4 Meta Guide)</h3>
@@ -3586,6 +3620,154 @@ function goToHome() {
     }
 
     // ==============================================================
+    // GUNSMITH ENGINE (LIVE STATS & BARS)
+    // ==============================================================
+    let currentGunsmithWeapon = null;
+
+    function sortGunsmith(mode) {
+        if (typeof gunsmithWeapons === 'undefined') return;
+        const select = document.getElementById('gsWeaponSelect');
+        const currentVal = select.value;
+        
+        let sorted = [...gunsmithWeapons];
+        if (mode === 'alpha') {
+            sorted.sort((a, b) => a.name.localeCompare(b.name));
+        } else {
+            sorted.sort((a, b) => (a.isMeta === b.isMeta ? 0 : a.isMeta ? -1 : 1));
+        }
+
+        select.innerHTML = '<option value="">-- Wähle eine Waffe zum Modifizieren aus --</option>';
+        sorted.forEach(w => {
+            const metaTag = w.isMeta ? " 🔥 META" : "";
+            select.innerHTML += `<option value="${w.id}">${w.name}${metaTag}</option>`;
+        });
+        
+        if (currentVal) select.value = currentVal;
+    }
+
+    function loadGunsmithWeapon() {
+        const wId = document.getElementById('gsWeaponSelect').value;
+        const terminal = document.getElementById('gunsmithTerminal');
+        
+        if (!wId) {
+            terminal.style.display = 'none';
+            return;
+        }
+
+        currentGunsmithWeapon = gunsmithWeapons.find(w => w.id === wId);
+        terminal.style.display = 'flex';
+
+        // Briefing füllen
+        document.getElementById('gsWeaponName').innerHTML = currentGunsmithWeapon.name + (currentGunsmithWeapon.isMeta ? ' <span style="background: rgba(255, 204, 0, 0.15); color: #ffcc00; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid #ffcc00; margin-left: 10px; vertical-align: middle;">🔥 META</span>' : '');
+        document.getElementById('gsAmmoType').innerText = currentGunsmithWeapon.ammo;
+        document.getElementById('gsWeaponType').innerText = currentGunsmithWeapon.type;
+        document.getElementById('gsTips').innerHTML = currentGunsmithWeapon.tip;
+
+        // Mod-Dropdowns füllen
+        populateModDropdown('gsModMuzzle', currentGunsmithWeapon.mods.muzzle, "Keine Mündung");
+        populateModDropdown('gsModOptic', currentGunsmithWeapon.mods.optic, "Iron Sights (Kein Visier)");
+        populateModDropdown('gsModGrip', currentGunsmithWeapon.mods.grip, "Kein Unterlaufgriff");
+        populateModDropdown('gsModMag', currentGunsmithWeapon.mods.mag, "Standard-Magazin");
+
+        updateGunsmithStats();
+    }
+
+    function populateModDropdown(elementId, allowedModsIds, defaultText) {
+        const select = document.getElementById(elementId);
+        select.innerHTML = `<option value="none">${defaultText}</option>`;
+        
+        allowedModsIds.forEach(modId => {
+            const mod = gunsmithMods[modId];
+            if (mod) {
+                select.innerHTML += `<option value="${modId}">${mod.name}</option>`;
+            }
+        });
+    }
+
+    function updateGunsmithStats() {
+        if (!currentGunsmithWeapon) return;
+
+        const muzzleId = document.getElementById('gsModMuzzle').value;
+        const opticId = document.getElementById('gsModOptic').value;
+        const gripId = document.getElementById('gsModGrip').value;
+        const magId = document.getElementById('gsModMag').value;
+
+        let mods = { recoil: 0, ergo: 0, noise: 0, moa: 0, vel: 0, reload: 0 };
+
+        [muzzleId, opticId, gripId, magId].forEach(id => {
+            if (id !== "none" && gunsmithMods[id]) {
+                const m = gunsmithMods[id];
+                mods.recoil += (m.recoil || 0);
+                mods.ergo += (m.ergo || 0);
+                mods.noise += (m.noise || 0);
+                mods.moa += (m.moa || 0);
+                mods.vel += (m.vel || 0);
+                mods.reload += (m.reload || 0);
+            }
+        });
+
+        const base = currentGunsmithWeapon.base;
+        
+        // Render Bar Logik (reverseLogic = MOA & Nachladen: Niedriger ist besser)
+        function createStatBar(label, baseVal, modVal, maxVal, reverseLogic = false) {
+            let finalVal = baseVal + modVal;
+            
+            let isGood = reverseLogic ? (modVal < 0) : (modVal > 0);
+            let isBad = reverseLogic ? (modVal > 0) : (modVal < 0);
+            
+            let diffColor = isGood ? '#7ca35a' : (isBad ? '#ff4c4c' : '#555');
+            let diffSign = modVal > 0 ? '+' : '';
+            let diffText = modVal !== 0 ? `<span style="color:${diffColor}">${diffSign}${modVal.toFixed(1)}</span>` : '';
+
+            let basePct = Math.min((baseVal / maxVal) * 100, 100);
+            let modPct = Math.min((Math.abs(modVal) / maxVal) * 100, 100);
+            
+            let barHtml = `<div class="stat-bar-base" style="width: ${basePct}%;"></div>`;
+            if (isGood) {
+                // Wenn lower = better (MOA), wächst der grüne Balken NACH LINKS (verringert optisch den Base-Wert)
+                if (reverseLogic) {
+                    barHtml += `<div class="stat-bar-bonus" style="width: ${modPct}%; left: ${basePct - modPct}%;"></div>`;
+                } else {
+                    barHtml += `<div class="stat-bar-bonus" style="width: ${modPct}%; left: ${basePct}%;"></div>`;
+                }
+            } else if (isBad) {
+                if (reverseLogic) {
+                    // Höherer Wert bei Reverse (schlecht) wächst nach rechts rot an
+                    barHtml += `<div class="stat-bar-penalty" style="width: ${modPct}%; left: ${basePct}%;"></div>`;
+                } else {
+                    barHtml += `<div class="stat-bar-penalty" style="width: ${modPct}%; right: ${100 - basePct}%;"></div>`;
+                }
+            }
+
+            return `
+                <div class="stat-row">
+                    <div class="stat-label">${label}</div>
+                    <div class="stat-bar-bg">${barHtml}</div>
+                    <div class="stat-value">${finalVal.toFixed(1)}</div>
+                    <div class="stat-diff">${diffText}</div>
+                </div>
+            `;
+        }
+
+        const container = document.getElementById('gsStatsContainer');
+        container.innerHTML = `
+            ${createStatBar("Rückstoßkontrolle", base.recoil, mods.recoil, 100)}
+            ${createStatBar("Ergonomie", base.ergo, mods.ergo, 100)}
+            ${createStatBar("Präzision (MOA)", base.moa, mods.moa, 5, true)}
+            ${createStatBar("Geräuschdämpfung", base.noise, mods.noise, 100)}
+        `;
+
+        document.getElementById('gsStatRpm').innerText = base.rpm;
+        document.getElementById('gsStatVel').innerText = (base.vel + mods.vel).toFixed(0);
+        
+        let finalReload = base.reload + mods.reload;
+        let relColor = mods.reload < 0 ? '#7ca35a' : (mods.reload > 0 ? '#ff4c4c' : 'white');
+        let relSign = mods.reload > 0 ? '+' : '';
+        let relDiff = mods.reload !== 0 ? `<span style="font-size:0.8rem; color:${relColor}; margin-left:10px;">(${relSign}${mods.reload.toFixed(1)}s)</span>` : '';
+        document.getElementById('gsStatRel').innerHTML = `${finalReload.toFixed(1)} ${relDiff}`;
+    }
+
+    // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
@@ -3603,6 +3785,7 @@ function goToHome() {
         renderTraderAccordions();
         renderStashAccordions();
         renderGearAccordions();
+        sortGunsmith('meta');
         buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
