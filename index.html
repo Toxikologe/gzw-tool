@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
-        /* ============================================================== */
+/* ============================================================== */
 /* TAC-PAD: MILITARY TABLET DESIGN (TASKS & BRIEFINGS) */
 /* ============================================================== */
 .tac-pad-frame {
@@ -78,6 +78,19 @@
 .complete-toggle:hover { background: #1a2230; }
 .complete-toggle.is-done { background: rgba(255,204,0,0.1); border-color: #ffcc00; }
 .complete-check { width: 20px; height: 20px; margin-right: 15px; pointer-events: none; }
+
+/* TAC-PAD Dual-Mode Schalter */
+        .filter-toggle-container { display: flex; background: #05070a; border-bottom: 2px solid #1a2230; }
+        .filter-toggle-btn { 
+            flex: 1; padding: 12px 5px; background: transparent; color: #666; border: none; 
+            font-weight: bold; cursor: pointer; font-size: 0.8rem; letter-spacing: 1px; transition: 0.2s; 
+            border-bottom: 2px solid transparent;
+        }
+        .filter-toggle-btn:hover { color: #aaa; background: rgba(255,255,255,0.02); }
+        .filter-toggle-btn.active { color: var(--accent); background: rgba(124,163,90,0.08); border-bottom-color: var(--accent); }
+        
+        /* Anpassung für etwas längere Gebiets-Namen */
+        .trader-btn { flex: 1 1 45%; }
 
         /* ============================================================== */
 /* LOCAL MARKET DESIGN (PROVISIONS) */
@@ -1217,12 +1230,17 @@
                 
                 <div class="tac-pad-screen">
                     <div class="tac-pad-sidebar">
+                        <div class="filter-toggle-container">
+                            <button id="toggleModeTrader" class="filter-toggle-btn active" onclick="switchTaskFilterMode('trader')">📡 HÄNDLER-NETZ</button>
+                            <button id="toggleModeRegion" class="filter-toggle-btn" onclick="switchTaskFilterMode('region')">🗺️ GEO-INTEL</button>
+                        </div>
+
                         <div class="trader-nav" id="traderNav">
                             </div>
                         
                         <div style="padding: 10px; background: #05070a; border-bottom: 1px solid #1a2230;">
                             <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #888; margin-bottom: 5px;">
-                                <span>OPERATIONEN ABGESCHLOSSEN:</span>
+                                <span id="progressLabel">OPERATIONEN ABGESCHLOSSEN:</span>
                                 <span id="traderProgressText">0/0</span>
                             </div>
                             <div style="height: 4px; background: #111622; border-radius: 2px; overflow: hidden;">
@@ -2872,9 +2890,11 @@
     }
 
     // ==============================================================
-    // TAC-PAD ENGINE (TASKS & BRIEFINGS)
+    // TAC-PAD ENGINE (TASKS & BRIEFINGS) - DUAL MODE
     // ==============================================================
+    let filterMode = 'trader'; // 'trader' oder 'region'
     let activeTrader = "Handshake";
+    let activeRegion = "Startregion";
     let selectedTaskId = null;
     let completedTasks = [];
 
@@ -2885,9 +2905,9 @@
         if (!Array.isArray(completedTasks)) completedTasks = [];
     } catch(e) { completedTasks = []; }
 
-    // Intelligente Funktion, die aus dem Lösungs-Text die Region erkennt
+    // Intelligente Regionen-Erkennung
     function getTaskRegion(task) {
-        if (task.loc) return task.loc; // Falls in data.js schon eine Location steht
+        if (task.loc) return task.loc; 
         const text = (task.sol + " " + task.desc + " " + task.de).toLowerCase();
         if (text.includes('tiger bay') || text.includes('unlra') || text.includes('mall') || text.includes('pier')) return "Tiger Bay";
         if (text.includes('midnight sapphire') || text.includes('hotel') || text.includes('villa') || text.includes('golf')) return "Midnight Sapphire";
@@ -2902,30 +2922,63 @@
         return "Lamang Island";
     }
 
-    function initTaskTablet() {
+    function switchTaskFilterMode(mode) {
+        filterMode = mode;
+        document.getElementById('toggleModeTrader').classList.remove('active');
+        document.getElementById('toggleModeRegion').classList.remove('active');
+        
+        if (mode === 'trader') {
+            document.getElementById('toggleModeTrader').classList.add('active');
+            document.getElementById('progressLabel').innerText = "HÄNDLER-FORTSCHRITT:";
+        } else {
+            document.getElementById('toggleModeRegion').classList.add('active');
+            document.getElementById('progressLabel').innerText = "GEBIETS-FORTSCHRITT:";
+        }
+        
+        selectedTaskId = null; // Reset selection beim Wechsel
+        buildNavButtons();
+    }
+
+    function buildNavButtons() {
         if (typeof allTasks === 'undefined') return;
-
-        // 1. Trader-Buttons oben links generieren (basierend auf "v" property in data.js)
-        const traders = [...new Set(allTasks.map(t => t.v))].filter(Boolean);
-        if(traders.length > 0 && !traders.includes(activeTrader)) activeTrader = traders[0];
-
         const nav = document.getElementById('traderNav');
-        if(!nav) return;
         nav.innerHTML = '';
         
-        traders.forEach(trader => {
-            const btn = document.createElement('button');
-            btn.className = `trader-btn ${trader === activeTrader ? 'active' : ''}`;
-            btn.innerText = trader;
-            btn.onclick = () => {
-                activeTrader = trader;
-                document.querySelectorAll('.trader-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderTabletTaskList();
-            };
-            nav.appendChild(btn);
-        });
+        if (filterMode === 'trader') {
+            const traders = [...new Set(allTasks.map(t => t.v))].filter(Boolean);
+            if(traders.length > 0 && !traders.includes(activeTrader)) activeTrader = traders[0];
+            
+            traders.forEach(trader => {
+                const btn = document.createElement('button');
+                btn.className = `trader-btn ${trader === activeTrader ? 'active' : ''}`;
+                btn.innerText = trader;
+                btn.onclick = () => {
+                    activeTrader = trader;
+                    selectedTaskId = null;
+                    buildNavButtons();
+                };
+                nav.appendChild(btn);
+            });
+        } else {
+            const regions = [...new Set(allTasks.map(t => getTaskRegion(t)))].filter(Boolean).sort();
+            if(regions.length > 0 && !regions.includes(activeRegion)) activeRegion = regions[0];
+            
+            regions.forEach(region => {
+                const btn = document.createElement('button');
+                btn.className = `trader-btn ${region === activeRegion ? 'active' : ''}`;
+                btn.innerText = region;
+                btn.onclick = () => {
+                    activeRegion = region;
+                    selectedTaskId = null;
+                    buildNavButtons();
+                };
+                nav.appendChild(btn);
+            });
+        }
+        renderTabletTaskList();
+    }
 
+    function initTaskTablet() {
         // Uhrzeit im Tablet-Rand (Live)
         setInterval(() => {
             const d = new Date();
@@ -2933,7 +2986,7 @@
             if (timeSpan) timeSpan.innerText = d.toLocaleTimeString('de-DE');
         }, 1000);
 
-        renderTabletTaskList();
+        buildNavButtons();
     }
 
     function renderTabletTaskList() {
@@ -2941,15 +2994,19 @@
         if(!list) return;
         list.innerHTML = '';
 
-        // Wir filtern nach der alten Property "v" (Vendor)
-        let traderTasks = allTasks.filter(t => t.v === activeTrader);
+        let currentTasks = [];
+        if (filterMode === 'trader') {
+            currentTasks = allTasks.filter(t => t.v === activeTrader);
+        } else {
+            currentTasks = allTasks.filter(t => getTaskRegion(t) === activeRegion);
+        }
         
         // Alphabetisch sortieren
-        traderTasks.sort((a, b) => a.de.localeCompare(b.de));
+        currentTasks.sort((a, b) => a.de.localeCompare(b.de));
 
         let completedCount = 0;
 
-        traderTasks.forEach((task, index) => {
+        currentTasks.forEach((task, index) => {
             const tId = task.en || task.de; 
             const isDone = completedTasks.includes(tId);
             if (isDone) completedCount++;
@@ -2959,43 +3016,42 @@
             card.id = `task-card-${index}`;
             card.innerHTML = `
                 <span class="task-name">${task.de}</span>
-                <span class="task-loc">📍 ${getTaskRegion(task)}</span>
+                <span class="task-loc">📍 ${filterMode === 'trader' ? getTaskRegion(task) : task.v}</span>
             `;
             card.onclick = () => openTaskBriefing(task, card.id, tId, isDone);
             list.appendChild(card);
         });
 
         // Fortschrittsbalken updaten
-        const total = traderTasks.length;
+        const total = currentTasks.length;
         document.getElementById('traderProgressText').innerText = `${completedCount} / ${total}`;
         const pct = total === 0 ? 0 : (completedCount / total) * 100;
         document.getElementById('traderProgressBar').style.width = `${pct}%`;
 
-        // Automatisch erste Task öffnen, wenn nichts ausgewählt ist
-        if (traderTasks.length > 0 && !selectedTaskId) {
-            const firstId = traderTasks[0].en || traderTasks[0].de;
-            openTaskBriefing(traderTasks[0], 'task-card-0', firstId, completedTasks.includes(firstId));
+        // Automatisch erste Task öffnen
+        if (currentTasks.length > 0 && !selectedTaskId) {
+            const firstId = currentTasks[0].en || currentTasks[0].de;
+            openTaskBriefing(currentTasks[0], 'task-card-0', firstId, completedTasks.includes(firstId));
+        } else if (currentTasks.length === 0) {
+            document.getElementById('tbTitle').innerText = "KEINE DATEN VERFÜGBAR";
+            document.getElementById('tbDesc').innerText = "-";
+            document.getElementById('tbObj').innerText = "-";
         }
     }
 
     function openTaskBriefing(task, cardDomId, taskId, isDone) {
         selectedTaskId = taskId;
 
-        // Visuelles Highlight in der Liste
         document.querySelectorAll('.task-card').forEach(c => c.classList.remove('active'));
         const activeCard = document.getElementById(cardDomId);
         if (activeCard) activeCard.classList.add('active');
 
-        // Textfelder füllen
         document.getElementById('tbTitle').innerText = task.de;
-        document.getElementById('tbLoc').innerHTML = `📍 ZIELGEBIET: ${getTaskRegion(task).toUpperCase()}`;
-        document.getElementById('tbObj').innerHTML = (task.desc || '-').replace(/\\n/g, '<br>'); // Objective war bei dir oft in desc
-        
-        // Da du "sol" (Solution) für das Briefing/die Lösung hattest:
+        document.getElementById('tbLoc').innerHTML = `📍 ZIELGEBIET: ${getTaskRegion(task).toUpperCase()} | AUFTRAGGEBER: ${task.v || 'Unbekannt'}`;
+        document.getElementById('tbObj').innerHTML = (task.desc || '-').replace(/\\n/g, '<br>');
         document.getElementById('tbDesc').innerHTML = task.sol ? task.sol.replace(/\\n/g, '<br>') : '-';
         document.getElementById('tbRewards').innerText = task.rewards || 'Unbekannte Belohnung / Kein Intel';
 
-        // Erledigt-Button Status
         const btn = document.getElementById('tbCompleteBtn');
         const check = document.getElementById('tbCheckbox');
         const text = document.getElementById('tbCompleteText');
@@ -3011,10 +3067,8 @@
             statusStamp.innerText = "AKTIV (IN BEARBEITUNG)"; statusStamp.style.color = "var(--accent)";
         }
 
-        // --- TAKTISCHE KI-ANALYSE ---
         const intelWarning = document.getElementById('tbIntelWarning');
         const searchString = (task.desc + " " + task.sol + " " + task.de).toLowerCase();
-        
         if (searchString.includes("schlüssel") || searchString.includes("key")) {
             intelWarning.style.display = 'block';
             intelWarning.querySelector('#tbIntelText').innerText = "Für diese Mission wird mit hoher Wahrscheinlichkeit ein Schlüssel benötigt. Überprüfe deinen Schlüsselbund, bevor du abrückst!";
@@ -3034,15 +3088,13 @@
         }
         
         localStorage.setItem('gzw_completedTasks', JSON.stringify(completedTasks));
-        
-        // Liste neu laden, damit die Durchstreich-Effekte greifen
         renderTabletTaskList();
         
-        // Briefing sofort updaten
         const currentTask = allTasks.find(t => (t.en || t.de) === selectedTaskId);
         if (currentTask) {
-            const traderTasks = allTasks.filter(t => t.v === activeTrader).sort((a, b) => a.de.localeCompare(b.de));
-            const index = traderTasks.findIndex(t => (t.en || t.de) === selectedTaskId);
+            let currentTasks = filterMode === 'trader' ? allTasks.filter(t => t.v === activeTrader) : allTasks.filter(t => getTaskRegion(t) === activeRegion);
+            currentTasks.sort((a, b) => a.de.localeCompare(b.de));
+            const index = currentTasks.findIndex(t => (t.en || t.de) === selectedTaskId);
             openTaskBriefing(currentTask, `task-card-${index}`, selectedTaskId, !isCurrentlyDone);
         }
     }
