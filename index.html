@@ -7,6 +7,37 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+        /* ============================================================== */
+        /* BALLISTIC RADAR DESIGN */
+        /* ============================================================== */
+        .armor-btn {
+            flex: 1; padding: 15px; background: #111; color: #888; border: 1px solid #333; 
+            border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 1rem;
+        }
+        .armor-btn:hover { background: #222; color: #fff; }
+        .armor-btn.active { 
+            background: rgba(124, 163, 90, 0.15); border-color: var(--accent); 
+            color: var(--accent); box-shadow: inset 0 0 10px rgba(124, 163, 90, 0.2); 
+        }
+        .ballistic-cal-group { 
+            color: #fff; font-family: 'Courier New', monospace; margin-top: 25px; 
+            margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; font-size: 1.1rem; 
+            font-weight: bold; letter-spacing: 1px;
+        }
+        .ballistic-row { display: flex; align-items: center; margin-bottom: 8px; font-family: monospace; }
+        .ballistic-name { 
+            width: 140px; color: #ccc; font-size: 0.85rem; font-weight: bold; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px;
+        }
+        .ballistic-bar-track { 
+            flex: 1; height: 16px; background: #1a1a1a; position: relative; 
+            border-radius: 3px; border: 1px solid #222; overflow: hidden;
+        }
+        .ballistic-bar-fill { 
+            height: 100%; transition: width 0.5s ease-out, background-color 0.5s ease; border-radius: 2px;
+        }
+        .ballistic-result { width: 140px; text-align: right; font-size: 0.85rem; font-weight: bold; }
+
 /* ============================================================== */
 /* GUNSMITH LIVE-STATS BAR DESIGN */
 /* ============================================================== */
@@ -964,32 +995,32 @@
         </div>
 
         <div id="tab-ballistics" class="tab-content">
-            <h2>🎯 Ballistik-Check & Penetrations-Rechner</h2>
-            <div class="grid">
-                <div id="armorCalcContainer" class="panel-box">
-                    <h3 style="margin-top: 0;">Simulator</h3>
-                    <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
-                        <div style="flex: 1;">
-                            <label style="margin-top: 0; font-size: 0.8rem;">Gegnerische Rüstung:</label>
-                            <select id="calcArmor" onchange="calculateBallistics()" style="padding: 8px;">
-                                    <option value="2.0">NIJ IIIA (Helme / Weichballistik)</option>
-                                    <option value="3.0">NIJ III (Lancer / M2 Westen)</option>
-                                    <option value="3.5">NIJ III+ (Recon Plate Carrier)</option>
-                                    <option value="4.0">NIJ III++ (Defender-2 / NIJ IV)</option>
-                                </select>
-                        </div>
-                        <div style="font-weight: bold; padding-top: 20px;">VS</div>
-                        <div style="flex: 1;">
-                            <label style="margin-top: 0; font-size: 0.8rem;">Deine Munition:</label>
-                            <select id="calcAmmoDisplay" onchange="calculateBallistics()" style="padding: 8px; color: var(--accent); font-weight: bold;">
-                                <option value="">-- Waffe wählen --</option>
-                            </select>
+            <h2>🎯 Ballistik-Radar & Penetrations-Simulator</h2>
+            <p style="color:#ccc; margin-bottom: 20px;">
+                Wähle die Schutzweste des Gegners aus. Das Radar visualisiert sofort in Echtzeit, welche Kaliber die Platte durchschlagen und welche wirkungslos abprallen.
+            </p>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                <button class="armor-btn active" onclick="simulateArmor(2.0, 'NIJ IIIA (Weichballistik)', this)">🛡️ NIJ IIIA</button>
+                <button class="armor-btn" onclick="simulateArmor(3.0, 'NIJ III (Standard-Platten)', this)">🛡️ NIJ III</button>
+                <button class="armor-btn" onclick="simulateArmor(3.5, 'NIJ III+ (Recon Carrier)', this)">🛡️ NIJ III+</button>
+                <button class="armor-btn" onclick="simulateArmor(4.0, 'NIJ III++ (Defender-2)', this)">🛡️ NIJ III++</button>
+            </div>
+
+            <div class="panel-box" style="background: #0d0d0d; position: relative; padding-top: 40px; padding-bottom: 20px; border: 2px solid #333;">
+                
+                <div style="display: flex; position: absolute; top: 15px; bottom: 15px; left: 15px; right: 15px; pointer-events: none; z-index: 5;">
+                    <div style="width: 140px; flex-shrink: 0;"></div> <div style="flex: 1; position: relative;">
+                        <div id="armorThresholdLine" style="position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.2); border-left: 2px dashed #ff4c4c;"></div>
+                        <div id="thresholdLabel" style="position: absolute; top: -15px; background: #ff4c4c; color: white; padding: 3px 10px; border-radius: 4px; font-size: 0.8rem; transform: translateX(-50%); font-weight: bold; box-shadow: 0 0 10px #ff4c4c; white-space: nowrap;">
+                            RÜSTUNG
                         </div>
                     </div>
-                    <div id="calcResult" style="padding: 15px; margin-top: 15px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 1.1rem; background: #1a1a1a; border: 1px solid #333;">
-                        Wähle eine Waffe im Arsenal-Tab, um die Munition zu simulieren.
+                    <div style="width: 140px; flex-shrink: 0;"></div> </div>
+
+                <div id="ballisticBars" style="position: relative; z-index: 10; max-height: 550px; overflow-y: auto; padding-right: 10px;">
                     </div>
-                </div>
+                
             </div>
         </div>
 
@@ -1546,87 +1577,87 @@
     }
 
     // ==============================================================
-    // FUNKTIONEN
+    // BALLISTIK RADAR ENGINE (VISUAL CHART)
     // ==============================================================
+    let currentArmorThreshold = 2.0;
 
-    function populateAmmoDropdown(weaponKey) {
-        const ammoSelect = document.getElementById('calcAmmoDisplay');
-        if (!ammoSelect) return;
+    function simulateArmor(threshold, name, btnElement) {
+        currentArmorThreshold = threshold;
 
-        // Wir holen die Waffen-Info aus der 'weapons' Datenbank
-        const weaponInfo = typeof weapons !== 'undefined' ? weapons[weaponKey] : null;
-        ammoSelect.innerHTML = "";
-
-        if (!weaponInfo) {
-            ammoSelect.innerHTML = '<option value="">-- Erst Waffe wählen --</option>';
-            return;
+        // Button-Design updaten
+        if (btnElement) {
+            document.querySelectorAll('.armor-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
         }
 
-        // Wir extrahieren das Kaliber (z.B. "5.56x45mm")
-        let caliber = weaponInfo.ammo.split(' ')[0]; 
-        
-        // Suche in der NEUEN ammoMatrixData nach passender Munition
-        let foundAmmo = false;
-        if (typeof ammoMatrixData !== 'undefined') {
-            ammoMatrixData.forEach(ammo => {
-                if (ammo.cal.toLowerCase().includes(caliber.toLowerCase())) {
-                    const option = document.createElement('option');
-                    option.value = ammo.name;
-                    option.text = ammo.name;
-                    ammoSelect.appendChild(option);
-                    foundAmmo = true;
+        renderBallisticChart(name);
+    }
+
+    function renderBallisticChart(armorName = "NIJ IIIA (Weichballistik)") {
+        const container = document.getElementById('ballisticBars');
+        const line = document.getElementById('armorThresholdLine');
+        const label = document.getElementById('thresholdLabel');
+
+        if (!container || typeof ammoMatrixData === 'undefined') return;
+
+        // Maximale Skala des Charts (Penetration bis 6.0)
+        const MAX_PEN = 6.0; 
+        const thresholdPct = (currentArmorThreshold / MAX_PEN) * 100;
+
+        // Positioniert die rote Laser-Linie exakt an der richtigen Stelle
+        if (line && label) {
+            line.style.left = `${thresholdPct}%`;
+            label.style.left = `${thresholdPct}%`;
+            label.innerHTML = `🛡️ ${armorName}`;
+        }
+
+        container.innerHTML = '';
+
+        // Munition nach Kaliber gruppieren
+        const groupedAmmo = {};
+        ammoMatrixData.forEach(ammo => {
+            if (!groupedAmmo[ammo.cal]) groupedAmmo[ammo.cal] = [];
+            groupedAmmo[ammo.cal].push(ammo);
+        });
+
+        // Diagramm für jedes Kaliber aufbauen
+        for (const [cal, ammos] of Object.entries(groupedAmmo)) {
+            // Sortiere die Munition innerhalb des Kalibers nach Penetration (stärkste oben)
+            ammos.sort((a, b) => b.pen - a.pen);
+
+            let html = `<div class="ballistic-cal-group">⚡ Kaliber: ${cal}</div>`;
+
+            ammos.forEach(ammo => {
+                const penPct = Math.min((ammo.pen / MAX_PEN) * 100, 100);
+                let barColor, resultText, resultColor;
+
+                // Logik für Durchschlag
+                if (ammo.pen >= currentArmorThreshold) {
+                    barColor = 'rgba(124, 163, 90, 0.8)'; // Grün
+                    resultColor = '#7ca35a';
+                    resultText = '🟢 DURCHSCHLAG';
+                } else if (ammo.pen >= currentArmorThreshold - 0.5) {
+                    barColor = 'rgba(255, 165, 0, 0.8)'; // Gelb
+                    resultColor = '#ffa500';
+                    resultText = '🟡 RÜSTUNGSSCHADEN';
+                } else {
+                    barColor = 'rgba(179, 57, 57, 0.8)'; // Rot
+                    resultColor = '#ff4c4c';
+                    resultText = '🔴 ABGEWEHRT';
                 }
+
+                html += `
+                <div class="ballistic-row">
+                    <div class="ballistic-name" title="${ammo.name}">${ammo.name}</div>
+                    <div style="flex: 1; position: relative; display: flex; align-items: center; height: 16px;">
+                        <div class="ballistic-bar-track">
+                            <div class="ballistic-bar-fill" style="width: ${penPct}%; background-color: ${barColor};"></div>
+                        </div>
+                    </div>
+                    <div class="ballistic-result" style="color: ${resultColor};">${resultText}</div>
+                </div>`;
             });
-        }
-
-        if (!foundAmmo) {
-            const option = document.createElement('option');
-            option.value = weaponInfo.ammo;
-            option.text = weaponInfo.ammo;
-            ammoSelect.appendChild(option);
-        }
-
-        calculateBallistics();
-    }
-
-    function getAmmoPenValue(ammoName) {
-        if (!ammoName || typeof ammoMatrixData === 'undefined') return 0;
-        // Suche den Penetrationswert in der Matrix-Datenbank
-        const ammo = ammoMatrixData.find(a => a.name === ammoName);
-        return ammo ? ammo.pen : 0;
-    }
-
-    function calculateBallistics() {
-        const armorElement = document.getElementById('calcArmor');
-        const ammoElement = document.getElementById('calcAmmoDisplay');
-        const resultBox = document.getElementById('calcResult');
-
-        if (!armorElement || !ammoElement || !resultBox) return;
-
-        const armorLevel = parseFloat(armorElement.value);
-        const ammoName = ammoElement.value; 
-        const penValue = getAmmoPenValue(ammoName);
-        
-        if (!ammoName || ammoName === "" || ammoName.includes("--")) {
-            resultBox.innerHTML = "Wähle eine Waffe im Arsenal-Tab!";
-            resultBox.style.color = "#888";
-            resultBox.style.backgroundColor = "#1a1a1a";
-            return;
-        }
-
-        // Neue GZW 0.4 Logik: Pen vs Armor
-        if (penValue >= armorLevel) {
-            resultBox.innerHTML = "✅ SICHERER DURCHSCHLAG (1-2 Schüsse)";
-            resultBox.style.backgroundColor = "rgba(124, 163, 90, 0.2)";
-            resultBox.style.color = "#7ca35a";
-        } else if (penValue >= armorLevel - 0.5) {
-            resultBox.innerHTML = "⚠️ RÜSTUNGSSCHADEN (Platte muss erst brechen)";
-            resultBox.style.backgroundColor = "rgba(255, 165, 0, 0.1)";
-            resultBox.style.color = "#ffa500";
-        } else {
-            resultBox.innerHTML = "❌ KEIN DURCHSCHLAG (Ziele auf die Beine!)";
-            resultBox.style.backgroundColor = "rgba(179, 57, 57, 0.2)";
-            resultBox.style.color = "#ff4c4c";
+            container.innerHTML += html;
         }
     }
 
@@ -3950,6 +3981,7 @@ function goToHome() {
         buildBossTimerList();
         initBlueprints();
         buildAmmoMatrix();
+        simulateArmor(2.0, 'NIJ IIIA (Weichballistik)', null);
         fetchLatestNews(); 
         updateLiveTime();
         startTraderTimer();
