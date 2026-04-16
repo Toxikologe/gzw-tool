@@ -3663,11 +3663,12 @@ function goToHome() {
         document.getElementById('gsWeaponType').innerText = currentGunsmithWeapon.type;
         document.getElementById('gsTips').innerHTML = currentGunsmithWeapon.tip;
 
-        // Mod-Dropdowns füllen
-        populateModDropdown('gsModMuzzle', currentGunsmithWeapon.mods.muzzle, "Keine Mündung");
-        populateModDropdown('gsModOptic', currentGunsmithWeapon.mods.optic, "Iron Sights (Kein Visier)");
-        populateModDropdown('gsModGrip', currentGunsmithWeapon.mods.grip, "Kein Unterlaufgriff");
-        populateModDropdown('gsModMag', currentGunsmithWeapon.mods.mag, "Standard-Magazin");
+        // Mod-Dropdowns füllen (Das '|| []' verhindert Fehler, falls eine Kategorie leer ist)
+        populateModDropdown('gsModMuzzle', currentGunsmithWeapon.mods.muzzle || [], "Keine Mündung");
+        populateModDropdown('gsModOptic', currentGunsmithWeapon.mods.optic || [], "Iron Sights (Kein Visier)");
+        populateModDropdown('gsModGrip', currentGunsmithWeapon.mods.grip || [], "Kein Unterlaufgriff");
+        populateModDropdown('gsModStock', currentGunsmithWeapon.mods.stock || [], "Standard-Schaft");
+        populateModDropdown('gsModMag', currentGunsmithWeapon.mods.mag || [], "Standard-Magazin");
 
         updateGunsmithStats();
     }
@@ -3687,14 +3688,18 @@ function goToHome() {
     function updateGunsmithStats() {
         if (!currentGunsmithWeapon) return;
 
+        // 1. Aktuelle Werte aus den Dropdowns auslesen
         const muzzleId = document.getElementById('gsModMuzzle').value;
         const opticId = document.getElementById('gsModOptic').value;
         const gripId = document.getElementById('gsModGrip').value;
+        const stockId = document.getElementById('gsModStock').value;
         const magId = document.getElementById('gsModMag').value;
 
+        // 2. Modifikator-Summen zurücksetzen
         let mods = { recoil: 0, ergo: 0, noise: 0, moa: 0, vel: 0, reload: 0 };
 
-        [muzzleId, opticId, gripId, magId].forEach(id => {
+        // 3. Alle ausgewählten Mods durchgehen und Werte addieren
+        [muzzleId, opticId, gripId, stockId, magId].forEach(id => {
             if (id !== "none" && gunsmithMods[id]) {
                 const m = gunsmithMods[id];
                 mods.recoil += (m.recoil || 0);
@@ -3708,10 +3713,11 @@ function goToHome() {
 
         const base = currentGunsmithWeapon.base;
         
-        // Render Bar Logik (reverseLogic = MOA & Nachladen: Niedriger ist besser)
+        // 4. Render-Logik für die grün/roten Balken
         function createStatBar(label, baseVal, modVal, maxVal, reverseLogic = false) {
             let finalVal = baseVal + modVal;
             
+            // Wenn reverseLogic = true (z.B. bei MOE: Niedriger ist besser), dann ist - (minus) gut (grün).
             let isGood = reverseLogic ? (modVal < 0) : (modVal > 0);
             let isBad = reverseLogic ? (modVal > 0) : (modVal < 0);
             
@@ -3723,19 +3729,18 @@ function goToHome() {
             let modPct = Math.min((Math.abs(modVal) / maxVal) * 100, 100);
             
             let barHtml = `<div class="stat-bar-base" style="width: ${basePct}%;"></div>`;
+            
             if (isGood) {
-                // Wenn lower = better (MOA), wächst der grüne Balken NACH LINKS (verringert optisch den Base-Wert)
                 if (reverseLogic) {
-                    barHtml += `<div class="stat-bar-bonus" style="width: ${modPct}%; left: ${basePct - modPct}%;"></div>`;
+                    barHtml += `<div class="stat-bar-bonus" style="width: ${modPct}%; left: ${Math.max(0, basePct - modPct)}%;"></div>`;
                 } else {
                     barHtml += `<div class="stat-bar-bonus" style="width: ${modPct}%; left: ${basePct}%;"></div>`;
                 }
             } else if (isBad) {
                 if (reverseLogic) {
-                    // Höherer Wert bei Reverse (schlecht) wächst nach rechts rot an
                     barHtml += `<div class="stat-bar-penalty" style="width: ${modPct}%; left: ${basePct}%;"></div>`;
                 } else {
-                    barHtml += `<div class="stat-bar-penalty" style="width: ${modPct}%; right: ${100 - basePct}%;"></div>`;
+                    barHtml += `<div class="stat-bar-penalty" style="width: ${modPct}%; right: ${Math.max(0, 100 - basePct)}%;"></div>`;
                 }
             }
 
@@ -3743,12 +3748,13 @@ function goToHome() {
                 <div class="stat-row">
                     <div class="stat-label">${label}</div>
                     <div class="stat-bar-bg">${barHtml}</div>
-                    <div class="stat-value">${finalVal.toFixed(1)}</div>
+                    <div class="stat-value">${Math.max(0, finalVal).toFixed(1)}</div>
                     <div class="stat-diff">${diffText}</div>
                 </div>
             `;
         }
 
+        // 5. Balken ins HTML schreiben
         const container = document.getElementById('gsStatsContainer');
         container.innerHTML = `
             ${createStatBar("Rückstoßkontrolle", base.recoil, mods.recoil, 100)}
@@ -3757,6 +3763,7 @@ function goToHome() {
             ${createStatBar("Geräuschdämpfung", base.noise, mods.noise, 100)}
         `;
 
+        // 6. Text-Werte (RPM, Velocity, Reload) überschreiben
         document.getElementById('gsStatRpm').innerText = base.rpm;
         document.getElementById('gsStatVel').innerText = (base.vel + mods.vel).toFixed(0);
         
@@ -3764,7 +3771,9 @@ function goToHome() {
         let relColor = mods.reload < 0 ? '#7ca35a' : (mods.reload > 0 ? '#ff4c4c' : 'white');
         let relSign = mods.reload > 0 ? '+' : '';
         let relDiff = mods.reload !== 0 ? `<span style="font-size:0.8rem; color:${relColor}; margin-left:10px;">(${relSign}${mods.reload.toFixed(1)}s)</span>` : '';
-        document.getElementById('gsStatRel').innerHTML = `${finalReload.toFixed(1)} ${relDiff}`;
+        
+        // Math.max(0, finalReload) sorgt dafür, dass die Nachladezeit nie unter 0 Sekunden rutschen kann
+        document.getElementById('gsStatRel').innerHTML = `${Math.max(0, finalReload).toFixed(1)} ${relDiff}`;
     }
 
     // ==============================================================
