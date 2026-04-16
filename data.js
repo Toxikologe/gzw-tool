@@ -1390,7 +1390,18 @@ const medicalDb = [
         treat: ["Loot abwerfen", "Schweres Gear droppen"], 
         tip: "Gewicht verringert auch die Bein-Ausdauer-Regeneration massiv." 
     },
-    { 
+    {
+        id: "exhausted", 
+        name: "Erschöpft (Exhausted)", 
+        icon: "🛑", 
+        symptom: "Sichtbares Waffen-Wackeln. Kein Sprinten, Springen oder Klettern möglich.", 
+        diag: "Absolute Bein-Erschöpfung", 
+        desc: "Deine Bein-Ausdauer ist auf 1% gefallen. Deine Beine versagen den Dienst.", 
+        vitals: [{ label: "Bein-Ausdauer", val: 1, color: "#ff4c4c" }], 
+        treat: ["Sofortige Deckung suchen", "Adrenalin-Injektor (Notfall)"], 
+        tip: "In diesem Zustand bist du ein leichtes Ziel, da du keine Hindernisse mehr überwinden kannst." 
+    },
+    {
         id: "fatigued", 
         name: "Ermüdet / Erschöpft (Fatigued)", 
         icon: "📉", 
@@ -1401,18 +1412,29 @@ const medicalDb = [
         treat: ["Sofortige Pause", "Kaffee (Stamina Buff)", "Energy Drink"], 
         tip: "Die Ausdauer regeneriert erst wieder, wenn du stehen bleibst." 
     },
-    { 
-        id: "cramps", 
-        name: "Arm-Schmerz & Krämpfe", 
-        icon: "⚡", 
-        symptom: "Erhöhtes bis extremes Waffen-Wackeln. Keine Nahkampfangriffe möglich.", 
-        diag: "Muskelversagen (Arme)", 
-        desc: "Die Arm-Ausdauer (Arm Stamina) ist kritisch niedrig (unter 40% oder bei 1%).", 
-        vitals: [{ label: "Arm-Ausdauer", val: 5, color: "#ff4c4c" }], 
-        treat: ["Zielen (ADS) sofort abbrechen", "Waffe senken"], 
-        tip: "Schwere Waffen entziehen beim Zielen deutlich schneller Arm-Ausdauer." 
+    {
+        id: "sore_arms",
+        name: "Schmerzende Arme (Sore Arms)",
+        icon: "💪",
+        symptom: "Erhöhtes Waffen-Wackeln (Sway) beim Zielen.",
+        diag: "Leichte Arm-Erschöpfung",
+        desc: "Tritt auf, wenn die Arm-Ausdauer unter 40% fällt. Oft durch langes Zielen (ADS) mit schweren Waffen verursacht.",
+        vitals: [{ label: "Arm-Ausdauer", val: 35, color: "#ffa500" }],
+        treat: ["Waffe senken", "Zielen (ADS) abbrechen"],
+        tip: "Hohes Waffengewicht beschleunigt diesen Effekt massiv."
     },
     { 
+        id: "cramps", 
+        name: "Krämpfe (Cramps)", 
+        icon: "⚡", 
+        symptom: "Extremes Waffen-Wackeln. Keine Nahkampfangriffe möglich.", 
+        diag: "Muskelversagen (Arme)", 
+        desc: "Die Arm-Ausdauer ist auf 1% gefallen. Du kannst die Waffe nicht mehr ruhig halten.", 
+        vitals: [{ label: "Arm-Ausdauer", val: 1, color: "#ff4c4c" }], 
+        treat: ["Zielen sofort abbrechen", "Deckung suchen"], 
+        tip: "Vermeide langes 'Hard-Scoping' in Gängen." 
+    },
+    {
         id: "out_of_breath", 
         name: "Außer Atem (Out of Breath)", 
         icon: "😮‍💨", 
@@ -1461,26 +1483,26 @@ const medicalDb = [
         tip: "Nutze für leichte Blutungen günstige Bandagen und spar dir die Tourniquets." 
     },
     {
-        id: "bleed_heavy",
-        name: "Schwere Blutung",
-        icon: "🩸🩸",
-        symptom: "Massiver Blutverlust, Sicht wird schnell grau",
-        diag: "Arterielle Verletzung",
-        desc: "Kritischer Zustand! Ohne Behandlung tritt innerhalb von 60-90 Sekunden das Koma ein.",
-        vitals: [{ label: "Blutvolumen", val: 40, color: "#ff4c4c" }],
-        treat: ["Tourniquet (CAT) - SOFORT!", "Blutbeutel (1000ml)", "Israeli Bandage"],
-        tip: "CAT stoppt die Blutung sofort, danach musst du das Blutvolumen wieder auffüllen."
+        id: "bleed_med", 
+        name: "Mittlere Blutung", 
+        icon: "🩸🩸", 
+        symptom: "Blutige Sicht, moderater Blutverlust.", 
+        diag: "Tiefe Schnitt- / Schusswunde", 
+        desc: "Tritt bei mittleren Wunden oder mehreren leichten Wunden auf.", 
+        vitals: [{ label: "Blutvolumen", val: 50, color: "#ffa500" }], 
+        treat: ["Tourniquet (CAT)", "Notfallbandage", "Combat Gauze"], 
+        tip: "Tourniquets stoppen die Blutung sofort, behandeln aber die Wunde selbst nicht!" 
     },
     {
-        id: "bleed_med", 
-        name: "Mittlere bis Schwere Blutung", 
-        icon: "🩸🩸🩸", 
-        symptom: "Blutige Sicht, moderater bis immenser Blutverlust.", 
-        diag: "Arterielle Verletzung", 
-        desc: "Kritischer Zustand durch ungeschützte Treffer! Führt ohne Behandlung in Kürze über Desorientierung zum Koma.", 
-        vitals: [{ label: "Blutvolumen", val: 25, color: "#b33939" }], 
-        treat: ["Tourniquet (CAT) - SOFORT!", "Notfallbandage", "Combat Gauze"], 
-        tip: "Tourniquets stoppen die Blutung sofort, heilen aber die zugrunde liegende Wunde nicht!" 
+        id: "bleed_heavy",
+        name: "Schwere Blutung",
+        icon: "🩸🩸🩸",
+        symptom: "Blutige Sicht, immenser Blutverlust.",
+        diag: "Arterielle Verletzung",
+        desc: "Kritischer Zustand! Entsteht durch schwere Wunden oder viele kleine Wunden. Führt rasant ins Koma.",
+        vitals: [{ label: "Blutvolumen", val: 15, color: "#ff4c4c" }],
+        treat: ["Tourniquet (CAT) - SOFORT!", "Blutbeutel (1000ml)", "Israeli Bandage"],
+        tip: "Wende sofort ein Tourniquet an und fülle danach zwingend dein Blutvolumen mit Blutbeuteln auf."
     },
 
     // --- KNOCHEN & ORGANE ---
@@ -1552,7 +1574,18 @@ const medicalDb = [
         treat: ["Chirurgie (bei Leber)", "Anti-Rad Tabletten", "Warten"], 
         tip: "Leberschäden sind die häufigste Ursache für Übelkeit nach einem Treffer in den Torso." 
     },
-    { 
+    {
+        id: "dizzy",
+        name: "Schwindlig (Dizzy)",
+        icon: "💫",
+        symptom: "Verschwommene / doppelte (hazy) Sicht.",
+        diag: "Kreislaufschwäche",
+        desc: "Die Vorstufe. Tritt auf bei leichtem Blutverlust, Dehydration oder extremem Hunger.",
+        vitals: [{ label: "Kreislauf", val: 50, color: "#ffa500" }],
+        treat: ["Trinken", "Essen", "Blutverlust stoppen"],
+        tip: "Ein schnelles Getränk oder ein Snack beheben dieses Problem oft sofort."
+    },
+    {
         id: "dazed_confused", 
         name: "Benommen / Desorientiert", 
         icon: "🧠", 
@@ -1565,7 +1598,7 @@ const medicalDb = [
     },
     { 
         id: "vision_blackout", 
-        name: "Vision Black-Out / Blind Spot", 
+        name: "Blindheit / Tinnitus", 
         icon: "👁️‍🗨️", 
         symptom: "Komplette Blindheit (2 Sek) oder Weiße Flecken (4 Sek).", 
         diag: "Optische Überreizung (Blendung)", 
