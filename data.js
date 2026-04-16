@@ -1375,7 +1375,7 @@ const lzDb = {
 };
 
 // ==========================================
-// 25. MEDICAL CENTER DATENBANK (100% COMPLETE - WIKI SYNCED)
+// 12. MEDICAL CENTER DATENBANK (100% COMPLETE - WIKI SYNCED)
 // ==========================================
 const medicalDb = [
     // --- AUSDAUER & ERSCHÖPFUNG ---
@@ -1798,7 +1798,9 @@ const tradersDb = [
     { trader: "Vulture", level: 4, name: "Secure Container Upgrades", isMeta: true, info: "Vergrößert deine sichere Lockbox (z.B. auf 3x3). Das absolute Endgame-Grind-Ziel!" }
 ];
 
+    // ==========================================
     // 14. FRAKTIONEN DATENBANK
+    // ==========================================
     const factionDb = {
         "mss": {
             name: "Mithras Security Systems",
@@ -2024,3 +2026,45 @@ const blueprintDb = {
         mapUrl: "https://gzwtacmap.com/de/maps/lamang/place/@9873.92,2932.91" // DEIN LEERFELD FÜR DEN MAP-LINK
     }
 };
+
+// ==========================================
+// 18. PROVISIONS & MARKET DATABASE (0.4 COMPLETE)
+// ==========================================
+const provisionsDb = [
+    // --- STAMINA BOOSTERS (0.4 NEU) ---
+    { name: "Dark Star Iced Coffee", type: "Stamina Booster", hyd: 20, eng: 5, uses: 1, grid: "1x1", isBuff: true, boost: "Arm & Bein Ausdauer", armCap: "+20%", armDur: "180s", legCap: "+20%", legDur: "180s", info: "Gibt dir einen starken Boost für lange Sprints oder das Halten schwerer Waffen im ADS." },
+    { name: "NuKlear Energy: Meltdown Mango", type: "Stamina Booster", hyd: 55, eng: 4, uses: 1, grid: "1x1", isBuff: true, boost: "Bein Ausdauer", armCap: "-", armDur: "-", legCap: "+30%", legDur: "120s", info: "Extremer Bein-Stamina-Boost. Perfekt, um unter Beschuss in Deckung zu rennen." },
+    { name: "Energy Bar Nuts and Fruits", type: "Stamina Booster", hyd: 0, eng: 14, uses: 1, grid: "1x1", isBuff: true, boost: "Arm Ausdauer", armCap: "+15%", armDur: "120s", legCap: "-", legDur: "-", info: "Stabilisiert deine Arme deutlich länger beim Zielen." },
+    { name: "Windmill Almond Choc Bar", type: "Stamina Booster", hyd: 0, eng: 16, uses: 1, grid: "1x1", isBuff: true, boost: "Bein Ausdauer", armCap: "-", armDur: "-", legCap: "+15%", legDur: "90s", info: "Kleiner, aber feiner Boost für den langen Rückweg zur Basis." },
+    { name: "TamTam DoubleChoc", type: "Stamina Booster", hyd: 0, eng: 20, uses: 1, grid: "1x1", isBuff: true, boost: "Arm Ausdauer", armCap: "+25%", armDur: "150s", legCap: "-", legDur: "-", info: "Sehr starker Arm-Boost für Scharfschützen, die lange das Scope halten müssen." },
+    { name: "Berg Bar Cookie Chocolate", type: "Stamina Booster", hyd: 0, eng: 25, uses: 1, grid: "1x1", isBuff: true, boost: "Allround Boost", armCap: "+10%", armDur: "120s", legCap: "+10%", legDur: "120s", info: "Ein solider Allrounder für den Gürtel. Wirkt auf den ganzen Körper." },
+
+    // --- DRINKS (GETRÄNKE) ---
+    { name: "Power Energy Drink", type: "Getränk", hyd: 45, eng: 10, uses: 1, grid: "1x1", isBuff: false, info: "Standard-Energy. Gute Hydration und etwas Energie." },
+    { name: "Gray Focused Energy", type: "Getränk", hyd: 50, eng: 15, uses: 1, grid: "1x1", isBuff: false, info: "Sehr starker Durstlöscher mit einem ordentlichen Kalorien-Schub." },
+    { name: "Infinity Isotonic Drink", type: "Getränk", hyd: 40, eng: 5, uses: 1, grid: "1x1", isBuff: false, info: "Isotonisches Getränk. Schnell konsumiert." },
+    { name: "Noakon Water 0.6 L", type: "Getränk", hyd: 60, eng: 0, uses: 1, grid: "1x1", isBuff: false, info: "Die effizienteste kleine Wasserflasche im Spiel für 1 Slot." },
+    { name: "Aques Water 1.0 L", type: "Getränk", hyd: 33, eng: 0, uses: 3, grid: "1x2", isBuff: false, info: "Große Flasche mit 3 Anwendungen. Sehr effizient für lange Raids." },
+    { name: "Noakon Water 1.5 L", type: "Getränk", hyd: 50, eng: 0, uses: 3, grid: "1x2", isBuff: false, info: "Riesige Flasche mit 3 Anwendungen. Deckt den Hydrationsbedarf eines ganzen Squads." },
+    { name: "Sunrise Cola", type: "Getränk", hyd: 33, eng: 15, uses: 1, grid: "1x1", isBuff: false, info: "Zuckerhaltig. Gut für eine schnelle Energiezufuhr bei mittlerem Durst." },
+    { name: "Kaipo Lychee Nectar", type: "Getränk", hyd: 35, eng: 10, uses: 1, grid: "1x1", isBuff: false, info: "Süßer Fruchtnektar." },
+    { name: "Maknav Iced Tea", type: "Getränk", hyd: 45, eng: 10, uses: 2, grid: "1x2", isBuff: false, info: "Eistee in der großen Flasche. Bietet 2 Anwendungen." },
+
+    // --- FOOD (MEALS) ---
+    { name: "Spicy Thai Combat Meal", type: "Mahlzeit", hyd: -15, eng: 80, uses: 2, grid: "1x2", isBuff: false, info: "Macht extrem satt (2 Anwendungen), zieht aber massiv Wasser! Trinken bereithalten." },
+    { name: "Combat Ration Pack (CRP)", type: "Mahlzeit", hyd: 75, eng: 37, uses: 2, grid: "1x2", isBuff: false, info: "Militärration. 2 Anwendungen. Sehr effizient und löscht sogar den Durst." },
+    { name: "HDR Meal", type: "Mahlzeit", hyd: 75, eng: 37, uses: 2, grid: "1x2", isBuff: false, info: "Humanitarian Daily Ration. Große Mahlzeit für lange Einsätze." },
+    { name: "Premium Pork Luncheon", type: "Mahlzeit", hyd: -10, eng: 70, uses: 2, grid: "1x2", isBuff: false, info: "Dosenfleisch (2 Anwendungen). Gibt viel Energie, trocknet dich aber leicht aus." },
+    { name: "Mackerel in Teriyaki", type: "Mahlzeit", hyd: -10, eng: 60, uses: 1, grid: "1x1", isBuff: false, info: "Fischkonserve. Solider Energie-Schub für einen 1x1 Slot." },
+    { name: "Canned Tuna Chunks", type: "Mahlzeit", hyd: -10, eng: 40, uses: 1, grid: "1x1", isBuff: false, info: "Thunfisch. Gut als Notration." },
+    { name: "Cowboy Baked Beans", type: "Mahlzeit", hyd: 5, eng: 35, uses: 2, grid: "1x2", isBuff: false, info: "Bohnen in Sauce. Spendet sogar ein klein wenig Hydration (2 Anwendungen)." },
+    { name: "Lychee in Syrup", type: "Mahlzeit", hyd: 10, eng: 26, uses: 2, grid: "1x2", isBuff: false, info: "Der Sirup gibt Wasser und Energie gleichzeitig zurück." },
+    { name: "Lucky Pork Liver Pâté", type: "Mahlzeit", hyd: -5, eng: 35, uses: 1, grid: "1x1", isBuff: false, info: "Leberpastete. Kleine Mahlzeit, die den Durst kaum beeinflusst." },
+
+    // --- SNACKS ---
+    { name: "Sinngua Lunch Meat", type: "Snack", hyd: -10, eng: 60, uses: 2, grid: "1x2", isBuff: false, info: "Fleisch-Snack in der Dose." },
+    { name: "Kasem Chocolate Wafers", type: "Snack", hyd: -5, eng: 14, uses: 1, grid: "1x1", isBuff: false, info: "Waffeln. Trocken und krümelig, minimaler Boost." },
+    { name: "Organic Tofu", type: "Snack", hyd: -10, eng: 18, uses: 1, grid: "1x1", isBuff: false, info: "Reines Protein. Zieht etwas Wasser." },
+    { name: "1 Shot Energy Chews", type: "Snack", hyd: 5, eng: 15, uses: 1, grid: "1x1", isBuff: false, info: "Schnelle Kaugummis für den Sofort-Kick. Labor-Ration." },
+    { name: "Bamboo Shoots", type: "Snack", hyd: 5, eng: 15, uses: 2, grid: "1x2", isBuff: false, info: "Bambussprossen. Leicht wässrig, daher +5 Hydration." }
+];
