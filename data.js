@@ -1510,84 +1510,144 @@ const lzDb = {
     }
     
 // ==========================================
-// 19. HÄNDLER FREISCHALTUNGEN (0.4 SPEARHEAD)
+// 13. HÄNDLER FREISCHALTUNGEN (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
 // isMeta: true markiert absolute Game-Changer Items!
 
 const tradersDb = [
+    // ==========================================
     // --- GUNNY (Westliche Waffen & Munition) ---
-    { trader: "Gunny", level: 1, name: "M4A1 (Standard)", isMeta: false, info: "" },
-    { trader: "Gunny", level: 1, name: "Glock 19 (9x19mm)", isMeta: false, info: "" },
-    { trader: "Gunny", level: 1, name: "M193 Munition (5.56x45)", isMeta: false, info: "" },
-    { trader: "Gunny", level: 2, name: "KAC QDSS-NT4 Schalldämpfer (5.56)", isMeta: true, info: "Erster Schalldämpfer für die M4! Ein absoluter Game-Changer für Stealth-Räumen." },
-    { trader: "Gunny", level: 2, name: "M855 Munition (5.56x45)", isMeta: false, info: "Standard-Munition, durchschlägt leichte Helme (NIJ IIIA)." },
-    { trader: "Gunny", level: 2, name: "Trijicon ACOG 4x Visier", isMeta: true, info: "Das beste Mid-Game Visier für Distanzkämpfe im Dschungel." },
-    { trader: "Gunny", level: 2, name: "30-Schuss STANAG Magazin", isMeta: false, info: "" },
-    { trader: "Gunny", level: 3, name: "DDM4 (Blueprint Unlock)", isMeta: true, info: "Nur verfügbar nach der Quest 'Phantom Lance'. Eine der besten 5.56 Waffen im Spiel!" },
-    { trader: "Gunny", level: 3, name: "Elcan SpecterDR 1-4x", isMeta: true, info: "Umschaltbares Visier (Nahkampf & Distanz). Absolutes Meta." },
-    { trader: "Gunny", level: 3, name: "M855A1 Munition (5.56x45)", isMeta: true, info: "Durchschlägt Level III Rüstungen zuverlässig. Pflicht-Munition ab Level 3!" },
-    { trader: "Gunny", level: 3, name: "60-Schuss SureFire Magazin", isMeta: true, info: "Verdoppelt deine Feuerkraft ohne Nachladen. Perfekt für Tiger Bay." },
-    { trader: "Gunny", level: 4, name: "M995 AP Munition (5.56x45)", isMeta: true, info: "Panzerbrechend! Ignoriert fast jede Rüstung im Spiel (NIJ III++)." },
-    { trader: "Gunny", level: 4, name: "Vudu 1-6x Scharfschützen-Visier", isMeta: true, info: "Das beliebteste Sniper-Visier für westliche Waffen." },
+    // ==========================================
+    { trader: "Gunny", level: 1, name: "M4A1 & CQ-A1 (5.56x45)", isMeta: false, info: "Basis-Sturmgewehre. Die CQ-A1 ist eine günstige chinesische Alternative zur M4." },
+    { trader: "Gunny", level: 1, name: "Glock 19 & Remington 870", isMeta: false, info: "Verlässliche Nebenwaffen und Schrotflinten für den Start." },
+    { trader: "Gunny", level: 1, name: "M193 Munition (5.56x45)", isMeta: false, info: "Zivile Munition. Kaum Rüstungsdurchschlag." },
+    { trader: "Gunny", level: 1, name: "Aimpoint T-1 Rotpunktvisier", isMeta: false, info: "Gutes, klares Visier für die ersten Missionen." },
+    
+    { trader: "Gunny", level: 2, name: "KAC QDSS-NT4 Schalldämpfer", isMeta: true, info: "Dein erster Schalldämpfer für die M4! Ein absoluter Game-Changer, um KI-Gruppen nicht sofort zu alarmieren." },
+    { trader: "Gunny", level: 2, name: "M855 Munition (5.56x45)", isMeta: false, info: "Militär-Standard. Durchschlägt leichte Helme und Soft-Armor (NIJ IIIA)." },
+    { trader: "Gunny", level: 2, name: "Trijicon ACOG 4x Visier", isMeta: true, info: "Das beste Mid-Game Visier für Distanzkämpfe im dichten Dschungel." },
+    { trader: "Gunny", level: 2, name: "EOTech EXPS3 Holovisier", isMeta: false, info: "Perfekt für den Nahkampf (Tiger Bay & Bunker)." },
+    { trader: "Gunny", level: 2, name: "30-Schuss PMAG Magazin", isMeta: false, info: "Leichter und zuverlässiger als die Standard-Blechmagazine." },
 
-    // --- HANDSHAKE (Rüstungen & Rucksäcke) ---
-    { trader: "Handshake", level: 1, name: "Patrol Rucksack (16 Slots)", isMeta: false, info: "" },
-    { trader: "Handshake", level: 1, name: "6B2 Schutzweste (NIJ IIIA)", isMeta: false, info: "Schützt nur vor Pistolen und Schrot. Gegen Sturmgewehre nutzlos." },
-    { trader: "Handshake", level: 2, name: "Delta Backpack (24 Slots)", isMeta: true, info: "Der erste große Rucksack. Erhöht deinen Loot-Profit massiv!" },
-    { trader: "Handshake", level: 2, name: "M2 Plate Carrier (NIJ III)", isMeta: true, info: "Die erste richtige Panzerung. Stoppt Standard-Sturmgewehrkugeln." },
-    { trader: "Handshake", level: 2, name: "GSSH-01 Headset", isMeta: false, info: "Verstärkt feindliche Schritte, macht aber eigenen Beschuss sehr laut." },
-    { trader: "Handshake", level: 3, name: "Recon Plate Carrier (NIJ III+)", isMeta: true, info: "Perfekte Balance aus Gewicht, Stauraum und Schutz." },
-    { trader: "Handshake", level: 3, name: "3-Day Assault Backpack", isMeta: false, info: "Sehr großer Rucksack, macht dich aber schwerfälliger." },
+    { trader: "Gunny", level: 3, name: "DDM4 (Blueprint Unlock)", isMeta: true, info: "Nur verfügbar nach Abschluss der Quest 'Phantom Lance'. Eine der präzisesten 5.56 Waffen im Spiel!" },
+    { trader: "Gunny", level: 3, name: "M855A1 AP Munition (5.56x45)", isMeta: true, info: "Durchschlägt Level III Rüstungen zuverlässig. Die absolute Pflicht-Munition ab Level 3!" },
+    { trader: "Gunny", level: 3, name: "Elcan SpecterDR 1-4x", isMeta: true, info: "Umschaltbares Visier (Nahkampf & Distanz). Das beliebteste Meta-Visier." },
+    { trader: "Gunny", level: 3, name: "SureFire RC2 Schalldämpfer", isMeta: true, info: "Besserer Schalldämpfer als der KAC, extrem gute Rückstoßdämpfung." },
+    { trader: "Gunny", level: 3, name: "60-Schuss SureFire Magazin", isMeta: true, info: "Verdoppelt deine Feuerkraft ohne Nachladen. Überlebenswichtig für Tiger Bay!" },
+
+    { trader: "Gunny", level: 4, name: "L403A1 / KS-1 Rifle", isMeta: true, info: "0.4 Neuzugang! Das britische Elite-Gewehr. Teuer, aber überragendes Handling." },
+    { trader: "Gunny", level: 4, name: "M995 AP Munition (5.56x45)", isMeta: true, info: "Panzerbrechend! Ignoriert fast jede Rüstung im Spiel (selbst NIJ III++)." },
+    { trader: "Gunny", level: 4, name: "Vudu 1-6x Scharfschützen-Visier", isMeta: true, info: "Das absolute Meta-Sniper-Visier für westliche Sturmgewehre." },
+    { trader: "Gunny", level: 4, name: "Waffenkoffer (Weapon Case)", isMeta: true, info: "Der Stash-Retter! Bietet enormen Platz für deine gesammelten Waffen." },
+    { trader: "Gunny", level: 4, name: "PEQ-15 Laser/IR Modul", isMeta: false, info: "Wichtig für Night-Raids mit Nachtsicht." },
+
+    // ==========================================
+    // --- HANDSHAKE (Rüstungen, Rucksäcke & Helme) ---
+    // ==========================================
+    { trader: "Handshake", level: 1, name: "Patrol Rucksack (16 Slots)", isMeta: false, info: "Besser als nichts für die ersten Loot-Runs." },
+    { trader: "Handshake", level: 1, name: "6B2 Schutzweste (NIJ IIIA)", isMeta: false, info: "Schützt nur vor Pistolen und Schrot. Gegen Sturmgewehre der KIs komplett nutzlos." },
+    { trader: "Handshake", level: 1, name: "PASGT Helm", isMeta: false, info: "Basis-Kopfschutz." },
+
+    { trader: "Handshake", level: 2, name: "Delta Backpack (24 Slots)", isMeta: true, info: "Der erste richtig große Rucksack. Erhöht deinen Loot-Profit massiv!" },
+    { trader: "Handshake", level: 2, name: "M2 Plate Carrier (NIJ III)", isMeta: true, info: "Die erste brauchbare Panzerung. Stoppt Standard-Sturmgewehrkugeln (z.B. PS-Munition)." },
+    { trader: "Handshake", level: 2, name: "GSSH-01 Headset", isMeta: false, info: "Verstärkt feindliche Schritte, macht aber eigenen Beschuss unangenehm laut." },
+    { trader: "Handshake", level: 2, name: "MICH Helm", isMeta: false, info: "Solider NIJ IIIA Helm mit Platz für Headsets." },
+
+    { trader: "Handshake", level: 3, name: "Recon Plate Carrier (NIJ III+)", isMeta: true, info: "Die Meta-Rüstung! Perfekte Balance aus Gewicht, Stauraum und Schutz vor harten Treffern." },
+    { trader: "Handshake", level: 3, name: "3-Day Assault Backpack", isMeta: false, info: "Sehr großer Rucksack, macht dich aber schwerfälliger und senkt die Ausdauer." },
+    { trader: "Handshake", level: 3, name: "AMP Headset", isMeta: true, info: "Das beste Headset. Filtert laute Schüsse perfekt heraus und verstärkt nur Schritte." },
+
     { trader: "Handshake", level: 4, name: "Defender-2 Weste (NIJ III++)", isMeta: true, info: "Die stärkste Rüstung im Spiel! Macht dich fast unbesiegbar gegen Standard-Kugeln." },
-    { trader: "Handshake", level: 4, name: "FAST MT Helm", isMeta: true, info: "Kombinierbar mit Nachtsichtgeräten und Gesichtsschutz." },
+    { trader: "Handshake", level: 4, name: "FAST MT Helm", isMeta: true, info: "Kombinierbar mit Nachtsichtgeräten (NVG) und ballistischem Gesichtsschutz." },
+    { trader: "Handshake", level: 4, name: "Rush Backpack", isMeta: true, info: "Der beste Rucksack im Endgame. Riesig, aber mit moderaten Speed-Penalties." },
+    { trader: "Handshake", level: 4, name: "Ausrüstungskoffer (Gear Case)", isMeta: true, info: "Spart massiv Platz in deiner Stash, indem du Helme und Westen stapelst." },
 
+    // ==========================================
     // --- LAB RAT (Medizin & Vorräte) ---
-    { trader: "Lab Rat", level: 1, name: "Bandage & Tourniquet", isMeta: false, info: "" },
-    { trader: "Lab Rat", level: 1, name: "Small Blood Bag (Blutkonserve)", isMeta: false, info: "" },
-    { trader: "Lab Rat", level: 2, name: "SurKit (Chirurgisches Set)", isMeta: true, info: "Lebensretter! Heilt zerstörte Organe und Knochenbrüche im Feld." },
-    { trader: "Lab Rat", level: 2, name: "Große Blutkonserve", isMeta: true, info: "Stellt dein gesamtes Blutvolumen auf einmal wieder her." },
-    { trader: "Lab Rat", level: 2, name: "IFAK (Erste-Hilfe-Set)", isMeta: false, info: "Kombiniert Blutungskontrolle und Heilung auf wenig Platz." },
-    { trader: "Lab Rat", level: 3, name: "Meloxicam (Schmerzmittel)", isMeta: false, info: "Unterdrückt Schmerz-Effekte und unscharfe Sicht nach Treffern." },
-    { trader: "Lab Rat", level: 3, name: "Adrenalin-Injektor", isMeta: true, info: "Regeneriert sofort massiv Ausdauer. Wichtig für die Flucht aus Hotzones." },
-    { trader: "Lab Rat", level: 4, name: "Anti-Strahlen Pillen (Rad-X)", isMeta: true, info: "Ohne diese Pillen überlebst du das Ground Zero Epizentrum in 0.4 nicht!" },
-    { trader: "Lab Rat", level: 4, name: "Regenerations-Stims", isMeta: true, info: "Heilt dich langsam passiv über Zeit hoch. Sehr teuer, aber extrem stark." },
+    // ==========================================
+    { trader: "Lab Rat", level: 1, name: "Bandagen & Tourniquets", isMeta: false, info: "Stoppt leichte (Bandage) und schwere (Tourniquet) Blutungen." },
+    { trader: "Lab Rat", level: 1, name: "Kleine Blutkonserve (Blood Bag)", isMeta: false, info: "Füllt dein Blutlevel nach schweren Treffern langsam wieder auf." },
+    { trader: "Lab Rat", level: 1, name: "Splint (Schiene)", isMeta: false, info: "Heilt gebrochene Knochen, um wieder rennen zu können." },
 
-    // --- ARTISAN (Östliche Waffen & Mods) ---
-    { trader: "Artisan", level: 1, name: "SKS & AKM (Standard)", isMeta: false, info: "" },
-    { trader: "Artisan", level: 1, name: "7.62x39mm PS Munition", isMeta: false, info: "" },
-    { trader: "Artisan", level: 2, name: "AK-74M", isMeta: false, info: "" },
-    { trader: "Artisan", level: 2, name: "PBS-1 Schalldämpfer (7.62)", isMeta: true, info: "Macht deine AKM lautlos. Perfekt für Sägewerk und Ban Pa." },
-    { trader: "Artisan", level: 2, name: "Kobra Rotpunktvisier", isMeta: false, info: "Günstiges und sehr klares Visier für russische Waffen." },
-    { trader: "Artisan", level: 3, name: "5.45x39mm BP Munition", isMeta: true, info: "Gute Penetration für die AK-74 Modelle." },
-    { trader: "Artisan", level: 3, name: "AK-12 (Neues Modell)", isMeta: true, info: "Extrem geringer Rückstoß, fantastische Feuerrate." },
-    { trader: "Artisan", level: 3, name: "PBS-4 Schalldämpfer (5.45)", isMeta: true, info: "" },
-    { trader: "Artisan", level: 4, name: "7.62x39mm MAI AP Munition", isMeta: true, info: "Die beste 7.62 Munition im Spiel. Zerstört dicke Westen auf einen Schlag." },
-    { trader: "Artisan", level: 4, name: "OKP-7 Visier", isMeta: false, info: "" },
+    { trader: "Lab Rat", level: 2, name: "SurKit (Chirurgisches Set)", isMeta: true, info: "Lebensretter! Heilt zerstörte Organe (Lunge, Leber) im Feld, sonst verblutest du unweigerlich." },
+    { trader: "Lab Rat", level: 2, name: "Große Blutkonserve", isMeta: true, info: "Stellt dein gesamtes Blutvolumen auf einmal wieder her. Sehr wichtig nach Coma-Phasen." },
+    { trader: "Lab Rat", level: 2, name: "IFAK (Erste-Hilfe-Set)", isMeta: false, info: "Kombiniert Blutungskontrolle und leichte Heilung auf wenig Platz." },
+    { trader: "Lab Rat", level: 2, name: "Ibuprofen", isMeta: false, info: "Günstige, langanhaltende Schmerzlinderung." },
 
-    // --- TURNCOAT (Ex-Söldner Gear) ---
-    { trader: "Turncoat", level: 1, name: "Mosin-Nagant", isMeta: false, info: "" },
-    { trader: "Turncoat", level: 1, name: "Bank Robber Rig", isMeta: false, info: "Günstige Weste für reine Loot-Runs ohne Rüstung." },
-    { trader: "Turncoat", level: 2, name: "SVD Dragunov (Basis)", isMeta: false, info: "Stark, aber schwer zu kontrollieren ohne gute Mods." },
-    { trader: "Turncoat", level: 2, name: "7.62x54R LPS Munition", isMeta: false, info: "" },
-    { trader: "Turncoat", level: 3, name: "7.62x54R 7N1 Sniper-Munition", isMeta: true, info: "Extrem hoher Schaden. Tötet ungeschützte Ziele oft mit einem Körpertreffer." },
-    { trader: "Turncoat", level: 3, name: "TGP-V Schalldämpfer (SVD)", isMeta: true, info: "Reduziert den enormen Knall der SVD. Ein Muss für Scharfschützen." },
-    { trader: "Turncoat", level: 4, name: "7.62x54R SNB AP Munition", isMeta: true, info: "Durchschlägt absolut jede Deckung und Helm. Die stärkste Scharfschützen-Kugel." },
+    { trader: "Lab Rat", level: 3, name: "Adrenalin-Injektor", isMeta: true, info: "Regeneriert sofort massiv Ausdauer. Überlebenswichtig für die Flucht aus Hotzones!" },
+    { trader: "Lab Rat", level: 3, name: "Morphin-Injektor", isMeta: true, info: "Unterdrückt sofort alle Schmerz-Effekte und unscharfe Sicht, selbst bei gebrochenen Beinen." },
+    { trader: "Lab Rat", level: 3, name: "4-Slot Medkits", isMeta: false, info: "Heilt Wunden extrem schnell, belegt aber viel Platz." },
 
-    // --- BANSHEE (High-End & Boss Gear) ---
-    { trader: "Banshee", level: 1, name: "M700 Sniper", isMeta: false, info: "" },
-    { trader: "Banshee", level: 1, name: "7.62x51mm M80 Munition", isMeta: false, info: "" },
-    { trader: "Banshee", level: 2, name: "M700 Schalldämpfer", isMeta: true, info: "Macht dich zum tödlichen Geist auf große Distanzen." },
-    { trader: "Banshee", level: 2, name: "Razor HD Gen II Visier", isMeta: true, info: "Wahnsinnig klare Sicht. Das beste Zoom-Visier auf Mid-Tier Level." },
-    { trader: "Banshee", level: 3, name: "M61 AP Munition (7.62x51)", isMeta: true, info: "Eine der gefährlichsten Kugeln im ganzen Spiel." },
-    { trader: "Banshee", level: 3, name: "SR-25 DMR", isMeta: true, info: "Halbautomatisches Sniper. Perfekt, um Squads schnell auszuschalten." },
-    { trader: "Banshee", level: 4, name: "Nachtsicht- & Thermal-Visiere", isMeta: true, info: "Macht die Dunkelheit zu deinem Vorteil. Unglaublich teuer, aber absolut OP." },
-    { trader: "Banshee", level: 4, name: "M993 AP Munition", isMeta: true, info: "Höchster Penetrationswert im gesamten Spiel." },
+    { trader: "Lab Rat", level: 4, name: "Anti-Strahlen Pillen (Rad-X)", isMeta: true, info: "0.4 Feature: Ohne diese Pillen und eine Gasmaske überlebst du das Ground Zero Epizentrum nicht!" },
+    { trader: "Lab Rat", level: 4, name: "Regenerations-Stims", isMeta: true, info: "Heilt dich langsam passiv über Zeit hoch. Sehr teuer, aber das absolute Meta für Tiger Bay." },
+    { trader: "Lab Rat", level: 4, name: "Medizin-Koffer (Medical Case)", isMeta: true, info: "Riesige Box für deine Stash, um all deine SurKits und Stims sauber zu lagern." },
 
-    // --- VULTURE (0.4 Secret Vendor) ---
-    { trader: "Vulture", level: 1, name: "Boss Skins (z.B. 1911 C)", isMeta: false, info: "Kosmetische Freischaltungen, nachdem du Boss-Quests erledigt hast." },
-    { trader: "Vulture", level: 2, name: "Spezielle Boss-Keys", isMeta: true, info: "Vulture verkauft gelegentlich seltene Schlüssel für In-Game Cash." },
-    { trader: "Vulture", level: 3, name: "AK-308 (Blueprint Mod)", isMeta: true, info: "Nach Abschluss der 'Chameleon' Quest. Ein absolutes Monster auf 7.62x51mm Basis." },
-    { trader: "Vulture", level: 4, name: "Secure Container Upgrades", isMeta: true, info: "Vergrößert deine sichere Lockbox. Der absolute Endgame-Grind!" }
+    // ==========================================
+    // --- ARTISAN (Östliche Waffen, AKs & Mods) ---
+    // ==========================================
+    { trader: "Artisan", level: 1, name: "AKM, SKS & Type 56", isMeta: false, info: "Die Arbeitstiere. Schlagen hart zu, haben aber enormen Rückstoß." },
+    { trader: "Artisan", level: 1, name: "7.62x39mm PS Munition", isMeta: false, info: "Solider Durchschlag gegen frühe Helme und leichte Westen." },
+    
+    { trader: "Artisan", level: 2, name: "AK-74M", isMeta: false, info: "Viel präziser als die AKM, feuert das kleinere 5.45 Kaliber." },
+    { trader: "Artisan", level: 2, name: "PBS-1 Schalldämpfer (7.62)", isMeta: true, info: "Macht deine AKM lautlos. Ein Muss für Sägewerk und Ban Pa." },
+    { trader: "Artisan", level: 2, name: "Kobra & PSO-1 Visiere", isMeta: false, info: "Klassische russische Visiere für Nahkampf (Kobra) und Distanz (PSO-1)." },
+
+    { trader: "Artisan", level: 3, name: "AK-12 (Spearhead Modell)", isMeta: true, info: "Extrem geringer Rückstoß, fantastische Feuerrate. Die beste 5.45 Waffe!" },
+    { trader: "Artisan", level: 3, name: "5.45x39mm BP Munition", isMeta: true, info: "Hervorragende Penetration gegen militärische Panzerung." },
+    { trader: "Artisan", level: 3, name: "PBS-4 & Hexagon Schalldämpfer", isMeta: true, info: "Die besten Suppressors für alle 5.45 Modelle." },
+    { trader: "Artisan", level: 3, name: "60-Schuss AK Magazine", isMeta: true, info: "Trommelmagazine für Dauerfeuer in Häuserkämpfen." },
+
+    { trader: "Artisan", level: 4, name: "7.62x39mm MAI AP Munition", isMeta: true, info: "Die beste 7.62 Munition im Spiel! Zerstört dicke Westen auf einen Schlag." },
+    { trader: "Artisan", level: 4, name: "5.45x39mm BS / 7N39 Igolnik", isMeta: true, info: "Absolutes AP-Monster für die AK-12. Geht durch alles durch." },
+    { trader: "Artisan", level: 4, name: "OKP-7 Visier", isMeta: false, info: "Das beliebteste und sauberste Rotpunkt-Visier für die AK-Plattform." },
+    { trader: "Artisan", level: 4, name: "Item Case", isMeta: true, info: "Bietet massig Platz für Schrott, Loot und Werkzeuge in deiner Basis." },
+
+    // ==========================================
+    // --- TURNCOAT (Ex-Söldner Gear, Rigs & 7.62x54R) ---
+    // ==========================================
+    { trader: "Turncoat", level: 1, name: "Mosin-Nagant & 7.62x54R LPS", isMeta: false, info: "Das alte Scharfschützengewehr. Ein Schuss, massiver Schaden." },
+    { trader: "Turncoat", level: 1, name: "Bank Robber & Chicom Rigs", isMeta: false, info: "Günstige Westen für reine Zero-to-Hero Loot-Runs ohne Rüstung." },
+
+    { trader: "Turncoat", level: 2, name: "SVD Dragunov (Basis)", isMeta: false, info: "Starkes halbautomatisches Sniper, aber ohne Mods schwer zu kontrollieren." },
+    { trader: "Turncoat", level: 2, name: "PU Scope", isMeta: false, info: "Das klassische Visier für die Mosin." },
+    { trader: "Turncoat", level: 2, name: "Phantom Rig", isMeta: false, info: "Sehr gute taktische Weste mit viel Stauraum." },
+
+    { trader: "Turncoat", level: 3, name: "AK-15", isMeta: true, info: "Moderne 7.62x39 Variante. Tödlich und extrem präzise." },
+    { trader: "Turncoat", level: 3, name: "7.62x54R 7N1 Sniper-Munition", isMeta: true, info: "Extrem hoher Fleisch-Schaden. Tötet Ziele ohne NIJ III oft mit einem Körpertreffer." },
+    { trader: "Turncoat", level: 3, name: "TGP-V Schalldämpfer (SVD)", isMeta: true, info: "Reduziert den enormen Knall der SVD. Ein Muss für Tiger Bay Sniper." },
+    { trader: "Turncoat", level: 3, name: "4-Slot Gürtel (Belts)", isMeta: true, info: "Die besten Gürtel im Spiel! Endlich Platz für große 60-Schuss Magazine in der Schnellauswahl." },
+
+    { trader: "Turncoat", level: 4, name: "7.62x54R SNB AP Munition", isMeta: true, info: "Durchschlägt absolut jede Deckung und jeden Helm. Die stärkste Kugel des Spiels." },
+    { trader: "Turncoat", level: 4, name: "SVT-40", isMeta: true, info: "0.4 Neuzugang! Historisch, aber verheerende Stoppwirkung." },
+    { trader: "Turncoat", level: 4, name: "Munitions-Koffer (Ammo Case)", isMeta: true, info: "Endlich ein Ort, um deine gesammelte AP-Munition platzsparend zu lagern!" },
+
+    // ==========================================
+    // --- BANSHEE (High-End NATO, Sniper & Night Ops) ---
+    // ==========================================
+    { trader: "Banshee", level: 1, name: "M700 Sniper", isMeta: false, info: "Präzises westliches Repetiergewehr." },
+    { trader: "Banshee", level: 1, name: "7.62x51mm M80 Munition", isMeta: false, info: "Gute Basis-Munition, stoppt KIs auf Distanz." },
+
+    { trader: "Banshee", level: 2, name: "M700 Schalldämpfer", isMeta: true, info: "Macht dich zum tödlichen Geist aus den Hügeln von Midnight Sapphire." },
+    { trader: "Banshee", level: 2, name: "Razor HD Gen II 1-6x Visier", isMeta: true, info: "Wahnsinnig klare Sicht. Das beste Zoom-Visier für mittlere und große Distanzen." },
+    { trader: "Banshee", level: 2, name: "7.62x51mm M62 Tracer", isMeta: false, info: "Gute Penetration, aber die Leuchtspur verrät nachts deine Position." },
+
+    { trader: "Banshee", level: 3, name: "M1A & SR-25 DMR", isMeta: true, info: "Halbautomatische Sniper-Gewehre. Perfekt, um ganze Squads auf Distanz zu zerlegen." },
+    { trader: "Banshee", level: 3, name: "7.62x51mm M61 AP Munition", isMeta: true, info: "Durchschlagskraft pur. Tötet stark gepanzerte Ziele extrem schnell." },
+    { trader: "Banshee", level: 3, name: "Großer Schlüsselbund (Keyholder)", isMeta: true, info: "Pflichtkauf! Bietet enormen Platz für alle deine Keys aus dem 0.4 Update." },
+
+    { trader: "Banshee", level: 4, name: "Nachtsichtgeräte (NVGs)", isMeta: true, info: "Quad-Nods! Macht die Dunkelheit zu deinem Revier (Night Raids 22-05 Uhr)." },
+    { trader: "Banshee", level: 4, name: "Thermal-Visiere (FLIR)", isMeta: true, info: "Unglaublich teuer, aber OP. Du siehst Feinde leuchtend weiß durch das dickste Blattwerk!" },
+    { trader: "Banshee", level: 4, name: "Alien Pistole (Laugo Alien)", isMeta: true, info: "0.4 Neuzugang! Die beste Pistole im Spiel, feuert fast ohne spürbaren Rückstoß." },
+    { trader: "Banshee", level: 4, name: "M993 AP Munition", isMeta: true, info: "Höchster Penetrationswert im gesamten Spiel. Geht durch Defender-2 Westen wie durch Butter." },
+
+    // ==========================================
+    // --- VULTURE (0.4 Secret Vendor & Boss Gear) ---
+    // ==========================================
+    { trader: "Vulture", level: 1, name: "Boss Skins (z.B. Viper's 1911 C)", isMeta: false, info: "Kosmetische Freischaltungen und modifizierte Waffen, nachdem du Boss-Tasks erledigt hast." },
+    { trader: "Vulture", level: 2, name: "Rotierende Boss-Schlüssel", isMeta: true, info: "Vulture verkauft gelegentlich extrem seltene Boss-Schlüssel für In-Game Cash." },
+    { trader: "Vulture", level: 3, name: "AK-308 (Blueprint Freischaltung)", isMeta: true, info: "Nach Abschluss der 'Chameleon' Quest. Ein absolutes Monster-Gewehr auf 7.62x51mm Basis." },
+    { trader: "Vulture", level: 4, name: "Vulture's Black Market Case", isMeta: false, info: "Geheimer Stash-Koffer für wertvolle Schmuggelware." },
+    { trader: "Vulture", level: 4, name: "Secure Container Upgrades", isMeta: true, info: "Vergrößert deine sichere Lockbox (z.B. auf 3x3). Das absolute Endgame-Grind-Ziel!" }
 ];
 
     // 14. FRAKTIONEN DATENBANK
