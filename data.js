@@ -1677,38 +1677,82 @@ const tradersDb = [
         }
     };
 
-    // ==========================================
-// 15. CODES & PASSWÖRTER (0.4 SPEARHEAD - 100% COMPLETE)
 // ==========================================
+// 15. CODES & PASSWÖRTER DATENBANK (0.4 SPEARHEAD COMPLETE)
+// ==========================================
+// type: "static" = Fester Code | type: "dynamic" = Ändert sich je nach Server!
+
 const codesDb = [
-    // --- 0.4 SPEARHEAD (NEU) ---
-    { name: "Kong Thab Depot Bunker (Kong Thab Bunker)", code: "Dynamisch", loc: "Kong Thab Depot", info: "Die Tür zum neuen Bunker erfordert ein Keypad. Der Code (z.B. 6867 oder 3412) generiert sich bei jedem Server-Neustart neu und liegt auf Notizzetteln im näheren Umkreis versteckt (Wichtig für die Quest 'Plan B')." },
-    { name: "Na Xieng Farm (Farm Padlock)", code: "9135", loc: "Na Xieng (Mohnfelder / Poppy Fields)", info: "<b>Fester Code!</b> Schließt ein Vorhängeschloss auf, oft genutzt für die Vulture-Quest 'The New Contact' (0.4). Die Hinweise dazu liegen bei den Koordinaten 192,154 und 178,153." },
-
-    // --- NAKASA VILLAGE & FORT NARITH (Das 5-Code-Rätsel) ---
-    // ACHTUNG: Im Erdgeschoss des blauen Hauses in Nakasa (140, 134) liegen 5 Haftnotizen auf der Küchentheke. Diese Codes wechseln bei jedem Server-Neustart und öffnen die folgenden 5 Schlösser:
-    { name: "Nakasa Obergeschoss (Nakasa Upper Floor Door)", code: "Dynamisch (5er Set)", loc: "Nakasa Village (Blaues Haus)", info: "Eine der 5 Haftnotizen aus der Küche im Erdgeschoss öffnet diese Keypad-Tür im oberen Stockwerk." },
-    { name: "Nakasa Munitionskiste (Nakasa Ammo Box)", code: "Dynamisch (5er Set)", loc: "Nakasa Village (Holzhütte)", info: "Eine Kiste in der Holzhütte mit der Veranda neben dem blauen Haus. Der Code ist eine der 5 Notizen aus der Küche." },
-    { name: "FN Müllplatz-Kiste (Dumping Ground Crate)", code: "Dynamisch (5er Set)", loc: "Nördlich von Fort Narith (Dumping Ground)", info: "Militärkiste auf dem Schrottplatz (nahe der Landezone). Der Code ist ebenfalls eine der 5 Notizen aus dem blauen Haus in Nakasa." },
-    { name: "FN Garagen-Kiste (Garage Crate)", code: "Dynamisch (5er Set)", loc: "Bürogebäude gegenüber dem FN-Haupttor", info: "Militärkiste auf dem unteren Regal in der Garage (nördlich vom Motel). Code stammt aus der Nakasa-Küche." },
-    { name: "Squad Mission Tür (Squad Mission Door)", code: "Dynamisch (5er Set)", loc: "Nakasa Village", info: "Der fünfte Code aus der Küche öffnet eine gesicherte Tür im Dorf für bestimmte Waffenkisten-Missionen." },
-    
-    // --- FORT NARITH (Weitere) ---
-    { name: "Flugkontrollturm (Air Control Tower)", code: "9198", loc: "Fort Narith (Airfield)", info: "<b>Fester Code!</b> Der Code für den Tower findet sich auf einem Zettel im Serverraum A204 der Militärbaracken." },
-    { name: "Static Echoes Tür (Static Echoes Door)", code: "Dynamisch (Oft 2063)", loc: "Nakasa Village (Obergeschoss)", info: "Nachdem du die erste Tür im Obergeschoss (mit dem Küchen-Code) geöffnet hast, liegt drinnen ein Buch mit dem Code für diese zweite Tür." },
-
-    // --- HUNTER'S PARADISE & SAWMILL ---
-    { name: "Alter Bunker (Old Bunker Padlock)", code: "Dynamisch", loc: "Hunter's Paradise", info: "Der Code steht auf einer leuchtend gelben Haftnotiz im Büro hinter der Waffenkammer, rechts an der Wand direkt neben der gefesselten Leiche." },
-    { name: "Sägewerk Schuppen & Lager (Sawmill Padlocks)", code: "Dynamisch", loc: "Lumber Yard (Sawmill)", info: "Es gibt Vorhängeschlösser für den Schuppen, die Toilette und das Lagerhaus. Die Codes spawnen immer auf Zetteln in der direkten Umgebung." },
-
-    // --- STARTGEBIETE (Starter Towns) & BAN PA ---
-    { name: "Villa Elena Tresor (Villa Garage Safe)", code: "Dynamisch", loc: "Startstadt (Starter Town)", info: "Der Code für den Safe in der Garage liegt auf einem kleinen Notizblock auf dem Nachttisch im Schlafzimmer im Obergeschoss der Villa." },
-    { name: "Rathaus Tresor (Town Hall Safe)", code: "Dynamisch", loc: "Startstadt (Starter Town)", info: "Der Code befindet sich auf einem Zettel direkt neben dem Schalter für das stadtweite Übertragungsradio." },
-    { name: "Ban Suk Hütte (Ban Suk Door)", code: "8777", loc: "Ban Suk (Südöstliche Halbinsel)", info: "<b>Fester Code!</b> Steht in einem roten Buch auf einem Boot in der Nähe. <b>Pro-Tipp:</b> Du kannst das Schloss komplett umgehen, indem du einfach über das Bücherregal neben der Tür kletterst!" },
-
-    // --- YBL-1 BUNKER & TIGER BAY ---
-    { name: "Gefängniszelle & Lager (Prison Cell & Storage)", code: "Dynamisch", loc: "YBL-1 Bunker", info: "Die Codes für die Zelle und das Padlock-Lager im Bunker generieren sich dynamisch und sind in benachbarten Räumen auf Tischen versteckt." },
-    { name: "UNLRA Hauptquartier (UNLRA HQ Keypad)", code: "Dynamisch", loc: "Tiger Bay", info: "Der Code für das Tastenfeld spawnt zufällig in der direkten Umgebung des UNLRA-Gebäudes (oft auf Schreibtischen)." }
+    { 
+        name: "Rathaus Tresor (Town Hall Safe)", 
+        loc: "Startgebiet (z.B. Nam Thaven)", 
+        code: "2218", 
+        type: "static", 
+        info: "Lies das schwarze Buch auf dem Schreibtisch im mittleren Büro im 2. Stock, um den Code zu erhalten." 
+    },
+    { 
+        name: "Server-Raum (The Last Broadcast)", 
+        loc: "Radio Station", 
+        code: "1506", 
+        type: "static", 
+        info: "Wird für die Quest 'The Last Broadcast' benötigt. Der Code steht auf einem Post-It im Büro im oberen Stockwerk des größeren Hauptgebäudes." 
+    },
+    { 
+        name: "Geheimer Koffer / Farm", 
+        loc: "Na Xieng Farms", 
+        code: "9135", 
+        type: "static", 
+        info: "Wird für eine Blueprint-Questreihe benötigt, um den Koffer von der Farm zu holen. Der Code findet sich oft auf Notizen bei den beiden versteckten Mohnfeldern (Poppy Fields)." 
+    },
+    { 
+        name: "Verschlossene Hütte", 
+        loc: "Ban Suk", 
+        code: "8777", 
+        type: "static", 
+        info: "Der Code steht in einem kleinen roten Buch auf einem Boot am östlichen Rand der Halbinsel. Alternative Taktik: Du kannst auch über die Regale klettern und dir den Code sparen!" 
+    },
+    { 
+        name: "Gefängniszelle (Padlock)", 
+        loc: "YBL-1 Bunker", 
+        code: "6482", 
+        type: "static", 
+        info: "Die Notiz mit dem Code liegt im äußeren Büro / Hinterzimmer an der Oberfläche des Bunkers." 
+    },
+    { 
+        name: "Bunker-Lagerraum (Keypad)", 
+        loc: "YBL-1 Bunker", 
+        code: "5544", 
+        type: "static", 
+        info: "Der Code steht auf einem Intel-Ordner, der auf einem Tisch in der Kantine/Küche liegt." 
+    },
+    { 
+        name: "Versteckter Waffen-Bunker", 
+        loc: "Fort Narith (Barracks)", 
+        code: "5756", 
+        type: "static", 
+        info: "Ein versteckter Bunker mit elektronischem Schloss in den Baracken. Der Code ist in einem In-Game Buch versteckt." 
+    },
+    { 
+        name: "Villa Garagen-Tresor (Criminal Hideout)", 
+        loc: "Startgebiet (Villa auf dem Hügel)", 
+        code: "DYNAMISCH", 
+        type: "dynamic", 
+        info: "Der Code für den Safe in der Garage liegt auf einem Notizzettel / Buch auf dem Nachttisch im Schlafzimmer im Obergeschoss der Villa." 
+    },
+    { 
+        name: "Windturbinen Keypad (Quest)", 
+        loc: "Sägewerk (Lumber Yard)", 
+        code: "DYNAMISCH", 
+        type: "dynamic", 
+        info: "Quest 'Unlisted Flight' (0.4): Der Code klebt auf einem Post-It am Beifahrerfenster des roten SUVs in der Nähe. Achtung: Du musst erst den Generator am Trailer starten und hast dann nur wenig Zeit, den Code einzutippen!" 
+    },
+    { 
+        name: "Black Box Schuppen (Quest)", 
+        loc: "Sägewerk (Lumber Yard)", 
+        code: "DYNAMISCH", 
+        type: "dynamic", 
+        info: "Quest 'Unlisted Flight' (0.4): Der Code für das Vorhängeschloss liegt im östlichen Bürogebäude (Zimmer zur Flussseite) auf einem Schreibtisch neben dem Telefon." 
+    }
 ];
 
 // ==========================================
