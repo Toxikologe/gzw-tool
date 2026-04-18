@@ -2357,7 +2357,7 @@
     }
 
     // ==============================================================
-    // AMMO MATRIX ENGINE (0.4 CSV DATA)
+    // AMMO MATRIX ENGINE (KORRIGIERT: STANDARDMÄSSIG GESCHLOSSEN)
     // ==============================================================
     function buildAmmoMatrix() {
         const tbody = document.querySelector('#ammoMatrixTable tbody');
@@ -2370,7 +2370,7 @@
             groupedAmmo[ammo.cal].push(ammo);
         });
 
-        // Alle verfügbaren Munitionen in das Dropdown des Simulators laden
+        // Simulator Dropdown füllen
         const simSelect = document.getElementById('simAmmoSelect');
         if (simSelect) {
             simSelect.innerHTML = '<option value="">-- Munition wählen --</option>';
@@ -2383,24 +2383,24 @@
         }
 
         for (const [cal, list] of Object.entries(groupedAmmo)) {
-            // Header-Reihe für das Kaliber (Nutzt dynamische RGB-Farben)
+            const calId = cal.replace(/[^a-zA-Z0-9]/g, '');
             const sepRow = document.createElement('tr');
             sepRow.className = 'ammo-cal-header';
             sepRow.style.cursor = "pointer";
             
+            // Icon auf -90deg (geschlossen)
             sepRow.innerHTML = `
                 <td colspan="7" style="background: rgba(var(--accent-rgb), 0.15); color: var(--accent); font-weight: bold; font-size: 0.95rem; padding: 10px 12px; border: 1px solid #333; letter-spacing: 1px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); user-select: none;">
-                    <span class="ammo-toggle-icon" style="display:inline-block; transition:transform 0.2s; margin-right:8px; font-size: 0.8rem; transform: rotate(0deg);">▼</span>
+                    <span class="ammo-toggle-icon" style="display:inline-block; transition:transform 0.2s; margin-right:8px; font-size: 0.8rem; transform: rotate(-90deg);">▼</span>
                     ⚡ Kaliber: ${cal}
                 </td>`;
             tbody.appendChild(sepRow);
 
-            // Die einzelnen Munitions-Reihen
             list.forEach(ammo => {
                 const row = document.createElement('tr');
-                row.className = `ammo-row ammo-group-${cal.replace(/[^a-zA-Z0-9]/g, '')}`;
+                row.className = `ammo-row ammo-group-${calId}`;
+                row.style.display = "none"; // FIX: HIERMIT SIND SIE GESCHLOSSEN
                 
-                // Farbcodierung für Genauigkeit und Haltbarkeit
                 const accColor = ammo.acc.includes('+') ? '#7ca35a' : (ammo.acc.includes('-') ? '#ff4c4c' : '#888');
                 const durColor = ammo.dur.includes('-') ? '#ff4c4c' : '#888';
                 const penColor = ammo.penValue >= 6 ? '#ffcc00' : '#ccc';
@@ -2417,16 +2417,67 @@
                 tbody.appendChild(row);
             });
 
-            // Akkordeon-Logik für die Kaliber
             sepRow.onclick = function() {
                 const icon = this.querySelector('.ammo-toggle-icon');
-                const groupRows = tbody.querySelectorAll(`.ammo-group-${cal.replace(/[^a-zA-Z0-9]/g, '')}`);
+                const groupRows = tbody.querySelectorAll(`.ammo-group-${calId}`);
                 const isHidden = groupRows[0].style.display === "none";
                 
                 icon.style.transform = isHidden ? "rotate(0deg)" : "rotate(-90deg)";
                 groupRows.forEach(r => r.style.display = isHidden ? "table-row" : "none");
             };
         }
+    }
+
+    // ==============================================================
+    // BALLISTIK CHECK (FIX: START-ANZEIGE)
+    // ==============================================================
+    function simulateArmor() {
+        const armorSelect = document.getElementById('simArmorSelect');
+        const ammoSelect = document.getElementById('simAmmoSelect');
+        const resultBox = document.getElementById('simResultBox');
+        
+        if (!armorSelect || !ammoSelect || !resultBox) return;
+
+        const armorTierStr = armorSelect.value;
+        const ammoIndex = ammoSelect.value;
+        
+        // Zeige eine Platzhalter-Nachricht, wenn noch nichts gewählt ist
+        if (armorTierStr === "" || ammoIndex === "") {
+            resultBox.style.display = "block";
+            resultBox.innerHTML = `<div style="padding: 20px; text-align:center; color:#555; border: 1px dashed #333; border-radius:6px;">Wähle oben Munition und Rüstung für die Analyse aus.</div>`;
+            return;
+        }
+
+        const armorTier = parseInt(armorTierStr);
+        const ammo = ammoDb[ammoIndex];
+        
+        resultBox.style.display = "block";
+        const delta = ammo.penValue - armorTier;
+        let statusHtml = "";
+        
+        if (delta >= 0) {
+            statusHtml = `
+                <div style="background: rgba(255, 76, 76, 0.1); border: 2px solid #ff4c4c; padding: 20px; border-radius: 6px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">💀</div>
+                    <h3 style="color: #ff4c4c; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">DURCHSCHLAG (TÖDLICH)</h3>
+                    <p style="color: #ccc; margin: 0; font-size: 0.95rem;">Das Projektil (${ammo.name}) durchschlägt diese Rüstungsklasse mühelos.</p>
+                </div>`;
+        } else if (delta === -1) {
+            statusHtml = `
+                <div style="background: rgba(255, 204, 0, 0.1); border: 2px solid #ffcc00; padding: 20px; border-radius: 6px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">💥</div>
+                    <h3 style="color: #ffcc00; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">SCHWERES TRAUMA</h3>
+                    <p style="color: #ccc; margin: 0; font-size: 0.95rem;">Die Rüstung hält, aber der Träger erleidet durch die Wucht schwere Prellungen oder Brüche.</p>
+                </div>`;
+        } else {
+            statusHtml = `
+                <div style="background: rgba(124, 163, 90, 0.1); border: 2px solid #7ca35a; padding: 20px; border-radius: 6px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
+                    <h3 style="color: #7ca35a; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">VOLLSTÄNDIGER SCHUTZ</h3>
+                    <p style="color: #ccc; margin: 0; font-size: 0.95rem;">Das Projektil wird zuverlässig abgewehrt.</p>
+                </div>`;
+        }
+        resultBox.innerHTML = statusHtml;
     }
 
     // ==============================================================
@@ -4873,7 +4924,7 @@ function goToHome() {
         buildBossTimerList();
         initBlueprints();
         buildAmmoMatrix();
-        simulateArmor(2.0, 'NIJ IIIA (Weichballistik)', null);
+        simulateArmor(); // Ruft die neue Funktion ohne die alten Fehler-Parameter auf
         fetchLatestNews(); 
         updateLiveTime();
         startTraderTimer();
