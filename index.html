@@ -2409,7 +2409,7 @@
         renderBallisticChart();
     }
 
-    // 2. Das Radar zeichnen (Macht die Reihen jetzt anklickbar - OHNE LINIE)
+    // 2. Das Radar zeichnen (OHNE SPOILER-BALKEN - Nur noch anklickbare Liste)
     function renderBallisticChart() {
         const container = document.getElementById('ballisticBars');
         if (!container || typeof ammoDb === 'undefined') return;
@@ -2423,6 +2423,7 @@
         });
 
         for (const [cal, ammos] of Object.entries(groupedAmmo)) {
+            // Sortierung bleibt intern erhalten, damit starke Munition oben steht
             ammos.sort((a, b) => b.penMap[currentRadarArmor] - a.penMap[currentRadarArmor]);
 
             const groupDiv = document.createElement('div');
@@ -2440,41 +2441,39 @@
 
             const content = document.createElement('div');
             content.style.display = isExpanded ? "block" : "none";
-            content.style.padding = "12px 10px 4px 10px";
+            content.style.padding = "8px";
             content.style.borderLeft = "2px solid #333";
             content.style.borderBottom = "1px solid #222";
             content.style.marginLeft = "5px";
             content.style.marginBottom = "5px";
 
             ammos.forEach(ammo => {
+                // Wir speichern den Wert nur noch für die Animation, nicht mehr für die Anzeige
                 const matrixVal = ammo.penMap[currentRadarArmor];
-                let barColor, resultText, resultColor, penPct;
 
-                // Die Prozent-Werte (penPct) bestimmen jetzt nur noch die Länge des visuellen Balkens
-                if (matrixVal === 3) {
-                    barColor = 'rgba(124, 163, 90, 0.9)'; resultColor = '#7ca35a'; resultText = '🟢 DURCHSCHLAG'; penPct = 100;
-                } else if (matrixVal === 2 || matrixVal === 1) {
-                    barColor = 'rgba(255, 204, 0, 0.9)'; resultColor = '#ffcc00'; resultText = '🟡 TRAUMA'; penPct = 65; 
-                } else {
-                    barColor = 'rgba(179, 57, 57, 0.9)'; resultColor = '#ff4c4c'; resultText = '🔴 ABGEWEHRT'; penPct = 25;
-                }
-
-                // Erstelle eine klickbare Reihe
+                // Erstelle eine saubere, klickbare Reihe ohne Farben/Balken
                 const row = document.createElement('div');
-                row.style.cssText = "display: flex; align-items: center; margin-bottom: 4px; font-size: 0.9rem; padding: 6px 8px; border-radius: 4px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;";
+                row.style.cssText = "display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 0.95rem; padding: 10px 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; border: 1px solid #222; background: #0f0f0f;";
                 
-                row.onmouseover = () => { row.style.background = "rgba(var(--accent-rgb), 0.1)"; row.style.borderColor = "rgba(var(--accent-rgb), 0.3)"; };
-                row.onmouseout = () => { row.style.background = "transparent"; row.style.borderColor = "transparent"; };
+                // Hover-Effekt (Leuchtet in Fraktionsfarbe auf)
+                row.onmouseover = () => { 
+                    row.style.background = "rgba(var(--accent-rgb), 0.15)"; 
+                    row.style.borderColor = "var(--accent)"; 
+                };
+                row.onmouseout = () => { 
+                    row.style.background = "#0f0f0f"; 
+                    row.style.borderColor = "#222"; 
+                };
                 
-                // Klick startet die Animation oben drüber
+                // Klick startet die Animation
                 row.onclick = () => playInteractiveAnimation(ammo.name, matrixVal, currentRadarArmor);
 
                 row.innerHTML = `
-                <div style="width: 170px; color: #eee; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${ammo.name}">${ammo.name}</div>
-                <div style="flex: 1; position: relative; height: 16px; background: #1a1a1a; border-radius: 4px; overflow: hidden; margin: 0 15px; border: 1px solid #333; pointer-events: none;">
-                    <div style="height: 100%; width: ${penPct}%; background-color: ${barColor}; transition: width 0.4s ease, background-color 0.4s ease;"></div>
-                </div>
-                <div style="width: 130px; text-align: right; font-weight: bold; color: ${resultColor}; font-size: 0.85rem; pointer-events: none;">${resultText}</div>`;
+                <div style="color: #eee; font-weight: bold; letter-spacing: 0.5px;">${ammo.name}</div>
+                <div style="color: var(--accent); font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; gap: 8px; opacity: 0.8;">
+                    <span>TESTEN</span>
+                    <span style="font-size: 1.2rem;">🎯</span>
+                </div>`;
                 content.appendChild(row);
             });
 
