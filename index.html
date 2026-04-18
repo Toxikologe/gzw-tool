@@ -5025,7 +5025,7 @@ function goToHome() {
             <div style="flex: 2.5; display: flex; flex-direction: column; gap: 15px;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 style="color: #666; margin: 0; letter-spacing: 2px; text-transform: uppercase;">Live Analyst & Loot Optimizer</h3>
-                    <button onclick="startScreenCapture()" style="background: #00ff00; color: #000; border: none; padding: 8px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; box-shadow: 0 0 10px rgba(0,255,0,0.3);">SPIEL ERFASSEN 📡</button>
+                    <button id="captureToggleBtn" onclick="toggleScreenCapture()" style="background: #00ff00; color: #000; border: none; padding: 8px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; box-shadow: 0 0 10px rgba(0,255,0,0.3); transition: 0.3s;">SPIEL ERFASSEN 📡</button>
                 </div>
                 <div style="flex: 2; min-height: 450px; background: #050505; border: 2px dashed #333; position: relative; border-radius: 8px; overflow: hidden;">
                     <video id="gameScreenVideo" autoplay style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
@@ -5195,15 +5195,52 @@ function goToHome() {
             }, 1000);
         }
 
-        // Screen Capture Logik
-        async function startScreenCapture() {
-            try {
-                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
-                const video = document.getElementById('gameScreenVideo');
-                document.getElementById('videoPlaceholder').style.display = 'none';
-                video.srcObject = stream;
-                video.style.display = 'block';
-            } catch (err) { console.error(err); }
+        // Screen Capture Logik (Smart Toggle)
+        let captureStream = null;
+
+        async function toggleScreenCapture() {
+            const video = document.getElementById('gameScreenVideo');
+            const placeholder = document.getElementById('videoPlaceholder');
+            const btn = document.getElementById('captureToggleBtn');
+
+            // WENN BEREITS AUFGENOMMEN WIRD -> BEENDEN
+            if (captureStream) {
+                // Alle Video-Tracks hart beenden (stoppt das Browser-Sharing)
+                captureStream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+                captureStream = null;
+
+                // UI zurücksetzen auf Standby
+                video.style.display = 'none';
+                placeholder.style.display = 'flex';
+                btn.innerHTML = 'SPIEL ERFASSEN 📡';
+                btn.style.background = '#00ff00';
+                btn.style.color = '#000';
+                btn.style.boxShadow = '0 0 10px rgba(0,255,0,0.3)';
+            } 
+            // WENN NICHT AUFGENOMMEN WIRD -> STARTEN
+            else {
+                try {
+                    captureStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+                    video.srcObject = captureStream;
+                    
+                    // UI updaten auf "Aktiv"
+                    document.getElementById('videoPlaceholder').style.display = 'none';
+                    video.style.display = 'block';
+                    btn.innerHTML = 'ERFASSUNG STOPPEN 🛑';
+                    btn.style.background = '#ff4c4c';
+                    btn.style.color = '#fff';
+                    btn.style.boxShadow = '0 0 10px rgba(255,76,76,0.5)';
+
+                    // Falls der User die Übertragung über die Windows/Browser-Leiste abbricht:
+                    captureStream.getVideoTracks()[0].onended = function () {
+                        // Simuliere einen Klick auf den Stop-Button, um das Interface sauber zurückzusetzen
+                        if (captureStream) toggleScreenCapture();
+                    };
+                } catch (err) { 
+                    console.error("Erfassung abgebrochen:", err); 
+                }
+            }
         }
 
         // Simulierter Loot Scanner (Zieht jetzt Daten aus der echten Datenbank!)
