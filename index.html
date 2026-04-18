@@ -5048,6 +5048,7 @@ function goToHome() {
     <div id="wachhundPulseLayer" class="pulse-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10001;"></div>
     
     <div id="wachhundOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; flex-direction: column; font-family: 'Segoe UI', sans-serif; color: #fff;">
+        
         <div style="background: #0a0a0a; border-bottom: 2px solid #ff4c4c; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 30px;">
                 <h2 style="color: #ff4c4c; margin: 0; font-size: 2.2rem; letter-spacing: 4px; font-weight: 900;">👁️ WACHHUND ACTIVE</h2>
@@ -5060,6 +5061,7 @@ function goToHome() {
         </div>
 
         <div style="flex: 1; display: flex; padding: 30px; gap: 30px; overflow: hidden; background: radial-gradient(circle at center, #111 0%, #000 100%);">
+            
             <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
                 <h3 style="color: #444; margin: 0; letter-spacing: 2px;">MEDICAL TRIAGE</h3>
                 <div style="flex: 1; background: rgba(255,0,0,0.15); border: 2px solid #ff4c4c; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
@@ -5107,10 +5109,6 @@ function goToHome() {
                 </div>
             </div>
 
-                <div id="wachhundMetaContainer" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; padding-right: 5px;">
-                    <div style="color: #555; text-align: center; font-family: monospace;">> Verbinde mit Datenbank...</div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -5181,8 +5179,6 @@ function goToHome() {
         // ==============================================================
         // WACHHUND DATENBANK & DYNAMISCHES LOOT SYSTEM
         // ==============================================================
-
-        // Die GZW Hardcore Item Datenbank
         const wachhundDatabase = [
             { id: 1, name: "USB Flash Drive", type: "task", icon: "💾", price: 0, info: "Level 1-10 Tasks" },
             { id: 2, name: "Wrench (Schraubenschlüssel)", type: "task", icon: "🔧", price: 0, info: "Gunsmith Task" },
@@ -5196,14 +5192,12 @@ function goToHome() {
             { id: 10, name: "Mithras / Crimson Intel", type: "task", icon: "📁", price: 0, info: "Fraktions-Task" }
         ];
 
-        // Funktion zum Rendern der Liste
         function renderWachhundMeta(filterType = 'task') {
             const container = document.getElementById('wachhundMetaContainer');
             if (!container) return;
             
             container.innerHTML = ''; // Liste leeren
             
-            // Datenbank filtern
             const items = wachhundDatabase.filter(item => item.type === filterType);
             
             items.forEach(item => {
