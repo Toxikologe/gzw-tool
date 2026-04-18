@@ -6,34 +6,7 @@
     <title>Gray Zone Warfare - Tactical Tool</title>
     <link rel="stylesheet" href="style.css">
     <style>
-
-        /* ============================================================== */
-        /* WACHHUND SYSTEM - PULSE ANIMATIONS */
-        /* ============================================================== */
-        @keyframes pulse-orange {
-            0% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
-            50% { box-shadow: inset 0 0 80px rgba(255, 153, 0, 0.6); }
-            100% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
-        }
-        @keyframes pulse-red {
-            0% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
-            50% { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.8); }
-            100% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
-        }
-        @keyframes pulse-green {
-            0% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
-            50% { box-shadow: inset 0 0 100px rgba(0, 255, 0, 0.7); border: 5px solid #00ff00; }
-            100% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
-        }
         
-        .pulse-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 10001; transition: all 0.5s ease;
-        }
-        .pulse-warning-orange { animation: pulse-orange 3s infinite; }
-        .pulse-critical-red { animation: pulse-red 1.5s infinite; }
-        .pulse-profit-green { animation: pulse-green 1s 3; } /* Pulsiert 3x schnell grün */
-
         /* ============================================================== */
         /* LOGISTICS & QUEST TRACKER TERMINAL */
         /* ============================================================== */
@@ -4962,36 +4935,49 @@ function goToHome() {
     });
 </script>
 
+    <style>
+        @keyframes pulse-orange {
+            0% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
+            50% { box-shadow: inset 0 0 80px rgba(255, 153, 0, 0.6); }
+            100% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
+            50% { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.8); }
+            100% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
+            50% { box-shadow: inset 0 0 100px rgba(0, 255, 0, 0.7); border: 5px solid #00ff00; }
+            100% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
+        }
+    </style>
+
     <div style="position: fixed !important; top: 15px !important; left: 355px !important; z-index: 5000 !important; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-        
         <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Wachhund%202.png" 
-             id="wachhundTriggerImg"
              alt="Wachhund Modus" 
-             onclick="toggleWachhund()" 
-             title="Wachhund System aktivieren"
+             onclick="window.toggleWachhund()" 
+             title="Wachhund System aktivieren (Hotkey: F8)"
              style="width: 150px; height: 150px; border-radius: 8px; border: 3px solid #ff4c4c; cursor: pointer; object-fit: cover; box-shadow: 0 0 20px rgba(255, 76, 76, 0.5); transition: all 0.2s ease;"
              onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 35px rgba(255, 76, 76, 0.9)';"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 76, 76, 0.5)';" />
-
-        <span onclick="toggleWachhund()" style="color: #ff4c4c; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; cursor: pointer; text-shadow: 0 0 10px rgba(255, 76, 76, 0.6); user-select: none;">
+        <span onclick="window.toggleWachhund()" style="color: #ff4c4c; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; cursor: pointer; text-shadow: 0 0 10px rgba(255, 76, 76, 0.6); user-select: none;">
             WACHHUND
         </span>
-
     </div>
 
-    <div id="wachhundPulseLayer" class="pulse-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10001;"></div>
+    <div id="wachhundPulseLayer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10001; transition: all 0.5s ease;"></div>
     
     <div id="wachhundOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; flex-direction: column; font-family: 'Segoe UI', sans-serif; color: #fff;">
-        
         <div style="background: #0a0a0a; border-bottom: 2px solid #ff4c4c; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 30px;">
                 <h2 style="color: #ff4c4c; margin: 0; font-size: 2rem; letter-spacing: 4px; font-weight: 900;">👁️ WACHHUND ACTIVE</h2>
                 <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,153,0,0.1); padding: 8px 20px; border: 1px solid #ff9900; border-radius: 4px;">
-                    <button onclick="startBioTimer()" style="background: #ff9900; border: none; color: #000; padding: 5px 15px; font-weight: bold; cursor: pointer; border-radius: 2px;">DEPLOY</button>
+                    <button onclick="window.startBioTimer()" style="background: #ff9900; border: none; color: #000; padding: 5px 15px; font-weight: bold; cursor: pointer; border-radius: 2px;">DEPLOY</button>
                     <span id="bioTimerDisplay" style="font-family: monospace; font-size: 1.6rem; font-weight: bold;">45:00</span>
                 </div>
             </div>
-            <button onclick="toggleWachhund()" style="background: #111; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 8px 25px; font-weight: bold; cursor: pointer; text-transform: uppercase;">Zurück zum Terminal ✕</button>
+            <button onclick="window.toggleWachhund()" style="background: #111; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 8px 25px; font-weight: bold; cursor: pointer; text-transform: uppercase;">Zurück zum Terminal ✕</button>
         </div>
 
         <div style="flex: 1; display: flex; padding: 25px; gap: 25px; overflow: hidden; background: radial-gradient(circle at center, #111 0%, #000 100%);">
@@ -5024,8 +5010,8 @@ function goToHome() {
 
             <div style="flex: 2.5; display: flex; flex-direction: column; gap: 15px;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="color: #666; margin: 0; letter-spacing: 2px; text-transform: uppercase;">Live Analyst & Loot Optimizer</h3>
-                    <button id="captureToggleBtn" onclick="toggleScreenCapture()" style="background: #00ff00; color: #000; border: none; padding: 8px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; box-shadow: 0 0 10px rgba(0,255,0,0.3); transition: 0.3s;">SPIEL ERFASSEN 📡</button>
+                    <h3 style="color: #666; margin: 0; letter-spacing: 2px; text-transform: uppercase;">Live Analyst & Optimizer</h3>
+                    <button id="captureToggleBtn" onclick="window.toggleScreenCapture()" style="background: #00ff00; color: #000; border: none; padding: 8px 20px; font-weight: bold; cursor: pointer; border-radius: 4px; box-shadow: 0 0 10px rgba(0,255,0,0.3); transition: 0.3s;">SPIEL ERFASSEN 📡</button>
                 </div>
                 <div style="flex: 2; min-height: 450px; background: #050505; border: 2px dashed #333; position: relative; border-radius: 8px; overflow: hidden;">
                     <video id="gameScreenVideo" autoplay style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
@@ -5034,7 +5020,7 @@ function goToHome() {
                 <div style="flex: 1; min-height: 150px; background: #0a0a0a; border: 1px solid #222; border-radius: 8px; padding: 15px; display: flex; flex-direction: column;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 10px;">
                         <span style="color: #888; font-size: 1.1rem;">INVENTARWERT: <strong id="lootTotalValue" style="color: #00ff00; font-size: 1.5rem;">$0</strong></span>
-                        <button onclick="simulateLootFind()" style="background: #1a1a1a; color: #aaa; border: 1px solid #333; padding: 5px 15px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">[ SIMULIERE HIGH-VALUE DROP ]</button>
+                        <button onclick="window.simulateLootFind()" style="background: #1a1a1a; color: #aaa; border: 1px solid #333; padding: 5px 15px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">[ SIMULIERE HIGH-VALUE DROP ]</button>
                     </div>
                     <ul id="lootLog" style="list-style: none; padding: 0; margin: 0; font-family: 'Courier New', monospace; font-size: 1rem; line-height: 1.6; overflow-y: auto; flex: 1;">
                         <li style="color: #555;">> System bereit... Warte auf Scan...</li>
@@ -5044,24 +5030,23 @@ function goToHome() {
 
             <div style="flex: 1; background: rgba(255,0,0,0.05); border: 2px solid #660000; border-radius: 8px; padding: 20px; display: flex; flex-direction: column;">
                 <h3 style="color: #ff4c4c; text-align: center; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,0,0,0.5);">🔥 TARGET DATABASE</h3>
-                
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <button onclick="renderWachhundMeta('task')" style="flex: 1; background: #1a1a1a; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; transition: 0.2s;" onmouseover="this.style.background='rgba(255,76,76,0.2)'" onmouseout="this.style.background='#1a1a1a'">QUESTS</button>
-                    <button onclick="renderWachhundMeta('value')" style="flex: 1; background: #1a1a1a; border: 1px solid #00ff00; color: #00ff00; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; transition: 0.2s;" onmouseover="this.style.background='rgba(0,255,0,0.2)'" onmouseout="this.style.background='#1a1a1a'">$$ HIGH TIER</button>
+                    <button onclick="window.renderWachhundMeta('task')" style="flex: 1; background: #1a1a1a; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; transition: 0.2s;" onmouseover="this.style.background='rgba(255,76,76,0.2)'" onmouseout="this.style.background='#1a1a1a'">QUESTS</button>
+                    <button onclick="window.renderWachhundMeta('value')" style="flex: 1; background: #1a1a1a; border: 1px solid #00ff00; color: #00ff00; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; transition: 0.2s;" onmouseover="this.style.background='rgba(0,255,0,0.2)'" onmouseout="this.style.background='#1a1a1a'">$$ HIGH TIER</button>
                 </div>
-
-                <div id="liveTargetDatabaseList" style="display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; padding-right: 5px;">
-                    </div>
+                <div id="liveTargetDatabaseList" style="display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; padding-right: 5px;"></div>
             </div>
 
         </div>
+    </div>
 
     <script>
-        // ==============================================================
-        // WACHHUND DATENBANK & DYNAMISCHES LOOT SYSTEM (MASSIVE UPDATE)
-        // ==============================================================
-        const wachhundDatabase = [
-            // --- QUEST & INTEL ITEMS (MUST LOOT) ---
+        // Sichere globale Variablen (verhindern Abstürze bei Doppel-Kopien)
+        window.captureStream = null;
+        window.bioTimerInterval = null;
+        window.currentLootValue = 0;
+
+        window.wachhundDatabase = [
             { id: 1, name: "USB Flash Drive", type: "task", icon: "💾", price: 0, info: "Multi-Quest / Fraktions-Task" },
             { id: 2, name: "Wrench (Schraubenschlüssel)", type: "task", icon: "🔧", price: 0, info: "Gunsmith Tasks" },
             { id: 3, name: "Military Laptop", type: "task", icon: "💻", price: 0, info: "Intel Retrieval" },
@@ -5131,19 +5116,15 @@ function goToHome() {
             { id: 53, name: "SNB AP Ammo (60x)", type: "value", icon: "💥", price: 960, info: "Die stärkste Kugel" }
         ];
 
-        // Funktion zum Rendern der Liste
-        function renderWachhundMeta(filterType) {
+        window.renderWachhundMeta = function(filterType) {
             const container = document.getElementById('liveTargetDatabaseList');
             if (!container) return; 
-            
             container.innerHTML = ''; 
             
-            const items = wachhundDatabase.filter(item => item.type === filterType);
-            
+            const items = window.wachhundDatabase.filter(item => item.type === filterType);
             items.forEach(item => {
                 const color = filterType === 'task' ? '#ff4c4c' : '#00ff00';
                 const badge = filterType === 'task' ? 'QUEST' : `$${item.price}`;
-                
                 container.innerHTML += `
                     <div style="background: #111; padding: 10px 12px; border-left: 4px solid ${color}; display: flex; justify-content: space-between; align-items: center; border-radius: 0 4px 4px 0;">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -5159,29 +5140,27 @@ function goToHome() {
                     </div>
                 `;
             });
-        }
+        };
 
-        // Steuerung des Wachhund-Overlays
-        function toggleWachhund() {
+        window.toggleWachhund = function() {
             const overlay = document.getElementById('wachhundOverlay');
             if (overlay.style.display === 'none' || overlay.style.display === '') {
                 overlay.style.display = 'flex';
-                setTimeout(() => { renderWachhundMeta('task'); }, 50); 
+                setTimeout(() => { window.renderWachhundMeta('task'); }, 50); 
             } else {
                 overlay.style.display = 'none';
             }
-        }
+        };
 
-        // Bio Timer Logik
-        let bioTimerInterval;
-        function startBioTimer() {
-            clearInterval(bioTimerInterval);
+        window.startBioTimer = function() {
+            clearInterval(window.bioTimerInterval);
             let timeRemaining = 45 * 60;
             const display = document.getElementById('bioTimerDisplay');
             const pulseLayer = document.getElementById('wachhundPulseLayer');
             pulseLayer.style.animation = 'none';
+            pulseLayer.className = '';
             
-            bioTimerInterval = setInterval(() => {
+            window.bioTimerInterval = setInterval(() => {
                 timeRemaining--;
                 let mins = Math.floor(timeRemaining / 60);
                 let secs = timeRemaining % 60;
@@ -5189,37 +5168,29 @@ function goToHome() {
                 
                 if (timeRemaining === 15 * 60) pulseLayer.style.animation = 'pulse-orange 3s infinite';
                 if (timeRemaining === 5 * 60) pulseLayer.style.animation = 'pulse-red 1.5s infinite';
-                if (timeRemaining <= 0) clearInterval(bioTimerInterval);
+                if (timeRemaining <= 0) clearInterval(window.bioTimerInterval);
             }, 1000);
-        }
+        };
 
-        // SMART SCREEN CAPTURE LOGIK (Starten & Beenden)
-        let captureStream = null;
-
-        async function toggleScreenCapture() {
+        window.toggleScreenCapture = async function() {
             const video = document.getElementById('gameScreenVideo');
             const placeholder = document.getElementById('videoPlaceholder');
             const btn = document.getElementById('captureToggleBtn');
 
-            // Beenden, wenn es läuft
-            if (captureStream) {
-                captureStream.getTracks().forEach(track => track.stop());
+            if (window.captureStream) {
+                window.captureStream.getTracks().forEach(track => track.stop());
                 video.srcObject = null;
-                captureStream = null;
-
+                window.captureStream = null;
                 video.style.display = 'none';
                 placeholder.style.display = 'flex';
                 btn.innerHTML = 'SPIEL ERFASSEN 📡';
                 btn.style.background = '#00ff00';
                 btn.style.color = '#000';
                 btn.style.boxShadow = '0 0 10px rgba(0,255,0,0.3)';
-            } 
-            // Starten, wenn es aus ist
-            else {
+            } else {
                 try {
-                    captureStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
-                    video.srcObject = captureStream;
-                    
+                    window.captureStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+                    video.srcObject = window.captureStream;
                     placeholder.style.display = 'none';
                     video.style.display = 'block';
                     btn.innerHTML = 'ERFASSUNG STOPPEN 🛑';
@@ -5227,48 +5198,45 @@ function goToHome() {
                     btn.style.color = '#fff';
                     btn.style.boxShadow = '0 0 10px rgba(255,76,76,0.5)';
 
-                    // Wenn man über den Browser stoppt
-                    captureStream.getVideoTracks()[0].onended = function () {
-                        if (captureStream) toggleScreenCapture();
+                    window.captureStream.getVideoTracks()[0].onended = function () {
+                        if (window.captureStream) window.toggleScreenCapture();
                     };
                 } catch (err) { 
-                    console.error("Erfassung abgebrochen:", err); 
+                    console.log("Erfassung abgebrochen."); 
                 }
             }
-        }
+        };
 
-        // Simulierter Loot Scanner
-        let currentLootValue = 0;
-        function simulateLootFind() {
+        window.simulateLootFind = function() {
             const pulseLayer = document.getElementById('wachhundPulseLayer');
             pulseLayer.style.animation = 'pulse-green 1s 3';
             setTimeout(() => pulseLayer.style.animation = 'none', 3000);
             
-            const highValueItems = wachhundDatabase.filter(i => i.type === 'value');
+            const highValueItems = window.wachhundDatabase.filter(i => i.type === 'value');
             const randomDrop = highValueItems[Math.floor(Math.random() * highValueItems.length)];
-            
-            const trashItems = ["AK-74N (Stock)", "M855 Ammo Box", "Scav Vest", "Bandage", "Half-empty Water"];
+            const trashItems = ["Scav Vest", "Bandage", "Water"];
             const randomTrash = trashItems[Math.floor(Math.random() * trashItems.length)];
             
-            currentLootValue += randomDrop.price;
-            document.getElementById('lootTotalValue').innerText = `$${currentLootValue.toLocaleString()}`;
+            window.currentLootValue += randomDrop.price;
+            document.getElementById('lootTotalValue').innerText = `$${window.currentLootValue.toLocaleString()}`;
             
             document.getElementById('lootLog').innerHTML = `
                 <li style="color: #666;">> Scan: ${randomTrash} ($45)</li>
-                <li style="color: #00ff00; font-weight: bold; font-size: 1.1rem; margin-top: 5px;">> 🎯 TARGET SPOTTED: ${randomDrop.icon} ${randomDrop.name.toUpperCase()} ($${randomDrop.price})</li>
-                <li style="background: rgba(0,255,0,0.15); border-left: 3px solid #00ff00; padding: 5px 10px; color: #fff; margin-top: 8px; font-weight: bold;">
-                    💡 PROFIT-ALARM: Wirf "${randomTrash}" raus für "${randomDrop.name}"!
+                <li style="color: #00ff00; font-weight: bold; font-size: 1.1rem; margin-top: 5px;">> 🎯 TARGET: ${randomDrop.name.toUpperCase()} ($${randomDrop.price})</li>
+                <li style="background: rgba(0,255,0,0.15); border-left: 3px solid #00ff00; padding: 5px 10px; color: #fff; margin-top: 8px;">
+                    💡 Wirf "${randomTrash}" raus für "${randomDrop.name}"!
                 </li>
             `;
-        }
+        };
 
-        // Hotkey (F8)
         window.addEventListener('keydown', function(event) {
-            if (event.key === 'Numpad0') {
+            if (event.key === 'F8') {
                 event.preventDefault();
-                toggleWachhund();
+                window.toggleWachhund();
             }
         });
+        
+        console.log("Wachhund System erfolgreich geladen!");
     </script>
 </body>
 </html>
