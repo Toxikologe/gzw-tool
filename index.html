@@ -1259,14 +1259,21 @@
         
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; border-bottom: 1px solid #222; padding-bottom: 12px;">
             
-            <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+                
+                <img src="https://github.com/Toxikologe/gzw-tool/blob/main/Wachhund.png" 
+                     alt="Wachhund Modus" 
+                     onclick="toggleWachhund()" 
+                     title="Wachhund System aktivieren"
+                     style="width: 45px; height: 45px; border-radius: 8px; border: 2px solid #ff4c4c; cursor: pointer; object-fit: cover; box-shadow: 0 0 10px rgba(255, 76, 76, 0.4); transition: all 0.2s ease;"
+                     onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 0 15px rgba(255, 76, 76, 0.8)';"
+                     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 10px rgba(255, 76, 76, 0.4)';">
+
+                <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="warning-icon" style="font-size: 1.3rem;">⚠️</span> 
                     <h3 style="margin: 0; color: #eee; font-size: 1.1rem; text-transform: uppercase;">Taktische Einsatzinformationen</h3>
                 </div>
-                <button onclick="toggleWachhund()" style="background: #050505; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 4px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 10px rgba(255, 76, 76, 0.3); font-family: monospace;">
-                    👁️ WACHHUND MODUS
-                </button>
+                
             </div>
 
             <div class="header-right" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
