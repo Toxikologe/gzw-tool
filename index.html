@@ -5094,13 +5094,18 @@ function goToHome() {
                 </div>
             </div>
 
-            <div style="flex: 1; background: rgba(255,0,0,0.05); border: 1px solid #440000; border-radius: 10px; padding: 25px; display: flex; flex-direction: column;">
-                <h3 style="color: #ff4c4c; text-align: center; margin-bottom: 20px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,0,0,0.5);">🔥 LIVE TARGETS</h3>
+            <div style="flex: 1; background: rgba(255,0,0,0.05); border: 2px solid #660000; border-radius: 8px; padding: 20px; display: flex; flex-direction: column;">
+                <h3 style="color: #ff4c4c; text-align: center; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,0,0,0.5);">🔥 LIVE TARGETS</h3>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <button onclick="renderWachhundMeta('task')" style="flex: 1; background: #222; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 5px; cursor: pointer; font-weight: bold; border-radius: 3px;">QUESTS</button>
-                    <button onclick="renderWachhundMeta('value')" style="flex: 1; background: #222; border: 1px solid #00ff00; color: #00ff00; padding: 5px; cursor: pointer; font-weight: bold; border-radius: 3px;">$$ HIGH TIER</button>
+                    <button onclick="renderWachhundMeta('task')" style="flex: 1; background: #222; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 8px; cursor: pointer; font-weight: bold; border-radius: 4px; transition: 0.2s;" onmouseover="this.style.background='rgba(255,76,76,0.2)'" onmouseout="this.style.background='#222'">QUESTS</button>
+                    <button onclick="renderWachhundMeta('value')" style="flex: 1; background: #222; border: 1px solid #00ff00; color: #00ff00; padding: 8px; cursor: pointer; font-weight: bold; border-radius: 4px; transition: 0.2s;" onmouseover="this.style.background='rgba(0,255,0,0.2)'" onmouseout="this.style.background='#222'">$$ HIGH TIER</button>
                 </div>
+
+                <div id="wachhundMetaContainer" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; padding-right: 5px;">
+                    <div style="color: #555; text-align: center; font-family: monospace; margin-top: 20px;">> Verbinde mit Datenbank...</div>
+                </div>
+            </div>
 
                 <div id="wachhundMetaContainer" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; padding-right: 5px;">
                     <div style="color: #555; text-align: center; font-family: monospace;">> Verbinde mit Datenbank...</div>
