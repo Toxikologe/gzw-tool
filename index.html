@@ -5047,73 +5047,73 @@ function goToHome() {
         window.currentLootValue = 0;
 
         window.wachhundDatabase = [
-            { id: 1, name: "USB Flash Drive", type: "task", icon: "💾", price: 0, info: "Multi-Quest / Fraktions-Task" },
-            { id: 2, name: "Wrench (Schraubenschlüssel)", type: "task", icon: "🔧", price: 0, info: "Gunsmith Tasks" },
-            { id: 3, name: "Military Laptop", type: "task", icon: "💻", price: 0, info: "Intel Retrieval" },
-            { id: 4, name: "Blood Samples", type: "task", icon: "💉", price: 0, info: "Medical Tasks" },
-            { id: 5, name: "Flight Recorder", type: "task", icon: "✈️", price: 0, info: "Crash Site Task" },
-            { id: 6, name: "Water Samples", type: "task", icon: "🧪", price: 0, info: "Bio Task (Ban Pa)" },
-            { id: 7, name: "Secret Documents", type: "task", icon: "📁", price: 0, info: "Fraktions Task" },
-            { id: 8, name: "Lab Keycard", type: "task", icon: "💳", price: 0, info: "High-End Task (Tiger Bay)" },
-            { id: 9, name: "Container Manifest", type: "task", icon: "📋", price: 0, info: "Logistics Task" },
-            { id: 10, name: "Generator Key", type: "task", icon: "🔑", price: 0, info: "YBL-1 Power Task" },
-            { id: 11, name: "PBG-01+ Drohnen-Station", type: "task", icon: "📡", price: 6400, info: "Drohnen-Quest" },
-            { id: 12, name: "Verstärkter Militär-Laptop", type: "task", icon: "💻", price: 2300, info: "Tech Recovery" },
-            { id: 13, name: "Biometrischer USB-Stick", type: "task", icon: "💾", price: 1900, info: "Data Extraction (3x)" },
-            { id: 14, name: "VIP-Reisepass", type: "task", icon: "🛂", price: 6800, info: "High-Value Intel" },
-            
-            // --- WAFFEN BLUEPRINTS (0.4 SPEARHEAD) ---
-            { id: 15, name: "Blueprint: DDM4", type: "task", icon: "🗺️", price: 0, info: "Fort Narith (Kaserne 2)" },
-            { id: 16, name: "Blueprint: AK-308", type: "task", icon: "🗺️", price: 0, info: "Fort Narith (Gefängnis)" },
-            { id: 17, name: "Blueprint: SVD Dragunov", type: "task", icon: "🗺️", price: 0, info: "Tiger Bay Mall (Cake Time)" },
-            { id: 18, name: "Blueprint: SIG MCX", type: "task", icon: "🗺️", price: 0, info: "Midnight Sapphire (Lobby)" },
-            { id: 19, name: "Blueprint: M700 Sniper", type: "task", icon: "🗺️", price: 0, info: "Midnight Sapphire (Dach)" },
-            { id: 20, name: "Blueprint: MP7A2", type: "task", icon: "🗺️", price: 0, info: "Tourist Shelter (Juliet 4)" },
-            { id: 21, name: "Blueprint: Mossberg 590", type: "task", icon: "🗺️", price: 0, info: "Remote Campsite (Süd)" },
+            // --- HOCHWERTIGE TECHNOLOGIE ---
+            { id: 101, name: "LTSD-4-3 Laser-Zielmarkierer", match: "LTSD", type: "value", icon: "🎯", price: 60000, info: "3x3 | 14kg | Extrem Wertvoll" },
+            { id: 102, name: "R-438 Barrier-T System", match: "BARRIER", type: "value", icon: "📻", price: 45000, info: "3x3 | 16kg | High-Tech" },
+            { id: 103, name: "PBG-01+ Drohnen-Station", match: "PBG", type: "task", icon: "📡", price: 6400, info: "Quest: Drohnen-Equipment" },
+            { id: 104, name: "C2 Militär-Laptop", match: "C2", type: "value", icon: "💻", price: 4900, info: "2x2 | 5.5kg" },
+            { id: 105, name: "STRELETS-M Tablet", match: "STRELETS", type: "value", icon: "📱", price: 4700, info: "2x2 | 1.4kg" },
+            { id: 106, name: "AN/PYQ-10", match: "PYQ", type: "value", icon: "📟", price: 3200, info: "1x2 | 0.97kg" },
+            { id: 107, name: "KIK-11 Schlüssel-Lader", match: "KIK", type: "value", icon: "🔑", price: 2900, info: "2x1 | 0.45kg" },
+            { id: 108, name: "Verstärkter Militär-Laptop", match: "VERSTÄRKT", type: "task", icon: "💻", price: 2300, info: "Quest: Tech Recovery" },
+            { id: 109, name: "HGCS-30 Drohnen-Station", match: "HGCS", type: "value", icon: "📡", price: 2000, info: "2x2 | 3kg" },
+            { id: 110, name: "Robustes Militär-Tablet", match: "ROBUST", type: "value", icon: "📱", price: 1200, info: "2x2 | 2kg" },
 
-            // --- HIGH VALUE TECH & WERTSACHEN ---
-            { id: 22, name: "LTSD-4-3 Laser-Zielmarkierer", type: "value", icon: "🎯", price: 60000, info: "Absoluter Jackpot! (3x3 Slot)" },
-            { id: 23, name: "R-438 Barrier-T System", type: "value", icon: "📻", price: 45000, info: "High-Value Tech (3x3 Slot)" },
-            { id: 24, name: "Schwarze Kreditkarte", type: "value", icon: "💳", price: 15000, info: "1x1 Slot Jackpot!" },
-            { id: 25, name: "Moutai - 50 Jahre", type: "value", icon: "🍾", price: 15000, info: "Wertvoller Alkohol" },
-            { id: 26, name: "Platinring", type: "value", icon: "💍", price: 10000, info: "Schmuck (1x1 Slot)" },
-            { id: 27, name: "Majestätische Titanuhr", type: "value", icon: "⌚", price: 8000, info: "Luxusuhr (1x1 Slot)" },
-            { id: 28, name: "Platin-Kreditkarte", type: "value", icon: "💳", price: 6000, info: "Sehr Wertvoll (1x1 Slot)" },
-            { id: 29, name: "Geldautomaten-Hacking-Tool", type: "value", icon: "💻", price: 5000, info: "Elektronik (1x1 Slot)" },
-            { id: 30, name: "Verschlüsselte Einsatz-HDD", type: "value", icon: "💽", price: 4900, info: "Elektronik (1x1 Slot)" },
+            // --- WERTSACHEN ---
+            { id: 201, name: "Schwarze Kreditkarte", match: "SCHWARZE", type: "value", icon: "💳", price: 15000, info: "1x1 | Jackpot" },
+            { id: 202, name: "Moutai - 50 Jahre", match: "MOUTAI", type: "value", icon: "🍾", price: 15000, info: "2x1 | 1.5kg" },
+            { id: 203, name: "Platinring", match: "PLATINRING", type: "value", icon: "💍", price: 10000, info: "1x1 | Artisan" },
+            { id: 204, name: "Majestätische Titanuhr", match: "TITANUHR", type: "value", icon: "⌚", price: 8000, info: "1x1 | Turncoat" },
+            { id: 205, name: "Diamantring", match: "DIAMANTRING", type: "value", icon: "💍", price: 7700, info: "1x1 | Turncoat" },
+            { id: 206, name: "Platin-Kreditkarte", match: "PLATIN-KRE", type: "value", icon: "💳", price: 6000, info: "1x1 | Artisan" },
+            { id: 207, name: "Diamantohrringe", match: "DIAMANTOHR", type: "value", icon: "💎", price: 5700, info: "1x1 | Turncoat" },
+            { id: 208, name: "Scotch - 40 Jahre", match: "SCOTCH", type: "value", icon: "🥃", price: 5500, info: "2x1 | 2.1kg" },
+            { id: 209, name: "Smaragdhalskette", match: "SMARAGD", type: "value", icon: "📿", price: 5300, info: "1x1 | 0.05kg" },
+            { id: 210, name: "Breda Rum", match: "BREDA", type: "value", icon: "🍾", price: 3800, info: "2x1 | 1.7kg" },
+            { id: 211, name: "Saphir-Anhänger", match: "SAPHIR", type: "value", icon: "💎", price: 3600, info: "1x1 | Turncoat" },
+            { id: 212, name: "Gold-Kreditkarte", match: "GOLD-KRE", type: "value", icon: "💳", price: 2200, info: "1x1 | 0.005kg" },
+            { id: 213, name: "Tzuntzimitl Tequila", match: "TEQUILA", type: "value", icon: "🍾", price: 2000, info: "2x1 | 1.8kg" },
+            { id: 214, name: "Elegante Luxusuhr", match: "LUXUSUHR", type: "value", icon: "⌚", price: 1700, info: "1x1 | 0.13kg" },
+            { id: 215, name: "Master Carbon SEAL", match: "CARBON", type: "value", icon: "⌚", price: 1450, info: "1x1 | 0.17kg" },
+            { id: 216, name: "Stange Tahirs Zigaretten", match: "STANGE", type: "task", icon: "🚬", price: 27, info: "Quest: Supply Request" },
+            { id: 217, name: "Holzstatue", match: "HOLZSTATUE", type: "task", icon: "🗿", price: 0, info: "Quest: Hazardous Treasures" },
 
-            // --- META WEAPON MODS & OPTICS ---
-            { id: 31, name: "VUDU 1-6x24 FFP", type: "value", icon: "🔭", price: 1500, info: "Meta Sniper-Scope" },
-            { id: 32, name: "Vortex RAZOR 1-6x", type: "value", icon: "🔭", price: 1400, info: "Meta Sniper-Scope" },
-            { id: 33, name: "Elcan SpecterDR 1-4x", type: "value", icon: "🔭", price: 1200, info: "Bester Allrounder" },
-            { id: 34, name: "SureFire SOCOM556 RC2", type: "value", icon: "🔇", price: 600, info: "Bester 5.56 Suppressor" },
-            { id: 35, name: "TGP-V (SVD)", type: "value", icon: "🔇", price: 550, info: "Meta SVD Suppressor" },
-            { id: 36, name: "60-Schuss SureFire Mag", type: "value", icon: "🔋", price: 300, info: "Extrem wichtig für M4" },
+            // --- GEHEIMDIENST & DOKUMENTE ---
+            { id: 301, name: "VIP-Reisepass", match: "VIP-REI", type: "value", icon: "🛂", price: 6800, info: "1x1 | Dokumente" },
+            { id: 302, name: "Touristen-Reisepass", match: "TOURISTEN-REI", type: "task", icon: "🛂", price: 2600, info: "Quest: Smuggling Route" },
+            { id: 303, name: "Schlüsselcodes", match: "SCHLÜSSELCODES", type: "task", icon: "🔢", price: 2400, info: "Quest-Intel" },
+            { id: 304, name: "Biometrische Zugangskarte", match: "ZUGANGSKARTE", type: "task", icon: "💳", price: 2000, info: "Quest-Intel" },
+            { id: 305, name: "Biometrischer USB-Stick", match: "USB-STICK", type: "task", icon: "💾", price: 1900, info: "Quest: Data Extraction" },
+            { id: 306, name: "Armee-Geheimdienstdaten", match: "ARMEE-GEH", type: "value", icon: "📁", price: 1280, info: "2x1 | Intel" },
+            { id: 307, name: "Geschäftsmann-Ausweis", match: "GESCHÄFTSMANN", type: "task", icon: "🪪", price: 937, info: "Quest: Target ID" },
 
-            // --- BOSS KEYS & CONTAINERS ---
-            { id: 37, name: "Boss Key (Sapphire)", type: "value", icon: "🗝️", price: 3000, info: "Öffnet High-Tier Loot" },
-            { id: 38, name: "Boss Key (Narith)", type: "value", icon: "🗝️", price: 2500, info: "Öffnet High-Tier Loot" },
-            { id: 39, name: "Tiger Bay Mall Key", type: "value", icon: "🗝️", price: 1800, info: "Loot Room Key" },
-            { id: 40, name: "Tactical Wallet", type: "value", icon: "👝", price: 3500, info: "4 Slots intern (1x1)" },
-            { id: 41, name: "Key Holder", type: "value", icon: "🔑", price: 4500, info: "Sichert deine Schlüssel" },
+            // --- ELEKTRONIK ---
+            { id: 401, name: "Hacking-Tool", match: "HACKING", type: "value", icon: "💾", price: 5000, info: "1x1 | 0.15kg" },
+            { id: 402, name: "Einsatz-Festplatte", match: "FESTPLATTE", type: "value", icon: "💽", price: 4900, info: "1x1 | 0.18kg" },
+            { id: 403, name: "Navigationsempfänger", match: "NAVIGATION", type: "value", icon: "🛰️", price: 1100, info: "NPI-2 / GLONASS" },
+            { id: 404, name: "DSLR Kamera", match: "SPIEGELREFLEX", type: "task", icon: "📷", price: 960, info: "Quest: Paparazzi (2x)" },
+            { id: 405, name: "AZART P1 Funkgerät", match: "AZART", type: "task", icon: "📻", price: 825, info: "Quest: Comms Sabotage" },
+            { id: 406, name: "ECM-Störsender", match: "STÖRSENDER", type: "value", icon: "📡", price: 712, info: "2x1 | 2kg" },
+            { id: 407, name: "DigiCam", match: "DIGITALKAMERA", type: "task", icon: "📸", price: 112, info: "Quest: Smile for Camera" },
 
-            // --- META GEAR (RÜSTUNG & RUCKSÄCKE) ---
-            { id: 42, name: "ComTac 4 Headset", type: "value", icon: "🎧", price: 800, info: "Audio Meta!" },
-            { id: 43, name: "Plate6 Carrier (NIJ III++)", type: "value", icon: "🛡️", price: 1500, info: "Beste Panzerung" },
-            { id: 44, name: "Recon Plate Carrier", type: "value", icon: "🛡️", price: 1200, info: "Leichtestes NIJ III+" },
-            { id: 45, name: "FAST MT Helm", type: "value", icon: "🪖", price: 800, info: "Meta NVG Helm" },
-            { id: 46, name: "Wanderer Rucksack (70L)", type: "value", icon: "🎒", price: 1000, info: "Bester Loot Rucksack" },
-            { id: 47, name: "Delta Rucksack (6x6)", type: "value", icon: "🎒", price: 950, info: "Riesiger Stauraum" },
+            // --- WERKZEUGE & MATERIALIEN ---
+            { id: 501, name: "Weißes Lithiumfett", match: "LITHIUM", type: "task", icon: "🧴", price: 150, info: "Quest: Smooth Operation" },
+            { id: 502, name: "Werkzeugset", match: "WERKZEUGSET", type: "task", icon: "🧰", price: 142, info: "Quest: Tooling Up" },
+            { id: 503, name: "Schwefelsäure", match: "SCHWEFELSÄURE", type: "task", icon: "🧪", price: 99, info: "Quest: Toxic Env" },
+            { id: 504, name: "Autobatterie", match: "AUTOBATTERIE", type: "task", icon: "🔋", price: 56, info: "Quest: Parts Needed" },
+            { id: 505, name: "Acetylenflasche", match: "ACETYLEN", type: "task", icon: "🔥", price: 56, info: "Quest | ACHTUNG: 11.5kg!" },
+            { id: 506, name: "Minderwertiges Schießpulver", match: "SCHIESSPULVER", type: "task", icon: "💣", price: 23, info: "Quest: Explosive Material" },
+            { id: 507, name: "Benzinkanister", match: "BENZINKANISTER", type: "task", icon: "⛽", price: 21, info: "Quest: Fuel Run" },
+            { id: 508, name: "Tarnstoff", match: "TARNSTOFF", type: "task", icon: "🧶", price: 10, info: "Quest: Gear Crafting" },
+            { id: 509, name: "Panzertape", match: "PANZERTAPE", type: "task", icon: "🎞️", price: 0, info: "Quest: Builder" },
 
-            // --- META WEAPONS ---
-            { id: 48, name: "Laugo Alien (Pistole)", type: "value", icon: "🔫", price: 2500, info: "Beste Pistole im Spiel" },
-            { id: 49, name: "L403A1 / KS-1 Rifle", type: "value", icon: "🔫", price: 3500, info: "5.56 Rückstoß-Meta" },
-            { id: 50, name: "DDM4 Sturmgewehr", type: "value", icon: "🔫", price: 3000, info: "5.56 Ergo-Meta" },
-
-            // --- META AMMO STACKS ---
-            { id: 51, name: "M995 AP Ammo (60x)", type: "value", icon: "💥", price: 1320, info: "Penetriert alles" },
-            { id: 52, name: "M61 AP Ammo (60x)", type: "value", icon: "💥", price: 1680, info: "Tödliche DMR Muni" },
-            { id: 53, name: "SNB AP Ammo (60x)", type: "value", icon: "💥", price: 960, info: "Die stärkste Kugel" }
+            // --- MEDIZIN & SURVIVAL ---
+            { id: 601, name: "Antigene", match: "ANTIGENEN", type: "value", icon: "🧪", price: 947, info: "1x1 | 0.03kg" },
+            { id: 602, name: "Desinfektionsmittel", match: "DESINFEKTIONS", type: "task", icon: "🧼", price: 199, info: "Quest: Medical Supply" },
+            { id: 603, name: "Blutbeutel 500ml", match: "BLUTBEUTEL", type: "task", icon: "🩸", price: 0, info: "Quest: Blood Donation" },
+            { id: 604, name: "Morphin-Injektor", match: "MORPHIN", type: "task", icon: "💉", price: 0, info: "Quest: Med Supplies" },
+            { id: 605, name: "Tourniquet (CAT)", match: "TOURNIQUET", type: "task", icon: "🩹", price: 0, info: "Quest: Vital Signs" },
+            { id: 606, name: "MRE (Kampfration)", match: "KAMPFRATION", type: "task", icon: "🍱", price: 0, info: "Quest: Supply Squeeze" }
         ];
 
         window.renderWachhundMeta = function(filterType) {
@@ -5282,44 +5282,35 @@ function goToHome() {
             const pulseLayer = document.getElementById('wachhundPulseLayer');
 
             if (!video || !video.srcObject) {
-                log.innerHTML = `<li style="color: #ff4c4c;">> FEHLER: Kein aktiver Videostream! Bitte erst "SPIEL ERFASSEN" starten.</li>`;
-                // Auto-Scan abbrechen falls er fälschlicherweise lief
-                if (window.autoScanIntervalTimer) window.toggleAutoScan();
+                log.innerHTML = `<li style="color: #ff4c4c;">> FEHLER: Kein Video-Signal.</li>`;
                 return;
             }
 
-            // UI Feedback während die KI rechnet
             btn.innerText = "[ LESE DATEN... ]";
-            btn.style.color = "#ff9900";
-            btn.style.borderColor = "#ff9900";
             btn.disabled = true;
 
-            // Foto vom Video machen
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            log.innerHTML = `<li style="color: #ff9900;">> Analysiere Bilddaten per KI...</li>`;
-
             try {
-                // Tesseract KI füttern
-                const result = await Tesseract.recognize(canvas, 'eng');
+                // WICHTIG: Scannt jetzt auf Deutsch ('deu')
+                const result = await Tesseract.recognize(canvas, 'deu');
                 const scannedText = result.data.text.toUpperCase();
                 let foundItems = [];
 
-                // Mit Datenbank abgleichen
                 window.wachhundDatabase.forEach(item => {
-                    // Prüft, ob der Item-Name im Text auf dem Bildschirm vorkommt
-                    if (scannedText.includes(item.name.toUpperCase())) {
-                        foundItems.push(item);
+                    if (scannedText.includes(item.match.toUpperCase())) {
+                        if (!foundItems.some(f => f.id === item.id)) {
+                            foundItems.push(item);
+                        }
                     }
                 });
 
                 log.innerHTML = `<li style="color: #aaa;">> Scan abgeschlossen.</li>`;
 
                 if (foundItems.length > 0) {
-                    // Grünes Pulsieren auslösen
                     pulseLayer.style.animation = 'pulse-green 1s 3';
                     setTimeout(() => { pulseLayer.style.animation = 'none'; }, 3000);
 
@@ -5327,22 +5318,19 @@ function goToHome() {
                         window.currentLootValue += item.price;
                         log.innerHTML += `
                             <li style="color: #00ff00; font-weight: bold; margin-top: 5px;">
-                                > 🎯 TARGET SPOTTED: ${item.icon} ${item.name} ($${item.price})
+                                > 🎯 TARGET DETECTED: ${item.match} (${item.name})
                             </li>`;
                     });
                     document.getElementById('lootTotalValue').innerText = `$${window.currentLootValue.toLocaleString()}`;
                 } else {
-                    log.innerHTML += `<li style="color: #666;">> Keine Targets im Fokus erkannt.</li>`;
+                    log.innerHTML += `<li style="color: #666;">> Keine Übereinstimmung gefunden.</li>`;
                 }
 
             } catch (error) {
-                log.innerHTML += `<li style="color: #ff4c4c;">> Scanner-Fehler: Die KI konnte das Bild nicht verarbeiten.</li>`;
+                log.innerHTML += `<li style="color: #ff4c4c;">> Scanner-Abbruch.</li>`;
             }
 
-            // Button Reset
             btn.innerText = "[ SCAN SCREEN ]";
-            btn.style.color = "#00ff00";
-            btn.style.borderColor = "#00ff00";
             btn.disabled = false;
         };
 
