@@ -1182,14 +1182,17 @@
     <button class="sidebar-btn" onclick="openTab('tab-food', this)">🥫 Markt (Essen & Trinken)</button>
 </div>
 
-<div class="main-wrapper">
-    <button id="changeFactionBtn" class="faction-btn-top" onclick="openFactionModal()">
+<div style="position: fixed; top: 20px; right: 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 1200;">
+    
+    <button id="changeFactionBtn" class="faction-btn-top" onclick="openFactionModal()" style="margin: 0; width: 180px;">
         🛡️ Fraktion wählen
     </button>
 
-    <button onclick="toggleNotepad()" class="faction-btn-top" style="margin-top: 8px; background: rgba(var(--accent-rgb), 0.2); border-color: var(--accent); color: var(--accent);">
-        📝 Notizblock öffnen
+    <button onclick="toggleNotepad()" class="faction-btn-top" style="margin: 0; width: 180px; background: rgba(var(--accent-rgb), 0.2); border-color: var(--accent); color: var(--accent);">
+        📝 Notizblock
     </button>
+    
+</div>
 
     <div id="factionModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5,5,5,0.92); z-index: 100000; align-items: center; justify-content: center; flex-direction: column;">
         <h1 style="color: #fff; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; font-size: 2.5rem; text-shadow: 0 0 15px rgba(255,255,255,0.3);">Wähle deine PMC Fraktion</h1>
