@@ -2160,35 +2160,44 @@
         }
     }
 
-    // ==========================================
-    // TACTICAL TRADER RESTOCK TIMER
-    // ==========================================
+    // ==============================================================
+    // TRADER TIMER ENGINE (FIXED)
+    // ==============================================================
     function startTraderTimer() {
-        const timerDisplay = document.getElementById('trader-timer-btn');
+        const timerDisplay = document.getElementById('traderTimerDisplay');
         if (!timerDisplay) return;
 
-        setInterval(() => {
+        function updateRestock() {
             const now = new Date();
-            const nextHour = new Date(now);
-            nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+            
+            // Berechnet die Zeit bis zur nächsten vollen Stunde
+            const nextRestock = new Date();
+            nextRestock.setHours(now.getHours() + 1, 0, 0, 0);
+            
+            const diff = nextRestock - now;
+            
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
 
-            const diff = nextHour - now;
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            // Formatierung auf 00:00:00
+            const timeStr = 
+                (hours > 0 ? hours.toString().padStart(2, '0') + ":" : "") + 
+                minutes.toString().padStart(2, '0') + ":" + 
+                seconds.toString().padStart(2, '0');
 
-            const mDisplay = String(minutes).padStart(2, '0');
-            const sDisplay = String(seconds).padStart(2, '0');
+            timerDisplay.innerText = timeStr;
 
-            timerDisplay.textContent = `🛒 Trader-Restock: ${mDisplay}:${sDisplay}`;
-
-            if (minutes < 5) {
-                timerDisplay.style.color = '#ff4c4c';
-                timerDisplay.style.textShadow = '0 0 8px rgba(255, 76, 76, 0.4)';
+            // Optionaler visueller Alarm: Wenn weniger als 5 Minuten übrig sind, wird der Timer gelb
+            if (minutes < 5 && hours === 0) {
+                timerDisplay.style.color = "#ffcc00";
             } else {
-                timerDisplay.style.color = '';
-                timerDisplay.style.textShadow = 'none';
+                timerDisplay.style.color = "var(--accent)";
             }
-        }, 1000); 
+        }
+
+        updateRestock(); // Sofortiger Aufruf beim Start
+        setInterval(updateRestock, 1000); // Update jede Sekunde
     }
     
     // --- SIDEBAR TAB NAVIGATION LOGIK ---
