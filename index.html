@@ -5235,6 +5235,17 @@ function goToHome() {
                 </li>
             `;
         }
+
+        // ==============================================================
+        // WACHHUND GLOBAL HOTKEY (F8)
+        // ==============================================================
+        window.addEventListener('keydown', function(event) {
+            // Wenn die Taste "F8" gedrückt wird, öffnet/schließt sich der Wachhund
+            if (event.key === 'Numpad0') {
+                event.preventDefault(); // Verhindert, dass der Browser andere Dinge bei F8 macht
+                toggleWachhund();
+            }
+        });
     </script>
 </body>
 </html>
