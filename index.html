@@ -1769,14 +1769,13 @@
             </div>
         </div>
 
-        <div id="tab-ammo" class="tab-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h2>🎯 Ballistik & Munitions-Matrix (v0.4 Spearhead)</h2>
+        <div id="tab-ballistik" class="tab-content"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>🛡️ Ballistik Check (Simulator & Radar)</h2>
                 <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">BALLISTICS_SYS_ONLINE // CALIBRATING</div>
             </div>
             
             <p style="color: #ccc; margin-bottom: 20px;">
-                Detaillierte Analyse aller Kaliber basierend auf den neuesten 0.4 Live-Daten. Prüfe Penetration, Velocity, Präzision und Waffenverschleiß für optimale Loadouts.
+                Testbereich für Penetrationswerte. Wähle die Munition und Rüstung für einen Live-Vergleich aus.
             </p>
 
             <div class="panel-box" style="margin-bottom: 20px; border-top-color: #ffcc00; background: rgba(255,204,0,0.05);">
@@ -1784,13 +1783,13 @@
                 <div class="grid">
                     <div>
                         <label>Munitionsart wählen:</label>
-                        <select id="simAmmoSelect" onchange="simulateArmorDrop()" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem;">
+                        <select id="simAmmoSelect" onchange="simulateArmorDrop()" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem; width: 100%; padding: 8px;">
                             <option value="">-- Munition wählen --</option>
                         </select>
                     </div>
                     <div>
                         <label>Gegnerische Rüstung wählen:</label>
-                        <select id="simArmorSelect" onchange="simulateArmorDrop()" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem;">
+                        <select id="simArmorSelect" onchange="simulateArmorDrop()" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem; width: 100%; padding: 8px;">
                             <option value="">-- Rüstungsklasse wählen --</option>
                             <option value="IIIA">NIJ IIIA (Weichballistik / Helme)</option>
                             <option value="IIIA+">NIJ IIIA+ (Verstärkte Westen)</option>
@@ -1818,9 +1817,19 @@
                     <div id="ballisticBars" style="position: relative; z-index: 5;"></div>
                 </div>
             </div>
+        </div>
+
+        <div id="tab-ammo" class="tab-content"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>📊 Ammo Matrix (v0.4 Spearhead)</h2>
+                <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">DATABASE_SYNCED</div>
+            </div>
+            
+            <p style="color: #ccc; margin-bottom: 20px;">
+                Detaillierte Analyse aller Kaliber basierend auf den neuesten 0.4 Live-Daten. Prüfe Velocity, Präzision und Waffenverschleiß.
+            </p>
 
             <div class="panel-box">
-                <h3 style="margin-bottom: 15px; color: var(--accent);">📊 Ammo Matrix (0.4 Stats)</h3>
+                <h3 style="margin-bottom: 15px; color: var(--accent);">📊 Munitions-Tabelle</h3>
                 <div style="overflow-x: auto;">
                     <table id="ammoMatrixTable" style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left;">
                         <thead style="background: #151515; color: var(--accent);">
