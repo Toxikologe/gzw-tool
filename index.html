@@ -1110,25 +1110,29 @@
     <button id="feedback-send-btn" class="feedback-send-btn" onclick="sendFeedback()">Senden</button>
 </div>
 
-<div id="raidNotepad" class="draggable-widget" style="position: fixed; top: 100px; right: 20px; width: 500px; height: 450px; z-index: 2000; background: #0a0a0a; border: 2px solid var(--accent); border-radius: 6px; display: none; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.9); overflow: hidden;">
-        <div class="widget-header" style="background: var(--accent); color: #000; padding: 10px 15px; cursor: move; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
-            <span>📝 TACTICAL RAID NOTES</span>
-            <div style="display: flex; gap: 8px;">
-                <button onclick="clearNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.65rem; font-weight: bold; padding: 2px 6px;">CLEAR</button>
-                <button onclick="toggleNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.8rem; font-weight: bold; padding: 2px 6px;">✕</button>
-            </div>
-        </div>
-        <div style="display: flex; gap: 5px; padding: 8px; background: #111; border-bottom: 1px solid #222;">
-            <button onclick="insertNoteTemplate('lz')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px;">+ LZ INFO</button>
-            <button onclick="insertNoteTemplate('task')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px;">+ TASK LOG</button>
-            <button onclick="insertNoteTemplate('intel')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px;">+ INTEL</button>
-        </div>
-        <textarea id="notepadArea" placeholder="Einsatznotizen hier eingeben..." style="flex: 1; width: 100%; background: #050505; color: #eee; border: none; padding: 20px; font-family: 'Courier New', monospace; font-size: 1rem; resize: none; outline: none; line-height: 1.6;"></textarea>
-        <div style="background: #0d0d0d; padding: 8px 15px; font-size: 0.7rem; color: #666; border-top: 1px solid #222; display: flex; justify-content: space-between;">
-            <span>STATUS: ENCRYPTED_LINK</span>
-            <span id="saveStatus">Auto-Save aktiv</span>
+<div id="raidNotepad" class="draggable-widget" style="position: fixed; top: 125px; right: 25px; width: 500px; height: 450px; z-index: 3000; background: #0a0a0a; border: 1px solid var(--accent); border-radius: 4px; display: none; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.8); overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    
+    <div class="widget-header" style="background: var(--accent); color: #000; padding: 8px 15px; cursor: move; font-weight: bold; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
+        <span><i class="fas fa-edit"></i> Tactical Notes</span>
+        <div style="display: flex; gap: 10px;">
+            <button onclick="clearNotepad()" style="background: rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.3); cursor: pointer; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 2px;">CLEAR</button>
+            <button onclick="toggleNotepad()" style="background: rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.3); cursor: pointer; font-size: 0.9rem; font-weight: bold; padding: 2px 6px; border-radius: 2px;">✕</button>
         </div>
     </div>
+    
+    <div style="display: flex; gap: 5px; padding: 6px; background: #111; border-bottom: 1px solid #222;">
+        <button onclick="insertNoteTemplate('lz')" style="flex: 1; font-size: 0.65rem; background: #1a1a1a; color: var(--accent); border: 1px solid #333; cursor: pointer; padding: 4px; text-transform: uppercase;">+ LZ</button>
+        <button onclick="insertNoteTemplate('task')" style="flex: 1; font-size: 0.65rem; background: #1a1a1a; color: var(--accent); border: 1px solid #333; cursor: pointer; padding: 4px; text-transform: uppercase;">+ Task</button>
+        <button onclick="insertNoteTemplate('intel')" style="flex: 1; font-size: 0.65rem; background: #1a1a1a; color: var(--accent); border: 1px solid #333; cursor: pointer; padding: 4px; text-transform: uppercase;">+ Intel</button>
+    </div>
+
+    <textarea id="notepadArea" placeholder="Warte auf Eingabe..." style="flex: 1; width: 100%; background: #050505; color: #eee; border: none; padding: 15px; font-family: 'Courier New', monospace; font-size: 1rem; resize: none; outline: none; line-height: 1.5;"></textarea>
+    
+    <div style="background: #0a0a0a; padding: 5px 12px; font-size: 0.65rem; color: #444; border-top: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center;">
+        <span>SECURE_CHANNEL_v4</span>
+        <span id="saveStatus" style="color: var(--accent); opacity: 0.6;">Auto-Save: Standby</span>
+    </div>
+</div>
 
 <div class="sidebar">
     <div style="padding: 10px; margin-bottom: 5px;">
@@ -1181,6 +1185,10 @@
 <div class="main-wrapper">
     <button id="changeFactionBtn" class="faction-btn-top" onclick="openFactionModal()">
         🛡️ Fraktion wählen
+    </button>
+
+    <button onclick="toggleNotepad()" class="faction-btn-top" style="margin-top: 8px; background: rgba(var(--accent-rgb), 0.2); border-color: var(--accent); color: var(--accent);">
+        📝 Notizblock öffnen
     </button>
 
     <div id="factionModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5,5,5,0.92); z-index: 100000; align-items: center; justify-content: center; flex-direction: column;">
@@ -2952,13 +2960,27 @@
     }
 
     function toggleNotepad() {
-        const notepad = document.getElementById('raidNotepad');
-        if (notepad.style.display === 'none' || notepad.style.display === '') {
-            notepad.style.display = 'flex';
-        } else {
-            notepad.style.display = 'none';
-        }
+    const notepad = document.getElementById('raidNotepad');
+    if (!notepad) {
+        console.error("Fehler: Element 'raidNotepad' nicht gefunden!");
+        return;
     }
+    
+    // Prüfen ob es gerade versteckt ist
+    if (notepad.style.display === 'none' || notepad.style.visibility === 'hidden') {
+        notepad.style.display = 'flex'; 
+        notepad.style.visibility = 'visible';
+        notepad.style.opacity = '1';
+        
+        // Falls initNotepad existiert, rufen wir es auf
+        if (typeof initNotepad === "function") initNotepad();
+        
+        console.log("Notepad aktiviert.");
+    } else {
+        notepad.style.display = 'none';
+        console.log("Notepad deaktiviert.");
+    }
+}
 
     function insertNoteTemplate(type) {
         const area = document.getElementById('notepadArea');
