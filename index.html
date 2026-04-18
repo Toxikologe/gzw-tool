@@ -1780,21 +1780,41 @@
             </p>
 
             <div class="panel-box" style="margin-bottom: 20px; border-top-color: #ffcc00; background: rgba(255,204,0,0.05);">
-                <h3 style="color: #ffcc00; margin-bottom: 15px;">🛡️ Ballistik Radar (Live-Penetration)</h3>
+                <h3 style="color: #ffcc00; margin-bottom: 15px;">🛡️ Rüstungs-Simulator (Live Check)</h3>
+                <div class="grid">
+                    <div>
+                        <label>Munitionsart wählen:</label>
+                        <select id="simAmmoSelect" onchange="simulateArmorDrop()" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem;">
+                            <option value="">-- Munition wählen --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Gegnerische Rüstung wählen:</label>
+                        <select id="simArmorSelect" onchange="simulateArmorDrop()" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem;">
+                            <option value="">-- Rüstungsklasse wählen --</option>
+                            <option value="IIIA">NIJ IIIA (Weichballistik / Helme)</option>
+                            <option value="IIIA+">NIJ IIIA+ (Verstärkte Westen)</option>
+                            <option value="III">NIJ III (Standard-Platten)</option>
+                            <option value="III+">NIJ III+ (Verbesserte Platten)</option>
+                            <option value="III++">NIJ III++ (High-End Platten)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="simResultBox" style="margin-top: 20px; display: none;"></div>
+            </div>
+
+            <div class="panel-box" style="margin-bottom: 20px; border-top-color: var(--accent); background: rgba(var(--accent-rgb),0.05);">
+                <h3 style="color: var(--accent); margin-bottom: 15px;">🛡️ Ballistik Radar (Live-Penetration)</h3>
                 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px;">
-                    <button class="armor-btn" onclick="simulateArmor(2, 'NIJ IIA', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ IIA</button>
-                    <button class="armor-btn" onclick="simulateArmor(3, 'NIJ IIIA', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ IIIA</button>
-                    <button class="armor-btn" onclick="simulateArmor(5, 'NIJ III', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III</button>
-                    <button class="armor-btn" onclick="simulateArmor(6, 'NIJ III+', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III+</button>
-                    <button class="armor-btn" onclick="simulateArmor(7, 'NIJ III++', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III++</button>
-                    <button class="armor-btn" onclick="simulateArmor(8, 'NIJ IV', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ IV</button>
+                    <button class="armor-btn active" onclick="simulateArmorRadar('IIIA', this)" style="padding: 8px 12px; background: rgba(var(--accent-rgb), 0.2); color: var(--accent); border: 1px solid var(--accent); font-weight: bold; cursor: pointer; border-radius: 4px;">NIJ IIIA</button>
+                    <button class="armor-btn" onclick="simulateArmorRadar('IIIA+', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ IIIA+</button>
+                    <button class="armor-btn" onclick="simulateArmorRadar('III', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III</button>
+                    <button class="armor-btn" onclick="simulateArmorRadar('III+', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III+</button>
+                    <button class="armor-btn" onclick="simulateArmorRadar('III++', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III++</button>
                 </div>
 
-                <div style="position: relative; padding-top: 35px; background: #050505; border: 1px solid #222; border-radius: 6px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; overflow: hidden;">
-                    <div id="armorThresholdLine" style="position: absolute; top: 0; bottom: 0; width: 2px; background: #ff4c4c; z-index: 10; transition: left 0.4s ease;"></div>
-                    <div id="thresholdLabel" style="position: absolute; top: 5px; color: #ff4c4c; font-weight: bold; font-size: 0.8rem; transform: translateX(-50%); z-index: 11; background: #111; padding: 2px 8px; border: 1px solid #ff4c4c; border-radius: 4px; transition: left 0.4s ease; white-space: nowrap;">🛡️ Rüstung</div>
-                    
+                <div style="position: relative; padding-top: 15px; background: #050505; border: 1px solid #222; border-radius: 6px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; overflow: hidden;">
                     <div id="ballisticBars" style="position: relative; z-index: 5;"></div>
                 </div>
             </div>
@@ -1806,7 +1826,6 @@
                         <thead style="background: #151515; color: var(--accent);">
                             <tr>
                                 <th style="padding: 10px; border-bottom: 2px solid #333;">Munition</th>
-                                <th style="padding: 10px; border-bottom: 2px solid #333;">Max. Penetration</th>
                                 <th style="padding: 10px; border-bottom: 2px solid #333;">Velocity (Speed)</th>
                                 <th style="padding: 10px; border-bottom: 2px solid #333;">Präzision</th>
                                 <th style="padding: 10px; border-bottom: 2px solid #333;">Verschleiß</th>
@@ -2421,15 +2440,14 @@
     }
 
     // ==============================================================
-    // BALLISTIK RADAR ENGINE (VISUAL CHART - COLLAPSIBLE)
+    // BALLISTIK SIMULATOR & RADAR ENGINE (EXAKTE MATRIX)
     // ==============================================================
-    let currentArmorThreshold = 3;
-    
-    // NEU: Speichert, welche Kaliber gerade aufgeklappt sind, damit sie beim Rüstungs-Wechsel offen bleiben!
+    let currentRadarArmor = "IIIA";
     let openRadarCategories = new Set();
 
-    function simulateArmor(threshold = 3, name = "NIJ IIIA", btnElement = null) {
-        currentArmorThreshold = threshold;
+    // 1. Radar Steuerung
+    function simulateArmorRadar(armorName, btnElement) {
+        currentRadarArmor = armorName;
 
         document.querySelectorAll('.armor-btn').forEach(b => {
             b.style.background = '#111';
@@ -2445,24 +2463,13 @@
             btnElement.style.fontWeight = 'bold';
         }
 
-        renderBallisticChart(name);
+        renderBallisticChart();
     }
 
-    function renderBallisticChart(armorName) {
+    // 2. Das Radar zeichnen (mit Ordner-Logik)
+    function renderBallisticChart() {
         const container = document.getElementById('ballisticBars');
-        const line = document.getElementById('armorThresholdLine');
-        const label = document.getElementById('thresholdLabel');
-
         if (!container || typeof ammoDb === 'undefined') return;
-
-        const MAX_PEN = 8.0; 
-        const thresholdPct = (currentArmorThreshold / MAX_PEN) * 100;
-
-        if (line && label) {
-            line.style.left = `${thresholdPct}%`;
-            label.style.left = `${thresholdPct}%`;
-            label.innerHTML = `🛡️ ${armorName}`;
-        }
 
         container.innerHTML = '';
 
@@ -2473,29 +2480,24 @@
         });
 
         for (const [cal, ammos] of Object.entries(groupedAmmo)) {
-            ammos.sort((a, b) => b.penValue - a.penValue);
+            // Sortierung anhand der gewählten Rüstung (stärkste Durchschlagskraft nach oben)
+            ammos.sort((a, b) => b.penMap[currentRadarArmor] - a.penMap[currentRadarArmor]);
 
             const groupDiv = document.createElement('div');
             groupDiv.style.marginBottom = "8px";
-            groupDiv.style.position = "relative";
-            groupDiv.style.zIndex = "20"; // Damit der Header klickbar bleibt, auch wenn die rote Linie drüber liegt
 
-            // Prüfen, ob der User dieses Kaliber bereits aufgeklappt hat
             const isExpanded = openRadarCategories.has(cal);
             const iconTransform = isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)';
 
-            // Anklickbarer Header im Matrix-Design
             const header = document.createElement('div');
             header.style.cssText = `background: rgba(var(--accent-rgb), 0.15); color: var(--accent); font-weight: bold; padding: 10px 15px; border: 1px solid #333; border-radius: 4px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); user-select: none; transition: 0.2s;`;
             header.innerHTML = `<span>⚡ Kaliber: ${cal}</span> <span class="radar-toggle" style="transition: transform 0.2s; font-size: 0.8rem; transform: ${iconTransform};">▼</span>`;
             
-            // Hover-Effekt für den Header
             header.onmouseover = () => header.style.background = `rgba(var(--accent-rgb), 0.25)`;
             header.onmouseout = () => header.style.background = `rgba(var(--accent-rgb), 0.15)`;
 
-            // Versteckter Container für die Munitions-Balken
             const content = document.createElement('div');
-            content.style.display = isExpanded ? "block" : "none"; // Standardmäßig ZU, außer es war vorher offen
+            content.style.display = isExpanded ? "block" : "none";
             content.style.padding = "12px 10px 4px 10px";
             content.style.borderLeft = "2px solid #333";
             content.style.borderBottom = "1px solid #222";
@@ -2503,41 +2505,38 @@
             content.style.marginBottom = "5px";
 
             ammos.forEach(ammo => {
-                const penPct = Math.min((ammo.penValue / MAX_PEN) * 100, 100);
-                let barColor, resultText, resultColor;
+                const matrixVal = ammo.penMap[currentRadarArmor]; // 0, 1, 2, oder 3
+                let barColor, resultText, resultColor, penPct;
 
-                if (ammo.penValue >= currentArmorThreshold) {
-                    barColor = 'rgba(124, 163, 90, 0.9)'; resultColor = '#7ca35a'; resultText = '🟢 DURCHSCHLAG';
-                } else if (ammo.penValue >= currentArmorThreshold - 1) {
-                    barColor = 'rgba(255, 204, 0, 0.9)'; resultColor = '#ffcc00'; resultText = '🟡 SCHW. TRAUMA';
+                if (matrixVal === 3) {
+                    barColor = 'rgba(124, 163, 90, 0.9)'; resultColor = '#7ca35a'; resultText = '🟢 DURCHSCHLAG'; penPct = 100;
+                } else if (matrixVal === 2 || matrixVal === 1) {
+                    barColor = 'rgba(255, 204, 0, 0.9)'; resultColor = '#ffcc00'; resultText = '🟡 TRAUMA'; penPct = 60;
                 } else {
-                    barColor = 'rgba(179, 57, 57, 0.9)'; resultColor = '#ff4c4c'; resultText = '🔴 ABGEWEHRT';
+                    barColor = 'rgba(179, 57, 57, 0.9)'; resultColor = '#ff4c4c'; resultText = '🔴 ABGEWEHRT'; penPct = 20;
                 }
 
                 const row = document.createElement('div');
                 row.style.cssText = "display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9rem;";
                 row.innerHTML = `
                 <div style="width: 170px; color: #eee; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${ammo.name}">${ammo.name}</div>
-                
                 <div style="flex: 1; position: relative; height: 16px; background: #1a1a1a; border-radius: 4px; overflow: hidden; margin: 0 15px; border: 1px solid #333;">
                     <div style="height: 100%; width: ${penPct}%; background-color: ${barColor}; transition: width 0.4s ease, background-color 0.4s ease;"></div>
                 </div>
-                
                 <div style="width: 130px; text-align: right; font-weight: bold; color: ${resultColor}; font-size: 0.85rem;">${resultText}</div>`;
                 content.appendChild(row);
             });
 
-            // Klick-Funktion für das Akkordeon
             header.onclick = () => {
                 const icon = header.querySelector('.radar-toggle');
                 if (content.style.display === "none") {
                     content.style.display = "block";
                     icon.style.transform = "rotate(0deg)";
-                    openRadarCategories.add(cal); // Ins Gedächtnis aufnehmen
+                    openRadarCategories.add(cal);
                 } else {
                     content.style.display = "none";
                     icon.style.transform = "rotate(-90deg)";
-                    openRadarCategories.delete(cal); // Aus dem Gedächtnis löschen
+                    openRadarCategories.delete(cal);
                 }
             };
 
@@ -2545,6 +2544,50 @@
             groupDiv.appendChild(content);
             container.appendChild(groupDiv);
         }
+    }
+
+    // 3. Rüstungs-Simulator (Dropdowns)
+    function simulateArmorDrop() {
+        const armorTierStr = document.getElementById('simArmorSelect').value; 
+        const ammoIndex = document.getElementById('simAmmoSelect').value;
+        const resultBox = document.getElementById('simResultBox');
+        
+        if (armorTierStr === "" || ammoIndex === "") {
+            resultBox.style.display = "block";
+            resultBox.innerHTML = `<div style="padding: 20px; text-align:center; color:#555; border: 1px dashed #333; border-radius:6px;">Wähle oben Munition und Rüstung für die Analyse aus.</div>`;
+            return;
+        }
+
+        const ammo = ammoDb[ammoIndex];
+        const matrixVal = ammo.penMap[armorTierStr]; // Exakte Matrix-Abfrage (0-3)
+        
+        resultBox.style.display = "block";
+        let statusHtml = "";
+        
+        if (matrixVal === 3) {
+            statusHtml = `
+                <div style="background: rgba(255, 76, 76, 0.1); border: 2px solid #ff4c4c; padding: 20px; border-radius: 6px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">💀</div>
+                    <h3 style="color: #ff4c4c; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">DURCHSCHLAG (LETHAL)</h3>
+                    <p style="color: #ccc; margin: 0; font-size: 0.95rem;">Das Projektil (${ammo.name}) durchschlägt die Rüstungsklasse NIJ ${armorTierStr} mühelos.</p>
+                </div>`;
+        } else if (matrixVal === 2 || matrixVal === 1) {
+            statusHtml = `
+                <div style="background: rgba(255, 204, 0, 0.1); border: 2px solid #ffcc00; padding: 20px; border-radius: 6px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">💥</div>
+                    <h3 style="color: #ffcc00; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">SCHWERES TRAUMA</h3>
+                    <p style="color: #ccc; margin: 0; font-size: 0.95rem;">Die Rüstung (NIJ ${armorTierStr}) hält, aber der Träger erleidet durch die Wucht schwere Prellungen.</p>
+                </div>`;
+        } else {
+            statusHtml = `
+                <div style="background: rgba(124, 163, 90, 0.1); border: 2px solid #7ca35a; padding: 20px; border-radius: 6px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
+                    <h3 style="color: #7ca35a; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">VOLLSTÄNDIGER SCHUTZ</h3>
+                    <p style="color: #ccc; margin: 0; font-size: 0.95rem;">Das Projektil (${ammo.name}) prallt an NIJ ${armorTierStr} wirkungslos ab.</p>
+                </div>`;
+        }
+
+        resultBox.innerHTML = statusHtml;
     }
 
     function updateContainer() { const c = typeof containers !== 'undefined' ? containers[document.getElementById('containerSelect').value] : null; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
