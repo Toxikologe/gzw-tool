@@ -5063,41 +5063,78 @@ function goToHome() {
     </div>
 
     <script>
-        // MASSIVE GZW LOOT DATABASE
+        // ==============================================================
+        // WACHHUND DATENBANK & DYNAMISCHES LOOT SYSTEM (MASSIVE UPDATE)
+        // ==============================================================
         const wachhundDatabase = [
-            // --- QUEST ITEMS ---
-            { id: 1, name: "USB Flash Drive", type: "task", icon: "💾", price: 0, info: "Multi-Quest" },
-            { id: 2, name: "Wrench", type: "task", icon: "🔧", price: 0, info: "Gunsmith Tasks" },
+            // --- QUEST & INTEL ITEMS (MUST LOOT) ---
+            { id: 1, name: "USB Flash Drive", type: "task", icon: "💾", price: 0, info: "Multi-Quest / Fraktions-Task" },
+            { id: 2, name: "Wrench (Schraubenschlüssel)", type: "task", icon: "🔧", price: 0, info: "Gunsmith Tasks" },
             { id: 3, name: "Military Laptop", type: "task", icon: "💻", price: 0, info: "Intel Retrieval" },
             { id: 4, name: "Blood Samples", type: "task", icon: "💉", price: 0, info: "Medical Tasks" },
             { id: 5, name: "Flight Recorder", type: "task", icon: "✈️", price: 0, info: "Crash Site Task" },
-            { id: 6, name: "Water Samples", type: "task", icon: "🧪", price: 0, info: "Bio Task" },
-            { id: 7, name: "Soil Samples", type: "task", icon: "🌿", price: 0, info: "Bio Task" },
-            { id: 8, name: "Negotiator's Log", type: "task", icon: "📓", price: 0, info: "Lore Task" },
-            { id: 9, name: "Secret Documents", type: "task", icon: "📁", price: 0, info: "Fraktions Task" },
-            { id: 10, name: "Lab Keycard", type: "task", icon: "💳", price: 0, info: "High-End Task" },
-            { id: 11, name: "Container Manifest", type: "task", icon: "📋", price: 0, info: "Logistics Task" },
-            { id: 12, name: "Generator Key", type: "task", icon: "🔑", price: 0, info: "Power Task" },
+            { id: 6, name: "Water Samples", type: "task", icon: "🧪", price: 0, info: "Bio Task (Ban Pa)" },
+            { id: 7, name: "Secret Documents", type: "task", icon: "📁", price: 0, info: "Fraktions Task" },
+            { id: 8, name: "Lab Keycard", type: "task", icon: "💳", price: 0, info: "High-End Task (Tiger Bay)" },
+            { id: 9, name: "Container Manifest", type: "task", icon: "📋", price: 0, info: "Logistics Task" },
+            { id: 10, name: "Generator Key", type: "task", icon: "🔑", price: 0, info: "YBL-1 Power Task" },
+            { id: 11, name: "PBG-01+ Drohnen-Station", type: "task", icon: "📡", price: 6400, info: "Drohnen-Quest" },
+            { id: 12, name: "Verstärkter Militär-Laptop", type: "task", icon: "💻", price: 2300, info: "Tech Recovery" },
+            { id: 13, name: "Biometrischer USB-Stick", type: "task", icon: "💾", price: 1900, info: "Data Extraction (3x)" },
+            { id: 14, name: "VIP-Reisepass", type: "task", icon: "🛂", price: 6800, info: "High-Value Intel" },
+            
+            // --- WAFFEN BLUEPRINTS (0.4 SPEARHEAD) ---
+            { id: 15, name: "Blueprint: DDM4", type: "task", icon: "🗺️", price: 0, info: "Fort Narith (Kaserne 2)" },
+            { id: 16, name: "Blueprint: AK-308", type: "task", icon: "🗺️", price: 0, info: "Fort Narith (Gefängnis)" },
+            { id: 17, name: "Blueprint: SVD Dragunov", type: "task", icon: "🗺️", price: 0, info: "Tiger Bay Mall (Cake Time)" },
+            { id: 18, name: "Blueprint: SIG MCX", type: "task", icon: "🗺️", price: 0, info: "Midnight Sapphire (Lobby)" },
+            { id: 19, name: "Blueprint: M700 Sniper", type: "task", icon: "🗺️", price: 0, info: "Midnight Sapphire (Dach)" },
+            { id: 20, name: "Blueprint: MP7A2", type: "task", icon: "🗺️", price: 0, info: "Tourist Shelter (Juliet 4)" },
+            { id: 21, name: "Blueprint: Mossberg 590", type: "task", icon: "🗺️", price: 0, info: "Remote Campsite (Süd)" },
 
-            // --- HIGH TIER LOOT (Value per Slot) ---
-            { id: 13, name: "VUDU 1-6x Scope", type: "value", icon: "🔭", price: 1500, info: "$1500/Slot!" },
-            { id: 14, name: "Razor HD Gen II", type: "value", icon: "🔭", price: 1400, info: "$1400/Slot!" },
-            { id: 15, name: "Elcan SpecterDR", type: "value", icon: "🔭", price: 1200, info: "$1200/Slot" },
-            { id: 16, name: "Trijicon ACOG", type: "value", icon: "🔭", price: 900, info: "$900/Slot" },
-            { id: 17, name: "RC1 Suppressor", type: "value", icon: "🔇", price: 450, info: "Top Value" },
-            { id: 18, name: "RC2 Suppressor", type: "value", icon: "🔇", price: 550, info: "Top Value" },
-            { id: 19, name: "SR-25 Receiver", type: "value", icon: "⚙️", price: 800, info: "Sniper Build" },
-            { id: 20, name: "M700 Receiver", type: "value", icon: "⚙️", price: 650, info: "Sniper Build" },
-            { id: 21, name: "Boss Key (Narith)", type: "value", icon: "🗝️", price: 2500, info: "Insane Value" },
-            { id: 22, name: "Boss Key (Sapphire)", type: "value", icon: "🗝️", price: 3000, info: "Insane Value" },
-            { id: 23, name: "Tiger Bay Mall Key", type: "value", icon: "🗝️", price: 1800, info: "Loot Room" },
-            { id: 24, name: "Level III+ Ceramic", type: "value", icon: "🛡️", price: 700, info: "Armor Plate" },
-            { id: 25, name: "Level IV Poly Plate", type: "value", icon: "🛡️", price: 1200, info: "Meta Armor" },
-            { id: 26, name: "M855A1 Ammo Box", type: "value", icon: "📦", price: 600, info: "Meta Ammo" },
-            { id: 27, name: "M856A1 Ammo Box", type: "value", icon: "📦", price: 500, info: "Meta Ammo" },
-            { id: 28, name: "Rolex Watch", type: "value", icon: "⌚", price: 2000, info: "Vendor Trash" },
-            { id: 29, name: "Gold Chain", type: "value", icon: "⛓️", price: 1000, info: "Vendor Trash" },
-            { id: 30, name: "Bitcoin", type: "value", icon: "🪙", price: 4500, info: "Jackpot!" }
+            // --- HIGH VALUE TECH & WERTSACHEN ---
+            { id: 22, name: "LTSD-4-3 Laser-Zielmarkierer", type: "value", icon: "🎯", price: 60000, info: "Absoluter Jackpot! (3x3 Slot)" },
+            { id: 23, name: "R-438 Barrier-T System", type: "value", icon: "📻", price: 45000, info: "High-Value Tech (3x3 Slot)" },
+            { id: 24, name: "Schwarze Kreditkarte", type: "value", icon: "💳", price: 15000, info: "1x1 Slot Jackpot!" },
+            { id: 25, name: "Moutai - 50 Jahre", type: "value", icon: "🍾", price: 15000, info: "Wertvoller Alkohol" },
+            { id: 26, name: "Platinring", type: "value", icon: "💍", price: 10000, info: "Schmuck (1x1 Slot)" },
+            { id: 27, name: "Majestätische Titanuhr", type: "value", icon: "⌚", price: 8000, info: "Luxusuhr (1x1 Slot)" },
+            { id: 28, name: "Platin-Kreditkarte", type: "value", icon: "💳", price: 6000, info: "Sehr Wertvoll (1x1 Slot)" },
+            { id: 29, name: "Geldautomaten-Hacking-Tool", type: "value", icon: "💻", price: 5000, info: "Elektronik (1x1 Slot)" },
+            { id: 30, name: "Verschlüsselte Einsatz-HDD", type: "value", icon: "💽", price: 4900, info: "Elektronik (1x1 Slot)" },
+
+            // --- META WEAPON MODS & OPTICS ---
+            { id: 31, name: "VUDU 1-6x24 FFP", type: "value", icon: "🔭", price: 1500, info: "Meta Sniper-Scope" },
+            { id: 32, name: "Vortex RAZOR 1-6x", type: "value", icon: "🔭", price: 1400, info: "Meta Sniper-Scope" },
+            { id: 33, name: "Elcan SpecterDR 1-4x", type: "value", icon: "🔭", price: 1200, info: "Bester Allrounder" },
+            { id: 34, name: "SureFire SOCOM556 RC2", type: "value", icon: "🔇", price: 600, info: "Bester 5.56 Suppressor" },
+            { id: 35, name: "TGP-V (SVD)", type: "value", icon: "🔇", price: 550, info: "Meta SVD Suppressor" },
+            { id: 36, name: "60-Schuss SureFire Mag", type: "value", icon: "🔋", price: 300, info: "Extrem wichtig für M4" },
+
+            // --- BOSS KEYS & CONTAINERS ---
+            { id: 37, name: "Boss Key (Sapphire)", type: "value", icon: "🗝️", price: 3000, info: "Öffnet High-Tier Loot" },
+            { id: 38, name: "Boss Key (Narith)", type: "value", icon: "🗝️", price: 2500, info: "Öffnet High-Tier Loot" },
+            { id: 39, name: "Tiger Bay Mall Key", type: "value", icon: "🗝️", price: 1800, info: "Loot Room Key" },
+            { id: 40, name: "Tactical Wallet", type: "value", icon: "👝", price: 3500, info: "4 Slots intern (1x1)" },
+            { id: 41, name: "Key Holder", type: "value", icon: "🔑", price: 4500, info: "Sichert deine Schlüssel" },
+
+            // --- META GEAR (RÜSTUNG & RUCKSÄCKE) ---
+            { id: 42, name: "ComTac 4 Headset", type: "value", icon: "🎧", price: 800, info: "Audio Meta!" },
+            { id: 43, name: "Plate6 Carrier (NIJ III++)", type: "value", icon: "🛡️", price: 1500, info: "Beste Panzerung" },
+            { id: 44, name: "Recon Plate Carrier", type: "value", icon: "🛡️", price: 1200, info: "Leichtestes NIJ III+" },
+            { id: 45, name: "FAST MT Helm", type: "value", icon: "🪖", price: 800, info: "Meta NVG Helm" },
+            { id: 46, name: "Wanderer Rucksack (70L)", type: "value", icon: "🎒", price: 1000, info: "Bester Loot Rucksack" },
+            { id: 47, name: "Delta Rucksack (6x6)", type: "value", icon: "🎒", price: 950, info: "Riesiger Stauraum" },
+
+            // --- META WEAPONS ---
+            { id: 48, name: "Laugo Alien (Pistole)", type: "value", icon: "🔫", price: 2500, info: "Beste Pistole im Spiel" },
+            { id: 49, name: "L403A1 / KS-1 Rifle", type: "value", icon: "🔫", price: 3500, info: "5.56 Rückstoß-Meta" },
+            { id: 50, name: "DDM4 Sturmgewehr", type: "value", icon: "🔫", price: 3000, info: "5.56 Ergo-Meta" },
+
+            // --- META AMMO STACKS (Geschätzter Wert für 60 Schuss) ---
+            { id: 51, name: "M995 AP Ammo (60x)", type: "value", icon: "💥", price: 1320, info: "Penetriert alles" },
+            { id: 52, name: "M61 AP Ammo (60x)", type: "value", icon: "💥", price: 1680, info: "Tödliche DMR Muni" },
+            { id: 53, name: "SNB AP Ammo (60x)", type: "value", icon: "💥", price: 960, info: "Die stärkste Kugel" }
         ];
 
         // Funktion zum Rendern der Liste
