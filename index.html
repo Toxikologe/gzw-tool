@@ -1740,36 +1740,7 @@
         </div>
 
         <div id="tab-ballistics" class="tab-content">
-            <h2>🎯 Ballistik-Radar & Penetrations-Simulator</h2>
-            <p style="color:#ccc; margin-bottom: 20px;">
-                Wähle die Schutzweste des Gegners aus. Das Radar visualisiert sofort in Echtzeit, welche Kaliber die Platte durchschlagen und welche wirkungslos abprallen.
-            </p>
-
-            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-                <button class="armor-btn active" onclick="simulateArmor(2.0, 'NIJ IIIA (Weichballistik)', this)">🛡️ NIJ IIIA</button>
-                <button class="armor-btn" onclick="simulateArmor(3.0, 'NIJ III (Standard-Platten)', this)">🛡️ NIJ III</button>
-                <button class="armor-btn" onclick="simulateArmor(3.5, 'NIJ III+ (Recon Carrier)', this)">🛡️ NIJ III+</button>
-                <button class="armor-btn" onclick="simulateArmor(4.0, 'NIJ III++ (Defender-2)', this)">🛡️ NIJ III++</button>
-            </div>
-
-            <div class="panel-box" style="background: #0d0d0d; position: relative; padding-top: 40px; padding-bottom: 20px; border: 2px solid #333;">
-                
-                <div style="display: flex; position: absolute; top: 15px; bottom: 15px; left: 15px; right: 15px; pointer-events: none; z-index: 5;">
-                    <div style="width: 140px; flex-shrink: 0;"></div> <div style="flex: 1; position: relative;">
-                        <div id="armorThresholdLine" style="position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.2); border-left: 2px dashed #ff4c4c;"></div>
-                        <div id="thresholdLabel" style="position: absolute; top: -15px; background: #ff4c4c; color: white; padding: 3px 10px; border-radius: 4px; font-size: 0.8rem; transform: translateX(-50%); font-weight: bold; box-shadow: 0 0 10px #ff4c4c; white-space: nowrap;">
-                            RÜSTUNG
-                        </div>
-                    </div>
-                    <div style="width: 140px; flex-shrink: 0;"></div> </div>
-
-                <div id="ballisticBars" style="position: relative; z-index: 10; max-height: 550px; overflow-y: auto; padding-right: 10px;">
-                    </div>
-                
-            </div>
-        </div>
-
-        <div id="tab-ballistik" class="tab-content"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <h2>🛡️ Ballistik Check (Simulator & Radar)</h2>
                 <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">BALLISTICS_SYS_ONLINE // CALIBRATING</div>
             </div>
@@ -1819,7 +1790,8 @@
             </div>
         </div>
 
-        <div id="tab-ammo" class="tab-content"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div id="tab-ammo" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <h2>📊 Ammo Matrix (v0.4 Spearhead)</h2>
                 <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">DATABASE_SYNCED</div>
             </div>
@@ -1848,32 +1820,7 @@
             </div>
         </div>
 
-        <div id="tab-gear" class="tab-content">
-            <h2>🦺 Rüstung, Helme & Gear (0.4 Spearhead)</h2>
-            <div class="panel-box">
-                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
-                    Das richtige Gear entscheidet über Leben und Tod. Nutze die Kategorien, um die Eigenschaften der Rüstungen und Rucksäcke einzusehen.
-                    Absolute <span style="color: #ffcc00; font-weight: bold;">Game-Changer (Meta)</span> sind mit einem 🔥 markiert!
-                </p>
-                
-                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                    <button id="sortGearAlphaBtn" onclick="renderGearAccordions('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔤 Alphabetisch sortieren</button>
-                    <button id="sortGearMetaBtn" onclick="renderGearAccordions('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔥 Nach Meta-Wichtigkeit sortieren</button>
-                </div>
-                
-                <div id="gearAccordionsContainer">
-                    </div>
-            </div>
-
-            <div class="panel-box">
-                <h3 style="margin-top: 0; color: var(--accent);">🎒 Armor Tipps (GZW Meta)</h3>
-                <ul style="color: #ccc; line-height: 1.6; padding-left: 20px;">
-                    <li><strong>NIJ Klassen:</strong> Gray Zone Warfare nutzt das reale NIJ-System. NIJ IIIA stoppt Pistolen, NIJ III stoppt Standard-Gewehre, NIJ III++ stoppt extrem gefährliche AP-Muni.</li>
-                    <li><strong>Inertia (Trägheit):</strong> Schwere Rüstungen (wie die Lancer) und volle Rucksäcke (Wanderer) reduzieren deine Ausdauer und deinen Sprint massiv. Bleib leicht, wenn du kämpfen willst!</li>
-                    <li><strong>Kombinationen:</strong> Du kannst Tactical Rigs über Armor Vests (Weichballistik) tragen, aber Plate Carriers (wie der Recon) haben bereits eingebaute Magazintaschen!</li>
-                </ul>
-            </div>
-        </div>
+        
 
         <div id="tab-map" class="tab-content">
             <h2>Interactive Tactical Map</h2>
@@ -2475,7 +2422,7 @@
         renderBallisticChart();
     }
 
-    // 2. Das Radar zeichnen (mit Ordner-Logik)
+    // 2. Das Radar zeichnen
     function renderBallisticChart() {
         const container = document.getElementById('ballisticBars');
         if (!container || typeof ammoDb === 'undefined') return;
@@ -2489,7 +2436,6 @@
         });
 
         for (const [cal, ammos] of Object.entries(groupedAmmo)) {
-            // Sortierung anhand der gewählten Rüstung (stärkste Durchschlagskraft nach oben)
             ammos.sort((a, b) => b.penMap[currentRadarArmor] - a.penMap[currentRadarArmor]);
 
             const groupDiv = document.createElement('div');
@@ -2514,7 +2460,7 @@
             content.style.marginBottom = "5px";
 
             ammos.forEach(ammo => {
-                const matrixVal = ammo.penMap[currentRadarArmor]; // 0, 1, 2, oder 3
+                const matrixVal = ammo.penMap[currentRadarArmor];
                 let barColor, resultText, resultColor, penPct;
 
                 if (matrixVal === 3) {
@@ -2568,7 +2514,7 @@
         }
 
         const ammo = ammoDb[ammoIndex];
-        const matrixVal = ammo.penMap[armorTierStr]; // Exakte Matrix-Abfrage (0-3)
+        const matrixVal = ammo.penMap[armorTierStr];
         
         resultBox.style.display = "block";
         let statusHtml = "";
@@ -2577,7 +2523,7 @@
             statusHtml = `
                 <div style="background: rgba(255, 76, 76, 0.1); border: 2px solid #ff4c4c; padding: 20px; border-radius: 6px; text-align: center;">
                     <div style="font-size: 2.5rem; margin-bottom: 10px;">💀</div>
-                    <h3 style="color: #ff4c4c; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">DURCHSCHLAG (LETHAL)</h3>
+                    <h3 style="color: #ff4c4c; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase;">DURCHSCHLAG (TÖDLICH)</h3>
                     <p style="color: #ccc; margin: 0; font-size: 0.95rem;">Das Projektil (${ammo.name}) durchschlägt die Rüstungsklasse NIJ ${armorTierStr} mühelos.</p>
                 </div>`;
         } else if (matrixVal === 2 || matrixVal === 1) {
@@ -2597,6 +2543,75 @@
         }
 
         resultBox.innerHTML = statusHtml;
+    }
+
+    // ==============================================================
+    // AMMO MATRIX ENGINE (TABELLE)
+    // ==============================================================
+    function buildAmmoMatrix() {
+        const tbody = document.querySelector('#ammoMatrixTable tbody');
+        if (!tbody || typeof ammoDb === 'undefined') return;
+        tbody.innerHTML = '';
+
+        const groupedAmmo = {};
+        ammoDb.forEach(ammo => {
+            if (!groupedAmmo[ammo.cal]) groupedAmmo[ammo.cal] = [];
+            groupedAmmo[ammo.cal].push(ammo);
+        });
+
+        // Dropdown für den Simulator füllen
+        const simSelect = document.getElementById('simAmmoSelect');
+        if (simSelect) {
+            simSelect.innerHTML = '<option value="">-- Munition wählen --</option>';
+            ammoDb.forEach((a, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.text = `[${a.cal}] ${a.name}`;
+                simSelect.appendChild(opt);
+            });
+        }
+
+        for (const [cal, list] of Object.entries(groupedAmmo)) {
+            const calId = cal.replace(/[^a-zA-Z0-9]/g, '');
+            const sepRow = document.createElement('tr');
+            sepRow.className = 'ammo-cal-header';
+            sepRow.style.cursor = "pointer";
+            
+            sepRow.innerHTML = `
+                <td colspan="6" style="background: rgba(var(--accent-rgb), 0.15); color: var(--accent); font-weight: bold; font-size: 0.95rem; padding: 10px 12px; border: 1px solid #333; letter-spacing: 1px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); user-select: none;">
+                    <span class="ammo-toggle-icon" style="display:inline-block; transition:transform 0.2s; margin-right:8px; font-size: 0.8rem; transform: rotate(-90deg);">▼</span>
+                    ⚡ Kaliber: ${cal}
+                </td>`;
+            tbody.appendChild(sepRow);
+
+            list.forEach(ammo => {
+                const row = document.createElement('tr');
+                row.className = `ammo-row ammo-group-${calId}`;
+                row.style.display = "none"; 
+                
+                const accColor = ammo.acc.includes('+') ? '#7ca35a' : (ammo.acc.includes('-') ? '#ff4c4c' : '#888');
+                const durColor = ammo.dur.includes('-') ? '#ff4c4c' : '#888';
+
+                row.innerHTML = `
+                    <td style="padding: 10px; font-weight: bold; color: #eee; border: 1px solid #333;">${ammo.name}</td>
+                    <td style="padding: 10px; color: #5dade2; font-family: monospace; border: 1px solid #333;">${ammo.speed}</td>
+                    <td style="padding: 10px; color: ${accColor}; font-weight: bold; border: 1px solid #333;">${ammo.acc}</td>
+                    <td style="padding: 10px; color: ${durColor}; font-weight: bold; border: 1px solid #333;">${ammo.dur}</td>
+                    <td style="padding: 10px; color: var(--accent); font-weight: bold; border: 1px solid #333;">${ammo.price}</td>
+                    <td style="padding: 10px; color: #aaa; font-size: 0.85rem; border: 1px solid #333;">${ammo.source}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            sepRow.onclick = function() {
+                const icon = this.querySelector('.ammo-toggle-icon');
+                const groupRows = tbody.querySelectorAll(`.ammo-group-${calId}`);
+                const isHidden = groupRows[0].style.display === "none";
+                
+                icon.style.transform = isHidden ? "rotate(0deg)" : "rotate(-90deg)";
+                groupRows.forEach(r => r.style.display = isHidden ? "table-row" : "none");
+            };
+        }
     }
 
     function updateContainer() { const c = typeof containers !== 'undefined' ? containers[document.getElementById('containerSelect').value] : null; document.getElementById('containerInfoDisplay').innerHTML = c ? `<b>${c.name}</b><br>Größe: <span class="highlight">${c.size}</span><br>Herkunft: <span class="highlight">${c.source}</span><br><br><small>${c.info}</small>` : "Wähle einen Container für Details zum Fundort..."; }
@@ -4979,7 +4994,7 @@ function goToHome() {
         buildBossTimerList();
         initBlueprints();
         buildAmmoMatrix();
-        simulateArmor(); // Ruft die neue Funktion ohne die alten Fehler-Parameter auf
+        simulateArmorRadar('IIIA', document.querySelector('.armor-btn.active'));
         fetchLatestNews(); 
         updateLiveTime();
         startTraderTimer();
