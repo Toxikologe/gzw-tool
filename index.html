@@ -987,30 +987,6 @@
         .tool-btn.active { background-color: #2a2a2a; color: #fff; border-color: var(--accent); box-shadow: 0 0 6px rgba(124,163,90,0.3); }
 
         /* WIDGETS */
-        #heliWidget, #raidNotepad, #bossSpawnWidget { position: fixed; z-index: 9997; background: #1e1e1e; border: 1px solid #444; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); transition: all 0.3s ease; }
-        #heliWidget { bottom: 20px; left: 7px; width: 200px; border-top: 3px solid #227093; }
-        #raidNotepad { top: 20px; right: 7px; width: 170px; height: 360px; border-top: 3px solid var(--accent); }
-        #bossSpawnWidget { top: 20px; left: 7px; width: 200px; border-top: 3px solid #ff4c4c; }
-        
-        #heliWidget.collapsed #heliBody, #raidNotepad.collapsed #notepadBody, #bossSpawnWidget.collapsed #bossSpawnBody { display: none; }
-        #heliWidget.collapsed, #raidNotepad.collapsed { height: auto; }
-        
-        #heliHeader, #notepadHeader, #bossSpawnHeader { padding: 8px 12px; font-weight: bold; font-size: 0.85rem; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
-        #heliHeader { color: #227093; } #notepadHeader { color: var(--accent); } #bossSpawnHeader { color: #ff4c4c; }
-        #heliHeader:hover, #notepadHeader:hover { background: rgba(255,255,255,0.03); }
-        
-        .toggle-icon, #notepadToggleIcon, #bossSpawnToggle { font-size: 0.75rem; color: #888; transition: transform 0.2s; }
-        #heliWidget.collapsed .toggle-icon, #raidNotepad.collapsed #notepadToggleIcon { transform: rotate(180deg); }
-
-        #heliBody, #notepadBody, #bossSpawnBody { padding: 10px; }
-        .heli-select { width: 100%; padding: 6px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 4px; margin-bottom: 8px; font-size: 0.75rem; }
-        #heliDisplay { text-align: center; font-weight: bold; font-size: 1.6rem; color: var(--accent); margin: 10px 0; font-family: 'Courier New', monospace; text-shadow: 0 0 5px rgba(124, 163, 90, 0.4); }
-        .heli-btn-group { display: flex; gap: 5px; }
-        .heli-btn { flex: 1; padding: 6px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.75rem; transition: filter 0.2s; }
-        .heli-btn:hover { filter: brightness(1.2); }
-        .btn-calc { background: #333; color: #ccc; border: 1px solid #555; }
-        .btn-start { background: var(--accent); color: #fff; }
-        .btn-stop { background: #b33939; color: #fff; }
 
         #raidTextarea { width: 100%; height: 280px; background: #2a2a2a; color: #e0e0e0; border: 1px solid #444; border-radius: 6px; padding: 8px; font-size: 0.8rem; font-family: 'Courier New', monospace; resize: vertical; box-sizing: border-box; line-height: 1.5; outline: none; }
         #raidTextarea:focus { border-color: var(--accent); }
@@ -1018,14 +994,6 @@
         #notepadCharCount, #noteSavedIndicator { font-size: 0.7rem; color: #555; }
         #notepadClearBtn { background: none; border: 1px solid #444; color: #888; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         #notepadClearBtn:hover { border-color: #b33939; color: #b33939; }
-        
-        .boss-timer-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 4px; border-bottom: 1px solid #2a2a2a; gap: 6px; }
-        .boss-timer-name { color: #ccc; font-size: 0.75rem; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .boss-timer-display { font-weight: bold; font-size: 0.8rem; min-width: 38px; text-align: center; color: #888; }
-        .boss-timer-display.active { color: #ffa500; }
-        .boss-timer-display.ready { color: #7ca35a; }
-        .boss-kill-btn, .boss-cancel-btn { background: #b33939; color: white; border: none; border-radius: 3px; padding: 2px 6px; font-size: 0.7rem; cursor: pointer; }
-        .boss-kill-btn.ready-btn { background: #2a4a2a; color: #7ca35a; border: 1px solid #7ca35a; }
 
         /* GLOBALE FARB-VARIABLE & AKKORDEON STYLES (NEU) */
         :root { 
@@ -1142,67 +1110,29 @@
     <button id="feedback-send-btn" class="feedback-send-btn" onclick="sendFeedback()">Senden</button>
 </div>
 
-<div id="bossSpawnWidget" style="display:none;">
-    <div id="bossSpawnHeader">
-        ☠️ Boss Spawn Timer
-        <span id="bossSpawnToggle" onclick="toggleBossWidget()" style="cursor:pointer; font-size:0.75rem; color:#888; margin-left:8px;">▼</span>
-    </div>
-    <div id="bossSpawnBody"><div id="bossTimerList"></div></div>
-</div>
-
-<div id="raidNotepad" style="display:none;">
-    <div id="notepadHeader" onclick="toggleNotepad()">
-        <div id="notepadTitle">📋 Raid-Notizblock</div>
-        <span id="notepadToggleIcon">▼</span>
-    </div>
-    <div id="notepadBody">
-        <textarea id="raidTextarea" placeholder="Koordinaten & Notizen..." oninput="saveNotepad()"></textarea>
-        <div id="notepadFooter">
-            <span id="notepadCharCount">0 Zeichen</span>
-            <button id="notepadClearBtn" onclick="clearNotepad()">🗑️ Leeren</button>
+<div id="raidNotepad" class="draggable-widget" style="position: fixed; top: 80px; right: 20px; width: 500px; height: 450px; z-index: 1000; background: #0a0a0a; border: 2px solid var(--accent); border-radius: 6px; display: none; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.9); overflow: hidden;">
+        
+        <div class="widget-header" style="background: var(--accent); color: #000; padding: 10px 15px; cursor: move; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+            <span>📝 TACTICAL RAID NOTES</span>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="clearNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.7rem; font-weight: bold; padding: 2px 8px;">LEEREN</button>
+                <button onclick="toggleNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.8rem; font-weight: bold; padding: 2px 8px;">✕</button>
+            </div>
         </div>
-        <div id="noteSavedIndicator"></div>
-    </div>
-</div>
+        
+        <div style="display: flex; gap: 5px; padding: 8px; background: #111; border-bottom: 1px solid #222;">
+            <button onclick="insertNoteTemplate('lz')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px; border-radius: 3px;">+ LZ INFO</button>
+            <button onclick="insertNoteTemplate('task')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px; border-radius: 3px;">+ TASK LOG</button>
+            <button onclick="insertNoteTemplate('intel')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px; border-radius: 3px;">+ INTEL</button>
+        </div>
 
-<div id="heliWidget" style="display:none;">
-    <div id="heliHeader" onclick="document.getElementById('heliWidget').classList.toggle('collapsed')">
-        🚁 Heli Fluglotse <span class="toggle-icon">▼</span>
-    </div>
-    <div id="heliBody">
-        <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:2px;">Startpunkt:</label>
-        <select id="heliStart" class="heli-select" onchange="calcHeliTime()">
-            <option value="0">Base Camp (HQ)</option>
-            <option value="90">Echo (Lumber Yard)</option>
-            <option value="120">Foxtrot (Hunter's Paradise)</option>
-            <option value="135">India (Ban Pa)</option>
-            <option value="165">Kilo (Blue Lagoon)</option>
-            <option value="105">Juliet (YBL-1 Bunker)</option>
-            <option value="210">Delta (Fort Narith)</option>
-            <option value="180">Hotel (Midnight Sapphire)</option>
-            <option value="195" selected>Lima (Tiger Bay)</option>
-            <option value="225">Golf (Ground Zero)</option>
-        </select>
-        <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:2px;">Ziel (LZ):</label>
-        <select id="heliEnd" class="heli-select" onchange="calcHeliTime()">
-            <option value="0">Base Camp (HQ)</option>
-            <option value="90">Echo (Lumber Yard)</option>
-            <option value="120">Foxtrot (Hunter's Paradise)</option>
-            <option value="135">India (Ban Pa)</option>
-            <option value="165">Kilo (Blue Lagoon)</option>
-            <option value="105">Juliet (YBL-1 Bunker)</option>
-            <option value="210">Delta (Fort Narith)</option>
-            <option value="180">Hotel (Midnight Sapphire)</option>
-            <option value="195" selected>Lima (Tiger Bay)</option>
-            <option value="225">Golf (Ground Zero)</option>
-        </select>
-        <div id="heliDisplay">00:00</div>
-        <div class="heli-btn-group">
-            <button class="heli-btn btn-calc" onclick="calcHeliTime()">⏱️ Calc</button>
-            <button id="heliActionBtn" class="heli-btn btn-start" onclick="toggleHeliTimer()">🚀 Start</button>
+        <textarea id="notepadArea" placeholder="Koordinaten, Tasks oder Feindbewegung hier protokollieren..." style="flex: 1; width: 100%; background: #050505; color: #eee; border: none; padding: 20px; font-family: 'Courier New', monospace; font-size: 1rem; resize: none; outline: none; line-height: 1.6;"></textarea>
+        
+        <div style="background: #0d0d0d; padding: 8px 15px; font-size: 0.7rem; color: #666; border-top: 1px solid #222; display: flex; justify-content: space-between; align-items: center;">
+            <span style="letter-spacing: 1px;">SYSTEM: ENCRYPTED_STORAGE</span>
+            <span id="saveStatus">Zuletzt gespeichert: Gerade eben</span>
         </div>
     </div>
-</div>
 
 <div class="sidebar">
     <div style="padding: 10px; margin-bottom: 5px;">
@@ -1289,11 +1219,16 @@
                 <div class="header-left">
                     <span class="warning-icon">⚠️</span> <h3>Taktische Einsatzinformationen:</h3>
                 </div>
-                <div class="header-right">
-                    <span class="live-indicator">● LIVE</span>
-                    <span id="live-time-display">DATE: -- --- ---- | TIME: --:--:-- ZULU</span>
-                </div>
-            </div>
+                <div class="header-right" style="display: flex; gap: 15px; align-items: center;">
+        <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 5px 12px; border-radius: 4px; color: var(--accent); font-family: monospace; font-weight: bold;">
+            <span class="live-indicator">● LIVE</span>
+            <span id="live-time-display">DATE: -- --- ---- | TIME: --:--:-- ZULU</span>
+        </div>
+        
+        <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 5px 12px; border-radius: 4px; color: var(--accent); font-family: monospace; font-weight: bold;">
+            🛒 RESTOCK: <span id="traderTimerDisplay">00:00:00</span>
+        </div>
+    </div>
             <div class="news-ticker-container">
                 <div class="news-ticker-text">
                     ⚠️ Neue Sektion - Blueprints - Neue Sektion - Codes - Neue Sektion - Farming Routen -  ⚠️
@@ -1308,9 +1243,7 @@
         <div style="background-color: #0d0d0d; border: 3px solid #333; border-radius: 6px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); padding: 15px; display: flex; justify-content: space-between; align-items: center;">
             <h3 style="margin: 0; color: #888; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-family: 'Courier New', monospace;">⚙️ Systemkanäle & Externe Tools</h3>
             <div style="display: flex; gap: 8px;">
-                <button class="tool-btn" id="btn-bossSpawnWidget" onclick="toggleWidget('bossSpawnWidget')">☠️ Boss Timer</button>
                 <button class="tool-btn" id="btn-raidNotepad" onclick="toggleWidget('raidNotepad')">📋 Notizblock</button>
-                <button class="tool-btn" id="btn-heliWidget" onclick="toggleWidget('heliWidget')">🚁 Heli-Lotsen</button>
                 <button id="trader-timer-btn" class="tool-btn" title="Zeit bis zum Händler-Restock">🛒 Trader-Restock: --:--</button>
             </div>
         </div>
@@ -2993,69 +2926,57 @@
     }
 
     // ==============================================================
-    // RAID NOTIZBLOCK
+    // RAID NOTEPAD v2.0 LOGIK
     // ==============================================================
-    let notepadSaveTimer = null;
-
     function initNotepad() {
-        const textarea = document.getElementById('raidTextarea');
-        const collapsed = localStorage.getItem('gzw_notepad_collapsed') === 'true';
+        const area = document.getElementById('notepadArea');
+        const status = document.getElementById('saveStatus');
+        if (!area) return;
 
-        try {
-            const saved = localStorage.getItem('gzw_notepad_text');
-            if (saved) {
-                textarea.value = saved;
-                updateCharCount();
-            }
-        } catch(e) {}
+        // Daten aus Browser-Speicher laden
+        const savedData = localStorage.getItem('gzw_tactical_notes');
+        if (savedData) area.value = savedData;
 
-        if (collapsed) {
-            document.getElementById('raidNotepad').classList.add('collapsed');
-        }
-    }
-
-    function saveNotepad() {
-        updateCharCount();
-        clearTimeout(notepadSaveTimer);
-        notepadSaveTimer = setTimeout(() => {
-            try {
-                const text = document.getElementById('raidTextarea').value;
-                localStorage.setItem('gzw_notepad_text', text);
-                showSavedIndicator();
-            } catch(e) {}
-        }, 600);
-    }
-
-    function updateCharCount() {
-        const textarea = document.getElementById('raidTextarea');
-        const count = document.getElementById('notepadCharCount');
-        const len = textarea.value.length;
-        count.textContent = len + ' Zeichen';
-        count.style.color = len > 800 ? '#ffa500' : '#555';
-    }
-
-    function showSavedIndicator() {
-        const el = document.getElementById('noteSavedIndicator');
-        el.textContent = '✓ Gespeichert';
-        el.style.color = 'var(--accent)';
-        setTimeout(() => { el.textContent = ''; }, 2000);
+        // Auto-Save beim Tippen
+        let saveTimeout;
+        area.addEventListener('input', () => {
+            clearTimeout(saveTimeout);
+            status.innerText = "Speichert...";
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('gzw_tactical_notes', area.value);
+                status.innerText = "Automatisch gespeichert";
+            }, 800);
+        });
     }
 
     function toggleNotepad() {
-        const pad = document.getElementById('raidNotepad');
-        pad.classList.toggle('collapsed');
-        try { localStorage.setItem('gzw_notepad_collapsed', pad.classList.contains('collapsed')); } catch(e) {}
+        const notepad = document.getElementById('raidNotepad');
+        if (notepad.style.display === 'none' || notepad.style.display === '') {
+            notepad.style.display = 'flex';
+        } else {
+            notepad.style.display = 'none';
+        }
+    }
+
+    function insertNoteTemplate(type) {
+        const area = document.getElementById('notepadArea');
+        let text = "";
+        const now = new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
+
+        if (type === 'lz') text = `\n--- [${now}] LZ CHECK ---\nLZ: \nSTATUS: [ ] Safe [ ] Hot\nFEINDSTÄRKE: `;
+        if (type === 'task') text = `\n--- [${now}] TASK PROGRESS ---\nMISSION: \nITEM: \nSTATUS: In Arbeit...`;
+        if (type === 'intel') text = `\n--- [${now}] FIELD INTEL ---\nORT: \nBEOBACHTUNG: \nDROPOUT: `;
+
+        area.value += text;
+        area.focus();
+        localStorage.setItem('gzw_tactical_notes', area.value);
     }
 
     function clearNotepad() {
-        if (!confirm("Notizblock leeren?")) return;
-        document.getElementById('raidTextarea').value = '';
-        updateCharCount();
-        try { localStorage.removeItem('gzw_notepad_text'); } catch(e) {}
-        const el = document.getElementById('noteSavedIndicator');
-        el.textContent = '🗑️ Geleert';
-        el.style.color = '#b33939';
-        setTimeout(() => { el.textContent = ''; }, 2000);
+        if (confirm("🚨 ACHTUNG OPERATOR: Alle Raid-Notizen unwiderruflich löschen?")) {
+            document.getElementById('notepadArea').value = "";
+            localStorage.removeItem('gzw_tactical_notes');
+        }
     }
 
    // ==============================================================
@@ -3821,114 +3742,6 @@
             if (btn) btn.classList.add('active');
             widget.classList.remove('collapsed');
         }
-    }
-
-    // ==============================================================
-    // BOSS SPAWN TIMER
-    // ==============================================================
-    const bossSpawnData = [
-        { id: "market",   name: "🏙️ Market Boss",     timer: 15 * 60 },
-        { id: "lumber",   name: "🪚 Lumber Boss",      timer: 15 * 60 },
-        { id: "ybl",      name: "🏚️ YBL Rebel",        timer: 15 * 60 },
-        { id: "hunters",  name: "🎯 HP Commander",     timer: 15 * 60 },
-        { id: "malo",     name: "🌊 Malo (Lagoon)",     timer: 20 * 60 },
-        { id: "banpa",    name: "🏘️ Ban Pa Elder",      timer: 15 * 60 },
-        { id: "general",  name: "🏯 General Pa",        timer: 25 * 60 },
-        { id: "midnight", name: "🏨 LAF Commander",     timer: 20 * 60 },
-        { id: "tiger",    name: "🐯 Tiger Bay Boss",    timer: 20 * 60 },
-        { id: "airfield", name: "✈️ Airfield Boss",     timer: 25 * 60 },
-        { id: "viper",    name: "🐍 Viper",             timer: 15 * 60 },
-        { id: "golden",   name: "💰 Golden Boy",        timer: 20 * 60 },
-    ];
-
-    let bossTimers = {};
-
-    function toggleBossWidget() {
-        document.getElementById('bossSpawnWidget').classList.toggle('collapsed');
-    }
-
-    function buildBossTimerList() {
-        const list = document.getElementById('bossTimerList');
-        list.innerHTML = '';
-
-        bossSpawnData.forEach(boss => {
-            const row = document.createElement('div');
-            row.className = 'boss-timer-row';
-            row.id = `boss-row-${boss.id}`;
-
-            row.innerHTML = `
-                <span class="boss-timer-name" title="${boss.name}">${boss.name}</span>
-                <span class="boss-timer-display" id="boss-time-${boss.id}">–:––</span>
-                <button class="boss-kill-btn" id="boss-btn-${boss.id}" onclick="bossKilled('${boss.id}')">✕ Tot</button>
-                <button class="boss-cancel-btn" id="boss-cancel-${boss.id}" onclick="bossCancel('${boss.id}')" style="display:none;">✕</button>
-            `;
-            list.appendChild(row);
-        });
-        setInterval(updateBossTimers, 1000);
-    }
-
-    function bossKilled(id) {
-        const boss = bossSpawnData.find(b => b.id === id);
-        if (!boss) return;
-        const endTime = Date.now() + boss.timer * 1000;
-        bossTimers[id] = { endTime };
-        const btn = document.getElementById(`boss-btn-${id}`);
-        if (btn) {
-            btn.textContent = '↺ Reset';
-            btn.classList.remove('ready-btn');
-        }
-        const cancelBtn = document.getElementById(`boss-cancel-${id}`);
-        if (cancelBtn) cancelBtn.style.display = 'inline-block';
-    }
-
-    function bossCancel(id) {
-        delete bossTimers[id];
-        const btn = document.getElementById(`boss-btn-${id}`);
-        const cancelBtn = document.getElementById(`boss-cancel-${id}`);
-        const display = document.getElementById(`boss-time-${id}`);
-        if (btn) {
-            btn.textContent = '✕ Tot';
-            btn.classList.remove('ready-btn');
-        }
-        if (cancelBtn) cancelBtn.style.display = 'none';
-        if (display) {
-            display.textContent = '–:––';
-            display.className = 'boss-timer-display';
-        }
-    }
-
-    function updateBossTimers() {
-        const now = Date.now();
-        bossSpawnData.forEach(boss => {
-            const display = document.getElementById(`boss-time-${boss.id}`);
-            const btn = document.getElementById(`boss-btn-${boss.id}`);
-            const cancelBtn = document.getElementById(`boss-cancel-${boss.id}`);
-            if (!display) return;
-
-            const data = bossTimers[boss.id];
-            if (!data) {
-                display.textContent = '–:––';
-                display.className = 'boss-timer-display';
-                return;
-            }
-
-            const remaining = Math.max(0, Math.floor((data.endTime - now) / 1000));
-            if (remaining <= 0) {
-                display.textContent = '✅ SP!';
-                display.className = 'boss-timer-display ready';
-                if (btn) {
-                    btn.textContent = '✕ Tot';
-                    btn.classList.remove('ready-btn');
-                }
-                if (cancelBtn) cancelBtn.style.display = 'none';
-                delete bossTimers[boss.id];
-            } else {
-                const m = Math.floor(remaining / 60);
-                const s = remaining % 60;
-                display.textContent = `${m}:${String(s).padStart(2, '0')}`;
-                display.className = 'boss-timer-display active';
-            }
-        });
     }
 
     // ==============================================================
@@ -4974,9 +4787,7 @@ function goToHome() {
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
-        makeDraggable('bossSpawnWidget');
         makeDraggable('raidNotepad');
-        makeDraggable('heliWidget');
         initTaskTablet();
         initNotepad();
         initKeyCabinet();
@@ -4992,8 +4803,6 @@ function goToHome() {
         renderStashAccordions();
         renderGearAccordions();
         sortGunsmith('meta');
-        calcHeliTime();
-        buildBossTimerList();
         initBlueprints();
         buildAmmoMatrix();
         simulateArmorRadar('IIIA', document.querySelector('.armor-btn.active'));
