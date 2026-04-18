@@ -5125,7 +5125,7 @@ function goToHome() {
             { id: 49, name: "L403A1 / KS-1 Rifle", type: "value", icon: "🔫", price: 3500, info: "5.56 Rückstoß-Meta" },
             { id: 50, name: "DDM4 Sturmgewehr", type: "value", icon: "🔫", price: 3000, info: "5.56 Ergo-Meta" },
 
-            // --- META AMMO STACKS (Geschätzter Wert für 60 Schuss) ---
+            // --- META AMMO STACKS ---
             { id: 51, name: "M995 AP Ammo (60x)", type: "value", icon: "💥", price: 1320, info: "Penetriert alles" },
             { id: 52, name: "M61 AP Ammo (60x)", type: "value", icon: "💥", price: 1680, info: "Tödliche DMR Muni" },
             { id: 53, name: "SNB AP Ammo (60x)", type: "value", icon: "💥", price: 960, info: "Die stärkste Kugel" }
@@ -5133,11 +5133,10 @@ function goToHome() {
 
         // Funktion zum Rendern der Liste
         function renderWachhundMeta(filterType) {
-            // HIER sucht er jetzt den neuen Container! Geister-sicher.
             const container = document.getElementById('liveTargetDatabaseList');
             if (!container) return; 
             
-            container.innerHTML = ''; // Liste komplett leeren
+            container.innerHTML = ''; 
             
             const items = wachhundDatabase.filter(item => item.type === filterType);
             
@@ -5167,7 +5166,6 @@ function goToHome() {
             const overlay = document.getElementById('wachhundOverlay');
             if (overlay.style.display === 'none' || overlay.style.display === '') {
                 overlay.style.display = 'flex';
-                // WICHTIG: Erzwingt das sofortige Laden der Quest-Datenbank beim Öffnen!
                 setTimeout(() => { renderWachhundMeta('task'); }, 50); 
             } else {
                 overlay.style.display = 'none';
@@ -5195,7 +5193,7 @@ function goToHome() {
             }, 1000);
         }
 
-        // Screen Capture Logik (Smart Toggle)
+        // SMART SCREEN CAPTURE LOGIK (Starten & Beenden)
         let captureStream = null;
 
         async function toggleScreenCapture() {
@@ -5203,14 +5201,12 @@ function goToHome() {
             const placeholder = document.getElementById('videoPlaceholder');
             const btn = document.getElementById('captureToggleBtn');
 
-            // WENN BEREITS AUFGENOMMEN WIRD -> BEENDEN
+            // Beenden, wenn es läuft
             if (captureStream) {
-                // Alle Video-Tracks hart beenden (stoppt das Browser-Sharing)
                 captureStream.getTracks().forEach(track => track.stop());
                 video.srcObject = null;
                 captureStream = null;
 
-                // UI zurücksetzen auf Standby
                 video.style.display = 'none';
                 placeholder.style.display = 'flex';
                 btn.innerHTML = 'SPIEL ERFASSEN 📡';
@@ -5218,23 +5214,21 @@ function goToHome() {
                 btn.style.color = '#000';
                 btn.style.boxShadow = '0 0 10px rgba(0,255,0,0.3)';
             } 
-            // WENN NICHT AUFGENOMMEN WIRD -> STARTEN
+            // Starten, wenn es aus ist
             else {
                 try {
                     captureStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
                     video.srcObject = captureStream;
                     
-                    // UI updaten auf "Aktiv"
-                    document.getElementById('videoPlaceholder').style.display = 'none';
+                    placeholder.style.display = 'none';
                     video.style.display = 'block';
                     btn.innerHTML = 'ERFASSUNG STOPPEN 🛑';
                     btn.style.background = '#ff4c4c';
                     btn.style.color = '#fff';
                     btn.style.boxShadow = '0 0 10px rgba(255,76,76,0.5)';
 
-                    // Falls der User die Übertragung über die Windows/Browser-Leiste abbricht:
+                    // Wenn man über den Browser stoppt
                     captureStream.getVideoTracks()[0].onended = function () {
-                        // Simuliere einen Klick auf den Stop-Button, um das Interface sauber zurückzusetzen
                         if (captureStream) toggleScreenCapture();
                     };
                 } catch (err) { 
@@ -5243,7 +5237,7 @@ function goToHome() {
             }
         }
 
-        // Simulierter Loot Scanner (Zieht jetzt Daten aus der echten Datenbank!)
+        // Simulierter Loot Scanner
         let currentLootValue = 0;
         function simulateLootFind() {
             const pulseLayer = document.getElementById('wachhundPulseLayer');
@@ -5268,13 +5262,10 @@ function goToHome() {
             `;
         }
 
-        // ==============================================================
-        // WACHHUND GLOBAL HOTKEY (F8)
-        // ==============================================================
+        // Hotkey (F8)
         window.addEventListener('keydown', function(event) {
-            // Wenn die Taste "F8" gedrückt wird, öffnet/schließt sich der Wachhund
             if (event.key === 'Numpad0') {
-                event.preventDefault(); // Verhindert, dass der Browser andere Dinge bei F8 macht
+                event.preventDefault();
                 toggleWachhund();
             }
         });
