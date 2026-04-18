@@ -1750,7 +1750,25 @@
             </div>
         </div>
 
-        
+        <div id="tab-gear" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>🦺 Rüstung & Tactical Gear</h2>
+                <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">GEAR_DATABASE_V4.0</div>
+            </div>
+            
+            <div class="panel-box">
+                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
+                    Übersicht aller verfügbaren Westen, Rucksäcke und Helme inklusive Schutzklassen und Spezifikationen. Absolute <span style="color: #ffcc00; font-weight: bold;">Game-Changer</span> sind mit einem 🔥 markiert!
+                </p>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="sortGearAlphaBtn" onclick="renderGearAccordions('alpha')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔤 Alphabetisch sortieren</button>
+                    <button id="sortGearMetaBtn" onclick="renderGearAccordions('meta')" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;">🔥 Nach Wichtigkeit (Meta) sortieren</button>
+                </div>
+                
+                <div id="gearAccordionsContainer"></div>
+            </div>
+        </div>
 
         <div id="tab-map" class="tab-content">
             <h2>Interactive Tactical Map</h2>
