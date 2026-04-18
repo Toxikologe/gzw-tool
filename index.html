@@ -8,6 +8,33 @@
     <style>
 
         /* ============================================================== */
+        /* WACHHUND SYSTEM - PULSE ANIMATIONS */
+        /* ============================================================== */
+        @keyframes pulse-orange {
+            0% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
+            50% { box-shadow: inset 0 0 80px rgba(255, 153, 0, 0.6); }
+            100% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
+            50% { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.8); }
+            100% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
+            50% { box-shadow: inset 0 0 100px rgba(0, 255, 0, 0.7); border: 5px solid #00ff00; }
+            100% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
+        }
+        
+        .pulse-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 10001; transition: all 0.5s ease;
+        }
+        .pulse-warning-orange { animation: pulse-orange 3s infinite; }
+        .pulse-critical-red { animation: pulse-red 1.5s infinite; }
+        .pulse-profit-green { animation: pulse-green 1s 3; } /* Pulsiert 3x schnell grün */
+
+        /* ============================================================== */
         /* LOGISTICS & QUEST TRACKER TERMINAL */
         /* ============================================================== */
         .logistics-terminal {
@@ -1232,9 +1259,14 @@
         
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; border-bottom: 1px solid #222; padding-bottom: 12px;">
             
-            <div class="header-left" style="display: flex; align-items: center; gap: 10px;">
-                <span class="warning-icon" style="font-size: 1.3rem;">⚠️</span> 
-                <h3 style="margin: 0; color: #eee; font-size: 1.1rem; text-transform: uppercase;">Taktische Einsatzinformationen</h3>
+            <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="warning-icon" style="font-size: 1.3rem;">⚠️</span> 
+                    <h3 style="margin: 0; color: #eee; font-size: 1.1rem; text-transform: uppercase;">Taktische Einsatzinformationen</h3>
+                </div>
+                <button onclick="toggleWachhund()" style="background: #050505; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 4px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 10px rgba(255, 76, 76, 0.3); font-family: monospace;">
+                    👁️ WACHHUND MODUS
+                </button>
             </div>
 
             <div class="header-right" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
@@ -2118,6 +2150,70 @@
 
 <script src="data.js?v=0.4"></script>
 
+<div id="wachhundPulseLayer" class="pulse-overlay"></div>
+    
+    <div id="wachhundOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; flex-direction: column; font-family: 'Segoe UI', sans-serif;">
+        <div style="background: #0a0a0a; border-bottom: 2px solid #ff4c4c; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <h2 style="color: #ff4c4c; margin: 0; font-size: 1.8rem; letter-spacing: 3px;">👁️ WACHHUND SYSTEM // ACTIVE</h2>
+                <button onclick="startBioTimer()" style="background: rgba(255,153,0,0.2); border: 2px solid #ff9900; color: #ff9900; padding: 8px 15px; font-weight: bold; cursor: pointer; font-size: 1.1rem; border-radius: 4px;">🚁 DEPLOY (START TIMER)</button>
+                <div id="bioTimerDisplay" style="color: #fff; font-size: 1.5rem; font-family: monospace; font-weight: bold;">45:00</div>
+            </div>
+            <button onclick="toggleWachhund()" style="background: #111; border: 1px solid #555; color: #ccc; padding: 8px 20px; font-weight: bold; cursor: pointer;">MODUS BEENDEN ✕</button>
+        </div>
+
+        <div style="flex: 1; display: flex; padding: 20px; gap: 20px; overflow: hidden;">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                <h3 style="color: #555; margin: 0; text-transform: uppercase;">⚠️ Triage (Panic Board)</h3>
+                <div style="flex: 1; background: rgba(255, 76, 76, 0.1); border: 2px solid #ff4c4c; border-radius: 8px; display: flex; justify-content: center; flex-direction: column; text-align: center; padding: 20px;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">🩸</div>
+                    <div style="font-size: 1.5rem; color: #ccc; font-weight: bold; margin-bottom: 5px;">BILD GRAU / WEISS</div>
+                    <div style="font-size: 2rem; color: #ff4c4c; font-weight: 900;">BLUTBEUTEL NUTZEN</div>
+                </div>
+                <div style="flex: 1; background: rgba(255, 153, 0, 0.1); border: 2px solid #ff9900; border-radius: 8px; display: flex; justify-content: center; flex-direction: column; text-align: center; padding: 20px;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">🫁</div>
+                    <div style="font-size: 1.5rem; color: #ccc; font-weight: bold; margin-bottom: 5px;">CHARAKTER HUSTET</div>
+                    <div style="font-size: 2rem; color: #ff9900; font-weight: 900;">SURGERY KIT NUTZEN</div>
+                </div>
+                <div style="flex: 1; background: rgba(124, 163, 90, 0.1); border: 2px solid #7ca35a; border-radius: 8px; display: flex; justify-content: center; flex-direction: column; text-align: center; padding: 20px;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">😵</div>
+                    <div style="font-size: 1.5rem; color: #ccc; font-weight: bold; margin-bottom: 5px;">BILD VERSCHWOMMEN</div>
+                    <div style="font-size: 2rem; color: #7ca35a; font-weight: 900;">PAINKILLER NUTZEN</div>
+                </div>
+            </div>
+
+            <div style="flex: 2; display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: #555; margin: 0; text-transform: uppercase;">👁️ Live-Stream & Value Optimizer</h3>
+                    <button onclick="startScreenCapture()" style="background: rgba(0, 255, 0, 0.2); border: 1px solid #00ff00; color: #00ff00; padding: 5px 15px; cursor: pointer; font-weight: bold;">📡 SPIEL ERFASSEN</button>
+                </div>
+                <div style="height: 300px; background: #050505; border: 2px dashed #333; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    <video id="gameScreenVideo" autoplay style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+                    <div id="videoPlaceholder" style="color: #444; font-size: 1.2rem; font-weight: bold;">WARTE AUF BILDQUELLE...</div>
+                </div>
+                <div style="flex: 1; background: #0a0a0a; border: 1px solid #222; border-radius: 8px; padding: 15px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px;">
+                        <span style="color: #aaa; font-weight: bold;">TASCHEN-WERT: <span id="lootTotalValue" style="color: #00ff00;">$0</span></span>
+                        <button onclick="simulateLootFind()" style="background: #222; border: 1px solid #444; color: #fff; cursor: pointer; font-size: 0.8rem;">[SIMULIERE HIGH-VALUE FUND]</button>
+                    </div>
+                    <ul id="lootLog" style="list-style: none; padding: 0; margin: 0; color: #ccc; font-family: monospace; font-size: 0.95rem; line-height: 1.8;">
+                        <li style="color: #555;">[SYSTEM] Warte auf Inventar-Scan...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="flex: 1; background: rgba(255, 0, 0, 0.05); border: 2px solid #660000; border-radius: 8px; padding: 20px;">
+                <h3 style="color: #ff4c4c; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 10px #ff0000; text-align: center;">🔥 NICHT VERKAUFEN (TASKS)</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                    <li style="background: #111; padding: 10px; border-left: 4px solid #ff4c4c; font-weight: bold; font-size: 1.1rem; color: #fff;">💾 USB Flash Drive</li>
+                    <li style="background: #111; padding: 10px; border-left: 4px solid #ff4c4c; font-weight: bold; font-size: 1.1rem; color: #fff;">🔧 Wrench</li>
+                    <li style="background: #111; padding: 10px; border-left: 4px solid #ff4c4c; font-weight: bold; font-size: 1.1rem; color: #fff;">💻 Militär-Laptop</li>
+                    <li style="background: #111; padding: 10px; border-left: 4px solid #ff4c4c; font-weight: bold; font-size: 1.1rem; color: #fff;">🔑 Fort Narith Keys</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
 <script>
     
     // ==============================================================
@@ -4833,6 +4929,62 @@ function goToHome() {
             const randomTip = tacticalTips[Math.floor(Math.random() * tacticalTips.length)];
             tipElement.innerText = `"${randomTip}"`;
         }
+    }
+
+    // ==============================================================
+    // WACHHUND JAVASCRIPT LOGIK
+    // ==============================================================
+    function toggleWachhund() {
+        const overlay = document.getElementById('wachhundOverlay');
+        overlay.style.display = overlay.style.display === 'none' || overlay.style.display === '' ? 'flex' : 'none';
+    }
+
+    let bioTimerInterval;
+    function startBioTimer() {
+        clearInterval(bioTimerInterval);
+        let timeRemaining = 45 * 60; // 45 Minuten in Sekunden
+        const display = document.getElementById('bioTimerDisplay');
+        const pulseLayer = document.getElementById('wachhundPulseLayer');
+        
+        pulseLayer.className = 'pulse-overlay'; // Reset
+        
+        bioTimerInterval = setInterval(() => {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            display.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Visuelle Pulse-Warnungen
+            if (timeRemaining === 15 * 60) pulseLayer.className = 'pulse-overlay pulse-warning-orange';
+            else if (timeRemaining === 5 * 60) pulseLayer.className = 'pulse-overlay pulse-critical-red';
+            
+            if (timeRemaining <= 0) clearInterval(bioTimerInterval);
+        }, 1000);
+    }
+
+    async function startScreenCapture() {
+        try {
+            const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+            const videoElement = document.getElementById('gameScreenVideo');
+            document.getElementById('videoPlaceholder').style.display = 'none';
+            videoElement.srcObject = stream;
+            videoElement.style.display = 'block';
+        } catch (err) {
+            alert("⚠️ Erfassung abgebrochen.");
+        }
+    }
+
+    function simulateLootFind() {
+        const pulseLayer = document.getElementById('wachhundPulseLayer');
+        pulseLayer.classList.add('pulse-profit-green');
+        setTimeout(() => pulseLayer.classList.remove('pulse-profit-green'), 3000);
+
+        document.getElementById('lootTotalValue').innerText = "$14,500";
+        document.getElementById('lootLog').innerHTML = `
+            <li style="color: #aaa;">Scan: <span style="color: #fff;">Assault Rifle Base</span> ($350)</li>
+            <li style="color: #aaa;">Scan: <span style="color: #00ff00; font-weight: bold;">VUDU Scope</span> ($1,500)</li>
+            <li style="background: rgba(0,255,0,0.1); border-left: 3px solid #00ff00; padding: 5px; color: #fff; margin-top: 5px;">💡 PROFIT-WARNUNG: Wirf "Assault Rifle Base" raus für "VUDU Scope"! (+ $1,150)</li>
+        `;
     }
 
     // ==============================================================
