@@ -7,6 +7,45 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+        /* ============================================================== */
+        /* LOGISTICS & QUEST TRACKER TERMINAL */
+        /* ============================================================== */
+        .logistics-terminal {
+            display: flex; gap: 20px; min-height: 550px; margin-top: 15px;
+        }
+        .logistics-sidebar {
+            width: 320px; display: flex; flex-direction: column;
+        }
+        .logistics-item-list {
+            flex: 1; background: #0a0a0a; border: 1px solid #333; border-radius: 6px;
+            overflow-y: auto; max-height: 600px; display: flex; flex-direction: column; gap: 5px; padding: 10px;
+        }
+        .logistics-item-card {
+            background: #151515; border: 1px solid #222; padding: 10px 12px; border-radius: 4px;
+            cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logistics-item-card:hover { border-color: var(--accent); background: #1a1a1a; }
+        .logistics-item-card.active { background: rgba(var(--accent-rgb), 0.15); border-color: var(--accent); }
+        .logistics-item-card.quest-true { border-left: 4px solid #ffcc00; }
+        .logistics-item-card.quest-false { border-left: 4px solid #444; }
+
+        .logistics-main {
+            flex: 1; background: #0d0d0d; border: 2px solid #333; border-radius: 8px;
+            padding: 30px; position: relative; overflow: hidden;
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 8px);
+        }
+        .logistics-header { border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        .logistics-title { font-size: 1.8rem; color: #fff; margin: 0 0 5px 0; text-transform: uppercase; }
+
+        .logistics-status-box { margin-bottom: 30px; padding: 20px; border-radius: 6px; display: none; }
+        .status-keep { background: rgba(255,204,0,0.1); border: 2px solid #ffcc00; }
+        .status-sell { background: rgba(var(--accent-rgb),0.1); border: 2px solid var(--accent); }
+
+        .logistics-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .logistics-stat { background: #111; border: 1px solid #222; padding: 15px; border-radius: 4px; text-align: center; }
+        .logistics-stat-label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
+        .logistics-stat-val { font-size: 1.2rem; color: #eee; font-weight: bold; font-family: monospace; }
+
 /* ============================================================== */
         /* STARTSEITE: JUNGLE COMMAND CENTER & INTEL MODALS */
         /* ============================================================== */
@@ -2004,21 +2043,49 @@
         </div>
 
         <div id="tab-questitems" class="tab-content">
-            <h2>🔍 Quest-Loot Tracker (Keep or Sell)</h2>
-            <div class="panel-box">
-                <p style="color: #ccc; font-size: 0.95rem; margin-top: 0; margin-bottom: 20px;">
-                    Suchst du ein Item und weißt nicht, ob du es behalten oder zu Geld machen sollst? Wähle es aus der Liste oder tippe es ein, um zu prüfen, ob du es für Missionen aufheben musst!
-                </p>
-                <label for="questItemDropdown" style="margin-top: 0;">Item aus Liste wählen:</label>
-                <select id="questItemDropdown" onchange="selectQuestItemFromDropdown()" style="margin-bottom: 15px;">
-                    <option value="">-- Wähle ein Item --</option>
-                </select>
-                <label for="questItemSearch" style="margin-top: 0;">Oder manuell suchen:</label>
-                <input type="text" id="questItemSearch" placeholder="z.B. Autobatterie, Toolset, Verbandskasten..." onkeyup="searchQuestItems()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>🔍 Logistics & Quest-Tracker (Keep or Sell)</h2>
+                <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">LOGISTICS_SYS_ONLINE // INVENTORY SCAN</div>
+            </div>
+            
+            <p style="color: #ccc; margin-bottom: 20px;">
+                Analysiere deinen Loot. Finde sofort heraus, ob ein Gegenstand für zukünftige Händler-Operationen aufbewahrt werden muss oder ob du ihn gefahrlos zu Geld machen kannst.
+            </p>
+
+            <div class="logistics-terminal">
                 
-                <div id="questItemList" style="margin-top: 20px;">
-                    <div class="info-box" style="text-align: center; color: #888; background: #1a1a1a; padding: 20px; border: 1px solid #333; border-top: 4px solid var(--accent);">
-                        Wähle ein Item oder tippe den Namen ein...
+                <div class="logistics-sidebar">
+                    <input type="text" id="questItemSearchInput" placeholder="Suchen (z.B. Batterie, Laptop)..." onkeyup="filterLogisticsTracker()" style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid var(--accent); background: #111; color: white; font-family: monospace; margin-bottom: 10px; outline: none;">
+                    <div id="logisticsItemList" class="logistics-item-list">
+                        </div>
+                </div>
+
+                <div class="logistics-main" id="logisticsDossier">
+                    <div class="logistics-header">
+                        <h3 id="ldItemName" class="logistics-title">ITEM AUSWÄHLEN</h3>
+                        <div id="ldCategory" style="color: #888; font-family: monospace; font-size: 0.9rem; font-weight: bold;">-</div>
+                    </div>
+
+                    <div id="ldStatusBox" class="logistics-status-box">
+                        </div>
+
+                    <div class="logistics-stats-grid">
+                        <div class="logistics-stat">
+                            <span class="logistics-stat-label">HÄNDLER / VENDOR</span>
+                            <span id="ldVendor" class="logistics-stat-val">-</span>
+                        </div>
+                        <div class="logistics-stat">
+                            <span class="logistics-stat-label">WERT (PRICE)</span>
+                            <span id="ldPrice" class="logistics-stat-val" style="color: var(--accent);">-</span>
+                        </div>
+                        <div class="logistics-stat">
+                            <span class="logistics-stat-label">GEWICHT</span>
+                            <span id="ldWeight" class="logistics-stat-val">-</span>
+                        </div>
+                        <div class="logistics-stat">
+                            <span class="logistics-stat-label">SLOTS (GRID)</span>
+                            <span id="ldGrid" class="logistics-stat-val">-</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2952,72 +3019,6 @@
         { name: "Holzstatue (Wood Statue)", qty: 3, quest: "Hazardous Treasures (Turncoat / Artisan)" },
         { name: "Goldene Uhr / Rolex (Gold Watch)", qty: 2, quest: "Bribe Money (Turncoat)" }
     ];
-
-    function buildQuestItemDropdown() {
-        const dropdown = document.getElementById('questItemDropdown');
-        if (!dropdown) return;
-        dropdown.innerHTML = '<option value="">-- Wähle ein Item --</option>'; // Reset
-        
-        const sortedItems = [...questItemsDb].sort((a, b) => a.name.localeCompare(b.name, 'de'));
-        sortedItems.forEach(item => {
-            const opt = document.createElement('option');
-            opt.value = item.name;
-            opt.text = item.name;
-            dropdown.appendChild(opt);
-        });
-    }
-
-    function selectQuestItemFromDropdown() {
-        const dropdownValue = document.getElementById('questItemDropdown').value;
-        const searchInput = document.getElementById('questItemSearch');
-        if (dropdownValue) {
-            searchInput.value = dropdownValue; 
-            searchQuestItems(); 
-        } else {
-            searchInput.value = "";
-            document.getElementById('questItemList').innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Wähle ein Item oder tippe den Namen ein...</div>';
-        }
-    }
-
-    function searchQuestItems() {
-        const input = document.getElementById('questItemSearch').value.toLowerCase();
-        const list = document.getElementById('questItemList');
-        list.innerHTML = '';
-        
-        if (input.length < 2) {
-            list.innerHTML = '<div class="info-box" style="text-align: center; color: #888; border-left: none; border-top: 4px solid var(--accent); background: #1a1a1a; padding: 20px;">Tippe mindestens 2 Buchstaben ein...</div>';
-            return;
-        }
-
-        const filtered = questItemsDb.filter(i => i.name.toLowerCase().includes(input));
-
-        if (filtered.length > 0) {
-            filtered.forEach(item => {
-                const box = document.createElement('div');
-                box.className = 'panel-box';
-                box.style.marginBottom = '10px';
-                box.style.borderTopColor = '#ffcc00'; 
-                box.innerHTML = `
-                    <h3 style="color: #ffcc00; margin-top: 0; font-size: 1.2rem;">⚠️ KEEP! (Aufheben)</h3>
-                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; color: #fff;">${item.name}</div>
-                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                        <strong>Benötigte Menge gesamt:</strong> <span style="color: #ffcc00; font-weight: bold;">${item.qty}</span><br>
-                        <strong>Wird gebraucht für:</strong> ${item.quest}
-                    </div>
-                `;
-                list.appendChild(box);
-            });
-        } else {
-            list.innerHTML = `
-                <div class="panel-box" style="border-top: 4px solid #b33939;">
-                    <h3 style="color: #b33939; margin-top: 0; font-size: 1.2rem;">💰 SELL! (Verkaufen / Nutzen)</h3>
-                    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                        Aktuell wird <strong>"${document.getElementById('questItemSearch').value}"</strong> für keine bekannte Sammel-Quest benötigt. Du kannst es zu Geld machen oder selbst ausrüsten.
-                    </div>
-                </div>
-            `;
-        }
-    }
 
     // ==============================================================
     // DECRYPTION TERMINAL LOGIK (CODES & PASSWÖRTER)
@@ -4208,16 +4209,109 @@ function goToHome() {
 }
 
     // ==============================================================
-    // LOOT-DATENBANK RENDER-LOGIK (AKKORDEON / BLAUE KÄSTEN)
+    // LOGISTICS & QUEST TRACKER ENGINE
+    // ==============================================================
+    function initLogisticsTracker() {
+        renderLogisticsList();
+    }
+
+    function renderLogisticsList(filter = "") {
+        const list = document.getElementById('logisticsItemList');
+        if (!list || typeof logisticsDb === 'undefined') return;
+        list.innerHTML = '';
+        
+        // Sortiere A-Z
+        const sorted = [...logisticsDb].sort((a,b) => a.name.localeCompare(b.name));
+        
+        const filtered = sorted.filter(item => 
+            item.name.toLowerCase().includes(filter.toLowerCase()) || 
+            item.category.toLowerCase().includes(filter.toLowerCase())
+        );
+        
+        if (filtered.length === 0) {
+            list.innerHTML = '<div style="padding:15px; color:#ff4c4c; text-align:center;">Kein Eintrag gefunden.</div>';
+            return;
+        }
+
+        filtered.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = `logistics-item-card quest-${item.isQuest}`;
+            div.id = `log-item-${index}`;
+            
+            let icon = item.isQuest ? '⚠️' : '📦';
+            
+            div.innerHTML = `
+                <div>
+                    <div style="color: #eee; font-weight: bold; font-size: 0.95rem;">${item.name}</div>
+                    <div style="color: #888; font-size: 0.75rem;">${item.category}</div>
+                </div>
+                <div style="font-size: 1.2rem;">${icon}</div>
+            `;
+            div.onclick = () => openLogisticsDossier(item, div.id);
+            list.appendChild(div);
+        });
+
+        // Automatisch erstes Element öffnen
+        if (filtered.length > 0) openLogisticsDossier(filtered[0], `log-item-0`);
+    }
+
+    function filterLogisticsTracker() {
+        const term = document.getElementById('questItemSearchInput').value;
+        renderLogisticsList(term);
+    }
+
+    function openLogisticsDossier(item, cardId) {
+        document.querySelectorAll('.logistics-item-card').forEach(c => c.classList.remove('active'));
+        const activeCard = document.getElementById(cardId);
+        if(activeCard) activeCard.classList.add('active');
+        
+        document.getElementById('ldItemName').innerText = item.name.toUpperCase();
+        document.getElementById('ldCategory').innerText = `KATEGORIE: ${item.category.toUpperCase()}`;
+        
+        const statusBox = document.getElementById('ldStatusBox');
+        statusBox.style.display = 'block';
+        
+        if (item.isQuest) {
+            statusBox.className = 'logistics-status-box status-keep';
+            statusBox.innerHTML = `
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size: 2.5rem; filter: drop-shadow(0 0 5px rgba(255,204,0,0.5));">⚠️</span>
+                    <div>
+                        <h3 style="margin:0; color:#ffcc00; font-size: 1.4rem;">KEEP ITEM (QUEST RELEVANT)</h3>
+                        <p style="margin: 5px 0 0 0; color: #ddd; font-size: 0.95rem;"><strong>Mission:</strong> ${item.questInfo}</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            statusBox.className = 'logistics-status-box status-sell';
+            statusBox.innerHTML = `
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size: 2.5rem; filter: drop-shadow(0 0 5px rgba(124,163,90,0.5));">💰</span>
+                    <div>
+                        <h3 style="margin:0; color:var(--accent); font-size: 1.4rem;">SAFE TO SELL</h3>
+                        <p style="margin: 5px 0 0 0; color: #ddd; font-size: 0.95rem;">Wird aktuell für keine Task benötigt. Verkauf empfohlen.</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        document.getElementById('ldVendor').innerText = item.vendor;
+        document.getElementById('ldPrice').innerText = item.price > 0 ? `$${item.price.toLocaleString()}` : 'N/A';
+        document.getElementById('ldWeight').innerText = item.weight;
+        document.getElementById('ldGrid').innerText = item.grid;
+    }
+
+    // ==============================================================
+    // LOOT-DATENBANK RENDER-LOGIK (AKKORDEON) - Nutzt jetzt die neue DB!
     // ==============================================================
     function renderLootAccordions() {
         const container = document.getElementById('lootAccordionsContainer');
-        if (!container || typeof lootItemsDb === 'undefined') return;
+        if (!container || typeof logisticsDb === 'undefined') return;
 
         container.innerHTML = '';
 
         const groupedLoot = {};
-        lootItemsDb.forEach(item => {
+        logisticsDb.forEach(item => {
             if (!groupedLoot[item.category]) {
                 groupedLoot[item.category] = [];
             }
@@ -4225,14 +4319,13 @@ function goToHome() {
         });
 
         for (const [category, items] of Object.entries(groupedLoot)) {
-            items.sort((a, b) => b.price - a.price);
+            items.sort((a, b) => b.price - a.price); // Nach Preis sortieren
 
             const groupDiv = document.createElement('div');
             groupDiv.style.marginBottom = "10px";
 
             const btn = document.createElement('button');
             btn.className = 'universal-accordion';
-            // BUGFIX: Zeigt jetzt Kategorie statt traderName
             btn.innerHTML = `📦 ${category} <span style="float:right; font-size:0.85rem;">(${items.length} Items) ▼</span>`;
 
             const contentDiv = document.createElement('div');
@@ -4253,18 +4346,17 @@ function goToHome() {
             `;
 
             items.forEach(item => {
-                let infoColor = "#888";
-                if (item.info && item.info.includes("WICHTIG")) infoColor = "#ffcc00"; 
-                if (item.info && (item.info.includes("SCHROTT") || item.info.includes("Müll") || item.info.includes("Wertlos") || item.info.includes("liegen lassen"))) infoColor = "#ff4c4c"; 
+                let infoText = item.isQuest ? `⚠️ WICHTIG: ${item.questInfo}` : "Kann verkauft werden";
+                let infoColor = item.isQuest ? "#ffcc00" : "#888"; 
 
                 tableHTML += `
                     <tr class="loot-row" style="border-bottom: 1px solid #1a1a1a;">
                         <td style="padding: 12px 8px;">
                             <div class="loot-name" style="color: #eee; font-weight: bold; margin-bottom: 3px;">${item.name}</div>
-                            <div style="font-size: 0.8rem; color: ${infoColor}; font-style: italic;">↳ ${item.info || ''}</div>
-                            <div style="font-size: 0.75rem; color: #555; margin-top: 3px;">Händler: <span style="color: #5dade2;">${item.trader || 'Unbekannt'}</span></div>
+                            <div style="font-size: 0.8rem; color: ${infoColor}; font-style: italic;">↳ ${infoText}</div>
+                            <div style="font-size: 0.75rem; color: #555; margin-top: 3px;">Händler: <span style="color: #5dade2;">${item.vendor || 'Unbekannt'}</span></div>
                         </td>
-                        <td style="padding: 8px; text-align: center; color: #aaa; font-family: monospace;">${item.size}</td>
+                        <td style="padding: 8px; text-align: center; color: #aaa; font-family: monospace;">${item.grid}</td>
                         <td style="padding: 8px; text-align: center; color: #aaa;">${item.weight}</td>
                         <td style="padding: 8px; text-align: right; color: var(--accent); font-weight: bold; font-size: 1.1rem;">
                             ${item.price > 0 ? '$' + item.price.toLocaleString() : 'QUEST'}
@@ -4298,7 +4390,6 @@ function goToHome() {
         }
     }
 
-    // Die clevere Suchleiste für die Akkordeons
     function filterLootAccordions() {
         const input = document.getElementById('lootSearch').value.toLowerCase();
         const accordions = document.getElementById('lootAccordionsContainer').children;
@@ -4765,6 +4856,7 @@ function goToHome() {
         initBossHVT();
         initMedicalCenter();
         initMarket();
+        initLogisticsTracker();
         renderDecryptionTerminal();
         renderLootRoutes();
         renderLootAccordions();
@@ -4772,7 +4864,6 @@ function goToHome() {
         renderStashAccordions();
         renderGearAccordions();
         sortGunsmith('meta');
-        buildQuestItemDropdown();
         calcHeliTime();
         buildBossTimerList();
         initBlueprints();
