@@ -1770,10 +1770,7 @@
                     <div id="simVisualArmor" style="position: absolute; left: 75%; top: 20px; bottom: 20px; width: 12px; background: #888; border-radius: 3px; box-shadow: inset 0 0 10px #000; z-index: 4;"></div>
                 </div>
 
-                <div style="position: relative; padding-top: 35px; background: #050505; border: 1px solid #222; border-radius: 6px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; overflow: hidden;">
-                    <div id="armorThresholdLine" style="position: absolute; top: 0; bottom: 0; width: 2px; background: #ffcc00; z-index: 10; transition: left 0.4s ease; box-shadow: 0 0 5px #ffcc00;"></div>
-                    <div id="thresholdLabel" style="position: absolute; top: 5px; color: #ffcc00; font-weight: bold; font-size: 0.8rem; transform: translateX(-50%); z-index: 11; background: #111; padding: 2px 8px; border: 1px solid #ffcc00; border-radius: 4px; transition: left 0.4s ease; white-space: nowrap;">🛡️ RÜSTUNGS-GRENZE</div>
-                    
+                <div style="position: relative; padding-top: 15px; background: #050505; border: 1px solid #222; border-radius: 6px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; overflow: hidden;">
                     <div id="ballisticBars" style="position: relative; z-index: 5;"></div>
                 </div>
             </div>
@@ -2412,21 +2409,14 @@
         renderBallisticChart();
     }
 
-    // 2. Das Radar zeichnen (Macht die Reihen jetzt anklickbar)
+    // 2. Das Radar zeichnen (Macht die Reihen jetzt anklickbar - OHNE LINIE)
     function renderBallisticChart() {
         const container = document.getElementById('ballisticBars');
-        const line = document.getElementById('armorThresholdLine');
-        const label = document.getElementById('thresholdLabel');
         if (!container || typeof ammoDb === 'undefined') return;
-
-        if (line && label) {
-            line.style.left = `75%`;
-            label.style.left = `75%`;
-            label.innerHTML = `🛡️ NIJ ${currentRadarArmor}`;
-        }
 
         container.innerHTML = '';
         const groupedAmmo = {};
+        
         ammoDb.forEach(ammo => {
             if (!groupedAmmo[ammo.cal]) groupedAmmo[ammo.cal] = [];
             groupedAmmo[ammo.cal].push(ammo);
@@ -2460,10 +2450,11 @@
                 const matrixVal = ammo.penMap[currentRadarArmor];
                 let barColor, resultText, resultColor, penPct;
 
+                // Die Prozent-Werte (penPct) bestimmen jetzt nur noch die Länge des visuellen Balkens
                 if (matrixVal === 3) {
                     barColor = 'rgba(124, 163, 90, 0.9)'; resultColor = '#7ca35a'; resultText = '🟢 DURCHSCHLAG'; penPct = 100;
                 } else if (matrixVal === 2 || matrixVal === 1) {
-                    barColor = 'rgba(255, 204, 0, 0.9)'; resultColor = '#ffcc00'; resultText = '🟡 TRAUMA'; penPct = 75;
+                    barColor = 'rgba(255, 204, 0, 0.9)'; resultColor = '#ffcc00'; resultText = '🟡 TRAUMA'; penPct = 65; 
                 } else {
                     barColor = 'rgba(179, 57, 57, 0.9)'; resultColor = '#ff4c4c'; resultText = '🔴 ABGEWEHRT'; penPct = 25;
                 }
@@ -2472,11 +2463,10 @@
                 const row = document.createElement('div');
                 row.style.cssText = "display: flex; align-items: center; margin-bottom: 4px; font-size: 0.9rem; padding: 6px 8px; border-radius: 4px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;";
                 
-                // Hover-Effekt für die Klickbarkeit
                 row.onmouseover = () => { row.style.background = "rgba(var(--accent-rgb), 0.1)"; row.style.borderColor = "rgba(var(--accent-rgb), 0.3)"; };
                 row.onmouseout = () => { row.style.background = "transparent"; row.style.borderColor = "transparent"; };
                 
-                // BEFEHL: Wenn geklickt wird, starte die Animation!
+                // Klick startet die Animation oben drüber
                 row.onclick = () => playInteractiveAnimation(ammo.name, matrixVal, currentRadarArmor);
 
                 row.innerHTML = `
