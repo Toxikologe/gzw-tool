@@ -1741,56 +1741,33 @@
 
         <div id="tab-ballistics" class="tab-content">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h2>🛡️ Ballistik Check (Simulator & Radar)</h2>
-                <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">BALLISTICS_SYS_ONLINE // CALIBRATING</div>
+                <h2>🛡️ Ballistik Radar & Live-Simulation</h2>
+                <div style="font-size: 0.8rem; color: #ffcc00; font-family: monospace; font-weight: bold;">BALLISTICS_SYS_ONLINE // READY</div>
             </div>
             
-            <p style="color: #ccc; margin-bottom: 20px;">
-                Testbereich für Penetrationswerte. Wähle die Munition und Rüstung für einen animierten Live-Vergleich aus.
-            </p>
-
-            <div class="panel-box" style="margin-bottom: 20px; border-top-color: #ffcc00; background: rgba(255,204,0,0.05);">
-                <h3 style="color: #ffcc00; margin-bottom: 15px;">🛡️ Rüstungs-Simulator (Live Check)</h3>
-                <div class="grid">
-                    <div>
-                        <label>Munitionsart wählen:</label>
-                        <select id="simAmmoSelect" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem; width: 100%; padding: 8px;">
-                            <option value="">-- Munition wählen --</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Gegnerische Rüstung wählen:</label>
-                        <select id="simArmorSelect" style="background: #111; border: 1px solid #333; color: #fff; font-family: monospace; font-size: 1.05rem; width: 100%; padding: 8px;">
-                            <option value="">-- Rüstungsklasse wählen --</option>
-                            <option value="IIIA">NIJ IIIA (Weichballistik / Helme)</option>
-                            <option value="IIIA+">NIJ IIIA+ (Verstärkte Westen)</option>
-                            <option value="III">NIJ III (Standard-Platten)</option>
-                            <option value="III+">NIJ III+ (Verbesserte Platten)</option>
-                            <option value="III++">NIJ III++ (High-End Platten)</option>
-                        </select>
-                    </div>
-                </div>
-                <button onclick="simulateArmorDrop()" style="margin-top: 15px; width: 100%; padding: 10px; background: rgba(255,204,0,0.2); border: 1px solid #ffcc00; color: #ffcc00; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 1.1rem; transition: 0.2s;">🎯 SIMULATION STARTEN</button>
-                
-                <div id="simVisualArena" style="display: none; height: 140px; background: #050505; border: 1px solid #333; border-radius: 6px; margin-top: 20px; position: relative; overflow: hidden; flex-direction: column; justify-content: center;">
-                    
-                    <div id="simVisualOverlay" style="position: absolute; top: 15px; width: 100%; text-align: center; z-index: 10; opacity: 0; transition: opacity 0.3s; text-shadow: 0 0 10px #000;"></div>
-                    
-                    <div id="simVisualBullet" style="position: absolute; left: -10%; top: 50%; transform: translateY(-50%); width: 25px; height: 6px; background: #ffcc00; border-radius: 0 50% 50% 0; box-shadow: 0 0 8px #ffcc00; z-index: 5;"></div>
-                    
-                    <div id="simVisualArmor" style="position: absolute; left: 75%; top: 20px; bottom: 20px; width: 12px; background: #888; border-radius: 3px; box-shadow: inset 0 0 10px #000; z-index: 4;"></div>
-                </div>
+            <div style="background: rgba(var(--accent-rgb), 0.1); border-left: 4px solid var(--accent); padding: 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0;">
+                <p style="color: #eee; margin: 0; font-size: 0.95rem; line-height: 1.5;">
+                    <strong>Bedienungsanleitung:</strong><br>
+                    1. Wähle oben die gegnerische Rüstungsklasse (z.B. NIJ IIIA).<br>
+                    2. Klappe unten das gewünschte Kaliber auf.<br>
+                    3. <strong>Klicke auf einen Munitions-Namen</strong>, um die Live-Animation (Kugel vs. Rüstung) zu starten!
+                </p>
             </div>
 
             <div class="panel-box" style="margin-bottom: 20px; border-top-color: var(--accent); background: rgba(var(--accent-rgb),0.05);">
-                <h3 style="color: var(--accent); margin-bottom: 15px;">🛡️ Ballistik Radar (Live-Penetration)</h3>
                 
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                     <button class="armor-btn active" onclick="simulateArmorRadar('IIIA', this)" style="padding: 8px 12px; background: rgba(var(--accent-rgb), 0.2); color: var(--accent); border: 1px solid var(--accent); font-weight: bold; cursor: pointer; border-radius: 4px;">NIJ IIIA</button>
                     <button class="armor-btn" onclick="simulateArmorRadar('IIIA+', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ IIIA+</button>
                     <button class="armor-btn" onclick="simulateArmorRadar('III', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III</button>
                     <button class="armor-btn" onclick="simulateArmorRadar('III+', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III+</button>
                     <button class="armor-btn" onclick="simulateArmorRadar('III++', this)" style="padding: 8px 12px; background: #111; color: #ccc; border: 1px solid #333; cursor: pointer; border-radius: 4px;">NIJ III++</button>
+                </div>
+
+                <div id="simVisualArena" style="display: none; height: 140px; background: #050505; border: 1px solid #333; border-radius: 6px; margin-bottom: 25px; position: relative; overflow: hidden; flex-direction: column; justify-content: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+                    <div id="simVisualOverlay" style="position: absolute; top: 15px; width: 100%; text-align: center; z-index: 10; opacity: 0; transition: opacity 0.3s; text-shadow: 0 0 10px #000;"></div>
+                    <div id="simVisualBullet" style="position: absolute; left: -10%; top: 50%; transform: translateY(-50%); width: 25px; height: 6px; background: #ffcc00; border-radius: 0 50% 50% 0; box-shadow: 0 0 8px #ffcc00; z-index: 5;"></div>
+                    <div id="simVisualArmor" style="position: absolute; left: 75%; top: 20px; bottom: 20px; width: 12px; background: #888; border-radius: 3px; box-shadow: inset 0 0 10px #000; z-index: 4;"></div>
                 </div>
 
                 <div style="position: relative; padding-top: 35px; background: #050505; border: 1px solid #222; border-radius: 6px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; overflow: hidden;">
@@ -2408,11 +2385,12 @@
     }
 
     // ==============================================================
-    // BALLISTIK SIMULATOR & RADAR ENGINE (ANIMATION + LINE FIX)
+    // BALLISTIK SIMULATOR & RADAR ENGINE (INTERAKTIVE REIHEN)
     // ==============================================================
     let currentRadarArmor = "IIIA";
     let openRadarCategories = new Set();
 
+    // 1. Radar Steuerung (Rüstung wechseln)
     function simulateArmorRadar(armorName, btnElement) {
         currentRadarArmor = armorName;
 
@@ -2427,17 +2405,20 @@
             btnElement.style.borderColor = 'var(--accent)';
             btnElement.style.fontWeight = 'bold';
         }
+        
+        // Verstecke die Animations-Arena bei Rüstungswechsel
+        document.getElementById('simVisualArena').style.display = "none";
+        
         renderBallisticChart();
     }
 
+    // 2. Das Radar zeichnen (Macht die Reihen jetzt anklickbar)
     function renderBallisticChart() {
         const container = document.getElementById('ballisticBars');
         const line = document.getElementById('armorThresholdLine');
         const label = document.getElementById('thresholdLabel');
         if (!container || typeof ammoDb === 'undefined') return;
 
-        // DIE COOLE LINIE IST ZURÜCK: Sie sitzt bei exakt 75% der Breite.
-        // Ein Durchschlag (100%) durchbricht die Linie. Trauma (75%) trifft sie genau.
         if (line && label) {
             line.style.left = `75%`;
             label.style.left = `75%`;
@@ -2479,23 +2460,31 @@
                 const matrixVal = ammo.penMap[currentRadarArmor];
                 let barColor, resultText, resultColor, penPct;
 
-                // Visuelle Zuordnung zur Linie
                 if (matrixVal === 3) {
-                    barColor = 'rgba(124, 163, 90, 0.9)'; resultColor = '#7ca35a'; resultText = '🟢 DURCHSCHLAG'; penPct = 100; // Durchbricht Linie
+                    barColor = 'rgba(124, 163, 90, 0.9)'; resultColor = '#7ca35a'; resultText = '🟢 DURCHSCHLAG'; penPct = 100;
                 } else if (matrixVal === 2 || matrixVal === 1) {
-                    barColor = 'rgba(255, 204, 0, 0.9)'; resultColor = '#ffcc00'; resultText = '🟡 TRAUMA'; penPct = 75; // Stoppt an Linie
+                    barColor = 'rgba(255, 204, 0, 0.9)'; resultColor = '#ffcc00'; resultText = '🟡 TRAUMA'; penPct = 75;
                 } else {
-                    barColor = 'rgba(179, 57, 57, 0.9)'; resultColor = '#ff4c4c'; resultText = '🔴 ABGEWEHRT'; penPct = 25; // Weit vor der Linie
+                    barColor = 'rgba(179, 57, 57, 0.9)'; resultColor = '#ff4c4c'; resultText = '🔴 ABGEWEHRT'; penPct = 25;
                 }
 
+                // Erstelle eine klickbare Reihe
                 const row = document.createElement('div');
-                row.style.cssText = "display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9rem;";
+                row.style.cssText = "display: flex; align-items: center; margin-bottom: 4px; font-size: 0.9rem; padding: 6px 8px; border-radius: 4px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;";
+                
+                // Hover-Effekt für die Klickbarkeit
+                row.onmouseover = () => { row.style.background = "rgba(var(--accent-rgb), 0.1)"; row.style.borderColor = "rgba(var(--accent-rgb), 0.3)"; };
+                row.onmouseout = () => { row.style.background = "transparent"; row.style.borderColor = "transparent"; };
+                
+                // BEFEHL: Wenn geklickt wird, starte die Animation!
+                row.onclick = () => playInteractiveAnimation(ammo.name, matrixVal, currentRadarArmor);
+
                 row.innerHTML = `
                 <div style="width: 170px; color: #eee; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${ammo.name}">${ammo.name}</div>
-                <div style="flex: 1; position: relative; height: 16px; background: #1a1a1a; border-radius: 4px; overflow: hidden; margin: 0 15px; border: 1px solid #333;">
+                <div style="flex: 1; position: relative; height: 16px; background: #1a1a1a; border-radius: 4px; overflow: hidden; margin: 0 15px; border: 1px solid #333; pointer-events: none;">
                     <div style="height: 100%; width: ${penPct}%; background-color: ${barColor}; transition: width 0.4s ease, background-color 0.4s ease;"></div>
                 </div>
-                <div style="width: 130px; text-align: right; font-weight: bold; color: ${resultColor}; font-size: 0.85rem;">${resultText}</div>`;
+                <div style="width: 130px; text-align: right; font-weight: bold; color: ${resultColor}; font-size: 0.85rem; pointer-events: none;">${resultText}</div>`;
                 content.appendChild(row);
             });
 
@@ -2516,72 +2505,56 @@
         }
     }
 
-    // ==============================================================
-    // NEU: DER VISUELLE ANIMATIONS-SIMULATOR
-    // ==============================================================
-    function simulateArmorDrop() {
-        const armorTierStr = document.getElementById('simArmorSelect').value; 
-        const ammoIndex = document.getElementById('simAmmoSelect').value;
+    // 3. Die Animations-Logik (Ausgelöst durch den Klick auf eine Reihe)
+    function playInteractiveAnimation(ammoName, matrixVal, armorTierStr) {
         const arena = document.getElementById('simVisualArena');
         const overlay = document.getElementById('simVisualOverlay');
         const bullet = document.getElementById('simVisualBullet');
         const armor = document.getElementById('simVisualArmor');
         
-        if (armorTierStr === "" || ammoIndex === "") {
-            alert("⚠️ Operator, wähle zuerst Munition und Rüstung aus!");
-            return;
-        }
+        // Weiches Scrollen zur Arena, damit der User sie direkt sieht
+        arena.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        const ammo = ammoDb[ammoIndex];
-        const matrixVal = ammo.penMap[armorTierStr]; 
-        
-        // 1. Arena einblenden & Animation zurücksetzen
+        // Arena einblenden & Reset
         arena.style.display = "flex";
         overlay.style.opacity = "0";
         
-        // Bullet auf Startposition
         bullet.style.transition = "none";
         bullet.style.left = "5%";
         bullet.style.top = "50%";
         bullet.style.transform = "translateY(-50%) rotate(0deg)";
         
-        // Armor auf Startposition
         armor.style.transition = "none";
         armor.style.transform = "skewX(0deg)";
         armor.style.background = "#888";
 
-        // Kurzer Delay, damit der Browser den Reset rendert, bevor die Animation startet
+        // Kurzer Delay, damit der Reset greift, bevor die Animation feuert
         setTimeout(() => {
-            // Flugbahn einstellen
             bullet.style.transition = "left 0.4s ease-in, top 0.4s ease-out, transform 0.4s ease";
-            bullet.style.left = "72%"; // Aufprall-Punkt
+            bullet.style.left = "72%"; // Aufprallpunkt
 
-            // Nach 400ms (Aufprall) wird das Ergebnis berechnet
             setTimeout(() => {
                 overlay.style.opacity = "1";
                 armor.style.transition = "all 0.2s ease";
 
                 if (matrixVal === 3) {
-                    // DURCHSCHLAG: Kugel fliegt weiter, Platte bricht (rot)
                     bullet.style.left = "120%"; 
                     armor.style.background = "#ff4c4c";
-                    overlay.innerHTML = `<h3 style="color: #ff4c4c; margin: 0; font-size: 1.5rem;">💀 DURCHSCHLAG (TÖDLICH)</h3><p style="color: #ccc; margin: 0; font-size: 0.85rem;">${ammo.name} vs NIJ ${armorTierStr}</p>`;
+                    overlay.innerHTML = `<h3 style="color: #ff4c4c; margin: 0; font-size: 1.5rem; text-shadow: 0 0 10px #000;">💀 DURCHSCHLAG (TÖDLICH)</h3><p style="color: #ccc; margin: 0; font-size: 0.85rem; text-shadow: 0 0 5px #000;">[${ammoName}] durchschlägt [NIJ ${armorTierStr}]</p>`;
                 } 
                 else if (matrixVal === 2 || matrixVal === 1) {
-                    // TRAUMA: Kugel stoppt, Platte verbiegt sich (gelb)
                     armor.style.transform = "skewX(-15deg)";
                     armor.style.background = "#ffcc00";
-                    overlay.innerHTML = `<h3 style="color: #ffcc00; margin: 0; font-size: 1.5rem;">💥 SCHWERES TRAUMA</h3><p style="color: #ccc; margin: 0; font-size: 0.85rem;">${ammo.name} vs NIJ ${armorTierStr}</p>`;
+                    overlay.innerHTML = `<h3 style="color: #ffcc00; margin: 0; font-size: 1.5rem; text-shadow: 0 0 10px #000;">💥 SCHWERES TRAUMA</h3><p style="color: #ccc; margin: 0; font-size: 0.85rem; text-shadow: 0 0 5px #000;">[NIJ ${armorTierStr}] stoppt [${ammoName}]</p>`;
                 } 
                 else {
-                    // ABGEWEHRT: Kugel prallt ab, dreht sich weg. Platte bleibt stabil (grün)
                     bullet.style.left = "60%";
                     bullet.style.top = "80%";
                     bullet.style.transform = "translateY(-50%) rotate(45deg)";
                     armor.style.background = "#7ca35a";
-                    overlay.innerHTML = `<h3 style="color: #7ca35a; margin: 0; font-size: 1.5rem;">🛡️ VOLLSTÄNDIGER SCHUTZ</h3><p style="color: #ccc; margin: 0; font-size: 0.85rem;">${ammo.name} vs NIJ ${armorTierStr}</p>`;
+                    overlay.innerHTML = `<h3 style="color: #7ca35a; margin: 0; font-size: 1.5rem; text-shadow: 0 0 10px #000;">🛡️ VOLLSTÄNDIGER SCHUTZ</h3><p style="color: #ccc; margin: 0; font-size: 0.85rem; text-shadow: 0 0 5px #000;">[${ammoName}] prallt an [NIJ ${armorTierStr}] ab</p>`;
                 }
-            }, 400); // Exakt auf den Einschlag getimet
+            }, 400); // Exakt nach 400ms (Aufprall) wird das Ergebnis gezeigt
         }, 50);
     }
 
