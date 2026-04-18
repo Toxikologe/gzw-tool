@@ -1110,27 +1110,23 @@
     <button id="feedback-send-btn" class="feedback-send-btn" onclick="sendFeedback()">Senden</button>
 </div>
 
-<div id="raidNotepad" class="draggable-widget" style="position: fixed; top: 80px; right: 20px; width: 500px; height: 450px; z-index: 1000; background: #0a0a0a; border: 2px solid var(--accent); border-radius: 6px; display: none; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.9); overflow: hidden;">
-        
+<div id="raidNotepad" class="draggable-widget" style="position: fixed; top: 100px; right: 20px; width: 500px; height: 450px; z-index: 2000; background: #0a0a0a; border: 2px solid var(--accent); border-radius: 6px; display: none; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.9); overflow: hidden;">
         <div class="widget-header" style="background: var(--accent); color: #000; padding: 10px 15px; cursor: move; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
             <span>📝 TACTICAL RAID NOTES</span>
-            <div style="display: flex; gap: 10px;">
-                <button onclick="clearNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.7rem; font-weight: bold; padding: 2px 8px;">LEEREN</button>
-                <button onclick="toggleNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.8rem; font-weight: bold; padding: 2px 8px;">✕</button>
+            <div style="display: flex; gap: 8px;">
+                <button onclick="clearNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.65rem; font-weight: bold; padding: 2px 6px;">CLEAR</button>
+                <button onclick="toggleNotepad()" style="background: rgba(0,0,0,0.2); border: 1px solid #000; cursor: pointer; font-size: 0.8rem; font-weight: bold; padding: 2px 6px;">✕</button>
             </div>
         </div>
-        
         <div style="display: flex; gap: 5px; padding: 8px; background: #111; border-bottom: 1px solid #222;">
-            <button onclick="insertNoteTemplate('lz')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px; border-radius: 3px;">+ LZ INFO</button>
-            <button onclick="insertNoteTemplate('task')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px; border-radius: 3px;">+ TASK LOG</button>
-            <button onclick="insertNoteTemplate('intel')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px; border-radius: 3px;">+ INTEL</button>
+            <button onclick="insertNoteTemplate('lz')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px;">+ LZ INFO</button>
+            <button onclick="insertNoteTemplate('task')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px;">+ TASK LOG</button>
+            <button onclick="insertNoteTemplate('intel')" style="flex: 1; font-size: 0.7rem; background: #222; color: #aaa; border: 1px solid #444; cursor: pointer; padding: 5px;">+ INTEL</button>
         </div>
-
-        <textarea id="notepadArea" placeholder="Koordinaten, Tasks oder Feindbewegung hier protokollieren..." style="flex: 1; width: 100%; background: #050505; color: #eee; border: none; padding: 20px; font-family: 'Courier New', monospace; font-size: 1rem; resize: none; outline: none; line-height: 1.6;"></textarea>
-        
-        <div style="background: #0d0d0d; padding: 8px 15px; font-size: 0.7rem; color: #666; border-top: 1px solid #222; display: flex; justify-content: space-between; align-items: center;">
-            <span style="letter-spacing: 1px;">SYSTEM: ENCRYPTED_STORAGE</span>
-            <span id="saveStatus">Zuletzt gespeichert: Gerade eben</span>
+        <textarea id="notepadArea" placeholder="Einsatznotizen hier eingeben..." style="flex: 1; width: 100%; background: #050505; color: #eee; border: none; padding: 20px; font-family: 'Courier New', monospace; font-size: 1rem; resize: none; outline: none; line-height: 1.6;"></textarea>
+        <div style="background: #0d0d0d; padding: 8px 15px; font-size: 0.7rem; color: #666; border-top: 1px solid #222; display: flex; justify-content: space-between;">
+            <span>STATUS: ENCRYPTED_LINK</span>
+            <span id="saveStatus">Auto-Save aktiv</span>
         </div>
     </div>
 
@@ -1213,41 +1209,38 @@
     </div>
     
     <div class="container">
+    
+    <div class="tactical-news-frame" style="background: #0a0a0a; border: 1px solid #333; border-radius: 6px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
         
-        <div class="tactical-news-frame">
-            <div class="news-header">
-                <div class="header-left">
-                    <span class="warning-icon">⚠️</span> <h3>Taktische Einsatzinformationen:</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; border-bottom: 1px solid #222; padding-bottom: 12px;">
+            
+            <div class="header-left" style="display: flex; align-items: center; gap: 10px;">
+                <span class="warning-icon" style="font-size: 1.3rem;">⚠️</span> 
+                <h3 style="margin: 0; color: #eee; font-size: 1.1rem; text-transform: uppercase;">Taktische Einsatzinformationen</h3>
+            </div>
+
+            <div class="header-right" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 4px; color: var(--accent); font-family: monospace; font-weight: bold; font-size: 0.9rem; white-space: nowrap;">
+                    <span class="live-indicator" style="color: #ff4c4c; margin-right: 5px; animation: pulse 2s infinite;">● LIVE</span>
+                    <span id="live-time-display">DATE: -- --- ---- | TIME: --:--:-- ZULU</span>
                 </div>
-                <div class="header-right" style="display: flex; gap: 15px; align-items: center;">
-        <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 5px 12px; border-radius: 4px; color: var(--accent); font-family: monospace; font-weight: bold;">
-            <span class="live-indicator">● LIVE</span>
-            <span id="live-time-display">DATE: -- --- ---- | TIME: --:--:-- ZULU</span>
+                
+                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 4px; color: var(--accent); font-family: monospace; font-weight: bold; font-size: 0.9rem; white-space: nowrap;">
+                    🛒 TRADER RESTOCK: <span id="traderTimerDisplay">00:00:00</span>
+                </div>
+            </div>
         </div>
-        
-        <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 5px 12px; border-radius: 4px; color: var(--accent); font-family: monospace; font-weight: bold;">
-            🛒 RESTOCK: <span id="traderTimerDisplay">00:00:00</span>
+
+        <div class="news-ticker-container" style="background: rgba(0,0,0,0.5); border: 1px solid #1a1a1a; padding: 8px 12px; border-radius: 4px; overflow: hidden;">
+            <div class="news-ticker-text" style="color: #aaa; font-family: monospace; font-size: 0.9rem; white-space: nowrap;">
+                <span style="color: var(--accent); font-weight: bold;">[INTEL]:</span> ⚠️ Neue Sektion - Blueprints - Neue Sektion - Codes - Neue Sektion - Farming Routen - ⚠️
+            </div>
         </div>
     </div>
-            <div class="news-ticker-container">
-                <div class="news-ticker-text">
-                    ⚠️ Neue Sektion - Blueprints - Neue Sektion - Codes - Neue Sektion - Farming Routen -  ⚠️
-                </div>
-            </div>
-        </div>
 
-        <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111;">
-            <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Banner%204.png" alt="Gray Zone Warfare Tool" style="width: 100%; height: auto; display: block;">
-        </div>
-
-        <div style="background-color: #0d0d0d; border: 3px solid #333; border-radius: 6px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); padding: 15px; display: flex; justify-content: space-between; align-items: center;">
-            <h3 style="margin: 0; color: #888; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-family: 'Courier New', monospace;">⚙️ Systemkanäle & Externe Tools</h3>
-            <div style="display: flex; gap: 8px;">
-                <button class="tool-btn" id="btn-raidNotepad" onclick="toggleWidget('raidNotepad')">📋 Notizblock</button>
-                <button id="trader-timer-btn" class="tool-btn" title="Zeit bis zum Händler-Restock">🛒 Trader-Restock: --:--</button>
-            </div>
-        </div>
-
+    <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden; margin-bottom: 25px; border: 1px solid #444; display: flex; align-items: center; justify-content: center; background-color: #111; box-shadow: 0 4px 15px rgba(0,0,0,0.6);">
+        <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Banner%204.png" alt="Gray Zone Warfare Tool" style="width: 100%; height: auto; display: block;">
+    </div>
        <div id="tab-home" class="tab-content active">
             
             <div class="panel-box" style="border-top-color: var(--accent); background: rgba(124, 163, 90, 0.05); margin-bottom: 20px;">
@@ -4787,7 +4780,10 @@ function goToHome() {
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
+        // Widgets initialisieren
         makeDraggable('raidNotepad');
+        
+        // Systeme starten
         initTaskTablet();
         initNotepad();
         initKeyCabinet();
@@ -4796,24 +4792,30 @@ function goToHome() {
         initMedicalCenter();
         initMarket();
         initLogisticsTracker();
+        
+        // Renderings
         renderDecryptionTerminal();
         renderLootRoutes();
         renderLootAccordions();
         renderTraderAccordions();
         renderStashAccordions();
         renderGearAccordions();
+        
+        // Ballistik & Gunsmith
         sortGunsmith('meta');
         initBlueprints();
         buildAmmoMatrix();
         simulateArmorRadar('IIIA', document.querySelector('.armor-btn.active'));
-        fetchLatestNews(); 
+        
+        // Header & Live Data
         updateLiveTime();
         startTraderTimer();
         initFactionSystem();
         initDailyTip();
+        
         setInterval(updateLiveTime, 1000);
+        fetchLatestNews(); 
     });
-
 </script>
 </body>
 </html>
