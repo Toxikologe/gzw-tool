@@ -5028,7 +5028,8 @@ function goToHome() {
     });
 </script>
 
-    <div style="position: fixed !important; top: 15px !important; left: 350px !important; z-index: 5000 !important;">
+    <div style="position: fixed !important; top: 15px !important; left: 355px !important; z-index: 5000 !important; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        
         <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Wachhund%202.png" 
              id="wachhundTriggerImg"
              alt="Wachhund Modus" 
@@ -5036,7 +5037,12 @@ function goToHome() {
              title="Wachhund System aktivieren"
              style="width: 150px; height: 150px; border-radius: 8px; border: 3px solid #ff4c4c; cursor: pointer; object-fit: cover; box-shadow: 0 0 20px rgba(255, 76, 76, 0.5); transition: all 0.2s ease;"
              onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 35px rgba(255, 76, 76, 0.9)';"
-             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 76, 76, 0.5)';">
+             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 76, 76, 0.5)';" />
+
+        <span onclick="toggleWachhund()" style="color: #ff4c4c; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; cursor: pointer; text-shadow: 0 0 10px rgba(255, 76, 76, 0.6); user-select: none;">
+            WACHHUND
+        </span>
+
     </div>
 
     <div id="wachhundPulseLayer" class="pulse-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10001;"></div>
