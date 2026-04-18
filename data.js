@@ -793,72 +793,100 @@ const bosses = {
 };
     
 // ==========================================
-// 6.BALLISTICS & AMMO DATABASE (0.4 SPEARHEAD - WIKI/CSV SYNCED)
+// 6. BALLISTICS & AMMO DATABASE (0.4 SPREADSHEET MATRIX - COMPLETE)
+// Werte: 3 = 1 TAP, 2 = Medium Trauma, 1 = Light Trauma, 0 = NO PEN
 // ==========================================
 const ammoDb = [
+    // --- 7.65 Browning ---
+    { cal: "7.65 Browning", name: "FMJ", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "318 m/s", acc: "0%", dur: "0%", price: "$1", source: "Artisan LL1" },
+    { cal: "7.65 Browning", name: "JHP", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "276 m/s", acc: "-4%", dur: "0%", price: "$2", source: "Artisan LL1" },
+    { cal: "7.65 Browning", name: "XTREME DEF", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "290 m/s", acc: "-2%", dur: "-15%", price: "$4", source: "Artisan LL2" },
+
+    // --- 7.62x25mm Tokarev ---
+    { cal: "7.62x25mm", name: "FMJ", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "430 m/s", acc: "0%", dur: "0%", price: "$1", source: "Artisan LL1" },
+    { cal: "7.62x25mm", name: "PST", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "430 m/s", acc: "-2%", dur: "-15%", price: "$3", source: "Artisan LL2" },
+    { cal: "7.62x25mm", name: "PT", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "415 m/s", acc: "-2%", dur: "0%", price: "$1", source: "Artisan LL1" },
+
+    // --- 9x18mm Makarov ---
+    { cal: "9x18mm", name: "PST", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "315 m/s", acc: "0%", dur: "0%", price: "$1", source: "Turncoat LL1" },
+    { cal: "9x18mm", name: "SP7", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "420 m/s", acc: "-4%", dur: "-15%", price: "$3", source: "Turncoat LL2" },
+    { cal: "9x18mm", name: "PMM", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "415 m/s", acc: "0%", dur: "-40%", price: "$6", source: "Turncoat LL3" },
+
     // --- 9x19mm ---
-    { cal: "9x19mm", name: "FMJ", pen: "Klasse IIA", penValue: 2, speed: "390 m/s", acc: "0%", dur: "0%", price: "$1", source: "Gunny LL1" },
-    { cal: "9x19mm", name: "TRACER", pen: "Klasse IIA", penValue: 2, speed: "342 m/s", acc: "-4%", dur: "0%", price: "$1", source: "Gunny LL1" },
-    { cal: "9x19mm", name: "HP", pen: "Flesh (Ungeschützt)", penValue: 1, speed: "377 m/s", acc: "-3%", dur: "0%", price: "$2", source: "Gunny LL1" },
-    { cal: "9x19mm", name: "XTREME PEN", pen: "Klasse IIIA", penValue: 4, speed: "381 m/s", acc: "+2%", dur: "-15%", price: "$4", source: "Gunny LL2" },
-    { cal: "9x19mm", name: "LIBRA SNAIL", pen: "Klasse III", penValue: 5, speed: "700 m/s", acc: "0%", dur: "-40%", price: "$10", source: "Gunny LL3" },
+    { cal: "9x19mm", name: "FMJ", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "390 m/s", acc: "0%", dur: "0%", price: "$1", source: "Gunny LL1" },
+    { cal: "9x19mm", name: "TRACER", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "342 m/s", acc: "-4%", dur: "0%", price: "$1", source: "Gunny LL1" },
+    { cal: "9x19mm", name: "HP", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "377 m/s", acc: "-3%", dur: "0%", price: "$2", source: "Gunny LL1" },
+    { cal: "9x19mm", name: "XTREME PEN", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "381 m/s", acc: "+2%", dur: "-15%", price: "$4", source: "Gunny LL2" },
+    { cal: "9x19mm", name: "LIBRA SNAIL", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "700 m/s", acc: "0%", dur: "-40%", price: "$10", source: "Gunny LL3" },
 
     // --- .45 ACP ---
-    { cal: ".45 ACP", name: "FMJ", pen: "Klasse IIA", penValue: 2, speed: "260 m/s", acc: "0%", dur: "0%", price: "$2", source: "Artisan LL1" },
-    { cal: ".45 ACP", name: "JHP", pen: "Flesh", penValue: 1, speed: "290 m/s", acc: "-2%", dur: "0%", price: "$3", source: "Artisan LL1" },
-    { cal: ".45 ACP", name: "HYDRA-SHOK", pen: "Flesh / Schock", penValue: 1, speed: "274 m/s", acc: "0%", dur: "-15%", price: "$5", source: "Artisan LL2" },
-    { cal: ".45 ACP", name: "AP", pen: "Klasse IIIA", penValue: 4, speed: "450 m/s", acc: "0%", dur: "-40%", price: "$10", source: "Artisan LL3" },
+    { cal: ".45 ACP", name: "FMJ", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "260 m/s", acc: "0%", dur: "0%", price: "$2", source: "Artisan LL1" },
+    { cal: ".45 ACP", name: "JHP", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "290 m/s", acc: "-2%", dur: "0%", price: "$3", source: "Artisan LL1" },
+    { cal: ".45 ACP", name: "HYDRA-SHOK", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "274 m/s", acc: "0%", dur: "-15%", price: "$5", source: "Artisan LL2" },
+    { cal: ".45 ACP", name: "AP", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "450 m/s", acc: "0%", dur: "-40%", price: "$10", source: "Artisan LL3" },
+
+    // --- .222 Rem ---
+    { cal: ".222 Rem", name: "SP", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "970 m/s", acc: "-5%", dur: "0%", price: "$1", source: "Artisan LL1" },
+    { cal: ".222 Rem", name: "FMJ", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "970 m/s", acc: "0%", dur: "0%", price: "$2", source: "Artisan LL1" },
+    { cal: ".222 Rem", name: "HP", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "966 m/s", acc: "-2%", dur: "-15%", price: "$4", source: "Artisan LL2" },
 
     // --- 4.6x30mm (MP7) ---
-    { cal: "4.6x30mm", name: "SUBSONIC", pen: "Klasse IIIA", penValue: 3, speed: "290 m/s", acc: "0%", dur: "0%", price: "$2", source: "Banshee LL1" },
-    { cal: "4.6x30mm", name: "FMJ", pen: "Klasse IIIA+", penValue: 4, speed: "620 m/s", acc: "0%", dur: "0%", price: "$3", source: "Banshee LL1" },
-    { cal: "4.6x30mm", name: "ACTION SX", pen: "Klasse III", penValue: 5, speed: "690 m/s", acc: "0%", dur: "0%", price: "$3", source: "Banshee LL1" },
-    { cal: "4.6x30mm", name: "V-MAX", pen: "Flesh", penValue: 1, speed: "640 m/s", acc: "0%", dur: "-15%", price: "$5", source: "Banshee LL2" },
-    { cal: "4.6x30mm", name: "AP SX", pen: "Klasse III+", penValue: 6, speed: "680 m/s", acc: "0%", dur: "-40%", price: "$10", source: "Banshee LL3" },
+    { cal: "4.6x30mm", name: "SUBSONIC", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "290 m/s", acc: "0%", dur: "0%", price: "$2", source: "Banshee LL1" },
+    { cal: "4.6x30mm", name: "FMJ SX", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "620 m/s", acc: "0%", dur: "0%", price: "$3", source: "Banshee LL1" },
+    { cal: "4.6x30mm", name: "ACTION SX", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "690 m/s", acc: "0%", dur: "0%", price: "$3", source: "Banshee LL1" },
+    { cal: "4.6x30mm", name: "V-MAX", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "640 m/s", acc: "0%", dur: "-15%", price: "$5", source: "Banshee LL2" },
+    { cal: "4.6x30mm", name: "AP SX", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "680 m/s", acc: "0%", dur: "-40%", price: "$10", source: "Banshee LL3" },
 
     // --- 5.45x39mm (AK-74) ---
-    { cal: "5.45x39mm", name: "US", pen: "Klasse IIIA", penValue: 3, speed: "303 m/s", acc: "-6%", dur: "0%", price: "$2", source: "Turncoat LL1" },
-    { cal: "5.45x39mm", name: "WOLF", pen: "Klasse IIIA+", penValue: 4, speed: "840 m/s", acc: "-2%", dur: "0%", price: "$2", source: "Turncoat LL1" },
-    { cal: "5.45x39mm", name: "FMJ", pen: "Klasse III", penValue: 5, speed: "855 m/s", acc: "0%", dur: "-15%", price: "$3", source: "Turncoat LL2" },
-    { cal: "5.45x39mm", name: "HP", pen: "Flesh", penValue: 1, speed: "880 m/s", acc: "-6%", dur: "-15%", price: "$4", source: "Turncoat LL2" },
-    { cal: "5.45x39mm", name: "PS", pen: "Klasse III", penValue: 5, speed: "900 m/s", acc: "-2%", dur: "-15%", price: "$5", source: "Turncoat LL2" },
-    { cal: "5.45x39mm", name: "PP", pen: "Klasse III+", penValue: 6, speed: "870 m/s", acc: "+2%", dur: "-40%", price: "$11", source: "Turncoat LL3" },
-    { cal: "5.45x39mm", name: "BT", pen: "Klasse III+", penValue: 6, speed: "915 m/s", acc: "+2%", dur: "-40%", price: "$11", source: "Turncoat LL3" },
-    { cal: "5.45x39mm", name: "BP", pen: "Klasse III++", penValue: 7, speed: "860 m/s", acc: "+1%", dur: "-100%", price: "$21", source: "Turncoat LL4" },
-    { cal: "5.45x39mm", name: "BS", pen: "Klasse IV", penValue: 8, speed: "840 m/s", acc: "+6%", dur: "-100%", price: "$21", source: "Turncoat LL4" },
+    { cal: "5.45x39mm", name: "US", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "303 m/s", acc: "-6%", dur: "0%", price: "$2", source: "Turncoat LL1" },
+    { cal: "5.45x39mm", name: "FMJ", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "855 m/s", acc: "0%", dur: "-15%", price: "$3", source: "Turncoat LL2" },
+    { cal: "5.45x39mm", name: "HP", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "880 m/s", acc: "-6%", dur: "-15%", price: "$4", source: "Turncoat LL2" },
+    { cal: "5.45x39mm", name: "PS", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "900 m/s", acc: "-2%", dur: "-15%", price: "$5", source: "Turncoat LL2" },
+    { cal: "5.45x39mm", name: "PP", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "870 m/s", acc: "+2%", dur: "-40%", price: "$11", source: "Turncoat LL3" },
+    { cal: "5.45x39mm", name: "BT", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "915 m/s", acc: "+2%", dur: "-40%", price: "$11", source: "Turncoat LL3" },
+    { cal: "5.45x39mm", name: "BP", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "860 m/s", acc: "+1%", dur: "-100%", price: "$21", source: "Turncoat LL4" },
+    { cal: "5.45x39mm", name: "BS", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "840 m/s", acc: "+6%", dur: "-100%", price: "$21", source: "Turncoat LL4" },
 
-    // --- 5.56x45mm (M4A1 / CQ A1) ---
-    { cal: "5.56x45mm", name: "SP", pen: "Flesh", penValue: 1, speed: "930 m/s", acc: "-3%", dur: "0%", price: "$2", source: "Gunny LL1" },
-    { cal: "5.56x45mm", name: "FMJ", pen: "Klasse III", penValue: 5, speed: "880 m/s", acc: "0%", dur: "0%", price: "$3", source: "Gunny LL1" },
-    { cal: "5.56x45mm", name: "HPBT", pen: "Flesh", penValue: 1, speed: "861 m/s", acc: "-3%", dur: "-15%", price: "$4", source: "Gunny LL2" },
-    { cal: "5.56x45mm", name: "M193", pen: "Klasse III", penValue: 5, speed: "1006 m/s", acc: "+2%", dur: "-15%", price: "$4", source: "Gunny LL2" },
-    { cal: "5.56x45mm", name: "M855", pen: "Klasse III+", penValue: 6, speed: "920 m/s", acc: "+2%", dur: "-15%", price: "$8", source: "Gunny LL2" },
-    { cal: "5.56x45mm", name: "M856 (Tracer)", pen: "Klasse III", penValue: 5, speed: "917 m/s", acc: "-3%", dur: "-15%", price: "$8", source: "Gunny LL2" },
-    { cal: "5.56x45mm", name: "M856A1", pen: "Klasse III+", penValue: 6, speed: "945 m/s", acc: "-4%", dur: "-40%", price: "$12", source: "Gunny LL3" },
-    { cal: "5.56x45mm", name: "M855A1", pen: "Klasse III++", penValue: 7, speed: "970 m/s", acc: "+7%", dur: "-40%", price: "$12", source: "Gunny LL3" },
-    { cal: "5.56x45mm", name: "M995 AP", pen: "Klasse IV", penValue: 8, speed: "1030 m/s", acc: "+5%", dur: "-100%", price: "$22", source: "Gunny LL4" },
+    // --- 5.56x45mm (M4A1) ---
+    { cal: "5.56x45mm", name: "SP", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "930 m/s", acc: "-3%", dur: "0%", price: "$2", source: "Gunny LL1" },
+    { cal: "5.56x45mm", name: "FMJ", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "880 m/s", acc: "0%", dur: "0%", price: "$3", source: "Gunny LL1" },
+    { cal: "5.56x45mm", name: "HPBT", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "861 m/s", acc: "-3%", dur: "-15%", price: "$4", source: "Gunny LL2" },
+    { cal: "5.56x45mm", name: "M193", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "1006 m/s", acc: "+2%", dur: "-15%", price: "$4", source: "Gunny LL2" },
+    { cal: "5.56x45mm", name: "M855", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "920 m/s", acc: "+2%", dur: "-15%", price: "$8", source: "Gunny LL2" },
+    { cal: "5.56x45mm", name: "M856 (Tracer)", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "917 m/s", acc: "-3%", dur: "-15%", price: "$8", source: "Gunny LL2" },
+    { cal: "5.56x45mm", name: "M856A1", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "945 m/s", acc: "-4%", dur: "-40%", price: "$12", source: "Gunny LL3" },
+    { cal: "5.56x45mm", name: "M855A1", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "970 m/s", acc: "+7%", dur: "-40%", price: "$12", source: "Gunny LL3" },
+    { cal: "5.56x45mm", name: "M995 AP", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "1030 m/s", acc: "+5%", dur: "-100%", price: "$22", source: "Gunny LL4" },
 
-    // --- 7.62x39mm (AKM / SKS) ---
-    { cal: "7.62x39mm", name: "US", pen: "Klasse IIIA", penValue: 3, speed: "310 m/s", acc: "-6%", dur: "0%", price: "$2", source: "Artisan LL1" },
-    { cal: "7.62x39mm", name: "SP", pen: "Flesh", penValue: 1, speed: "743 m/s", acc: "-2%", dur: "0%", price: "$2", source: "Artisan LL1" },
-    { cal: "7.62x39mm", name: "FMJ", pen: "Klasse III", penValue: 5, speed: "738 m/s", acc: "-6%", dur: "0%", price: "$4", source: "Turncoat LL1" },
-    { cal: "7.62x39mm", name: "TRACER", pen: "Klasse III", penValue: 5, speed: "725 m/s", acc: "-3%", dur: "0%", price: "$4", source: "Turncoat LL1" },
-    { cal: "7.62x39mm", name: "PS", pen: "Klasse III+", penValue: 6, speed: "725 m/s", acc: "+1%", dur: "-15%", price: "$9", source: "Turncoat LL2" },
-    { cal: "7.62x39mm", name: "PP", pen: "Klasse III++", penValue: 7, speed: "740 m/s", acc: "+1%", dur: "-40%", price: "$13", source: "Turncoat LL3" },
-    { cal: "7.62x39mm", name: "BP", pen: "Klasse IV", penValue: 8, speed: "740 m/s", acc: "+2%", dur: "-100%", price: "$23", source: "Turncoat LL4" },
+    // --- 7.62x39mm (AKM) ---
+    { cal: "7.62x39mm", name: "US", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "310 m/s", acc: "-6%", dur: "0%", price: "$2", source: "Artisan LL1" },
+    { cal: "7.62x39mm", name: "SP", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "743 m/s", acc: "-2%", dur: "0%", price: "$2", source: "Artisan LL1" },
+    { cal: "7.62x39mm", name: "FMJ", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "738 m/s", acc: "-6%", dur: "0%", price: "$4", source: "Turncoat LL1" },
+    { cal: "7.62x39mm", name: "TRACER", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "725 m/s", acc: "-3%", dur: "0%", price: "$4", source: "Turncoat LL1" },
+    { cal: "7.62x39mm", name: "PS", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "725 m/s", acc: "+1%", dur: "-15%", price: "$9", source: "Turncoat LL2" },
+    { cal: "7.62x39mm", name: "PP", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "740 m/s", acc: "+1%", dur: "-40%", price: "$13", source: "Turncoat LL3" },
+    { cal: "7.62x39mm", name: "BP", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "740 m/s", acc: "+2%", dur: "-100%", price: "$23", source: "Turncoat LL4" },
 
-    // --- 7.62x51mm (M700 / Mosin Equivalent) ---
-    { cal: "7.62x51mm", name: "M80", pen: "Klasse III+", penValue: 6, speed: "817 m/s", acc: "0%", dur: "0%", price: "$5", source: "Gunny LL1" },
-    { cal: "7.62x51mm", name: "M62 (Tracer)", pen: "Klasse III+", penValue: 6, speed: "820 m/s", acc: "-4%", dur: "0%", price: "$5", source: "Gunny LL1" },
-    { cal: "7.62x51mm", name: "HPBT", pen: "Flesh", penValue: 1, speed: "800 m/s", acc: "+4%", dur: "-40%", price: "$12", source: "Gunny LL3" },
-    { cal: "7.62x51mm", name: "M80A1", pen: "Klasse III++", penValue: 7, speed: "835 m/s", acc: "+3%", dur: "-40%", price: "$15", source: "Gunny LL3" },
-    { cal: "7.62x51mm", name: "M61", pen: "Klasse IV", penValue: 8, speed: "838 m/s", acc: "+4%", dur: "-100%", price: "$28", source: "Gunny LL4" },
+    // --- 7.62x51mm (M700) ---
+    { cal: "7.62x51mm", name: "HPBT", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "800 m/s", acc: "+4%", dur: "-40%", price: "$12", source: "Gunny LL3" },
+    { cal: "7.62x51mm", name: "M80", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "817 m/s", acc: "0%", dur: "0%", price: "$5", source: "Gunny LL1" },
+    { cal: "7.62x51mm", name: "M62 (Tracer)", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "820 m/s", acc: "-4%", dur: "0%", price: "$5", source: "Gunny LL1" },
+    { cal: "7.62x51mm", name: "M80A1", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "835 m/s", acc: "+3%", dur: "-40%", price: "$15", source: "Gunny LL3" },
+    { cal: "7.62x51mm", name: "M61", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "838 m/s", acc: "+4%", dur: "-100%", price: "$28", source: "Gunny LL4" },
 
-    // --- 12 GAUGE (Schrot / Slugs) ---
-    { cal: "12 Gauge", name: "00 BUCK", pen: "Flesh (Brutal)", penValue: 1, speed: "370 m/s", acc: "+38%", dur: "0%", price: "$3", source: "Gunny LL1" },
-    { cal: "12 Gauge", name: "12G SLUG", pen: "Klasse IIA", penValue: 2, speed: "420 m/s", acc: "+42%", dur: "-15%", price: "$5", source: "Gunny LL2" },
-    { cal: "12 Gauge", name: "FC 00 BUCK", pen: "Flesh (Tight Spread)", penValue: 1, speed: "349 m/s", acc: "+27%", dur: "-15%", price: "$6", source: "Gunny LL2" },
-    { cal: "12 Gauge", name: "SST SABOT SLUG", pen: "Klasse IIIA", penValue: 3, speed: "609 m/s", acc: "+50%", dur: "-40%", price: "$12", source: "Gunny LL3" }
+    // --- 7.62x54mmR (Mosin) ---
+    { cal: "7.62x54mmR", name: "SP", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "700 m/s", acc: "0%", dur: "0%", price: "$4", source: "Turncoat LL1" },
+    { cal: "7.62x54mmR", name: "FMJ", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "840 m/s", acc: "0%", dur: "0%", price: "$5", source: "Turncoat LL2" },
+    { cal: "7.62x54mmR", name: "LPS", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "865 m/s", acc: "0%", dur: "-15%", price: "$8", source: "Turncoat LL2" },
+    { cal: "7.62x54mmR", name: "T-46M", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":0 }, speed: "800 m/s", acc: "-2%", dur: "-15%", price: "$8", source: "Turncoat LL2" },
+    { cal: "7.62x54mmR", name: "SNB", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "875 m/s", acc: "+2%", dur: "-40%", price: "$16", source: "Turncoat LL3" },
+    { cal: "7.62x54mmR", name: "BS", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":3, "III++":3 }, speed: "860 m/s", acc: "+4%", dur: "-100%", price: "$25", source: "Turncoat LL4" },
+
+    // --- 12 Gauge (Schrotflinten) ---
+    { cal: "12 Gauge", name: "00 BUCK", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "370 m/s", acc: "+38%", dur: "0%", price: "$3", source: "Gunny LL1" },
+    { cal: "12 Gauge", name: "12G SLUG", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "420 m/s", acc: "+42%", dur: "-15%", price: "$5", source: "Gunny LL2" },
+    { cal: "12 Gauge", name: "FC 00 BUCK", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "349 m/s", acc: "+27%", dur: "-15%", price: "$6", source: "Gunny LL2" },
+    { cal: "12 Gauge", name: "SST SABOT SLUG", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "609 m/s", acc: "+50%", dur: "-40%", price: "$12", source: "Gunny LL3" }
 ];
     
 // ==========================================
