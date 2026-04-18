@@ -5238,5 +5238,154 @@ function goToHome() {
         
         console.log("Wachhund System erfolgreich geladen!");
     </script>
+
+    // ==============================================================
+    // KI ===========================================================
+    // ==============================================================
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+    <script>
+        // --- UI DYNAMISCH UPDATEN ---
+        // Fügt die neuen Buttons automatisch ins bestehende Layout ein
+        setTimeout(() => {
+            const lootHeader = document.getElementById('lootTotalValue')?.parentElement;
+            if (lootHeader) {
+                lootHeader.style.alignItems = 'center';
+                
+                // Alten Simulator-Button entfernen
+                const oldBtn = lootHeader.querySelector('button');
+                if (oldBtn) oldBtn.remove();
+
+                // Neue Scanner-Buttons einfügen
+                const btnGroup = document.createElement('div');
+                btnGroup.style.display = 'flex';
+                btnGroup.style.gap = '10px';
+                btnGroup.innerHTML = `
+                    <button id="autoScanBtn" onclick="window.toggleAutoScan()" style="background: #111; color: #aaa; border: 1px solid #444; padding: 5px 10px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.3s;">[ AUTO SCAN: OFF ]</button>
+                    <button id="ocrScanBtn" onclick="window.scanScreenWithOCR()" style="background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00; padding: 5px 15px; cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.3s;">[ SCAN SCREEN ]</button>
+                `;
+                lootHeader.appendChild(btnGroup);
+
+                // Versteckte Kamera (Canvas) für die KI einbauen
+                if (!document.getElementById('ocrCanvas')) {
+                    const canvas = document.createElement('canvas');
+                    canvas.id = 'ocrCanvas';
+                    canvas.style.display = 'none';
+                    lootHeader.parentNode.insertBefore(canvas, lootHeader.nextSibling);
+                }
+            }
+        }, 500);
+
+        // --- KI SCAN LOGIK ---
+        window.scanScreenWithOCR = async function() {
+            const video = document.getElementById('gameScreenVideo');
+            const canvas = document.getElementById('ocrCanvas');
+            const log = document.getElementById('lootLog');
+            const btn = document.getElementById('ocrScanBtn');
+            const pulseLayer = document.getElementById('wachhundPulseLayer');
+
+            if (!video || !video.srcObject) {
+                log.innerHTML = `<li style="color: #ff4c4c;">> FEHLER: Kein aktiver Videostream! Bitte erst "SPIEL ERFASSEN" starten.</li>`;
+                // Auto-Scan abbrechen falls er fälschlicherweise lief
+                if (window.autoScanIntervalTimer) window.toggleAutoScan();
+                return;
+            }
+
+            // UI Feedback während die KI rechnet
+            btn.innerText = "[ LESE DATEN... ]";
+            btn.style.color = "#ff9900";
+            btn.style.borderColor = "#ff9900";
+            btn.disabled = true;
+
+            // Foto vom Video machen
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            log.innerHTML = `<li style="color: #ff9900;">> Analysiere Bilddaten per KI...</li>`;
+
+            try {
+                // Tesseract KI füttern
+                const result = await Tesseract.recognize(canvas, 'eng');
+                const scannedText = result.data.text.toUpperCase();
+                let foundItems = [];
+
+                // Mit Datenbank abgleichen
+                window.wachhundDatabase.forEach(item => {
+                    // Prüft, ob der Item-Name im Text auf dem Bildschirm vorkommt
+                    if (scannedText.includes(item.name.toUpperCase())) {
+                        foundItems.push(item);
+                    }
+                });
+
+                log.innerHTML = `<li style="color: #aaa;">> Scan abgeschlossen.</li>`;
+
+                if (foundItems.length > 0) {
+                    // Grünes Pulsieren auslösen
+                    pulseLayer.style.animation = 'pulse-green 1s 3';
+                    setTimeout(() => { pulseLayer.style.animation = 'none'; }, 3000);
+
+                    foundItems.forEach(item => {
+                        window.currentLootValue += item.price;
+                        log.innerHTML += `
+                            <li style="color: #00ff00; font-weight: bold; margin-top: 5px;">
+                                > 🎯 TARGET SPOTTED: ${item.icon} ${item.name} ($${item.price})
+                            </li>`;
+                    });
+                    document.getElementById('lootTotalValue').innerText = `$${window.currentLootValue.toLocaleString()}`;
+                } else {
+                    log.innerHTML += `<li style="color: #666;">> Keine Targets im Fokus erkannt.</li>`;
+                }
+
+            } catch (error) {
+                log.innerHTML += `<li style="color: #ff4c4c;">> Scanner-Fehler: Die KI konnte das Bild nicht verarbeiten.</li>`;
+            }
+
+            // Button Reset
+            btn.innerText = "[ SCAN SCREEN ]";
+            btn.style.color = "#00ff00";
+            btn.style.borderColor = "#00ff00";
+            btn.disabled = false;
+        };
+
+        // --- AUTO RADAR SWEEP LOGIK ---
+        window.autoScanIntervalTimer = null;
+
+        window.toggleAutoScan = function() {
+            const btn = document.getElementById('autoScanBtn');
+            const log = document.getElementById('lootLog');
+
+            // Ausschalten
+            if (window.autoScanIntervalTimer) {
+                clearInterval(window.autoScanIntervalTimer);
+                window.autoScanIntervalTimer = null;
+                btn.innerText = "[ AUTO SCAN: OFF ]";
+                btn.style.color = "#aaa";
+                btn.style.borderColor = "#444";
+                log.innerHTML += `<li style="color: #ff4c4c;">> Auto-Scanner deaktiviert.</li>`;
+            } 
+            // Einschalten
+            else {
+                btn.innerText = "[ AUTO SCAN: ON (15s) ]";
+                btn.style.color = "#00ff00";
+                btn.style.borderColor = "#00ff00";
+                log.innerHTML += `<li style="color: #00ff00; font-weight: bold;">> Auto-Scanner aktiviert! (15s Intervall)</li>`;
+                
+                window.scanScreenWithOCR(); // Erster Scan sofort
+                
+                window.autoScanIntervalTimer = setInterval(() => {
+                    const video = document.getElementById('gameScreenVideo');
+                    // Nur scannen, wenn auch wirklich das Spiel erfasst wird
+                    if (video && video.srcObject) {
+                        window.scanScreenWithOCR();
+                    } else {
+                        window.toggleAutoScan(); // Automatisch ausschalten, wenn Stream tot
+                    }
+                }, 15000); // 15000 Millisekunden = 15 Sekunden
+            }
+        };
+    </script>
 </body>
 </html>
