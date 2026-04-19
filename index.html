@@ -6,6 +6,146 @@
     <title>Gray Zone Warfare - Tactical Tool</title>
     <link rel="stylesheet" href="style.css">
     <style>
+
+        /* ============================================================== */
+        /* INTELLIGENCE BRIEFING TERMINAL (PATCH NOTES) */
+        /* ============================================================== */
+        .intel-terminal {
+            display: flex;
+            gap: 20px;
+            background: #0d110d; /* Dunkles Dschungel-Grün/Schwarz */
+            border: 2px solid #2a3b2a;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 600px;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 255, 0, 0.05);
+            font-family: 'Courier New', Courier, monospace;
+            color: #b0c4b0;
+        }
+
+        /* LINKE SEITE: Archiv der Briefings */
+        .intel-sidebar {
+            width: 300px;
+            background: rgba(10, 15, 10, 0.8);
+            border: 1px solid #1f2b1f;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .intel-header {
+            background: #1a241a;
+            color: #7ca35a;
+            padding: 15px;
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 3px;
+            border-bottom: 2px solid #334a33;
+            text-transform: uppercase;
+        }
+
+        .intel-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .intel-item {
+            background: #121812;
+            border-left: 4px solid #334a33;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .intel-item:hover, .intel-item.active {
+            background: #1f2b1f;
+            border-left-color: #7ca35a;
+        }
+
+        .intel-item .date { color: #5a755a; font-size: 0.8rem; margin-bottom: 5px; }
+        .intel-item .title { font-weight: bold; color: #e0e0e0; font-size: 1rem; }
+        .intel-item .version {
+            position: absolute; top: 10px; right: 10px;
+            background: #000; padding: 2px 5px; font-size: 0.7rem; color: #7ca35a; border: 1px solid #334a33;
+        }
+
+        /* RECHTE SEITE: Das eigentliche Dossier */
+        .intel-content-wrapper {
+            flex: 1;
+            background: #121812;
+            border: 1px solid #1f2b1f;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Die rote Geheim-Markierung */
+        .top-secret-bar {
+            background: #8b0000;
+            color: #fff;
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 8px;
+            padding: 5px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .intel-content {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        /* Militärische Typografie im Text */
+        .intel-content h1 { color: #fff; font-size: 2rem; margin-top: 0; border-bottom: 1px solid #334a33; padding-bottom: 10px; }
+        .intel-content h2 { color: #7ca35a; font-size: 1.2rem; margin-top: 30px; }
+        .intel-content ul { padding-left: 20px; list-style-type: square; }
+        .intel-content li { margin-bottom: 8px; }
+        .intel-content strong { color: #fff; background: rgba(255,255,255,0.1); padding: 0 4px; }
+
+        /* Decryption Animation (Matrix Effekt) */
+        .decryption-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #0d110d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+        
+        .decryption-text {
+            color: #7ca35a;
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Stempel */
+        .classified-stamp {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            color: rgba(139, 0, 0, 0.4);
+            font-size: 3rem;
+            font-weight: 900;
+            border: 4px solid rgba(139, 0, 0, 0.4);
+            padding: 10px;
+            transform: rotate(15deg);
+            pointer-events: none;
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+        }
         
         /* ============================================================== */
         /* LOGISTICS & QUEST TRACKER TERMINAL */
@@ -1156,7 +1296,7 @@
 
     <div class="sidebar-title">Allgemein</div>
     <button class="sidebar-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
-    <button class="sidebar-btn" onclick="openTab('tab-patchnotes', this)">📜 Patch Notes</button>
+    <button class="sidebar-btn" onclick="openTab('tab-patchnotes', this)">📜 Briefing Terminal (Patch Notes)</button>
 
     <div class="sidebar-title">Basecamp</div>
     <button class="sidebar-btn" onclick="openTab('tab-vendors', this)">🤝 Händler</button>
@@ -1402,17 +1542,30 @@
         </div>
 
         <div id="tab-patchnotes" class="tab-content">
-            <h2>Aktuelle Patch Notes (Changelog)</h2>
-            <div class="info-box" style="text-align: center; padding: 50px 20px; border-top: 4px solid var(--accent); background: #252525;">
-                <div style="font-size: 3rem; margin-bottom: 10px;">📜</div>
-                <h3 style="color: #fff; font-size: 1.5rem; margin-top: 0;">GZW News & Patch Notes</h3>
-                <p style="color: #aaa; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6;">
-                    Die offizielle Gray Zone Warfare Website blockiert das direkte Einbetten innerhalb anderer Tools. Klicke auf einen der Buttons, um die offiziellen News sicher in einem neuen Fenster zu öffnen.
-                </p>
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <a href="https://www-grayzonewarfare-com.translate.goog/news?_x_tr_sl=en&_x_tr_tl=de&_x_tr_hl=de" target="_blank" style="background-color: var(--accent); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: filter 0.2s;" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter='brightness(1)'">🇩🇪 Auf Deutsch lesen</a>
-                    <a href="https://www.grayzonewarfare.com/news" target="_blank" style="background-color: #2a2a2a; color: #ccc; border: 1px solid #444; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#3a3a3a'; this.style.color='#fff'" onmouseout="this.style.backgroundColor='#2a2a2a'; this.style.color='#ccc'">🇬🇧 Original öffnen</a>
+            <h2 style="color: #7ca35a; text-transform: uppercase; letter-spacing: 3px; border-bottom: 2px solid #334a33; padding-bottom: 10px; margin-top: 0;">📡 Intercepted Transmissions (Patch Notes)</h2>
+            
+            <div class="intel-terminal">
+                
+                <div class="intel-sidebar">
+                    <div class="intel-header">
+                        DATEN-ARCHIV
+                    </div>
+                    <div class="intel-list" id="intelList">
+                        </div>
                 </div>
+
+                <div class="intel-content-wrapper">
+                    <div class="top-secret-bar">TOP SECRET // NO FOREIGN NATS</div>
+                    
+                    <div id="decryptionOverlay" class="decryption-overlay">
+                        <div style="font-size: 3rem; margin-bottom: 20px;">🔒</div>
+                        <div class="decryption-text">ENTSCHLÜSSELUNG LÄUFT...</div>
+                    </div>
+
+                    <div class="intel-content" id="intelContent">
+                        </div>
+                </div>
+
             </div>
         </div>
 
@@ -4895,6 +5048,160 @@ function goToHome() {
     }
 
     // ==============================================================
+        // INTELLIGENCE BRIEFING (PATCH NOTES) DATENBANK & LOGIK
+        // ==============================================================
+        
+        // Hier trägst du in Zukunft die übersetzten Patch Notes ein!
+        const intelDatabase = [
+                {
+                id: "patch_0_4_1_0",
+                date: "AKTUELL - APRIL 2024",
+                version: "v0.4.1.0",
+                title: "Operation: Ballistische Korrektur",
+                content: `
+                    <div class="classified-stamp">DECRYPTED</div>
+                    <h1>EINSATZ-UPDATE: 0.4.1.0</h1>
+                    <p>Commander, neue Daten vom MADFINGER-Kommando wurden entschlüsselt. Der Fokus liegt auf der ballistischen Effektivität und der Stabilisierung der Feld-Logistik.</p>
+                    
+                    <h2>1. BALLISTIK & MUNITION (PRIORITÄT)</h2>
+                    <ul>
+                        <li><strong>Durchschlagskraft:</strong> Der Einfluss des Auftreffwinkels wurde optimiert. Gut platzierte Schüsse dringen nun zuverlässiger durch Rüstung und Knochen, anstatt unrealistisch abzuprallen.</li>
+                        <li><strong>Abprall-Logik:</strong> Die Winkel wurden angepasst, um die Letalität bei korrekter Zielansprache massiv zu erhöhen.</li>
+                    </ul>
+
+                    <h2>2. FEINDVERHALTEN & GAMEPLAY</h2>
+                    <ul>
+                        <li><strong>KI-Reaktionszeit:</strong> Feindliche Einheiten eröffnen nun ohne Verzögerung das Feuer, sobald sie nach Sichtverlust den Kontakt zum Spieler wiederherstellen.</li>
+                        <li><strong>Visier-Kalibrierung:</strong> Fehler beim "Nullstellen" (Zeroing) behoben. Visiere behalten nun ihre Einstellungen nach Verlassen des Zielmodus bei.</li>
+                        <li><strong>Fernglas-Lock:</strong> Ein kritischer Fehler, bei dem Soldaten nach dem Tod im Beobachtungsmodus feststeckten, wurde eliminiert.</li>
+                    </ul>
+
+                    <h2>3. LOGISTIK & FINANZEN (UI)</h2>
+                    <ul>
+                        <li><strong>Finanz-Logistik:</strong> Kritischer Systemabsturz beim Befüllen von teilweise gefüllten Geldbörsen wurde behoben.</li>
+                        <li><strong>Inventar-Management:</strong> Gegenstände in Rucksäcken bleiben nun auch nach dem Verschachteln (Rucksack in Rucksack) voll interaktiv.</li>
+                        <li><strong>Händler-Inventar:</strong> Freigeschaltete Ausrüstung von Boss-Tasks verschwindet nicht mehr aus dem Angebot der Händler.</li>
+                    </ul>
+
+                    <h2>4. TECHNISCHE OPTIMIERUNG</h2>
+                    <ul>
+                        <li><strong>FPS-Stabilisierung:</strong> Ein seltener Bug, der die Bildrate nach dem Respawn auf 15 FPS drosselte, wurde behoben.</li>
+                        <li><strong>LOD-Rendering:</strong> Das Springen der NPC-Modelle zwischen niedriger und hoher Auflösung auf Distanz wurde korrigiert.</li>
+                        <li><strong>Server-Stabilität:</strong> Diverse Speicheroptimierungen implementiert, um serverbedingte Lags zu vermeiden.</li>
+                    </ul>
+
+                    <h2>5. DIVERSE FELDKORREKTUREN</h2>
+                    <ul>
+                        <li>Unsichtbare Kollisionsbarriere nahe der <strong>Tiger Bay Mall (196, 129)</strong> entfernt.</li>
+                        <li>Fehlerhafte Schussbahnen im Treppenhaus des <strong>Midnight Sapphire Hotels</strong> korrigiert.</li>
+                        <li>Wahrscheinlichkeit für den Fund wertvoller Gegenstände (High-Value Loot) wurde global aktualisiert.</li>
+                    </ul>
+                    
+                    <p style="margin-top:20px; color:#7ca35a; font-weight:bold;">> ENDE DER ÜBERTRAGUNG: JEDE BEWEGUNG ZÄHLT.</p>
+                `
+            },
+            {
+                id: "patch_0_4_0",
+                date: "15. MAI 2024",
+                version: "v0.4.0",
+                title: "Operation: Spearhead Deployed",
+                content: `
+                    <div class="classified-stamp">DECRYPTED</div>
+                    <h1>MAJOR UPDATE: Spearhead</h1>
+                    <p>Commander, folgende Daten wurden vom feindlichen Netzwerk abgefangen und für unsere Operationen aufbereitet.</p>
+                    
+                    <h2>NEUE AUSRÜSTUNG (HARDWARE)</h2>
+                    <ul>
+                        <li><strong>L403A1 / KS-1 Sturmgewehr:</strong> Wurde dem Arsenal von Turncoat hinzugefügt. Ideal für CQC und mittlere Distanzen.</li>
+                        <li><strong>VUDU 1-6x24 Scope:</strong> Neues Zielfernrohr für präzise Aufklärung verfügbar.</li>
+                        <li><strong>Zusätzliche Munitionstypen:</strong> 5.56x45 M995 AP Munition wurde autorisiert.</li>
+                    </ul>
+
+                    <h2>FEINDLICHES VERHALTEN (KI-UPDATE)</h2>
+                    <ul>
+                        <li>Gegnerische Einheiten reagieren nun aggressiver auf Schalldämpfer-Schüsse aus unter 50 Metern.</li>
+                        <li>Sichtkegel der Wachen in Fort Narith wurde um 15% reduziert bei starkem Regen.</li>
+                    </ul>
+
+                    <h2>TERRAIN & LOGISTIK</h2>
+                    <ul>
+                        <li>Neue Landezonen (LZs) am Rand von Tiger Bay eingerichtet.</li>
+                        <li>Kollisionsfehler bei den Helikoptern (Phase-Through) wurde behoben.</li>
+                    </ul>
+                `
+            },
+            {
+                id: "hotfix_0_3_1",
+                date: "02. MAI 2024",
+                version: "v0.3.1",
+                title: "Hotfix: Stabilitäts-Update",
+                content: `
+                    <div class="classified-stamp">ARCHIVED</div>
+                    <h1>HOTFIX: Performance & Crashes</h1>
+                    <p>Kurzes Briefing zur Serverstabilität:</p>
+                    <h2>SYSTEM-ANPASSUNGEN</h2>
+                    <ul>
+                        <li>Memory Leak beim Öffnen des Inventars wurde gefixt.</li>
+                        <li>Easy Anti-Cheat (EAC) Timeouts wurden reduziert.</li>
+                        <li>Der "Headless"-Bug (Fehlender Kopf nach dem Spawnen) wurde eliminiert.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        // Funktion: Liste der Briefings laden
+        function renderIntelList() {
+            const listContainer = document.getElementById('intelList');
+            listContainer.innerHTML = '';
+
+            intelDatabase.forEach((intel, index) => {
+                const isActive = index === 0 ? 'active' : ''; // Erstes Item ist aktiv
+                listContainer.innerHTML += `
+                    <div class="intel-item ${isActive}" onclick="openIntelBriefing('${intel.id}', this)">
+                        <div class="version">${intel.version}</div>
+                        <div class="date">> ${intel.date}</div>
+                        <div class="title">${intel.title}</div>
+                    </div>
+                `;
+            });
+
+            // Lade das erste Briefing direkt beim Start
+            if (intelDatabase.length > 0) {
+                openIntelBriefing(intelDatabase[0].id, null, true);
+            }
+        }
+
+        // Funktion: Ein Briefing öffnen (Mit Entschlüsselungs-Effekt)
+        function openIntelBriefing(intelId, element, isInitialLoad = false) {
+            // Aktive Markierung in der Liste setzen
+            if (element) {
+                document.querySelectorAll('.intel-item').forEach(el => el.classList.remove('active'));
+                element.classList.add('active');
+            }
+
+            const intel = intelDatabase.find(i => i.id === intelId);
+            if (!intel) return;
+
+            const contentDiv = document.getElementById('intelContent');
+            const overlay = document.getElementById('decryptionOverlay');
+
+            // Inhalt leeren und Overlay anzeigen
+            contentDiv.innerHTML = '';
+            overlay.style.display = 'flex';
+
+            // Simuliere die Entschlüsselung (1,5 Sekunden)
+            const decryptTime = isInitialLoad ? 500 : 1500; 
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                contentDiv.innerHTML = intel.content;
+            }, decryptTime);
+        }
+
+        // Initialisierung aufrufen, wenn die Sektion geladen wird
+        // (Füge 'renderIntelList()' in deine Haupt-Navigations-Logik ein, wenn man auf "Patch Notes" klickt)
+        renderIntelList();
+
+    // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
     window.addEventListener('DOMContentLoaded', () => {
@@ -4918,6 +5225,7 @@ function goToHome() {
         renderTraderAccordions();
         renderStashAccordions();
         renderGearAccordions();
+        renderIntelList();
         
         // Ballistik & Gunsmith
         sortGunsmith('meta');
