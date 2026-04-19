@@ -1296,7 +1296,7 @@
 
     <div class="sidebar-title">Allgemein</div>
     <button class="sidebar-btn active" onclick="openTab('tab-home', this)">🏠 Startseite</button>
-    <button class="sidebar-btn" onclick="openTab('tab-patchnotes', this)">📜 Briefing Terminal (Patch Notes)</button>
+    <button class="sidebar-btn" onclick="openTab('tab-patchnotes', this)">📜 Briefing Terminal</button>
 
     <div class="sidebar-title">Basecamp</div>
     <button class="sidebar-btn" onclick="openTab('tab-vendors', this)">🤝 Händler</button>
@@ -5048,114 +5048,19 @@ function goToHome() {
     }
 
     // ==============================================================
-        // INTELLIGENCE BRIEFING (PATCH NOTES) DATENBANK & LOGIK
-        // ==============================================================
+    // INTELLIGENCE BRIEFING (PATCH NOTES) LOGIK
+    // ==============================================================
         
-        // Hier trägst du in Zukunft die übersetzten Patch Notes ein!
-        const intelDatabase = [
-                {
-                id: "patch_0_4_1_0",
-                date: "AKTUELL - APRIL 2024",
-                version: "v0.4.1.0",
-                title: "Operation: Ballistische Korrektur",
-                content: `
-                    <div class="classified-stamp">DECRYPTED</div>
-                    <h1>EINSATZ-UPDATE: 0.4.1.0</h1>
-                    <p>Commander, neue Daten vom MADFINGER-Kommando wurden entschlüsselt. Der Fokus liegt auf der ballistischen Effektivität und der Stabilisierung der Feld-Logistik.</p>
-                    
-                    <h2>1. BALLISTIK & MUNITION (PRIORITÄT)</h2>
-                    <ul>
-                        <li><strong>Durchschlagskraft:</strong> Der Einfluss des Auftreffwinkels wurde optimiert. Gut platzierte Schüsse dringen nun zuverlässiger durch Rüstung und Knochen, anstatt unrealistisch abzuprallen.</li>
-                        <li><strong>Abprall-Logik:</strong> Die Winkel wurden angepasst, um die Letalität bei korrekter Zielansprache massiv zu erhöhen.</li>
-                    </ul>
-
-                    <h2>2. FEINDVERHALTEN & GAMEPLAY</h2>
-                    <ul>
-                        <li><strong>KI-Reaktionszeit:</strong> Feindliche Einheiten eröffnen nun ohne Verzögerung das Feuer, sobald sie nach Sichtverlust den Kontakt zum Spieler wiederherstellen.</li>
-                        <li><strong>Visier-Kalibrierung:</strong> Fehler beim "Nullstellen" (Zeroing) behoben. Visiere behalten nun ihre Einstellungen nach Verlassen des Zielmodus bei.</li>
-                        <li><strong>Fernglas-Lock:</strong> Ein kritischer Fehler, bei dem Soldaten nach dem Tod im Beobachtungsmodus feststeckten, wurde eliminiert.</li>
-                    </ul>
-
-                    <h2>3. LOGISTIK & FINANZEN (UI)</h2>
-                    <ul>
-                        <li><strong>Finanz-Logistik:</strong> Kritischer Systemabsturz beim Befüllen von teilweise gefüllten Geldbörsen wurde behoben.</li>
-                        <li><strong>Inventar-Management:</strong> Gegenstände in Rucksäcken bleiben nun auch nach dem Verschachteln (Rucksack in Rucksack) voll interaktiv.</li>
-                        <li><strong>Händler-Inventar:</strong> Freigeschaltete Ausrüstung von Boss-Tasks verschwindet nicht mehr aus dem Angebot der Händler.</li>
-                    </ul>
-
-                    <h2>4. TECHNISCHE OPTIMIERUNG</h2>
-                    <ul>
-                        <li><strong>FPS-Stabilisierung:</strong> Ein seltener Bug, der die Bildrate nach dem Respawn auf 15 FPS drosselte, wurde behoben.</li>
-                        <li><strong>LOD-Rendering:</strong> Das Springen der NPC-Modelle zwischen niedriger und hoher Auflösung auf Distanz wurde korrigiert.</li>
-                        <li><strong>Server-Stabilität:</strong> Diverse Speicheroptimierungen implementiert, um serverbedingte Lags zu vermeiden.</li>
-                    </ul>
-
-                    <h2>5. DIVERSE FELDKORREKTUREN</h2>
-                    <ul>
-                        <li>Unsichtbare Kollisionsbarriere nahe der <strong>Tiger Bay Mall (196, 129)</strong> entfernt.</li>
-                        <li>Fehlerhafte Schussbahnen im Treppenhaus des <strong>Midnight Sapphire Hotels</strong> korrigiert.</li>
-                        <li>Wahrscheinlichkeit für den Fund wertvoller Gegenstände (High-Value Loot) wurde global aktualisiert.</li>
-                    </ul>
-                    
-                    <p style="margin-top:20px; color:#7ca35a; font-weight:bold;">> ENDE DER ÜBERTRAGUNG: JEDE BEWEGUNG ZÄHLT.</p>
-                `
-            },
-            {
-                id: "patch_0_4_0",
-                date: "15. MAI 2024",
-                version: "v0.4.0",
-                title: "Operation: Spearhead Deployed",
-                content: `
-                    <div class="classified-stamp">DECRYPTED</div>
-                    <h1>MAJOR UPDATE: Spearhead</h1>
-                    <p>Commander, folgende Daten wurden vom feindlichen Netzwerk abgefangen und für unsere Operationen aufbereitet.</p>
-                    
-                    <h2>NEUE AUSRÜSTUNG (HARDWARE)</h2>
-                    <ul>
-                        <li><strong>L403A1 / KS-1 Sturmgewehr:</strong> Wurde dem Arsenal von Turncoat hinzugefügt. Ideal für CQC und mittlere Distanzen.</li>
-                        <li><strong>VUDU 1-6x24 Scope:</strong> Neues Zielfernrohr für präzise Aufklärung verfügbar.</li>
-                        <li><strong>Zusätzliche Munitionstypen:</strong> 5.56x45 M995 AP Munition wurde autorisiert.</li>
-                    </ul>
-
-                    <h2>FEINDLICHES VERHALTEN (KI-UPDATE)</h2>
-                    <ul>
-                        <li>Gegnerische Einheiten reagieren nun aggressiver auf Schalldämpfer-Schüsse aus unter 50 Metern.</li>
-                        <li>Sichtkegel der Wachen in Fort Narith wurde um 15% reduziert bei starkem Regen.</li>
-                    </ul>
-
-                    <h2>TERRAIN & LOGISTIK</h2>
-                    <ul>
-                        <li>Neue Landezonen (LZs) am Rand von Tiger Bay eingerichtet.</li>
-                        <li>Kollisionsfehler bei den Helikoptern (Phase-Through) wurde behoben.</li>
-                    </ul>
-                `
-            },
-            {
-                id: "hotfix_0_3_1",
-                date: "02. MAI 2024",
-                version: "v0.3.1",
-                title: "Hotfix: Stabilitäts-Update",
-                content: `
-                    <div class="classified-stamp">ARCHIVED</div>
-                    <h1>HOTFIX: Performance & Crashes</h1>
-                    <p>Kurzes Briefing zur Serverstabilität:</p>
-                    <h2>SYSTEM-ANPASSUNGEN</h2>
-                    <ul>
-                        <li>Memory Leak beim Öffnen des Inventars wurde gefixt.</li>
-                        <li>Easy Anti-Cheat (EAC) Timeouts wurden reduziert.</li>
-                        <li>Der "Headless"-Bug (Fehlender Kopf nach dem Spawnen) wurde eliminiert.</li>
-                    </ul>
-                `
-            }
-        ];
-
-        // Funktion: Liste der Briefings laden
+        // Greift jetzt automatisch auf 'intelDatabase' aus der data.js zu!
+        
         function renderIntelList() {
             const listContainer = document.getElementById('intelList');
+            if (!listContainer) return;
             listContainer.innerHTML = '';
 
+            // 'intelDatabase' kommt jetzt direkt aus der data.js
             intelDatabase.forEach((intel, index) => {
-                const isActive = index === 0 ? 'active' : ''; // Erstes Item ist aktiv
+                const isActive = index === 0 ? 'active' : ''; 
                 listContainer.innerHTML += `
                     <div class="intel-item ${isActive}" onclick="openIntelBriefing('${intel.id}', this)">
                         <div class="version">${intel.version}</div>
@@ -5165,15 +5070,12 @@ function goToHome() {
                 `;
             });
 
-            // Lade das erste Briefing direkt beim Start
             if (intelDatabase.length > 0) {
                 openIntelBriefing(intelDatabase[0].id, null, true);
             }
         }
 
-        // Funktion: Ein Briefing öffnen (Mit Entschlüsselungs-Effekt)
         function openIntelBriefing(intelId, element, isInitialLoad = false) {
-            // Aktive Markierung in der Liste setzen
             if (element) {
                 document.querySelectorAll('.intel-item').forEach(el => el.classList.remove('active'));
                 element.classList.add('active');
@@ -5185,22 +5087,21 @@ function goToHome() {
             const contentDiv = document.getElementById('intelContent');
             const overlay = document.getElementById('decryptionOverlay');
 
-            // Inhalt leeren und Overlay anzeigen
             contentDiv.innerHTML = '';
             overlay.style.display = 'flex';
 
-            // Simuliere die Entschlüsselung (1,5 Sekunden)
-            const decryptTime = isInitialLoad ? 500 : 1500; 
+            const decryptTime = isInitialLoad ? 500 : 1200; 
             setTimeout(() => {
                 overlay.style.display = 'none';
                 contentDiv.innerHTML = intel.content;
             }, decryptTime);
         }
 
-        // Initialisierung aufrufen, wenn die Sektion geladen wird
-        // (Füge 'renderIntelList()' in deine Haupt-Navigations-Logik ein, wenn man auf "Patch Notes" klickt)
-        renderIntelList();
-
+        // Initialisierung
+        document.addEventListener('DOMContentLoaded', () => {
+            renderIntelList();
+        });
+                
     // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
