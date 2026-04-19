@@ -1159,7 +1159,7 @@ const logisticsDb = [
     { name: "Schwefelsäure", category: "Werkzeuge & Materialien", vendor: "Alle", price: 99, grid: "2x2", weight: "5.03 kg", isQuest: true, questInfo: "Toxic Environment (Lab Rat) - 2x" },
     { name: "Kaputte Nagelpistole", category: "Werkzeuge & Materialien", vendor: "Alle", price: 75, grid: "2x2", weight: "2.5 kg", isQuest: false, questInfo: "" },
     { name: "Autobatterie", category: "Werkzeuge & Materialien", vendor: "Alle", price: 56, grid: "2x2", weight: "12.66 kg", isQuest: true, questInfo: "Parts Needed / Mechanic's Trouble - 4x" },
-    { name: "Acetylenflasche", category: "Werkzeuge & Materialien", vendor: "Alle", price: 56, grid: "4x2", weight: "11.5 kg", isQuest: true, questInfo: "Heavy Metal (Artisan) - 1x (ACHTUNG: 11.5kg!)" },
+    { name: "Acetylenflasche", category: "Werkzeuge & Materialien", vendor: "Alle", price: 56, grid: "4x2", weight: "11.5 kg", isQuest: true, questInfo: "Heavy Metal (Artisan) - 2x (ACHTUNG: 11.5kg!)" },
     { name: "Kaputter Winkelschleifer", category: "Werkzeuge & Materialien", vendor: "Alle", price: 56, grid: "2x2", weight: "2.499 kg", isQuest: false, questInfo: "" },
     { name: "Kaputte Stichsäge", category: "Werkzeuge & Materialien", vendor: "Alle", price: 55, grid: "2x2", weight: "2 kg", isQuest: false, questInfo: "" },
     { name: "Gummi-Erneuerer", category: "Werkzeuge & Materialien", vendor: "Alle", price: 51, grid: "2x1", weight: "1 kg", isQuest: false, questInfo: "" },
