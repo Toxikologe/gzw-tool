@@ -6437,15 +6437,16 @@ if (saved) savedRing = JSON.parse(saved);
         window.hunterSpeak(cleanResponse);
     };
 </script>
-        <div id="tacticalImageTooltip" style="display: none; position: absolute; z-index: 10000; pointer-events: none; background: #050705; border: 2px solid var(--accent); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 15px rgba(124, 163, 90, 0.2); padding: 5px;">
+        <div id="tacticalImageTooltip" style="display: none; position: fixed; z-index: 10000; pointer-events: none; background: #050705; border: 2px solid var(--accent); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 15px rgba(124, 163, 90, 0.2); padding: 5px;">
         <div style="font-family: 'Courier New', monospace; font-size: 0.65rem; color: var(--accent); margin-bottom: 5px; border-bottom: 1px solid #1f2b1f; padding-bottom: 3px;">VISUAL DATALINK // SECURE</div>
         <img id="tacticalTooltipImg" src="" style="max-width: 280px; max-height: 180px; display: block; border-radius: 2px;" 
              onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'280\\' height=\\'140\\'><rect width=\\'280\\' height=\\'140\\' fill=\\'%230a0a0a\\'/><text x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%23ff4c4c\\' font-family=\\'monospace\\' font-size=\\'18\\'>NO VISUAL DATA</text><line x1=\\'0\\' y1=\\'0\\' x2=\\'280\\' y2=\\'140\\' stroke=\\'%23ff4c4c\\' stroke-width=\\'2\\' opacity=\\'0.3\\'/><line x1=\\'280\\' y1=\\'0\\' x2=\\'0\\' y2=\\'140\\' stroke=\\'%23ff4c4c\\' stroke-width=\\'2\\' opacity=\\'0.3\\'/></svg>';">
     </div>
 
     <script>
+        <script>
         // ==============================================================
-        // TACTICAL HOVER ENGINE V2 (BULLETPROOF TRACKING)
+        // TACTICAL HOVER ENGINE V3 (100% SCROLL-SICHER)
         // ==============================================================
         const tooltip = document.getElementById('tacticalImageTooltip');
         const tooltipImg = document.getElementById('tacticalTooltipImg');
@@ -6458,7 +6459,7 @@ if (saved) savedRing = JSON.parse(saved);
                 let rawId = target.getAttribute('data-item-id');
                 if (!rawId) return;
 
-                // Formatierung der ID
+                // Formatierung der ID (z.B. "M4A1" -> "m4a1")
                 let formattedId = rawId.toLowerCase()
                                        .replace(/[^a-z0-9]+/g, "_")
                                        .replace(/^_|_$/g, "");
@@ -6466,8 +6467,7 @@ if (saved) savedRing = JSON.parse(saved);
                 if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
                     tooltipImg.src = itemImages[formattedId];
                     tooltip.style.display = 'block';
-                    // Sofortige Positionierung beim Erscheinen
-                    positionTooltip(e);
+                    positionTooltip(e); // Sofort positionieren
                 }
             }
         });
@@ -6481,7 +6481,6 @@ if (saved) savedRing = JSON.parse(saved);
         document.addEventListener('mouseout', function(e) {
             let target = e.target.closest('.item-hover-trigger');
             if (target) {
-                // Prüfen, ob wir wirklich das Element verlassen haben (verhindert Flackern)
                 if (!e.relatedTarget || !target.contains(e.relatedTarget)) {
                     currentHoverTarget = null;
                     tooltip.style.display = 'none';
@@ -6490,25 +6489,25 @@ if (saved) savedRing = JSON.parse(saved);
             }
         });
 
-        // Die perfekte Positionierungs-Logik
+        // Die kugelsichere Bildschirm-Logik
         function positionTooltip(e) {
             if (!tooltip) return;
             
-            // X- und Y-Koordinaten relativ zum Dokument (inklusive Scroll-Position!)
-            let x = e.pageX + 20; // 20px Abstand zur Maus, damit sie das Bild nicht verdeckt
-            let y = e.pageY + 20;
+            // clientX & clientY nutzen! Die interessieren sich nicht fürs Scrollen, 
+            // sondern messen nur die exakten Pixel deines Monitors!
+            let x = e.clientX + 20; 
+            let y = e.clientY + 20;
 
-            // Optional: Prüfen, ob das Bild aus dem Bildschirmrand rutscht
             const tooltipRect = tooltip.getBoundingClientRect();
             
-            // Wenn das Bild rechts aus dem Bildschrim ragt, spiegeln wir es nach links
-            if (e.clientX + 20 + tooltipRect.width > window.innerWidth) {
-                x = e.pageX - tooltipRect.width - 20;
+            // Kollisionskontrolle: Verhindert, dass das Bild aus dem rechten Rand rutscht
+            if (x + tooltipRect.width > window.innerWidth) {
+                x = e.clientX - tooltipRect.width - 20;
             }
             
-            // Wenn das Bild unten aus dem Bildschirm ragt, schieben wir es nach oben
-            if (e.clientY + 20 + tooltipRect.height > window.innerHeight) {
-                y = e.pageY - tooltipRect.height - 20;
+            // Kollisionskontrolle: Verhindert, dass das Bild aus dem unteren Rand rutscht
+            if (y + tooltipRect.height > window.innerHeight) {
+                y = e.clientY - tooltipRect.height - 20;
             }
 
             tooltip.style.left = x + 'px';
