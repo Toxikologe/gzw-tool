@@ -6513,6 +6513,29 @@ if (saved) savedRing = JSON.parse(saved);
             tooltip.style.left = x + 'px';
             tooltip.style.top = y + 'px';
         }
+
+        document.addEventListener('mouseover', function(e) {
+            let target = e.target.closest('.item-hover-trigger');
+            if (target) {
+                currentHoverTarget = target;
+                let rawId = target.getAttribute('data-item-id');
+                if (!rawId) return;
+
+                // Formatierung der ID
+                let formattedId = rawId.toLowerCase()
+                                       .replace(/[^a-z0-9]+/g, "_")
+                                       .replace(/^_|_$/g, "");
+
+                // ---> FÜGE DIESE ZEILE HIER EIN: <---
+                console.log("SUCHE NACH BILD-ID:", formattedId);
+
+                if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
+                    tooltipImg.src = itemImages[formattedId];
+                    tooltip.style.display = 'block';
+                    positionTooltip(e); 
+                }
+            }
+        });
     </script>
 </body>
 </html>
