@@ -564,27 +564,21 @@
     position: relative; overflow: hidden;
 }
 /* ============================================================== */
-/* EKG-OVERLAY: MITTIG & IM VORDERGRUND */
+/* EKG-OVERLAY (100% KLICKSICHER & ZENTRIERT) */
 /* ============================================================== */
 .ekg-container {
     position: absolute;
-    /* Zentrierung: Startet bei 50% der Höhe und schiebt sich um die eigene Hälfte nach oben */
-    top: 50%; 
-    left: 0;
-    right: 0;
-    height: 120px; /* Die Höhe der Kurve im Zentrum */
-    transform: translateY(-50%); 
-    
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none !important; /* Das wichtigste: Blockiert absolut keine Klicks! */
+    z-index: 10; /* Liegt im Hintergrund */
+    display: flex;
+    align-items: center; /* Zentriert die Linie automatisch exakt in der Mitte */
+    opacity: 0.25;
     overflow: hidden;
-    pointer-events: none; /* WICHTIG: Klicks gehen durch das EKG hindurch auf deine Buttons */
-    z-index: 100; /* Legt sich ÜBER die Kasten */
-    opacity: 0.25; /* Transparenz, damit der Text lesbar bleibt */
 }
 
-/* Taktisches Raster - läuft ebenfalls mittig mit */
 .ekg-grid {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
     background-image: 
         linear-gradient(rgba(124, 163, 90, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(124, 163, 90, 0.05) 1px, transparent 1px);
@@ -592,9 +586,8 @@
 }
 
 .ekg-svg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    width: 100%; 
+    height: 120px; /* Feste Höhe, damit die Zacken immer perfekt aussehen */
 }
 
 .ekg-line-glow {
@@ -610,24 +603,14 @@
 
 .ekg-sweep {
     position: absolute;
-    top: 0; bottom: 0; width: 60px;
-    /* Ein weicher Lichtstreifen, der die Linie 'beleuchtet' */
-    background: linear-gradient(90deg, transparent, rgba(124, 163, 90, 0.2), rgba(124, 163, 90, 0.5));
+    top: 0; bottom: 0; width: 80px;
+    background: linear-gradient(90deg, transparent, rgba(124, 163, 90, 0.15), rgba(124, 163, 90, 0.6));
     left: -10%;
     animation: ekg-radar 3s linear infinite;
 }
 
-@keyframes ekg-heartbeat {
-    0% { stroke-dashoffset: 100; }
-    80% { stroke-dashoffset: 0; }
-    100% { stroke-dashoffset: 0; }
-}
-
-@keyframes ekg-radar {
-    0% { left: -10%; }
-    80% { left: 100%; }
-    100% { left: 100%; }
-}
+@keyframes ekg-heartbeat { 0% { stroke-dashoffset: 100; } 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+@keyframes ekg-radar { 0% { left: -10%; } 80% { left: 100%; } 100% { left: 100%; } }
 
 /* ============================================================== */
 /* LZ DISPATCHER (AVIATION DESIGN) */
@@ -2430,29 +2413,29 @@
         </div>
 
         <div id="tab-medical" class="tab-content">
-
-            <div class="ekg-container">
-        <div class="ekg-grid"></div>
-        <svg class="ekg-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
-            <path class="ekg-line-glow" pathLength="100" d="M0,50 L100,50 L110,40 L120,50 L140,50 L150,80 L170,10 L190,90 L200,50 L220,50 L235,30 L255,30 L270,50 L500,50" />
-        </svg>
-        <div class="ekg-sweep"></div>
-    </div>
-        
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2>🏥 Digital Medical Center</h2>
                 <div style="font-size: 0.8rem; color: #666; font-family: monospace;">OS: MED_CORE_V4.2 // VITAL SIGNS: NOMINAL</div>
             </div>
 
-            <div class="med-center">
-                <div class="med-panel med-left">
+            <div class="med-center" style="position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #1f2b1f;">
+                
+                <div class="ekg-container">
+                    <div class="ekg-grid"></div>
+                    <svg class="ekg-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+                        <path class="ekg-line-glow" pathLength="100" d="M0,50 L100,50 L110,40 L120,50 L140,50 L150,80 L170,10 L190,90 L200,50 L220,50 L235,30 L255,30 L270,50 L500,50" />
+                    </svg>
+                    <div class="ekg-sweep"></div>
+                </div>
+
+                <div class="med-panel med-left" style="position: relative; z-index: 20; background: rgba(10, 15, 10, 0.7);">
                     <h3 style="margin-top:0; color:var(--accent); font-size: 0.9rem; text-transform: uppercase;">1. Symptom-Analyse</h3>
                     <p style="font-size:0.8rem; color:#888;">Wähle die aktuellen Anzeichen deines Charakters aus:</p>
                     <div id="symptomList" style="display: flex; flex-direction: column; gap: 8px; overflow-y: auto;">
                         </div>
                 </div>
 
-                <div class="med-panel med-main" id="medicalOutput">
+                <div class="med-panel med-main" id="medicalOutput" style="position: relative; z-index: 20; background: rgba(10, 15, 10, 0.7);">
                     <div class="diag-header">
                         <div style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">DIAGNOSE-RESULTAT:</div>
                         <h3 id="diagTitle" class="diag-title">BEREIT FÜR SCAN...</h3>
@@ -2466,13 +2449,13 @@
                             <div style="margin-top:20px;">
                                 <span style="color:var(--accent); font-size:0.75rem; font-weight:bold; text-transform:uppercase;">Vital-Auswirkung:</span>
                                 <div id="vitalEffect" style="margin-top:10px;">
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div>
                             <span style="color:#ff4c4c; font-size:0.75rem; font-weight:bold; text-transform:uppercase;">Behandlungsprotokoll:</span>
                             <div id="treatmentSteps" style="margin-top:15px;">
-                                </div>
+                            </div>
                         </div>
                     </div>
 
