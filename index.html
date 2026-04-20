@@ -2558,7 +2558,8 @@
    </div> </div> <button id="backToTopBtn" onclick="scrollToTop()" title="Zurück nach oben">↑ Top</button>
 
 <script src="data.js?v=0.4"></script>
-
+<script src="item-images.js"></script>
+        
 <script>
     
     // ==============================================================
@@ -5192,7 +5193,7 @@ function goToHome() {
                                      onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#141a14'; this.style.transform='translateY(-2px)';"
                                      onmouseout="this.style.borderColor='#1f2b1f'; this.style.background='#0d110d'; this.style.transform='translateY(0)';">
                                     
-                                    <div style="color: #fff; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between;">
+                                    <div class="item-hover-trigger" data-item-id="${w.id}" style="color: #fff; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
                                         ${w.name} ${metaBadge}
                                     </div>
                                     <div style="color: #888; font-size: 0.85rem; font-family: 'Courier New', monospace;">Kaliber: <span style="color: #ccc;">${w.ammo}</span></div>
@@ -6422,5 +6423,46 @@ if (saved) savedRing = JSON.parse(saved);
         window.hunterSpeak(cleanResponse);
     };
 </script>
+        <div id="tacticalImageTooltip" style="display: none; position: absolute; z-index: 10000; pointer-events: none; background: #050705; border: 2px solid var(--accent); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 15px rgba(124, 163, 90, 0.2); padding: 5px;">
+        <div style="font-family: 'Courier New', monospace; font-size: 0.65rem; color: var(--accent); margin-bottom: 5px; border-bottom: 1px solid #1f2b1f; padding-bottom: 3px;">VISUAL DATALINK // SECURE</div>
+        <img id="tacticalTooltipImg" src="" style="max-width: 280px; max-height: 180px; display: block; border-radius: 2px;" 
+             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'280\\' height=\\'140\\'><rect width=\\'280\\' height=\\'140\\' fill=\\'%230a0a0a\\'/><text x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%23ff4c4c\\' font-family=\\'monospace\\' font-size=\\'18\\'>NO VISUAL DATA</text><line x1=\\'0\\' y1=\\'0\\' x2=\\'280\\' y2=\\'140\\' stroke=\\'%23ff4c4c\\' stroke-width=\\'2\\' opacity=\\'0.3\\'/><line x1=\\'280\\' y1=\\'0\\' x2=\\'0\\' y2=\\'140\\' stroke=\\'%23ff4c4c\\' stroke-width=\\'2\\' opacity=\\'0.3\\'/></svg>';">
+    </div>
+
+    <script>
+        // Die Logik für den Hover-Effekt
+        document.addEventListener('mouseover', function(e) {
+            // Sucht nach Elementen mit der Klasse 'item-hover-trigger'
+            let target = e.target.closest('.item-hover-trigger');
+            if (target) {
+                let itemId = target.getAttribute('data-item-id');
+                // Wenn die ID in unserer neuen item-images.js existiert
+                if (typeof itemImages !== 'undefined' && itemImages[itemId]) {
+                    let tooltip = document.getElementById('tacticalImageTooltip');
+                    let img = document.getElementById('tacticalTooltipImg');
+                    img.src = itemImages[itemId];
+                    tooltip.style.display = 'block';
+                }
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            let tooltip = document.getElementById('tacticalImageTooltip');
+            if (tooltip.style.display === 'block') {
+                // Bild folgt der Maus (leicht nach rechts unten versetzt)
+                tooltip.style.left = (e.pageX + 15) + 'px';
+                tooltip.style.top = (e.pageY + 15) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseout', function(e) {
+            let target = e.target.closest('.item-hover-trigger');
+            if (target) {
+                let tooltip = document.getElementById('tacticalImageTooltip');
+                tooltip.style.display = 'none';
+                document.getElementById('tacticalTooltipImg').src = ''; // Bild leeren
+            }
+        });
+    </script>
 </body>
 </html>
