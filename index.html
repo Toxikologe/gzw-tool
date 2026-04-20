@@ -5185,7 +5185,7 @@ function goToHome() {
              onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 35px rgba(255, 76, 76, 0.9)';"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 76, 76, 0.5)';" />
         <span onclick="window.toggleWachhund()" style="color: #ff4c4c; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; cursor: pointer; text-shadow: 0 0 10px rgba(255, 76, 76, 0.6); user-select: none;">
-            WACHHUND
+            HUNTER
         </span>
         <button id="hunterCommsBtn" onclick="window.toggleHunter()" style="margin-top: 15px; background: #111; color: #aaa; border: 2px solid #444; padding: 10px 15px; font-family: 'Courier New', monospace; font-weight: bold; border-radius: 4px; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: 0.3s; display: flex; align-items: center; gap: 8px;">
             <span id="hunterMicIcon" style="font-size: 1.2rem;">🎙️</span> 
@@ -5703,7 +5703,7 @@ function goToHome() {
                 btn.style.color = "#aaa";
                 btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
                 icon.innerText = "🎙️";
-                text.innerText = "COMMS: OFF";
+                text.innerText = "HUNTER: OFFLINE";
                 window.hunterSpeak("Comms deaktiviert.");
             } else {
                 // Erzwinge Stimmen-Laden beim ersten Klick
@@ -5715,7 +5715,7 @@ function goToHome() {
                 btn.style.color = "#00ff00";
                 btn.style.boxShadow = "0 0 15px rgba(0,255,0,0.5)";
                 icon.innerText = "🟢";
-                text.innerText = "HUNTER LISTENING";
+                text.innerText = "HUNTER: ONLINE";
                 window.hunterSpeak("Online und bereit, Commander.");
             }
         };
