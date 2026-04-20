@@ -8,6 +8,60 @@
     <style>
 
 /* ============================================================== */
+/* SYMPTOM BUTTONS (TACTICAL HUD OVERRIDE) */
+/* ============================================================== */
+
+/* Platz für die Scrollbar schaffen, damit nichts gequetscht wird */
+#symptomList {
+    padding-right: 10px; 
+}
+
+/* Wir zwingen ALLES in dieser Liste zum taktischen Button-Design (!important überschreibt alte Fehler) */
+#symptomList > * {
+    background: linear-gradient(90deg, rgba(15, 20, 15, 0.9) 0%, rgba(5, 8, 5, 0.9) 100%) !important;
+    border: 1px solid #1f2b1f !important;
+    border-left: 4px solid #334a33 !important; /* Dunkler Rand im inaktiven Zustand */
+    color: #88a088 !important;
+    padding: 12px 15px !important;
+    margin-bottom: 8px !important;
+    cursor: pointer !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 0.85rem !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    border-radius: 2px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+/* Hover-Effekt: Taktisches Aufleuchten und leichtes Einrücken nach rechts */
+#symptomList > *:hover {
+    background: linear-gradient(90deg, rgba(124, 163, 90, 0.15) 0%, rgba(15, 20, 15, 0.9) 100%) !important;
+    border-color: #334a33 !important;
+    border-left: 4px solid var(--accent) !important; /* Leuchtend Grüner Rand */
+    color: #ffffff !important;
+    transform: translateX(6px) !important; /* Der coole Slide-Effekt */
+    box-shadow: -2px 0 15px rgba(124, 163, 90, 0.2) !important;
+}
+
+/* Taktischer [ ANALYSE ] Indikator am rechten Rand des Buttons */
+#symptomList > *::after {
+    content: "[ SCAN ]";
+    font-size: 0.65rem;
+    color: #333;
+    transition: color 0.2s;
+    letter-spacing: 1px;
+}
+
+/* Beim rüberfahren leuchtet auch der Indikator auf */
+#symptomList > *:hover::after {
+    color: var(--accent);
+    text-shadow: 0 0 5px var(--accent);
+}
+
+/* ============================================================== */
 /* WACHHUND / HUNTER ANLEITUNG (HOVER-TOOLTIP) */
 /* ============================================================== */
 
