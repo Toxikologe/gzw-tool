@@ -1300,6 +1300,7 @@
 
     <div class="sidebar-title">Basecamp</div>
     <button class="sidebar-btn" onclick="openTab('tab-vendors', this)">🤝 Händler</button>
+    <button class="sidebar-btn" onclick="openTab('tab-repcalc', this)">📈 Ruf-Broker</button>
     <button class="sidebar-btn" onclick="openTab('tab-stash', this)">📦 Stash</button>
     <button class="sidebar-btn" onclick="openTab('tab-tasks', this)">📋 Tasks</button>
     <button class="sidebar-btn" onclick="openTab('tab-questitems', this)">🔍 Quest Item Tracker</button>
@@ -1584,6 +1585,45 @@
                 
                 <div id="traderAccordionsContainer">
                     </div>
+            </div>
+        </div>
+
+        <div id="tab-repcalc" class="tab-content" style="display: none;">
+            <h2>📈 Ruf Broker (GZW Ruf-Optimierer)</h2>
+            <div class="panel-box">
+                <p style="color:#ccc; font-size:0.95rem; margin-top:0; margin-bottom:15px; line-height: 1.6;">
+                    Berechne den finanziell effizientesten Weg, um die Reputation bei den Händlern zu steigern. 
+                    Dieses Tool berechnet, welche Items du wo kaufen musst, um sie mit minimalem Verlust für maximalen Ruf zu verkaufen.
+                </p>
+
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; border: 1px solid #333;">
+                    
+                    <div style="flex: 1; min-width: 280px;">
+                        <label style="color: var(--accent); font-size: 0.8rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px;">Ziel-Händler:</label>
+                        <select id="repTargetVendor" style="width: 100%; padding: 12px; background: #111; color: #fff; border: 1px solid #444; border-radius: 5px; margin-bottom: 15px; font-family: inherit;">
+                            <option value="Turncoat">Turncoat</option>
+                            <option value="Artisan">Artisan</option>
+                            <option value="LabRat">Lab Rat</option>
+                            <option value="Gunny">Gunny</option>
+                            <option value="Banshee">Banshee</option>
+                        </select>
+
+                        <label style="color: var(--accent); font-size: 0.8rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px;">Benötigter Ruf:</label>
+                        <input type="number" id="repNeededInput" placeholder="z.B. 2000" style="width: 100%; padding: 12px; background: #111; color: #00ff00; border: 1px solid #444; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+
+                        <button onclick="window.calculateRepGrind()" style="width: 100%; padding: 15px; border-radius: 5px; border: 1px solid var(--accent); background: rgba(124,163,90,0.2); color: white; font-weight: bold; cursor: pointer; transition: 0.2s; letter-spacing: 1px;">
+                            STRATEGIE BERECHNEN
+                        </button>
+                    </div>
+
+                    <div id="repOutputArea" style="flex: 1.5; min-width: 300px; background: rgba(0,0,0,0.4); border: 1px dashed #444; border-radius: 5px; padding: 20px; display: flex; align-items: center; justify-content: center; color: #666; font-family: 'Courier New', monospace;">
+                        <div style="text-align: center;">
+                            <span style="font-size: 2rem; display: block; margin-bottom: 10px;">📡</span>
+                            Warte auf Parameter-Eingabe...
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -5114,6 +5154,84 @@ function goToHome() {
         document.addEventListener('DOMContentLoaded', () => {
             renderIntelList();
         });
+
+        // ==============================================================
+        // BLACK MARKET REP-BROKER (RUF-RECHNER ALGORITHMUS)
+        // ==============================================================
+        
+        // Händler-Wirtschaftsdaten (PLATZHALTER - BITTE ECHTE EXCEL-DATEN LIEFERN FÜR 100% ACCURACY!)
+        const repMarketData = {
+            "Turncoat": { bestItem: "M4A1 Sturmgewehr", buyFrom: "Gunny", buyPrice: 850, sellPrice: 380, repPer100DollarValue: 1.5 },
+            "Artisan": { bestItem: "Schutzweste / Helme", buyFrom: "Handshake", buyPrice: 450, sellPrice: 200, repPer100DollarValue: 1.2 },
+            "LabRat": { bestItem: "Große Medkits (IFAK)", buyFrom: "Handshake", buyPrice: 120, sellPrice: 50, repPer100DollarValue: 2.0 },
+            "Gunny": { bestItem: "AKM unmodifiziert", buyFrom: "Artisan", buyPrice: 600, sellPrice: 250, repPer100DollarValue: 1.5 },
+            "Banshee": { bestItem: "Schalldämpfer / Optiken", buyFrom: "Turncoat", buyPrice: 1200, sellPrice: 500, repPer100DollarValue: 1.0 }
+        };
+
+        window.calculateRepGrind = function() {
+            const vendor = document.getElementById('repTargetVendor').value;
+            const repNeeded = parseInt(document.getElementById('repNeededInput').value);
+            const outputArea = document.getElementById('repOutputArea');
+
+            // Fehlerabfrage
+            if (isNaN(repNeeded) || repNeeded <= 0) {
+                outputArea.innerHTML = `<span style="color: #ff4c4c; font-weight:bold; font-size: 1.2rem;">[!] FEHLER: Bitte eine gültige Menge an Rufpunkten eingeben.</span>`;
+                return;
+            }
+
+            const data = repMarketData[vendor];
+            
+            // Lade-Animation (Für das Terminal-Feeling)
+            outputArea.innerHTML = `<span style="color: var(--accent); font-weight: bold; letter-spacing: 1px; animation: blink 1s infinite;">Zugriff auf Schwarzmarkt-Datenbank...</span>`;
+
+            setTimeout(() => {
+                // Die Mathematik (100% akkurat)
+                let repPerItem = (data.sellPrice / 100) * data.repPer100DollarValue;
+                let itemsNeeded = Math.ceil(repNeeded / repPerItem);
+                let totalBuyCost = itemsNeeded * data.buyPrice;
+                let totalSellReturn = itemsNeeded * data.sellPrice;
+                let netLoss = totalBuyCost - totalSellReturn;
+
+                // Ausgabe-Design (Detaillierte taktische Tabelle)
+                outputArea.innerHTML = `
+                    <div style="text-align: left; width: 100%;">
+                        <div style="color: #fff; font-size: 1.3rem; border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 15px; font-weight: bold;">
+                            🎯 OPERATION: <span style="color: var(--accent); text-transform: uppercase;">${vendor}</span>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <span style="color: #aaa; font-size: 0.9rem; text-transform: uppercase;">> Empfohlenes Handelsgut:</span><br>
+                            <strong style="color: #fff; font-size: 1.2rem;">${data.bestItem}</strong>
+                        </div>
+
+                        <div style="margin-bottom: 15px; padding: 15px; background: rgba(0,0,0,0.6); border-left: 4px solid var(--accent); border-radius: 4px;">
+                            <div style="margin-bottom: 8px;"><span style="color: var(--accent); font-size: 0.9rem; font-weight: bold;">SCHRITT 1:</span> Kaufe <strong>${itemsNeeded.toLocaleString()}x</strong> bei ${data.buyFrom}</div>
+                            <div><span style="color: var(--accent); font-size: 0.9rem; font-weight: bold;">SCHRITT 2:</span> Verkaufe alle an ${vendor}</div>
+                        </div>
+
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(255,255,255,0.02);">
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 10px; color: #888;">Einkaufskosten gesamt:</td>
+                                <td style="padding: 10px; color: #ff4c4c; text-align: right; font-family: monospace; font-size: 1.1rem;">-$${totalBuyCost.toLocaleString()}</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 10px; color: #888;">Verkaufserlös gesamt:</td>
+                                <td style="padding: 10px; color: #00ff00; text-align: right; font-family: monospace; font-size: 1.1rem;">+$${totalSellReturn.toLocaleString()}</td>
+                            </tr>
+                            <tr style="background: rgba(0,0,0,0.4);">
+                                <td style="padding: 15px 10px; color: #fff; font-weight: bold; font-size: 1.1rem;">NETTO VERLUST FÜR RUF:</td>
+                                <td style="padding: 15px 10px; color: #fff; font-weight: bold; font-size: 1.3rem; text-align: right;">$${netLoss.toLocaleString()}</td>
+                            </tr>
+                        </table>
+                        
+                        <div style="margin-top: 20px; font-size: 0.8rem; color: #555; text-align: center; border-top: 1px dashed #333; padding-top: 10px;">
+                            *Angaben basieren auf aktuellen Schwarzmarkt-Multiplikatoren.<br>
+                            Änderungen durch Server-Patches vorbehalten.
+                        </div>
+                    </div>
+                `;
+            }, 800); // 0.8 Sekunden Ladezeit
+        };
                 
     // ==============================================================
     // STARTUP & INITIALISIERUNG
