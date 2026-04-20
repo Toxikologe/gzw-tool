@@ -6434,48 +6434,75 @@ if (saved) savedRing = JSON.parse(saved);
 
     <script>
         // ==============================================================
-        // TACTICAL HOVER ENGINE (BILDER-OVERLAY) LOGIK
+        // TACTICAL HOVER ENGINE V2 (BULLETPROOF TRACKING)
         // ==============================================================
+        const tooltip = document.getElementById('tacticalImageTooltip');
+        const tooltipImg = document.getElementById('tacticalTooltipImg');
+        let currentHoverTarget = null;
+
         document.addEventListener('mouseover', function(e) {
             let target = e.target.closest('.item-hover-trigger');
             if (target) {
+                currentHoverTarget = target;
                 let rawId = target.getAttribute('data-item-id');
                 if (!rawId) return;
 
-                // Macht den Namen "Safe Lock Box (2x2)" zu "safe_lock_box_2x2"
+                // Formatierung der ID
                 let formattedId = rawId.toLowerCase()
                                        .replace(/[^a-z0-9]+/g, "_")
                                        .replace(/^_|_$/g, "");
 
                 if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
-                    let tooltip = document.getElementById('tacticalImageTooltip');
-                    if(tooltip) {
-                        let img = document.getElementById('tacticalTooltipImg');
-                        img.src = itemImages[formattedId];
-                        tooltip.style.display = 'block';
-                    }
+                    tooltipImg.src = itemImages[formattedId];
+                    tooltip.style.display = 'block';
+                    // Sofortige Positionierung beim Erscheinen
+                    positionTooltip(e);
                 }
             }
         });
 
         document.addEventListener('mousemove', function(e) {
-            let tooltip = document.getElementById('tacticalImageTooltip');
-            if (tooltip && tooltip.style.display === 'block') {
-                tooltip.style.left = (e.pageX + 15) + 'px';
-                tooltip.style.top = (e.pageY + 15) + 'px';
+            if (currentHoverTarget && tooltip.style.display === 'block') {
+                positionTooltip(e);
             }
         });
 
         document.addEventListener('mouseout', function(e) {
             let target = e.target.closest('.item-hover-trigger');
             if (target) {
-                let tooltip = document.getElementById('tacticalImageTooltip');
-                if(tooltip) {
+                // Prüfen, ob wir wirklich das Element verlassen haben (verhindert Flackern)
+                if (!e.relatedTarget || !target.contains(e.relatedTarget)) {
+                    currentHoverTarget = null;
                     tooltip.style.display = 'none';
-                    document.getElementById('tacticalTooltipImg').src = '';
+                    tooltipImg.src = '';
                 }
             }
         });
+
+        // Die perfekte Positionierungs-Logik
+        function positionTooltip(e) {
+            if (!tooltip) return;
+            
+            // X- und Y-Koordinaten relativ zum Dokument (inklusive Scroll-Position!)
+            let x = e.pageX + 20; // 20px Abstand zur Maus, damit sie das Bild nicht verdeckt
+            let y = e.pageY + 20;
+
+            // Optional: Prüfen, ob das Bild aus dem Bildschirmrand rutscht
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            // Wenn das Bild rechts aus dem Bildschrim ragt, spiegeln wir es nach links
+            if (e.clientX + 20 + tooltipRect.width > window.innerWidth) {
+                x = e.pageX - tooltipRect.width - 20;
+            }
+            
+            // Wenn das Bild unten aus dem Bildschirm ragt, schieben wir es nach oben
+            if (e.clientY + 20 + tooltipRect.height > window.innerHeight) {
+                y = e.pageY - tooltipRect.height - 20;
+            }
+
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+        }
     </script>
 </body>
 </html>
