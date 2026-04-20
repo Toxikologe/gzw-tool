@@ -6459,9 +6459,9 @@ if (saved) savedRing = JSON.parse(saved);
                 let rawId = target.getAttribute('data-item-id');
                 if (!rawId) return;
 
-                // Formatierung der ID (z.B. "M4A1" -> "m4a1")
+                // Formatierung der ID (z.B. "M4A1 (Test)" -> "m4a1_test")
                 let formattedId = rawId.toLowerCase()
-                                       .replace(/[^a-z0-9]+/g, "_")
+                                       .replace(/[^a-z0-9äöüß]+/g, "_")
                                        .replace(/^_|_$/g, "");
 
                 if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
