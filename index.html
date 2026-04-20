@@ -4416,7 +4416,7 @@
                     <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
                         <td style="padding: 12px 8px; text-align: center; color: #aaa; font-weight: bold; font-size: 1.1rem;">LL${item.level}</td>
                         <td style="padding: 12px 8px;">
-                            <div style="color: #eee; font-weight: bold;">${item.name} ${metaTag}</div>
+                            <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; cursor: help; display: inline-block;">${item.name} ${metaTag}</div>
                             ${infoText}
                         </td>
                     </tr>
@@ -4711,7 +4711,7 @@ function goToHome() {
             
             div.innerHTML = `
                 <div>
-                    <div style="color: #eee; font-weight: bold; font-size: 0.95rem;">${item.name}</div>
+                    <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; font-size: 0.95rem; cursor: help; display: inline-block;">${item.name}</div>
                     <div style="color: #888; font-size: 0.75rem;">${item.category}</div>
                 </div>
                 <div style="font-size: 1.2rem;">${icon}</div>
@@ -4730,6 +4730,9 @@ function goToHome() {
         if(activeCard) activeCard.classList.add('active');
         
         document.getElementById('ldItemName').innerText = item.name.toUpperCase();
+        document.getElementById('ldItemName').classList.add('item-hover-trigger');
+        document.getElementById('ldItemName').setAttribute('data-item-id', item.name);
+        document.getElementById('ldItemName').style.cursor = 'help';
         document.getElementById('ldCategory').innerText = `KATEGORIE: ${item.category.toUpperCase()}`;
         
         const statusBox = document.getElementById('ldStatusBox');
