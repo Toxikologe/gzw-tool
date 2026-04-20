@@ -1381,22 +1381,26 @@
                 </div>
             </div>
 
-            <div class="header-right" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 4px; color: var(--accent); font-family: monospace; font-weight: bold; font-size: 0.9rem; white-space: nowrap;">
-                    <span class="live-indicator" style="color: #ff4c4c; margin-right: 5px; animation: pulse 2s infinite;">● LIVE</span>
-                    <span id="live-time-display">DATE: -- --- ---- | TIME: --:--:-- ZULU</span>
-                </div>
+            <div style="display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 30px; gap: 20px;">
+            
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #222; text-align: center; min-width: 220px; display: flex; flex-direction: column; justify-content: center;">
+                <div id="live-clock" style="font-size: 2rem; font-weight: bold; color: #fff; margin: 5px 0;">00:00:00</div>
+                <div id="live-date" style="font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 2px;">--.--.----</div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #222; text-align: center; min-width: 220px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                <div id="traderTimerDisplay" style="font-size: 2rem; font-weight: bold; color: var(--accent); margin: 5px 0;">00:00:00</div>
+                <div style="font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;">Nächster Lieferungs-Slot</div>
                 
-                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #222; text-align: center;">
-    <div id="restock-timer" style="font-size: 2rem; font-weight: bold; color: var(--accent); margin: 5px 0;">00:00:00</div>
-    <div style="font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Nächster Lieferungs-Slot</div>
-    
-    <button onclick="resetRestockTimer()" style="background: transparent; border: 1px solid #444; color: #666; font-size: 0.7rem; padding: 4px 10px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-family: 'Courier New', monospace;" 
-            onmouseover="this.style.borderColor= 'var(--accent)'; this.style.color='#fff';" 
-            onmouseout="this.style.borderColor='#444'; this.style.color='#666';">
-        [ MANUAL RESET ]
-    </button>
-</div>
+                <div style="margin-top: 5px;">
+                    <button onclick="resetRestockTimer()" style="background: rgba(255,255,255,0.05); border: 1px solid #333; color: #555; font-size: 0.65rem; padding: 3px 8px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-family: 'Courier New', monospace; text-transform: uppercase;" 
+                            onmouseover="this.style.borderColor='var(--accent)'; this.style.color='#fff'; this.style.background='rgba(124,163,90,0.1)';" 
+                            onmouseout="this.style.borderColor='#333'; this.style.color='#555'; this.style.background='rgba(255,255,255,0.05)';">
+                        [ Manual Reset ]
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <div class="news-ticker-container" style="width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.5); border: 1px solid #1a1a1a; padding: 8px 12px; border-radius: 4px; overflow: hidden; position: relative;">
             <div class="news-ticker-text" style="color: #aaa; font-family: monospace; font-size: 0.9rem; white-space: nowrap; display: inline-block;">
@@ -2408,17 +2412,13 @@
             const now = new Date().getTime();
             let target;
 
-            // Prüfe auf manuellen Reset im Speicher
             const manualTarget = localStorage.getItem('gzw_manual_restock');
-
             if (manualTarget && parseInt(manualTarget) > now) {
                 target = parseInt(manualTarget);
             } else {
-                // Standard: Nächste volle Stunde
                 const nextHour = new Date();
                 nextHour.setHours(nextHour.getHours() + 1, 0, 0, 0);
                 target = nextHour.getTime();
-                
                 if (manualTarget) localStorage.removeItem('gzw_manual_restock');
             }
 
@@ -2427,36 +2427,29 @@
             const m = Math.floor((diff % 3600000) / 60000);
             const s = Math.floor((diff % 60000) / 1000);
 
-            // Formatierung 00:00:00
-            const timeStr = 
+            timerDisplay.innerText = 
                 h.toString().padStart(2, '0') + ":" + 
                 m.toString().padStart(2, '0') + ":" + 
                 s.toString().padStart(2, '0');
 
-            timerDisplay.innerText = timeStr;
-
-            // Visueller Alarm unter 5 Minuten
             if (m < 5 && h === 0) {
-                timerDisplay.style.color = "#ffcc00";
+                timerDisplay.style.color = "#ffcc00"; // Warnfarbe Gelb
             } else {
                 timerDisplay.style.color = "var(--accent)";
             }
         }
 
-        // Funktion für den Button (Global verfügbar)
         window.resetRestockTimer = function() {
-            const newTarget = new Date().getTime() + 3600000; // + 60 Minuten
+            const newTarget = new Date().getTime() + 3600000;
             localStorage.setItem('gzw_manual_restock', newTarget);
             
-            // Visuelle Bestätigung (Kurzes weißes Aufblitzen)
+            // Optisches Feedback
             timerDisplay.style.color = "#ffffff";
             setTimeout(() => { timerDisplay.style.color = "var(--accent)"; }, 500);
             
-            // Hunter Voice Feedback (Optional)
             if (typeof window.hunterSpeak === 'function') {
-                window.hunterSpeak("Restock-Timer manuell synchronisiert. Sechzig Minuten bis zum nächsten Slot.");
+                window.hunterSpeak("Timer synchronisiert.");
             }
-            
             updateRestock();
         };
 
