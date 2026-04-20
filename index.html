@@ -5174,6 +5174,10 @@ function goToHome() {
         <span onclick="window.toggleWachhund()" style="color: #ff4c4c; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; cursor: pointer; text-shadow: 0 0 10px rgba(255, 76, 76, 0.6); user-select: none;">
             WACHHUND
         </span>
+        <button id="hunterCommsBtn" onclick="window.toggleHunter()" style="margin-top: 15px; background: #111; color: #aaa; border: 2px solid #444; padding: 10px 15px; font-family: 'Courier New', monospace; font-weight: bold; border-radius: 4px; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: 0.3s; display: flex; align-items: center; gap: 8px;">
+            <span id="hunterMicIcon" style="font-size: 1.2rem;">🎙️</span> 
+            <span id="hunterStatusText">COMMS: OFF</span>
+        </button>
     </div>
 
     <div id="wachhundPulseLayer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10001; transition: all 0.5s ease;"></div>
@@ -5579,6 +5583,158 @@ function goToHome() {
                     }
                 }, 15000); // 15000 Millisekunden = 15 Sekunden
             }
+        };
+    </script>
+    <script>
+        window.hunterActive = false;
+        window.recognition = null;
+        window.synth = window.speechSynthesis;
+
+        // Prüfen, ob der Browser Spracherkennung unterstützt
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (SpeechRecognition) {
+            window.recognition = new SpeechRecognition();
+            window.recognition.continuous = true; // Hört dauerhaft zu
+            window.recognition.interimResults = false;
+            window.recognition.lang = 'de-DE'; // Auf Deutsch stellen
+
+            // Wenn ein Satz erkannt wurde
+            window.recognition.onresult = function(event) {
+                const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+                console.log("> Funkspruch empfangen: " + transcript);
+
+                // Wake-Word Check
+                if (transcript.includes("hunter")) {
+                    // Wachhund-Fenster automatisch öffnen, falls es zu ist
+                    const overlay = document.getElementById('wachhundOverlay');
+                    if (overlay && overlay.style.display !== 'flex') {
+                        window.toggleWachhund();
+                    }
+
+                    // Befehl extrahieren (alles nach dem Wort "hunter")
+                    const parts = transcript.split("hunter");
+                    let command = parts[parts.length - 1].trim();
+                    
+                    if (command.length > 2) {
+                        window.processHunterCommand(command);
+                    } else {
+                        window.hunterSpeak("Ja, Commander?");
+                    }
+                }
+            };
+
+            // Auto-Restart, falls der Browser nach Stille abschaltet
+            window.recognition.onend = function() {
+                if (window.hunterActive) {
+                    try { window.recognition.start(); } catch(e) {}
+                }
+            };
+        } else {
+            console.error("Spracherkennung wird von diesem Browser nicht unterstützt.");
+        }
+
+        // --- MIKROFON AN/AUS ---
+        window.toggleHunter = function() {
+            const btn = document.getElementById('hunterCommsBtn');
+            const icon = document.getElementById('hunterMicIcon');
+            const text = document.getElementById('hunterStatusText');
+
+            if (!window.recognition) {
+                alert("Dein Browser unterstützt keine Sprachsteuerung. Nutze Chrome oder Edge.");
+                return;
+            }
+
+            if (window.hunterActive) {
+                window.hunterActive = false;
+                window.recognition.stop();
+                btn.style.borderColor = "#444";
+                btn.style.color = "#aaa";
+                btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+                icon.innerText = "🎙️";
+                text.innerText = "COMMS: OFF";
+                window.hunterSpeak("Comms deaktiviert. Hunter geht offline.");
+            } else {
+                window.hunterActive = true;
+                try { window.recognition.start(); } catch(e) {}
+                btn.style.borderColor = "#00ff00";
+                btn.style.color = "#00ff00";
+                btn.style.boxShadow = "0 0 15px rgba(0,255,0,0.5)";
+                icon.innerText = "🟢";
+                text.innerText = "HUNTER LISTENING";
+                window.hunterSpeak("Comms aktiv. Hunter hört mit.");
+            }
+        };
+
+        // --- SPRACHAUSGABE (TTS) ---
+        window.hunterSpeak = function(text) {
+            // Alte Sprachausgaben abbrechen
+            if (window.synth.speaking) { window.synth.cancel(); }
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            utterance.pitch = 0.9; // Etwas tiefere, ernstere Stimme
+            utterance.rate = 1.1;  // Etwas schnelleres Sprechen (Militärisch)
+            
+            window.synth.speak(utterance);
+        };
+
+        // --- DAS GEHIRN (LOKALE LOGIK) ---
+        window.processHunterCommand = function(command) {
+            console.log("> Analysiere Befehl: " + command);
+            let response = "Entschuldigung Commander, diesen Befehl habe ich nicht verstanden.";
+            let found = false;
+
+            // 1. PREIS / WERT ABFRAGE (Sucht in wachhundDatabase)
+            if (command.includes("wert") || command.includes("kostet") || command.includes("preis")) {
+                if (window.wachhundDatabase) {
+                    for (let item of window.wachhundDatabase) {
+                        // Sucht nach dem Keyword ODER dem vollen Namen
+                        if (command.includes(item.match.toLowerCase()) || command.includes(item.name.toLowerCase())) {
+                            response = `Der Gegenstand ${item.name} hat einen geschätzten Wert von ${item.price} Dollar. ${item.info}`;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) response = "Ich konnte diesen Gegenstand nicht in der Datenbank finden.";
+            }
+
+            // 2. QUEST / TASK ABFRAGE (Sucht in allTasks aus data.js)
+            else if (command.includes("task") || command.includes("aufgabe") || command.includes("wo ist") || command.includes("ziel")) {
+                // Wir nehmen an, deine Tasks liegen global als Array namens 'allTasks' vor
+                if (typeof allTasks !== 'undefined') {
+                    for (let task of allTasks) {
+                        if (command.includes(task.de.toLowerCase())) {
+                            response = `Für die Aufgabe ${task.de} von ${task.v} lautet die Lösung: ${task.sol}`;
+                            found = true;
+                            break;
+                        }
+                    }
+                } else {
+                    response = "Systemfehler: Task-Datenbank nicht geladen.";
+                }
+                if (!found) response = "Ich habe keine Informationen zu dieser Task gefunden.";
+            }
+
+            // 3. KEY / SCHLÜSSEL ABFRAGE
+            else if (command.includes("schlüssel") || command.includes("code")) {
+                // HIER kannst du später eine echte Schlüsselsuche einbauen
+                // Für den Moment durchsuchen wir die Task-Lösungen nach dem Wort "Schlüssel" oder "Code"
+                if (typeof allTasks !== 'undefined') {
+                    for (let task of allTasks) {
+                        if (command.includes(task.de.toLowerCase()) && (task.sol.toLowerCase().includes("code") || task.sol.toLowerCase().includes("schlüssel"))) {
+                            response = `Die Informationen zur Tür für ${task.de} lauten: ${task.sol}`;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) response = "Ich habe keine spezifischen Zugangscodes oder Schlüssel für diesen Bereich gefunden.";
+            }
+
+            // Antwort aussprechen
+            window.hunterSpeak(response);
         };
     </script>
 </body>
