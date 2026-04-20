@@ -3060,7 +3060,7 @@
             const card = document.createElement('div');
             card.className = 'symptom-card';
             card.id = `symptom-${item.id}`;
-            card.innerHTML = `<span class="icon">${item.icon}</span> <span>${item.name}</span>`;
+            card.innerHTML = `<span class="icon">${item.icon}</span> <span class="item-hover-trigger" data-item-id="${item.id}" style="width: 100%; text-align: left;">${item.name}</span>`;
             card.onclick = () => runMedicalScan(item);
             list.appendChild(card);
         });
@@ -3161,7 +3161,7 @@
                 <div class="crate-uses">🔲 ${item.grid} | 🍽️ ${item.uses}x</div>
                 <div class="crate-header">
                     <div class="crate-type">${item.type}</div>
-                    <h3 class="crate-title">${item.name}</h3>
+                    <h3 class="crate-title item-hover-trigger" data-item-id="${item.name}" style="cursor: help;">${item.name}</h3>
                 </div>
                 
                 <div class="crate-stats">
@@ -4816,7 +4816,7 @@ function goToHome() {
                 tableHTML += `
                     <tr class="loot-row" style="border-bottom: 1px solid #1a1a1a;">
                         <td style="padding: 12px 8px;">
-                            <div class="loot-name" style="color: #eee; font-weight: bold; margin-bottom: 3px;">${item.name}</div>
+                            <div class="loot-name item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; margin-bottom: 3px; cursor: help; display: inline-block;">${item.name}</div>
                             <div style="font-size: 0.8rem; color: ${infoColor}; font-style: italic;">↳ ${infoText}</div>
                             <div style="font-size: 0.75rem; color: #555; margin-top: 3px;">Händler: <span style="color: #5dade2;">${item.vendor || 'Unbekannt'}</span></div>
                         </td>
@@ -4975,7 +4975,7 @@ function goToHome() {
                 tableHTML += `
                     <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
                         <td style="padding: 12px 8px;">
-                            <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
+                            <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; font-size: 1.05rem; cursor: help; display: inline-block;">${item.name} ${metaTag}</div>
                             <div style="font-size: 0.9rem; color: #ccc; margin-top: 6px; line-height: 1.5;">${item.info}</div>
                         </td>
                         <td style="padding: 12px 8px; text-align: center; color: #aaa; font-family: monospace;">${item.size}</td>
@@ -5094,7 +5094,7 @@ function goToHome() {
                 tableHTML += `
                     <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
                         <td style="padding: 12px 8px;">
-                            <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
+                            <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; font-size: 1.05rem; cursor: help; display: inline-block;">${item.name} ${metaTag}</div>
                             ${infoText}
                         </td>
                         <td style="padding: 12px 8px; text-align: center; color: #85c1e9; font-weight: bold;">${item.stats}</td>
@@ -6430,26 +6430,34 @@ if (saved) savedRing = JSON.parse(saved);
     </div>
 
     <script>
-        // Die Logik für den Hover-Effekt
+        // ==============================================================
+        // TACTICAL HOVER ENGINE (BILDER-OVERLAY) LOGIK
+        // ==============================================================
         document.addEventListener('mouseover', function(e) {
-            // Sucht nach Elementen mit der Klasse 'item-hover-trigger'
             let target = e.target.closest('.item-hover-trigger');
             if (target) {
-                let itemId = target.getAttribute('data-item-id');
-                // Wenn die ID in unserer neuen item-images.js existiert
-                if (typeof itemImages !== 'undefined' && itemImages[itemId]) {
+                let rawId = target.getAttribute('data-item-id');
+                if (!rawId) return;
+
+                // Macht den Namen "Safe Lock Box (2x2)" zu "safe_lock_box_2x2"
+                let formattedId = rawId.toLowerCase()
+                                       .replace(/[^a-z0-9]+/g, "_")
+                                       .replace(/^_|_$/g, "");
+
+                if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
                     let tooltip = document.getElementById('tacticalImageTooltip');
-                    let img = document.getElementById('tacticalTooltipImg');
-                    img.src = itemImages[itemId];
-                    tooltip.style.display = 'block';
+                    if(tooltip) {
+                        let img = document.getElementById('tacticalTooltipImg');
+                        img.src = itemImages[formattedId];
+                        tooltip.style.display = 'block';
+                    }
                 }
             }
         });
 
         document.addEventListener('mousemove', function(e) {
             let tooltip = document.getElementById('tacticalImageTooltip');
-            if (tooltip.style.display === 'block') {
-                // Bild folgt der Maus (leicht nach rechts unten versetzt)
+            if (tooltip && tooltip.style.display === 'block') {
                 tooltip.style.left = (e.pageX + 15) + 'px';
                 tooltip.style.top = (e.pageY + 15) + 'px';
             }
@@ -6459,8 +6467,10 @@ if (saved) savedRing = JSON.parse(saved);
             let target = e.target.closest('.item-hover-trigger');
             if (target) {
                 let tooltip = document.getElementById('tacticalImageTooltip');
-                tooltip.style.display = 'none';
-                document.getElementById('tacticalTooltipImg').src = ''; // Bild leeren
+                if(tooltip) {
+                    tooltip.style.display = 'none';
+                    document.getElementById('tacticalTooltipImg').src = '';
+                }
             }
         });
     </script>
