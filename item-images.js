@@ -73,8 +73,7 @@ const itemImages = {
     "m9a3": imageBaseUrl + "m9a3.png",
     "1911": imageBaseUrl + "1911.png",
     "ccc": imageBaseUrl + "ccc.png",
-    "makarov": imageBaseUrl + "makarov.png",
-    "makarov_pb": imageBaseUrl + "makarov_pb.png",
+    "m201c": imageBaseUrl + "m201c.png",
     "typ51": imageBaseUrl + "typ51.png",
 
     // ==========================================
