@@ -53,6 +53,51 @@
     animation: pulse-red 2s infinite;
 }
 
+/* Taktische Überschrift Styling */
+.tactical-header-strip {
+    background: linear-gradient(90deg, rgba(124, 163, 90, 0.1) 0%, rgba(20, 25, 20, 0.4) 100%);
+    border-left: 5px solid var(--accent);
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtiler Scanline-Effekt für den Titel */
+.tactical-header-strip::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 3px, 3px 100%;
+    pointer-events: none;
+}
+
+.tactical-header-strip h2 {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: 900;
+    text-shadow: 0 0 8px rgba(124, 163, 90, 0.6);
+}
+
+.status-tag {
+    font-size: 0.6rem;
+    background: var(--accent);
+    color: #000;
+    padding: 2px 6px;
+    font-weight: bold;
+    border-radius: 2px;
+    margin-left: auto;
+}
+
 @keyframes pulse-red {
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 76, 76, 0.7); }
     70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 76, 76, 0); }
@@ -1426,12 +1471,11 @@
         
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; border-bottom: 1px solid #222; padding-bottom: 12px;">
             
-            <div class="header-left" style="display: flex; align-items: center; gap: 15px; margin-left: 20px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span class="warning-icon" style="font-size: 1.3rem;">⚠️</span> 
-                    <h3 style="margin: 0; color: #eee; font-size: 1.1rem; text-transform: uppercase;">Taktische Einsatzinformationen</h3>
-                </div>
-            </div>
+           <div class="tactical-header-strip">
+    <span style="font-size: 1.4rem; filter: drop-shadow(0 0 5px var(--accent));">⚠️</span>
+    <h2>Taktische Einsatzinformationen</h2>
+    <div class="status-tag">SECURE_LINK</div>
+</div>
 
             <div style="display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 30px; gap: 25px;">
     
@@ -1445,7 +1489,7 @@
 
     <div class="hud-box" style="text-align: right;">
         <div class="live-indicator" style="justify-content: flex-end; color: var(--accent);">
-            SUPPLY_CHAIN // SYNCED <div class="pulse-dot" style="background-color: var(--accent); box-shadow: 0 0 8px var(--accent);"></div>
+            TRADER_RESTOCK // SYNCED <div class="pulse-dot" style="background-color: var(--accent); box-shadow: 0 0 8px var(--accent);"></div>
         </div>
         <div id="traderTimerDisplay" style="font-size: 2.2rem; font-weight: 900; color: var(--accent); line-height: 1;">00:00:00</div>
         
