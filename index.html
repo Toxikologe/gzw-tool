@@ -2088,7 +2088,7 @@
 
                         <div style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #333; padding-top: 15px;">
                             <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin: 0;">
-                                <input type="checkbox" id="kdOwnedCheck" style="width: 22px; height: 22px; margin-right: 10px; cursor: pointer;">
+                                <input type="checkbox" id="kdOwnedCheck" onchange="window.updateDossierKeyStatus(this.checked)" style="width: 22px; height: 22px; margin-right: 10px; cursor: pointer;">
                                 SCHLÜSSEL IM BESITZ
                             </label>
                             <button onclick="document.getElementById('keyDossier').style.display='none'" style="background:none; border: 1px solid #444; color: #888; padding: 5px 12px; border-radius: 4px; cursor: pointer;">Schließen</button>
@@ -5585,53 +5585,91 @@ function goToHome() {
             }
         };
     </script>
+    
     <script>
         window.hunterActive = false;
         window.recognition = null;
         window.synth = window.speechSynthesis;
+        window.hunterVoice = null; // Speichert die beste Stimme
 
-        // Prüfen, ob der Browser Spracherkennung unterstützt
+        // --- STIMMEN-SCANNER (SUCHT DIE BESTE MENSCHLICHE STIMME) ---
+        function loadPremiumVoice() {
+            let voices = window.synth.getVoices();
+            if (voices.length === 0) return;
+
+            // Filtern nach deutschen Stimmen
+            let deVoices = voices.filter(v => v.lang.includes('de'));
+            
+            // Priorität 1: Google Stimmen (Sehr natürlich)
+            // Priorität 2: Natürliche Microsoft Stimmen (Stefan/Katja)
+            window.hunterVoice = deVoices.find(v => v.name.includes('Google') && v.name.includes('Deutsch')) 
+                              || deVoices.find(v => v.name.includes('Stefan')) 
+                              || deVoices.find(v => v.name.includes('Conrad'))
+                              || deVoices.find(v => v.name.includes('Katja'))
+                              || deVoices[0]; // Notfall-Fallback
+                              
+            console.log("> Hunter Voice System online. Gewählte Stimme: ", window.hunterVoice ? window.hunterVoice.name : "Standard");
+        }
+
+        // Chrome lädt Stimmen asynchron, deshalb dieser Event-Listener:
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadPremiumVoice;
+        }
+
+        // --- SPRACHAUSGABE (TTS V2) ---
+        window.hunterSpeak = function(text) {
+            if (window.synth.speaking) { window.synth.cancel(); }
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (window.hunterVoice) {
+                utterance.voice = window.hunterVoice;
+            } else {
+                utterance.lang = 'de-DE';
+            }
+            
+            utterance.pitch = 0.8; // Etwas tiefer für militärischen Funk-Klang
+            utterance.rate = 1.05; // Etwas zügiger
+            
+            window.synth.speak(utterance);
+        };
+
+        // --- SPRACHERKENNUNG ---
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
         if (SpeechRecognition) {
             window.recognition = new SpeechRecognition();
-            window.recognition.continuous = true; // Hört dauerhaft zu
+            window.recognition.continuous = true; 
             window.recognition.interimResults = false;
-            window.recognition.lang = 'de-DE'; // Auf Deutsch stellen
+            window.recognition.lang = 'de-DE'; 
 
-            // Wenn ein Satz erkannt wurde
             window.recognition.onresult = function(event) {
                 const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
                 console.log("> Funkspruch empfangen: " + transcript);
 
-                // Wake-Word Check
                 if (transcript.includes("hunter")) {
-                    // Wachhund-Fenster automatisch öffnen, falls es zu ist
                     const overlay = document.getElementById('wachhundOverlay');
                     if (overlay && overlay.style.display !== 'flex') {
                         window.toggleWachhund();
                     }
 
-                    // Befehl extrahieren (alles nach dem Wort "hunter")
                     const parts = transcript.split("hunter");
                     let command = parts[parts.length - 1].trim();
                     
                     if (command.length > 2) {
                         window.processHunterCommand(command);
                     } else {
-                        window.hunterSpeak("Ja, Commander?");
+                        window.hunterSpeak("Commander?");
                     }
                 }
             };
 
-            // Auto-Restart, falls der Browser nach Stille abschaltet
             window.recognition.onend = function() {
                 if (window.hunterActive) {
                     try { window.recognition.start(); } catch(e) {}
                 }
             };
         } else {
-            console.error("Spracherkennung wird von diesem Browser nicht unterstützt.");
+            console.error("Spracherkennung wird nicht unterstützt.");
         }
 
         // --- MIKROFON AN/AUS ---
@@ -5653,8 +5691,11 @@ function goToHome() {
                 btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
                 icon.innerText = "🎙️";
                 text.innerText = "COMMS: OFF";
-                window.hunterSpeak("Comms deaktiviert. Hunter geht offline.");
+                window.hunterSpeak("Comms deaktiviert.");
             } else {
+                // Erzwinge Stimmen-Laden beim ersten Klick
+                loadPremiumVoice(); 
+                
                 window.hunterActive = true;
                 try { window.recognition.start(); } catch(e) {}
                 btn.style.borderColor = "#00ff00";
@@ -5662,80 +5703,120 @@ function goToHome() {
                 btn.style.boxShadow = "0 0 15px rgba(0,255,0,0.5)";
                 icon.innerText = "🟢";
                 text.innerText = "HUNTER LISTENING";
-                window.hunterSpeak("Comms aktiv. Hunter hört mit.");
+                window.hunterSpeak("Online und bereit, Commander.");
             }
         };
 
-        // --- SPRACHAUSGABE (TTS) ---
-        window.hunterSpeak = function(text) {
-            // Alte Sprachausgaben abbrechen
-            if (window.synth.speaking) { window.synth.cancel(); }
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'de-DE';
-            utterance.pitch = 0.9; // Etwas tiefere, ernstere Stimme
-            utterance.rate = 1.1;  // Etwas schnelleres Sprechen (Militärisch)
-            
-            window.synth.speak(utterance);
-        };
-
-        // --- DAS GEHIRN (LOKALE LOGIK) ---
+        // --- DAS GEHIRN V2 (SCHLÜSSEL & CODES INTEGRIERT) ---
         window.processHunterCommand = function(command) {
             console.log("> Analysiere Befehl: " + command);
-            let response = "Entschuldigung Commander, diesen Befehl habe ich nicht verstanden.";
+            let response = "Verzeihung, das habe ich nicht verstanden.";
             let found = false;
 
-            // 1. PREIS / WERT ABFRAGE (Sucht in wachhundDatabase)
+            // 1. PREIS / WERT ABFRAGE
             if (command.includes("wert") || command.includes("kostet") || command.includes("preis")) {
                 if (window.wachhundDatabase) {
                     for (let item of window.wachhundDatabase) {
-                        // Sucht nach dem Keyword ODER dem vollen Namen
                         if (command.includes(item.match.toLowerCase()) || command.includes(item.name.toLowerCase())) {
-                            response = `Der Gegenstand ${item.name} hat einen geschätzten Wert von ${item.price} Dollar. ${item.info}`;
-                            found = true;
-                            break;
+                            response = `${item.name}. Geschätzter Wert: ${item.price} Dollar.`;
+                            found = true; break;
                         }
                     }
                 }
-                if (!found) response = "Ich konnte diesen Gegenstand nicht in der Datenbank finden.";
+                if (!found) response = "Diesen Gegenstand habe ich nicht in der Datenbank.";
             }
 
-            // 2. QUEST / TASK ABFRAGE (Sucht in allTasks aus data.js)
-            else if (command.includes("task") || command.includes("aufgabe") || command.includes("wo ist") || command.includes("ziel")) {
-                // Wir nehmen an, deine Tasks liegen global als Array namens 'allTasks' vor
-                if (typeof allTasks !== 'undefined') {
-                    for (let task of allTasks) {
-                        if (command.includes(task.de.toLowerCase())) {
-                            response = `Für die Aufgabe ${task.de} von ${task.v} lautet die Lösung: ${task.sol}`;
-                            found = true;
-                            break;
+            // 2. SCHLÜSSEL & CODE ABFRAGE (NEU!)
+            else if (command.includes("schlüssel") || command.includes("code") || command.includes("habe ich")) {
+                if (typeof keyDatabase !== 'undefined') {
+                    for (let item of keyDatabase) {
+                        // Suchen wir nach dem Namen (z.B. "ybl-1" oder "schlafzimmer")
+                        const nameParts = item.name.toLowerCase().split(" ");
+                        let nameMatched = nameParts.some(part => command.includes(part) && part.length > 3);
+                        
+                        // Wenn der User explizit nach Codes fragt
+                        if (command.includes("code") && item.type === "code" && nameMatched) {
+                            response = `Der Code für ${item.name} lautet: ${item.code}.`;
+                            found = true; break;
+                        }
+                        
+                        // Wenn der User fragt ob er den Schlüssel hat
+                        if ((command.includes("schlüssel") || command.includes("habe ich")) && item.type === "key" && nameMatched) {
+                            if (item.owned) {
+                                response = `Positiv. Der ${item.name} befindet sich in deinem Besitz. ${item.info}`;
+                            } else {
+                                response = `Negativ. Du hast den ${item.name} noch nicht gefunden.`;
+                            }
+                            found = true; break;
                         }
                     }
                 } else {
-                    response = "Systemfehler: Task-Datenbank nicht geladen.";
+                    response = "Systemfehler: Schlüssel-Datenbank offline.";
                 }
-                if (!found) response = "Ich habe keine Informationen zu dieser Task gefunden.";
+                if (!found) response = "Ich kann diesen Schlüssel oder Code nicht in deinen Akten finden.";
             }
 
-            // 3. KEY / SCHLÜSSEL ABFRAGE
-            else if (command.includes("schlüssel") || command.includes("code")) {
-                // HIER kannst du später eine echte Schlüsselsuche einbauen
-                // Für den Moment durchsuchen wir die Task-Lösungen nach dem Wort "Schlüssel" oder "Code"
+            // 3. QUEST / TASK ABFRAGE
+            else if (command.includes("task") || command.includes("aufgabe") || command.includes("wo ist") || command.includes("ziel")) {
                 if (typeof allTasks !== 'undefined') {
                     for (let task of allTasks) {
-                        if (command.includes(task.de.toLowerCase()) && (task.sol.toLowerCase().includes("code") || task.sol.toLowerCase().includes("schlüssel"))) {
-                            response = `Die Informationen zur Tür für ${task.de} lauten: ${task.sol}`;
-                            found = true;
-                            break;
+                        if (command.includes(task.de.toLowerCase())) {
+                            response = `Einsatzbesprechung für ${task.de}: ${task.sol}`;
+                            found = true; break;
                         }
                     }
                 }
-                if (!found) response = "Ich habe keine spezifischen Zugangscodes oder Schlüssel für diesen Bereich gefunden.";
+                if (!found) response = "Keine Daten zu dieser Mission gefunden.";
             }
 
             // Antwort aussprechen
             window.hunterSpeak(response);
         };
+    </script>
+
+    <script>
+        // 1. Beim Starten: Daten aus dem Tresor holen und an Hunter verfüttern
+        function syncKeysWithStorage() {
+            if (typeof allKeys !== 'undefined') {
+                allKeys.forEach(key => {
+                    // Schaut im Browser des Nutzers nach, ob es einen Speicherstand gibt
+                    let savedState = localStorage.getItem('GZW_Key_' + key.name);
+                    
+                    if (savedState !== null) {
+                        // Wenn ja, überschreibe die data.js im Arbeitsspeicher
+                        key.owned = (savedState === 'true');
+                    }
+                });
+                console.log("> Lokaler Speicher synchronisiert. Hunter ist up-to-date.");
+            }
+        }
+
+        // 2. Diese Funktion rufst du auf, wenn jemand in der UI einen Schlüssel anklickt
+        window.updateKeyStatus = function(keyName, isOwned) {
+            // Speichert es dauerhaft im Browser des Nutzers
+            localStorage.setItem('GZW_Key_' + keyName, isOwned);
+
+            // Updated es in Echtzeit für Hunter im RAM
+            if (typeof allKeys !== 'undefined') {
+                let key = allKeys.find(k => k.name === keyName);
+                if (key) {
+                    key.owned = isOwned;
+                    console.log(`> Status Update: ${keyName} ist jetzt ${isOwned ? 'im Besitz' : 'nicht im Besitz'}.`);
+                }
+            }
+        }
+
+        // 3. Brücke für das Einsatz-Dossier: Liest den aktuellen Schlüssel aus dem Titel aus
+        window.updateDossierKeyStatus = function(isOwned) {
+            let keyName = document.getElementById('kdTitle').innerText;
+            if (keyName && keyName !== '-') {
+                // Sendet den Namen und den Status (true/false) an den lokalen Speicher
+                window.updateKeyStatus(keyName, isOwned);
+            }
+        };
+
+        // Sobald die Seite lädt, Tresor öffnen
+        document.addEventListener('DOMContentLoaded', syncKeysWithStorage);
     </script>
 </body>
 </html>
