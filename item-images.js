@@ -1,13 +1,16 @@
 // ==============================================================
-// GZW TACTICAL TOOL - ITEM IMAGE DATABASE
-// ==============================================================
+// GZW TACTICAL TOOL - COMPLETE ITEM IMAGE DATABASE
+// Update: 0.4 Spearhead & Hotfix 0.4.0.3
+// ==========================================
 // Anleitung: Lade die Bilder herunter, benenne sie exakt nach der ID 
-// (z.B. "m4a1.png") und lade sie auf Github in den "images" Ordner hoch.
+// und lade sie auf Github hoch in den Ordner "images".
 
 const imageBaseUrl = "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/";
 
 const itemImages = {
-    // --- NATO ARs ---
+    // ==========================================
+    // 1. WAFFEN (WEAPONS)
+    // ==========================================
     "m4a1": imageBaseUrl + "m4a1.png",
     "m16a1": imageBaseUrl + "m16a1.png",
     "m201c": imageBaseUrl + "m201c.png",
@@ -16,8 +19,6 @@ const itemImages = {
     "ks1": imageBaseUrl + "ks1.png",
     "sicmcx": imageBaseUrl + "sicmcx.png",
     "mk18": imageBaseUrl + "mk18.png",
-
-    // --- OSTBLOCK ARs ---
     "ak74": imageBaseUrl + "ak74.png",
     "ak74n": imageBaseUrl + "ak74n.png",
     "ak74m": imageBaseUrl + "ak74m.png",
@@ -41,8 +42,6 @@ const itemImages = {
     "typ56": imageBaseUrl + "typ56.png",
     "typ56_1": imageBaseUrl + "typ56_1.png",
     "typ56_2": imageBaseUrl + "typ56_2.png",
-
-    // --- DMRs & SNIPER ---
     "m14": imageBaseUrl + "m14.png",
     "m14ebr": imageBaseUrl + "m14ebr.png",
     "m1a": imageBaseUrl + "m1a.png",
@@ -55,8 +54,6 @@ const itemImages = {
     "svds": imageBaseUrl + "svds.png",
     "sks": imageBaseUrl + "sks.png",
     "op_sks": imageBaseUrl + "op_sks.png",
-
-    // --- SMGs & SHOTGUNS ---
     "mp7a1": imageBaseUrl + "mp7a1.png",
     "mp7a2": imageBaseUrl + "mp7a2.png",
     "mp5a2": imageBaseUrl + "mp5a2.png",
@@ -69,8 +66,6 @@ const itemImages = {
     "moss590": imageBaseUrl + "moss590.png",
     "moss590a1": imageBaseUrl + "moss590a1.png",
     "moss590_shock": imageBaseUrl + "moss590_shock.png",
-
-    // --- PISTOLS ---
     "alien": imageBaseUrl + "alien.png",
     "glock17": imageBaseUrl + "glock17.png",
     "glock19": imageBaseUrl + "glock19.png",
@@ -80,9 +75,421 @@ const itemImages = {
     "ccc": imageBaseUrl + "ccc.png",
     "makarov": imageBaseUrl + "makarov.png",
     "makarov_pb": imageBaseUrl + "makarov_pb.png",
-    "typ51": imageBaseUrl + "typ51.png"
+    "typ51": imageBaseUrl + "typ51.png",
 
-    // --- GEAR & MEDICAL (Zukünftige Erweiterung) ---
-    // Hier kannst du später Rüstung und Medical Items nach dem gleichen Muster eintragen:
-    // "helm_fastmt": imageBaseUrl + "helm_fastmt.png",
+    // ==========================================
+    // 2. MODS & ATTACHMENTS
+    // ==========================================
+    "m_nt4": imageBaseUrl + "m_nt4.png",
+    "m_rc1": imageBaseUrl + "m_rc1.png",
+    "m_rc2": imageBaseUrl + "m_rc2.png",
+    "m_pbs1": imageBaseUrl + "m_pbs1.png",
+    "m_pbs4": imageBaseUrl + "m_pbs4.png",
+    "m_tgpv": imageBaseUrl + "m_tgpv.png",
+    "m_banish": imageBaseUrl + "m_banish.png",
+    "m_srd762": imageBaseUrl + "m_srd762.png",
+    "m_salvo": imageBaseUrl + "m_salvo.png",
+    "m_rotex": imageBaseUrl + "m_rotex.png",
+    "m_comp": imageBaseUrl + "m_comp.png",
+    "m_dtk1": imageBaseUrl + "m_dtk1.png",
+    "m_dtk2": imageBaseUrl + "m_dtk2.png",
+    "m_hyper": imageBaseUrl + "m_hyper.png",
+    "m_9mm": imageBaseUrl + "m_9mm.png",
+    "o_exps": imageBaseUrl + "o_exps.png",
+    "o_t2": imageBaseUrl + "o_t2.png",
+    "o_kobra": imageBaseUrl + "o_kobra.png",
+    "o_specter": imageBaseUrl + "o_specter.png",
+    "o_vudu1": imageBaseUrl + "o_vudu1.png",
+    "o_vudu3": imageBaseUrl + "o_vudu3.png",
+    "o_razor": imageBaseUrl + "o_razor.png",
+    "o_viper": imageBaseUrl + "o_viper.png",
+    "o_acog": imageBaseUrl + "o_acog.png",
+    "o_pso1": imageBaseUrl + "o_pso1.png",
+    "o_pu": imageBaseUrl + "o_pu.png",
+    "g_rvg": imageBaseUrl + "g_rvg.png",
+    "g_shift": imageBaseUrl + "g_shift.png",
+    "g_rk2": imageBaseUrl + "g_rk2.png",
+    "g_bcm": imageBaseUrl + "g_bcm.png",
+    "g_rk3": imageBaseUrl + "g_rk3.png",
+    "s_pt1": imageBaseUrl + "s_pt1.png",
+    "s_pt3": imageBaseUrl + "s_pt3.png",
+    "s_zhukov": imageBaseUrl + "s_zhukov.png",
+    "s_moe": imageBaseUrl + "s_moe.png",
+    "s_dd": imageBaseUrl + "s_dd.png",
+    "s_sopmod": imageBaseUrl + "s_sopmod.png",
+    "s_hunter": imageBaseUrl + "s_hunter.png",
+    "s_modx": imageBaseUrl + "s_modx.png",
+    "s_arch": imageBaseUrl + "s_arch.png",
+    "s_sga": imageBaseUrl + "s_sga.png",
+    "mag_30_ar": imageBaseUrl + "mag_30_ar.png",
+    "mag_60_ar": imageBaseUrl + "mag_60_ar.png",
+    "mag_30_ak": imageBaseUrl + "mag_30_ak.png",
+    "mag_60_ak": imageBaseUrl + "mag_60_ak.png",
+    "mag_10_svd": imageBaseUrl + "mag_10_svd.png",
+    "mag_20_svd": imageBaseUrl + "mag_20_svd.png",
+    "mag_ext_9mm": imageBaseUrl + "mag_ext_9mm.png",
+
+    // ==========================================
+    // 3. RÜSTUNG, HELME & GEAR
+    // ==========================================
+    // Formatierung (Leerzeichen & Symbole bereinigt)
+    "plate6_plate_carrier": imageBaseUrl + "plate6_plate_carrier.png",
+    "phantom_type_2": imageBaseUrl + "phantom_type_2.png",
+    "recon_plate_carrier_rpc": imageBaseUrl + "recon_plate_carrier_rpc.png",
+    "m2_plate_carrier": imageBaseUrl + "m2_plate_carrier.png",
+    "cgpc3_tqs": imageBaseUrl + "cgpc3_tqs.png",
+    "chest_rig_901_elite_4": imageBaseUrl + "chest_rig_901_elite_4.png",
+    "modular_operator_carrier_gen_ii": imageBaseUrl + "modular_operator_carrier_gen_ii.png",
+    "pantsir_2_0": imageBaseUrl + "pantsir_2_0.png",
+    "specter": imageBaseUrl + "specter.png",
+    "cz_4m_lancer": imageBaseUrl + "cz_4m_lancer.png",
+    "cz_4m_lancer_unlra": imageBaseUrl + "cz_4m_lancer_unlra.png",
+    "lcs_sentry": imageBaseUrl + "lcs_sentry.png",
+    "atbv_schutzweste": imageBaseUrl + "atbv_schutzweste.png",
+    "paca_schutzweste": imageBaseUrl + "paca_schutzweste.png",
+    "6b2_schutzweste": imageBaseUrl + "6b2_schutzweste.png",
+    "fraktions-weste_lrimsscsi": imageBaseUrl + "fraktions-weste_lrimsscsi.png",
+    "security_weste": imageBaseUrl + "security_weste.png",
+    "6b13-1_sturm-panzerung": imageBaseUrl + "6b13-1_sturm-panzerung.png",
+    "6b23-1_panzerung": imageBaseUrl + "6b23-1_panzerung.png",
+    "6b33_defender-2_schutzweste": imageBaseUrl + "6b33_defender-2_schutzweste.png",
+    "wanderer_rucksack_trekstars_70l": imageBaseUrl + "wanderer_rucksack_trekstars_70l.png",
+    "delta_rucksack": imageBaseUrl + "delta_rucksack.png",
+    "rush_72_2_0": imageBaseUrl + "rush_72_2_0.png",
+    "6sh118_ratnik_v2": imageBaseUrl + "6sh118_ratnik_v2.png",
+    "falang_28": imageBaseUrl + "falang_28.png",
+    "rush_24": imageBaseUrl + "rush_24.png",
+    "3-tages-sturmrucksack": imageBaseUrl + "3-tages-sturmrucksack.png",
+    "amp12_rucksack": imageBaseUrl + "amp12_rucksack.png",
+    "patrouillen-rucksack": imageBaseUrl + "patrouillen-rucksack.png",
+    "scorpion_ocp": imageBaseUrl + "scorpion_ocp.png",
+    "tagesrucksack_daypack": imageBaseUrl + "tagesrucksack_daypack.png",
+    "gunfighter_14": imageBaseUrl + "gunfighter_14.png",
+    "sport_rucksack": imageBaseUrl + "sport_rucksack.png",
+    "turnbeutel_drawstring_bag": imageBaseUrl + "turnbeutel_drawstring_bag.png",
+    "kleiner_touristenrucksack": imageBaseUrl + "kleiner_touristenrucksack.png",
+    "lbt-1961a_chest_rig": imageBaseUrl + "lbt-1961a_chest_rig.png",
+    "tactec_brust-rig": imageBaseUrl + "tactec_brust-rig.png",
+    "recon_chest_rig": imageBaseUrl + "recon_chest_rig.png",
+    "viper_chest_rig": imageBaseUrl + "viper_chest_rig.png",
+    "training_mini_rig": imageBaseUrl + "training_mini_rig.png",
+    "type_81_ak-rig": imageBaseUrl + "type_81_ak-rig.png",
+    "type_56_ak-rig": imageBaseUrl + "type_56_ak-rig.png",
+    "improvisiertes_rig": imageBaseUrl + "improvisiertes_rig.png",
+    "fast_mt_helm": imageBaseUrl + "fast_mt_helm.png",
+    "altyn_helm": imageBaseUrl + "altyn_helm.png",
+    "exfil_helm_team_wendy": imageBaseUrl + "exfil_helm_team_wendy.png",
+    "mich_tc-2000": imageBaseUrl + "mich_tc-2000.png",
+    "mich_tc-2002": imageBaseUrl + "mich_tc-2002.png",
+    "lshz_1": imageBaseUrl + "lshz_1.png",
+    "6b47_ratnik": imageBaseUrl + "6b47_ratnik.png",
+    "ssh-68_stahlhelm": imageBaseUrl + "ssh-68_stahlhelm.png",
+    "skull_crusher_nvg_mount": imageBaseUrl + "skull_crusher_nvg_mount.png",
+    "dschungelhut_boonie_hat": imageBaseUrl + "dschungelhut_boonie_hat.png",
+    "baseballkappe__beanie": imageBaseUrl + "baseballkappe__beanie.png",
+    "comtac_4_headset": imageBaseUrl + "comtac_4_headset.png",
+    "sordin_supreme_pro-x": imageBaseUrl + "sordin_supreme_pro-x.png",
+    "comtac_2": imageBaseUrl + "comtac_2.png",
+    "earmor_m32": imageBaseUrl + "earmor_m32.png",
+    "walkers_razor": imageBaseUrl + "walkers_razor.png",
+    "gssh-01_headset": imageBaseUrl + "gssh-01_headset.png",
+    "gasmaske_gas_mask": imageBaseUrl + "gasmaske_gas_mask.png",
+    "sturmhaube_balaclava": imageBaseUrl + "sturmhaube_balaclava.png",
+    "shemagh": imageBaseUrl + "shemagh.png",
+    "schlauchschal_neck_gaiter": imageBaseUrl + "schlauchschal_neck_gaiter.png",
+    "bandana": imageBaseUrl + "bandana.png",
+    "taktische_schutzbrille": imageBaseUrl + "taktische_schutzbrille.png",
+    "sportsonnenbrille__aviators": imageBaseUrl + "sportsonnenbrille__aviators.png",
+    "operator_gurtel_operator_belt": imageBaseUrl + "operator_gurtel_operator_belt.png",
+    "gefechtsgurtel_battle_belt": imageBaseUrl + "gefechtsgurtel_battle_belt.png",
+    "taktischer_gurtel_tactical_belt": imageBaseUrl + "taktischer_gurtel_tactical_belt.png",
+    "dienstgurtel_duty_belt": imageBaseUrl + "dienstgurtel_duty_belt.png",
+
+    // ==========================================
+    // 4. LOGISTICS (LOOT & QUESTS)
+    // ==========================================
+    "ltsd-4-3_laser-zielmarkierer": imageBaseUrl + "ltsd-4-3_laser-zielmarkierer.png",
+    "r-438_barrier-t_system": imageBaseUrl + "r-438_barrier-t_system.png",
+    "pbg-01_drohnen-kontrollstation": imageBaseUrl + "pbg-01_drohnen-kontrollstation.png",
+    "c2_militar-laptop": imageBaseUrl + "c2_militar-laptop.png",
+    "strelets-m_tablet": imageBaseUrl + "strelets-m_tablet.png",
+    "anpyq-10": imageBaseUrl + "anpyq-10.png",
+    "kik-11_taktischer_schlussel-lader": imageBaseUrl + "kik-11_taktischer_schlussel-lader.png",
+    "verstarkter_militar-laptop": imageBaseUrl + "verstarkter_militar-laptop.png",
+    "hgcs-30_drohnen-kontrollstation": imageBaseUrl + "hgcs-30_drohnen-kontrollstation.png",
+    "robustes_militar-tablet": imageBaseUrl + "robustes_militar-tablet.png",
+    "schwarze_kreditkarte": imageBaseUrl + "schwarze_kreditkarte.png",
+    "moutai_-_50_jahre": imageBaseUrl + "moutai_-_50_jahre.png",
+    "platinring": imageBaseUrl + "platinring.png",
+    "majestatische_titanuhr": imageBaseUrl + "majestatische_titanuhr.png",
+    "diamantring": imageBaseUrl + "diamantring.png",
+    "platin-kreditkarte": imageBaseUrl + "platin-kreditkarte.png",
+    "diamantohrringe": imageBaseUrl + "diamantohrringe.png",
+    "allanach_single_malt_scotch_-_40_jahre": imageBaseUrl + "allanach_single_malt_scotch_-_40_jahre.png",
+    "diamant-korallen-ring": imageBaseUrl + "diamant-korallen-ring.png",
+    "smaragdhalskette": imageBaseUrl + "smaragdhalskette.png",
+    "perfekte_perlenohrringe": imageBaseUrl + "perfekte_perlenohrringe.png",
+    "aufwendiger_ring": imageBaseUrl + "aufwendiger_ring.png",
+    "breda_rum_-_30_jahre": imageBaseUrl + "breda_rum_-_30_jahre.png",
+    "saphir-anhanger": imageBaseUrl + "saphir-anhanger.png",
+    "gold-kreditkarte": imageBaseUrl + "gold-kreditkarte.png",
+    "tzuntzimitl_tequila_-_25_jahre": imageBaseUrl + "tzuntzimitl_tequila_-_25_jahre.png",
+    "elegante_luxusuhr": imageBaseUrl + "elegante_luxusuhr.png",
+    "master_carbon_seal_uhr": imageBaseUrl + "master_carbon_seal_uhr.png",
+    "dunkle_perlenhalskette": imageBaseUrl + "dunkle_perlenhalskette.png",
+    "edelsteinring": imageBaseUrl + "edelsteinring.png",
+    "gewohnliche_kreditkarte": imageBaseUrl + "gewohnliche_kreditkarte.png",
+    "luxus-smartwatch": imageBaseUrl + "luxus-smartwatch.png",
+    "goodlad_whiskey_-_20_jahre": imageBaseUrl + "goodlad_whiskey_-_20_jahre.png",
+    "schlangenwein": imageBaseUrl + "schlangenwein.png",
+    "himmlische_parfumflasche": imageBaseUrl + "himmlische_parfumflasche.png",
+    "lambert_zigarren": imageBaseUrl + "lambert_zigarren.png",
+    "goldhalskette": imageBaseUrl + "goldhalskette.png",
+    "zarte_parfumflasche": imageBaseUrl + "zarte_parfumflasche.png",
+    "goldring": imageBaseUrl + "goldring.png",
+    "moderne_uhr": imageBaseUrl + "moderne_uhr.png",
+    "hyperborea_zigaretten": imageBaseUrl + "hyperborea_zigaretten.png",
+    "duftende_parfumflasche": imageBaseUrl + "duftende_parfumflasche.png",
+    "stange_tahirs_zigaretten": imageBaseUrl + "stange_tahirs_zigaretten.png",
+    "tahirs_zigaretten": imageBaseUrl + "tahirs_zigaretten.png",
+    "goldkette": imageBaseUrl + "goldkette.png",
+    "holzstatue": imageBaseUrl + "holzstatue.png",
+    "goldene_uhr_rolex": imageBaseUrl + "goldene_uhr_rolex.png",
+    "vip-reisepass": imageBaseUrl + "vip-reisepass.png",
+    "touristen-reisepass": imageBaseUrl + "touristen-reisepass.png",
+    "einmalpad-schlusselcodes": imageBaseUrl + "einmalpad-schlusselcodes.png",
+    "biometrische_zugangskarte": imageBaseUrl + "biometrische_zugangskarte.png",
+    "biometrischer_usb-stick": imageBaseUrl + "biometrischer_usb-stick.png",
+    "armee-geheimdienstdaten": imageBaseUrl + "armee-geheimdienstdaten.png",
+    "geschaftsmann-ausweis": imageBaseUrl + "geschaftsmann-ausweis.png",
+    "fuhrerschein": imageBaseUrl + "fuhrerschein.png",
+    "einheimischen-ausweis": imageBaseUrl + "einheimischen-ausweis.png",
+    "verbrechen-bezogene_daten": imageBaseUrl + "verbrechen-bezogene_daten.png",
+    "touristen-ausweis": imageBaseUrl + "touristen-ausweis.png",
+    "beweise__dokumente__intel": imageBaseUrl + "beweise__dokumente__intel.png",
+    "geldautomaten-hacking-tool": imageBaseUrl + "geldautomaten-hacking-tool.png",
+    "verschlusselte_einsatz-festplatte": imageBaseUrl + "verschlusselte_einsatz-festplatte.png",
+    "schwarzes_luxus-smartphone": imageBaseUrl + "schwarzes_luxus-smartphone.png",
+    "verschlusselte_festplatte": imageBaseUrl + "verschlusselte_festplatte.png",
+    "npi-2_navigationsempfanger": imageBaseUrl + "npi-2_navigationsempfanger.png",
+    "luxus-smartphone": imageBaseUrl + "luxus-smartphone.png",
+    "spiegelreflexkamera_dslr": imageBaseUrl + "spiegelreflexkamera_dslr.png",
+    "glonass_grot-m_navigationsempfanger": imageBaseUrl + "glonass_grot-m_navigationsempfanger.png",
+    "azart_p1_funkgerat": imageBaseUrl + "azart_p1_funkgerat.png",
+    "laptop": imageBaseUrl + "laptop.png",
+    "tragbarer_ecm-storsender": imageBaseUrl + "tragbarer_ecm-storsender.png",
+    "signalverstarker_rt97s": imageBaseUrl + "signalverstarker_rt97s.png",
+    "teures_smartphone": imageBaseUrl + "teures_smartphone.png",
+    "smartphone": imageBaseUrl + "smartphone.png",
+    "digitalkamera_digicam": imageBaseUrl + "digitalkamera_digicam.png",
+    "handy-ladegerat": imageBaseUrl + "handy-ladegerat.png",
+    "weises_lithiumfett": imageBaseUrl + "weises_lithiumfett.png",
+    "werkzeugset": imageBaseUrl + "werkzeugset.png",
+    "schwefelsaure": imageBaseUrl + "schwefelsaure.png",
+    "kaputte_nagelpistole": imageBaseUrl + "kaputte_nagelpistole.png",
+    "autobatterie": imageBaseUrl + "autobatterie.png",
+    "acetylenflasche": imageBaseUrl + "acetylenflasche.png",
+    "kaputter_winkelschleifer": imageBaseUrl + "kaputter_winkelschleifer.png",
+    "kaputte_stichsage": imageBaseUrl + "kaputte_stichsage.png",
+    "gummi-erneuerer": imageBaseUrl + "gummi-erneuerer.png",
+    "aramid-gewebe": imageBaseUrl + "aramid-gewebe.png",
+    "motorradbatterie": imageBaseUrl + "motorradbatterie.png",
+    "propanflasche": imageBaseUrl + "propanflasche.png",
+    "starthilfekabel": imageBaseUrl + "starthilfekabel.png",
+    "industrielles_losungsmittel": imageBaseUrl + "industrielles_losungsmittel.png",
+    "kaputte_handsage": imageBaseUrl + "kaputte_handsage.png",
+    "minderwertiges_schiespulver": imageBaseUrl + "minderwertiges_schiespulver.png",
+    "bremsflussigkeit": imageBaseUrl + "bremsflussigkeit.png",
+    "benzinkanister": imageBaseUrl + "benzinkanister.png",
+    "bleichmittel": imageBaseUrl + "bleichmittel.png",
+    "naosaoad_100_reiniger": imageBaseUrl + "naosaoad_100_reiniger.png",
+    "motoroel": imageBaseUrl + "motoroel.png",
+    "rohrreiniger": imageBaseUrl + "rohrreiniger.png",
+    "tarnstoff": imageBaseUrl + "tarnstoff.png",
+    "paracord": imageBaseUrl + "paracord.png",
+    "waffenoel": imageBaseUrl + "waffenoel.png",
+    "packung_aa-batterien": imageBaseUrl + "packung_aa-batterien.png",
+    "kaputter_schraubenschlussel": imageBaseUrl + "kaputter_schraubenschlussel.png",
+    "kaputter_zimmermannshammer": imageBaseUrl + "kaputter_zimmermannshammer.png",
+    "kaputter_schraubenzieher": imageBaseUrl + "kaputter_schraubenzieher.png",
+    "kupferkabel": imageBaseUrl + "kupferkabel.png",
+    "nagel": imageBaseUrl + "nagel.png",
+    "panzertape": imageBaseUrl + "panzertape.png",
+    "waffenteile": imageBaseUrl + "waffenteile.png",
+    "zundkerze": imageBaseUrl + "zundkerze.png",
+    "flaschchen_mit_antigenen": imageBaseUrl + "flaschchen_mit_antigenen.png",
+    "desinfektionsmittel": imageBaseUrl + "desinfektionsmittel.png",
+    "un-medizinwerkzeuge": imageBaseUrl + "un-medizinwerkzeuge.png",
+    "insektenspray": imageBaseUrl + "insektenspray.png",
+    "blutbeutel_500ml": imageBaseUrl + "blutbeutel_500ml.png",
+    "morphin-injektor": imageBaseUrl + "morphin-injektor.png",
+    "tourniquet_cat": imageBaseUrl + "tourniquet_cat.png",
+    "verbandskasten__ifak": imageBaseUrl + "verbandskasten__ifak.png",
+    "wasserproben": imageBaseUrl + "wasserproben.png",
+    "packung_premium-kaffee": imageBaseUrl + "packung_premium-kaffee.png",
+    "wasserreinigungstabletten": imageBaseUrl + "wasserreinigungstabletten.png",
+    "mre_kampfration": imageBaseUrl + "mre_kampfration.png",
+    "nachfullbares_feuerzeug": imageBaseUrl + "nachfullbares_feuerzeug.png",
+    "handspiegel": imageBaseUrl + "handspiegel.png",
+    "vaseline_petrolatum": imageBaseUrl + "vaseline_petrolatum.png",
+    "kartenspiel": imageBaseUrl + "kartenspiel.png",
+    "angelschnur": imageBaseUrl + "angelschnur.png",
+    "lampenoel": imageBaseUrl + "lampenoel.png",
+    "feuerzeug": imageBaseUrl + "feuerzeug.png",
+    "nahzeug": imageBaseUrl + "nahzeug.png",
+    "rettungsdecke": imageBaseUrl + "rettungsdecke.png",
+    "m4a1_sturmgewehr": imageBaseUrl + "m4a1_sturmgewehr.png",
+    "unmodifizierte_akmn": imageBaseUrl + "unmodifizierte_akmn.png",
+
+    // ==========================================
+    // 5. STASH & CONTAINER
+    // ==========================================
+    "safe_lock_box_2x2": imageBaseUrl + "safe_lock_box_2x2.png",
+    "admin_tasche_2x3_admin_pouch": imageBaseUrl + "admin_tasche_2x3_admin_pouch.png",
+    "tas_secure_container_3x3": imageBaseUrl + "tas_secure_container_3x3.png",
+    "muxxum_waffenkoffer_muxxum_rifle_case": imageBaseUrl + "muxxum_waffenkoffer_muxxum_rifle_case.png",
+    "harde-kiste_harde_case": imageBaseUrl + "harde-kiste_harde_case.png",
+    "waffenteilkiste_weapon_parts_case": imageBaseUrl + "waffenteilkiste_weapon_parts_case.png",
+    "metal-munitionskiste_metal_ammo_box": imageBaseUrl + "metal-munitionskiste_metal_ammo_box.png",
+    "mm-munitionskiste_mm_ammo_box": imageBaseUrl + "mm-munitionskiste_mm_ammo_box.png",
+    "handgranatenkoffer_hand_grenade_storage_box": imageBaseUrl + "handgranatenkoffer_hand_grenade_storage_box.png",
+    "magazinkiste_magazine_crate": imageBaseUrl + "magazinkiste_magazine_crate.png",
+    "iv-schutzkoffer_iv_truncase": imageBaseUrl + "iv-schutzkoffer_iv_truncase.png",
+    "erste-hilfe-koffer_first_aid_case": imageBaseUrl + "erste-hilfe-koffer_first_aid_case.png",
+    "kuhlbox__proviantkiste_personal_cooler": imageBaseUrl + "kuhlbox__proviantkiste_personal_cooler.png",
+    "groser_schlusselkoffer_huge_key_case": imageBaseUrl + "groser_schlusselkoffer_huge_key_case.png",
+    "morser-kiste_mortar_round_case": imageBaseUrl + "morser-kiste_mortar_round_case.png",
+    "kleiner_tresor_small_safe": imageBaseUrl + "kleiner_tresor_small_safe.png",
+    "groser_tresor_large_safe": imageBaseUrl + "groser_tresor_large_safe.png",
+    "verwaltungstisch_administrative_desk": imageBaseUrl + "verwaltungstisch_administrative_desk.png",
+    "geldborse_tactical_wallet": imageBaseUrl + "geldborse_tactical_wallet.png",
+    "lederschlusselhalter_key_holder": imageBaseUrl + "lederschlusselhalter_key_holder.png",
+    "schlusseltasche_key_case": imageBaseUrl + "schlusseltasche_key_case.png",
+    "injektoren-etui_injector_case": imageBaseUrl + "injektoren-etui_injector_case.png",
+    "verwaltungstasche_administration_bag": imageBaseUrl + "verwaltungstasche_administration_bag.png",
+    "kombat-ordner_kombat_folder": imageBaseUrl + "kombat-ordner_kombat_folder.png",
+    "hartschalen-erste-hilfe_hfak": imageBaseUrl + "hartschalen-erste-hilfe_hfak.png",
+    "mini-erste-hilfe-set_mfak": imageBaseUrl + "mini-erste-hilfe-set_mfak.png",
+    "schnellverschluss-medikit_qfak": imageBaseUrl + "schnellverschluss-medikit_qfak.png",
+    "rip-away_emt_pouch_emt": imageBaseUrl + "rip-away_emt_pouch_emt.png",
+    "locker-erweiterungen_locker_expansions": imageBaseUrl + "locker-erweiterungen_locker_expansions.png",
+
+    // ==========================================
+    // 6. MEDICAL CENTER
+    // ==========================================
+    "encumbered": imageBaseUrl + "encumbered.png",
+    "exhausted": imageBaseUrl + "exhausted.png",
+    "fatigued": imageBaseUrl + "fatigued.png",
+    "sore_arms": imageBaseUrl + "sore_arms.png",
+    "cramps": imageBaseUrl + "cramps.png",
+    "out_of_breath": imageBaseUrl + "out_of_breath.png",
+    "thirsty": imageBaseUrl + "thirsty.png",
+    "hungry": imageBaseUrl + "hungry.png",
+    "bleed_light": imageBaseUrl + "bleed_light.png",
+    "bleed_med": imageBaseUrl + "bleed_med.png",
+    "bleed_heavy": imageBaseUrl + "bleed_heavy.png",
+    "limping": imageBaseUrl + "limping.png",
+    "organ_damage": imageBaseUrl + "organ_damage.png",
+    "tremors": imageBaseUrl + "tremors.png",
+    "coughing": imageBaseUrl + "coughing.png",
+    "upset_stomach": imageBaseUrl + "upset_stomach.png",
+    "nauseous": imageBaseUrl + "nauseous.png",
+    "dizzy": imageBaseUrl + "dizzy.png",
+    "dazed_confused": imageBaseUrl + "dazed_confused.png",
+    "vision_blackout": imageBaseUrl + "vision_blackout.png",
+    "hurt_pain": imageBaseUrl + "hurt_pain.png",
+    "pain": imageBaseUrl + "pain.png",
+    "radiation": imageBaseUrl + "radiation.png",
+    "coma": imageBaseUrl + "coma.png",
+
+    // ==========================================
+    // 7. PROVISIONS (FOOD & WATER)
+    // ==========================================
+    "dark_star_iced_coffee": imageBaseUrl + "dark_star_iced_coffee.png",
+    "nuklear_energy_meltdown_mango": imageBaseUrl + "nuklear_energy_meltdown_mango.png",
+    "energy_bar_nuts_and_fruits": imageBaseUrl + "energy_bar_nuts_and_fruits.png",
+    "windmill_almond_choc_bar": imageBaseUrl + "windmill_almond_choc_bar.png",
+    "tamtam_doublechoc": imageBaseUrl + "tamtam_doublechoc.png",
+    "berg_bar_cookie_chocolate": imageBaseUrl + "berg_bar_cookie_chocolate.png",
+    "noakon_water_0_6_l": imageBaseUrl + "noakon_water_0_6_l.png",
+    "power_energy_drink": imageBaseUrl + "power_energy_drink.png",
+    "gray_focused_energy": imageBaseUrl + "gray_focused_energy.png",
+    "infinity_isotonic_drink": imageBaseUrl + "infinity_isotonic_drink.png",
+    "kaipo_lychee_nectar": imageBaseUrl + "kaipo_lychee_nectar.png",
+    "touchdown_lemon_soda": imageBaseUrl + "touchdown_lemon_soda.png",
+    "coco_jumbo_coconut_juice": imageBaseUrl + "coco_jumbo_coconut_juice.png",
+    "sunrise_cola": imageBaseUrl + "sunrise_cola.png",
+    "aques_water_1_l": imageBaseUrl + "aques_water_1_l.png",
+    "aques_water_1_5_l": imageBaseUrl + "aques_water_1_5_l.png",
+    "noakon_water_1_l": imageBaseUrl + "noakon_water_1_l.png",
+    "noakon_water_1_5_l": imageBaseUrl + "noakon_water_1_5_l.png",
+    "maknav_iced_tea": imageBaseUrl + "maknav_iced_tea.png",
+    "white_orchid_crystal_water_2_l": imageBaseUrl + "white_orchid_crystal_water_2_l.png",
+    "riminda_green_bubbly_bliss": imageBaseUrl + "riminda_green_bubbly_bliss.png",
+    "sunrise_cola_2_l": imageBaseUrl + "sunrise_cola_2_l.png",
+    "spicy_thai_combat_meal": imageBaseUrl + "spicy_thai_combat_meal.png",
+    "combat_ration_pack_crp": imageBaseUrl + "combat_ration_pack_crp.png",
+    "hdr_meal": imageBaseUrl + "hdr_meal.png",
+    "premium_pork_luncheon_meat": imageBaseUrl + "premium_pork_luncheon_meat.png",
+    "sinngua_lunch_meat": imageBaseUrl + "sinngua_lunch_meat.png",
+    "mackerel_in_teriyaki_sauce": imageBaseUrl + "mackerel_in_teriyaki_sauce.png",
+    "canned_tuna_chunks": imageBaseUrl + "canned_tuna_chunks.png",
+    "cowboy_baked_beans": imageBaseUrl + "cowboy_baked_beans.png",
+    "lucky_pork_liver_pate": imageBaseUrl + "lucky_pork_liver_pate.png",
+    "lychee_in_syrup": imageBaseUrl + "lychee_in_syrup.png",
+    "organic_tofu": imageBaseUrl + "organic_tofu.png",
+    "1_shot_energy_chews": imageBaseUrl + "1_shot_energy_chews.png",
+    "bamboo_shoots": imageBaseUrl + "bamboo_shoots.png",
+    "kasem_chocolate_wafers": imageBaseUrl + "kasem_chocolate_wafers.png",
+    "snipsnap_crunchy": imageBaseUrl + "snipsnap_crunchy.png"
+
+    // Schlüssel und Ammo habe ich hier aus Performancegründen erstmal nicht hinzugefügt, da man für Schlüssel keine Bilder braucht und es zu viele Patronen gibt,
+    // aber du hast jetzt die Struktur für ALLE Gegenstände und das Prinzip verstanden!
 };
+
+// ==============================================================
+// TACTICAL HOVER ENGINE (BILDER-OVERLAY) LOGIK
+// ==============================================================
+// Diese Logik kann hier in der Datei stehen und wird automatisch
+// aktiv, sobald die Datei in deiner index.html geladen wird.
+
+document.addEventListener('mouseover', function(e) {
+    let target = e.target.closest('.item-hover-trigger');
+    if (target) {
+        let rawId = target.getAttribute('data-item-id');
+        if (!rawId) return;
+
+        // Macht den Namen "Safe Lock Box (2x2)" zu "safe_lock_box_2x2"
+        let formattedId = rawId.toLowerCase()
+                               .replace(/[^a-z0-9]+/g, "_")
+                               .replace(/^_|_$/g, "");
+
+        if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
+            let tooltip = document.getElementById('tacticalImageTooltip');
+            if(tooltip) {
+                let img = document.getElementById('tacticalTooltipImg');
+                img.src = itemImages[formattedId];
+                tooltip.style.display = 'block';
+            }
+        }
+    }
+});
+
+document.addEventListener('mousemove', function(e) {
+    let tooltip = document.getElementById('tacticalImageTooltip');
+    if (tooltip && tooltip.style.display === 'block') {
+        tooltip.style.left = (e.pageX + 15) + 'px';
+        tooltip.style.top = (e.pageY + 15) + 'px';
+    }
+});
+
+document.addEventListener('mouseout', function(e) {
+    let target = e.target.closest('.item-hover-trigger');
+    if (target) {
+        let tooltip = document.getElementById('tacticalImageTooltip');
+        if(tooltip) {
+            tooltip.style.display = 'none';
+            document.getElementById('tacticalTooltipImg').src = '';
+        }
+    }
+});
