@@ -53,9 +53,10 @@
     animation: pulse-red 2s infinite;
 }
 
-/* Taktische Überschrift Styling */
+/* Taktische Überschrift Styling (Smooth Fade-Out) */
 .tactical-header-strip {
-    background: linear-gradient(90deg, rgba(124, 163, 90, 0.1) 0%, rgba(20, 25, 20, 0.4) 100%);
+    /* Der neue Gradient: Startet in kräftigem Taktik-Grün und fadet nach rechts zu 100% transparent aus */
+    background: linear-gradient(90deg, rgba(124, 163, 90, 0.25) 0%, rgba(124, 163, 90, 0.05) 50%, transparent 100%);
     border-left: 5px solid var(--accent);
     padding: 12px 20px;
     margin-bottom: 20px;
@@ -64,6 +65,8 @@
     gap: 15px;
     position: relative;
     overflow: hidden;
+    /* Optional: Macht den unsichtbaren Übergang rechts noch weicher */
+    border-radius: 0 8px 8px 0; 
 }
 
 /* Subtiler Scanline-Effekt für den Titel */
@@ -71,9 +74,9 @@
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-    background-size: 100% 3px, 3px 100%;
+    /* Die Scanlines faden rechts ebenfalls aus, damit es keine harte Kante gibt */
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, transparent 80%);
+    background-size: 100% 3px;
     pointer-events: none;
 }
 
@@ -96,6 +99,7 @@
     font-weight: bold;
     border-radius: 2px;
     margin-left: auto;
+    box-shadow: 0 0 10px rgba(124, 163, 90, 0.4);
 }
 
 @keyframes pulse-red {
