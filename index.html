@@ -2088,7 +2088,7 @@
 
                         <div style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #333; padding-top: 15px;">
                             <label style="display: flex; align-items: center; cursor: pointer; color: var(--accent); font-weight: bold; margin: 0;">
-                                <input type="checkbox" id="kdOwnedCheck" onchange="window.updateDossierKeyStatus(this.checked)" style="width: 22px; height: 22px; margin-right: 10px; cursor: pointer;">
+                                <input type="checkbox" id="kdOwnedCheck" style="width: 22px; height: 22px; margin-right: 10px; cursor: pointer;">
                                 SCHLÜSSEL IM BESITZ
                             </label>
                             <button onclick="document.getElementById('keyDossier').style.display='none'" style="background:none; border: 1px solid #444; color: #888; padding: 5px 12px; border-radius: 4px; cursor: pointer;">Schließen</button>
@@ -3293,6 +3293,7 @@
     }
 
     function toggleKeyCabinetOwnership(keyName, isChecked) {
+        // 1. Dein bestehendes System (UI & Speichern)
         if (isChecked) {
             if (!myKeyRing.includes(keyName)) myKeyRing.push(keyName);
         } else {
@@ -3300,7 +3301,19 @@
         }
         localStorage.setItem('gzw_keyring', JSON.stringify(myKeyRing));
         renderKeyGrid(document.getElementById('keyQuickSearch').value);
-        document.getElementById('keyRingCount').innerText = myKeyRing.length;
+        
+        try {
+            document.getElementById('keyRingCount').innerText = myKeyRing.length;
+        } catch(e) {} // Verhindert Fehler, falls das Element nicht existiert
+
+        // 2. NEU: Hunter sofort im Arbeitsspeicher (RAM) aktualisieren!
+        if (typeof allKeys !== 'undefined') {
+            let key = allKeys.find(k => k.name === keyName);
+            if (key) {
+                key.owned = isChecked;
+                console.log(`> Hunter Live-Update: ${keyName} ist jetzt ${isChecked ? 'IM BESITZ' : 'VERLOREN'}.`);
+            }
+        }
     }
 
     function searchKeysModern() {
@@ -5775,47 +5788,24 @@ function goToHome() {
     </script>
 
     <script>
-        // 1. Beim Starten: Daten aus dem Tresor holen und an Hunter verfüttern
+        // Beim Start der Seite: Hunter liest deinen bestehenden Schlüsselbund (myKeyRing) aus
         function syncKeysWithStorage() {
             if (typeof allKeys !== 'undefined') {
+                // Deinen Tresor laden
+                let savedRing = [];
+                try {
+                    let saved = localStorage.getItem('gzw_keyring');
+                    if (saved) savedRing = JSON.parse(saved);
+                } catch(e) {}
+
+                // Hunters Datenbank abgleichen
                 allKeys.forEach(key => {
-                    // Schaut im Browser des Nutzers nach, ob es einen Speicherstand gibt
-                    let savedState = localStorage.getItem('GZW_Key_' + key.name);
-                    
-                    if (savedState !== null) {
-                        // Wenn ja, überschreibe die data.js im Arbeitsspeicher
-                        key.owned = (savedState === 'true');
-                    }
+                    key.owned = savedRing.includes(key.name);
                 });
-                console.log("> Lokaler Speicher synchronisiert. Hunter ist up-to-date.");
+                console.log("> Tactical Sync: Hunter hat deinen Schlüsselbund erfolgreich eingelesen.");
             }
         }
-
-        // 2. Diese Funktion rufst du auf, wenn jemand in der UI einen Schlüssel anklickt
-        window.updateKeyStatus = function(keyName, isOwned) {
-            // Speichert es dauerhaft im Browser des Nutzers
-            localStorage.setItem('GZW_Key_' + keyName, isOwned);
-
-            // Updated es in Echtzeit für Hunter im RAM
-            if (typeof allKeys !== 'undefined') {
-                let key = allKeys.find(k => k.name === keyName);
-                if (key) {
-                    key.owned = isOwned;
-                    console.log(`> Status Update: ${keyName} ist jetzt ${isOwned ? 'im Besitz' : 'nicht im Besitz'}.`);
-                }
-            }
-        }
-
-        // 3. Brücke für das Einsatz-Dossier: Liest den aktuellen Schlüssel aus dem Titel aus
-        window.updateDossierKeyStatus = function(isOwned) {
-            let keyName = document.getElementById('kdTitle').innerText;
-            if (keyName && keyName !== '-') {
-                // Sendet den Namen und den Status (true/false) an den lokalen Speicher
-                window.updateKeyStatus(keyName, isOwned);
-            }
-        };
-
-        // Sobald die Seite lädt, Tresor öffnen
+        
         document.addEventListener('DOMContentLoaded', syncKeysWithStorage);
     </script>
 </body>
