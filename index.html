@@ -5600,213 +5600,231 @@ function goToHome() {
     </script>
     
     <script>
-        window.hunterActive = false;
-        window.recognition = null;
-        window.synth = window.speechSynthesis;
-        window.hunterVoice = null; // Speichert die beste Stimme
+// --- 1. DATEN-TRESOR SYNCHRONISATION (Beim Laden der Seite) ---
+function syncKeysWithStorage() {
+if (typeof allKeys !== 'undefined') {
+let savedRing = [];
+try {
+let saved = localStorage.getItem('gzw_keyring');
+if (saved) savedRing = JSON.parse(saved);
+} catch(e) {}
 
-        // --- STIMMEN-SCANNER (SUCHT DIE BESTE MENSCHLICHE STIMME) ---
-        function loadPremiumVoice() {
-            let voices = window.synth.getVoices();
-            if (voices.length === 0) return;
-
-            // Filtern nach deutschen Stimmen
-            let deVoices = voices.filter(v => v.lang.includes('de'));
-            
-            // Priorität 1: Google Stimmen (Sehr natürlich)
-            // Priorität 2: Natürliche Microsoft Stimmen (Stefan/Katja)
-            window.hunterVoice = deVoices.find(v => v.name.includes('Google') && v.name.includes('Deutsch')) 
-                              || deVoices.find(v => v.name.includes('Stefan')) 
-                              || deVoices.find(v => v.name.includes('Conrad'))
-                              || deVoices.find(v => v.name.includes('Katja'))
-                              || deVoices[0]; // Notfall-Fallback
-                              
-            console.log("> Hunter Voice System online. Gewählte Stimme: ", window.hunterVoice ? window.hunterVoice.name : "Standard");
+            allKeys.forEach(key => {
+                key.owned = savedRing.includes(key.name);
+            });
+            console.log("> Tactical Sync: Hunter hat deinen Schlüsselbund erfolgreich eingelesen.");
         }
+    }
+    document.addEventListener('DOMContentLoaded', syncKeysWithStorage);
 
-        // Chrome lädt Stimmen asynchron, deshalb dieser Event-Listener:
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = loadPremiumVoice;
-        }
+    // --- 2. HUNTER SPRACH-SETUP ---
+    window.hunterActive = false;
+    window.recognition = null;
+    window.synth = window.speechSynthesis;
+    window.hunterVoice = null; 
 
-        // --- SPRACHAUSGABE (TTS V2) ---
-        window.hunterSpeak = function(text) {
-            if (window.synth.speaking) { window.synth.cancel(); }
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            if (window.hunterVoice) {
-                utterance.voice = window.hunterVoice;
-            } else {
-                utterance.lang = 'de-DE';
-            }
-            
-            utterance.pitch = 0.8; // Etwas tiefer für militärischen Funk-Klang
-            utterance.rate = 1.05; // Etwas zügiger
-            
-            window.synth.speak(utterance);
-        };
+    function loadPremiumVoice() {
+        let voices = window.synth.getVoices();
+        if (voices.length === 0) return;
+        let deVoices = voices.filter(v => v.lang.includes('de'));
+        window.hunterVoice = deVoices.find(v => v.name.includes('Google') && v.name.includes('Deutsch')) 
+                          || deVoices.find(v => v.name.includes('Stefan')) 
+                          || deVoices.find(v => v.name.includes('Conrad'))
+                          || deVoices.find(v => v.name.includes('Katja'))
+                          || deVoices[0]; 
+    }
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = loadPremiumVoice;
+    }
 
-        // --- SPRACHERKENNUNG ---
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    window.hunterSpeak = function(text) {
+        if (window.synth.speaking) { window.synth.cancel(); }
+        const utterance = new SpeechSynthesisUtterance(text);
+        if (window.hunterVoice) utterance.voice = window.hunterVoice;
+        else utterance.lang = 'de-DE';
+        utterance.pitch = 0.8; 
+        utterance.rate = 1.05; 
+        window.synth.speak(utterance);
+    };
 
-        if (SpeechRecognition) {
-            window.recognition = new SpeechRecognition();
-            window.recognition.continuous = true; 
-            window.recognition.interimResults = false;
-            window.recognition.lang = 'de-DE'; 
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+        window.recognition = new SpeechRecognition();
+        window.recognition.continuous = true; 
+        window.recognition.interimResults = false;
+        window.recognition.lang = 'de-DE'; 
 
-            window.recognition.onresult = function(event) {
-                const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
-                console.log("> Funkspruch empfangen: " + transcript);
+        window.recognition.onresult = function(event) {
+            const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+            console.log("> Funkspruch empfangen: " + transcript);
 
-                if (transcript.includes("hunter")) {
-                    const overlay = document.getElementById('wachhundOverlay');
-                    if (overlay && overlay.style.display !== 'flex') {
-                        window.toggleWachhund();
-                    }
-
-                    const parts = transcript.split("hunter");
-                    let command = parts[parts.length - 1].trim();
-                    
-                    if (command.length > 2) {
-                        window.processHunterCommand(command);
-                    } else {
-                        window.hunterSpeak("Commander?");
-                    }
+            if (transcript.includes("hunter")) {
+                const overlay = document.getElementById('wachhundOverlay');
+                if (overlay && overlay.style.display !== 'flex') {
+                    if(typeof window.toggleWachhund === 'function') window.toggleWachhund();
                 }
-            };
 
-            window.recognition.onend = function() {
-                if (window.hunterActive) {
-                    try { window.recognition.start(); } catch(e) {}
-                }
-            };
-        } else {
-            console.error("Spracherkennung wird nicht unterstützt.");
-        }
-
-        // --- MIKROFON AN/AUS ---
-        window.toggleHunter = function() {
-            const btn = document.getElementById('hunterCommsBtn');
-            const icon = document.getElementById('hunterMicIcon');
-            const text = document.getElementById('hunterStatusText');
-
-            if (!window.recognition) {
-                alert("Dein Browser unterstützt keine Sprachsteuerung. Nutze Chrome oder Edge.");
-                return;
-            }
-
-            if (window.hunterActive) {
-                window.hunterActive = false;
-                window.recognition.stop();
-                btn.style.borderColor = "#444";
-                btn.style.color = "#aaa";
-                btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-                icon.innerText = "🎙️";
-                text.innerText = "HUNTER: OFFLINE";
-                window.hunterSpeak("Comms deaktiviert.");
-            } else {
-                // Erzwinge Stimmen-Laden beim ersten Klick
-                loadPremiumVoice(); 
+                const parts = transcript.split("hunter");
+                let command = parts[parts.length - 1].trim();
                 
-                window.hunterActive = true;
+                if (command.length > 2) window.processHunterCommand(command);
+                else window.hunterSpeak("Commander?");
+            }
+        };
+
+        window.recognition.onend = function() {
+            if (window.hunterActive) {
                 try { window.recognition.start(); } catch(e) {}
-                btn.style.borderColor = "#00ff00";
-                btn.style.color = "#00ff00";
-                btn.style.boxShadow = "0 0 15px rgba(0,255,0,0.5)";
-                icon.innerText = "🟢";
-                text.innerText = "HUNTER: ONLINE";
-                window.hunterSpeak("Online und bereit, Commander.");
             }
         };
+    } else {
+        console.error("Spracherkennung wird nicht unterstützt.");
+    }
 
-        // --- DAS GEHIRN V2 (SCHLÜSSEL & CODES INTEGRIERT) ---
-        window.processHunterCommand = function(command) {
-            console.log("> Analysiere Befehl: " + command);
-            let response = "Verzeihung, das habe ich nicht verstanden.";
-            let found = false;
+    window.toggleHunter = function() {
+        const btn = document.getElementById('hunterCommsBtn');
+        const icon = document.getElementById('hunterMicIcon');
+        const text = document.getElementById('hunterStatusText');
 
-            // 1. PREIS / WERT ABFRAGE
-            if (command.includes("wert") || command.includes("kostet") || command.includes("preis")) {
-                if (window.wachhundDatabase) {
-                    for (let item of window.wachhundDatabase) {
-                        if (command.includes(item.match.toLowerCase()) || command.includes(item.name.toLowerCase())) {
-                            response = `${item.name}. Geschätzter Wert: ${item.price} Dollar.`;
-                            found = true; break;
-                        }
-                    }
-                }
-                if (!found) response = "Diesen Gegenstand habe ich nicht in der Datenbank.";
-            }
-
-            // 2. SCHLÜSSEL & CODE ABFRAGE (NEU!)
-            else if (command.includes("schlüssel") || command.includes("code") || command.includes("habe ich")) {
-                if (typeof keyDatabase !== 'undefined') {
-                    for (let item of keyDatabase) {
-                        // Suchen wir nach dem Namen (z.B. "ybl-1" oder "schlafzimmer")
-                        const nameParts = item.name.toLowerCase().split(" ");
-                        let nameMatched = nameParts.some(part => command.includes(part) && part.length > 3);
-                        
-                        // Wenn der User explizit nach Codes fragt
-                        if (command.includes("code") && item.type === "code" && nameMatched) {
-                            response = `Der Code für ${item.name} lautet: ${item.code}.`;
-                            found = true; break;
-                        }
-                        
-                        // Wenn der User fragt ob er den Schlüssel hat
-                        if ((command.includes("schlüssel") || command.includes("habe ich")) && item.type === "key" && nameMatched) {
-                            if (item.owned) {
-                                response = `Positiv. Der ${item.name} befindet sich in deinem Besitz. ${item.info}`;
-                            } else {
-                                response = `Negativ. Du hast den ${item.name} noch nicht gefunden.`;
-                            }
-                            found = true; break;
-                        }
-                    }
-                } else {
-                    response = "Systemfehler: Schlüssel-Datenbank offline.";
-                }
-                if (!found) response = "Ich kann diesen Schlüssel oder Code nicht in deinen Akten finden.";
-            }
-
-            // 3. QUEST / TASK ABFRAGE
-            else if (command.includes("task") || command.includes("aufgabe") || command.includes("wo ist") || command.includes("ziel")) {
-                if (typeof allTasks !== 'undefined') {
-                    for (let task of allTasks) {
-                        if (command.includes(task.de.toLowerCase())) {
-                            response = `Einsatzbesprechung für ${task.de}: ${task.sol}`;
-                            found = true; break;
-                        }
-                    }
-                }
-                if (!found) response = "Keine Daten zu dieser Mission gefunden.";
-            }
-
-            // Antwort aussprechen
-            window.hunterSpeak(response);
-        };
-    </script>
-
-    <script>
-        // Beim Start der Seite: Hunter liest deinen bestehenden Schlüsselbund (myKeyRing) aus
-        function syncKeysWithStorage() {
-            if (typeof allKeys !== 'undefined') {
-                // Deinen Tresor laden
-                let savedRing = [];
-                try {
-                    let saved = localStorage.getItem('gzw_keyring');
-                    if (saved) savedRing = JSON.parse(saved);
-                } catch(e) {}
-
-                // Hunters Datenbank abgleichen
-                allKeys.forEach(key => {
-                    key.owned = savedRing.includes(key.name);
-                });
-                console.log("> Tactical Sync: Hunter hat deinen Schlüsselbund erfolgreich eingelesen.");
-            }
+        if (!window.recognition) {
+            alert("Dein Browser unterstützt keine Sprachsteuerung. Nutze Chrome oder Edge.");
+            return;
         }
-        
-        document.addEventListener('DOMContentLoaded', syncKeysWithStorage);
-    </script>
+
+        if (window.hunterActive) {
+            window.hunterActive = false;
+            window.recognition.stop();
+            btn.style.borderColor = "#444"; btn.style.color = "#aaa";
+            icon.innerText = "🎙️"; text.innerText = "COMMS: OFF";
+            window.hunterSpeak("Comms deaktiviert.");
+        } else {
+            loadPremiumVoice(); 
+            window.hunterActive = true;
+            try { window.recognition.start(); } catch(e) {}
+            btn.style.borderColor = "#00ff00"; btn.style.color = "#00ff00";
+            icon.innerText = "🟢"; text.innerText = "HUNTER LISTENING";
+            window.hunterSpeak("Online und bereit, Commander.");
+        }
+    };
+
+    // --- 3. DAS GEHIRN V4 (COMPACT MATCHER) ---
+    window.processHunterCommand = function(command) {
+        console.log("> Analysiere Befehl: " + command);
+        let response = "Verzeihung, das habe ich nicht verstanden.";
+        let found = false;
+
+        // WICHTIG: Entfernt alle Leerzeichen, damit "Flug Kontroll Turm" = "flugkontrollturm" wird!
+        let compactCommand = command.toLowerCase().replace(/[^a-z0-9äöüß]/g, "");
+
+        // 1. PREIS / WERT
+        if (command.includes("wert") || command.includes("kostet") || command.includes("preis")) {
+            if (window.wachhundDatabase) {
+                for (let item of window.wachhundDatabase) {
+                    let safeMatch = item.match.toLowerCase().replace(/[^a-z0-9äöüß]/g, "");
+                    if (compactCommand.includes(safeMatch) || compactCommand.includes(item.name.toLowerCase().replace(/[^a-z0-9äöüß]/g, ""))) {
+                        response = `${item.name}. Geschätzter Wert: ${item.price} Dollar.`;
+                        found = true; break;
+                    }
+                }
+            }
+            if (!found) response = "Diesen Gegenstand habe ich nicht in der Datenbank.";
+        }
+
+        // 2. SCHLÜSSEL
+        else if (command.includes("schlüssel") || command.includes("habe ich") || command.includes("besitze ich")) {
+            if (typeof allKeys !== 'undefined') {
+                let bestMatch = null;
+                let highestScore = 0;
+
+                for (let item of allKeys) {
+                    let cleanName = item.name.toLowerCase().replace(/[()\-]/g, " ");
+                    let words = cleanName.split(" ").filter(w => w.length >= 3);
+                    let score = 0;
+                    for (let w of words) {
+                        if (compactCommand.includes(w.replace(/[^a-z0-9äöüß]/g, ""))) score += 2;
+                    }
+                    
+                    let locWords = item.loc.toLowerCase().replace(/[()\-]/g, " ").split(" ").filter(w => w.length >= 3);
+                    for (let w of locWords) {
+                        if (compactCommand.includes(w.replace(/[^a-z0-9äöüß]/g, ""))) score += 1;
+                    }
+
+                    if (score > highestScore) {
+                        highestScore = score;
+                        bestMatch = item;
+                    }
+                }
+
+                if (bestMatch && highestScore > 0) {
+                    let shortName = bestMatch.name.split(' (')[0].trim();
+                    if (bestMatch.owned) {
+                        response = `Positiv. Der ${shortName} befindet sich in deinem Besitz. Er öffnet: ${bestMatch.effect}`;
+                    } else {
+                        response = `Negativ. Du hast den ${shortName} noch nicht gefunden. Er wäre in der Region ${bestMatch.loc}.`;
+                    }
+                    found = true;
+                }
+            } else {
+                response = "Systemfehler: Schlüssel-Datenbank offline.";
+            }
+            if (!found) response = "Ich kann diesen Schlüssel nicht in deinen Akten finden.";
+        }
+
+        // 3. CODES & PASSWÖRTER
+        else if (command.includes("code") || command.includes("passwort") || command.includes("pin")) {
+            if (typeof codesDb !== 'undefined') {
+                let bestMatch = null;
+                let highestScore = 0;
+
+                for (let item of codesDb) {
+                    let cleanName = item.name.toLowerCase().replace(/[()\-]/g, " ");
+                    let words = cleanName.split(" ").filter(w => w.length >= 3);
+                    let score = 0;
+                    for (let w of words) {
+                        if (compactCommand.includes(w.replace(/[^a-z0-9äöüß]/g, ""))) score += 2;
+                    }
+                    
+                    let locWords = item.loc.toLowerCase().replace(/[()\-]/g, " ").split(" ").filter(w => w.length >= 3);
+                    for (let w of locWords) {
+                        if (compactCommand.includes(w.replace(/[^a-z0-9äöüß]/g, ""))) score += 1;
+                    }
+
+                    if (score > highestScore) {
+                        highestScore = score;
+                        bestMatch = item;
+                    }
+                }
+
+                if (bestMatch && highestScore > 0) {
+                    if (bestMatch.type === "dynamic") {
+                        response = `Der Code für ${bestMatch.name} ist dynamisch und ändert sich pro Server. ${bestMatch.info}`;
+                    } else {
+                        response = `Der feste Code für ${bestMatch.name} lautet: ${bestMatch.code}. ${bestMatch.info}`;
+                    }
+                    found = true;
+                }
+            }
+            if (!found) response = "Ich habe keinen Code für diese Position gefunden.";
+        }
+
+        // 4. TASKS
+        else if (command.includes("task") || command.includes("aufgabe") || command.includes("wo ist") || command.includes("ziel")) {
+            if (typeof allTasks !== 'undefined') {
+                for (let task of allTasks) {
+                    let safeTask = task.de.toLowerCase().replace(/[^a-z0-9äöüß]/g, "");
+                    if (compactCommand.includes(safeTask) || command.includes(task.de.toLowerCase())) {
+                        response = `Einsatzbesprechung für ${task.de}: ${task.sol}`;
+                        found = true; break;
+                    }
+                }
+            }
+            if (!found) response = "Keine Daten zu dieser Mission gefunden.";
+        }
+
+        // HTML Tags (<br>, <b> etc.) sauber aus der Sprachausgabe entfernen
+        let cleanResponse = response.replace(/<\/?[^>]+(>|$)/g, "");
+        window.hunterSpeak(cleanResponse);
+    };
+</script>
 </body>
 </html>
