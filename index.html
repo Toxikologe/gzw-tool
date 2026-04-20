@@ -3058,9 +3058,10 @@
         list.innerHTML = '';
         medicalDb.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'symptom-card';
+            card.className = 'symptom-card item-hover-trigger';
+            card.setAttribute('data-item-id', item.id);
             card.id = `symptom-${item.id}`;
-            card.innerHTML = `<span class="icon">${item.icon}</span> <span class="item-hover-trigger" data-item-id="${item.id}" style="width: 100%; text-align: left;">${item.name}</span>`;
+            card.innerHTML = `<span class="icon">${item.icon}</span> <span style="width: 100%; text-align: left;">${item.name}</span>`;
             card.onclick = () => runMedicalScan(item);
             list.appendChild(card);
         });
@@ -3155,13 +3156,14 @@
             }
 
             const crate = document.createElement('div');
-            crate.className = `market-crate ${item.isBuff ? 'buff-item' : ''}`;
+            crate.className = `market-crate item-hover-trigger ${item.isBuff ? 'buff-item' : ''}`;
+            crate.setAttribute('data-item-id', item.name);
             
             crate.innerHTML = `
                 <div class="crate-uses">🔲 ${item.grid} | 🍽️ ${item.uses}x</div>
                 <div class="crate-header">
                     <div class="crate-type">${item.type}</div>
-                    <h3 class="crate-title item-hover-trigger" data-item-id="${item.name}" style="cursor: help;">${item.name}</h3>
+                    <h3 class="crate-title" style="margin: 0;">${item.name}</h3>
                 </div>
                 
                 <div class="crate-stats">
@@ -4412,11 +4414,14 @@
                 const infoText = item.info ? `<div style="font-size: 0.8rem; color: #888; font-style: italic; margin-top: 4px;">↳ ${item.info}</div>` : '';
                 const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
 
+               // NEU: Der Hover-Trigger liegt jetzt auf der gesamten Tabellenzeile (<tr>)!
                 tableHTML += `
-                    <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
+                    <tr class="item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
+                        onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
+                        onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px; text-align: center; color: #aaa; font-weight: bold; font-size: 1.1rem;">LL${item.level}</td>
                         <td style="padding: 12px 8px;">
-                            <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; cursor: help; display: inline-block;">${item.name} ${metaTag}</div>
+                            <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
                             ${infoText}
                         </td>
                     </tr>
@@ -4703,15 +4708,15 @@ function goToHome() {
 
         filtered.forEach((item, index) => {
             const div = document.createElement('div');
-            div.className = `logistics-item-card quest-${item.isQuest}`;
+            div.className = `logistics-item-card item-hover-trigger quest-${item.isQuest}`;
+            div.setAttribute('data-item-id', item.name);
             div.id = `log-item-${index}`;
             
-            // Da nur Quest-Items geladen werden, ist das Icon immer das Warnschild
             let icon = '⚠️'; 
             
             div.innerHTML = `
                 <div>
-                    <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; font-size: 0.95rem; cursor: help; display: inline-block;">${item.name}</div>
+                    <div style="color: #eee; font-weight: bold; font-size: 0.95rem;">${item.name}</div>
                     <div style="color: #888; font-size: 0.75rem;">${item.category}</div>
                 </div>
                 <div style="font-size: 1.2rem;">${icon}</div>
@@ -4817,9 +4822,11 @@ function goToHome() {
                 let infoColor = item.isQuest ? "#ffcc00" : "#888"; 
 
                 tableHTML += `
-                    <tr class="loot-row" style="border-bottom: 1px solid #1a1a1a;">
+                    <tr class="loot-row item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s;"
+                        onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
+                        onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px;">
-                            <div class="loot-name item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; margin-bottom: 3px; cursor: help; display: inline-block;">${item.name}</div>
+                            <div class="loot-name" style="color: #eee; font-weight: bold; margin-bottom: 3px;">${item.name}</div>
                             <div style="font-size: 0.8rem; color: ${infoColor}; font-style: italic;">↳ ${infoText}</div>
                             <div style="font-size: 0.75rem; color: #555; margin-top: 3px;">Händler: <span style="color: #5dade2;">${item.vendor || 'Unbekannt'}</span></div>
                         </td>
@@ -4976,10 +4983,12 @@ function goToHome() {
                 const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
 
                 tableHTML += `
-                    <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
+                    <tr class="item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
+                        onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
+                        onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px;">
-                            <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; font-size: 1.05rem; cursor: help; display: inline-block;">${item.name} ${metaTag}</div>
-                            <div style="font-size: 0.9rem; color: #ccc; margin-top: 6px; line-height: 1.5;">${item.info}</div>
+                            <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
+                            ${infoText}
                         </td>
                         <td style="padding: 12px 8px; text-align: center; color: #aaa; font-family: monospace;">${item.size}</td>
                         <td style="padding: 12px 8px; text-align: center; color: #85c1e9;">${item.source}</td>
@@ -5095,10 +5104,12 @@ function goToHome() {
                 const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
 
                 tableHTML += `
-                    <tr style="border-bottom: 1px solid #1a1a1a; ${rowBg}">
+                    <tr class="item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
+                        onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
+                        onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px;">
-                            <div class="item-hover-trigger" data-item-id="${item.name}" style="color: #eee; font-weight: bold; font-size: 1.05rem; cursor: help; display: inline-block;">${item.name} ${metaTag}</div>
-                            ${infoText}
+                            <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name} ${metaTag}</div>
+                            <div style="font-size: 0.9rem; color: #ccc; margin-top: 6px; line-height: 1.5;">${item.info}</div>
                         </td>
                         <td style="padding: 12px 8px; text-align: center; color: #85c1e9; font-weight: bold;">${item.stats}</td>
                     </tr>
@@ -5191,12 +5202,12 @@ function goToHome() {
                     groups[category].forEach(w => {
                         let metaBadge = w.isMeta ? `<span style="background: rgba(255,204,0,0.1); color: #ffcc00; padding: 3px 6px; border-radius: 3px; font-size: 0.7rem; border: 1px solid #ffcc00; margin-left: 8px;">🔥 META</span>` : '';
                         html += `
-                                <div onclick="window.openWeaponWorkbench('${w.id}')"
+                                <div class="item-hover-trigger" data-item-id="${w.id}" onclick="window.openWeaponWorkbench('${w.id}')"
                                      style="background: #0d110d; border: 1px solid #1f2b1f; padding: 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 8px;"
                                      onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#141a14'; this.style.transform='translateY(-2px)';"
                                      onmouseout="this.style.borderColor='#1f2b1f'; this.style.background='#0d110d'; this.style.transform='translateY(0)';">
                                     
-                                    <div class="item-hover-trigger" data-item-id="${w.id}" style="color: #fff; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                                    <div style="color: #fff; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
                                         ${w.name} ${metaBadge}
                                     </div>
                                     <div style="color: #888; font-size: 0.85rem; font-family: 'Courier New', monospace;">Kaliber: <span style="color: #ccc;">${w.ammo}</span></div>
