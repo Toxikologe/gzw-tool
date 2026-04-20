@@ -7,6 +7,84 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+        /* ============================================================== */
+/* WACHHUND / HUNTER ANLEITUNG (HOVER-TOOLTIP) */
+/* ============================================================== */
+
+/* Der Container, der alles zusammenhält */
+.hunter-system-container {
+    position: fixed !important; 
+    top: 15px !important; 
+    left: 355px !important; 
+    z-index: 5000 !important; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 10px;
+}
+
+/* Das unsichtbare Handbuch */
+.hunter-manual-tooltip {
+    position: absolute;
+    top: 0;
+    left: 170px; /* Setzt das Handbuch direkt rechts neben das Bild */
+    width: 380px;
+    background: linear-gradient(135deg, rgba(10, 15, 10, 0.98) 0%, rgba(5, 8, 5, 0.98) 100%);
+    border: 1px solid #2a3b2a;
+    border-left: 4px solid var(--accent);
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 10px 10px 30px rgba(0,0,0,0.9);
+    color: #b0c4b0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    
+    /* Animations-Startwerte (Unsichtbar und leicht nach links verschoben) */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-15px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none; /* Verhindert, dass der Tooltip deine Maus stört */
+}
+
+/* Wenn du über den Container fährst, wird das Handbuch sichtbar */
+.hunter-system-container:hover .hunter-manual-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* Typografie im Handbuch */
+.hunter-manual-tooltip h3 {
+    color: var(--accent);
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #334a33;
+    padding-bottom: 8px;
+}
+
+.hunter-manual-tooltip h4 {
+    color: #fff;
+    margin: 15px 0 5px 0;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+}
+
+.hunter-manual-tooltip ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.hunter-manual-tooltip li {
+    margin-bottom: 6px;
+}
+
+.hunter-manual-tooltip .hl-red { color: #ff4c4c; font-weight: bold; }
+.hunter-manual-tooltip .hl-green { color: var(--accent); font-weight: bold; }
+
         /* Taktische HUD-Elemente */
 .hud-box {
     background: linear-gradient(135deg, rgba(20, 25, 20, 0.9) 0%, rgba(10, 12, 10, 0.95) 100%);
@@ -5547,7 +5625,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     </style>
 
-    <div style="position: fixed !important; top: 15px !important; left: 355px !important; z-index: 5000 !important; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+   <div class="hunter-system-container">
+        
         <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Wachhund%202.png" 
              alt="Wachhund Modus" 
              onclick="window.toggleWachhund()" 
@@ -5555,26 +5634,43 @@ document.addEventListener('DOMContentLoaded', () => {
              style="width: 150px; height: 150px; border-radius: 8px; border: 3px solid #ff4c4c; cursor: pointer; object-fit: cover; box-shadow: 0 0 20px rgba(255, 76, 76, 0.5); transition: all 0.2s ease;"
              onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 35px rgba(255, 76, 76, 0.9)';"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 76, 76, 0.5)';" />
+        
         <span onclick="window.toggleWachhund()" style="color: #ff4c4c; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; cursor: pointer; text-shadow: 0 0 10px rgba(255, 76, 76, 0.6); user-select: none;">
             HUNTER
         </span>
+        
         <button id="hunterCommsBtn" onclick="window.toggleHunter()" style="margin-top: 15px; background: #111; color: #aaa; border: 2px solid #444; padding: 10px 15px; font-family: 'Courier New', monospace; font-weight: bold; border-radius: 4px; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: 0.3s; display: flex; align-items: center; gap: 8px;">
             <span id="hunterMicIcon" style="font-size: 1.2rem;">🎙️</span> 
             <span id="hunterStatusText">COMMS: OFF</span>
         </button>
-    </div>
 
-    <div id="wachhundPulseLayer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10001; transition: all 0.5s ease;"></div>
-    
-    <div id="wachhundOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; flex-direction: column; font-family: 'Segoe UI', sans-serif; color: #fff;">
-        <div style="background: #0a0a0a; border-bottom: 2px solid #ff4c4c; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 30px;">
-                <h2 style="color: #ff4c4c; margin: 0; font-size: 2rem; letter-spacing: 4px; font-weight: 900;">👁️ WACHHUND ACTIVE</h2>
-                <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,153,0,0.1); padding: 8px 20px; border: 1px solid #ff9900; border-radius: 4px;">
-                    <button onclick="window.startBioTimer()" style="background: #ff9900; border: none; color: #000; padding: 5px 15px; font-weight: bold; cursor: pointer; border-radius: 2px;">DEPLOY</button>
-                    <span id="bioTimerDisplay" style="font-family: monospace; font-size: 1.6rem; font-weight: bold;">45:00</span>
-                </div>
+        <div class="hunter-manual-tooltip">
+            <h3>📖 Taktisches Feldhandbuch</h3>
+            
+            <h4>👁️ WACHHUND (Visuelles Radar)</h4>
+            <ul>
+                <li>Klicke auf das Bild, um das <span class="hl-red">Wachhund-Terminal</span> zu öffnen.</li>
+                <li>Das System scannt automatisch deinen Ingame-Stream.</li>
+                <li>Es warnt dich akustisch & visuell bei <span class="hl-green">High-Tier Loot</span> oder Quest-Items.</li>
+            </ul>
+
+            <h4>🎙️ HUNTER & COMMS (Sprach-KI)</h4>
+            <ul>
+                <li>Klicke auf <span class="hl-green">COMMS</span>, um dein Mikrofon scharfzuschalten.</li>
+                <li>Sage <strong style="color: #fff;">"Hunter"</strong>, um die KI aufzuwecken.</li>
+                <li>Frage im Gefecht zum Beispiel:<br>
+                    <i style="color: #888;">> "Hunter, was kostet die Schwarze Kreditkarte?"</i><br>
+                    <i style="color: #888;">> "Hunter, habe ich den YBL-1 Schlüssel?"</i><br>
+                    <i style="color: #888;">> "Hunter, Code für den Kontrollturm?"</i>
+                </li>
+            </ul>
+            
+            <div style="margin-top: 15px; font-size: 0.7rem; color: #555; text-align: center; border-top: 1px dashed #334a33; padding-top: 8px;">
+                // LOKALE VERARBEITUNG // SECURE AUDIO LINK //
             </div>
+        </div>
+        
+    </div>
             <button onclick="window.toggleWachhund()" style="background: #111; border: 1px solid #ff4c4c; color: #ff4c4c; padding: 8px 25px; font-weight: bold; cursor: pointer; text-transform: uppercase;">Zurück zum Terminal ✕</button>
         </div>
 
