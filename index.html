@@ -514,82 +514,69 @@
     position: relative; overflow: hidden;
 }
 /* ============================================================== */
-/* EKG-MONITOR STYLING & ANIMATION (100% BULLETPROOF) */
+/* EKG-OVERLAY: MITTIG & IM VORDERGRUND */
 /* ============================================================== */
 .ekg-container {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    /* Zentrierung: Startet bei 50% der Höhe und schiebt sich um die eigene Hälfte nach oben */
+    top: 50%; 
+    left: 0;
+    right: 0;
+    height: 120px; /* Die Höhe der Kurve im Zentrum */
+    transform: translateY(-50%); 
+    
     overflow: hidden;
-    pointer-events: none; /* Wichtig: Blockiert keine Klicks auf deine Buttons! */
-    z-index: 0;
-    background: rgba(10, 15, 10, 0.4); 
-    border-radius: inherit;
+    pointer-events: none; /* WICHTIG: Klicks gehen durch das EKG hindurch auf deine Buttons */
+    z-index: 100; /* Legt sich ÜBER die Kasten */
+    opacity: 0.25; /* Transparenz, damit der Text lesbar bleibt */
 }
 
-/* Intensivstation-Raster */
+/* Taktisches Raster - läuft ebenfalls mittig mit */
 .ekg-grid {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background-image: 
-        linear-gradient(rgba(124, 163, 90, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124, 163, 90, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.5;
+        linear-gradient(rgba(124, 163, 90, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 163, 90, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
 }
 
-/* Das SVG Element ausrichten */
 .ekg-svg {
     position: absolute;
-    top: 20%; left: 0;
-    width: 100%; height: 60%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
 }
 
-/* Die blasse Schatten-Spur */
-.ekg-line-bg {
-    fill: none;
-    stroke: rgba(124, 163, 90, 0.15);
-    stroke-width: 2;
-    vector-effect: non-scaling-stroke;
-}
-
-/* Die leuchtende Kurve */
 .ekg-line-glow {
     fill: none;
     stroke: var(--accent);
-    stroke-width: 3;
-    filter: drop-shadow(0 0 6px var(--accent));
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 5px var(--accent));
     vector-effect: non-scaling-stroke;
-    /* pathLength="100" im HTML sorgt dafür, dass dieser Trick immer exakt funktioniert */
     stroke-dasharray: 100;
     stroke-dashoffset: 100;
-    animation: ekg-heartbeat 2.5s linear infinite;
+    animation: ekg-heartbeat 3s linear infinite;
 }
 
-/* Der leuchtende Wisch-Balken (Radar) */
 .ekg-sweep {
     position: absolute;
-    top: 0; bottom: 0; width: 40px;
-    background: linear-gradient(90deg, transparent, rgba(124, 163, 90, 0.1), rgba(124, 163, 90, 0.6));
-    box-shadow: 2px 0 10px rgba(124, 163, 90, 0.4);
+    top: 0; bottom: 0; width: 60px;
+    /* Ein weicher Lichtstreifen, der die Linie 'beleuchtet' */
+    background: linear-gradient(90deg, transparent, rgba(124, 163, 90, 0.2), rgba(124, 163, 90, 0.5));
     left: -10%;
-    animation: ekg-radar 2.5s linear infinite;
+    animation: ekg-radar 3s linear infinite;
 }
 
-/* Keyframes für das Zeichnen der Kurve */
 @keyframes ekg-heartbeat {
-    0% { stroke-dashoffset: 100; opacity: 1; }
-    80% { stroke-dashoffset: 0; opacity: 1; }
-    90% { stroke-dashoffset: 0; opacity: 0; }
-    100% { stroke-dashoffset: 100; opacity: 0; }
+    0% { stroke-dashoffset: 100; }
+    80% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 0; }
 }
 
-/* Keyframes für den Wisch-Balken */
 @keyframes ekg-radar {
-    0% { left: -10%; opacity: 0; }
-    10% { opacity: 1; }
-    80% { left: 100%; opacity: 1; }
-    90% { left: 100%; opacity: 0; }
-    100% { left: -10%; opacity: 0; }
+    0% { left: -10%; }
+    80% { left: 100%; }
+    100% { left: 100%; }
 }
 
 /* ============================================================== */
@@ -2393,6 +2380,14 @@
         </div>
 
         <div id="tab-medical" class="tab-content">
+
+            <div class="ekg-container">
+        <div class="ekg-grid"></div>
+        <svg class="ekg-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path class="ekg-line-glow" pathLength="100" d="M0,50 L100,50 L110,40 L120,50 L140,50 L150,80 L170,10 L190,90 L200,50 L220,50 L235,30 L255,30 L270,50 L500,50" />
+        </svg>
+        <div class="ekg-sweep"></div>
+    </div>
         
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h2>🏥 Digital Medical Center</h2>
@@ -2412,17 +2407,6 @@
                         <div style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">DIAGNOSE-RESULTAT:</div>
                         <h3 id="diagTitle" class="diag-title">BEREIT FÜR SCAN...</h3>
                     </div>
-
-                    <div class="ekg-container">
-        <div class="ekg-grid"></div>
-        
-        <svg class="ekg-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
-            <path class="ekg-line-bg" d="M0,50 L100,50 L110,40 L120,50 L140,50 L150,80 L170,10 L190,90 L200,50 L220,50 L235,30 L255,30 L270,50 L500,50" />
-            <path class="ekg-line-glow" pathLength="100" d="M0,50 L100,50 L110,40 L120,50 L140,50 L150,80 L170,10 L190,90 L200,50 L220,50 L235,30 L255,30 L270,50 L500,50" />
-        </svg>
-        
-        <div class="ekg-sweep"></div>
-    </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                         <div>
