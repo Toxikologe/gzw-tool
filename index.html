@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gray Zone Warfare - Tactical Tool</title>
-    <link rel="stylesheet" href="style.css">
     <style>
 
 /* ============================================================== */
@@ -111,7 +110,7 @@
 .hunter-manual-tooltip .hl-red { color: #ff4c4c; font-weight: bold; }
 .hunter-manual-tooltip .hl-green { color: var(--accent); font-weight: bold; }
 
-        /* Taktische HUD-Elemente */
+    /* Taktische HUD-Elemente */
 .hud-box {
     background: linear-gradient(135deg, rgba(20, 25, 20, 0.9) 0%, rgba(10, 12, 10, 0.95) 100%);
     border: 1px solid #2a3b2a;
@@ -212,10 +211,22 @@
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 76, 76, 0); }
 }
 
-        /* ============================================================== */
-        /* INTELLIGENCE BRIEFING TERMINAL (PATCH NOTES) */
-        /* ============================================================== */
-        .intel-terminal {
+@keyframes pulse-orange {
+    0% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
+    50% { box-shadow: inset 0 0 80px rgba(255, 153, 0, 0.6); }
+    100% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
+    50% { box-shadow: inset 0 0 100px rgba(0, 255, 0, 0.7); border: 5px solid #00ff00; }
+    100% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
+}
+
+    /* ============================================================== */
+    /* INTELLIGENCE BRIEFING TERMINAL (PATCH NOTES) */
+    /* ============================================================== */
+    .intel-terminal {
             display: flex;
             gap: 20px;
             background: #0d110d; /* Dunkles Dschungel-Grün/Schwarz */
@@ -226,18 +237,18 @@
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 255, 0, 0.05);
             font-family: 'Courier New', Courier, monospace;
             color: #b0c4b0;
-        }
+    }
 
-        /* LINKE SEITE: Archiv der Briefings */
-        .intel-sidebar {
+    /* LINKE SEITE: Archiv der Briefings */
+    .intel-sidebar {
             width: 300px;
             background: rgba(10, 15, 10, 0.8);
             border: 1px solid #1f2b1f;
             display: flex;
             flex-direction: column;
-        }
+    }
 
-        .intel-header {
+    .intel-header {
             background: #1a241a;
             color: #7ca35a;
             padding: 15px;
@@ -246,40 +257,40 @@
             letter-spacing: 3px;
             border-bottom: 2px solid #334a33;
             text-transform: uppercase;
-        }
+    }
 
-        .intel-list {
+    .intel-list {
             flex: 1;
             overflow-y: auto;
             padding: 10px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-        }
+    }
 
-        .intel-item {
+    .intel-item {
             background: #121812;
             border-left: 4px solid #334a33;
             padding: 12px;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
-        }
+    }
 
-        .intel-item:hover, .intel-item.active {
+    .intel-item:hover, .intel-item.active {
             background: #1f2b1f;
             border-left-color: #7ca35a;
-        }
+    }
 
-        .intel-item .date { color: #5a755a; font-size: 0.8rem; margin-bottom: 5px; }
-        .intel-item .title { font-weight: bold; color: #e0e0e0; font-size: 1rem; }
-        .intel-item .version {
+    .intel-item .date { color: #5a755a; font-size: 0.8rem; margin-bottom: 5px; }
+    .intel-item .title { font-weight: bold; color: #e0e0e0; font-size: 1rem; }
+    .intel-item .version {
             position: absolute; top: 10px; right: 10px;
             background: #000; padding: 2px 5px; font-size: 0.7rem; color: #7ca35a; border: 1px solid #334a33;
-        }
+    }
 
-        /* RECHTE SEITE: Das eigentliche Dossier */
-        .intel-content-wrapper {
+    /* RECHTE SEITE: Das eigentliche Dossier */
+    .intel-content-wrapper {
             flex: 1;
             background: #121812;
             border: 1px solid #1f2b1f;
@@ -287,10 +298,10 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-        }
+    }
 
-        /* Die rote Geheim-Markierung */
-        .top-secret-bar {
+    /* Die rote Geheim-Markierung */
+    .top-secret-bar {
             background: #8b0000;
             color: #fff;
             text-align: center;
@@ -299,24 +310,24 @@
             padding: 5px;
             font-size: 0.9rem;
             text-transform: uppercase;
-        }
+    }
 
-        .intel-content {
+    .intel-content {
             padding: 30px;
             overflow-y: auto;
             flex: 1;
             line-height: 1.6;
-        }
+    }
 
-        /* Militärische Typografie im Text */
-        .intel-content h1 { color: #fff; font-size: 2rem; margin-top: 0; border-bottom: 1px solid #334a33; padding-bottom: 10px; }
-        .intel-content h2 { color: #7ca35a; font-size: 1.2rem; margin-top: 30px; }
-        .intel-content ul { padding-left: 20px; list-style-type: square; }
-        .intel-content li { margin-bottom: 8px; }
-        .intel-content strong { color: #fff; background: rgba(255,255,255,0.1); padding: 0 4px; }
+    /* Militärische Typografie im Text */
+    .intel-content h1 { color: #fff; font-size: 2rem; margin-top: 0; border-bottom: 1px solid #334a33; padding-bottom: 10px; }
+    .intel-content h2 { color: #7ca35a; font-size: 1.2rem; margin-top: 30px; }
+    .intel-content ul { padding-left: 20px; list-style-type: square; }
+    .intel-content li { margin-bottom: 8px; }
+    .intel-content strong { color: #fff; background: rgba(255,255,255,0.1); padding: 0 4px; }
 
-        /* Decryption Animation (Matrix Effekt) */
-        .decryption-overlay {
+    /* Decryption Animation (Matrix Effekt) */
+    .decryption-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: #0d110d;
@@ -325,19 +336,19 @@
             justify-content: center;
             flex-direction: column;
             z-index: 10;
-        }
-        
-        .decryption-text {
+    }
+    
+    .decryption-text {
             color: #7ca35a;
             font-size: 1.5rem;
             letter-spacing: 5px;
             animation: blink 1s infinite;
-        }
+    }
 
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* Stempel */
-        .classified-stamp {
+    /* Stempel */
+    .classified-stamp {
             position: absolute;
             top: 40px;
             right: 40px;
@@ -350,125 +361,125 @@
             pointer-events: none;
             font-family: 'Arial Black', sans-serif;
             text-transform: uppercase;
-        }
-        
-        /* ============================================================== */
-        /* LOGISTICS & QUEST TRACKER TERMINAL */
-        /* ============================================================== */
-        .logistics-terminal {
+    }
+    
+    /* ============================================================== */
+    /* LOGISTICS & QUEST TRACKER TERMINAL */
+    /* ============================================================== */
+    .logistics-terminal {
             display: flex; gap: 20px; min-height: 550px; margin-top: 15px;
-        }
-        .logistics-sidebar {
+    }
+    .logistics-sidebar {
             width: 320px; display: flex; flex-direction: column;
-        }
-        .logistics-item-list {
+    }
+    .logistics-item-list {
             flex: 1; background: #0a0a0a; border: 1px solid #333; border-radius: 6px;
             overflow-y: auto; max-height: 600px; display: flex; flex-direction: column; gap: 5px; padding: 10px;
-        }
-        .logistics-item-card {
+    }
+    .logistics-item-card {
             background: #151515; border: 1px solid #222; padding: 10px 12px; border-radius: 4px;
             cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center;
-        }
-        .logistics-item-card:hover { border-color: var(--accent); background: #1a1a1a; }
-        .logistics-item-card.active { background: rgba(var(--accent-rgb), 0.15); border-color: var(--accent); }
-        .logistics-item-card.quest-true { border-left: 4px solid #ffcc00; }
-        .logistics-item-card.quest-false { border-left: 4px solid #444; }
+    }
+    .logistics-item-card:hover { border-color: var(--accent); background: #1a1a1a; }
+    .logistics-item-card.active { background: rgba(var(--accent-rgb), 0.15); border-color: var(--accent); }
+    .logistics-item-card.quest-true { border-left: 4px solid #ffcc00; }
+    .logistics-item-card.quest-false { border-left: 4px solid #444; }
 
-        .logistics-main {
+    .logistics-main {
             flex: 1; background: #0d0d0d; border: 2px solid #333; border-radius: 8px;
             padding: 30px; position: relative; overflow: hidden;
             background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 8px);
-        }
-        .logistics-header { border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
-        .logistics-title { font-size: 1.8rem; color: #fff; margin: 0 0 5px 0; text-transform: uppercase; }
+    }
+    .logistics-header { border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+    .logistics-title { font-size: 1.8rem; color: #fff; margin: 0 0 5px 0; text-transform: uppercase; }
 
-        .logistics-status-box { margin-bottom: 30px; padding: 20px; border-radius: 6px; display: none; }
-        .status-keep { background: rgba(255,204,0,0.1); border: 2px solid #ffcc00; }
-        .status-sell { background: rgba(var(--accent-rgb),0.1); border: 2px solid var(--accent); }
+    .logistics-status-box { margin-bottom: 30px; padding: 20px; border-radius: 6px; display: none; }
+    .status-keep { background: rgba(255,204,0,0.1); border: 2px solid #ffcc00; }
+    .status-sell { background: rgba(var(--accent-rgb),0.1); border: 2px solid var(--accent); }
 
-        .logistics-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .logistics-stat { background: #111; border: 1px solid #222; padding: 15px; border-radius: 4px; text-align: center; }
-        .logistics-stat-label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
-        .logistics-stat-val { font-size: 1.2rem; color: #eee; font-weight: bold; font-family: monospace; }
+    .logistics-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .logistics-stat { background: #111; border: 1px solid #222; padding: 15px; border-radius: 4px; text-align: center; }
+    .logistics-stat-label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
+    .logistics-stat-val { font-size: 1.2rem; color: #eee; font-weight: bold; font-family: monospace; }
 
 /* ============================================================== */
-        /* STARTSEITE: JUNGLE COMMAND CENTER & INTEL MODALS */
-        /* ============================================================== */
-        .home-dashboard {
+    /* STARTSEITE: JUNGLE COMMAND CENTER & INTEL MODALS */
+    /* ============================================================== */
+    .home-dashboard {
             display: flex; flex-direction: column; gap: 20px; margin-top: 15px;
-        }
+    }
 
-        .hero-banner {
+    .hero-banner {
             grid-column: 1 / -1;
             background: linear-gradient(rgba(10, 15, 10, 0.85), rgba(15, 20, 15, 0.95)), 
                         repeating-linear-gradient(45deg, rgba(124, 163, 90, 0.03) 0px, rgba(124, 163, 90, 0.03) 2px, transparent 2px, transparent 8px);
             border: 2px solid #1a2b1c; border-radius: 8px; padding: 40px;
             position: relative; overflow: hidden; box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-        }
-        .hero-banner::after {
+    }
+    .hero-banner::after {
             content: ""; position: absolute; right: -100px; bottom: -100px;
             width: 300px; height: 300px; background: radial-gradient(circle, rgba(124,163,90,0.15) 0%, transparent 70%);
-        }
-        .hero-title { 
+    }
+    .hero-title { 
             font-size: 2.8rem; color: #fff; text-transform: uppercase; margin: 0 0 10px 0; 
             letter-spacing: 2px; text-shadow: 0 0 20px rgba(124,163,90,0.4); 
-        }
-        .hero-subtitle { color: var(--accent); font-family: monospace; font-size: 1.1rem; border-bottom: 1px solid rgba(124,163,90,0.3); padding-bottom: 10px; display: inline-block; }
+    }
+    .hero-subtitle { color: var(--accent); font-family: monospace; font-size: 1.1rem; border-bottom: 1px solid rgba(124,163,90,0.3); padding-bottom: 10px; display: inline-block; }
 
-        .intel-grid { 
+    .intel-grid { 
             display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; 
-        }
-        .intel-folder {
+    }
+    .intel-folder {
             background: #0b120c; border: 1px solid #1a2b1c; border-top: 4px solid var(--accent);
             padding: 20px; border-radius: 6px; cursor: pointer; transition: 0.3s;
             display: flex; flex-direction: column; justify-content: space-between; position: relative;
             overflow: hidden;
-        }
-        .intel-folder::before {
-            content: "TOP SECRET"; position: absolute; top: 15px; right: -25px; transform: rotate(45deg);
+    }
+    .intel-folder::before {
+            content: "GEHEIM"; position: absolute; top: 15px; right: -25px; transform: rotate(45deg);
             background: #b33939; color: white; font-size: 0.6rem; font-weight: bold; padding: 2px 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-        .intel-folder:hover { transform: translateY(-5px); border-color: var(--accent); background: #131f15; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .intel-icon { font-size: 2.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-        .intel-title { color: #eee; font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase; }
-        .intel-desc { color: #888; font-size: 0.85rem; line-height: 1.5; }
+    }
+    .intel-folder:hover { transform: translateY(-5px); border-color: var(--accent); background: #131f15; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+    .intel-icon { font-size: 2.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+    .intel-title { color: #eee; font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase; }
+    .intel-desc { color: #888; font-size: 0.85rem; line-height: 1.5; }
 
-        .comms-panel {
+    .comms-panel {
             background: #05070a; border: 1px solid #1a2230; border-radius: 6px; padding: 20px;
             display: flex; flex-direction: column; gap: 15px;
-        }
-        .comms-btn {
+    }
+    .comms-btn {
             background: #111622; border: 1px solid #222c3f; color: #ccc; padding: 15px;
             border-radius: 4px; cursor: pointer; font-weight: bold; text-align: left;
             display: flex; align-items: center; justify-content: space-between; transition: 0.2s;
-        }
-        .comms-btn:hover { background: #1a2230; border-color: var(--accent); color: #fff; box-shadow: inset 4px 0 0 var(--accent); }
-        @keyframes statusPulse { 0% { box-shadow: 0 0 0 0 rgba(255,76,76,0.7); } 70% { box-shadow: 0 0 0 6px rgba(255,76,76,0); } 100% { box-shadow: 0 0 0 0 rgba(255,76,76,0); } }
-        .live-dot { display: inline-block; width: 10px; height: 10px; background: #ff4c4c; border-radius: 50%; margin-right: 10px; animation: statusPulse 2s infinite; }
+    }
+    .comms-btn:hover { background: #1a2230; border-color: var(--accent); color: #fff; box-shadow: inset 4px 0 0 var(--accent); }
+    @keyframes statusPulse { 0% { box-shadow: 0 0 0 0 rgba(255,76,76,0.7); } 70% { box-shadow: 0 0 0 6px rgba(255,76,76,0); } 100% { box-shadow: 0 0 0 0 rgba(255,76,76,0); } }
+    .live-dot { display: inline-block; width: 10px; height: 10px; background: #ff4c4c; border-radius: 50%; margin-right: 10px; animation: statusPulse 2s infinite; }
 
-        .tac-tip-box {
+    .tac-tip-box {
             grid-column: 1 / -1; background: rgba(255,204,0,0.05); border-left: 4px solid #ffcc00;
             padding: 15px 20px; border-radius: 0 6px 6px 0; display: flex; align-items: center; gap: 20px;
             border-top: 1px solid rgba(255,204,0,0.1); border-right: 1px solid rgba(255,204,0,0.1); border-bottom: 1px solid rgba(255,204,0,0.1);
-        }
+    }
 
-        /* Styling für die Pop-Up Akten */
-        .intel-modal-bg {
+    /* Styling für die Pop-Up Akten */
+    .intel-modal-bg {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0,0,0,0.85); z-index: 100000; align-items: center; justify-content: center;
             backdrop-filter: blur(5px);
-        }
-        .intel-modal-content {
+    }
+    .intel-modal-content {
             background: #0d0d0d; border: 2px solid #333; border-top: 4px solid var(--accent);
             border-radius: 8px; padding: 30px; width: 90%; max-width: 800px; max-height: 85vh;
             overflow-y: auto; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             animation: fadeIn 0.3s ease-out;
-        }
-        .intel-modal-close {
+    }
+    .intel-modal-close {
             position: absolute; top: 20px; right: 20px; background: #b33939; color: white;
             border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s;
-        }
-        .intel-modal-close:hover { background: #ff4c4c; }
+    }
+    .intel-modal-close:hover { background: #ff4c4c; }
 
 /* ============================================================== */
 /* TAC-PAD: MILITARY TABLET DESIGN (TASKS & BRIEFINGS) */
@@ -543,19 +554,19 @@
 .complete-check { width: 20px; height: 20px; margin-right: 15px; pointer-events: none; }
 
 /* TAC-PAD Dual-Mode Schalter */
-        .filter-toggle-container { display: flex; background: #05070a; border-bottom: 2px solid #1a2230; }
-        .filter-toggle-btn { 
+    .filter-toggle-container { display: flex; background: #05070a; border-bottom: 2px solid #1a2230; }
+    .filter-toggle-btn { 
             flex: 1; padding: 12px 5px; background: transparent; color: #666; border: none; 
             font-weight: bold; cursor: pointer; font-size: 0.8rem; letter-spacing: 1px; transition: 0.2s; 
             border-bottom: 2px solid transparent;
-        }
-        .filter-toggle-btn:hover { color: #aaa; background: rgba(255,255,255,0.02); }
-        .filter-toggle-btn.active { color: var(--accent); background: rgba(124,163,90,0.08); border-bottom-color: var(--accent); }
-        
-        /* Anpassung für etwas längere Gebiets-Namen */
-        .trader-btn { flex: 1 1 45%; }
+    }
+    .filter-toggle-btn:hover { color: #aaa; background: rgba(255,255,255,0.02); }
+    .filter-toggle-btn.active { color: var(--accent); background: rgba(124,163,90,0.08); border-bottom-color: var(--accent); }
+    
+    /* Anpassung für etwas längere Gebiets-Namen */
+    .trader-btn { flex: 1 1 45%; }
 
-        /* ============================================================== */
+    /* ============================================================== */
 /* LOCAL MARKET DESIGN (PROVISIONS) */
 /* ============================================================== */
 .market-container {
@@ -607,7 +618,7 @@
 .crate-info { font-size: 0.85rem; color: #aaa; line-height: 1.4; font-style: italic; }
 .crate-uses { position: absolute; top: 15px; right: 15px; background: #222; border: 1px solid #444; color: #ccc; padding: 2px 6px; font-size: 0.7rem; border-radius: 4px; font-weight: bold; }
 
-        /* ============================================================== */
+    /* ============================================================== */
 /* DIGITAL MEDICAL CENTER (HOSPITAL INTERFACE) */
 /* ============================================================== */
 .med-center {
@@ -634,8 +645,8 @@
 .ekg-grid {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
     background-image: 
-        linear-gradient(rgba(124, 163, 90, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124, 163, 90, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(124, 163, 90, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 163, 90, 0.05) 1px, transparent 1px);
     background-size: 30px 30px;
 }
 
@@ -711,7 +722,7 @@
 .lz-tag-container { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .lz-tag { background: #333; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; border: 1px solid #444; }
 
-        /* ============================================================== */
+    /* ============================================================== */
 /* TACTICAL HVT DOSSIER DESIGN */
 /* ============================================================== */
 .hvt-terminal {
@@ -762,7 +773,7 @@
 .dossier-label { color: #ff4c4c; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; display: block; }
 .dossier-value { color: #ccc; font-size: 1.05rem; line-height: 1.6; }
 
-        /* ============================================================== */
+    /* ============================================================== */
 /* TACTICAL KEY CABINET DESIGN */
 /* ============================================================== */
 .key-cabinet {
@@ -810,16 +821,16 @@
     font-size: 0.75rem; font-weight: bold; text-transform: uppercase;
 }
 
-        /* ============================================================== */
-        /* DECRYPTION TERMINAL (CODES & PASSWORDS) */
-        /* ============================================================== */
-        .codes-grid {
+    /* ============================================================== */
+    /* DECRYPTION TERMINAL (CODES & PASSWORDS) */
+    /* ============================================================== */
+    .codes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
             margin-top: 20px;
-        }
-        .code-card {
+    }
+    .code-card {
             background: #111;
             border: 1px solid #333;
             border-radius: 8px;
@@ -828,45 +839,45 @@
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .code-card:hover {
+    }
+    .code-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.8);
-        }
-        .code-card.static { border-top: 4px solid #7ca35a; }
-        .code-card.dynamic { border-top: 4px solid #ffa500; }
-        
-        .code-value {
+    }
+    .code-card.static { border-top: 4px solid #7ca35a; }
+    .code-card.dynamic { border-top: 4px solid #ffa500; }
+    
+    .code-value {
             font-family: 'Courier New', monospace;
             font-size: 2.2rem;
             font-weight: bold;
             margin: 10px 0;
             text-shadow: 0 0 10px rgba(255,255,255,0.2);
-        }
-        .code-card.static .code-value { color: #7ca35a; }
-        .code-card.dynamic .code-value { color: #ffa500; }
-        
-        .code-title {
+    }
+    .code-card.static .code-value { color: #7ca35a; }
+    .code-card.dynamic .code-value { color: #ffa500; }
+    
+    .code-title {
             color: #fff;
             font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 5px;
-        }
-        .code-loc {
+    }
+    .code-loc {
             color: #85c1e9;
             font-size: 0.85rem;
             margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-        .code-info {
+    }
+    .code-info {
             color: #aaa;
             font-size: 0.9rem;
             line-height: 1.5;
             border-top: 1px dashed #333;
             padding-top: 15px;
-        }
-        .code-badge {
+    }
+    .code-badge {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -875,40 +886,40 @@
             border-radius: 4px;
             font-weight: bold;
             text-transform: uppercase;
-        }
-        .code-card.static .code-badge { background: rgba(124,163,90,0.15); color: #7ca35a; border: 1px solid #7ca35a; }
-        .code-card.dynamic .code-badge { background: rgba(255,165,0,0.15); color: #ffa500; border: 1px solid #ffa500; }
+    }
+    .code-card.static .code-badge { background: rgba(124,163,90,0.15); color: #7ca35a; border: 1px solid #7ca35a; }
+    .code-card.dynamic .code-badge { background: rgba(255,165,0,0.15); color: #ffa500; border: 1px solid #ffa500; }
 
-        /* ============================================================== */
-        /* BALLISTIC RADAR DESIGN */
-        /* ============================================================== */
-        .armor-btn {
+    /* ============================================================== */
+    /* BALLISTIC RADAR DESIGN */
+    /* ============================================================== */
+    .armor-btn {
             flex: 1; padding: 15px; background: #111; color: #888; border: 1px solid #333; 
             border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 1rem;
-        }
-        .armor-btn:hover { background: #222; color: #fff; }
-        .armor-btn.active { 
+    }
+    .armor-btn:hover { background: #222; color: #fff; }
+    .armor-btn.active { 
             background: rgba(124, 163, 90, 0.15); border-color: var(--accent); 
             color: var(--accent); box-shadow: inset 0 0 10px rgba(124, 163, 90, 0.2); 
-        }
-        .ballistic-cal-group { 
+    }
+    .ballistic-cal-group { 
             color: #fff; font-family: 'Courier New', monospace; margin-top: 25px; 
             margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; font-size: 1.1rem; 
             font-weight: bold; letter-spacing: 1px;
-        }
-        .ballistic-row { display: flex; align-items: center; margin-bottom: 8px; font-family: monospace; }
-        .ballistic-name { 
+    }
+    .ballistic-row { display: flex; align-items: center; margin-bottom: 8px; font-family: monospace; }
+    .ballistic-name { 
             width: 140px; color: #ccc; font-size: 0.85rem; font-weight: bold; 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px;
-        }
-        .ballistic-bar-track { 
+    }
+    .ballistic-bar-track { 
             flex: 1; height: 16px; background: #1a1a1a; position: relative; 
             border-radius: 3px; border: 1px solid #222; overflow: hidden;
-        }
-        .ballistic-bar-fill { 
+    }
+    .ballistic-bar-fill { 
             height: 100%; transition: width 0.5s ease-out, background-color 0.5s ease; border-radius: 2px;
-        }
-        .ballistic-result { width: 140px; text-align: right; font-size: 0.85rem; font-weight: bold; }
+    }
+    .ballistic-result { width: 140px; text-align: right; font-size: 0.85rem; font-weight: bold; }
 
 /* ============================================================== */
 /* GUNSMITH LIVE-STATS BAR DESIGN */
@@ -972,9 +983,9 @@
 }
 
 /* ============================================================== */
-        /* GUNSMITH WORKBENCH DESIGN (ARMORY) */
-        /* ============================================================== */
-        .gs-workbench {
+    /* GUNSMITH WORKBENCH DESIGN (ARMORY) */
+    /* ============================================================== */
+    .gs-workbench {
             background: #090a0c;
             border: 2px solid #1a2230;
             border-radius: 8px;
@@ -985,97 +996,97 @@
                 radial-gradient(circle at 100% 0%, rgba(124, 163, 90, 0.05) 0%, transparent 50%),
                 linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px);
             box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-        }
-        .gs-top-bar {
+    }
+    .gs-top-bar {
             display: flex; gap: 15px; margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px dashed #1a2230; align-items: center;
-        }
-        .gs-layout {
+    }
+    .gs-layout {
             display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-        }
-        
-        /* Die Waffendaten */
-        .gs-weapon-header {
+    }
+    
+    /* Die Waffendaten */
+    .gs-weapon-header {
             background: linear-gradient(90deg, #111622 0%, #05070a 100%);
             border-left: 4px solid var(--accent);
             padding: 20px;
             border-radius: 4px;
             margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        .gs-weapon-title { font-family: 'Courier New', monospace; font-size: 1.8rem; color: #fff; margin: 0 0 10px 0; text-transform: uppercase; }
-        .gs-weapon-tags { display: flex; gap: 15px; font-size: 0.85rem; font-weight: bold; }
-        
-        /* Die Taktischen Slots für Aufsätze */
-        .gs-attachment-rack { display: flex; flex-direction: column; gap: 12px; }
-        .gs-slot {
+    }
+    .gs-weapon-title { font-family: 'Courier New', monospace; font-size: 1.8rem; color: #fff; margin: 0 0 10px 0; text-transform: uppercase; }
+    .gs-weapon-tags { display: flex; gap: 15px; font-size: 0.85rem; font-weight: bold; }
+    
+    /* Die Taktischen Slots für Aufsätze */
+    .gs-attachment-rack { display: flex; flex-direction: column; gap: 12px; }
+    .gs-slot {
             background: #0a0d14; border: 1px solid #1a2230; border-radius: 6px;
             display: flex; align-items: center; padding: 8px 12px; transition: 0.2s;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-        }
-        .gs-slot:hover { border-color: #33415c; background: #111622; }
-        .gs-slot-icon {
+    }
+    .gs-slot:hover { border-color: #33415c; background: #111622; }
+    .gs-slot-icon {
             width: 45px; height: 45px; background: #151a25; border-radius: 4px;
             display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
             margin-right: 15px; color: #6688cc; border: 1px solid #1a2230;
-        }
-        .gs-slot-content { flex: 1; }
-        .gs-slot-label { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; font-weight: bold; }
-        
-        /* Spezielles Select-Design für die Slots */
-        .gs-select-modern {
+    }
+    .gs-slot-content { flex: 1; }
+    .gs-slot-label { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; font-weight: bold; }
+    
+    /* Spezielles Select-Design für die Slots */
+    .gs-select-modern {
             width: 100%; background: transparent; border: none; color: #fff; font-weight: bold;
             font-size: 0.95rem; outline: none; cursor: pointer; padding: 0; margin: 0;
             appearance: none; /* Entfernt den Standard-Pfeil im Browser */
-        }
-        .gs-select-modern option { background: #111; color: #fff; padding: 10px; }
+    }
+    .gs-select-modern option { background: #111; color: #fff; padding: 10px; }
 
-        /* Das Telemetrie-Panel (Rechts) */
-        .gs-telemetry {
+    /* Das Telemetrie-Panel (Rechts) */
+    .gs-telemetry {
             background: #05070a; border: 2px solid #1a2230; border-radius: 8px; padding: 30px;
             position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-        .gs-telemetry::before {
-            content: "LIVE TELEMETRY"; position: absolute; top: -12px; left: 25px;
+    }
+    .gs-telemetry::before {
+            content: "LIVE-TELEMETRIE"; position: absolute; top: -12px; left: 25px;
             background: var(--accent); color: #000; font-size: 0.75rem; font-weight: bold;
             padding: 4px 15px; border-radius: 3px; letter-spacing: 2px;
-        }
-        .gs-numeric-stats {
+    }
+    .gs-numeric-stats {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px;
             padding-top: 25px; border-top: 1px dashed #1a2230;
-        }
-        .gs-num-box { text-align: center; background: #0a0d14; border: 1px solid #1a2230; padding: 15px 5px; border-radius: 6px; }
-        .gs-num-val { font-size: 1.6rem; font-family: 'Courier New', monospace; font-weight: bold; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
-        .gs-num-label { font-size: 0.7rem; color: #6688cc; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+    }
+    .gs-num-box { text-align: center; background: #0a0d14; border: 1px solid #1a2230; padding: 15px 5px; border-radius: 6px; }
+    .gs-num-val { font-size: 1.6rem; font-family: 'Courier New', monospace; font-weight: bold; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+    .gs-num-label { font-size: 0.7rem; color: #6688cc; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
 
-        /* Responsives Layout */
-        @media (max-width: 900px) {
+    /* Responsives Layout */
+    @media (max-width: 900px) {
             .gs-layout { grid-template-columns: 1fr; }
             .gs-top-bar { flex-direction: column; align-items: stretch; }
-        }        
+    }        
 
-        /* ============================================================== */
-        /* BLUEPRINT TERMINAL DESIGN (CAD STYLE) */
-        /* ============================================================== */
-        .bp-terminal { 
+    /* ============================================================== */
+    /* BLUEPRINT TERMINAL DESIGN (CAD STYLE) */
+    /* ============================================================== */
+    .bp-terminal { 
             display: flex; gap: 20px; min-height: 450px; height: auto; margin-top: 15px; 
-        }
-        .bp-list { 
+    }
+    .bp-list { 
             width: 320px; background: #111; border: 1px solid #333; border-radius: 6px; 
             overflow-y: auto; display: flex; flex-direction: column; padding: 10px; gap: 8px; 
-        }
-        .bp-btn { 
+    }
+    .bp-btn { 
             background: #1a1a1a; color: #ccc; border: 1px solid #444; padding: 15px; 
             text-align: left; border-radius: 4px; cursor: pointer; font-weight: bold; 
             transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
-        }
-        .bp-btn:hover { background: #2a2a2a; color: #fff; border-color: #666; }
-        .bp-btn.active { 
+    }
+    .bp-btn:hover { background: #2a2a2a; color: #fff; border-color: #666; }
+    .bp-btn.active { 
             background: rgba(100, 255, 218, 0.1); border-color: #64ffda; color: #64ffda; 
             box-shadow: inset 4px 0 0 #64ffda; 
-        }
-        
-        /* Das gerasterte Blaupausen-Feld */
-        .bp-canvas { 
+    }
+    
+    /* Das gerasterte Blaupausen-Feld */
+    .bp-canvas { 
             flex: 1; background-color: #0a192f; border: 2px solid #172a45; border-radius: 6px; 
             position: relative; padding: 30px; overflow: hidden; 
             /* Karomuster für Blueprint-Look */
@@ -1085,28 +1096,28 @@
             background-size: 25px 25px; 
             box-shadow: inset 0 0 40px rgba(0,0,0,0.8); 
             display: flex; flex-direction: column;
-        }
-        .bp-title { 
+    }
+    .bp-title { 
             font-family: 'Courier New', monospace; font-size: 2.2rem; color: #64ffda; 
             margin-top: 0; margin-bottom: 20px; border-bottom: 2px dashed #172a45; 
             padding-bottom: 10px; text-transform: uppercase; text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
-        }
-        .bp-info-row { 
+    }
+    .bp-info-row { 
             margin-bottom: 20px; font-family: 'Courier New', monospace; color: #a8b2d1; 
             font-size: 1.15rem; line-height: 1.6; z-index: 2;
-        }
-        .bp-info-label { color: #64ffda; font-weight: bold; margin-right: 10px; }
-        
-        .bp-watermark { 
+    }
+    .bp-info-label { color: #64ffda; font-weight: bold; margin-right: 10px; }
+    
+    .bp-watermark { 
             position: absolute; bottom: -30px; right: -20px; font-size: 12rem; 
             color: rgba(100, 255, 218, 0.03); transform: rotate(-10deg); 
             user-select: none; pointer-events: none; font-family: 'Courier New', monospace; font-weight: bold; 
-        }
+    }
 
-        /* ============================================================== */
-        /* FACTION SELECTION MODAL */
-        /* ============================================================== */
-        .faction-card {
+    /* ============================================================== */
+    /* FACTION SELECTION MODAL */
+    /* ============================================================== */
+    .faction-card {
             width: 260px;
             padding: 30px 20px;
             border-radius: 8px;
@@ -1118,18 +1129,18 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(10px);
-        }
-        .faction-card:hover {
+    }
+    .faction-card:hover {
             transform: translateY(-10px) scale(1.02);
             filter: brightness(1.3);
             box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-        }
-        .faction-card h2 {
+    }
+    .faction-card h2 {
             border: none;
             font-size: 1.8rem;
             margin-bottom: 5px;
-        }
-        .faction-btn-top {
+    }
+    .faction-btn-top {
             position: absolute; 
             top: 20px; 
             right: 40px; 
@@ -1143,15 +1154,15 @@
             z-index: 999; 
             transition: 0.2s;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .faction-btn-top:hover {
+    }
+    .faction-btn-top:hover {
             background: rgba(255,255,255,0.1);
-        }
-        
-        /* ============================================================== */
-        /* --- TACTICAL SIDEBAR DASHBOARD LAYOUT (NEU) --- */
-        /* ============================================================== */
-        body { 
+    }
+    
+    /* ============================================================== */
+    /* --- TACTICAL SIDEBAR DASHBOARD LAYOUT (NEU) --- */
+    /* ============================================================== */
+    body { 
             display: flex;
             margin: 0; 
             padding: 0;
@@ -1160,10 +1171,10 @@
             background-color: #050505; 
             color: #e0e0e0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        }
+    }
 
-        /* Der dynamische Leuchteffekt an den Rändern für den Main-Bereich */
-        .main-wrapper::before {
+    /* Der dynamische Leuchteffekt an den Rändern für den Main-Bereich */
+    .main-wrapper::before {
             content: "";
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -1171,9 +1182,9 @@
             opacity: 0.18; 
             z-index: -1;
             pointer-events: none;
-        }
+    }
 
-        .sidebar {
+    .sidebar {
             width: 260px;
             background-color: #111;
             border-right: 2px solid #333;
@@ -1185,9 +1196,9 @@
             flex-shrink: 0;
             z-index: 1000;
             box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-        }
+    }
 
-        .sidebar-title {
+    .sidebar-title {
             color: var(--accent);
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -1196,9 +1207,9 @@
             border-bottom: 1px solid #333;
             padding-bottom: 5px;
             font-weight: bold;
-        }
+    }
 
-        .sidebar-btn {
+    .sidebar-btn {
             background: transparent;
             color: #aaa;
             border: none;
@@ -1212,34 +1223,34 @@
             border-radius: 0 4px 4px 0;
             display: flex;
             align-items: center;
-        }
+    }
 
-        .sidebar-btn:hover {
+    .sidebar-btn:hover {
             background: rgba(255,255,255,0.05);
             color: #fff;
-        }
+    }
 
-        .sidebar-btn.active {
+    .sidebar-btn.active {
             background: rgba(124, 163, 90, 0.15);
             border-left: 3px solid var(--accent);
             color: var(--accent);
             font-weight: bold;
-        }
+    }
 
-        .main-wrapper {
+    .main-wrapper {
             flex: 1;
             height: 100vh;
             overflow-y: auto;
             position: relative;
-        }
+    }
 
-        .container {
+    .container {
             padding: 20px 40px;
             max-width: 1600px;
             margin: 0 auto;
-        }
+    }
 
-        /* Feedback Button & Modal */
+    /* Feedback Button & Modal */
 #feedback-trigger {
     position: fixed;
     bottom: 20px;
@@ -1326,46 +1337,46 @@
     cursor: not-allowed;
 }
 
-        /* --- DEIN BESTEHENDES CSS (100% ERHALTEN) --- */
-        .tactical-news-frame {
+    /* --- DEIN BESTEHENDES CSS (100% ERHALTEN) --- */
+    .tactical-news-frame {
             width: 100%; background-color: #0d0d0d; border: 3px solid #333;
             border-radius: 6px; margin-bottom: 20px; font-family: 'Roboto Mono', monospace; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .news-header {
+    }
+    .news-header {
             display: flex; justify-content: space-between; align-items: center;
             background-color: #1a1a1a; padding: 10px 15px; border-bottom: 2px solid #333; border-radius: 6px 6px 0 0;
-        }
-        .header-left { display: flex; align-items: center; gap: 10px; }
-        .header-left .warning-icon { font-size: 1.5rem; color: #ffcc00; }
-        .header-left h3 { margin: 0; color: #ffcc00; font-size: 1.1rem; text-transform: uppercase; font-weight: bold; }
-        .header-right { text-align: right; font-size: 0.8rem; color: #aaa; }
-        .live-indicator { color: #2ecc71; font-size: 0.75rem; display: flex; align-items: center; gap: 5px; }
-        .news-ticker-container { width: 100%; overflow: hidden; background: rgba(179, 57, 57, 0.05); padding: 8px 0; position: relative; }
-        .news-ticker-text { display: inline-block; white-space: nowrap; color: #ffcc00; font-weight: bold; font-size: 1.05rem; padding-left: 100%; animation: ticker 25s linear infinite; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .header-left .warning-icon { font-size: 1.5rem; color: #ffcc00; }
+    .header-left h3 { margin: 0; color: #ffcc00; font-size: 1.1rem; text-transform: uppercase; font-weight: bold; }
+    .header-right { text-align: right; font-size: 0.8rem; color: #aaa; }
+    .live-indicator { color: #2ecc71; font-size: 0.75rem; display: flex; align-items: center; gap: 5px; }
+    .news-ticker-container { width: 100%; overflow: hidden; background: rgba(179, 57, 57, 0.05); padding: 8px 0; position: relative; }
+    .news-ticker-text { display: inline-block; white-space: nowrap; color: #ffcc00; font-weight: bold; font-size: 1.05rem; padding-left: 100%; animation: ticker 25s linear infinite; }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        .tool-btn { background-color: #1e1e1e; color: #888; border: 1px solid #444; padding: 6px 12px; margin: 0 3px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; font-weight: bold; transition: all 0.2s; }
-        .tool-btn:hover { color: #fff; border-color: #666; background-color: #2a2a2a; }
-        .tool-btn.active { background-color: #2a2a2a; color: #fff; border-color: var(--accent); box-shadow: 0 0 6px rgba(124,163,90,0.3); }
+    .tool-btn { background-color: #1e1e1e; color: #888; border: 1px solid #444; padding: 6px 12px; margin: 0 3px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; font-weight: bold; transition: all 0.2s; }
+    .tool-btn:hover { color: #fff; border-color: #666; background-color: #2a2a2a; }
+    .tool-btn.active { background-color: #2a2a2a; color: #fff; border-color: var(--accent); box-shadow: 0 0 6px rgba(124,163,90,0.3); }
 
-        /* WIDGETS */
+    /* WIDGETS */
 
-        #raidTextarea { width: 100%; height: 280px; background: #2a2a2a; color: #e0e0e0; border: 1px solid #444; border-radius: 6px; padding: 8px; font-size: 0.8rem; font-family: 'Courier New', monospace; resize: vertical; box-sizing: border-box; line-height: 1.5; outline: none; }
-        #raidTextarea:focus { border-color: var(--accent); }
-        #notepadFooter { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
-        #notepadCharCount, #noteSavedIndicator { font-size: 0.7rem; color: #555; }
-        #notepadClearBtn { background: none; border: 1px solid #444; color: #888; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
-        #notepadClearBtn:hover { border-color: #b33939; color: #b33939; }
+    #raidTextarea { width: 100%; height: 280px; background: #2a2a2a; color: #e0e0e0; border: 1px solid #444; border-radius: 6px; padding: 8px; font-size: 0.8rem; font-family: 'Courier New', monospace; resize: vertical; box-sizing: border-box; line-height: 1.5; outline: none; }
+    #raidTextarea:focus { border-color: var(--accent); }
+    #notepadFooter { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+    #notepadCharCount, #noteSavedIndicator { font-size: 0.7rem; color: #555; }
+    #notepadClearBtn { background: none; border: 1px solid #444; color: #888; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
+    #notepadClearBtn:hover { border-color: #b33939; color: #b33939; }
 
-        /* GLOBALE FARB-VARIABLE & AKKORDEON STYLES (NEU) */
-        :root { 
+    /* GLOBALE FARB-VARIABLE & AKKORDEON STYLES (NEU) */
+    :root { 
             --accent: #7ca35a; 
-            --accent-rgb: 124, 163, 144; /* Wird für transparente Hintergründe genutzt */
-        }
+            --accent-rgb: 124, 163, 90; /* Wird für transparente Hintergründe genutzt */
+    }
 
-        /* UNIVERSAL ACCORDION STYLING (Händler, Loot, Gear, Stash) */
-        .universal-accordion {
+    /* UNIVERSAL ACCORDION STYLING (Händler, Loot, Gear, Stash) */
+    .universal-accordion {
             width: 100%;
             text-align: left;
             padding: 12px 15px;
@@ -1378,11 +1389,11 @@
             font-size: 1.05rem;
             transition: 0.2s;
             margin-bottom: 5px;
-        }
-        .universal-accordion:hover {
+    }
+    .universal-accordion:hover {
             background-color: rgba(var(--accent-rgb), 0.2);
-        }
-        .universal-content {
+    }
+    .universal-content {
             display: none;
             border: 1px solid var(--accent);
             border-top: none;
@@ -1391,27 +1402,27 @@
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
             margin-bottom: 10px;
-        }
+    }
 
-        /* GLOBALE LAYOUT STYLES (NICHT LÖSCHEN!) */
-        h2 { color: var(--accent); margin-top: 10px; font-size: 1.3rem; border-bottom: 1px solid #444; padding-bottom: 5px; }
-        .highlight { color: var(--accent); font-weight: bold; }
+    /* GLOBALE LAYOUT STYLES (NICHT LÖSCHEN!) */
+    h2 { color: var(--accent); margin-top: 10px; font-size: 1.3rem; border-bottom: 1px solid #444; padding-bottom: 5px; }
+    .highlight { color: var(--accent); font-weight: bold; }
 
-        .panel-box { background: #252525; padding: 15px; border-radius: 8px; border-top: 4px solid var(--accent); box-sizing: border-box; margin-bottom: 20px;}
-        .panel-box h3 { color: var(--accent); margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 5px; }
+    .panel-box { background: #252525; padding: 15px; border-radius: 8px; border-top: 4px solid var(--accent); box-sizing: border-box; margin-bottom: 20px;}
+    .panel-box h3 { color: var(--accent); margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 5px; }
 
-        .tab-content { display: none; animation: fadeIn 0.4s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .tab-content { display: none; animation: fadeIn 0.4s; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #aaa; }
-        select, input { width: 100%; padding: 10px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 6px; box-sizing: border-box; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #aaa; }
+    select, input { width: 100%; padding: 10px; background: #2a2a2a; color: #fff; border: 1px solid #444; border-radius: 6px; box-sizing: border-box; }
 
-        /* ============================================================== */
-        /* BACK TO TOP BUTTON (FIXED) */
-        /* ============================================================== */
-        #backToTopBtn {
+    /* ============================================================== */
+    /* BACK TO TOP BUTTON (FIXED) */
+    /* ============================================================== */
+    #backToTopBtn {
             position: fixed !important;
             bottom: 85px !important;    /* Schwebt über dem Feedback-Button */
             right: 25px !important;
@@ -1431,21 +1442,21 @@
             transition: transform 0.2s ease, filter 0.2s !important;
             padding: 0 !important;
             margin: 0 !important;
-        }
+    }
 
-        #backToTopBtn:hover {
+    #backToTopBtn:hover {
             transform: scale(1.1) !important;
             filter: brightness(1.2) !important;
-        }
+    }
 
-        #keyList, #taskList { background: #2a2a2a; border: 1px solid #444; max-height: 200px; overflow-y: auto; display: none; border-radius: 0 0 6px 6px; }
-        .search-item { padding: 10px; border-bottom: 1px solid #333; cursor: pointer; }
-        .search-item:hover { background-color: #3a3a3a; }
-        
-        .news-alert { background: rgba(255, 76, 76, 0.1); border-top: 4px solid #ff4c4c; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .news-alert h3 { color: #ff4c4c; margin-top: 0; }
+    #keyList, #taskList { background: #2a2a2a; border: 1px solid #444; max-height: 200px; overflow-y: auto; display: none; border-radius: 0 0 6px 6px; }
+    .search-item { padding: 10px; border-bottom: 1px solid #333; cursor: pointer; }
+    .search-item:hover { background-color: #3a3a3a; }
+    
+    .news-alert { background: rgba(255, 76, 76, 0.1); border-top: 4px solid #ff4c4c; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .news-alert h3 { color: #ff4c4c; margin-top: 0; }
 
-        @media (max-width: 768px) {
+    @media (max-width: 768px) {
             body { flex-direction: column; overflow: auto; }
             .sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 2px solid #333; padding: 10px; }
             .sidebar-title { width: 100%; margin: 5px 0; }
@@ -1455,7 +1466,7 @@
             .grid { grid-template-columns: 1fr; gap: 15px; }
             .header-left, .header-right { justify-content: center; width: 100%; }
             div[style*="height: 250px;"] { height: 130px !important; margin-bottom: 15px !important; }
-        }
+    }
     </style>
 </head>
 <body>
@@ -1481,9 +1492,9 @@
             border: 1px solid var(--accent) !important; overflow: hidden !important;">
     
     <div class="widget-header" style="background: var(--accent); color: #000; padding: 8px 15px; cursor: move; font-weight: bold; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
-        <span><i class="fas fa-edit"></i> Tactical Notes</span>
+        <span><i class="fas fa-edit"></i> Taktische Notizen</span>
         <div style="display: flex; gap: 10px;">
-            <button onclick="clearNotepad()" style="background: rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.3); cursor: pointer; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 2px;">CLEAR</button>
+            <button onclick="clearNotepad()" style="background: rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.3); cursor: pointer; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 2px;">LEEREN</button>
             <button onclick="toggleNotepad()" style="background: rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.3); cursor: pointer; font-size: 0.9rem; font-weight: bold; padding: 2px 6px; border-radius: 2px;">✕</button>
         </div>
     </div>
@@ -1498,7 +1509,7 @@
     
     <div style="background: #0a0a0a; padding: 5px 12px; font-size: 0.65rem; color: #444; border-top: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center;">
         <span>SECURE_CHANNEL_v4</span>
-        <span id="saveStatus" style="color: var(--accent); opacity: 0.6;">Auto-Save: Standby</span>
+        <span id="saveStatus" style="color: var(--accent); opacity: 0.6;">Auto-Speichern: Bereit</span>
     </div>
 </div>
 
@@ -1622,7 +1633,7 @@
         <div style="margin-top: 8px; display: flex; justify-content: flex-end; align-items: center; gap: 15px;">
             <span style="font-size: 0.75rem; color: #555; text-transform: uppercase;">Next Restock</span>
             <button onclick="resetRestockTimer()" style="background: rgba(124, 163, 90, 0.1); border: 1px solid #334a33; color: #7ca35a; font-size: 0.6rem; padding: 3px 10px; cursor: pointer; border-radius: 2px; transition: 0.2s; font-family: 'Courier New', monospace;">
-                [ RE-SYNC ]
+                [ NEU SYNC ]
             </button>
         </div>
     </div>
@@ -1657,7 +1668,7 @@
                 
                 <div class="hero-banner">
                     <h1 class="hero-title">Lamang Island Einsatzzentrale</h1>
-                    <div class="hero-subtitle">SYS_OS: GZW_TACTICAL_TOOL // CONNECTION: SECURE // Version 0.1</div>
+                    <div class="hero-subtitle">SYS_OS: GZW_TACTICAL_TOOL // VERBINDUNG: GESICHERT // Version 0.4 Spearhead</div>
                     <p style="color: #aaa; max-width: 800px; margin-top: 15px; line-height: 1.6; font-size: 1.05rem;">
                         Willkommen in der Einsatzzentrale. Dies ist dein primäres Interface für Operationen in Lamang Island. Analysiere Feindbewegungen, berechne Loadouts und studiere die Geheimdienstakten, bevor du den Helikopter betrittst.
                     </p>
@@ -1791,7 +1802,7 @@
                 </div>
 
                 <div class="intel-content-wrapper">
-                    <div class="top-secret-bar">TOP SECRET // NO FOREIGN NATS</div>
+                    <div class="top-secret-bar">STRENG GEHEIM // NUR INTERNE NUTZUNG</div>
                     
                     <div id="decryptionOverlay" class="decryption-overlay">
                         <div style="font-size: 3rem; margin-bottom: 20px;">🔒</div>
@@ -2071,7 +2082,7 @@
                                 </div>
 
                                 <div style="margin-top: 25px; font-size: 0.75rem; color: #555; text-align: center; font-family: monospace;">
-                                    <span style="color:#7ca35a;">GRÜN</span> = PERFORMANCE UP | <span style="color:#ff4c4c;">ROT</span> = PERFORMANCE DOWN
+                                    <span style="color:#7ca35a;">GRÜN</span> = LEISTUNG BESSER | <span style="color:#ff4c4c;">ROT</span> = LEISTUNG SCHLECHTER
                                 </div>
                             </div>
                         </div>
@@ -2098,17 +2109,17 @@
                     <h3 id="bpCanvasTitle" class="bp-title">WAFFE AUSWÄHLEN</h3>
                     
                     <div class="bp-info-row">
-                        <span class="bp-info-label">COORDINATES:</span><br>
+                        <span class="bp-info-label">KOORDINATEN:</span><br>
                         <span id="bpCanvasLoc" style="color: #fff;">-</span>
                     </div>
                     
                     <div class="bp-info-row">
-                        <span class="bp-info-label">UNLOCK_SPECS:</span><br>
+                        <span class="bp-info-label">FREISCHALT-INFO:</span><br>
                         <span id="bpCanvasDesc">-</span>
                     </div>
                     
                     <div class="bp-info-row" style="margin-top: auto; padding: 15px; background: rgba(255,204,0,0.05); border-left: 4px solid #ffcc00;">
-                        <span style="color:#ffcc00; font-weight:bold; font-size: 1rem; display:block; margin-bottom: 5px;">⚠️ TACTICAL INTEL:</span>
+                        <span style="color:#ffcc00; font-weight:bold; font-size: 1rem; display:block; margin-bottom: 5px;">⚠️ TAKTISCHE INTEL:</span>
                         <span id="bpCanvasTip" style="font-family: Arial, sans-serif; font-size: 0.95rem; color: #ccc;">-</span>
                     </div>
                 </div>
@@ -5266,10 +5277,7 @@ function goToHome() {
             document.getElementById('weaponWorkbenchUI').style.display = 'none';
         };
 
-        // Sofort beim Start der Seite die Accordions rendern
-        document.addEventListener('DOMContentLoaded', () => {
-            window.renderWeaponAccordions('alpha');
-        });
+
 
     // ==============================================================
     // GUNSMITH ENGINE (LIVE STATS & BARS)
@@ -5556,10 +5564,7 @@ function goToHome() {
             }, decryptTime);
         }
 
-        // Initialisierung
-        document.addEventListener('DOMContentLoaded', () => {
-            renderIntelList();
-        });
+
 
         // ==============================================================
         // BLACK MARKET REP-BROKER (RUF-RECHNER ALGORITHMUS)
@@ -5713,19 +5718,21 @@ function startHudSystem() {
     setInterval(updateRestock, 1000);
 }
 
-// System beim Laden starten
-document.addEventListener('DOMContentLoaded', () => {
-    startHudSystem();
-    // ... andere Initialisierungen
-});
+
                 
     // ==============================================================
     // STARTUP & INITIALISIERUNG
     // ==============================================================
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+        // HUD-System starten (beinhaltet Trader-Timer, Uhr und Intervalle)
+        startHudSystem();
+
+        // Weapon Accordions initialisieren
+        window.renderWeaponAccordions('alpha');
+
         // Widgets initialisieren
         makeDraggable('raidNotepad');
-        
+
         // Systeme starten
         initTaskTablet();
         initNotepad();
@@ -5735,7 +5742,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initMedicalCenter();
         initMarket();
         initLogisticsTracker();
-        
+
         // Renderings
         renderDecryptionTerminal();
         renderLootRoutes();
@@ -5744,41 +5751,25 @@ document.addEventListener('DOMContentLoaded', () => {
         renderStashAccordions();
         renderGearAccordions();
         renderIntelList();
-        
+
         // Ballistik & Gunsmith
         sortGunsmith('meta');
         initBlueprints();
         buildAmmoMatrix();
         simulateArmorRadar('IIIA', document.querySelector('.armor-btn.active'));
-        
+
         // Header & Live Data
-        updateLiveTime();
-        startTraderTimer();
         initFactionSystem();
         initDailyTip();
-        
-        setInterval(updateLiveTime, 1000);
-        fetchLatestNews(); 
+
+        fetchLatestNews();
+
+        // Key-Status aus localStorage synchronisieren
+        syncKeysWithStorage();
     });
 </script>
 
-    <style>
-        @keyframes pulse-orange {
-            0% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
-            50% { box-shadow: inset 0 0 80px rgba(255, 153, 0, 0.6); }
-            100% { box-shadow: inset 0 0 0px rgba(255, 153, 0, 0); }
-        }
-        @keyframes pulse-red {
-            0% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
-            50% { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.8); }
-            100% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
-        }
-        @keyframes pulse-green {
-            0% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
-            50% { box-shadow: inset 0 0 100px rgba(0, 255, 0, 0.7); border: 5px solid #00ff00; }
-            100% { box-shadow: inset 0 0 0px rgba(0, 255, 0, 0); border: 5px solid transparent; }
-        }
-    </style>
+
 
    <div class="hunter-system-container">
         <img src="https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/Wachhund%202.png" 
@@ -5794,7 +5785,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         <button id="hunterCommsBtn" onclick="window.toggleHunter()" style="margin-top: 15px; background: #111; color: #aaa; border: 2px solid #444; padding: 10px 15px; font-family: 'Courier New', monospace; font-weight: bold; border-radius: 4px; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: 0.3s; display: flex; align-items: center; gap: 8px;">
             <span id="hunterMicIcon" style="font-size: 1.2rem;">🎙️</span> 
-            <span id="hunterStatusText">COMMS: OFF</span>
+            <span id="hunterStatusText">KOMM: AUS</span>
         </button>
 
         <div class="hunter-manual-tooltip">
@@ -5812,7 +5803,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="display: flex; align-items: center; gap: 30px;">
                 <h2 style="color: #ff4c4c; margin: 0; font-size: 2rem; letter-spacing: 4px; font-weight: 900;">👁️ WACHHUND ACTIVE</h2>
                 <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,153,0,0.1); padding: 8px 20px; border: 1px solid #ff9900; border-radius: 4px;">
-                    <button onclick="window.startBioTimer()" style="background: #ff9900; border: none; color: #000; padding: 5px 15px; font-weight: bold; cursor: pointer; border-radius: 2px;">DEPLOY</button>
+                    <button onclick="window.startBioTimer()" style="background: #ff9900; border: none; color: #000; padding: 5px 15px; font-weight: bold; cursor: pointer; border-radius: 2px;">STARTEN</button>
                     <span id="bioTimerDisplay" style="font-family: monospace; font-size: 1.6rem; font-weight: bold;">45:00</span>
                 </div>
             </div>
@@ -6226,7 +6217,6 @@ if (saved) savedRing = JSON.parse(saved);
             console.log("> Tactical Sync: Hunter hat deinen Schlüsselbund erfolgreich eingelesen.");
         }
     }
-    document.addEventListener('DOMContentLoaded', syncKeysWithStorage);
 
     // --- 2. HUNTER SPRACH-SETUP ---
     window.hunterActive = false;
@@ -6306,7 +6296,7 @@ if (saved) savedRing = JSON.parse(saved);
             window.hunterActive = false;
             window.recognition.stop();
             btn.style.borderColor = "#444"; btn.style.color = "#aaa";
-            icon.innerText = "🎙️"; text.innerText = "COMMS: OFF";
+            icon.innerText = "🎙️"; text.innerText = "KOMM: AUS";
             window.hunterSpeak("Comms deaktiviert.");
         } else {
             loadPremiumVoice(); 
@@ -6444,7 +6434,6 @@ if (saved) savedRing = JSON.parse(saved);
     </div>
 
     <script>
-        <script>
         // ==============================================================
         // TACTICAL HOVER ENGINE V3 (100% SCROLL-SICHER)
         // ==============================================================
