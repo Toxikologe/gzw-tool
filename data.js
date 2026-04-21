@@ -470,7 +470,6 @@ const gunsmithWeapons = [
     // NATO ARs
     { id: "m4a1", name: "M4A1 Sturmgewehr", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Die Standard-NATO-Waffe.<br><b>Build-Tipp:</b> RC2 Schalldämpfer + SpecterDR + SOPMOD Stock.", base: { moa: 2.0, rpm: 800, recoil: 55, ergo: 60, noise: 0, vel: 880, reload: 2.8 }, mods: p_ar },
     { id: "m16a1", name: "M16A1 Sturmgewehr", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 NEU: 'The Black Rifle'. Retro-Look, extrem präzise.<br><b>Build-Tipp:</b> Auf Distanz lassen, z.B. mit Vudu-Visier.", base: { moa: 1.5, rpm: 750, recoil: 65, ergo: 50, noise: 0, vel: 950, reload: 3.0 }, mods: p_ar },
-    { id: "m201c", name: "Norinco M-201C", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 NEU: Kompakte chinesische M4. Hoher Verschleiß!<br><b>Build-Tipp:</b> Gut für Tiger Bay Häuserkampf.", base: { moa: 2.5, rpm: 800, recoil: 45, ergo: 70, noise: 0, vel: 820, reload: 2.7 }, mods: p_ar },
     { id: "cqa1", name: "CQ-A1", isMeta: false, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "Chinesischer M4-Klon. Günstig für den Start, später austauschen.", base: { moa: 2.2, rpm: 800, recoil: 50, ergo: 58, noise: 0, vel: 870, reload: 2.9 }, mods: p_ar },
     { id: "ddm4", name: "Daniel Defense DDM4", isMeta: true, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 S-TIER: Perfekte Ergonomie ab Werk. Erfordert Blueprint.<br><b>Build-Tipp:</b> SpecterDR + Shift Griff + DD Stock = OP.", base: { moa: 1.2, rpm: 800, recoil: 65, ergo: 75, noise: 0, vel: 910, reload: 2.5 }, mods: p_ar },
     { id: "ks1", name: "KAC KS-1 (L403A1)", isMeta: true, ammo: "5.56x45mm NATO", type: "Sturmgewehr", tip: "0.4 META: Bestes Rückstoßverhalten im Spiel.", base: { moa: 1.0, rpm: 800, recoil: 70, ergo: 72, noise: 0, vel: 920, reload: 2.4 }, mods: p_ar },
@@ -546,7 +545,7 @@ const gunsmithWeapons = [
     const weaponImages = {
         "ak74m": "https://static.wikia.nocookie.net/gray-zone-warfare/images/5/52/AK-74M_inspect.png",
         "ak74n": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e2/AK-74N_inspect.png",
-        "ak103": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-12_inspect.png",
+        "ak103": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-103_inspect.png",
         "ak12": "https://static.wikia.nocookie.net/gray-zone-warfare/images/3/30/AK-12_inspect.png",
         "ak15": "https://static.wikia.nocookie.net/gray-zone-warfare/images/e/e3/AK-15_inspect.png",
         "ak19": "https://static.wikia.nocookie.net/gray-zone-warfare/images/b/b6/AK-19_inspect.png",
@@ -838,6 +837,7 @@ const ammoDb = [
 
     // --- 5.45x39mm (AK-74) ---
     { cal: "5.45x39mm", name: "US", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "303 m/s", acc: "-6%", dur: "0%", price: "$2", source: "Turncoat LL1" },
+    { cal: "5.45x39mm", name: "WOLF", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "840 m/s", acc: "0%", dur: "0%", price: "$3", source: "Turncoat LL1" },
     { cal: "5.45x39mm", name: "FMJ", penMap: { "IIIA":3, "IIIA+":3, "III":0, "III+":0, "III++":0 }, speed: "855 m/s", acc: "0%", dur: "-15%", price: "$3", source: "Turncoat LL2" },
     { cal: "5.45x39mm", name: "HP", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "880 m/s", acc: "-6%", dur: "-15%", price: "$4", source: "Turncoat LL2" },
     { cal: "5.45x39mm", name: "PS", penMap: { "IIIA":3, "IIIA+":3, "III":3, "III+":0, "III++":0 }, speed: "900 m/s", acc: "-2%", dur: "-15%", price: "$5", source: "Turncoat LL2" },
@@ -885,7 +885,19 @@ const ammoDb = [
     { cal: "12 Gauge", name: "00 BUCK", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "370 m/s", acc: "+38%", dur: "0%", price: "$3", source: "Gunny LL1" },
     { cal: "12 Gauge", name: "12G SLUG", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "420 m/s", acc: "+42%", dur: "-15%", price: "$5", source: "Gunny LL2" },
     { cal: "12 Gauge", name: "FC 00 BUCK", penMap: { "IIIA":0, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "349 m/s", acc: "+27%", dur: "-15%", price: "$6", source: "Gunny LL2" },
-    { cal: "12 Gauge", name: "SST SABOT SLUG", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "609 m/s", acc: "+50%", dur: "-40%", price: "$12", source: "Gunny LL3" }
+    { cal: "12 Gauge", name: "SST SABOT SLUG", penMap: { "IIIA":3, "IIIA+":0, "III":0, "III+":0, "III++":0 }, speed: "609 m/s", acc: "+50%", dur: "-40%", price: "$12", source: "Gunny LL3" },
+
+        // --- .300 AAC BLACKOUT (SIG MCX) ---
+        {
+            caliber: ".300 AAC Blackout", usedBy: ["SIG MCX"],
+            types: [
+                { name: "AAC Black FMJ", pen: 3, dmg: 7, vel: "633 m/s", source: "Banshee LL1", price: 5, isAP: false, isMeta: false },
+                { name: "AAC Black Subsonic", pen: 1, dmg: 6, vel: "310 m/s", source: "Banshee LL1", price: 4, isAP: false, isMeta: false },
+                { name: "AAC Black CQ", pen: 5, dmg: 8, vel: "853 m/s", source: "Banshee LL2", price: 11, isAP: false, isMeta: true },
+                { name: "AAC Black V-MAX", pen: 3, dmg: 9, vel: "724 m/s", source: "Banshee LL2", price: 8, isAP: false, isMeta: false },
+                { name: "AAC Black AP", pen: 8, dmg: 6, vel: "777 m/s", source: "Banshee LL4", price: 24, isAP: true, isMeta: true }
+            ]
+        }
 ];
     
 // ==========================================
@@ -2052,7 +2064,7 @@ const provisionsDb = [
 const intelDatabase = [
     {
                 id: "patch_0_4_1_0",
-                date: "AKTUELL - APRIL 2024",
+                date: "AKTUELL - 16. APRIL 2026",
                 version: "v0.4.1.0",
                 title: "Operation: Ballistische Korrektur",
                 content: `
@@ -2099,7 +2111,7 @@ const intelDatabase = [
             },
             {
                 id: "patch_0_4_0",
-                date: "15. MAI 2024",
+                date: "31. MÄRZ 2026",
                 version: "v0.4.0",
                 title: "Operation: Spearhead Deployed",
                 content: `
@@ -2109,7 +2121,7 @@ const intelDatabase = [
                     
                     <h2>NEUE AUSRÜSTUNG (HARDWARE)</h2>
                     <ul>
-                        <li><strong>L403A1 / KS-1 Sturmgewehr:</strong> Wurde dem Arsenal von Turncoat hinzugefügt. Ideal für CQC und mittlere Distanzen.</li>
+                        <li><strong>L403A1 / KS-1 Sturmgewehr:</strong> Wurde dem Arsenal von Gunny hinzugefügt. Ideal für CQC und mittlere Distanzen.</li>
                         <li><strong>VUDU 1-6x24 Scope:</strong> Neues Zielfernrohr für präzise Aufklärung verfügbar.</li>
                         <li><strong>Zusätzliche Munitionstypen:</strong> 5.56x45 M995 AP Munition wurde autorisiert.</li>
                     </ul>
@@ -2129,7 +2141,7 @@ const intelDatabase = [
             },
             {
                 id: "hotfix_0_3_1",
-                date: "02. MAI 2024",
+                date: "02. Mai 2025 (v0.3 Ära)",
                 version: "v0.3.1",
                 title: "Hotfix: Stabilitäts-Update",
                 content: `
