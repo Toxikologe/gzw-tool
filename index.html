@@ -6473,24 +6473,33 @@ if (saved) savedRing = JSON.parse(saved);
         let currentHoverTarget = null;
 
         document.addEventListener('mouseover', function(e) {
-            let target = e.target.closest('.item-hover-trigger');
-            if (target) {
-                currentHoverTarget = target;
-                let rawId = target.getAttribute('data-item-id');
-                if (!rawId) return;
+    let target = e.target.closest('.item-hover-trigger');
+    if (target) {
+        currentHoverTarget = target;
 
-                // Formatierung der ID (z.B. "M4A1 (Test)" -> "m4a1_test")
-                let formattedId = rawId.toLowerCase()
-                                       .replace(/[^a-z0-9äöüß]+/g, "_")
-                                       .replace(/^_|_$/g, "");
+        let rawId = target.getAttribute('data-item-id');
+        if (!rawId) return;
 
-                if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
-                    tooltipImg.src = itemImages[formattedId];
-                    tooltip.style.display = 'block';
-                    positionTooltip(e); // Sofort positionieren
-                }
-            }
-        });
+        let formattedId = rawId.toLowerCase()
+                               .replace(/[^a-z0-9]+/g, "-")
+                               .replace(/^-|-$/g, "");
+
+        const foundItem =
+            typeof verifiedGzwItemsDb !== 'undefined'
+                ? verifiedGzwItemsDb.find(item => item.id === formattedId)
+                : null;
+
+        const imageSrc =
+            foundItem?.imageUrl ||
+            (typeof itemImages !== 'undefined' ? itemImages[formattedId] : null);
+
+        if (imageSrc) {
+            tooltipImg.src = imageSrc;
+            tooltip.style.display = 'block';
+            positionTooltip(e);
+        }
+    }
+});
 
         document.addEventListener('mousemove', function(e) {
             if (currentHoverTarget && tooltip.style.display === 'block') {
@@ -6543,8 +6552,8 @@ if (saved) savedRing = JSON.parse(saved);
 
                 // Formatierung der ID
                 let formattedId = rawId.toLowerCase()
-                                       .replace(/[^a-z0-9]+/g, "_")
-                                       .replace(/^_|_$/g, "");
+                       .replace(/[^a-z0-9]+/g, "-")
+                       .replace(/^-|-$/g, "");
 
                 // ---> FÜGE DIESE ZEILE HIER EIN: <---
                 console.log("SUCHE NACH BILD-ID:", formattedId);
