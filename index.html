@@ -2891,8 +2891,10 @@
                 row.onmouseover = function() { this.style.backgroundColor = 'rgba(124, 163, 90, 0.1)'; };
                 row.onmouseout = function() { this.style.backgroundColor = 'transparent'; };
                 
-                const accColor = ammo.acc.includes('+') ? '#7ca35a' : (ammo.acc.includes('-') ? '#ff4c4c' : '#888');
-                const durColor = ammo.dur.includes('-') ? '#ff4c4c' : '#888';
+                const acc = ammo.acc || ""; // Verhindert Absturz, wenn leer
+                const dur = ammo.dur || ""; // Verhindert Absturz, wenn leer
+                const accColor = acc.includes('+') ? '#7ca35a' : (acc.includes('-') ? '#ff4c4c' : '#888');
+                const durColor = dur.includes('-') ? '#ff4c4c' : '#888';
                 
                 // Behebt einen Fehler in deinem zweiten Code-Block (pen und penColor fehlte dort)
                 const pen = ammo.pen || "-";
