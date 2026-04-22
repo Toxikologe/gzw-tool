@@ -6631,8 +6631,9 @@ if (saved) savedRing = JSON.parse(saved);
     </div>
 
     <script>
+        <script>
         // ==============================================================
-        // TACTICAL HOVER ENGINE V3 (100% SCROLL-SICHER)
+        // TACTICAL HOVER ENGINE V4 (SCROLL-SICHER + DUAL DATABASE)
         // ==============================================================
         const tooltip = document.getElementById('tacticalImageTooltip');
         const tooltipImg = document.getElementById('tacticalTooltipImg');
@@ -6645,15 +6646,30 @@ if (saved) savedRing = JSON.parse(saved);
                 let rawId = target.getAttribute('data-item-id');
                 if (!rawId) return;
 
-                // Formatierung der ID (z.B. "M4A1 (Test)" -> "m4a1_test")
+                // Formatierung für die alte Datenbank
                 let formattedId = rawId.toLowerCase()
                                        .replace(/[^a-z0-9äöüß]+/g, "_")
                                        .replace(/^_|_$/g, "");
 
+                let foundImageUrl = "";
+
+                // CHECK 1: Suche in der alten itemImages-Datenbank
                 if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
-                    tooltipImg.src = itemImages[formattedId];
+                    foundImageUrl = itemImages[formattedId];
+                } 
+                // CHECK 2: Suche in der neuen verifiedGzwItemsDb
+                else if (typeof verifiedGzwItemsDb !== 'undefined') {
+                    let dbItem = verifiedGzwItemsDb.find(item => item.name.toLowerCase() === rawId.toLowerCase());
+                    if (dbItem && dbItem.imageUrl && dbItem.imageUrl !== "") {
+                        foundImageUrl = dbItem.imageUrl;
+                    }
+                }
+
+                // Wenn ein Bild gefunden wurde, anzeigen und sofort positionieren
+                if (foundImageUrl !== "") {
+                    tooltipImg.src = foundImageUrl;
                     tooltip.style.display = 'block';
-                    positionTooltip(e); // Sofort positionieren
+                    positionTooltip(e); 
                 }
             }
         });
@@ -6679,19 +6695,18 @@ if (saved) savedRing = JSON.parse(saved);
         function positionTooltip(e) {
             if (!tooltip) return;
             
-            // clientX & clientY nutzen! Die interessieren sich nicht fürs Scrollen, 
-            // sondern messen nur die exakten Pixel deines Monitors!
+            // clientX & clientY nutzen! (Scroll-unabhängig)
             let x = e.clientX + 20; 
             let y = e.clientY + 20;
 
             const tooltipRect = tooltip.getBoundingClientRect();
             
-            // Kollisionskontrolle: Verhindert, dass das Bild aus dem rechten Rand rutscht
+            // Kollisionskontrolle: Rechter Rand
             if (x + tooltipRect.width > window.innerWidth) {
                 x = e.clientX - tooltipRect.width - 20;
             }
             
-            // Kollisionskontrolle: Verhindert, dass das Bild aus dem unteren Rand rutscht
+            // Kollisionskontrolle: Unterer Rand
             if (y + tooltipRect.height > window.innerHeight) {
                 y = e.clientY - tooltipRect.height - 20;
             }
@@ -6699,30 +6714,7 @@ if (saved) savedRing = JSON.parse(saved);
             tooltip.style.left = x + 'px';
             tooltip.style.top = y + 'px';
         }
-
-        document.addEventListener('mouseover', function(e) {
-            let target = e.target.closest('.item-hover-trigger');
-            if (target) {
-                currentHoverTarget = target;
-                let rawId = target.getAttribute('data-item-id');
-                if (!rawId) return;
-
-                // Formatierung der ID
-                let formattedId = rawId.toLowerCase()
-                                       .replace(/[^a-z0-9]+/g, "_")
-                                       .replace(/^_|_$/g, "");
-
-                // ---> FÜGE DIESE ZEILE HIER EIN: <---
-                console.log("SUCHE NACH BILD-ID:", formattedId);
-
-                if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
-                    tooltipImg.src = itemImages[formattedId];
-                    tooltip.style.display = 'block';
-                    positionTooltip(e); 
-                }
-            }
-        });
-    </script>
+</script>
         <div id="hidden-yt-player" style="position: absolute; width: 0; height: 0; border: none; overflow: hidden; pointer-events: none;"></div>
 </body>
 </html>
