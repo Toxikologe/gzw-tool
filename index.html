@@ -5259,16 +5259,18 @@ function goToHome() {
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;">
                     `;
 
-                    // ÄNDERUNG IN: renderWeaponAccordions
+                    // INNERHALB VON renderWeaponAccordions
 groups[category].forEach(w => {
     let metaBadge = w.isMeta ? `<span style="background: rgba(255,204,0,0.1); color: #ffcc00; padding: 3px 6px; border-radius: 3px; font-size: 0.7rem; border: 1px solid #ffcc00; margin-left: 8px;">🔥 META</span>` : '';
     
-    // HOVER TRIGGER: Klasse und data-item-id hinzugefügt
+    // Wir nehmen die ID, falls sie fehlt, generieren wir eine aus dem Namen
+    const safeId = w.id || w.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
     html += `
-        <div class="item-hover-trigger" data-item-id="${w.id}" onclick="window.openWeaponWorkbench('${w.id}')"
+        <div class="item-hover-trigger" data-item-id="${safeId}" onclick="window.openWeaponWorkbench('${safeId}')"
              style="background: #0d110d; border: 1px solid #1f2b1f; padding: 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 8px;"
-             onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#141a14'; this.style.transform='translateY(-2px)';"
-             onmouseout="this.style.borderColor='#1f2b1f'; this.style.background='#0d110d'; this.style.transform='translateY(0)';">
+             onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#141a14';"
+             onmouseout="this.style.borderColor='#1f2b1f'; this.style.background='#0d110d';">
             
             <div style="color: #fff; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
                 ${w.name} ${metaBadge}
@@ -5393,12 +5395,14 @@ function loadGunsmithWeapon() {
 // ÄNDERUNG IN: populateModDropdown
 function populateModDropdown(elementId, allowedModsIds, defaultText) {
     const select = document.getElementById(elementId);
+    if (!select) return;
+
     select.innerHTML = `<option value="none">${defaultText}</option>`;
     
-    // Wir fügen der Select-Box die Hover-Klasse hinzu
+    // Die Select-Box selbst wird zum Trigger
     select.className = "gunsmith-mod-select item-hover-trigger";
     
-    // Event-Listener, der die data-item-id beim Ändern des Dropdowns aktualisiert
+    // Sobald sich der Wert ändert, wird die ID für den Hover aktualisiert
     select.onchange = () => {
         select.setAttribute('data-item-id', select.value);
         updateGunsmithStats();
@@ -5407,7 +5411,6 @@ function populateModDropdown(elementId, allowedModsIds, defaultText) {
     allowedModsIds.forEach(modId => {
         const mod = gunsmithMods[modId];
         if (mod) {
-            // Wir nutzen hier den Namen aus der Mod-Datenbank für das Hover-Bild
             const opt = document.createElement('option');
             opt.value = modId;
             opt.text = mod.name;
