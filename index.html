@@ -1891,7 +1891,7 @@
                     Dein Browser unterstützt keine Videos.
                 </video>
                 
-                <a href="DEIN_EXTERNER_LINK" target="_blank" style="position: absolute; bottom: 15px; right: 15px; background: rgba(179, 57, 57, 0.7); border: 1px solid #ff4c4c; color: #fff; padding: 6px 12px; font-size: 0.8rem; text-decoration: none; border-radius: 4px; font-weight: bold; z-index: 5; transition: 0.2s;">
+                <a href="https://whereisvulture.com/" target="_blank" style="position: absolute; bottom: 15px; right: 15px; background: rgba(179, 57, 57, 0.7); border: 1px solid #ff4c4c; color: #fff; padding: 6px 12px; font-size: 0.8rem; text-decoration: none; border-radius: 4px; font-weight: bold; z-index: 5; transition: 0.2s;">
                     🎬 VOLLBILD / LINK
                 </a>
             </div>
@@ -1938,6 +1938,25 @@
 
         </div>
     </div>
+
+    <div class="panel-box">
+        <h3 style="margin-top: 0; color: var(--accent);">💰 Top 10 High-Tier Loot für Vulture</h3>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left;">
+                <thead style="background: #151515; color: var(--accent);">
+                    <tr>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #333; width: 60px;">Rang</th>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #333;">Gegenstand</th>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #333; text-align: center;">Größe</th>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #333; text-align: right;">Wert ($)</th>
+                    </tr>
+                </thead>
+                <tbody id="vultureLootTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
     <div class="panel-box">
         <h3 style="margin-top: 0; color: var(--accent);">💰 Top 10 High-Tier Loot für Vulture</h3>
@@ -5673,19 +5692,23 @@ function goToHome() {
 
 
 // ==============================================================
-// VULTURE ENGINE (AUTOPLAY & DYNAMISCHE TABELLE)
+// VULTURE ENGINE - REPARIERTE VERSION
 // ==============================================================
 
 function renderVultureLoot() {
     const tbody = document.getElementById('vultureLootTableBody');
-    // Sicherheitscheck: Existiert die Datenbank und das Tabellen-Element?
-    if (!tbody || typeof logisticsDb === 'undefined' || logisticsDb.length === 0) {
-        console.error("Vulture Error: logisticsDb nicht gefunden oder leer.");
+    if (!tbody) return;
+
+    // Wir prüfen hier dynamisch, wie deine Datenbank heißt (meistens logisticsDb oder lootDb)
+    let dbSource = (typeof logisticsDb !== 'undefined') ? logisticsDb : (typeof lootDb !== 'undefined' ? lootDb : null);
+
+    if (!dbSource || dbSource.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; color:#666;">Datenbank wird geladen oder ist leer...</td></tr>';
         return;
     }
 
-    // Wir filtern nach Preis > 0, sortieren absteigend und nehmen die Top 10
-    const highValueLoot = [...logisticsDb]
+    // Filtern & Sortieren
+    const highValueLoot = [...dbSource]
         .filter(item => item.price && item.price > 0)
         .sort((a, b) => b.price - a.price)
         .slice(0, 10);
@@ -5694,32 +5717,25 @@ function renderVultureLoot() {
     
     highValueLoot.forEach((item, index) => {
         const rank = index + 1;
-        const rankColor = rank <= 3 ? '#ffcc00' : '#ccc'; // Top 3 sind Gold
+        const color = rank <= 3 ? '#ffcc00' : '#ccc';
         
-        // Prüfung ob Bild vorhanden, sonst Fallback
-        const itemIdForHover = item.name.toLowerCase().replace(/[^a-z0-9äöüß]+/g, "_").replace(/^_|_$/g, "");
-
         tbody.innerHTML += `
-            <tr class="item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; transition: 0.2s;" onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" onmouseout="this.style.backgroundColor='';">
-                <td style="padding: 15px 10px; font-weight: bold; color: ${rankColor}; font-size: 1.2rem;">#${rank}</td>
-                <td style="padding: 15px 10px;">
-                    <div style="color: #eee; font-weight: bold; font-size: 1.05rem;">${item.name}</div>
-                    <div style="font-size: 0.8rem; color: #888; font-style: italic;">↳ Händler: ${item.vendor}</div>
-                </td>
-                <td style="padding: 15px 10px; text-align: center; color: #aaa; font-family: monospace;">${item.grid}</td>
-                <td style="padding: 15px 10px; text-align: right; color: var(--accent); font-weight: bold; font-size: 1.1rem;">$${item.price.toLocaleString('de-DE')}</td>
+            <tr style="border-bottom: 1px solid #1a1a1a;">
+                <td style="padding: 15px 10px; color: ${color}; font-weight: bold; font-size: 1.1rem;">#${rank}</td>
+                <td style="padding: 15px 10px; font-weight: bold; color: #eee;">${item.name}</td>
+                <td style="padding: 15px 10px; text-align: center; color: #888;">${item.grid || '1x1'}</td>
+                <td style="padding: 15px 10px; text-align: right; color: var(--accent); font-weight: bold;">$${item.price.toLocaleString('de-DE')}</td>
             </tr>
         `;
     });
-    console.log("Vulture: Loot-Tabelle erfolgreich generiert.");
 }
 
+// Timer Funktion
 function updateVultureTimer() {
     const timerDisplay = document.getElementById('vultureResetTimer');
     if (!timerDisplay) return;
 
     const now = new Date();
-    // UTC-Zeit für weltweite Genauigkeit
     const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
     const d = new Date(nowUTC);
     
@@ -5729,13 +5745,22 @@ function updateVultureTimer() {
     const targetUTC = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + daysUntilMonday, 12, 0, 0);
     const diff = targetUTC - nowUTC;
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / 1000 / 60) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
+    const d_days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const d_hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const d_mins = Math.floor((diff / 1000 / 60) % 60);
+    const d_secs = Math.floor((diff / 1000) % 60);
 
-    timerDisplay.innerText = `${days}T ${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    timerDisplay.innerText = `${d_days}T ${d_hours.toString().padStart(2, '0')}:${d_mins.toString().padStart(2, '0')}:${d_secs.toString().padStart(2, '0')}`;
 }
+
+// Initialisierung beim Laden der Seite
+document.addEventListener('DOMContentLoaded', () => {
+    updateVultureTimer();
+    setInterval(updateVultureTimer, 1000);
+    
+    // Kleiner Delay, um sicherzugehen, dass data.js geladen ist
+    setTimeout(renderVultureLoot, 500); 
+});
 
     // ==============================================================
 // HUD-SYSTEM: UHRZEIT, DATUM & RESTOCK
