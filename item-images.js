@@ -5950,3 +5950,84 @@ const verifiedGzwItemsDb = [
     "lastUpdated": "2026-04-21T13:33:33.079Z"
   }
 ];
+
+// ==========================================
+// 4. GEAR, RUCKSÄCKE & CONTAINER BILDER
+// ==========================================
+// Anleitung: Ersetze "DEIN_BILDNAME.png" durch den echten Dateinamen aus deinem GitHub /images/ Ordner.
+// Die V11 Engine findet diese glattgebügelten IDs automatisch!
+
+const itemImages = {
+    // --- RÜSTUNGEN (Plate Carriers & Westen) ---
+    "plate6platecarrier": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/plate6_plate_carrier.png",
+    "phantomtype2": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/phantom_type_2.png",
+    "reconplatecarrierrpc": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/recon_plate_carrier_rpc.png",
+    "m2platecarrier": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/m2_plate_carrier.png",
+    "cgpc3tqs": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/cgpc3_tqs.png",
+    "chestrig901elite4": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/chest_rig_901_elite_4.png",
+    "modularoperatorcarriergenii": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/modular_operator_carrier_gen_ii.png",
+    "pantsir20": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/pantsir_2_0.png",
+    "specter": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "cz4mlancer": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/cz_4m_lancer.png",
+    "cz4mlancerunlra": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/cz_4m_lancer_unlra.png",
+    "lcssentry": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/lcs_sentry.png",
+    "6b33defender2schutzweste": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "spitfire": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/spitefire.png",
+    "lbt6094g3v2": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/lbt_6094g3v2.png",
+    "atbvschutzweste": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/atbv_schutzweste.png",
+    "6b131sturmpanzerung": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/6b13_1_sturm_panzerung.png",
+    
+    // --- HELME & HEADSETS ---
+    "michtc2000": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/mich_tc-2000.png",
+    "michtc2002": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/mich_tc-2002.png",
+    "fastmthelm": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "altynhelm": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "exfilhelmteamwendy": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "comtac4headset": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "sordinsupremeprox": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "gasmaskegasmask": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+
+    // --- RUCKSÄCKE & RIGS ---
+    "wandererrucksacktrekstars70l": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "deltarucksack": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "rush7220": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/rush_72_2_0.png",
+    "6sh118ratnikv2": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/6sh118_ratnik_v2.png",
+    "falang28": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "rush24": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "3tagessturmrucksack": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "amp12rucksack": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/amp12_rucksack.png",
+    "scorpionocp": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/scorpion_ocp.png",
+    "gunfighter14": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/gunfighter_14.png",
+    "patrouillenrucksack": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/patrouillen_rucksack.png",
+    
+    "lbt1961achestrig": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "tactecbrustrig": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "operatorgrteloperatorbelt": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+
+    // --- CONTAINER & KOFFER ---
+    "safelockbox2x2": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/safe_lock_box_2x2.png",
+    "admintasche2x3adminpouch": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/admin_tasche_2x3_admin_pouch.png",
+    "tassecurecontainer3x3": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/tas_secure_container_3x3.png",
+    "muxxumwaffenkoffermuxxumriflecase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "hardekistehardecase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/harde_kiste_harde_case.png",
+    "waffenteilkisteweaponpartscase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/waffenteilkiste_weapon_parts_case.png",
+    "metalmunitionskistemetalammobox": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/metal_munitionskiste_metal_ammo_box.png",
+    "mmmunitionskistemmammobox": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "handgranatenkofferhandgrenadestoragebox": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/handgranatenkoffer_hand_grenade_storage_box.png",
+    "magazinkistemagazinecrate": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/magazinkiste_magazine_crate.png",
+    "ivschutzkofferivtruncase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/iv_schutzkoffer_iv_truncase.png",
+    "erstehilfekofferfirstaidcase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/erste_hilfe_koffer_first_aid_case.png",
+    "khlboxproviantkistepersonalcooler": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/kuhlbox__proviantkiste_personal_cooler.png",
+    "groerschlsselkofferhugekeycase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "geldbresetacticalwallet": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/geldborse_tactical_wallet.png",
+    "lederschlsselhalterkeyholder": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/lederschlusselhalter_key_holder.png",
+    "schlsseltaschekeycase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/schlusseltasche_key_case.png",
+    "injektorenetuiinjectorcase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/DEIN_BILDNAME.png",
+    "morserkistemortarroundcase": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/morser_kiste_mortar_round_case.png",
+    "hartschalenerstehilfehfak": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/hartschalen_erste_hilfe_hfak.png",
+    "minierstehilfesetmfak": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/mini_erste_hilfe_set_mfak.png",
+    "schnellverschlussmedikitqfak": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/schnellverschluss_medikit_qfak.png",
+    "verwaltungstascheadministrationbag": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/verwaltungstasche_administration_bag.png",
+    "kombatordnerkombatfolder": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/kombat_ordner_kombat_folder.png",
+    "verwaltungstischadministrativedesk": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/verwaltungstisch_administrative_desk.png",
+};
