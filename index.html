@@ -6623,60 +6623,63 @@ if (saved) savedRing = JSON.parse(saved);
 
     <script>
     // ==============================================================
-    // TACTICAL HOVER ENGINE V8 (ANTI-HOTLINK & DEBUGGER)
+    // TACTICAL HOVER ENGINE V9 (AGGRESSIVE NORMALIZATION)
     // ==============================================================
     const tooltip = document.getElementById('tacticalImageTooltip');
     const tooltipImg = document.getElementById('tacticalTooltipImg');
     let currentHoverTarget = null;
 
-    // 100% kugelsicherer Offline-Fallback (Ein taktischer Code-Block, der IMMER lädt)
     const FALLBACK_IMAGE = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' style='background:%230a0a0a; border: 1px solid %23333; border-radius: 4px;'%3E%3Ctext fill='%237ca35a' x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='18px'%3E[ NO INTEL ]%3C/text%3E%3Ctext fill='%23555' x='50%25' y='60%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='12px'%3EIMAGE MISSING OR BLOCKED%3C/text%3E%3C/svg%3E";
+
+    // 🛠️ DER GLATTBÜGLER: Entfernt ALLES außer Buchstaben(a-z) und Zahlen(0-9)
+    function normalizeString(str) {
+        if (!str) return "";
+        return String(str).toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
 
     document.addEventListener('mouseover', function(e) {
         let target = e.target.closest('.item-hover-trigger');
         if (target) {
             currentHoverTarget = target;
-            let targetId = target.getAttribute('data-item-id');
-            if (!targetId) return;
+            let rawTargetId = target.getAttribute('data-item-id');
+            if (!rawTargetId) return;
 
+            // Wir bügeln den Namen aus der HTML/data.js glatt
+            let cleanTarget = normalizeString(rawTargetId);
             let foundImageUrl = "";
 
-            // 1. ULTIMATIVE SUCHE (Ignoriert Groß-/Kleinschreibung)
+            // 1. Suche in der NEUEN Datenbank (verifiedGzwItemsDb)
             if (typeof verifiedGzwItemsDb !== 'undefined') {
                 let dbItem = verifiedGzwItemsDb.find(item => 
-                    (item.id && item.id.toLowerCase() === targetId.toLowerCase()) || 
-                    (item.name && item.name.toLowerCase() === targetId.toLowerCase())
+                    normalizeString(item.id) === cleanTarget || 
+                    normalizeString(item.name) === cleanTarget
                 );
                 if (dbItem && dbItem.imageUrl) {
                     foundImageUrl = dbItem.imageUrl;
                 }
             }
 
-            // 2. FALLBACK IN DIE ALTE DATENBANK
+            // 2. Suche in der ALTEN Datenbank (itemImages)
             if (!foundImageUrl && typeof itemImages !== 'undefined') {
-                let oldKey = targetId.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
-                if (itemImages[oldKey]) {
-                    foundImageUrl = itemImages[oldKey];
+                for (let key in itemImages) {
+                    if (normalizeString(key) === cleanTarget) {
+                        foundImageUrl = itemImages[key];
+                        break;
+                    }
                 }
             }
 
-            // 3. BILD-LADE-LOGIK MIT DIAGNOSE
+            // BILD ANZEIGEN
             if (foundImageUrl) {
-                console.log(`[Hover-Radar] 🎯 Treffer für "${targetId}" -> Lade Bild:`, foundImageUrl);
-                
-                // Falls das ECHTE Bild einen toten Link hat, greift der Offline-Fallback
                 tooltipImg.onerror = function() {
-                    console.warn(`[Hover-Radar] ⚠️ BILD GEBLOCKT (Link tot oder Hotlink-Schutz aktiv): ${foundImageUrl}`);
-                    this.onerror = null; // Verhindert Abstürze
+                    this.onerror = null; 
                     this.src = FALLBACK_IMAGE;
                 };
-                
                 tooltipImg.src = foundImageUrl;
                 tooltip.style.display = 'block';
                 positionTooltip(e);
             } else {
-                console.log(`[Hover-Radar] ❌ Kein Eintrag in der Datenbank für: "${targetId}"`);
-                // Zeigt das "NO INTEL"-Schild an, wenn das Item gar nicht in der Datenbank existiert
+                // Wenn wirklich absolut nichts gefunden wird
                 tooltipImg.onerror = null; 
                 tooltipImg.src = FALLBACK_IMAGE;
                 tooltip.style.display = 'block';
