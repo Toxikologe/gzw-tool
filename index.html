@@ -15,37 +15,6 @@
     padding-right: 10px; 
 }
 
-/* ============================================================== */
-/* SCROLLBAR STYLING – Passt zum taktischen GZW-Design            */
-/* ============================================================== */
-
-/* Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: #7ca35a #1a1a1a;
-}
-
-/* Chrome, Edge, Safari */
-*::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-*::-webkit-scrollbar-track {
-    background: #1a1a1a;
-    border-radius: 4px;
-}
-*::-webkit-scrollbar-thumb {
-    background: #7ca35a;
-    border-radius: 4px;
-    border: 2px solid #1a1a1a;
-}
-*::-webkit-scrollbar-thumb:hover {
-    background: #9bca70;
-}
-*::-webkit-scrollbar-corner {
-    background: #1a1a1a;
-}
-
 /* Wir zwingen ALLES in dieser Liste zum taktischen Button-Design (!important überschreibt alte Fehler) */
 #symptomList > * {
     background: linear-gradient(90deg, rgba(15, 20, 15, 0.9) 0%, rgba(5, 8, 5, 0.9) 100%) !important;
@@ -3101,7 +3070,7 @@
         medicalDb.forEach(item => {
             const card = document.createElement('div');
             card.className = 'symptom-card item-hover-trigger';
-            card.setAttribute('data-item-id', item.id || item.name);
+            card.setAttribute('data-item-id', item.id);
             card.id = `symptom-${item.id}`;
             card.innerHTML = `<span class="icon">${item.icon}</span> <span style="width: 100%; text-align: left;">${item.name}</span>`;
             card.onclick = () => runMedicalScan(item);
@@ -3199,7 +3168,7 @@
 
             const crate = document.createElement('div');
             crate.className = `market-crate item-hover-trigger ${item.isBuff ? 'buff-item' : ''}`;
-            crate.setAttribute('data-item-id', item.id || item.name);
+            crate.setAttribute('data-item-id', item.name);
             
             crate.innerHTML = `
                 <div class="crate-uses">🔲 ${item.grid} | 🍽️ ${item.uses}x</div>
@@ -4458,7 +4427,7 @@
 
                // NEU: Der Hover-Trigger liegt jetzt auf der gesamten Tabellenzeile (<tr>)!
                 tableHTML += `
-                    <tr class="item-hover-trigger" data-item-id="${something.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
+                    <tr class="item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
                         onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
                         onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px; text-align: center; color: #aaa; font-weight: bold; font-size: 1.1rem;">LL${item.level}</td>
@@ -4751,7 +4720,7 @@ function goToHome() {
         filtered.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = `logistics-item-card item-hover-trigger quest-${item.isQuest}`;
-            div.setAttribute('data-item-id', item.id || item.name);
+            div.setAttribute('data-item-id', item.name);
             div.id = `log-item-${index}`;
             
             let icon = '⚠️'; 
@@ -4778,7 +4747,7 @@ function goToHome() {
         
         document.getElementById('ldItemName').innerText = item.name.toUpperCase();
         document.getElementById('ldItemName').classList.add('item-hover-trigger');
-        document.getElementById('ldItemName').setAttribute('data-item-id', item.id || item.name);
+        document.getElementById('ldItemName').setAttribute('data-item-id', item.name);
         document.getElementById('ldItemName').style.cursor = 'help';
         document.getElementById('ldCategory').innerText = `KATEGORIE: ${item.category.toUpperCase()}`;
         
@@ -4864,7 +4833,7 @@ function goToHome() {
                 let infoColor = item.isQuest ? "#ffcc00" : "#888"; 
 
                 tableHTML += `
-                    <tr class="loot-row item-hover-trigger" data-item-id="${something.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s;"
+                    <tr class="loot-row item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s;"
                         onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
                         onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px;">
@@ -5025,7 +4994,7 @@ function goToHome() {
                 const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
 
                 tableHTML += `
-                    <tr class="item-hover-trigger" data-item-id="${something.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
+                    <tr class="item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
                         onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
                         onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px;">
@@ -5146,7 +5115,7 @@ function goToHome() {
                 const rowBg = item.isMeta ? 'background: rgba(255, 204, 0, 0.03);' : '';
 
                 tableHTML += `
-                    <tr class="item-hover-trigger" data-item-id="${something.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
+                    <tr class="item-hover-trigger" data-item-id="${item.name}" style="border-bottom: 1px solid #1a1a1a; cursor: help; transition: 0.2s; ${rowBg}"
                         onmouseover="this.style.backgroundColor='rgba(124, 163, 90, 0.1)';" 
                         onmouseout="this.style.backgroundColor='';">
                         <td style="padding: 12px 8px;">
@@ -6472,6 +6441,26 @@ if (saved) savedRing = JSON.parse(saved);
         const tooltipImg = document.getElementById('tacticalTooltipImg');
         let currentHoverTarget = null;
 
+        document.addEventListener('mouseover', function(e) {
+            let target = e.target.closest('.item-hover-trigger');
+            if (target) {
+                currentHoverTarget = target;
+                let rawId = target.getAttribute('data-item-id');
+                if (!rawId) return;
+
+                // Formatierung der ID (z.B. "M4A1 (Test)" -> "m4a1_test")
+                let formattedId = rawId.toLowerCase()
+                                       .replace(/[^a-z0-9äöüß]+/g, "_")
+                                       .replace(/^_|_$/g, "");
+
+                if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
+                    tooltipImg.src = itemImages[formattedId];
+                    tooltip.style.display = 'block';
+                    positionTooltip(e); // Sofort positionieren
+                }
+            }
+        });
+
         document.addEventListener('mousemove', function(e) {
             if (currentHoverTarget && tooltip.style.display === 'block') {
                 positionTooltip(e);
@@ -6515,36 +6504,27 @@ if (saved) savedRing = JSON.parse(saved);
         }
 
         document.addEventListener('mouseover', function(e) {
-    let target = e.target.closest('.item-hover-trigger');
-    if (!target) return;
+            let target = e.target.closest('.item-hover-trigger');
+            if (target) {
+                currentHoverTarget = target;
+                let rawId = target.getAttribute('data-item-id');
+                if (!rawId) return;
 
-    currentHoverTarget = target;
+                // Formatierung der ID
+                let formattedId = rawId.toLowerCase()
+                                       .replace(/[^a-z0-9]+/g, "_")
+                                       .replace(/^_|_$/g, "");
 
-    let rawId = target.getAttribute('data-item-id');
-    if (!rawId) return;
+                // ---> FÜGE DIESE ZEILE HIER EIN: <---
+                console.log("SUCHE NACH BILD-ID:", formattedId);
 
-    let formattedId = rawId.toLowerCase()
-                           .replace(/[^a-z0-9]+/g, "-")
-                           .replace(/^-|-$/g, "");
-
-    const foundItem =
-        typeof verifiedGzwItemsDb !== 'undefined'
-            ? verifiedGzwItemsDb.find(item => item.id === formattedId)
-            : null;
-
-    const imageSrc =
-        foundItem?.imageUrl ||
-        (typeof itemImages !== 'undefined' ? itemImages[formattedId] : null);
-
-    if (imageSrc) {
-        tooltipImg.src = imageSrc;
-        tooltip.style.display = 'block';
-        positionTooltip(e);
-    } else {
-        tooltip.style.display = 'none';
-        tooltipImg.src = '';
-    }
-});
+                if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
+                    tooltipImg.src = itemImages[formattedId];
+                    tooltip.style.display = 'block';
+                    positionTooltip(e); 
+                }
+            }
+        });
     </script>
 </body>
 </html>
