@@ -1642,7 +1642,14 @@
            <div class="tactical-header-strip">
     <span style="font-size: 1.4rem; filter: drop-shadow(0 0 5px var(--accent));">⚠️</span>
     <h2>Taktische Einsatzinformationen</h2>
-    <div class="status-tag">SECURE_LINK</div>
+    <div style="display: flex; align-items: center; margin-left: auto; gap: 15px;">
+        <div class="status-tag" style="margin-left: 0;">SECURE_LINK</div>
+        
+        <button id="bgmToggleBtn" onclick="toggleBGM()" style="background: rgba(124, 163, 90, 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; font-size: 0.75rem; font-weight: bold; cursor: pointer; border-radius: 3px; font-family: 'Courier New', monospace; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 5px rgba(124, 163, 90, 0.3); z-index: 100;">
+            <span id="bgmIcon" style="font-size: 1rem;">⏳</span> 
+            <span id="bgmText">BGM: LÄDT...</span>
+        </button>
+    </div>
 </div>
 
             <div style="display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 30px; gap: 25px;">
@@ -5792,7 +5799,117 @@ function startHudSystem() {
     setInterval(updateRestock, 1000);
 }
 
+// ==============================================================
+    // TACTICAL BACKGROUND MUSIC (YOUTUBE API)
+    // ==============================================================
+    let bgmPlayer;
+    let bgmReady = false;
+    let bgmPlaying = false;
+    
+    // TRAGE HIER DEINE YOUTUBE VIDEO ID EIN (nur die Buchstaben/Zahlen nach "v=")
+    const YOUTUBE_VIDEO_ID = 'DEINE_VIDEO_ID_HIER'; 
 
+    // Lade die YouTube IFrame API dynamisch
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // Diese Funktion wird von YouTube automatisch aufgerufen, sobald die API geladen ist
+    window.onYouTubeIframeAPIReady = function() {
+        bgmPlayer = new YT.Player('hidden-yt-player', {
+            height: '0',
+            width: '0',
+            videoId: YOUTUBE_VIDEO_ID,
+            playerVars: {
+                'autoplay': 1,         // Versucht Autoplay
+                'controls': 0,         // Keine UI
+                'disablekb': 1,        // Keine Tastatursteuerung
+                'loop': 1,             // Dauerschleife
+                'playlist': YOUTUBE_VIDEO_ID // Wichtig für Loop
+            },
+            events: {
+                'onReady': onBgmPlayerReady,
+                'onStateChange': onBgmPlayerStateChange
+            }
+        });
+    };
+
+    function onBgmPlayerReady(event) {
+        bgmReady = true;
+        event.target.setVolume(20); // LAUTSTÄRKE HIER AUF 20% GESETZT!
+        
+        // Prüfe nach 1 Sekunde, ob das Video wirklich läuft (wegen Browser-Autoplay-Blockade)
+        setTimeout(() => {
+            if (event.target.getPlayerState() !== YT.PlayerState.PLAYING) {
+                updateBgmUI(false, true); // Zeige "Klick Start" Warnung
+            }
+        }, 1000);
+    }
+
+    function onBgmPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            bgmPlaying = true;
+            updateBgmUI(true);
+        } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+            bgmPlaying = false;
+            updateBgmUI(false);
+        }
+    }
+
+    window.toggleBGM = function() {
+        if (!bgmReady) return;
+        
+        if (bgmPlaying) {
+            bgmPlayer.pauseVideo();
+        } else {
+            bgmPlayer.playVideo();
+        }
+    };
+
+    function updateBgmUI(isPlaying, isBlocked = false) {
+        const btn = document.getElementById('bgmToggleBtn');
+        const icon = document.getElementById('bgmIcon');
+        const text = document.getElementById('bgmText');
+        
+        if (!btn) return;
+
+        if (isPlaying) {
+            btn.style.borderColor = "var(--accent)";
+            btn.style.color = "var(--accent)";
+            btn.style.background = "rgba(124, 163, 90, 0.1)";
+            btn.style.boxShadow = "0 0 10px rgba(124, 163, 90, 0.4)";
+            btn.style.animation = "none";
+            icon.innerText = "🔊";
+            text.innerText = "BGM: ON";
+        } else {
+            btn.style.borderColor = "#444";
+            btn.style.color = "#888";
+            btn.style.background = "#111";
+            btn.style.boxShadow = "none";
+            icon.innerText = "🔇";
+            
+            if (isBlocked) {
+                // Browser hat Autoplay blockiert -> Mach den Nutzer darauf aufmerksam
+                text.innerText = "BGM: KLICK START";
+                btn.style.borderColor = "#ffcc00";
+                btn.style.color = "#ffcc00";
+                btn.style.animation = "pulse-orange 2s infinite";
+            } else {
+                text.innerText = "BGM: PAUSE";
+                btn.style.animation = "none";
+            }
+        }
+    }
+    
+    // Taktischer Workaround: Wenn der Browser blockiert, starte die Musik heimlich 
+    // beim ERSTEN Klick des Nutzers irgendwo auf der Webseite (z.B. Tab-Wechsel)
+    document.body.addEventListener('click', function initAudioWorkaround() {
+        if (bgmReady && !bgmPlaying && bgmPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+            bgmPlayer.playVideo();
+            document.body.removeEventListener('click', initAudioWorkaround);
+        }
+    }, { once: true });
                 
     // ==============================================================
     // STARTUP & INITIALISIERUNG
@@ -6605,5 +6722,6 @@ if (saved) savedRing = JSON.parse(saved);
             }
         });
     </script>
+        <div id="hidden-yt-player" style="position: absolute; width: 0; height: 0; border: none; overflow: hidden; pointer-events: none;"></div>
 </body>
 </html>
