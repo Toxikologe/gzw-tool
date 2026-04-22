@@ -6030,4 +6030,8 @@ const itemImages = {
     "verwaltungstascheadministrationbag": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/verwaltungstasche_administration_bag.png",
     "kombatordnerkombatfolder": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/kombat_ordner_kombat_folder.png",
     "verwaltungstischadministrativedesk": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/main/images/verwaltungstisch_administrative_desk.png",
+
+    // --- WERTSACHEN ----
+    "bredarum30jahre": "https://raw.githubusercontent.com/Toxikologe/gzw-tool/refs/heads/main/images/bredarum30jahre.png",
+    "tzuntzimitltequila25jahre": "https://github.com/Toxikologe/gzw-tool/blob/main/images/tzuntzimitltequila25jahre.png",
 };
