@@ -5259,15 +5259,15 @@ function goToHome() {
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;">
                     `;
 
-                    // INNERHALB VON renderWeaponAccordions
+                    // ÄNDERUNG IN: renderWeaponAccordions
 groups[category].forEach(w => {
     let metaBadge = w.isMeta ? `<span style="background: rgba(255,204,0,0.1); color: #ffcc00; padding: 3px 6px; border-radius: 3px; font-size: 0.7rem; border: 1px solid #ffcc00; margin-left: 8px;">🔥 META</span>` : '';
     
-    // Wir nehmen die ID, falls sie fehlt, generieren wir eine aus dem Namen
-    const safeId = w.id || w.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    // Wir nehmen die ID der Waffe. Wenn keine da ist, nehmen wir den Namen.
+    const finalId = w.id || w.name;
 
     html += `
-        <div class="item-hover-trigger" data-item-id="${safeId}" onclick="window.openWeaponWorkbench('${safeId}')"
+        <div class="item-hover-trigger" data-item-id="${finalId}" onclick="window.openWeaponWorkbench('${w.id}')"
              style="background: #0d110d; border: 1px solid #1f2b1f; padding: 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 8px;"
              onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#141a14';"
              onmouseout="this.style.borderColor='#1f2b1f'; this.style.background='#0d110d';">
@@ -5399,21 +5399,27 @@ function populateModDropdown(elementId, allowedModsIds, defaultText) {
 
     select.innerHTML = `<option value="none">${defaultText}</option>`;
     
-    // Die Select-Box selbst wird zum Trigger
+    // Die Select-Box bekommt die Trigger-Klasse
     select.className = "gunsmith-mod-select item-hover-trigger";
     
-    // Sobald sich der Wert ändert, wird die ID für den Hover aktualisiert
-    select.onchange = () => {
-        select.setAttribute('data-item-id', select.value);
+    // WICHTIG: Wenn du die Auswahl änderst, aktualisieren wir die ID für das Bild
+    select.addEventListener('change', function() {
+        const selectedOptionText = this.options[this.selectedIndex].text;
+        // Wenn "Keine Mündung" gewählt ist, Tooltip verstecken, sonst Namen setzen
+        if (this.value === "none") {
+            this.setAttribute('data-item-id', "");
+        } else {
+            this.setAttribute('data-item-id', selectedOptionText);
+        }
         updateGunsmithStats();
-    };
+    });
 
     allowedModsIds.forEach(modId => {
         const mod = gunsmithMods[modId];
         if (mod) {
             const opt = document.createElement('option');
             opt.value = modId;
-            opt.text = mod.name;
+            opt.text = mod.name; // Das ist der Name, der in der DB gesucht wird
             select.appendChild(opt);
         }
     });
