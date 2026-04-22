@@ -6631,18 +6631,146 @@ if (saved) savedRing = JSON.parse(saved);
 
     const FALLBACK_IMAGE = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' style='background:%230a0a0a; border: 1px solid %23333; border-radius: 4px;'%3E%3Ctext fill='%237ca35a' x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='18px'%3E[ NO INTEL ]%3C/text%3E%3Ctext fill='%23555' x='50%25' y='60%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='12px'%3EIMAGE MISSING OR BLOCKED%3C/text%3E%3C/svg%3E";
 
-    // 🛠️ DER ÜBERSETZER (Hier trägst du Abweichungen ein!)
-    // Links: Der deutsche glattgebügelte Name (alles klein, keine Leerzeichen)
-    // Rechts: Der englische Name, wie er in der item-images.js steht
+    // 🛠️ THE MASTER ALIAS DICTIONARY (German to English normalization mapping)
+    // Only includes items where the translated words differ completely from the image ID.
     const translationMap = {
-        "artisanwasser": "artisanwater",
-        "mreverpflegung": "mre",
-        "mosinobrez": "mosinnagant", // Beispiel: Wenn Mosin Kurz auf das normale Mosin-Bild zeigen soll
-        "aqueswasser": "aqueswater"
-        // Du kannst hier beliebig viele hinzufügen (Komma am Ende nicht vergessen!)
+        // Valuables & Docs
+        "schwarzekreditkarte": "blackcreditcard",
+        "platinring": "platinumring",
+        "majesttischetitanuhr": "majestictitaniumwatch",
+        "diamantring": "diamondring",
+        "platinkreditkarte": "platinumcreditcard",
+        "diamantohrringe": "diamondearrings",
+        "diamantkorallenring": "diamondcoralring",
+        "smaragdhalskette": "emeraldnecklace",
+        "perfekteperlenohrringe": "perfectpearlearrings",
+        "aufwendigerring": "elaboratering",
+        "saphiranhnger": "sapphirependant",
+        "goldkreditkarte": "goldcreditcard",
+        "eleganteluxusuhr": "sleekluxurywatch",
+        "mastercarbonsealuhr": "mastercarbonsealautomaticwatch",
+        "dunkleperlenhalskette": "darkpearlnecklace",
+        "edelsteinring": "gemstonering",
+        "gewhnlichekreditkarte": "commoncreditcard",
+        "luxussmartwatch": "luxurysmartwatch",
+        "schlangenwein": "snakewine",
+        "himmlischeparfmflasche": "heavenlyperfumebottle",
+        "lambertzigarren": "lambertcigars",
+        "goldhalskette": "goldnecklace",
+        "zarteparfmflasche": "delicateperfumebottle",
+        "goldring": "goldring",
+        "moderneuhr": "modernwatch",
+        "hyperboreazigaretten": "hyperboreacigarettes",
+        "duftendeparfmflasche": "fragrantperfumebottle",
+        "stangetahirszigaretten": "cartonoftahirscigarettes",
+        "tahirszigaretten": "tahirscigarettes",
+        "goldkette": "goldnecklace",
+        "vipreisepass": "vippassport",
+        "touristenreisepass": "touristpassport",
+        "einmalpadschlsselcodes": "onetimepadkeysheets",
+        "biometrischezugangskarte": "biometricaccesscard",
+        "biometrischerusbstick": "biometricthumbdrive",
+        "armeegeheimdienstdaten": "armyintel",
+        "geschftsmannausweis": "businessmanidcard",
+        "fhrerschein": "driverslicense",
+        "einheimischenausweis": "localidcard",
+        "verbrechenbezogenedaten": "crimerelatedintel",
+        "touristenausweis": "touristidcard",
+
+        // Electronics & Tech
+        "geldautomatenhackingtool": "atmhackingtool",
+        "verschlsstelteeinsatzfestplatte": "operationdataencryptedharddisk",
+        "schwarzesluxussmartphone": "blackluxuryphone",
+        "verschlssteltefestplatte": "encryptedharddiskdrive",
+        "np12navigationsempfnger": "npi2navigationreceiver",
+        "luxussmartphone": "luxurysmartphone",
+        "spiegelreflexkameradslr": "reflexcamera",
+        "glonassgrotmnavigationsempfnger": "glonassgrotmnavigationreceiver",
+        "azartp1funkgert": "azartp1radio",
+        "tragbarerecmstrsender": "handheldecmjammer",
+        "signalverstrkerrt97s": "signalrepeaterrt97s",
+        "teuressmartphone": "expensivesmartphone",
+        "digitalkameradigicam": "digitalcamera",
+        "handyladegert": "phonecharger",
+        "ltsd43laserzielmarkierer": "ltsd43laserdesignator",
+        "r438barriertsystem": "r438barriert",
+        "pbg01drohnenkontrollstation": "pbg01uavcontrolstation",
+        "c2militrlaptop": "c2militarylaptop",
+        "streletsmtablet": "streletsmtablet",
+        "anpyq10": "anpyq10",
+        "kik11taktischerschlssellader": "kik11tacticalkeyloader",
+        "verstrktermilitrlaptop": "reinforcedmilitarylaptop",
+        "hgcs30drohnenkontrollstation": "hgcs30uavcontrolstation",
+        "robustesmilitrtablet": "ruggedmilitarytablet",
+
+        // Tools & Materials
+        "weieslithiumfett": "whitelithiumgrease",
+        "werkzeugset": "toolset",
+        "schwefelsure": "sulfuricacid",
+        "kaputtenagelpistole": "brokennailgun",
+        "autobatterie": "carbattery",
+        "acetylenflasche": "acetylenecylinder",
+        "kaputterwinkelschleifer": "brokenanglegrinder",
+        "kaputtestichsge": "brokenjigsaw",
+        "gummierneuerer": "rubberrenue",
+        "aramidgewebe": "aramidcloth",
+        "motorradbatterie": "motorbikebattery",
+        "propanflasche": "propanebottle",
+        "starthilfekabel": "jumpercables",
+        "industrielleslsungsmittel": "industrialsolvent",
+        "kaputtehandsge": "brokenhandsaw",
+        "minderwertigesschiepulver": "lowgradegunpowder",
+        "bremsflssigkeit": "brakefluid",
+        "benzinkanister": "fuelcanister",
+        "bleichmittel": "bleach",
+        "naosaoad100reiniger": "naosaoad100clean",
+        "motorl": "motoroil",
+        "rohrreiniger": "draincleaner",
+        "tarnstoff": "camouflagefabric",
+        "waffenl": "weaponoil",
+        "packungaabatterien": "packofaabatteries",
+        "kaputterschraubenschlssel": "brokenwrench", // Assuming wrench, check if different
+        "kaputterzimmermannshammer": "brokencarpentryhammer",
+        "kaputterschraubenzieher": "brokenscrewdriver",
+        "kupferkabel": "copperwire", // Generic fallback
+        "ngel": "nails", // Generic fallback
+        "panzertape": "ducttape", // Generic fallback
+        "waffenteile": "weaponparts", // Generic fallback
+        "zndkerze": "sparkplug", // Generic fallback
+
+        // Medical & Survival
+        "flschchenmitantigenen": "vialofantigens",
+        "desinfektionsmittel": "disinfectant",
+        "unmedizinwerkzeuge": "unmedicaltools",
+        "insektenspray": "insectrepellantspray",
+        "blutbeutel500ml": "smallbloodbag",
+        "morphininjektor": "morphine",
+        "tourniquetcat": "combattourniquet", // Mapping to general CT
+        "verbandskastenifak": "ifak", // Generic
+        "wasserproben": "watersamples", // Generic
+        "packungpremiumkaffee": "packofpremiumcoffee",
+        "wasserreinigungstabletten": "waterpurificationtablets",
+        "mrekampfration": "combatrationpack",
+
+        // Misc
+        "nachfllbaresfeuerzeug": "refillablelighter",
+        "handspiegel": "handmirror",
+        "vaselinepetrolatum": "petrolatum",
+        "kartenspiel": "deckofcards",
+        "angelschnur": "fishingline",
+        "lampenl": "lampoil",
+        "feuerzeug": "lighter",
+        "nhzeug": "sewingset",
+        "rettungsdecke": "thermalblanket",
+        
+        // Mapped Ammo to specific keys for edge cases
+        "00buck": "12ga00buckshot",
+        "12gslug": "12gaslug",
+        "fc00buck": "12gafc00buckshot",
+        "sstsabotslug": "12gasstsabotslug"
     };
 
-    // 🛠️ DER GLATTBÜGLER
+    // 🛠️ THE SMOOTHER
     function normalizeString(str) {
         if (!str) return "";
         return String(str).toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -6655,18 +6783,17 @@ if (saved) savedRing = JSON.parse(saved);
             let rawTargetId = target.getAttribute('data-item-id');
             if (!rawTargetId) return;
 
-            // 1. Namen glattbügeln
+            // 1. Smooth the name
             let cleanTarget = normalizeString(rawTargetId);
 
-            // 2. PRÜFEN OB EINE ÜBERSETZUNG NÖTIG IST
+            // 2. CHECK ALIAS MAP
             if (translationMap[cleanTarget]) {
-                console.log(`[Übersetzer] "${cleanTarget}" wurde umgeleitet auf "${translationMap[cleanTarget]}"`);
-                cleanTarget = translationMap[cleanTarget]; // Ersetze das deutsche durch das englische Wort
+                cleanTarget = translationMap[cleanTarget]; 
             }
 
             let foundImageUrl = "";
 
-            // 3. Suche in der NEUEN Datenbank (verifiedGzwItemsDb)
+            // 3. Search NEW Database (verifiedGzwItemsDb)
             if (typeof verifiedGzwItemsDb !== 'undefined') {
                 let dbItem = verifiedGzwItemsDb.find(item => 
                     normalizeString(item.id) === cleanTarget || 
@@ -6677,7 +6804,7 @@ if (saved) savedRing = JSON.parse(saved);
                 }
             }
 
-            // 4. Suche in der ALTEN Datenbank (itemImages)
+            // 4. Search OLD Database (itemImages/weaponImages)
             if (!foundImageUrl && typeof itemImages !== 'undefined') {
                 for (let key in itemImages) {
                     if (normalizeString(key) === cleanTarget) {
@@ -6686,8 +6813,16 @@ if (saved) savedRing = JSON.parse(saved);
                     }
                 }
             }
+             if (!foundImageUrl && typeof weaponImages !== 'undefined') {
+                for (let key in weaponImages) {
+                    if (normalizeString(key) === cleanTarget) {
+                        foundImageUrl = weaponImages[key];
+                        break;
+                    }
+                }
+            }
 
-            // BILD ANZEIGEN
+            // DISPLAY IMAGE
             if (foundImageUrl) {
                 tooltipImg.onerror = function() {
                     this.onerror = null; 
