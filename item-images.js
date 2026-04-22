@@ -452,16 +452,34 @@ document.addEventListener('mouseover', function(e) {
         let rawId = target.getAttribute('data-item-id');
         if (!rawId) return;
 
-        // Macht den Namen "Safe Lock Box (2x2)" zu "safe_lock_box_2x2"
+        // Formatierung 1: Für die alte itemImages Datenbank (macht alles klein und setzt Unterstriche)
         let formattedId = rawId.toLowerCase()
                                .replace(/[^a-z0-9]+/g, "_")
                                .replace(/^_|_$/g, "");
 
+        let foundImageUrl = "";
+
+        // CHECK 1: Suche in der alten itemImages-Datenbank
         if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
+            foundImageUrl = itemImages[formattedId];
+        } 
+        // CHECK 2: Wenn nicht gefunden, suche in der neuen verifiedGzwItemsDb
+        else if (typeof verifiedGzwItemsDb !== 'undefined') {
+            // Wir suchen das Item anhand seines echten Namens (Groß-/Kleinschreibung wird ignoriert)
+            let dbItem = verifiedGzwItemsDb.find(item => item.name.toLowerCase() === rawId.toLowerCase());
+            
+            // Haben wir es gefunden und hat es eine URL?
+            if (dbItem && dbItem.imageUrl && dbItem.imageUrl !== "") {
+                foundImageUrl = dbItem.imageUrl;
+            }
+        }
+
+        // BILD ANZEIGEN: Wenn ein Bild in einer der Datenbanken gefunden wurde
+        if (foundImageUrl !== "") {
             let tooltip = document.getElementById('tacticalImageTooltip');
             if(tooltip) {
                 let img = document.getElementById('tacticalTooltipImg');
-                img.src = itemImages[formattedId];
+                img.src = foundImageUrl;
                 tooltip.style.display = 'block';
             }
         }
