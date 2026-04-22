@@ -6633,95 +6633,84 @@ if (saved) savedRing = JSON.parse(saved);
     <script>
         <script>
         <script>
-        // ==============================================================
-        // TACTICAL HOVER ENGINE V5 (FALLBACK & ERROR HANDLING)
-        // ==============================================================
-        const tooltip = document.getElementById('tacticalImageTooltip');
-        const tooltipImg = document.getElementById('tacticalTooltipImg');
-        let currentHoverTarget = null;
+        <script>
+    // ==============================================================
+    // TACTICAL HOVER ENGINE V6 (ID-BASED & STRICT IMAGE URL)
+    // ==============================================================
+    const tooltip = document.getElementById('tacticalImageTooltip');
+    const tooltipImg = document.getElementById('tacticalTooltipImg');
+    let currentHoverTarget = null;
 
-        // Taktisches Platzhalter-Bild (Lädt, wenn ein Bild fehlt oder Link kaputt ist)
-        const FALLBACK_IMAGE = "https://placehold.co/200x200/0a0a0a/7ca35a?text=NO+INTEL\\nIMAGE+MISSING";
+    const FALLBACK_IMAGE = "https://placehold.co/200x200/0a0a0a/7ca35a?text=NO+INTEL\\nIMAGE+MISSING";
 
-        // Fängt fehlerhafte GitHub/Wikia Links ab (Das Fragezeichen)
-        if (tooltipImg) {
-            tooltipImg.onerror = function() {
-                this.src = FALLBACK_IMAGE;
-            };
-        }
+    if (tooltipImg) {
+        tooltipImg.onerror = function() {
+            this.src = FALLBACK_IMAGE;
+        };
+    }
 
-        document.addEventListener('mouseover', function(e) {
-            let target = e.target.closest('.item-hover-trigger');
-            if (target) {
-                currentHoverTarget = target;
-                let rawId = target.getAttribute('data-item-id');
-                if (!rawId) return;
+    document.addEventListener('mouseover', function(e) {
+        let target = e.target.closest('.item-hover-trigger');
+        if (target) {
+            currentHoverTarget = target;
+            let targetId = target.getAttribute('data-item-id'); // Wir suchen jetzt nach der ID (z.B. allanach-single-malt-scotch-40y)
+            if (!targetId) return;
 
-                // Formatierung für die alte Datenbank
-                let formattedId = rawId.toLowerCase()
-                                       .replace(/[^a-z0-9äöüß]+/g, "_")
-                                       .replace(/^_|_$/g, "");
+            let foundImageUrl = "";
 
-                // Wir starten standardmäßig mit dem Platzhalter
-                let foundImageUrl = FALLBACK_IMAGE; 
-
-                // CHECK 1: Suche in der alten itemImages-Datenbank
-                if (typeof itemImages !== 'undefined' && itemImages[formattedId]) {
-                    foundImageUrl = itemImages[formattedId];
-                } 
-                // CHECK 2: Suche in der neuen verifiedGzwItemsDb
-                else if (typeof verifiedGzwItemsDb !== 'undefined') {
-                    let dbItem = verifiedGzwItemsDb.find(item => item.name.toLowerCase() === rawId.toLowerCase());
-                    // Prüfen, ob eine echte URL hinterlegt ist und es nicht "Missing_icon.png" ist
-                    if (dbItem && dbItem.imageUrl && dbItem.imageUrl !== "" && !dbItem.imageUrl.includes("Missing_icon")) {
-                        foundImageUrl = dbItem.imageUrl;
-                    }
+            // 1. STRIKTE SUCHE IN DER NEUEN DATENBANK (verifiedGzwItemsDb)
+            if (typeof verifiedGzwItemsDb !== 'undefined') {
+                let dbItem = verifiedGzwItemsDb.find(item => item.id === targetId);
+                if (dbItem && dbItem.imageUrl) {
+                    foundImageUrl = dbItem.imageUrl;
                 }
+            }
 
-                // Bild in den Tooltip laden und anzeigen
+            // 2. FALLBACK: ALTE DATENBANK (itemImages), falls in der neuen nichts gefunden wurde
+            if (!foundImageUrl && typeof itemImages !== 'undefined') {
+                // Formatiere die ID für das alte Objekt (Unterstriche)
+                let oldKey = targetId.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+                if (itemImages[oldKey]) {
+                    foundImageUrl = itemImages[oldKey];
+                }
+            }
+
+            // ANZEIGEN
+            if (foundImageUrl) {
                 tooltipImg.src = foundImageUrl;
                 tooltip.style.display = 'block';
-                positionTooltip(e); 
-            }
-        });
-
-        document.addEventListener('mousemove', function(e) {
-            if (currentHoverTarget && tooltip.style.display === 'block') {
                 positionTooltip(e);
             }
-        });
-
-        document.addEventListener('mouseout', function(e) {
-            let target = e.target.closest('.item-hover-trigger');
-            if (target) {
-                if (!e.relatedTarget || !target.contains(e.relatedTarget)) {
-                    currentHoverTarget = null;
-                    tooltip.style.display = 'none';
-                    // Wichtig: src leeren, damit das alte Bild beim nächsten Hover nicht kurz aufblitzt
-                    tooltipImg.src = ''; 
-                }
-            }
-        });
-
-        function positionTooltip(e) {
-            if (!tooltip) return;
-            
-            let x = e.clientX + 20; 
-            let y = e.clientY + 20;
-
-            const tooltipRect = tooltip.getBoundingClientRect();
-            
-            if (x + tooltipRect.width > window.innerWidth) {
-                x = e.clientX - tooltipRect.width - 20;
-            }
-            
-            if (y + tooltipRect.height > window.innerHeight) {
-                y = e.clientY - tooltipRect.height - 20;
-            }
-
-            tooltip.style.left = x + 'px';
-            tooltip.style.top = y + 'px';
         }
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (currentHoverTarget && tooltip.style.display === 'block') {
+            positionTooltip(e);
+        }
+    });
+
+    document.addEventListener('mouseout', function(e) {
+        let target = e.target.closest('.item-hover-trigger');
+        if (target) {
+            if (!e.relatedTarget || !target.contains(e.relatedTarget)) {
+                currentHoverTarget = null;
+                tooltip.style.display = 'none';
+                tooltipImg.src = '';
+            }
+        }
+    });
+
+    function positionTooltip(e) {
+        if (!tooltip) return;
+        let x = e.clientX + 20;
+        let y = e.clientY + 20;
+        const tooltipRect = tooltip.getBoundingClientRect();
+        if (x + tooltipRect.width > window.innerWidth) x = e.clientX - tooltipRect.width - 20;
+        if (y + tooltipRect.height > window.innerHeight) y = e.clientY - tooltipRect.height - 20;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = y + 'px';
+    }
 </script>
         <div id="hidden-yt-player" style="position: absolute; width: 0; height: 0; border: none; overflow: hidden; pointer-events: none;"></div>
 </body>
