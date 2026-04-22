@@ -6623,8 +6623,9 @@ if (saved) savedRing = JSON.parse(saved);
         <script>
         <script>
         <script>
+    <script>
     // ==============================================================
-    // TACTICAL HOVER ENGINE V6 (ID-BASED & STRICT IMAGE URL)
+    // TACTICAL HOVER ENGINE V7 (ULTIMATE MATCHING)
     // ==============================================================
     const tooltip = document.getElementById('tacticalImageTooltip');
     const tooltipImg = document.getElementById('tacticalTooltipImg');
@@ -6642,29 +6643,33 @@ if (saved) savedRing = JSON.parse(saved);
         let target = e.target.closest('.item-hover-trigger');
         if (target) {
             currentHoverTarget = target;
-            let targetId = target.getAttribute('data-item-id'); // Wir suchen jetzt nach der ID (z.B. allanach-single-malt-scotch-40y)
+            let targetId = target.getAttribute('data-item-id');
             if (!targetId) return;
 
             let foundImageUrl = "";
 
-            // 1. STRIKTE SUCHE IN DER NEUEN DATENBANK (verifiedGzwItemsDb)
+            // 1. ULTIMATIVE SUCHE IN DER NEUEN DATENBANK (verifiedGzwItemsDb)
             if (typeof verifiedGzwItemsDb !== 'undefined') {
-                let dbItem = verifiedGzwItemsDb.find(item => item.id === targetId);
+                // Sucht flexibel nach ID ODER Namen (ignoriert Groß-/Kleinschreibung komplett)
+                let dbItem = verifiedGzwItemsDb.find(item => 
+                    (item.id && item.id.toLowerCase() === targetId.toLowerCase()) || 
+                    (item.name && item.name.toLowerCase() === targetId.toLowerCase())
+                );
+                
                 if (dbItem && dbItem.imageUrl) {
                     foundImageUrl = dbItem.imageUrl;
                 }
             }
 
-            // 2. FALLBACK: ALTE DATENBANK (itemImages), falls in der neuen nichts gefunden wurde
+            // 2. FALLBACK: ALTE DATENBANK (itemImages)
             if (!foundImageUrl && typeof itemImages !== 'undefined') {
-                // Formatiere die ID für das alte Objekt (Unterstriche)
                 let oldKey = targetId.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
                 if (itemImages[oldKey]) {
                     foundImageUrl = itemImages[oldKey];
                 }
             }
 
-            // ANZEIGEN
+            // BILD ANZEIGEN
             if (foundImageUrl) {
                 tooltipImg.src = foundImageUrl;
                 tooltip.style.display = 'block';
