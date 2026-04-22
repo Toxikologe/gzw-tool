@@ -3101,7 +3101,7 @@
         medicalDb.forEach(item => {
             const card = document.createElement('div');
             card.className = 'symptom-card item-hover-trigger';
-            card.setAttribute('data-item-id', item.id);
+            card.setAttribute('data-item-id', item.id || item.name);
             card.id = `symptom-${item.id}`;
             card.innerHTML = `<span class="icon">${item.icon}</span> <span style="width: 100%; text-align: left;">${item.name}</span>`;
             card.onclick = () => runMedicalScan(item);
@@ -3199,7 +3199,7 @@
 
             const crate = document.createElement('div');
             crate.className = `market-crate item-hover-trigger ${item.isBuff ? 'buff-item' : ''}`;
-            crate.setAttribute('data-item-id', item.id);
+            crate.setAttribute('data-item-id', item.id || item.name);
             
             crate.innerHTML = `
                 <div class="crate-uses">🔲 ${item.grid} | 🍽️ ${item.uses}x</div>
@@ -4751,7 +4751,7 @@ function goToHome() {
         filtered.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = `logistics-item-card item-hover-trigger quest-${item.isQuest}`;
-            div.setAttribute('data-item-id', item.name);
+            div.setAttribute('data-item-id', item.id || item.name);
             div.id = `log-item-${index}`;
             
             let icon = '⚠️'; 
@@ -4778,7 +4778,7 @@ function goToHome() {
         
         document.getElementById('ldItemName').innerText = item.name.toUpperCase();
         document.getElementById('ldItemName').classList.add('item-hover-trigger');
-        document.getElementById('ldItemName').setAttribute('data-item-id', item.id);
+        document.getElementById('ldItemName').setAttribute('data-item-id', item.id || item.name);
         document.getElementById('ldItemName').style.cursor = 'help';
         document.getElementById('ldCategory').innerText = `KATEGORIE: ${item.category.toUpperCase()}`;
         
