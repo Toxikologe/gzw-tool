@@ -1644,6 +1644,7 @@
     <h2>Taktische Einsatzinformationen</h2>
     <div style="display: flex; align-items: center; margin-left: auto; gap: 15px;">
         <div class="status-tag" style="margin-left: 0;">SECURE_LINK</div>
+        </div>
         
         <button id="bgmToggleBtn" onclick="toggleBGM()" style="background: rgba(124, 163, 90, 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; font-size: 0.75rem; font-weight: bold; cursor: pointer; border-radius: 3px; font-family: 'Courier New', monospace; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 5px rgba(124, 163, 90, 0.3); z-index: 100;">
             <span id="bgmIcon" style="font-size: 1rem;">⏳</span> 
@@ -5799,7 +5800,7 @@ function startHudSystem() {
     setInterval(updateRestock, 1000);
 }
 
-// ==============================================================
+    // ==============================================================
     // TACTICAL BACKGROUND MUSIC (YOUTUBE API)
     // ==============================================================
     let bgmPlayer;
