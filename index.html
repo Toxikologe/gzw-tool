@@ -6623,7 +6623,7 @@ if (saved) savedRing = JSON.parse(saved);
 
     <script>
     // ==============================================================
-    // TACTICAL HOVER ENGINE V9 (AGGRESSIVE NORMALIZATION)
+    // TACTICAL HOVER ENGINE V10 (TRANSLATOR & NORMALIZATION)
     // ==============================================================
     const tooltip = document.getElementById('tacticalImageTooltip');
     const tooltipImg = document.getElementById('tacticalTooltipImg');
@@ -6631,7 +6631,18 @@ if (saved) savedRing = JSON.parse(saved);
 
     const FALLBACK_IMAGE = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' style='background:%230a0a0a; border: 1px solid %23333; border-radius: 4px;'%3E%3Ctext fill='%237ca35a' x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='18px'%3E[ NO INTEL ]%3C/text%3E%3Ctext fill='%23555' x='50%25' y='60%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='12px'%3EIMAGE MISSING OR BLOCKED%3C/text%3E%3C/svg%3E";
 
-    // 🛠️ DER GLATTBÜGLER: Entfernt ALLES außer Buchstaben(a-z) und Zahlen(0-9)
+    // 🛠️ DER ÜBERSETZER (Hier trägst du Abweichungen ein!)
+    // Links: Der deutsche glattgebügelte Name (alles klein, keine Leerzeichen)
+    // Rechts: Der englische Name, wie er in der item-images.js steht
+    const translationMap = {
+        "artisanwasser": "artisanwater",
+        "mreverpflegung": "mre",
+        "mosinobrez": "mosinnagant", // Beispiel: Wenn Mosin Kurz auf das normale Mosin-Bild zeigen soll
+        "aqueswasser": "aqueswater"
+        // Du kannst hier beliebig viele hinzufügen (Komma am Ende nicht vergessen!)
+    };
+
+    // 🛠️ DER GLATTBÜGLER
     function normalizeString(str) {
         if (!str) return "";
         return String(str).toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -6644,11 +6655,18 @@ if (saved) savedRing = JSON.parse(saved);
             let rawTargetId = target.getAttribute('data-item-id');
             if (!rawTargetId) return;
 
-            // Wir bügeln den Namen aus der HTML/data.js glatt
+            // 1. Namen glattbügeln
             let cleanTarget = normalizeString(rawTargetId);
+
+            // 2. PRÜFEN OB EINE ÜBERSETZUNG NÖTIG IST
+            if (translationMap[cleanTarget]) {
+                console.log(`[Übersetzer] "${cleanTarget}" wurde umgeleitet auf "${translationMap[cleanTarget]}"`);
+                cleanTarget = translationMap[cleanTarget]; // Ersetze das deutsche durch das englische Wort
+            }
+
             let foundImageUrl = "";
 
-            // 1. Suche in der NEUEN Datenbank (verifiedGzwItemsDb)
+            // 3. Suche in der NEUEN Datenbank (verifiedGzwItemsDb)
             if (typeof verifiedGzwItemsDb !== 'undefined') {
                 let dbItem = verifiedGzwItemsDb.find(item => 
                     normalizeString(item.id) === cleanTarget || 
@@ -6659,7 +6677,7 @@ if (saved) savedRing = JSON.parse(saved);
                 }
             }
 
-            // 2. Suche in der ALTEN Datenbank (itemImages)
+            // 4. Suche in der ALTEN Datenbank (itemImages)
             if (!foundImageUrl && typeof itemImages !== 'undefined') {
                 for (let key in itemImages) {
                     if (normalizeString(key) === cleanTarget) {
@@ -6679,7 +6697,6 @@ if (saved) savedRing = JSON.parse(saved);
                 tooltip.style.display = 'block';
                 positionTooltip(e);
             } else {
-                // Wenn wirklich absolut nichts gefunden wird
                 tooltipImg.onerror = null; 
                 tooltipImg.src = FALLBACK_IMAGE;
                 tooltip.style.display = 'block';
