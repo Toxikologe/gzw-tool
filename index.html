@@ -5202,14 +5202,14 @@ function goToHome() {
     }
 
         // ==============================================================
-        // GUNSMITH MENÜ-LOGIK (ACCORDIONS MIT FESTEN KATEGORIEN)
+        // GUNSMITH MENÜ-LOGIK (Waffenkammer Übersicht mit Hover-Fix)
         // ==============================================================
 
         window.renderWeaponAccordions = function(sortType = 'alpha') {
             const container = document.getElementById('weaponAccordionsContainer');
             if (!container || typeof gunsmithWeapons === 'undefined') return;
 
-            // 1. Waffen sortieren (A-Z oder Meta)
+            // 1. Waffen sortieren
             let sorted = [...gunsmithWeapons];
             if (sortType === 'alpha') {
                 sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -5217,34 +5217,29 @@ function goToHome() {
                 sorted.sort((a, b) => (b.isMeta === true ? 1 : 0) - (a.isMeta === true ? 1 : 0));
             }
 
-            // 2. Taktisches Mapping: Macht aus "MP / Kurz" -> "SMGs" etc.
             const categoryMap = {
                 "Sturmgewehr": "Sturmgewehr",
-                "Schweres AR": "Sturmgewehr", // Packt die AK-308 zu den Sturmgewehren
+                "Schweres AR": "Sturmgewehr", 
                 "SMG": "SMGs",
-                "MP / Kurz": "SMGs",          // Packt AKS-74U etc. zu den SMGs
+                "MP / Kurz": "SMGs",          
                 "Sniper": "Sniper",
                 "DMR": "DMRs",
                 "Shotgun": "Shotguns",
                 "Pistole": "Pistolen",
-                "Pistole/Kurz": "Pistolen"    // Packt Mosin Obrez zu den Pistolen
+                "Pistole/Kurz": "Pistolen"    
             };
 
-            // Die exakte Reihenfolge, die du angefordert hast!
             const categoryOrder = ["Sturmgewehr", "SMGs", "Sniper", "DMRs", "Shotguns", "Pistolen"];
 
-            // 3. Waffen in die neuen Hauptkategorien einsortieren
             let groups = {};
             sorted.forEach(w => {
-                let cleanCategory = categoryMap[w.type] || "Sonstiges"; // Fallback, falls was fehlt
+                let cleanCategory = categoryMap[w.type] || "Sonstiges"; 
                 if (!groups[cleanCategory]) groups[cleanCategory] = [];
                 groups[cleanCategory].push(w);
             });
 
-            // 4. HTML in exakter Reihenfolge aufbauen
             let html = '';
             categoryOrder.forEach(category => {
-                // Nur Kategorien rendern, in denen auch Waffen drin sind
                 if (groups[category] && groups[category].length > 0) {
                     html += `
                     <div style="margin-bottom: 10px; border: 1px solid #2a3b2a; border-radius: 4px; background: rgba(0,0,0,0.4); overflow: hidden;">
@@ -5259,30 +5254,29 @@ function goToHome() {
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;">
                     `;
 
-                    // ÄNDERUNG IN: renderWeaponAccordions
-groups[category].forEach(w => {
-    let metaBadge = w.isMeta ? `<span style="background: rgba(255,204,0,0.1); color: #ffcc00; padding: 3px 6px; border-radius: 3px; font-size: 0.7rem; border: 1px solid #ffcc00; margin-left: 8px;">🔥 META</span>` : '';
-    
-    // Wir nehmen die ID der Waffe. Wenn keine da ist, nehmen wir den Namen.
-    const finalId = w.id || w.name;
+                    groups[category].forEach(w => {
+                        let metaBadge = w.isMeta ? `<span style="background: rgba(255,204,0,0.1); color: #ffcc00; padding: 3px 6px; border-radius: 3px; font-size: 0.7rem; border: 1px solid #ffcc00; margin-left: 8px;">🔥 META</span>` : '';
+                        
+                        // DER ENTSCHEIDENDE FIX: Wir zwingen das Radar, nach dem Klarnamen der Waffe (w.name) zu suchen, nicht nach der ID!
+                        const safeHoverName = w.name.replace(/"/g, ""); // Entfernt eventuelle Anführungszeichen, die das HTML kaputt machen könnten
 
-    html += `
-        <div class="item-hover-trigger" data-item-id="${finalId}" onclick="window.openWeaponWorkbench('${w.id}')"
-             style="background: #0d110d; border: 1px solid #1f2b1f; padding: 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 8px;"
-             onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#141a14';"
-             onmouseout="this.style.borderColor='#1f2b1f'; this.style.background='#0d110d';">
-            
-            <div style="color: #fff; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                ${w.name} ${metaBadge}
-            </div>
-            <div style="color: #888; font-size: 0.85rem; font-family: 'Courier New', monospace;">Kaliber: <span style="color: #ccc;">${w.ammo}</span></div>
-            
-            <div style="margin-top: 8px; color: var(--accent); font-size: 0.75rem; font-weight: bold; letter-spacing: 1px; border-top: 1px dashed #2a3b2a; padding-top: 8px;">
-                [ WERKZEUG ÖFFNEN ]
-            </div>
-        </div>
-    `;
-});
+                        html += `
+                                <div class="item-hover-trigger" data-item-id="${safeHoverName}" onclick="window.openWeaponWorkbench('${w.id}')"
+                                     style="background: #0d110d; border: 1px solid #1f2b1f; padding: 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 8px;"
+                                     onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#141a14'; this.style.transform='translateY(-2px)';"
+                                     onmouseout="this.style.borderColor='#1f2b1f'; this.style.background='#0d110d'; this.style.transform='translateY(0)';">
+                                    
+                                    <div style="color: #fff; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                                        ${w.name} ${metaBadge}
+                                    </div>
+                                    <div style="color: #888; font-size: 0.85rem; font-family: 'Courier New', monospace;">Kaliber: <span style="color: #ccc;">${w.ammo}</span></div>
+                                    
+                                    <div style="margin-top: 8px; color: var(--accent); font-size: 0.75rem; font-weight: bold; letter-spacing: 1px; border-top: 1px dashed #2a3b2a; padding-top: 8px;">
+                                        [ WERKZEUG ÖFFNEN ]
+                                    </div>
+                                </div>
+                        `;
+                    });
 
                     html += `
                             </div>
